@@ -1,5 +1,5 @@
 # Add all the application routes to the app.routes file
-->         /calculate-public-pension-adjustment-frontend                    app.Routes
-->         /                          health.Routes
+->         /public-pension-adjustment                    app.Routes
+->         /                                             health.Routes
 
 GET        /admin/metrics             @com.kenshoo.play.metrics.MetricsController.metrics
