@@ -3,16 +3,19 @@ import sbt._
 object AppDependencies {
   import play.core.PlayVersion
 
+  private val bootstrapPlay28Version = "5.24.0"
+
   val compile = Seq(
     play.sbt.PlayImport.ws,
     "uk.gov.hmrc"       %% "play-frontend-hmrc"            % "3.22.0-play-28",
     "uk.gov.hmrc"       %% "play-conditional-form-mapping" % "1.12.0-play-28",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-28"    % "6.4.0",
-    "uk.gov.hmrc"       %% "play-language"                 % "5.3.0-play-28",
-    "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"            % "0.68.0"
+    "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"            % "0.68.0",
+    "uk.gov.hmrc"       %% "url-builder"                   % "3.8.0-play-28"
   )
 
   val test = Seq(
+    "uk.gov.hmrc"            %% "bootstrap-test-play-28"  % bootstrapPlay28Version,
     "org.scalatest"          %% "scalatest"               % "3.2.10",
     "org.scalatestplus"      %% "scalacheck-1-15"         % "3.2.10.0",
     "org.scalatestplus"      %% "mockito-3-4"             % "3.2.10.0",
