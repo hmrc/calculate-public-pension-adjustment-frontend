@@ -35,9 +35,9 @@ error.number = Please enter a valid number
 error.required = Please enter a value
 error.summary.title = There is a problem
 
-index.title = Public Service Pensions Remediation service
-index.heading = Public Service Pensions Remediation service
-index.guidance = Welcome to Public Service Pensions Remediation service frontend. Please see the README file for a guide to getting started.
+index.title = Calculate Public Pension Adjustment service
+index.heading = Calculate Public Pension Adjustment service
+index.guidance = Welcome to Calculate Public Pension Adjustment service. Please see the README file for a guide to getting started.
 
 checkYourAnswers.title = Check Your Answers
 checkYourAnswers.heading = Check Your Answers
