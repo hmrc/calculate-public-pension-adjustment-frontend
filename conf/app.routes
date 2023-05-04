@@ -19,3 +19,18 @@ GET         /account/sign-out                            controllers.auth.AuthCo
 GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad
 
 GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad
+
+GET        /savings-statement                            controllers.IsRSSReceivedController.onPageLoad(mode: Mode = NormalMode)
+POST       /savings-statement                            controllers.IsRSSReceivedController.onSubmit(mode: Mode = NormalMode)
+GET        /change-savings-statement                     controllers.IsRSSReceivedController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-savings-statement                     controllers.IsRSSReceivedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /resubmitting-adjustment                      controllers.ResubmittingAdjustmentController.onPageLoad(mode: Mode = NormalMode)
+POST       /resubmitting-adjustment                      controllers.ResubmittingAdjustmentController.onSubmit(mode: Mode = NormalMode)
+GET        /change-resubmitting-adjustment               controllers.ResubmittingAdjustmentController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-resubmitting-adjustment               controllers.ResubmittingAdjustmentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /reason-for-resubmission                      controllers.ReasonForResubmissionController.onPageLoad(mode: Mode = NormalMode)
+POST       /reason-for-resubmission                      controllers.ReasonForResubmissionController.onSubmit(mode: Mode = NormalMode)
+GET        /change-reason-for-resubmission               controllers.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-reason-for-resubmission               controllers.ReasonForResubmissionController.onSubmit(mode: Mode = CheckMode)

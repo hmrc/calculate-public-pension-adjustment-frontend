@@ -1,4 +1,4 @@
-service.name = cy: Calculate Public Pension Adjustment service
+service.name = cy: Public Service Pensions Remediation service
 
 site.back = cy: Back
 site.remove = cy: Remove
@@ -35,9 +35,9 @@ error.number = cy: Please enter a valid number
 error.required = cy: Please enter a value
 error.summary.title = cy: There is a problem
 
-index.title = cy: Calculate Public Pension Adjustment service
-index.heading = cy: Calculate Public Pension Adjustment service
-index.guidance = cy: Welcome to Calculate Public Pension Adjustment service. Please see the README file for a guide to getting started.
+index.title = cy: Public Service Pensions Remediation service
+index.heading = cy: Public Service Pensions Remediation service
+index.guidance = cy: Welcome to Public Service Pensions Remediation service. Please see the README file for a guide to getting started.
 
 checkYourAnswers.title = cy: Check Your Answers
 checkYourAnswers.heading = cy: Check Your Answers
@@ -55,3 +55,26 @@ signedOut.guidance = cy: We did not save your answers.
 
 unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account
+
+isRSSReceived.title = cy: Have you received a remedial service statement from your public service pension scheme?
+isRSSReceived.heading = cy: Have you received a remedial service statement from your public service pension scheme?
+isRSSReceived.yes = cy: Yes
+isRSSReceived.no = cy: No
+isRSSReceived.error.required = cy: You must select one of the options
+isRSSReceived.checkYourAnswersLabel = cy: Have you received a remedial service statement from your public service pension scheme?
+
+resubmittingAdjustment.title = cy: Are you resubmitting a public pension adjustment?
+resubmittingAdjustment.heading = cy: Are you resubmitting a public pension adjustment?
+resubmittingAdjustment.checkYourAnswersLabel = cy: Are you resubmitting a public pension adjustment?
+resubmittingAdjustment.error.required = cy: You must select one of the options
+resubmittingAdjustment.change.hidden = cy: Are you resubmitting a public pension adjustment?
+resubmittingAdjustment.hint = cy: We are asking whether you are seeking an adjustment on your public service pension - either compensation or a tax charge.
+
+reasonForResubmission.title = cy: What is your reason for a resubmission?
+reasonForResubmission.heading = cy: What is your reason for a resubmission?
+reasonForResubmission.label = cy: What is your reason for a resubmission?
+reasonForResubmission.checkYourAnswersLabel = cy: What is your reason for a resubmission?
+reasonForResubmission.error.required = cy: Enter your reason
+reasonForResubmission.error.length = cy: Your submission reason must be 500 characters or less
+reasonForResubmission.change.hidden = cy: What is your reason for a resubmission?
+reasonForResubmission.hint = cy: Provide the reason for your resubmission in the space below.
