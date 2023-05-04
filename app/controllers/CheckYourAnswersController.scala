@@ -21,7 +21,7 @@ import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierA
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.{SavingsStatementSummary, ReasonForResubmissionSummary, ResubmittingAdjustmentSummary}
+import viewmodels.checkAnswers.{ReasonForResubmissionSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 

@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ResubmittingAdjustmentFormProvider
-import models.{NormalMode, CheckMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -40,7 +40,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
   val form         = formProvider()
 
   lazy val resubmittingNormalRoute = routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
-  lazy val resubmittingCheckRoute = routes.ResubmittingAdjustmentController.onPageLoad(CheckMode).url
+  lazy val resubmittingCheckRoute  = routes.ResubmittingAdjustmentController.onPageLoad(CheckMode).url
 
   "ResubmittingAdjustment Controller" - {
 
@@ -203,7 +203,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
         redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
       }
     }
-    
+
     "redirect to ReasonForResubmission page when user answers true in Check Mode" in {
       val mockSessionRepository = mock[SessionRepository]
 

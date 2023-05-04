@@ -22,7 +22,7 @@ import play.api.data.FormError
 class SavingsStatementFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "savingsStatement.error.required"
-  val invalidKey = "error.boolean"
+  val invalidKey  = "error.boolean"
 
   val form = new SavingsStatementFormProvider()()
 

@@ -25,19 +25,17 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ReasonForResubmissionSummary  {
+object ReasonForResubmissionSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ReasonForResubmissionPage).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "reasonForResubmission.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.ReasonForResubmissionController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("reasonForResubmission.change.hidden"))
-          )
+    answers.get(ReasonForResubmissionPage).map { answer =>
+      SummaryListRowViewModel(
+        key = "reasonForResubmission.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.ReasonForResubmissionController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("reasonForResubmission.change.hidden"))
         )
+      )
     }
 }

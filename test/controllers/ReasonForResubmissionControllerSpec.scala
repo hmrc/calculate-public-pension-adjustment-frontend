@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ReasonForResubmissionFormProvider
-import models.{NormalMode, CheckMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -40,7 +40,7 @@ class ReasonForResubmissionControllerSpec extends SpecBase with MockitoSugar {
   val form         = formProvider()
 
   lazy val reasonNormalRoute = routes.ReasonForResubmissionController.onPageLoad(NormalMode).url
-  lazy val reasonCheckRoute = routes.ReasonForResubmissionController.onPageLoad(CheckMode).url
+  lazy val reasonCheckRoute  = routes.ReasonForResubmissionController.onPageLoad(CheckMode).url
 
   "ReasonForResubmission Controller" - {
 
@@ -179,7 +179,7 @@ class ReasonForResubmissionControllerSpec extends SpecBase with MockitoSugar {
         redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
       }
     }
-    
+
     // Change to appropriate page upon implementation
     "redirect to CheckYourAnswers page when user answers false in check mode" in {
       val mockSessionRepository = mock[SessionRepository]

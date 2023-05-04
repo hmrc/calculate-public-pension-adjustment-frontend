@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.SavingsStatementFormProvider
-import models.{NormalMode, CheckMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -37,10 +37,10 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new SavingsStatementFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val savingsStatementNormalRoute = routes.SavingsStatementController.onPageLoad(NormalMode).url
-  lazy val savingsStatementCheckRoute = routes.SavingsStatementController.onPageLoad(CheckMode).url
+  lazy val savingsStatementCheckRoute  = routes.SavingsStatementController.onPageLoad(CheckMode).url
 
   "SavingsStatement Controller" - {
 
@@ -149,8 +149,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    //Change to appropriate page upon implementation
-    "redirect to CheckYourAnswers page when user answers false" in {
+    "redirect to Ineligible page when user answers false" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -170,10 +169,10 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(result).value mustEqual routes.IneligibleController.onPageLoad.url
       }
     }
-    
+
     "redirect to ResubmittingAdjustment page when user answers true in check mode" in {
       val mockSessionRepository = mock[SessionRepository]
 
@@ -198,8 +197,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    //Change to appropriate page upon implementation
-    "redirect to CheckYourAnswers page when user answers false in check mode" in {
+    "redirect to Ineligible page when user answers false in check mode" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -219,7 +217,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(result).value mustEqual routes.IneligibleController.onPageLoad.url
       }
     }
   }

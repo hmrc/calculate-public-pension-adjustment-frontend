@@ -22,8 +22,8 @@ import play.api.data.FormError
 class ReasonForResubmissionFormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "reasonForResubmission.error.required"
-  val lengthKey = "reasonForResubmission.error.length"
-  val maxLength = 500
+  val lengthKey   = "reasonForResubmission.error.length"
+  val maxLength   = 500
 
   val form = new ReasonForResubmissionFormProvider()()
 

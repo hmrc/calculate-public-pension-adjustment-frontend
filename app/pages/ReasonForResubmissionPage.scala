@@ -17,7 +17,7 @@
 package pages
 
 import controllers.routes
-import models.{UserAnswers}
+import models.UserAnswers
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -26,9 +26,9 @@ case object ReasonForResubmissionPage extends QuestionPage[String] {
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "reasonForResubmission"
-  
+
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-  routes.CheckYourAnswersController.onPageLoad
+    routes.CheckYourAnswersController.onPageLoad
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     routes.CheckYourAnswersController.onPageLoad

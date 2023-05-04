@@ -17,7 +17,7 @@
 package pages
 
 import controllers.routes
-import models.{NormalMode, CheckMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -26,14 +26,18 @@ case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "resubmittingAdjustment"
-  
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(ResubmittingAdjustmentPage) match {
-    case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(NormalMode)
-    case Some(false) => routes.CheckYourAnswersController.onPageLoad //Redirect to appropriate page upon implementation
-  }
-  
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ResubmittingAdjustmentPage) match {
-    case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(CheckMode)
-    case Some(false) => routes.CheckYourAnswersController.onPageLoad //Redirect to appropriate page upon implementation
-  }
+
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    answers.get(ResubmittingAdjustmentPage) match {
+      case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(NormalMode)
+      case Some(false) =>
+        routes.CheckYourAnswersController.onPageLoad // Redirect to appropriate page upon implementation
+    }
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    answers.get(ResubmittingAdjustmentPage) match {
+      case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(CheckMode)
+      case Some(false) =>
+        routes.CheckYourAnswersController.onPageLoad // Redirect to appropriate page upon implementation
+    }
 }

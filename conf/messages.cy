@@ -78,3 +78,13 @@ reasonForResubmission.error.required = cy: Enter your reason
 reasonForResubmission.error.length = cy: Your submission reason must be 500 characters or less
 reasonForResubmission.change.hidden = cy: What is your reason for a resubmission?
 reasonForResubmission.hint = cy: Provide the reason for your resubmission in the space below.
+
+ineligible.title = cy: Check your eligibility
+ineligible.heading = cy: Check your eligibility
+ineligible.message = cy: Your are currently unable to use the service.
+ineligible.message1 = cy: Unless you have been contacted by HMRC or your Pension Scheme Administrator (PSA) stating you may have been affected by Public Service Pension Remediation, you cannot currently make a calculation.
+ineligible.message2 = cy: You can:
+ineligible.message3 = cy: You can also contact customer services for more information or alternatively, click the link below.
+ineligible.list = cy: contact your PSA for further information
+ineligible.list1 = cy: check if you are eligible or may have been affected, using the checker (opens in a new tab)
+ineligible.redirect = cy: Contact HMRC about pension schemes (opens in a new tab).
