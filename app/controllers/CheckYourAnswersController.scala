@@ -21,7 +21,7 @@ import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierA
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.{IsRSSReceivedSummary, ReasonForResubmissionSummary, ResubmittingAdjustmentSummary}
+import viewmodels.checkAnswers.{SavingsStatementSummary, ReasonForResubmissionSummary, ResubmittingAdjustmentSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -38,7 +38,7 @@ class CheckYourAnswersController @Inject() (
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val list = SummaryListViewModel(
       rows = Seq(
-        IsRSSReceivedSummary.row(request.userAnswers),
+        SavingsStatementSummary.row(request.userAnswers),
         ResubmittingAdjustmentSummary.row(request.userAnswers),
         ReasonForResubmissionSummary.row(request.userAnswers)
       ).flatten

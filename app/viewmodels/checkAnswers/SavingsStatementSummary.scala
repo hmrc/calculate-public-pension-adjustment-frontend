@@ -18,26 +18,26 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.IsRSSReceivedPage
+import pages.SavingsStatementPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IsRSSReceivedSummary  {
+object SavingsStatementSummary  {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IsRSSReceivedPage).map {
+    answers.get(SavingsStatementPage).map {
       answer =>
 
         val value = if (answer) "site.yes" else "site.no"
 
         SummaryListRowViewModel(
-          key     = "isRSSReceived.checkYourAnswersLabel",
+          key     = "savingsStatement.checkYourAnswersLabel",
           value   = ValueViewModel(value),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IsRSSReceivedController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("isRSSReceived.change.hidden"))
+            ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("savingsStatement.change.hidden"))
           )
         )
     }

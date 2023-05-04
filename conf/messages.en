@@ -1,4 +1,4 @@
-service.name = Public Service Pensions Remediation service
+service.name = Calculate Public Pension Adjustment service
 
 site.back = Back
 site.remove = Remove
@@ -56,12 +56,12 @@ signedOut.guidance = We did not save your answers.
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
-isRSSReceived.title = Have you received a remedial service statement from your public service pension scheme?
-isRSSReceived.heading = Have you received a remedial service statement from your public service pension scheme?
-isRSSReceived.yes = Yes
-isRSSReceived.no = No
-isRSSReceived.error.required = You must select one of the options
-isRSSReceived.checkYourAnswersLabel = Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.title = Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.heading = Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.yes = Yes
+savingsStatement.no = No
+savingsStatement.error.required = You must select one of the options
+savingsStatement.checkYourAnswersLabel = Have you received a remedial service statement from your public service pension scheme?
 
 resubmittingAdjustment.title = Are you resubmitting a public pension adjustment?
 resubmittingAdjustment.heading = Are you resubmitting a public pension adjustment?

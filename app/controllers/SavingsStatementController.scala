@@ -17,27 +17,27 @@
 package controllers
 
 import controllers.actions._
-import forms.IsRSSReceivedFormProvider
+import forms.SavingsStatementFormProvider
 import javax.inject.Inject
 import models.{Mode, UserAnswers}
-import pages.IsRSSReceivedPage
+import pages.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.IsRSSReceivedView
+import views.html.SavingsStatementView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class IsRSSReceivedController @Inject()(
+class SavingsStatementController @Inject()(
                                          override val messagesApi: MessagesApi,
                                          sessionRepository: SessionRepository,
                                          identify: IdentifierAction,
                                          getData: DataRetrievalAction,
                                          requireData: DataRequiredAction,
-                                         formProvider: IsRSSReceivedFormProvider,
+                                         formProvider: SavingsStatementFormProvider,
                                          val controllerComponents: MessagesControllerComponents,
-                                         view: IsRSSReceivedView
+                                         view: SavingsStatementView
                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
@@ -45,7 +45,7 @@ class IsRSSReceivedController @Inject()(
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(IsRSSReceivedPage) match {
+      val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(SavingsStatementPage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -62,9 +62,9 @@ class IsRSSReceivedController @Inject()(
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(IsRSSReceivedPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(SavingsStatementPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(IsRSSReceivedPage.navigate(mode, updatedAnswers))
+          } yield Redirect(SavingsStatementPage.navigate(mode, updatedAnswers))
       )
   }
 }

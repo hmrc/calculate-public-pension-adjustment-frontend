@@ -20,13 +20,13 @@ import controllers.routes
 import models.{ CheckMode, UserAnswers }
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.IsRSSReceivedPage
+import pages.SavingsStatementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class IsRSSReceivedSummarySpec extends AnyFreeSpec with Matchers {
+class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
@@ -34,17 +34,17 @@ class IsRSSReceivedSummarySpec extends AnyFreeSpec with Matchers {
     "when Yes is selected, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          IsRSSReceivedPage,
+          SavingsStatementPage,
           true
         )
         .get
-      IsRSSReceivedSummary.row(userAnswers) shouldBe Some(
+      SavingsStatementSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "isRSSReceived.checkYourAnswersLabel",
+          key = "savingsStatement.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IsRSSReceivedController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText("isRSSReceived.change.hidden")
+            ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText("savingsStatement.change.hidden")
           )
         )
       )
@@ -53,17 +53,17 @@ class IsRSSReceivedSummarySpec extends AnyFreeSpec with Matchers {
     "when No is selected, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          IsRSSReceivedPage,
+          SavingsStatementPage,
           false
         )
         .get
-      IsRSSReceivedSummary.row(userAnswers) shouldBe Some(
+      SavingsStatementSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "isRSSReceived.checkYourAnswersLabel",
+          key = "savingsStatement.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IsRSSReceivedController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText("isRSSReceived.change.hidden")
+            ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText("savingsStatement.change.hidden")
           )
         )
       )
@@ -71,7 +71,7 @@ class IsRSSReceivedSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      IsRSSReceivedSummary.row(userAnswers) shouldBe None
+      SavingsStatementSummary.row(userAnswers) shouldBe None
     }
   }
 

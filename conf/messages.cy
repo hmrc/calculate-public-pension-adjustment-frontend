@@ -1,4 +1,4 @@
-service.name = cy: Public Service Pensions Remediation service
+service.name = cy: Calculate Public Pension Adjustment service
 
 site.back = cy: Back
 site.remove = cy: Remove
@@ -56,12 +56,12 @@ signedOut.guidance = cy: We did not save your answers.
 unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account
 
-isRSSReceived.title = cy: Have you received a remedial service statement from your public service pension scheme?
-isRSSReceived.heading = cy: Have you received a remedial service statement from your public service pension scheme?
-isRSSReceived.yes = cy: Yes
-isRSSReceived.no = cy: No
-isRSSReceived.error.required = cy: You must select one of the options
-isRSSReceived.checkYourAnswersLabel = cy: Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.title = cy: Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.heading = cy: Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.yes = cy: Yes
+savingsStatement.no = cy: No
+savingsStatement.error.required = cy: You must select one of the options
+savingsStatement.checkYourAnswersLabel = cy: Have you received a remedial service statement from your public service pension scheme?
 
 resubmittingAdjustment.title = cy: Are you resubmitting a public pension adjustment?
 resubmittingAdjustment.heading = cy: Are you resubmitting a public pension adjustment?

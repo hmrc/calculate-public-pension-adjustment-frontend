@@ -17,43 +17,43 @@
 package controllers
 
 import base.SpecBase
-import forms.IsRSSReceivedFormProvider
+import forms.SavingsStatementFormProvider
 import models.{NormalMode, CheckMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.IsRSSReceivedPage
+import pages.SavingsStatementPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.IsRSSReceivedView
+import views.html.SavingsStatementView
 
 import scala.concurrent.Future
 
-class IsRSSReceivedControllerSpec extends SpecBase with MockitoSugar {
+class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new IsRSSReceivedFormProvider()
+  val formProvider = new SavingsStatementFormProvider()
   val form = formProvider()
 
-  lazy val isRSSReceivedNormalRoute = routes.IsRSSReceivedController.onPageLoad(NormalMode).url
-  lazy val isRSSReceivedCheckRoute = routes.IsRSSReceivedController.onPageLoad(CheckMode).url
+  lazy val savingsStatementNormalRoute = routes.SavingsStatementController.onPageLoad(NormalMode).url
+  lazy val savingsStatementCheckRoute = routes.SavingsStatementController.onPageLoad(CheckMode).url
 
-  "IsRSSReceived Controller" - {
+  "SavingsStatement Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, isRSSReceivedNormalRoute)
+        val request = FakeRequest(GET, savingsStatementNormalRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[IsRSSReceivedView]
+        val view = application.injector.instanceOf[SavingsStatementView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -62,14 +62,14 @@ class IsRSSReceivedControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(IsRSSReceivedPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(SavingsStatementPage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, isRSSReceivedNormalRoute)
+        val request = FakeRequest(GET, savingsStatementNormalRoute)
 
-        val view = application.injector.instanceOf[IsRSSReceivedView]
+        val view = application.injector.instanceOf[SavingsStatementView]
 
         val result = route(application, request).value
 
@@ -93,15 +93,15 @@ class IsRSSReceivedControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, isRSSReceivedNormalRoute)
+          FakeRequest(POST, savingsStatementNormalRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(IsRSSReceivedPage, true).success.value
+        val expectedAnswers = emptyUserAnswers.set(SavingsStatementPage, true).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual IsRSSReceivedPage.navigate(NormalMode, expectedAnswers).url
+        redirectLocation(result).value mustEqual SavingsStatementPage.navigate(NormalMode, expectedAnswers).url
       }
     }
 
@@ -111,12 +111,12 @@ class IsRSSReceivedControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, isRSSReceivedNormalRoute)
+          FakeRequest(POST, savingsStatementNormalRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[IsRSSReceivedView]
+        val view = application.injector.instanceOf[SavingsStatementView]
 
         val result = route(application, request).value
 
@@ -139,7 +139,7 @@ class IsRSSReceivedControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, isRSSReceivedNormalRoute)
+          FakeRequest(POST, savingsStatementNormalRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -164,7 +164,7 @@ class IsRSSReceivedControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, isRSSReceivedNormalRoute)
+          FakeRequest(POST, savingsStatementNormalRoute)
             .withFormUrlEncodedBody(("value", "false"))
 
         val result = route(application, request).value
@@ -188,7 +188,7 @@ class IsRSSReceivedControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, isRSSReceivedCheckRoute)
+          FakeRequest(POST, savingsStatementCheckRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -213,7 +213,7 @@ class IsRSSReceivedControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, isRSSReceivedCheckRoute)
+          FakeRequest(POST, savingsStatementCheckRoute)
             .withFormUrlEncodedBody(("value", "false"))
 
         val result = route(application, request).value

@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import pages.behaviours.PageBehaviours
+import javax.inject.Inject
 
-class IsRSSReceivedPageSpec extends PageBehaviours {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  "IsRSSReceivedPage" - {
+class SavingsStatementFormProvider @Inject() extends Mappings {
 
-    beRetrievable[Boolean](IsRSSReceivedPage)
-
-    beSettable[Boolean](IsRSSReceivedPage)
-
-    beRemovable[Boolean](IsRSSReceivedPage)
-  }
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("savingsStatement.error.required")
+    )
 }

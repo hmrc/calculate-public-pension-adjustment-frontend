@@ -19,12 +19,12 @@ package forms
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class IsRSSReceivedFormProviderSpec extends BooleanFieldBehaviours {
+class SavingsStatementFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "isRSSReceived.error.required"
+  val requiredKey = "savingsStatement.error.required"
   val invalidKey = "error.boolean"
 
-  val form = new IsRSSReceivedFormProvider()()
+  val form = new SavingsStatementFormProvider()()
 
   ".value" - {
 
