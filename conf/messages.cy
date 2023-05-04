@@ -35,9 +35,9 @@ error.number = cy: Please enter a valid number
 error.required = cy: Please enter a value
 error.summary.title = cy: There is a problem
 
-index.title = cy: Calculate Public Pension Adjustment service
-index.heading = cy: Calculate Public Pension Adjustment service
-index.guidance = cy: Welcome to Calculate Public Pension Adjustment service. Please see the README file for a guide to getting started.
+index.title = cy: Public Service Pensions Remediation service
+index.heading = cy: Public Service Pensions Remediation service
+index.guidance = cy: Welcome to Public Service Pensions Remediation service. Please see the README file for a guide to getting started.
 
 checkYourAnswers.title = cy: Check Your Answers
 checkYourAnswers.heading = cy: Check Your Answers
@@ -55,3 +55,36 @@ signedOut.guidance = cy: We did not save your answers.
 
 unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account
+
+savingsStatement.title = cy: Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.heading = cy: Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.yes = cy: Yes
+savingsStatement.no = cy: No
+savingsStatement.error.required = cy: You must select one of the options
+savingsStatement.checkYourAnswersLabel = cy: Have you received a remedial service statement from your public service pension scheme?
+
+resubmittingAdjustment.title = cy: Are you resubmitting a public pension adjustment?
+resubmittingAdjustment.heading = cy: Are you resubmitting a public pension adjustment?
+resubmittingAdjustment.checkYourAnswersLabel = cy: Are you resubmitting a public pension adjustment?
+resubmittingAdjustment.error.required = cy: You must select one of the options
+resubmittingAdjustment.change.hidden = cy: Are you resubmitting a public pension adjustment?
+resubmittingAdjustment.hint = cy: We are asking whether you are seeking an adjustment on your public service pension - either compensation or a tax charge.
+
+reasonForResubmission.title = cy: What is your reason for a resubmission?
+reasonForResubmission.heading = cy: What is your reason for a resubmission?
+reasonForResubmission.label = cy: What is your reason for a resubmission?
+reasonForResubmission.checkYourAnswersLabel = cy: What is your reason for a resubmission?
+reasonForResubmission.error.required = cy: Enter your reason
+reasonForResubmission.error.length = cy: Your submission reason must be 500 characters or less
+reasonForResubmission.change.hidden = cy: What is your reason for a resubmission?
+reasonForResubmission.hint = cy: Provide the reason for your resubmission in the space below.
+
+ineligible.title = cy: Check your eligibility
+ineligible.heading = cy: Check your eligibility
+ineligible.message = cy: Your are currently unable to use the service.
+ineligible.message1 = cy: Unless you have been contacted by HMRC or your Pension Scheme Administrator (PSA) stating you may have been affected by Public Service Pension Remediation, you cannot currently make a calculation.
+ineligible.message2 = cy: You can:
+ineligible.message3 = cy: You can also contact customer services for more information or alternatively, click the link below.
+ineligible.list = cy: contact your PSA for further information
+ineligible.list1 = cy: check if you are eligible or may have been affected, using the checker (opens in a new tab)
+ineligible.redirect = cy: Contact HMRC about pension schemes (opens in a new tab).

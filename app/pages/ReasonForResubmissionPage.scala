@@ -14,30 +14,22 @@
  * limitations under the License.
  */
 
-package navigation
+package pages
 
-import javax.inject.{Inject, Singleton}
-
-import play.api.mvc.Call
 import controllers.routes
-import pages._
-import models._
+import models.UserAnswers
+import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
-@Singleton
-class Navigator @Inject() () {
+case object ReasonForResubmissionPage extends QuestionPage[String] {
 
-  private val normalRoutes: Page => UserAnswers => Call = { case _ =>
-    _ => routes.IndexController.onPageLoad
-  }
+  override def path: JsPath = JsPath \ toString
 
-  private val checkRouteMap: Page => UserAnswers => Call = { case _ =>
-    _ => routes.CheckYourAnswersController.onPageLoad
-  }
+  override def toString: String = "reasonForResubmission"
 
-  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
-    case NormalMode =>
-      normalRoutes(page)(userAnswers)
-    case CheckMode  =>
-      checkRouteMap(page)(userAnswers)
-  }
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    routes.CheckYourAnswersController.onPageLoad
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    routes.CheckYourAnswersController.onPageLoad
 }

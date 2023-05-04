@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package navigation
+package pages
 
-import play.api.mvc.Call
-import pages._
-import models.{Mode, UserAnswers}
+import pages.behaviours.PageBehaviours
 
-class FakeNavigator(desiredRoute: Call) extends Navigator {
+class ResubmittingAdjustmentPageSpec extends PageBehaviours {
 
-  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
-    desiredRoute
+  "ResubmittingAdjustmentPage" - {
+
+    beRetrievable[Boolean](ResubmittingAdjustmentPage)
+
+    beSettable[Boolean](ResubmittingAdjustmentPage)
+
+    beRemovable[Boolean](ResubmittingAdjustmentPage)
+  }
 }
