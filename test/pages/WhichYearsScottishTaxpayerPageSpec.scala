@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import pages._
+import models.WhichYearsScottishTaxpayer
+import pages.behaviours.PageBehaviours
 
-trait PageGenerators {
-  implicit lazy val arbitraryReportingChangePage: Arbitrary[ReportingChangePage.type] =
-    Arbitrary(ReportingChangePage)
+class WhichYearsScottishTaxpayerPageSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryWhichYearsScottishTaxpayerPage: Arbitrary[WhichYearsScottishTaxpayerPage.type] =
-    Arbitrary(WhichYearsScottishTaxpayerPage)
+  "WhichYearsScottishTaxpayerPage" - {
 
-  implicit lazy val arbitraryScottishTaxpayerFrom2016Page: Arbitrary[ScottishTaxpayerFrom2016Page.type] =
-    Arbitrary(ScottishTaxpayerFrom2016Page)
+    beRetrievable[Set[WhichYearsScottishTaxpayer]](WhichYearsScottishTaxpayerPage)
 
+    beSettable[Set[WhichYearsScottishTaxpayer]](WhichYearsScottishTaxpayerPage)
+
+    beRemovable[Set[WhichYearsScottishTaxpayer]](WhichYearsScottishTaxpayerPage)
+  }
 }
