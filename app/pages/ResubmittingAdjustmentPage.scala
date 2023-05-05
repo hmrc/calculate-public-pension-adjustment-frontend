@@ -21,6 +21,8 @@ import models.{CheckMode, NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
@@ -40,4 +42,12 @@ case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
       case Some(false) =>
         routes.CheckYourAnswersController.onPageLoad // Redirect to appropriate page upon implementation
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case true  => super.cleanup(value, userAnswers)
+        case false => userAnswers.remove(ReasonForResubmissionPage)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -27,5 +27,25 @@ class ResubmittingAdjustmentPageSpec extends PageBehaviours {
     beSettable[Boolean](ResubmittingAdjustmentPage)
 
     beRemovable[Boolean](ResubmittingAdjustmentPage)
+
+    "must not remove ReasonForResubmissionPage when the answer is yes" in {
+
+      val answers = emptyUserAnswers.set(ReasonForResubmissionPage, "test data").success.value
+
+      val result = answers.set(ResubmittingAdjustmentPage, true).success.value
+
+      result.get(ResubmittingAdjustmentPage) must be(defined)
+      result.get(ReasonForResubmissionPage)  must be(defined)
+    }
+
+    "must remove ReasonForResubmissionPage when the answer is no" in {
+
+      val answers = emptyUserAnswers.set(ReasonForResubmissionPage, "test data").success.value
+
+      val result = answers.set(ResubmittingAdjustmentPage, false).success.value
+
+      result.get(ResubmittingAdjustmentPage) must be(defined)
+      result.get(ReasonForResubmissionPage)  must not be defined
+    }
   }
 }
