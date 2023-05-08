@@ -36,3 +36,8 @@ GET        /change-reason-for-resubmission               controllers.ReasonForRe
 POST       /change-reason-for-resubmission               controllers.ReasonForResubmissionController.onSubmit(mode: Mode = CheckMode)
 
 GET        /ineligible                                   controllers.IneligibleController.onPageLoad
+
+GET        /reporting-change                            controllers.ReportingChangeController.onPageLoad(mode: Mode = NormalMode)
+POST       /reporting-change                            controllers.ReportingChangeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-reporting-change                     controllers.ReportingChangeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-reporting-change                     controllers.ReportingChangeController.onSubmit(mode: Mode = CheckMode)

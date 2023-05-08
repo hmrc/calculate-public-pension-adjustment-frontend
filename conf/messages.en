@@ -88,3 +88,14 @@ ineligible.message3 = You can also contact customer services for more informatio
 ineligible.list = contact your PSA for further information
 ineligible.list1 = check if you are eligible or may have been affected, using the checker (opens in a new tab)
 ineligible.redirect = Contact HMRC about pension schemes (opens in a new tab).
+
+reportingChange.title = What are you reporting?
+reportingChange.heading = What are you reporting?
+reportingChange.error.required = You must select at least one of the options
+reportingChange.annualAllowance = Annual allowance
+reportingChange.lifetimeAllowance = Lifetime allowance
+reportingChange.otherCompensation = Other compensation
+reportingChange.annualAllowance.hint = If you have paid annual allowance charges during the remedy period, you may be eligible for direct and/or indirect compensation or need to report a tax adjustment.
+reportingChange.lifetimeAllowance.hint = If you have paid lifetime allowance charges during the remedy period, you may be eligible for direct compensation or need to report a tax adjustment.
+reportingChange.otherCompensation.hint = You may be eligible for compensation if you have paid administration fees to solicitors, legal advisors, accountants or any other professional service for help with your pensions during the remedy period.
+reportingChange.hint = Select all options that apply
