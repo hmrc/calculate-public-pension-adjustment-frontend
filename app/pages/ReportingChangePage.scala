@@ -17,7 +17,7 @@
 package pages
 
 import controllers.routes
-import models.{NormalMode, ReportingChange, UserAnswers}
+import models.{ReportingChange, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
