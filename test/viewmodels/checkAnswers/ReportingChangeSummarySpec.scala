@@ -61,5 +61,4 @@ class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
       ReportingChangeSummary.row(userAnswers) shouldBe None
     }
   }
-
 }

@@ -21,12 +21,12 @@ import pages.behaviours.PageBehaviours
 
 class ReportingChangePageSpec extends PageBehaviours {
 
-//  "ReportingChangePage" - {
-//
-//    beRetrievable[Set[ReportingChange]](ReportingChangePage)
-//
-//    beSettable[Set[ReportingChange]](ReportingChangePage)
-//
-//    beRemovable[Set[ReportingChange]](ReportingChangePage)
-//  }
+  "ReportingChangePage" - {
+
+    beRetrievable[Set[ReportingChange]](ReportingChangePage)
+
+    beSettable[Set[ReportingChange]](ReportingChangePage)
+
+    beRemovable[Set[ReportingChange]](ReportingChangePage)
+  }
 }
