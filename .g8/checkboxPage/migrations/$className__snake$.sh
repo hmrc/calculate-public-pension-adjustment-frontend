@@ -18,7 +18,6 @@ echo "$className;format="decap"$.title = $title$" >> ../conf/messages.en
 echo "$className;format="decap"$.heading = $title$" >> ../conf/messages.en
 echo "$className;format="decap"$.$option1key;format="decap"$ = $option1msg$" >> ../conf/messages.en
 echo "$className;format="decap"$.$option2key;format="decap"$ = $option2msg$" >> ../conf/messages.en
-echo "$className;format="decap"$.$option3key;format="decap"$ = $option3msg$" >> ../conf/messages.en
 echo "$className;format="decap"$.checkYourAnswersLabel = $title$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.required = Select $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.change.hidden = $className$" >> ../conf/messages.en
