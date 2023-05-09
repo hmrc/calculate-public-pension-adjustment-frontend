@@ -17,6 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
+import models._
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance, OtherCompensation}
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -26,38 +27,39 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
-//  "row" - {
-//    "when Yes is selected, return the summary row" in {
-//      val userAnswers = UserAnswers("id")
-//        .set(
-//          ReportingChangePage,
-//          Seq(
-//            +AnnualAllowance
-//          )
-//        )
-//        .get
-//      ReportingChangeSummary.row(userAnswers) shouldBe Some(
-//        SummaryListRowViewModel(
-//          key = "reportingChange.checkYourAnswersLabel",
-//          value = ValueViewModel("site.yes"),
-//          actions = Seq(
-//            ActionItemViewModel("site.change", routes.ReportingChangeController.onPageLoad(CheckMode).url)
-//              .withVisuallyHiddenText("reportingChange.change.hidden")
-//          )
-//        )
-//      )
-//    }
+  "row" - {
+    "when all checkboxes are selected, return the summary row" in {
+      val userAnswers = UserAnswers("id")
+        .set[Set[ReportingChange]](
+          ReportingChangePage,
+          Set(
+            AnnualAllowance, LifetimeAllowance, OtherCompensation
+          )
+        )
+        .get
+      ReportingChangeSummary.row(userAnswers) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "reportingChange.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent("reportingChange.annualAllowance,<br>reportingChange.lifetimeAllowance,<br>reportingChange.otherCompensation")),
+          actions = Seq(
+            ActionItemViewModel("site.change", routes.ReportingChangeController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText("reportingChange.change.hidden")
+          )
+        )
+      )
+    }
 
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       ReportingChangeSummary.row(userAnswers) shouldBe None
     }
-//  }
+  }
 
 }

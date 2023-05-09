@@ -62,6 +62,7 @@ savingsStatement.yes = cy: Yes
 savingsStatement.no = cy: No
 savingsStatement.error.required = cy: You must select one of the options
 savingsStatement.checkYourAnswersLabel = cy: Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.change.hidden = cy: Have you received a remedial service statement from your public service pension scheme?
 
 resubmittingAdjustment.title = cy: Are you resubmitting a public pension adjustment?
 resubmittingAdjustment.heading = cy: Are you resubmitting a public pension adjustment?
@@ -99,3 +100,5 @@ reportingChange.annualAllowance.hint = cy: If you have paid annual allowance cha
 reportingChange.lifetimeAllowance.hint = cy: If you have paid lifetime allowance charges during the remedy period, you may be eligible for direct compensation or need to report a tax adjustment.
 reportingChange.otherCompensation.hint = cy: You may be eligible for compensation if you have paid administration fees to solicitors, legal advisors, accountants or any other professional service for help with your pensions during the remedy period.
 reportingChange.hint = cy: Select all options that apply
+reportingChange.checkYourAnswersLabel = cy: What are you reporting?
+reportingChange.change.hidden = cy: What are you reporting?
