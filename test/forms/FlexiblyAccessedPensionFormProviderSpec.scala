@@ -14,28 +14,32 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{CheckMode, Mode, NormalMode, UserAnswers}
-import play.api.Logging
-import play.api.mvc.Call
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
 
-import scala.language.implicitConversions
+class FlexiblyAccessedPensionFormProviderSpec extends BooleanFieldBehaviours {
 
-trait Page extends Logging {
+  val requiredKey = "flexiblyAccessedPension.error.required"
+  val invalidKey  = "error.boolean"
 
-  def navigate(mode: Mode, answers: UserAnswers): Call = mode match {
-    case NormalMode => navigateInNormalMode(answers)
-    case CheckMode  => navigateInCheckMode(answers)
+  val form = new FlexiblyAccessedPensionFormProvider()()
+
+  ".value" - {
+
+    val fieldName = "value"
+
+    behave like booleanField(
+      form,
+      fieldName,
+      invalidError = FormError(fieldName, invalidKey)
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
   }
-
-  protected def navigateInNormalMode(answers: UserAnswers): Call
-
-  protected def navigateInCheckMode(answers: UserAnswers): Call
-}
-
-object Page {
-
-  implicit def toString(page: Page): String =
-    page.toString
 }

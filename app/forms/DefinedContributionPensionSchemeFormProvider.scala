@@ -14,28 +14,17 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{CheckMode, Mode, NormalMode, UserAnswers}
-import play.api.Logging
-import play.api.mvc.Call
+import javax.inject.Inject
 
-import scala.language.implicitConversions
+import forms.mappings.Mappings
+import play.api.data.Form
 
-trait Page extends Logging {
+class DefinedContributionPensionSchemeFormProvider @Inject() extends Mappings {
 
-  def navigate(mode: Mode, answers: UserAnswers): Call = mode match {
-    case NormalMode => navigateInNormalMode(answers)
-    case CheckMode  => navigateInCheckMode(answers)
-  }
-
-  protected def navigateInNormalMode(answers: UserAnswers): Call
-
-  protected def navigateInCheckMode(answers: UserAnswers): Call
-}
-
-object Page {
-
-  implicit def toString(page: Page): String =
-    page.toString
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("definedContributionPensionScheme.error.required")
+    )
 }

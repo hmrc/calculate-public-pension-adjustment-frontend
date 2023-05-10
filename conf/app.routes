@@ -61,3 +61,18 @@ GET        /which-years-scottish-taxpayer                controllers.WhichYearsS
 POST       /which-years-scottish-taxpayer                controllers.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = NormalMode)
 GET        /change-which-years-scottish-taxpayer         controllers.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-which-years-scottish-taxpayer         controllers.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = CheckMode)
+
+GET        /have-defined-contribution-pension            controllers.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
+POST       /have-defined-contribution-pension            controllers.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-have-defined-contribution-pension     controllers.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-have-defined-contribution-pension     controllers.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /when-flexibly-access-pension                 controllers.FlexibleAccessStartDateController.onPageLoad(mode: Mode = NormalMode)
+POST       /when-flexibly-access-pension                 controllers.FlexibleAccessStartDateController.onSubmit(mode: Mode = NormalMode)
+GET        /change-when-flexibly-access-pension          controllers.FlexibleAccessStartDateController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-when-flexibly-access-pension          controllers.FlexibleAccessStartDateController.onSubmit(mode: Mode = CheckMode)
+
+GET        /have-flexibly-accessed-pension               controllers.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = NormalMode)
+POST       /have-flexibly-accessed-pension               controllers.FlexiblyAccessedPensionController.onSubmit(mode: Mode = NormalMode)
+GET        /change-have-flexibly-accessed-pension        controllers.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-have-flexibly-accessed-pension        controllers.FlexiblyAccessedPensionController.onSubmit(mode: Mode = CheckMode)

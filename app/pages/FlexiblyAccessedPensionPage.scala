@@ -23,22 +23,23 @@ import play.api.mvc.Call
 
 import scala.util.Try
 
-case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
+case object FlexiblyAccessedPensionPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "resubmittingAdjustment"
+  override def toString: String = "flexiblyAccessedPension"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(ResubmittingAdjustmentPage) match {
-      case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(NormalMode)
-      case Some(false) => routes.ReportingChangeController.onPageLoad(NormalMode)
+    answers.get(FlexiblyAccessedPensionPage) match {
+      case Some(true)  => routes.FlexibleAccessStartDateController.onPageLoad(NormalMode)
+      case Some(false) =>
+        routes.CheckYourAnswersController.onPageLoad // TODO redirect to the appropriate page when it has been implemented
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(ResubmittingAdjustmentPage) match {
-      case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(CheckMode)
+    answers.get(FlexiblyAccessedPensionPage) match {
+      case Some(true)  => routes.FlexibleAccessStartDateController.onPageLoad(CheckMode)
       case Some(false) => routes.CheckYourAnswersController.onPageLoad
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
@@ -47,7 +48,7 @@ case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
     value
       .map {
         case true  => super.cleanup(value, userAnswers)
-        case false => userAnswers.remove(ReasonForResubmissionPage)
+        case false => userAnswers.remove(FlexibleAccessStartDatePage)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -56,6 +56,8 @@ signedOut.guidance = cy: We did not save your answers.
 unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account
 
+annualAllowance.caption = cy: Annual allowance
+
 savingsStatement.title = cy: Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.heading = cy: Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.yes = cy: Yes
@@ -140,3 +142,37 @@ stopPayingPublicPension.error.required.two = cy: The date must include {0} and {
 stopPayingPublicPension.error.min = cy: You have entered a pre-remedy date when you stopped paying into a public service pension scheme, it must be within the remedy period 6 April 2015 to 5 April 2022
 stopPayingPublicPension.error.max = cy: You have entered a future date when you stopped paying into a public service pension scheme, it must be within the remedy period 6 April 2015 to 5 April 2022
 stopPayingPublicPension.checkYourAnswersLabel = cy: When did you stop paying into a public service pension scheme?
+
+definedContributionPensionScheme.title = cy: Do you have a defined contribution pension scheme?
+definedContributionPensionScheme.heading = cy: Do you have a defined contribution pension scheme?
+definedContributionPensionScheme.checkYourAnswersLabel = cy: Do you have a defined contribution pension scheme?
+definedContributionPensionScheme.hint = cy: A defined contribution pension scheme is a workplace pension made up of contributions, such as:
+definedContributionPensionScheme.hintPoint1 = cy: your own
+definedContributionPensionScheme.hintPoint2 = cy: those by your employer
+definedContributionPensionScheme.hintPoint3 = cy: tax relief from the government
+definedContributionPensionScheme.error.required = cy: Select yes if you have a defined contribution pension scheme
+definedContributionPensionScheme.change.hidden = cy: Do you have a defined contribution pension scheme?
+
+flexiblyAccessedPension.title = cy: Have you flexibly accessed your defined contribution pension savings?
+flexiblyAccessedPension.heading = cy: Have you flexibly accessed your defined contribution pension savings?
+flexiblyAccessedPension.checkYourAnswersLabel = cy: Have you flexibly accessed your defined contribution pension savings?
+flexiblyAccessedPension.hint = cy: Pension drawdown is when you take money out a pension after the age of 55.
+flexiblyAccessedPension.detailsTitle = cy: When you can draw from your pension.
+flexiblyAccessedPension.detailsContent = cy: You can draw from your pension, only if your scheme lets you. For example, this could be:
+flexiblyAccessedPension.detailsPoint1 = cy: when you take money out of your scheme,
+flexiblyAccessedPension.detailsPoint2 = cy: if you convert pension savings that you had before April 2015 into a drawdown fund
+flexiblyAccessedPension.error.required = cy: Select yes if you have flexibly accessed your defined contribution pension savings
+flexiblyAccessedPension.change.hidden = cy: Have you flexibly accessed your defined contribution pension savings?
+
+flexibleAccessStartDate.title = cy: When did you start flexibly accessing defined contribution pension savings?
+flexibleAccessStartDate.heading = cy: When did you start flexibly accessing defined contribution pension savings?
+flexibleAccessStartDate.checkYourAnswersLabel = cy: When did you start flexibly accessing defined contribution pension savings?
+flexibleAccessStartDate.hint1 = cy: You can find this on your flexible access statement.
+flexibleAccessStartDate.hint2 = cy: For example 25 2 2015
+flexibleAccessStartDate.change.hidden = cy: When did you start flexibly accessing defined contribution pension savings?
+flexibleAccessStartDate.error.required.all = cy: Enter the date that you flexibly accessed your defined contribution pension savings as day, month, year
+flexibleAccessStartDate.error.invalid = cy: Enter a real date for the date that you flexibly accessed your defined contribution pension savings as day, month, year
+flexibleAccessStartDate.error.required = cy:  The date must include {0}
+flexibleAccessStartDate.error.required.two = cy: The date must include {0} and {1}
+flexibleAccessStartDate.error.min = cy: You have entered a date for the date that you flexibly accessed your defined contribution pension savings before the remedy period, enter a date after 5 April 2015
+flexibleAccessStartDate.error.max = cy: You have entered a future date for the date that you flexibly accessed your defined contribution pension savings, it must be within the remedy period
