@@ -37,14 +37,13 @@ object ReportingChange extends Enumerable.Implicits {
   )
 
   def checkboxItems(implicit messages: Messages): Seq[CheckboxItem] =
-    values.zipWithIndex.map {
-      case (value, index) =>
-        CheckboxItemViewModel(
-          content = Text(messages(s"reportingChange.${value.toString}")),
-          fieldId = "value",
-          index   = index,
-          value   = value.toString
-        ).withHint(Hint(content = Text(messages(s"reportingChange.${value.toString}.hint"))))
+    values.zipWithIndex.map { case (value, index) =>
+      CheckboxItemViewModel(
+        content = Text(messages(s"reportingChange.${value.toString}")),
+        fieldId = "value",
+        index = index,
+        value = value.toString
+      ).withHint(Hint(content = Text(messages(s"reportingChange.${value.toString}.hint"))))
     }
 
   implicit val enumerable: Enumerable[ReportingChange] =

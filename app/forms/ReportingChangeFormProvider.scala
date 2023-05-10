@@ -27,6 +27,7 @@ class ReportingChangeFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Set[ReportingChange]] =
     Form(
-      "value" -> set(enumerable[ReportingChange]("reportingChange.error.required")).verifying(nonEmptySet("reportingChange.error.required"))
+      "value" -> set(enumerable[ReportingChange]("reportingChange.error.required"))
+        .verifying(nonEmptySet("reportingChange.error.required"))
     )
 }

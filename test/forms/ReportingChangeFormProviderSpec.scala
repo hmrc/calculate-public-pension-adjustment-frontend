@@ -26,13 +26,13 @@ class ReportingChangeFormProviderSpec extends CheckboxFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "reportingChange.error.required"
 
     behave like checkboxField[ReportingChange](
       form,
       fieldName,
-      validValues  = ReportingChange.values,
+      validValues = ReportingChange.values,
       invalidError = FormError(s"$fieldName[0]", "error.invalid")
     )
 

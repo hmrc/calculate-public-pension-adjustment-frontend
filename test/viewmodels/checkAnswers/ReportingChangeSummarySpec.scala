@@ -39,14 +39,20 @@ class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
         .set[Set[ReportingChange]](
           ReportingChangePage,
           Set(
-            AnnualAllowance, LifetimeAllowance, OtherCompensation
+            AnnualAllowance,
+            LifetimeAllowance,
+            OtherCompensation
           )
         )
         .get
       ReportingChangeSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "reportingChange.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("reportingChange.annualAllowance,<br>reportingChange.lifetimeAllowance,<br>reportingChange.otherCompensation")),
+          value = ValueViewModel(
+            HtmlContent(
+              "reportingChange.annualAllowance,<br>reportingChange.lifetimeAllowance,<br>reportingChange.otherCompensation"
+            )
+          ),
           actions = Seq(
             ActionItemViewModel("site.change", routes.ReportingChangeController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText("reportingChange.change.hidden")
@@ -54,7 +60,6 @@ class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
         )
       )
     }
-
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")

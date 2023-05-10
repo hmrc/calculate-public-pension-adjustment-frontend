@@ -39,7 +39,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
   lazy val reportingChangeRoute = routes.ReportingChangeController.onPageLoad(NormalMode).url
 
   val formProvider = new ReportingChangeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "ReportingChange Controller" - {
 
@@ -74,7 +74,10 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ReportingChange.values.toSet), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ReportingChange.values.toSet), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
