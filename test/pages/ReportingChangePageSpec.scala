@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import pages._
+import models.ReportingChange
+import pages.behaviours.PageBehaviours
 
-trait PageGenerators {
-  implicit lazy val arbitraryReportingChangePage: Arbitrary[ReportingChangePage.type] =
-    Arbitrary(ReportingChangePage)
+class ReportingChangePageSpec extends PageBehaviours {
+
+  "ReportingChangePage" - {
+
+    beRetrievable[Set[ReportingChange]](ReportingChangePage)
+
+    beSettable[Set[ReportingChange]](ReportingChangePage)
+
+    beRemovable[Set[ReportingChange]](ReportingChangePage)
+  }
 }

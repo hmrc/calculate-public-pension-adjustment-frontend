@@ -14,12 +14,22 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import pages._
+import controllers.routes
+import models.{ReportingChange, UserAnswers}
+import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
-trait PageGenerators {
-  implicit lazy val arbitraryReportingChangePage: Arbitrary[ReportingChangePage.type] =
-    Arbitrary(ReportingChangePage)
+case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
+
+  override def path: JsPath = JsPath \ toString
+
+  override def toString: String = "reportingChange"
+
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    routes.CheckYourAnswersController.onPageLoad
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    routes.CheckYourAnswersController.onPageLoad
 }

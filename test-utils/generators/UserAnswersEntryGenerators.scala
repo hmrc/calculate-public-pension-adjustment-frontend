@@ -22,4 +22,12 @@ import org.scalacheck.Arbitrary.arbitrary
 import pages._
 import play.api.libs.json.{JsValue, Json}
 
-trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {}
+trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+  implicit lazy val arbitraryReportingChangeUserAnswersEntry: Arbitrary[(ReportingChangePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ReportingChangePage.type]
+        value <- arbitrary[ReportingChange].map(Json.toJson(_))
+      } yield (page, value)
+    }
+}

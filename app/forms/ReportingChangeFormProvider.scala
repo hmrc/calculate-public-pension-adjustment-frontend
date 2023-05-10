@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
-package generators
+package forms
 
-import org.scalacheck.Arbitrary
-import pages._
+import javax.inject.Inject
 
-trait PageGenerators {
-  implicit lazy val arbitraryReportingChangePage: Arbitrary[ReportingChangePage.type] =
-    Arbitrary(ReportingChangePage)
+import forms.mappings.Mappings
+import play.api.data.Form
+import play.api.data.Forms.set
+import models.ReportingChange
+
+class ReportingChangeFormProvider @Inject() extends Mappings {
+
+  def apply(): Form[Set[ReportingChange]] =
+    Form(
+      "value" -> set(enumerable[ReportingChange]("reportingChange.error.required"))
+        .verifying(nonEmptySet("reportingChange.error.required"))
+    )
 }

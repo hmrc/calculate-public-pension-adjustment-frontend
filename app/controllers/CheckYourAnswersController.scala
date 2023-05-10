@@ -21,7 +21,7 @@ import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierA
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.{ReasonForResubmissionSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary}
+import viewmodels.checkAnswers.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -40,7 +40,8 @@ class CheckYourAnswersController @Inject() (
       rows = Seq(
         SavingsStatementSummary.row(request.userAnswers),
         ResubmittingAdjustmentSummary.row(request.userAnswers),
-        ReasonForResubmissionSummary.row(request.userAnswers)
+        ReasonForResubmissionSummary.row(request.userAnswers),
+        ReportingChangeSummary.row(request.userAnswers)
       ).flatten
     )
 
