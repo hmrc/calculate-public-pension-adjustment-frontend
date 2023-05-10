@@ -32,15 +32,13 @@ case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ResubmittingAdjustmentPage) match {
       case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(NormalMode)
-      case Some(false) =>
-        routes.CheckYourAnswersController.onPageLoad // Redirect to appropriate page upon implementation
+      case Some(false) => routes.ReportingChangeController.onPageLoad(NormalMode)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ResubmittingAdjustmentPage) match {
       case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(CheckMode)
-      case Some(false) =>
-        routes.CheckYourAnswersController.onPageLoad // Redirect to appropriate page upon implementation
+      case Some(false) => routes.ReportingChangeController.onPageLoad(CheckMode)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =

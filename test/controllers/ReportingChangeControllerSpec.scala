@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ReportingChangeFormProvider
-import models.{NormalMode, ReportingChange, UserAnswers}
+import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -36,10 +36,11 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val reportingChangeRoute = routes.ReportingChangeController.onPageLoad(NormalMode).url
-
   val formProvider = new ReportingChangeFormProvider()
   val form         = formProvider()
+
+  lazy val reportingNormalRoute = routes.ReportingChangeController.onPageLoad(NormalMode).url
+  lazy val reportingCheckRoute  = routes.ReportingChangeController.onPageLoad(CheckMode).url
 
   "ReportingChange Controller" - {
 
@@ -48,7 +49,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, reportingChangeRoute)
+        val request = FakeRequest(GET, reportingNormalRoute)
 
         val result = route(application, request).value
 
@@ -67,7 +68,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, reportingChangeRoute)
+        val request = FakeRequest(GET, reportingNormalRoute)
 
         val view = application.injector.instanceOf[ReportingChangeView]
 
@@ -81,7 +82,8 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    // Must be changed later appropriately
+    "must redirect to the next page when valid data is submitted in Normal Mode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -96,7 +98,33 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, reportingChangeRoute)
+          FakeRequest(POST, reportingNormalRoute)
+            .withFormUrlEncodedBody(("value[0]", ReportingChange.values.head.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+      }
+    }
+
+    // Must be changed later appropriately
+    "must redirect to the next page when valid data is submitted in Check Mode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, reportingCheckRoute)
             .withFormUrlEncodedBody(("value[0]", ReportingChange.values.head.toString))
 
         val result = route(application, request).value
@@ -112,7 +140,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, reportingChangeRoute)
+          FakeRequest(POST, reportingNormalRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
@@ -131,7 +159,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, reportingChangeRoute)
+        val request = FakeRequest(GET, reportingNormalRoute)
 
         val result = route(application, request).value
 
@@ -146,7 +174,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, reportingChangeRoute)
+          FakeRequest(POST, reportingNormalRoute)
             .withFormUrlEncodedBody(("value[0]", ReportingChange.values.head.toString))
 
         val result = route(application, request).value

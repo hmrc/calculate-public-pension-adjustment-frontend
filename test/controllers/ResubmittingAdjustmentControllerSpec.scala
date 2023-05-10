@@ -179,8 +179,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    // Change to appropriate page upon implementation
-    "redirect to CheckYourAnswers page when user answers false in Normal Mode" in {
+    "redirect to Reporting Change page when user answers false in Normal Mode" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -199,8 +198,10 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
+        val expectedAnswers = emptyUserAnswers.set(ResubmittingAdjustmentPage, false).success.value
+
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(result).value mustEqual ResubmittingAdjustmentPage.navigate(NormalMode, expectedAnswers).url
       }
     }
 
@@ -228,8 +229,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    // Change to appropriate page upon implementation
-    "redirect to CheckYourAnswers page when user answers false in Check Mode" in {
+    "redirect to Reporting Change page when user answers false in Check Mode" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -249,7 +249,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(result).value mustEqual routes.ReportingChangeController.onPageLoad(CheckMode).url
       }
     }
   }
