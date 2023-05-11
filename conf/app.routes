@@ -41,3 +41,13 @@ GET        /reporting-change                            controllers.ReportingCha
 POST       /reporting-change                            controllers.ReportingChangeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-reporting-change                     controllers.ReportingChangeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-reporting-change                     controllers.ReportingChangeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /scottish-taxpayer-from-2016                  controllers.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = NormalMode)
+POST       /scottish-taxpayer-from-2016                  controllers.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = NormalMode)
+GET        /change-scottish-taxpayer-from-2016           controllers.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = CheckMode)
+POST       /change-scottish-taxpayer-from-2016           controllers.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = CheckMode)
+
+GET        /which-years-scottish-taxpayer                controllers.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = NormalMode)
+POST       /which-years-scottish-taxpayer                controllers.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = NormalMode)
+GET        /change-which-years-scottish-taxpayer         controllers.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-which-years-scottish-taxpayer         controllers.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = CheckMode)

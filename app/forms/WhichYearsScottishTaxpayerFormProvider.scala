@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package generators
+package forms
 
-import org.scalacheck.Arbitrary
-import pages._
+import javax.inject.Inject
 
-trait PageGenerators {
-  implicit lazy val arbitraryReportingChangePage: Arbitrary[ReportingChangePage.type] =
-    Arbitrary(ReportingChangePage)
+import forms.mappings.Mappings
+import play.api.data.Form
+import play.api.data.Forms.set
+import models.WhichYearsScottishTaxpayer
 
-  implicit lazy val arbitraryWhichYearsScottishTaxpayerPage: Arbitrary[WhichYearsScottishTaxpayerPage.type] =
-    Arbitrary(WhichYearsScottishTaxpayerPage)
+class WhichYearsScottishTaxpayerFormProvider @Inject() extends Mappings {
 
-  implicit lazy val arbitraryScottishTaxpayerFrom2016Page: Arbitrary[ScottishTaxpayerFrom2016Page.type] =
-    Arbitrary(ScottishTaxpayerFrom2016Page)
-
+  def apply(): Form[Set[WhichYearsScottishTaxpayer]] =
+    Form(
+      "value" -> set(enumerable[WhichYearsScottishTaxpayer]("whichYearsScottishTaxpayer.error.required"))
+        .verifying(nonEmptySet("whichYearsScottishTaxpayer.error.required"))
+    )
 }

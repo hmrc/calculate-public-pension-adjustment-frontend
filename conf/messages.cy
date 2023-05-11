@@ -102,3 +102,24 @@ reportingChange.otherCompensation.hint = cy: You may be eligible for compensatio
 reportingChange.hint = cy: Select all options that apply
 reportingChange.checkYourAnswersLabel = cy: What are you reporting?
 reportingChange.change.hidden = cy: What are you reporting?
+
+scottishTaxpayerFrom2016.title = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
+scottishTaxpayerFrom2016.heading = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
+scottishTaxpayerFrom2016.hint = cy: Say if Scotland has been your main place of residence since April 2016.
+scottishTaxpayerFrom2016.checkYourAnswersLabel = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
+scottishTaxpayerFrom2016.error.required = cy: Select yes if you were ever a Scottish taxpayer from 6 April 2016 onwards
+scottishTaxpayerFrom2016.change.hidden = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
+
+whichYearsScottishTaxpayer.title = cy: In which years were you a Scottish taxpayer?
+whichYearsScottishTaxpayer.heading = cy: In which years were you a Scottish taxpayer?
+whichYearsScottishTaxpayer.hint = cy: You must select each year you lived in Scotland as your primary residence.
+whichYearsScottishTaxpayer.toTwentyThree = cy: 2022 to 2023
+whichYearsScottishTaxpayer.toTwentyTwo = cy: 2021 to 2022
+whichYearsScottishTaxpayer.toTwentyOne = cy: 2020 to 2021
+whichYearsScottishTaxpayer.toTwenty = cy: 2019 to 2020
+whichYearsScottishTaxpayer.toNineteen = cy: 2018 to 2019
+whichYearsScottishTaxpayer.toEighteen = cy: 2017 to 2018
+whichYearsScottishTaxpayer.toSeventeen = cy: 2016 to 2017
+whichYearsScottishTaxpayer.checkYourAnswersLabel = cy: In which years were you a Scottish taxpayer?
+whichYearsScottishTaxpayer.error.required = cy: Select which years you were a Scottish taxpayer
+whichYearsScottishTaxpayer.change.hidden = cy: In which years were you a Scottish taxpayer?

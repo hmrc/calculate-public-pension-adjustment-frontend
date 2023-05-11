@@ -16,24 +16,25 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.UserAnswers
+import models.WhichYearsScottishTaxpayer
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
 import controllers.routes
+import play.api.mvc.Call
 
-case object SavingsStatementPage extends QuestionPage[Boolean] {
+case object WhichYearsScottishTaxpayerPage extends QuestionPage[Set[WhichYearsScottishTaxpayer]] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "savingsStatement"
+  override def toString: String = "whichYearsScottishTaxpayer"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
-    case Some(true)  => routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-    case Some(false) => routes.IneligibleController.onPageLoad
-  }
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    answers.get(WhichYearsScottishTaxpayerPage) match {
+      case Some(set) if set.nonEmpty => routes.CheckYourAnswersController.onPageLoad
+    }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
-    case Some(true)  => routes.CheckYourAnswersController.onPageLoad
-    case Some(false) => routes.IneligibleController.onPageLoad
-  }
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    answers.get(WhichYearsScottishTaxpayerPage) match {
+      case Some(set) if set.nonEmpty => routes.CheckYourAnswersController.onPageLoad
+    }
 }
