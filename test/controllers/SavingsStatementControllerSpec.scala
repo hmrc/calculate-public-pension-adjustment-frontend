@@ -173,7 +173,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "redirect to ResubmittingAdjustment page when user answers true in check mode" in {
+    "redirect to CheckYourAnswers page when user answers true in check mode" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -193,7 +193,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.ResubmittingAdjustmentController.onPageLoad(CheckMode).url
+        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
       }
     }
 

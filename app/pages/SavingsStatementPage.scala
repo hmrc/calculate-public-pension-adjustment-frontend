@@ -33,7 +33,7 @@ case object SavingsStatementPage extends QuestionPage[Boolean] {
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
-    case Some(true)  => routes.ResubmittingAdjustmentController.onPageLoad(CheckMode)
+    case Some(true)  => routes.CheckYourAnswersController.onPageLoad
     case Some(false) => routes.IneligibleController.onPageLoad
   }
 }

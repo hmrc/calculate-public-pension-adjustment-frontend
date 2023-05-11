@@ -107,7 +107,7 @@ scottishTaxpayerFrom2016.title = cy: Were you ever a Scottish taxpayer from 6 Ap
 scottishTaxpayerFrom2016.heading = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
 scottishTaxpayerFrom2016.hint = cy: Say if Scotland has been your main place of residence since April 2016.
 scottishTaxpayerFrom2016.checkYourAnswersLabel = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
-scottishTaxpayerFrom2016.error.required = cy: You must select one of the options
+scottishTaxpayerFrom2016.error.required = cy: Select yes if you were ever a Scottish taxpayer from 6 April 2016 onwards
 scottishTaxpayerFrom2016.change.hidden = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
 
 whichYearsScottishTaxpayer.title = cy: In which years were you a Scottish taxpayer?
@@ -121,5 +121,5 @@ whichYearsScottishTaxpayer.toNineteen = cy: 2018 to 2019
 whichYearsScottishTaxpayer.toEighteen = cy: 2017 to 2018
 whichYearsScottishTaxpayer.toSeventeen = cy: 2016 to 2017
 whichYearsScottishTaxpayer.checkYourAnswersLabel = cy: In which years were you a Scottish taxpayer?
-whichYearsScottishTaxpayer.error.required = cy: You must select one of the options
+whichYearsScottishTaxpayer.error.required = cy: Select which years you were a Scottish taxpayer
 whichYearsScottishTaxpayer.change.hidden = cy: In which years were you a Scottish taxpayer?
