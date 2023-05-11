@@ -31,5 +31,5 @@ case object ReasonForResubmissionPage extends QuestionPage[String] {
     routes.ReportingChangeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    routes.ReportingChangeController.onPageLoad(CheckMode)
+    routes.CheckYourAnswersController.onPageLoad
 }
