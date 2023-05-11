@@ -22,7 +22,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary, ScottishTaxpayerFrom2016Summary, WhichYearsScottishTaxpayerSummary}
-import viewmodels.checkAnswers.{ReasonForResubmissionSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary, ScottishTaxpayerFrom2016Summary, WhichYearsScottishTaxpayerSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 

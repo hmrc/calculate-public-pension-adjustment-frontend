@@ -30,7 +30,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
         value <- arbitrary[ReportingChange].map(Json.toJson(_))
       } yield (page, value)
     }
-    
+
   implicit lazy val arbitraryWhichYearsScottishTaxpayerUserAnswersEntry
     : Arbitrary[(WhichYearsScottishTaxpayerPage.type, JsValue)] =
     Arbitrary {
