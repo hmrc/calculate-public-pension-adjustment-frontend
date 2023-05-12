@@ -18,11 +18,11 @@ package controllers
 
 import base.SpecBase
 import forms.ReportingChangeFormProvider
-import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
+import models.{CheckMode, NormalMode, ReportingChange, UserAnswers, WhichYearsScottishTaxpayer}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ReportingChangePage
+import pages.{ReportingChangePage, WhichYearsScottishTaxpayerPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -82,7 +82,6 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    // Must be changed later appropriately
     "must redirect to the next page when valid data is submitted in Normal Mode" in {
 
       val mockSessionRepository = mock[SessionRepository]
@@ -103,12 +102,16 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
+        val expectedAnswers =
+          emptyUserAnswers.set(ReportingChangePage, ReportingChange.values.toSet).success.value
+
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(result).value mustEqual ReportingChangePage
+          .navigate(NormalMode, expectedAnswers)
+          .url
       }
     }
 
-    // Must be changed later appropriately
     "must redirect to the next page when valid data is submitted in Check Mode" in {
 
       val mockSessionRepository = mock[SessionRepository]
@@ -129,8 +132,13 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
+        val expectedAnswers =
+          emptyUserAnswers.set(ReportingChangePage, ReportingChange.values.toSet).success.value
+
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(result).value mustEqual ReportingChangePage
+          .navigate(CheckMode, expectedAnswers)
+          .url
       }
     }
 
