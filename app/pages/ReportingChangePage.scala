@@ -17,9 +17,11 @@
 package pages
 
 import controllers.routes
-import models.{ReportingChange, UserAnswers}
+import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
 
@@ -27,9 +29,28 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
 
   override def toString: String = "reportingChange"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
+    case Some(set) if set.contains(ReportingChange.AnnualAllowance)  =>
+      routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
+    case Some(set) if !set.contains(ReportingChange.AnnualAllowance) => routes.CheckYourAnswersController.onPageLoad
+  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
+    case Some(set) if set.contains(ReportingChange.AnnualAllowance) =>
+      answers.get(WhichYearsScottishTaxpayerPage) match {
+        case None => routes.ScottishTaxpayerFrom2016Controller.onPageLoad(CheckMode)
+        case Some(value) => routes.CheckYourAnswersController.onPageLoad
+      }
+    case Some(set) if !set.contains(ReportingChange.AnnualAllowance) => routes.CheckYourAnswersController.onPageLoad
+  }
+
+  override def cleanup(value: Option[Set[ReportingChange]], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { set =>
+        if (set.contains(ReportingChange.AnnualAllowance)) {
+          super.cleanup(value, userAnswers)
+        } else { userAnswers.remove(WhichYearsScottishTaxpayerPage) }
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
+
 }
