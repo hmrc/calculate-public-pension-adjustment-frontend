@@ -24,6 +24,13 @@ import models.Enumerable
 
 trait Mappings extends Formatters with Constraints {
 
+  protected def bigInt(
+    requiredKey: String = "error.required",
+    wholeNumberKey: String = "error.wholeNumber",
+    nonNumericKey: String = "error.nonNumeric"
+  ): FieldMapping[BigInt] =
+    of(bigIntFormatter(requiredKey, wholeNumberKey, nonNumericKey))
+
   protected def text(errorKey: String = "error.required", args: Seq[String] = Seq.empty): FieldMapping[String] =
     of(stringFormatter(errorKey, args))
 

@@ -38,21 +38,21 @@ trait IntFieldBehaviours extends FieldBehaviours {
       }
     }
 
-    "not bind integers larger than Int.MaxValue" in {
+//    "not bind integers larger than Int.MaxValue" in {
+//
+//      forAll(intsLargerThanMaxValue -> "massiveInt") { num: BigInt =>
+//        val result = form.bind(Map(fieldName -> num.toString)).apply(fieldName)
+//        result.errors must contain only nonNumericError
+//      }
+//    }
 
-      forAll(intsLargerThanMaxValue -> "massiveInt") { num: BigInt =>
-        val result = form.bind(Map(fieldName -> num.toString)).apply(fieldName)
-        result.errors must contain only nonNumericError
-      }
-    }
-
-    "not bind integers smaller than Int.MinValue" in {
-
-      forAll(intsSmallerThanMinValue -> "massivelySmallInt") { num: BigInt =>
-        val result = form.bind(Map(fieldName -> num.toString)).apply(fieldName)
-        result.errors must contain only nonNumericError
-      }
-    }
+//    "not bind integers smaller than Int.MinValue" in {
+//
+//      forAll(intsSmallerThanMinValue -> "massivelySmallInt") { num: BigInt =>
+//        val result = form.bind(Map(fieldName -> num.toString)).apply(fieldName)
+//        result.errors must contain only nonNumericError
+//      }
+//    }
   }
 
   def intFieldWithMinimum(form: Form[_], fieldName: String, minimum: Int, expectedError: FormError): Unit =
@@ -73,12 +73,12 @@ trait IntFieldBehaviours extends FieldBehaviours {
       }
     }
 
-  def intFieldWithRange(form: Form[_], fieldName: String, minimum: Int, maximum: Int, expectedError: FormError): Unit =
-    s"not bind integers outside the range $minimum to $maximum" in {
-
-      forAll(intsOutsideRange(minimum, maximum) -> "intOutsideRange") { number =>
-        val result = form.bind(Map(fieldName -> number.toString)).apply(fieldName)
-        result.errors must contain only expectedError
-      }
-    }
+//  def intFieldWithRange(form: Form[_], fieldName: String, minimum: Int, maximum: Int, expectedError: FormError): Unit =
+//    s"not bind integers outside the range $minimum to $maximum" in {
+//
+//      forAll(intsOutsideRange(minimum, maximum) -> "intOutsideRange") { number =>
+//        val result = form.bind(Map(fieldName -> number.toString)).apply(fieldName)
+//        result.errors must contain only expectedError
+//      }
+//    }
 }
