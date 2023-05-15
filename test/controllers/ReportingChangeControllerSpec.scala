@@ -18,20 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.ReportingChangeFormProvider
-import models.ReportingChange.{LifetimeAllowance, OtherCompensation}
-import models.{CheckMode, NormalMode, ReportingChange, UserAnswers, WhichYearsScottishTaxpayer}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{ReportingChangePage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
-import play.api.inject.bind
+import pages.ReportingChangePage
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
 import views.html.ReportingChangeView
-
-import scala.concurrent.Future
 
 class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
