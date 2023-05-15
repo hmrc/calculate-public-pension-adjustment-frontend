@@ -49,7 +49,7 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
       .map { set =>
         if (set.contains(ReportingChange.AnnualAllowance)) {
           super.cleanup(value, userAnswers)
-        } else { userAnswers.remove(WhichYearsScottishTaxpayerPage) }
+        } else { userAnswers.remove(ScottishTaxpayerFrom2016Page).flatMap(_.remove(WhichYearsScottishTaxpayerPage)) }
       }
       .getOrElse(super.cleanup(value, userAnswers))
 
