@@ -176,3 +176,23 @@ flexibleAccessStartDate.error.required = cy:  The date must include {0}
 flexibleAccessStartDate.error.required.two = cy: The date must include {0} and {1}
 flexibleAccessStartDate.error.min = cy: You have entered a date for the date that you flexibly accessed your defined contribution pension savings before the remedy period, enter a date after 5 April 2015
 flexibleAccessStartDate.error.max = cy: You have entered a future date for the date that you flexibly accessed your defined contribution pension savings, it must be within the remedy period
+
+payTaxCharge1516.title = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
+payTaxCharge1516.heading = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
+payTaxCharge1516.hint = cy: You can find this on a bank statement.
+payTaxCharge1516.checkYourAnswersLabel = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
+payTaxCharge1516.error.required = cy: Select yes if you paid a tax charge between 6 April 2015 to 5 April 2016
+payTaxCharge1516.change.hidden = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
+
+pIAPreRemedy.title = cy: What was your pension input amount from 6 April {0} to 5 April {1}?
+pIAPreRemedy.heading = cy: What was your pension input amount from 6 April {0} to 5 April {1}?
+pIAPreRemedy.hint1 = cy: This is the total pension contributions during a period, such as 6 April 2020 to 5 April 2021.
+pIAPreRemedy.hint2 = cy: Amounts must be rounded down to the nearest pound, for example 2300.
+pIAPreRemedy.checkYourAnswersLabel.2012 = cy: What was your pension input amount from 6 April 2012 to 5 April 2013?
+pIAPreRemedy.checkYourAnswersLabel.2013 = cy: What was your pension input amount from 6 April 2013 to 5 April 2014?
+pIAPreRemedy.checkYourAnswersLabel.2014 = cy: What was your pension input amount from 6 April 2014 to 5 April 2015?
+pIAPreRemedy.error.nonNumeric = cy: You have entered non-numerical characters for your pension input amount. You must enter numerical characters
+pIAPreRemedy.error.required = cy: Enter an amount for pension input amount in the space provided
+pIAPreRemedy.error.wholeNumber = cy: You have not entered a whole number for your pension input amount. You cannot use decimals.
+pIAPreRemedy.error.outOfRange = cy: You have entered too many characters for your pension input amount. The maximum number of characters you can enter is 12
+pIAPreRemedy.change.hidden = cy: What was your pension input amount from 6 April {0} to 5 April {1}??
