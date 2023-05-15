@@ -36,9 +36,9 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
-    case Some(set) if set.contains(ReportingChange.AnnualAllowance) =>
+    case Some(set) if set.contains(ReportingChange.AnnualAllowance)  =>
       answers.get(ScottishTaxpayerFrom2016Page) match {
-        case None => routes.ScottishTaxpayerFrom2016Controller.onPageLoad(CheckMode)
+        case None        => routes.ScottishTaxpayerFrom2016Controller.onPageLoad(CheckMode)
         case Some(value) => routes.CheckYourAnswersController.onPageLoad
       }
     case Some(set) if !set.contains(ReportingChange.AnnualAllowance) => routes.CheckYourAnswersController.onPageLoad

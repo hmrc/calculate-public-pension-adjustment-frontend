@@ -199,8 +199,12 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val answers = emptyUserAnswers
-        .set(ReportingChangePage, ReportingChange.values.toSet).success.value
-        .set(ScottishTaxpayerFrom2016Page, true).success.value
+        .set(ReportingChangePage, ReportingChange.values.toSet)
+        .success
+        .value
+        .set(ScottishTaxpayerFrom2016Page, true)
+        .success
+        .value
 
       val application =
         applicationBuilder(userAnswers = Some(answers))
@@ -227,7 +231,9 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val answers = emptyUserAnswers
-        .set(ReportingChangePage, ReportingChange.values.toSet).success.value
+        .set(ReportingChangePage, ReportingChange.values.toSet)
+        .success
+        .value
 
       val application =
         applicationBuilder(userAnswers = Some(answers))
@@ -254,7 +260,9 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val answers = emptyUserAnswers
-        .set(ReportingChangePage, ReportingChange.values.toSet).success.value
+        .set(ReportingChangePage, ReportingChange.values.toSet)
+        .success
+        .value
 
       val application =
         applicationBuilder(userAnswers = Some(answers))
