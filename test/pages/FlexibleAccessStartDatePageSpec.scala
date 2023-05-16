@@ -16,26 +16,23 @@
 
 package pages
 
-import models.{CheckMode, Mode, NormalMode, UserAnswers}
-import play.api.Logging
-import play.api.mvc.Call
+import java.time.LocalDate
 
-import scala.language.implicitConversions
+import org.scalacheck.Arbitrary
+import pages.behaviours.PageBehaviours
 
-trait Page extends Logging {
+class FlexibleAccessStartDatePageSpec extends PageBehaviours {
 
-  def navigate(mode: Mode, answers: UserAnswers): Call = mode match {
-    case NormalMode => navigateInNormalMode(answers)
-    case CheckMode  => navigateInCheckMode(answers)
+  "FlexibleAccessStartDatePage" - {
+
+    implicit lazy val arbitraryLocalDate: Arbitrary[LocalDate] = Arbitrary {
+      datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
+    }
+
+    beRetrievable[LocalDate](FlexibleAccessStartDatePage)
+
+    beSettable[LocalDate](FlexibleAccessStartDatePage)
+
+    beRemovable[LocalDate](FlexibleAccessStartDatePage)
   }
-
-  protected def navigateInNormalMode(answers: UserAnswers): Call
-
-  protected def navigateInCheckMode(answers: UserAnswers): Call
-}
-
-object Page {
-
-  implicit def toString(page: Page): String =
-    page.toString
 }

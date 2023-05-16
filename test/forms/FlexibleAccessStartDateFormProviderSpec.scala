@@ -14,28 +14,25 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{CheckMode, Mode, NormalMode, UserAnswers}
-import play.api.Logging
-import play.api.mvc.Call
+import java.time.{LocalDate, ZoneOffset}
 
-import scala.language.implicitConversions
+import forms.behaviours.DateBehaviours
 
-trait Page extends Logging {
+class FlexibleAccessStartDateFormProviderSpec extends DateBehaviours {
 
-  def navigate(mode: Mode, answers: UserAnswers): Call = mode match {
-    case NormalMode => navigateInNormalMode(answers)
-    case CheckMode  => navigateInCheckMode(answers)
+  val form = new FlexibleAccessStartDateFormProvider()()
+
+  ".value" - {
+
+    val validData = datesBetween(
+      min = LocalDate.of(2015, 4, 6),
+      max = LocalDate.now(ZoneOffset.UTC)
+    )
+
+    behave like dateField(form, "value", validData)
+
+    behave like mandatoryDateField(form, "value", "flexibleAccessStartDate.error.required.all")
   }
-
-  protected def navigateInNormalMode(answers: UserAnswers): Call
-
-  protected def navigateInCheckMode(answers: UserAnswers): Call
-}
-
-object Page {
-
-  implicit def toString(page: Page): String =
-    page.toString
 }

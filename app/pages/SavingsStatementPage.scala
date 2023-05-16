@@ -30,10 +30,12 @@ case object SavingsStatementPage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
     case Some(true)  => routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
     case Some(false) => routes.IneligibleController.onPageLoad
+    case None        => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
     case Some(true)  => routes.CheckYourAnswersController.onPageLoad
     case Some(false) => routes.IneligibleController.onPageLoad
+    case None        => routes.JourneyRecoveryController.onPageLoad(None)
   }
 }

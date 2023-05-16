@@ -45,7 +45,10 @@ class CheckYourAnswersController @Inject() (
         ScottishTaxpayerFrom2016Summary.row(request.userAnswers),
         WhichYearsScottishTaxpayerSummary.row(request.userAnswers),
         PayingPublicPensionSchemeSummary.row(request.userAnswers),
-        StopPayingPublicPensionSummary.row(request.userAnswers)
+        StopPayingPublicPensionSummary.row(request.userAnswers),
+        DefinedContributionPensionSchemeSummary.row(request.userAnswers),
+        FlexiblyAccessedPensionSummary.row(request.userAnswers),
+        FlexibleAccessStartDateSummary.row(request.userAnswers)
       ).flatten
     )
 
