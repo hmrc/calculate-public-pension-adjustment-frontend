@@ -33,6 +33,7 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
     case Some(set) if set.contains(ReportingChange.AnnualAllowance)  =>
       routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
     case Some(set) if !set.contains(ReportingChange.AnnualAllowance) => routes.CheckYourAnswersController.onPageLoad
+    case None => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
@@ -42,6 +43,7 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
         case Some(value) => routes.CheckYourAnswersController.onPageLoad
       }
     case Some(set) if !set.contains(ReportingChange.AnnualAllowance) => routes.CheckYourAnswersController.onPageLoad
+    case None => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override def cleanup(value: Option[Set[ReportingChange]], userAnswers: UserAnswers): Try[UserAnswers] =
