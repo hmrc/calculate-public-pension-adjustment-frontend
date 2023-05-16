@@ -33,13 +33,13 @@ case object ScottishTaxpayerFrom2016Page extends QuestionPage[Boolean] {
     answers.get(ScottishTaxpayerFrom2016Page) match {
       case Some(true)  => routes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode)
       case Some(false) => routes.PayingPublicPensionSchemeController.onPageLoad(NormalMode)
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
   override protected def navigateInCheckMode(answers: UserAnswers): Call  =
     answers.get(ScottishTaxpayerFrom2016Page) match {
       case Some(true)  => routes.WhichYearsScottishTaxpayerController.onPageLoad(CheckMode)
       case Some(false) => routes.CheckYourAnswersController.onPageLoad
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =

@@ -34,7 +34,7 @@ case object PayingPublicPensionSchemePage extends QuestionPage[Boolean] {
       case Some(true)  =>
         routes.CheckYourAnswersController.onPageLoad // Redirect to appropriate page upon implementation
       case Some(false) => routes.StopPayingPublicPensionController.onPageLoad(NormalMode)
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
@@ -42,7 +42,7 @@ case object PayingPublicPensionSchemePage extends QuestionPage[Boolean] {
       case Some(true)  =>
         routes.CheckYourAnswersController.onPageLoad // Redirect to appropriate page upon implementation
       case Some(false) => routes.StopPayingPublicPensionController.onPageLoad(CheckMode)
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
