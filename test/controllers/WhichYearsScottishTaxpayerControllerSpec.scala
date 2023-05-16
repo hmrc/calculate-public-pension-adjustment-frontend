@@ -143,6 +143,56 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
       }
     }
 
+    "must redirect to PayingPublicPensionScheme when valid data is submitted in NormalMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, whichYearsNormalRoute)
+            .withFormUrlEncodedBody(("value[0]", WhichYearsScottishTaxpayer.values.head.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.PayingPublicPensionSchemeController.onPageLoad(NormalMode).url
+      }
+    }
+
+    "must redirect to CheckYourAnswers when valid data is submitted in CheckMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, whichYearsCheckRoute)
+            .withFormUrlEncodedBody(("value[0]", WhichYearsScottishTaxpayer.values.head.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+      }
+    }
+
     "must return a Bad Request and errors when invalid data is submitted" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()

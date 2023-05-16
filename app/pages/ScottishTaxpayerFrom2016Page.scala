@@ -32,7 +32,7 @@ case object ScottishTaxpayerFrom2016Page extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ScottishTaxpayerFrom2016Page) match {
       case Some(true)  => routes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad
+      case Some(false) => routes.PayingPublicPensionSchemeController.onPageLoad(NormalMode)
     }
   override protected def navigateInCheckMode(answers: UserAnswers): Call  =
     answers.get(ScottishTaxpayerFrom2016Page) match {
