@@ -35,6 +35,16 @@ POST       /reason-for-resubmission                      controllers.ReasonForRe
 GET        /change-reason-for-resubmission               controllers.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-reason-for-resubmission               controllers.ReasonForResubmissionController.onSubmit(mode: Mode = CheckMode)
 
+GET        /paying-into-public-pension-scheme            controllers.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
+POST       /paying-into-public-pension-scheme            controllers.PayingPublicPensionSchemeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-paying-into-public-pension-scheme     controllers.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-paying-into-public-pension-scheme     controllers.PayingPublicPensionSchemeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /when-stop-paying-public-pension              controllers.StopPayingPublicPensionController.onPageLoad(mode: Mode = NormalMode)
+POST       /when-stop-paying-public-pension              controllers.StopPayingPublicPensionController.onSubmit(mode: Mode = NormalMode)
+GET        /change-stop-paying-public-pension            controllers.StopPayingPublicPensionController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-stop-paying-public-pension            controllers.StopPayingPublicPensionController.onSubmit(mode: Mode = CheckMode)
+
 GET        /ineligible                                   controllers.IneligibleController.onPageLoad
 
 GET        /reporting-change                            controllers.ReportingChangeController.onPageLoad(mode: Mode = NormalMode)

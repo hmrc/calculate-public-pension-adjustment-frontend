@@ -123,3 +123,20 @@ whichYearsScottishTaxpayer.toSeventeen = 2016 to 2017
 whichYearsScottishTaxpayer.checkYourAnswersLabel = In which years were you a Scottish taxpayer?
 whichYearsScottishTaxpayer.error.required = Select which years you were a Scottish taxpayer
 whichYearsScottishTaxpayer.change.hidden = In which years were you a Scottish taxpayer?
+
+payingPublicPensionScheme.title = Are you paying into a public service pension scheme?
+payingPublicPensionScheme.heading = Are you paying into a public service pension scheme?
+payingPublicPensionScheme.hint = You must enter information for each year of your pension scheme.
+payingPublicPensionScheme.error.required = Select yes if you are paying into a public service pension scheme
+payingPublicPensionScheme.checkYourAnswersLabel = Are you paying into a public service pension scheme?
+
+stopPayingPublicPension.title = When did you stop paying into a public service pension scheme?
+stopPayingPublicPension.heading = When did you stop paying into a public service pension scheme?
+stopPayingPublicPension.hint = For example, 25 2 2015.
+stopPayingPublicPension.error.required.all =  Enter a date when you stopped paying into a public service pension scheme into the spaces provided as day, month, year
+stopPayingPublicPension.error.invalid = Enter a real date for when you stopped paying into a public service pension scheme into the spaces provided as day, month, year
+stopPayingPublicPension.error.required =  The date must include {0}
+stopPayingPublicPension.error.required.two = The date must include {0} and {1}
+stopPayingPublicPension.error.min = You have entered a pre-remedy date when you stopped paying into a public service pension scheme, it must be within the remedy period 6 April 2015 to 5 April 2022
+stopPayingPublicPension.error.max = You have entered a future date when you stopped paying into a public service pension scheme, it must be within the remedy period 6 April 2015 to 5 April 2022
+stopPayingPublicPension.checkYourAnswersLabel = When did you stop paying into a public service pension scheme?

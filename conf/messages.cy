@@ -123,3 +123,20 @@ whichYearsScottishTaxpayer.toSeventeen = cy: 2016 to 2017
 whichYearsScottishTaxpayer.checkYourAnswersLabel = cy: In which years were you a Scottish taxpayer?
 whichYearsScottishTaxpayer.error.required = cy: Select which years you were a Scottish taxpayer
 whichYearsScottishTaxpayer.change.hidden = cy: In which years were you a Scottish taxpayer?
+
+payingPublicPensionScheme.title = cy: Are you paying into a public service pension scheme?
+payingPublicPensionScheme.heading = cy: Are you paying into a public service pension scheme?
+payingPublicPensionScheme.hint = cy: You must enter information for each year of your pension scheme.
+payingPublicPensionScheme.error.required = cy: Select yes if you are paying into a public service pension scheme
+payingPublicPensionScheme.checkYourAnswersLabel = cy: Are you paying into a public service pension scheme?
+
+stopPayingPublicPension.title = cy: When did you stop paying into a public service pension scheme?
+stopPayingPublicPension.heading = cy: When did you stop paying into a public service pension scheme?
+stopPayingPublicPension.hint = cy: For example, 25 2 2015.
+stopPayingPublicPension.error.required.all = cy: Enter a date when you stopped paying into a public service pension scheme into the spaces provided as day, month, year
+stopPayingPublicPension.error.invalid = cy: Enter a real date for when you stopped paying into a public service pension scheme into the spaces provided as day, month, year
+stopPayingPublicPension.error.required = cy: The date must include {0}
+stopPayingPublicPension.error.required.two = cy: The date must include {0} and {1}
+stopPayingPublicPension.error.min = cy: You have entered a pre-remedy date when you stopped paying into a public service pension scheme, it must be within the remedy period 6 April 2015 to 5 April 2022
+stopPayingPublicPension.error.max = cy: You have entered a future date when you stopped paying into a public service pension scheme, it must be within the remedy period 6 April 2015 to 5 April 2022
+stopPayingPublicPension.checkYourAnswersLabel = cy: When did you stop paying into a public service pension scheme?
