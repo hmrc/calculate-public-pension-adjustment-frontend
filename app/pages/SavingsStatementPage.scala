@@ -16,10 +16,10 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, UserAnswers}
+import controllers.routes
+import models.{NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.routes
 
 case object SavingsStatementPage extends QuestionPage[Boolean] {
 
