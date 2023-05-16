@@ -125,10 +125,10 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
+        val expectedAnswers = emptyUserAnswers.set(PayingPublicPensionSchemePage, true).success.value
+
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual routes.CheckYourAnswersController.onPageLoad.url // Change to appropriate page upon implementation
+        redirectLocation(result).value mustEqual PayingPublicPensionSchemePage.navigate(NormalMode, expectedAnswers).url
       }
     }
 

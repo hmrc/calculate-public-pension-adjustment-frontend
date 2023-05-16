@@ -31,8 +31,7 @@ case object PayingPublicPensionSchemePage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayingPublicPensionSchemePage) match {
-      case Some(true)  =>
-        routes.CheckYourAnswersController.onPageLoad // Redirect to appropriate page upon implementation
+      case Some(true)  => routes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode)
       case Some(false) => routes.StopPayingPublicPensionController.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
@@ -40,7 +39,7 @@ case object PayingPublicPensionSchemePage extends QuestionPage[Boolean] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayingPublicPensionSchemePage) match {
       case Some(true)  =>
-        routes.CheckYourAnswersController.onPageLoad // Redirect to appropriate page upon implementation
+        routes.CheckYourAnswersController.onPageLoad
       case Some(false) => routes.StopPayingPublicPensionController.onPageLoad(CheckMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
