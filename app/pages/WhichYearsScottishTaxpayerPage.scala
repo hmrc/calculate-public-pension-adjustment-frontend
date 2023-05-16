@@ -16,8 +16,7 @@
 
 package pages
 
-import models.UserAnswers
-import models.WhichYearsScottishTaxpayer
+import models.{NormalMode, UserAnswers, WhichYearsScottishTaxpayer}
 import play.api.libs.json.JsPath
 import controllers.routes
 import play.api.mvc.Call
@@ -30,7 +29,7 @@ case object WhichYearsScottishTaxpayerPage extends QuestionPage[Set[WhichYearsSc
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(WhichYearsScottishTaxpayerPage) match {
-      case Some(set) if set.nonEmpty => routes.CheckYourAnswersController.onPageLoad
+      case Some(set) if set.nonEmpty => routes.PayingPublicPensionSchemeController.onPageLoad(NormalMode)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
