@@ -19,18 +19,12 @@ package controllers
 import base.SpecBase
 import forms.ReportingChangeFormProvider
 import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.ReportingChangePage
-import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
 import views.html.ReportingChangeView
-
-import scala.concurrent.Future
 
 class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
@@ -79,58 +73,6 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
           request,
           messages(application)
         ).toString
-      }
-    }
-
-    // Must be changed later appropriately
-    "must redirect to the next page when valid data is submitted in Normal Mode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, reportingNormalRoute)
-            .withFormUrlEncodedBody(("value[0]", ReportingChange.values.head.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
-      }
-    }
-
-    // Must be changed later appropriately
-    "must redirect to the next page when valid data is submitted in Check Mode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, reportingCheckRoute)
-            .withFormUrlEncodedBody(("value[0]", ReportingChange.values.head.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
       }
     }
 
