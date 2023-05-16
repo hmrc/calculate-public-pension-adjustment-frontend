@@ -17,7 +17,7 @@
 package pages
 
 import controllers.routes
-import models.UserAnswers
+import models.{NormalMode, UserAnswers}
 
 import java.time.LocalDate
 import play.api.libs.json.JsPath
@@ -30,8 +30,8 @@ case object StopPayingPublicPensionPage extends QuestionPage[LocalDate] {
   override def toString: String = "stopPayingPublicPension"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad // TODO Redirect to appropriate page upon implementation
+    routes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad // TODO Redirect to appropriate page upon implementation
+    routes.CheckYourAnswersController.onPageLoad
 }
