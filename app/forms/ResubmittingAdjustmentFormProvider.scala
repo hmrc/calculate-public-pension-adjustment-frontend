@@ -16,16 +16,15 @@
 
 package forms
 
-import javax.inject.Inject
-
 import forms.mappings.Mappings
 import play.api.data.Form
 
-class ReasonForResubmissionFormProvider @Inject() extends Mappings {
+import javax.inject.Inject
 
-  def apply(): Form[String] =
+class ResubmittingAdjustmentFormProvider @Inject() extends Mappings {
+
+  def apply(): Form[Boolean] =
     Form(
-      "value" -> text("reasonForResubmission.error.required")
-        .verifying(maxLength(500, "reasonForResubmission.error.length"))
+      "value" -> boolean("resubmittingAdjustment.error.required")
     )
 }

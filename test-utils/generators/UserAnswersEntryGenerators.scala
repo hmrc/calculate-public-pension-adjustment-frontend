@@ -19,12 +19,31 @@ package generators
 import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
+import pages.lifetimeallowance.{DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
 import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.setupquestions.ReportingChangePage
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+
+  implicit lazy val arbitraryDateOfBenefitCrystallisationEventUserAnswersEntry
+    : Arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DateOfBenefitCrystallisationEventPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHadBenefitCrystallisationEventUserAnswersEntry
+    : Arbitrary[(HadBenefitCrystallisationEventPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HadBenefitCrystallisationEventPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
   implicit lazy val arbitraryReportingChangeUserAnswersEntry: Arbitrary[(ReportingChangePage.type, JsValue)] =
     Arbitrary {
       for {

@@ -17,12 +17,20 @@
 package generators
 
 import org.scalacheck.Arbitrary
+import pages.lifetimeallowance.{DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
 import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
-  implicit lazy val arbitraryReportingChangePage: Arbitrary[ReportingChangePage.type] =
+
+  implicit lazy val arbitraryDateOfBenefitCrystallisationEventPage
+    : Arbitrary[DateOfBenefitCrystallisationEventPage.type] =
+    Arbitrary(DateOfBenefitCrystallisationEventPage)
+
+  implicit lazy val arbitraryHadBenefitCrystallisationEventPage: Arbitrary[HadBenefitCrystallisationEventPage.type] =
+    Arbitrary(HadBenefitCrystallisationEventPage)
+  implicit lazy val arbitraryReportingChangePage: Arbitrary[ReportingChangePage.type]                               =
     Arbitrary(ReportingChangePage)
 
   implicit lazy val arbitraryWhichYearsScottishTaxpayerPage: Arbitrary[WhichYearsScottishTaxpayerPage.type] =

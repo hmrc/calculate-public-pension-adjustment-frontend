@@ -24,6 +24,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers.annualallowance.preaaquestions.{DefinedContributionPensionSchemeSummary, FlexibleAccessStartDateSummary, FlexiblyAccessedPensionSummary, PIAPreRemedySummary, PayTaxCharge1516Summary, PayingPublicPensionSchemeSummary, ScottishTaxpayerFrom2016Summary, StopPayingPublicPensionSummary, WhichYearsScottishTaxpayerSummary}
 import viewmodels.checkAnswers.setupquestions.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary}
+import viewmodels.checkAnswers.lifetimeallowance.{DateOfBenefitCrystallisationEventSummary, HadBenefitCrystallisationEventSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -50,8 +51,10 @@ class CheckYourAnswersController @Inject() (
       DefinedContributionPensionSchemeSummary.row(request.userAnswers),
       FlexiblyAccessedPensionSummary.row(request.userAnswers),
       FlexibleAccessStartDateSummary.row(request.userAnswers),
-      PayTaxCharge1516Summary.row(request.userAnswers)
-    ) ++ PIAPreRemedySummary.rows(request.userAnswers)
+      PayTaxCharge1516Summary.row(request.userAnswers),
+      HadBenefitCrystallisationEventSummary.row(request.userAnswers),
+      DateOfBenefitCrystallisationEventSummary.row(request.userAnswers)
+      ) ++ PIAPreRemedySummary.rows(request.userAnswers)
 
     Ok(view(SummaryListViewModel(rows.flatten)))
   }
