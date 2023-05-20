@@ -18,6 +18,7 @@ package pages
 
 import models.ReportingChange
 import pages.behaviours.PageBehaviours
+import pages.setupQuestions.ReportingChangePage
 
 class ReportingChangePageSpec extends PageBehaviours {
 

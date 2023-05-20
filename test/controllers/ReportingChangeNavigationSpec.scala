@@ -22,7 +22,8 @@ import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{ReportingChangePage, ScottishTaxpayerFrom2016Page}
+import pages.ScottishTaxpayerFrom2016Page
+import pages.setupQuestions.ReportingChangePage
 import play.api.Application
 import play.api.inject.bind
 import play.api.mvc.Call

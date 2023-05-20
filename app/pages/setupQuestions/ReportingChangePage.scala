@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package pages
+package pages.setupQuestions
 
 import controllers.routes
 import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
+import pages.{QuestionPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 

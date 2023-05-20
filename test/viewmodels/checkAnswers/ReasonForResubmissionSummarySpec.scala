@@ -20,9 +20,10 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.ReasonForResubmissionPage
+import pages.setupQuestions.ReasonForResubmissionPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import viewmodels.checkAnswers.setupQuestions.ReasonForResubmissionSummary
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 

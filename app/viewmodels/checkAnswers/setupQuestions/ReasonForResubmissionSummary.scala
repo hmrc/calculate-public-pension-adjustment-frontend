@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.setupQuestions
 
-import controllers.routes
+import controllers.setupQuestions.routes
 import models.{CheckMode, UserAnswers}
-import pages.ReasonForResubmissionPage
+import pages.setupQuestions.ReasonForResubmissionPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow

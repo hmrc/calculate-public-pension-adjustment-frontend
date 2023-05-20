@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package pages
+package pages.setupQuestions
 
 import controllers.routes
+import controllers.setupQuestions.{routes => setupRoutes}
 import models.{NormalMode, UserAnswers}
+import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -28,14 +30,14 @@ case object SavingsStatementPage extends QuestionPage[Boolean] {
   override def toString: String = "savingsStatement"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
-    case Some(true)  => routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-    case Some(false) => routes.IneligibleController.onPageLoad
+    case Some(true)  => setupRoutes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
+    case Some(false) => setupRoutes.IneligibleController.onPageLoad
     case None        => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
     case Some(true)  => routes.CheckYourAnswersController.onPageLoad
-    case Some(false) => routes.IneligibleController.onPageLoad
+    case Some(false) => setupRoutes.IneligibleController.onPageLoad
     case None        => routes.JourneyRecoveryController.onPageLoad(None)
   }
 }

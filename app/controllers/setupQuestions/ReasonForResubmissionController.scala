@@ -14,38 +14,38 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.setupQuestions
 
 import controllers.actions._
-import forms.SavingsStatementFormProvider
+import forms.ReasonForResubmissionFormProvider
 import javax.inject.Inject
-import models.{Mode, UserAnswers}
-import pages.SavingsStatementPage
+import models.Mode
+import pages.setupQuestions.ReasonForResubmissionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.SavingsStatementView
+import views.html.setupQuestions.ReasonForResubmissionView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class SavingsStatementController @Inject() (
+class ReasonForResubmissionController @Inject() (
   override val messagesApi: MessagesApi,
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: SavingsStatementFormProvider,
+  formProvider: ReasonForResubmissionFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: SavingsStatementView
+  view: ReasonForResubmissionView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) { implicit request =>
-    val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(SavingsStatementPage) match {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val preparedForm = request.userAnswers.get(ReasonForResubmissionPage) match {
       case None        => form
       case Some(value) => form.fill(value)
     }
@@ -53,18 +53,17 @@ class SavingsStatementController @Inject() (
     Ok(view(preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
-    form
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-        value =>
-          for {
-            updatedAnswers <-
-              Future
-                .fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(SavingsStatementPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(SavingsStatementPage.navigate(mode, updatedAnswers))
-      )
+  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+    implicit request =>
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(ReasonForResubmissionPage, value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(ReasonForResubmissionPage.navigate(mode, updatedAnswers))
+        )
   }
 }

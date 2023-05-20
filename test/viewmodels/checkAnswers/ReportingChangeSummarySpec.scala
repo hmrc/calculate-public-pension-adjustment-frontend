@@ -22,12 +22,13 @@ import models.ReportingChange.{AnnualAllowance, LifetimeAllowance, OtherCompensa
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.ReportingChangePage
+import pages.setupQuestions.ReportingChangePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+import viewmodels.checkAnswers.setupQuestions.ReportingChangeSummary
 
 class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
 

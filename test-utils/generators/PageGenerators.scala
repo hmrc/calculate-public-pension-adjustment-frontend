@@ -18,6 +18,7 @@ package generators
 
 import org.scalacheck.Arbitrary
 import pages._
+import pages.setupQuestions.ReportingChangePage
 
 trait PageGenerators {
   implicit lazy val arbitraryReportingChangePage: Arbitrary[ReportingChangePage.type] =

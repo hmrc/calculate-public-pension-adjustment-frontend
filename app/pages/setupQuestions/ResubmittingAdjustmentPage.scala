@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package pages
+package pages.setupQuestions
 
 import controllers.routes
+import controllers.setupQuestions.{routes => setupRoutes}
 import models.{CheckMode, NormalMode, UserAnswers}
+import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -31,14 +33,14 @@ case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ResubmittingAdjustmentPage) match {
-      case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(NormalMode)
-      case Some(false) => routes.ReportingChangeController.onPageLoad(NormalMode)
+      case Some(true)  => setupRoutes.ReasonForResubmissionController.onPageLoad(NormalMode)
+      case Some(false) => setupRoutes.ReportingChangeController.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ResubmittingAdjustmentPage) match {
-      case Some(true)  => routes.ReasonForResubmissionController.onPageLoad(CheckMode)
+      case Some(true)  => setupRoutes.ReasonForResubmissionController.onPageLoad(CheckMode)
       case Some(false) => routes.CheckYourAnswersController.onPageLoad
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }

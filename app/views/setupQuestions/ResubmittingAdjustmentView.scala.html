@@ -14,6 +14,8 @@
  * limitations under the License.
  *@
 
+@import controllers.setupQuestions.routes
+
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
@@ -24,9 +26,9 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("savingsStatement.title"))) {
+@layout(pageTitle = title(form, messages("resubmittingAdjustment.title"))) {
 
-    @formHelper(action = routes.SavingsStatementController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.ResubmittingAdjustmentController.onSubmit(mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
@@ -35,8 +37,8 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("savingsStatement.heading")).asPageHeading()
-            )
+                legend = LegendViewModel(messages("resubmittingAdjustment.heading")).asPageHeading()
+            ).withHint(HintViewModel(messages("resubmittingAdjustment.hint")))
         )
 
         @govukButton(

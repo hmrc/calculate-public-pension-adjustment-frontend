@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.setupQuestions
 
 import controllers.actions._
-import forms.ReasonForResubmissionFormProvider
+import forms.ReportingChangeFormProvider
 import javax.inject.Inject
 import models.Mode
-import pages.ReasonForResubmissionPage
+import pages.setupQuestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.ReasonForResubmissionView
+import views.html.setupQuestions.ReportingChangeView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class ReasonForResubmissionController @Inject() (
+class ReportingChangeController @Inject() (
   override val messagesApi: MessagesApi,
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: ReasonForResubmissionFormProvider,
+  formProvider: ReportingChangeFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: ReasonForResubmissionView
+  view: ReportingChangeView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -45,7 +45,7 @@ class ReasonForResubmissionController @Inject() (
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(ReasonForResubmissionPage) match {
+    val preparedForm = request.userAnswers.get(ReportingChangePage) match {
       case None        => form
       case Some(value) => form.fill(value)
     }
@@ -61,9 +61,9 @@ class ReasonForResubmissionController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(ReasonForResubmissionPage, value))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(ReportingChangePage, value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(ReasonForResubmissionPage.navigate(mode, updatedAnswers))
+            } yield Redirect(ReportingChangePage.navigate(mode, updatedAnswers))
         )
   }
 }

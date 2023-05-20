@@ -22,7 +22,7 @@ import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ReasonForResubmissionPage
+import pages.setupQuestions.ReasonForResubmissionPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

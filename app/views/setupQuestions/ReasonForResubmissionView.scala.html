@@ -14,29 +14,36 @@
  * limitations under the License.
  *@
 
+@import viewmodels.InputWidth._
+@import controllers.setupQuestions.routes
+
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
-    govukRadios: GovukRadios,
+    govukTextarea: GovukTextarea,
+    govukInput: GovukInput,
     govukButton: GovukButton
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("resubmittingAdjustment.title"))) {
+@layout(pageTitle = title(form, messages("reasonForResubmission.title"))) {
 
-    @formHelper(action = routes.ResubmittingAdjustmentController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.ReasonForResubmissionController.onSubmit(mode)) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
-
-        @govukRadios(
-            RadiosViewModel.yesNo(
+        
+        @govukTextarea(
+            TextareaViewModel(
                 field = form("value"),
-                legend = LegendViewModel(messages("resubmittingAdjustment.heading")).asPageHeading()
-            ).withHint(HintViewModel(messages("resubmittingAdjustment.hint")))
+                label = LabelViewModel(messages("reasonForResubmission.heading")).asPageHeading()
+                )
+                .withRows(5)
+                .withAttribute("maxlength","500")
+                .withHint(HintViewModel(messages("reasonForResubmission.hint")))
         )
 
         @govukButton(

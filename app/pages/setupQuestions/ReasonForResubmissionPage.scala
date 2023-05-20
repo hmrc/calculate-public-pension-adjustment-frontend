@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package pages
+package pages.setupQuestions
 
 import controllers.routes
+import controllers.setupQuestions.{routes => setupRoutes}
 import models.{NormalMode, UserAnswers}
+import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -28,7 +30,7 @@ case object ReasonForResubmissionPage extends QuestionPage[String] {
   override def toString: String = "reasonForResubmission"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    routes.ReportingChangeController.onPageLoad(NormalMode)
+    setupRoutes.ReportingChangeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     routes.CheckYourAnswersController.onPageLoad

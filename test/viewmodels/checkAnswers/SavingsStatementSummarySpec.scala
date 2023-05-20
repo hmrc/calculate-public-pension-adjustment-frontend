@@ -20,9 +20,10 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.SavingsStatementPage
+import pages.setupQuestions.SavingsStatementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import viewmodels.checkAnswers.setupQuestions.SavingsStatementSummary
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 

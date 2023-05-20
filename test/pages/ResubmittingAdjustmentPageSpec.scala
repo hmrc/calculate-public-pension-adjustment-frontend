@@ -17,6 +17,7 @@
 package pages
 
 import pages.behaviours.PageBehaviours
+import pages.setupQuestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
 
 class ResubmittingAdjustmentPageSpec extends PageBehaviours {
 

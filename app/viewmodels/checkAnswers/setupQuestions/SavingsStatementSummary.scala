@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.setupQuestions
 
-import controllers.routes
+import controllers.setupQuestions.routes
 import models.{CheckMode, UserAnswers}
-import pages.ResubmittingAdjustmentPage
+import pages.setupQuestions.SavingsStatementPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ResubmittingAdjustmentSummary {
+object SavingsStatementSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ResubmittingAdjustmentPage).map { answer =>
+    answers.get(SavingsStatementPage).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "resubmittingAdjustment.checkYourAnswersLabel",
+        key = "savingsStatement.checkYourAnswersLabel",
         value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.ResubmittingAdjustmentController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("resubmittingAdjustment.change.hidden"))
+          ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("savingsStatement.change.hidden"))
         )
       )
     }

@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.ReportingChangeFormProvider
 import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ReportingChangePage
+import pages.setupQuestions.ReportingChangePage
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
