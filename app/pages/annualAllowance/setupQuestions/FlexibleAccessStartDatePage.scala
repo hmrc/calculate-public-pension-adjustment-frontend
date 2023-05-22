@@ -19,6 +19,7 @@ package pages.annualAllowance.setupQuestions
 import java.time.LocalDate
 
 import controllers.routes
+import controllers.annualAllowance.setupQuestions.{routes => setupAARoutes}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -32,7 +33,7 @@ case object FlexibleAccessStartDatePage extends QuestionPage[LocalDate] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(FlexibleAccessStartDatePage) match {
-      case Some(_) => routes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
+      case Some(_) => setupAARoutes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

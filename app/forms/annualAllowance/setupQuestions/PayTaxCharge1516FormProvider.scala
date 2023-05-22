@@ -14,22 +14,16 @@
  * limitations under the License.
  */
 
-package forms
+package forms.annualAllowance.setupQuestions
 
 import forms.mappings.Mappings
-
 import javax.inject.Inject
 import play.api.data.Form
 
-class PIAPreRemedyFormProvider @Inject() extends Mappings {
+class PayTaxCharge1516FormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(): Form[Boolean] =
     Form(
-      "value" -> bigInt(
-        "pIAPreRemedy.error.required",
-        "pIAPreRemedy.error.wholeNumber",
-        "pIAPreRemedy.error.nonNumeric"
-      )
-        .verifying(inRange[BigInt](0, BigInt("1000000000000"), "pIAPreRemedy.error.outOfRange"))
+      "value" -> boolean("payTaxCharge1516.error.required")
     )
 }

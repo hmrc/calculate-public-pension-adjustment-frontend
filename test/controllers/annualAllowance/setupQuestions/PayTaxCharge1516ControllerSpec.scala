@@ -14,40 +14,37 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.annualAllowance.setupQuestions
 
 import base.SpecBase
-import forms.PIAPreRemedyFormProvider
-import models.TaxYear.TaxYear2012
-import models.{CheckMode, NormalMode, TaxYear, UserAnswers}
+import controllers.routes
+import controllers.annualAllowance.setupQuestions.{routes => setupAARoutes}
+import forms.annualAllowance.setupQuestions.PayTaxCharge1516FormProvider
+import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.PIAPreRemedyPage
+import pages.annualAllowance.setupQuestions.PayTaxCharge1516Page
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.PIAPreRemedyView
+import views.html.annualAllowance.setupQuestions.PayTaxCharge1516View
 
 import scala.concurrent.Future
 
-class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
-
-  val formProvider = new PIAPreRemedyFormProvider()
-  val form         = formProvider()
+class PayTaxCharge1516ControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = BigInt(0)
+  val formProvider = new PayTaxCharge1516FormProvider()
+  val form         = formProvider()
 
-  val validPreRemedyTaxYear: TaxYear = TaxYear2012
+  lazy val normalRoute = setupAARoutes.PayTaxCharge1516Controller.onPageLoad(NormalMode).url
+  lazy val checkRoute  = setupAARoutes.PayTaxCharge1516Controller.onPageLoad(CheckMode).url
 
-  lazy val normalRoute = routes.PIAPreRemedyController.onPageLoad(NormalMode, validPreRemedyTaxYear).url
-  lazy val checkRoute  = routes.PIAPreRemedyController.onPageLoad(CheckMode, validPreRemedyTaxYear).url
-
-  "PIAPreRemedy Controller" - {
+  "PayTaxCharge1516 Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
@@ -58,35 +55,28 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[PIAPreRemedyView]
+        val view = application.injector.instanceOf[PayTaxCharge1516View]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, validPreRemedyTaxYear)(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers =
-        UserAnswers(userAnswersId).set(PIAPreRemedyPage(validPreRemedyTaxYear), validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(PayTaxCharge1516Page, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, normalRoute)
 
-        val view = application.injector.instanceOf[PIAPreRemedyView]
+        val view = application.injector.instanceOf[PayTaxCharge1516View]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, validPreRemedyTaxYear)(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -106,15 +96,14 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", validAnswer.toString))
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
+        val expectedAnswers = emptyUserAnswers.set(PayTaxCharge1516Page, true).success.value
 
-        println(contentAsString(result))
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual PIAPreRemedyPage(validPreRemedyTaxYear)
+        redirectLocation(result).value mustEqual PayTaxCharge1516Page
           .navigate(NormalMode, expectedAnswers)
           .url
       }
@@ -136,14 +125,14 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", validAnswer.toString))
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
+        val expectedAnswers = emptyUserAnswers.set(PayTaxCharge1516Page, true).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual PIAPreRemedyPage(validPreRemedyTaxYear)
+        redirectLocation(result).value mustEqual PayTaxCharge1516Page
           .navigate(CheckMode, expectedAnswers)
           .url
       }
@@ -156,19 +145,16 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", "invalid value"))
+            .withFormUrlEncodedBody(("value", ""))
 
-        val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[PIAPreRemedyView]
+        val view = application.injector.instanceOf[PayTaxCharge1516View]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, validPreRemedyTaxYear)(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -193,12 +179,11 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", validAnswer.toString))
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }

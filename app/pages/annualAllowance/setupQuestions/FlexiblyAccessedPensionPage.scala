@@ -35,7 +35,7 @@ case object FlexiblyAccessedPensionPage extends QuestionPage[Boolean] {
     answers.get(FlexiblyAccessedPensionPage) match {
       case Some(true)  => setupAARoutes.FlexibleAccessStartDateController.onPageLoad(NormalMode)
       case Some(false) =>
-        routes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
+        setupAARoutes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

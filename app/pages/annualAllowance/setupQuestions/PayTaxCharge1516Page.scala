@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package pages
+package pages.annualAllowance.setupQuestions
 
 import controllers.routes
+import controllers.annualAllowance.setupQuestions.{routes => setupAARoutes}
 import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
 import models.{NormalMode, UserAnswers}
+import pages.QuestionPage
+import pages.annualAllowance.setupQuestions
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -32,27 +35,27 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
-      case Some(false) => routes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
-      case Some(true)  => routes.CheckYourAnswersController.onPageLoad // TODO once subsequent page is implemented
-      case _           => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false) => setupAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
+      case Some(true) => routes.CheckYourAnswersController.onPageLoad // TODO once subsequent page is implemented
+      case _ => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
-      case Some(false) => routes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
-      case Some(true)  => routes.CheckYourAnswersController.onPageLoad
-      case _           => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false) => setupAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
+      case Some(true) => routes.CheckYourAnswersController.onPageLoad
+      case _ => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
         case false => super.cleanup(value, userAnswers)
-        case true  =>
+        case true =>
           userAnswers
             .remove(PIAPreRemedyPage(TaxYear2012))
-            .flatMap(_.remove(PIAPreRemedyPage(TaxYear2013)))
-            .flatMap(_.remove(PIAPreRemedyPage(TaxYear2014)))
+            .flatMap(_.remove(setupQuestions.PIAPreRemedyPage(TaxYear2013)))
+            .flatMap(_.remove(setupQuestions.PIAPreRemedyPage(TaxYear2014)))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

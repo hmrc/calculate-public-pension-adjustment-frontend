@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package pages
+package pages.annualAllowance.setupQuestions
 
 import controllers.routes
+import controllers.annualAllowance.setupQuestions.{routes => setupAARoutes}
 import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
 import models.{NormalMode, TaxYear, UserAnswers}
+import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -31,12 +33,12 @@ case class PIAPreRemedyPage(taxYear: TaxYear) extends QuestionPage[BigInt] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PIAPreRemedyPage(taxYear)) match {
       case Some(_) => navigateInNormalMode
-      case None    => routes.JourneyRecoveryController.onPageLoad(None)
+      case None => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   private def navigateInNormalMode =
     if (taxYear == TaxYear2012 || taxYear == TaxYear2013) {
-      routes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear(taxYear.value + 1))
+      setupAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear(taxYear.value + 1))
     } else if (taxYear == TaxYear2014) {
       routes.CheckYourAnswersController.onPageLoad
     } else routes.JourneyRecoveryController.onPageLoad(None)
@@ -44,6 +46,6 @@ case class PIAPreRemedyPage(taxYear: TaxYear) extends QuestionPage[BigInt] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PIAPreRemedyPage(taxYear)) match {
       case Some(_) => routes.CheckYourAnswersController.onPageLoad
-      case None    => routes.JourneyRecoveryController.onPageLoad(None)
+      case None => routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

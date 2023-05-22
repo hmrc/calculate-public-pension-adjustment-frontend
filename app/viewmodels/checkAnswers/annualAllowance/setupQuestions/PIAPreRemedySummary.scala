@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.annualAllowance.setupQuestions
 
-import controllers.routes
+import controllers.annualAllowance.setupQuestions.routes
 import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
 import models.{CheckMode, TaxYear, UserAnswers}
-import pages.PIAPreRemedyPage
+import pages.annualAllowance.setupQuestions
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
-import utils.CurrencyFormatter.currencyFormat
 
 object PIAPreRemedySummary {
 
@@ -37,9 +37,9 @@ object PIAPreRemedySummary {
     )
 
   private def row(answers: UserAnswers, taxYear: TaxYear)(implicit
-    messages: Messages
+                                                          messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(PIAPreRemedyPage(taxYear)).map { answer =>
+    answers.get(setupQuestions.PIAPreRemedyPage(taxYear)).map { answer =>
       SummaryListRowViewModel(
         key = s"pIAPreRemedy.checkYourAnswersLabel.${taxYear.value}",
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),

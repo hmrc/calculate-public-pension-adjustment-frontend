@@ -14,56 +14,58 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.annualAllowance.setupQuestions
 
 import controllers.actions._
-import forms.PayTaxCharge1516FormProvider
-import models.Mode
-import pages.PayTaxCharge1516Page
+import forms.annualAllowance.setupQuestions.PIAPreRemedyFormProvider
+import javax.inject.Inject
+import models.{Mode, TaxYear}
+import pages.annualAllowance.setupQuestions
+import pages.annualAllowance.setupQuestions.PIAPreRemedyPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.PayTaxCharge1516View
+import views.html.annualAllowance.setupQuestions.PIAPreRemedyView
 
-import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PayTaxCharge1516Controller @Inject() (
+class PIAPreRemedyController @Inject() (
   override val messagesApi: MessagesApi,
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: PayTaxCharge1516FormProvider,
+  formProvider: PIAPreRemedyFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: PayTaxCharge1516View
+  view: PIAPreRemedyView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(PayTaxCharge1516Page) match {
-      case None        => form
-      case Some(value) => form.fill(value)
+  def onPageLoad(mode: Mode, taxYear: TaxYear): Action[AnyContent] =
+    (identify andThen getData andThen requireData) { implicit request =>
+      val preparedForm = request.userAnswers.get(setupQuestions.PIAPreRemedyPage(taxYear)) match {
+        case None        => form
+        case Some(value) => form.fill(value)
+      }
+
+      Ok(view(preparedForm, mode, taxYear))
     }
 
-    Ok(view(preparedForm, mode))
-  }
-
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
+  def onSubmit(mode: Mode, taxYear: TaxYear): Action[AnyContent] =
+    (identify andThen getData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, taxYear))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(PayTaxCharge1516Page, value))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(setupQuestions.PIAPreRemedyPage(taxYear), value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(PayTaxCharge1516Page.navigate(mode, updatedAnswers))
+            } yield Redirect(setupQuestions.PIAPreRemedyPage(taxYear).navigate(mode, updatedAnswers))
         )
-  }
+    }
 }

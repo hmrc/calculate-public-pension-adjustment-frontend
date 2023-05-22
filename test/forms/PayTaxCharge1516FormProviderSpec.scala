@@ -16,6 +16,7 @@
 
 package forms
 
+import forms.annualAllowance.setupQuestions.PayTaxCharge1516FormProvider
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 

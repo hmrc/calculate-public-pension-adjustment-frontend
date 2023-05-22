@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package pages
+package pages.annualAllowance.setupQuestions
 
 import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
 import models.{CheckMode, NormalMode, UserAnswers}
+import pages.annualAllowance.setupQuestions
 import pages.behaviours.PageBehaviours
 import play.api.mvc.Call
 
@@ -76,31 +77,31 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
         val userAnswers =
           UserAnswers("1")
             .set(PIAPreRemedyPage(TaxYear2012), BigInt(1))
-            .flatMap(a => a.set(PIAPreRemedyPage(TaxYear2013), BigInt(1)))
-            .flatMap(a => a.set(PIAPreRemedyPage(TaxYear2014), BigInt(1)))
+            .flatMap(a => a.set(setupQuestions.PIAPreRemedyPage(TaxYear2013), BigInt(1)))
+            .flatMap(a => a.set(setupQuestions.PIAPreRemedyPage(TaxYear2014), BigInt(1)))
             .get
 
         val cleanedAnswers: UserAnswers = PayTaxCharge1516Page.cleanup(Some(true), userAnswers).get
 
-        cleanedAnswers.get(PIAPreRemedyPage(TaxYear2012)) must be(None)
-        cleanedAnswers.get(PIAPreRemedyPage(TaxYear2013)) must be(None)
-        cleanedAnswers.get(PIAPreRemedyPage(TaxYear2014)) must be(None)
+        cleanedAnswers.get(setupQuestions.PIAPreRemedyPage(TaxYear2012)) must be(None)
+        cleanedAnswers.get(setupQuestions.PIAPreRemedyPage(TaxYear2013)) must be(None)
+        cleanedAnswers.get(setupQuestions.PIAPreRemedyPage(TaxYear2014)) must be(None)
       }
 
       "should not remove answers related to PIAs when user did not pay a tax charge in 2015/2016" in {
 
         val userAnswers =
           UserAnswers("1")
-            .set(PIAPreRemedyPage(TaxYear2012), BigInt(1))
-            .flatMap(a => a.set(PIAPreRemedyPage(TaxYear2013), BigInt(1)))
-            .flatMap(a => a.set(PIAPreRemedyPage(TaxYear2014), BigInt(1)))
+            .set(setupQuestions.PIAPreRemedyPage(TaxYear2012), BigInt(1))
+            .flatMap(a => a.set(setupQuestions.PIAPreRemedyPage(TaxYear2013), BigInt(1)))
+            .flatMap(a => a.set(setupQuestions.PIAPreRemedyPage(TaxYear2014), BigInt(1)))
             .get
 
         val cleanedAnswers: UserAnswers = PayTaxCharge1516Page.cleanup(Some(false), userAnswers).get
 
-        cleanedAnswers.get(PIAPreRemedyPage(TaxYear2012)) must be(Some(1))
-        cleanedAnswers.get(PIAPreRemedyPage(TaxYear2013)) must be(Some(1))
-        cleanedAnswers.get(PIAPreRemedyPage(TaxYear2014)) must be(Some(1))
+        cleanedAnswers.get(setupQuestions.PIAPreRemedyPage(TaxYear2012)) must be(Some(1))
+        cleanedAnswers.get(setupQuestions.PIAPreRemedyPage(TaxYear2013)) must be(Some(1))
+        cleanedAnswers.get(setupQuestions.PIAPreRemedyPage(TaxYear2014)) must be(Some(1))
       }
     }
   }
