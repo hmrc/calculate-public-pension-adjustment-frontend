@@ -17,77 +17,74 @@
 package controllers
 
 import base.SpecBase
-import forms.FlexibleAccessStartDateFormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import forms.PIAPreRemedyFormProvider
+import models.TaxYear.TaxYear2012
+import models.{CheckMode, NormalMode, TaxYear, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.FlexibleAccessStartDatePage
+import pages.PIAPreRemedyPage
 import play.api.inject.bind
-import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
+import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.FlexibleAccessStartDateView
+import views.html.PIAPreRemedyView
 
-import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
-class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
+class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new FlexibleAccessStartDateFormProvider()
-  private def form = formProvider()
+  val formProvider = new PIAPreRemedyFormProvider()
+  val form         = formProvider()
 
-  def onwardRoute = Call("GET", "/public-pension-adjustment/check-your-answers")
+  def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = LocalDate.now(ZoneOffset.UTC)
+  val validAnswer = BigInt(0)
 
-  lazy val normalRoute = routes.FlexibleAccessStartDateController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = routes.FlexibleAccessStartDateController.onPageLoad(CheckMode).url
+  val validPreRemedyTaxYear: TaxYear = TaxYear2012
 
-  override val emptyUserAnswers = UserAnswers(userAnswersId)
+  lazy val normalRoute = routes.PIAPreRemedyController.onPageLoad(NormalMode, validPreRemedyTaxYear).url
+  lazy val checkRoute  = routes.PIAPreRemedyController.onPageLoad(CheckMode, validPreRemedyTaxYear).url
 
-  def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest(GET, normalRoute)
-
-  def postRequest(route: String = normalRoute): FakeRequest[AnyContentAsFormUrlEncoded] =
-    FakeRequest(POST, route)
-      .withFormUrlEncodedBody(
-        "value.day"   -> validAnswer.getDayOfMonth.toString,
-        "value.month" -> validAnswer.getMonthValue.toString,
-        "value.year"  -> validAnswer.getYear.toString
-      )
-
-  "FlexibleAccessStartDate Controller" - {
+  "PIAPreRemedy Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val request = FakeRequest(GET, normalRoute)
 
-        val view = application.injector.instanceOf[FlexibleAccessStartDateView]
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[PIAPreRemedyView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, validPreRemedyTaxYear)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(FlexibleAccessStartDatePage, validAnswer).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(PIAPreRemedyPage(validPreRemedyTaxYear), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val view = application.injector.instanceOf[FlexibleAccessStartDateView]
+        val request = FakeRequest(GET, normalRoute)
 
-        val result = route(application, getRequest).value
+        val view = application.injector.instanceOf[PIAPreRemedyView]
+
+        val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
-          getRequest,
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, validPreRemedyTaxYear)(
+          request,
           messages(application)
         ).toString
       }
@@ -107,12 +104,19 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val result = route(application, postRequest()).value
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
 
-        val expectedAnswers = emptyUserAnswers.set(FlexibleAccessStartDatePage, LocalDate.now()).success.value
+        val result = route(application, request).value
 
+        val expectedAnswers = emptyUserAnswers.set(PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
+
+        println(contentAsString(result))
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual FlexibleAccessStartDatePage.navigate(NormalMode, expectedAnswers).url
+        redirectLocation(result).value mustEqual PIAPreRemedyPage(validPreRemedyTaxYear)
+          .navigate(NormalMode, expectedAnswers)
+          .url
       }
     }
 
@@ -130,12 +134,18 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val result = route(application, postRequest(checkRoute)).value
+        val request =
+          FakeRequest(POST, checkRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
 
-        val expectedAnswers = emptyUserAnswers.set(FlexibleAccessStartDatePage, LocalDate.now()).success.value
+        val result = route(application, request).value
+
+        val expectedAnswers = emptyUserAnswers.set(PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual FlexibleAccessStartDatePage.navigate(CheckMode, expectedAnswers).url
+        redirectLocation(result).value mustEqual PIAPreRemedyPage(validPreRemedyTaxYear)
+          .navigate(CheckMode, expectedAnswers)
+          .url
       }
     }
 
@@ -143,19 +153,22 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      val request =
-        FakeRequest(POST, normalRoute)
-          .withFormUrlEncodedBody(("value", "invalid value"))
-
       running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", "invalid value"))
+
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[FlexibleAccessStartDateView]
+        val view = application.injector.instanceOf[PIAPreRemedyView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, validPreRemedyTaxYear)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -164,7 +177,9 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val request = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
@@ -176,9 +191,14 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val result = route(application, postRequest()).value
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
+
+        val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }

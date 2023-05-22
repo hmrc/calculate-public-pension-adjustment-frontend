@@ -17,37 +17,42 @@
 package pages
 
 import controllers.routes
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
+import models.{NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
 import scala.util.Try
 
-case object DefinedContributionPensionSchemePage extends QuestionPage[Boolean] {
+case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "definedContributionPensionScheme"
+  override def toString: String = "payTaxCharge1516"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(DefinedContributionPensionSchemePage) match {
-      case Some(true)  => routes.FlexiblyAccessedPensionController.onPageLoad(NormalMode)
-      case Some(false) => routes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(PayTaxCharge1516Page) match {
+      case Some(false) => routes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
+      case Some(true)  => routes.CheckYourAnswersController.onPageLoad // TODO once subsequent page is implemented
+      case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(DefinedContributionPensionSchemePage) match {
-      case Some(true)  => routes.FlexiblyAccessedPensionController.onPageLoad(CheckMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(PayTaxCharge1516Page) match {
+      case Some(false) => routes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
+      case Some(true)  => routes.CheckYourAnswersController.onPageLoad
+      case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true  => super.cleanup(value, userAnswers)
-        case false => userAnswers.remove(FlexiblyAccessedPensionPage).flatMap(_.remove(FlexibleAccessStartDatePage))
+        case false => super.cleanup(value, userAnswers)
+        case true  =>
+          userAnswers
+            .remove(PIAPreRemedyPage(TaxYear2012))
+            .flatMap(_.remove(PIAPreRemedyPage(TaxYear2013)))
+            .flatMap(_.remove(PIAPreRemedyPage(TaxYear2014)))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -16,10 +16,12 @@
 
 package pages
 
-import java.time.LocalDate
-
+import models.{CheckMode, NormalMode, UserAnswers}
 import org.scalacheck.Arbitrary
 import pages.behaviours.PageBehaviours
+import play.api.mvc.Call
+
+import java.time.LocalDate
 
 class FlexibleAccessStartDatePageSpec extends PageBehaviours {
 
@@ -34,5 +36,34 @@ class FlexibleAccessStartDatePageSpec extends PageBehaviours {
     beSettable[LocalDate](FlexibleAccessStartDatePage)
 
     beRemovable[LocalDate](FlexibleAccessStartDatePage)
+
+    val validDate = LocalDate.of(2020, 1, 1)
+
+    "normal mode navigation" - {
+
+      "next page should be PayTaxCharge1516Page when user has a DC pension" in {
+        val userAnswers = UserAnswers("1").set(FlexibleAccessStartDatePage, validDate).get
+
+        val nextPageUrl: Call = FlexibleAccessStartDatePage.navigate(NormalMode, userAnswers)
+
+        check(nextPageUrl, "/pay-tax-charge-from2015-2016")
+      }
+    }
+
+    "check mode navigation" - {
+
+      "next page should be CheckYourAnswersPage when user has a DC pension" in {
+        val userAnswers = UserAnswers("1").set(FlexibleAccessStartDatePage, validDate).get
+
+        val nextPageUrl: Call = FlexibleAccessStartDatePage.navigate(CheckMode, userAnswers)
+
+        check(nextPageUrl, "/check-your-answers")
+      }
+    }
+
+    def check(nextPageUrl: Call, expectedPath: String) = {
+      println(s"nextPageUrl:$nextPageUrl")
+      nextPageUrl.url.endsWith(expectedPath) must be(true)
+    }
   }
 }

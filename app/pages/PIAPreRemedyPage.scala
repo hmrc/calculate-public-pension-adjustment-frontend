@@ -17,26 +17,32 @@
 package pages
 
 import controllers.routes
-import models.{NormalMode, UserAnswers}
+import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
+import models.{NormalMode, TaxYear, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-import java.time.LocalDate
+case class PIAPreRemedyPage(taxYear: TaxYear) extends QuestionPage[BigInt] {
 
-case object FlexibleAccessStartDatePage extends QuestionPage[LocalDate] {
+  override def path: JsPath = JsPath \ taxYear.value.toString \ toString
 
-  override def path: JsPath = JsPath \ toString
-
-  override def toString: String = "flexibleAccessStartDate"
+  override def toString: String = "pIAPreRemedy"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(FlexibleAccessStartDatePage) match {
-      case Some(_) => routes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
+    answers.get(PIAPreRemedyPage(taxYear)) match {
+      case Some(_) => navigateInNormalMode
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
+  private def navigateInNormalMode =
+    if (taxYear == TaxYear2012 || taxYear == TaxYear2013) {
+      routes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear(taxYear.value + 1))
+    } else if (taxYear == TaxYear2014) {
+      routes.CheckYourAnswersController.onPageLoad
+    } else routes.JourneyRecoveryController.onPageLoad(None)
+
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(FlexibleAccessStartDatePage) match {
+    answers.get(PIAPreRemedyPage(taxYear)) match {
       case Some(_) => routes.CheckYourAnswersController.onPageLoad
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }

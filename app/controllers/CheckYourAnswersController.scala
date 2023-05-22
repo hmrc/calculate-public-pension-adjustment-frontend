@@ -20,6 +20,7 @@ import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
@@ -36,22 +37,21 @@ class CheckYourAnswersController @Inject() (
     with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val list = SummaryListViewModel(
-      rows = Seq(
-        SavingsStatementSummary.row(request.userAnswers),
-        ResubmittingAdjustmentSummary.row(request.userAnswers),
-        ReasonForResubmissionSummary.row(request.userAnswers),
-        ReportingChangeSummary.row(request.userAnswers),
-        ScottishTaxpayerFrom2016Summary.row(request.userAnswers),
-        WhichYearsScottishTaxpayerSummary.row(request.userAnswers),
-        PayingPublicPensionSchemeSummary.row(request.userAnswers),
-        StopPayingPublicPensionSummary.row(request.userAnswers),
-        DefinedContributionPensionSchemeSummary.row(request.userAnswers),
-        FlexiblyAccessedPensionSummary.row(request.userAnswers),
-        FlexibleAccessStartDateSummary.row(request.userAnswers)
-      ).flatten
-    )
+    val rows: Seq[Option[SummaryListRow]] = Seq(
+      SavingsStatementSummary.row(request.userAnswers),
+      ResubmittingAdjustmentSummary.row(request.userAnswers),
+      ReasonForResubmissionSummary.row(request.userAnswers),
+      ReportingChangeSummary.row(request.userAnswers),
+      ScottishTaxpayerFrom2016Summary.row(request.userAnswers),
+      WhichYearsScottishTaxpayerSummary.row(request.userAnswers),
+      PayingPublicPensionSchemeSummary.row(request.userAnswers),
+      StopPayingPublicPensionSummary.row(request.userAnswers),
+      DefinedContributionPensionSchemeSummary.row(request.userAnswers),
+      FlexiblyAccessedPensionSummary.row(request.userAnswers),
+      FlexibleAccessStartDateSummary.row(request.userAnswers),
+      PayTaxCharge1516Summary.row(request.userAnswers)
+    ) ++ PIAPreRemedySummary.rows(request.userAnswers)
 
-    Ok(view(list))
+    Ok(view(SummaryListViewModel(rows.flatten)))
   }
 }
