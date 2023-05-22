@@ -23,6 +23,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
+import viewmodels.checkAnswers.annualAllowance.setupQuestions.{DefinedContributionPensionSchemeSummary, FlexibleAccessStartDateSummary, FlexiblyAccessedPensionSummary, PayingPublicPensionSchemeSummary, ScottishTaxpayerFrom2016Summary, StopPayingPublicPensionSummary, WhichYearsScottishTaxpayerSummary}
 import viewmodels.checkAnswers.setupQuestions.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView

@@ -17,6 +17,7 @@
 package forms
 
 import forms.behaviours.CheckboxFieldBehaviours
+import forms.setupQuestions.ReportingChangeFormProvider
 import models.ReportingChange
 import play.api.data.FormError
 

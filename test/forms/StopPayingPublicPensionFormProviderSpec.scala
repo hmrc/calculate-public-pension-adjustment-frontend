@@ -17,8 +17,9 @@
 package forms
 
 import forms.behaviours.DateBehaviours
-
 import java.time.LocalDate
+
+import forms.annualAllowance.setupQuestions.StopPayingPublicPensionFormProvider
 
 class StopPayingPublicPensionFormProviderSpec extends DateBehaviours {
 

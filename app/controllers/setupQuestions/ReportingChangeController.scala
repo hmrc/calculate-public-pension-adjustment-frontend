@@ -17,7 +17,7 @@
 package controllers.setupQuestions
 
 import controllers.actions._
-import forms.ReportingChangeFormProvider
+import forms.setupQuestions.ReportingChangeFormProvider
 import javax.inject.Inject
 import models.Mode
 import pages.setupQuestions.ReportingChangePage

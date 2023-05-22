@@ -18,6 +18,7 @@ package generators
 
 import org.scalacheck.Arbitrary
 import pages._
+import pages.annualAllowance.setupQuestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.setupQuestions.ReportingChangePage
 
 trait PageGenerators {

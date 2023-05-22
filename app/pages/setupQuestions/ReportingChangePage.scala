@@ -17,8 +17,10 @@
 package pages.setupQuestions
 
 import controllers.routes
+import controllers.annualAllowance.setupQuestions.{routes => setupAARoutes}
 import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
-import pages.{QuestionPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
+import pages.annualAllowance.setupQuestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
+import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -32,7 +34,7 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
     case Some(set) if set.contains(ReportingChange.AnnualAllowance)  =>
-      routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
+      setupAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
     case Some(set) if !set.contains(ReportingChange.AnnualAllowance) => routes.CheckYourAnswersController.onPageLoad
     case _                                                           => routes.JourneyRecoveryController.onPageLoad(None)
   }
@@ -40,7 +42,7 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
     case Some(set) if set.contains(ReportingChange.AnnualAllowance)  =>
       answers.get(ScottishTaxpayerFrom2016Page) match {
-        case None    => routes.ScottishTaxpayerFrom2016Controller.onPageLoad(CheckMode)
+        case None    => setupAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(CheckMode)
         case Some(_) => routes.CheckYourAnswersController.onPageLoad
       }
     case Some(set) if !set.contains(ReportingChange.AnnualAllowance) => routes.CheckYourAnswersController.onPageLoad
