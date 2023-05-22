@@ -46,7 +46,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = PayTaxCharge1516Page.navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/pia-pre-remedy/2012")
+        check(nextPageUrl, "/pia-pre-remedy/2012-2013")
       }
     }
 
@@ -65,7 +65,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = PayTaxCharge1516Page.navigate(CheckMode, userAnswers)
 
-        check(nextPageUrl, "/pia-pre-remedy/2012")
+        check(nextPageUrl, "/pia-pre-remedy/2012-2013")
       }
     }
 

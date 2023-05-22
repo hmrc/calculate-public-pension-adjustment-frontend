@@ -38,7 +38,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = PIAPreRemedyPage(TaxYear2012).navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/pia-pre-remedy/2013")
+        check(nextPageUrl, "/pia-pre-remedy/2013-2014")
       }
 
       "next page should be PIAPreRemedy capture for 2014 when this page is for 2013" in {
@@ -46,7 +46,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = PIAPreRemedyPage(TaxYear2013).navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/pia-pre-remedy/2014")
+        check(nextPageUrl, "/pia-pre-remedy/2014-2015")
       }
 
       "next page should be CheckYourAnswers when this page is for 2014" in {
