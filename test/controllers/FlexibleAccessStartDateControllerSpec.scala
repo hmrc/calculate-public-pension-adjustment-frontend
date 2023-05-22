@@ -50,8 +50,8 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, normalRoute)
 
-  def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
-    FakeRequest(POST, normalRoute)
+  def postRequest(route: String = normalRoute): FakeRequest[AnyContentAsFormUrlEncoded] =
+    FakeRequest(POST, route)
       .withFormUrlEncodedBody(
         "value.day"   -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
@@ -107,7 +107,7 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val result = route(application, postRequest).value
+        val result = route(application, postRequest()).value
 
         val expectedAnswers = emptyUserAnswers.set(FlexibleAccessStartDatePage, LocalDate.now()).success.value
 
@@ -130,7 +130,7 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val result = route(application, postRequest).value
+        val result = route(application, postRequest(checkRoute)).value
 
         val expectedAnswers = emptyUserAnswers.set(FlexibleAccessStartDatePage, LocalDate.now()).success.value
 
@@ -176,7 +176,7 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val result = route(application, postRequest).value
+        val result = route(application, postRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url

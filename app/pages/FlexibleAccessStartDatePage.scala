@@ -17,7 +17,7 @@
 package pages
 
 import controllers.routes
-import models.UserAnswers
+import models.{NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -31,8 +31,7 @@ case object FlexibleAccessStartDatePage extends QuestionPage[LocalDate] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(FlexibleAccessStartDatePage) match {
-      case Some(_) =>
-        routes.CheckYourAnswersController.onPageLoad // TODO redirect to the appropriate page when it has been implemented
+      case Some(_) => routes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

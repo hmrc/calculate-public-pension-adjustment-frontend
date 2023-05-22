@@ -16,7 +16,9 @@
 
 package pages
 
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.behaviours.PageBehaviours
+import play.api.mvc.Call
 
 import java.time.LocalDate
 
@@ -29,6 +31,47 @@ class DefinedContributionPensionSchemePageSpec extends PageBehaviours {
     beSettable[Boolean](DefinedContributionPensionSchemePage)
 
     beRemovable[Boolean](DefinedContributionPensionSchemePage)
+
+    "normal mode navigation" - {
+
+      "next page should be FlexiblyAccessedPensionPage when user has a DC pension" in {
+        val userAnswers = UserAnswers("1").set(DefinedContributionPensionSchemePage, true).get
+
+        val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(NormalMode, userAnswers)
+
+        check(nextPageUrl, "/have-flexibly-accessed-pension")
+      }
+
+      "next page should be PayTaxCharge1516Page when user does not have a DC pension" in {
+        val userAnswers = UserAnswers("1").set(DefinedContributionPensionSchemePage, false).get
+
+        val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(NormalMode, userAnswers)
+
+        check(nextPageUrl, "/pay-tax-charge-from2015-2016")
+      }
+    }
+
+    "check mode navigation" - {
+
+      "next page should be FlexiblyAccessedPensionPage when user has a DC pension" in {
+        val userAnswers = UserAnswers("1").set(DefinedContributionPensionSchemePage, true).get
+
+        val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(CheckMode, userAnswers)
+
+        check(nextPageUrl, "/change-have-flexibly-accessed-pension")
+      }
+
+      "next page should be PayTaxCharge1516Page when user does not have a DC pension" in {
+        val userAnswers = UserAnswers("1").set(DefinedContributionPensionSchemePage, false).get
+
+        val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(CheckMode, userAnswers)
+
+        check(nextPageUrl, "/check-your-answers")
+      }
+    }
+
+    def check(nextPageUrl: Call, expectedPath: String) =
+      nextPageUrl.url.endsWith(expectedPath) must be(true)
 
     "must not remove dependent state when the answer is yes" in {
 

@@ -32,8 +32,7 @@ case object DefinedContributionPensionSchemePage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(DefinedContributionPensionSchemePage) match {
       case Some(true)  => routes.FlexiblyAccessedPensionController.onPageLoad(NormalMode)
-      case Some(false) =>
-        routes.CheckYourAnswersController.onPageLoad // TODO redirect to the appropriate page when it has been implemented
+      case Some(false) => routes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

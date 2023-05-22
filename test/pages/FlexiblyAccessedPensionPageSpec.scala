@@ -16,7 +16,9 @@
 
 package pages
 
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.behaviours.PageBehaviours
+import play.api.mvc.Call
 
 import java.time.LocalDate
 
@@ -29,6 +31,47 @@ class FlexiblyAccessedPensionPageSpec extends PageBehaviours {
     beSettable[Boolean](FlexiblyAccessedPensionPage)
 
     beRemovable[Boolean](FlexiblyAccessedPensionPage)
+
+    "normal mode navigation" - {
+
+      "next page should be FlexibleAccessStartDatePage when user has accessed DC pension" in {
+        val userAnswers = UserAnswers("1").set(FlexiblyAccessedPensionPage, true).get
+
+        val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(NormalMode, userAnswers)
+
+        check(nextPageUrl, "/when-flexibly-access-pension")
+      }
+
+      "next page should be PayTaxCharge1216Page when user has not accessed DC pension" in {
+        val userAnswers = UserAnswers("1").set(FlexiblyAccessedPensionPage, false).get
+
+        val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(NormalMode, userAnswers)
+
+        check(nextPageUrl, "/pay-tax-charge-from2015-2016")
+      }
+    }
+
+    "check mode navigation" - {
+
+      "next page should be FlexiblyAccessedPensionPage when user has accessed DC pension" in {
+        val userAnswers = UserAnswers("1").set(FlexiblyAccessedPensionPage, true).get
+
+        val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(CheckMode, userAnswers)
+
+        check(nextPageUrl, "/change-when-flexibly-access-pension")
+      }
+
+      "next page should be PayTaxCharge1516Page when user does not have a DC pension" in {
+        val userAnswers = UserAnswers("1").set(FlexiblyAccessedPensionPage, false).get
+
+        val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(CheckMode, userAnswers)
+
+        check(nextPageUrl, "/check-your-answers")
+      }
+    }
+
+    def check(nextPageUrl: Call, expectedPath: String) =
+      nextPageUrl.url.endsWith(expectedPath) must be(true)
 
     "must not remove dependent state when the answer is yes" in {
 
