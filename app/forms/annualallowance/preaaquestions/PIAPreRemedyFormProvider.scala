@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,30 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import controllers.setupquestions.routes
+package forms.annualallowance.preaaquestions
 
-@this(
-    layout: templates.Layout,
-    govukButton: GovukButton
-)
+import forms.mappings.Mappings
+import javax.inject.Inject
+import play.api.data.Form
 
-@()(implicit request: Request[_], messages: Messages)
+class PIAPreRemedyFormProvider @Inject() extends Mappings {
 
-@layout(
-    pageTitle    = titleNoForm(messages("index.title")),
-    showBackLink = false
-) {
-
-    <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
-
-    <p class="govuk-body">@messages("index.guidance")</p>
-
-    <p class="govuk-body">
-        @govukButton(
-            ButtonViewModel(messages("site.start"))
-            .asLink(routes.SavingsStatementController.onPageLoad(NormalMode).url)
-        )
-    </p>
+  def apply(): Form[BigInt] =
+    Form(
+      "value" -> bigInt(
+        "pIAPreRemedy.error.required",
+        "pIAPreRemedy.error.wholeNumber",
+        "pIAPreRemedy.error.nonNumeric"
+      )
+        .verifying(inRange[BigInt](0, BigInt("1000000000000"), "pIAPreRemedy.error.outOfRange"))
+    )
 }

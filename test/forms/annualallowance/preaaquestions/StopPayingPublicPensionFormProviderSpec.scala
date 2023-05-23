@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,30 +12,27 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import controllers.setupquestions.routes
+package forms.annualallowance.preaaquestions
 
-@this(
-    layout: templates.Layout,
-    govukButton: GovukButton
-)
+import java.time.LocalDate
 
-@()(implicit request: Request[_], messages: Messages)
+import forms.behaviours.DateBehaviours
 
-@layout(
-    pageTitle    = titleNoForm(messages("index.title")),
-    showBackLink = false
-) {
+class StopPayingPublicPensionFormProviderSpec extends DateBehaviours {
 
-    <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
+  val form = new StopPayingPublicPensionFormProvider()()
 
-    <p class="govuk-body">@messages("index.guidance")</p>
+  ".value" - {
 
-    <p class="govuk-body">
-        @govukButton(
-            ButtonViewModel(messages("site.start"))
-            .asLink(routes.SavingsStatementController.onPageLoad(NormalMode).url)
-        )
-    </p>
+    val validData = datesBetween(
+      min = LocalDate.of(2015, 4, 6),
+      max = LocalDate.of(2022, 4, 5)
+    )
+
+    behave like dateField(form, "value", validData)
+
+    behave like mandatoryDateField(form, "value", "stopPayingPublicPension.error.required.all")
+  }
 }
