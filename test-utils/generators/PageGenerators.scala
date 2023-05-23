@@ -18,8 +18,8 @@ package generators
 
 import org.scalacheck.Arbitrary
 import pages._
-import pages.annualAllowance.setupQuestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
-import pages.setupQuestions.ReportingChangePage
+import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
+import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
   implicit lazy val arbitraryReportingChangePage: Arbitrary[ReportingChangePage.type] =

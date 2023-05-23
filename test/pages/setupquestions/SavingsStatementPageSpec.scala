@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,30 +12,20 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import controllers.setupquestions.routes
+package pages.setupquestions
 
-@this(
-    layout: templates.Layout,
-    govukButton: GovukButton
-)
+import pages.behaviours.PageBehaviours
 
-@()(implicit request: Request[_], messages: Messages)
+class SavingsStatementPageSpec extends PageBehaviours {
 
-@layout(
-    pageTitle    = titleNoForm(messages("index.title")),
-    showBackLink = false
-) {
+  "SavingsStatementPage" - {
 
-    <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
+    beRetrievable[Boolean](SavingsStatementPage)
 
-    <p class="govuk-body">@messages("index.guidance")</p>
+    beSettable[Boolean](SavingsStatementPage)
 
-    <p class="govuk-body">
-        @govukButton(
-            ButtonViewModel(messages("site.start"))
-            .asLink(routes.SavingsStatementController.onPageLoad(NormalMode).url)
-        )
-    </p>
+    beRemovable[Boolean](SavingsStatementPage)
+  }
 }
