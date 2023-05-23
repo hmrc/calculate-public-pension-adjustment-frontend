@@ -33,23 +33,23 @@ case object PayingPublicPensionSchemePage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayingPublicPensionSchemePage) match {
-      case Some(true) => preAARoutes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode)
+      case Some(true)  => preAARoutes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode)
       case Some(false) => preAARoutes.StopPayingPublicPensionController.onPageLoad(NormalMode)
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayingPublicPensionSchemePage) match {
-      case Some(true) =>
+      case Some(true)  =>
         routes.CheckYourAnswersController.onPageLoad
       case Some(false) => preAARoutes.StopPayingPublicPensionController.onPageLoad(CheckMode)
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true => userAnswers.remove(StopPayingPublicPensionPage)
+        case true  => userAnswers.remove(StopPayingPublicPensionPage)
         case false => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))

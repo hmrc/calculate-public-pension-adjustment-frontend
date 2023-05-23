@@ -26,7 +26,6 @@ import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import controllers.annualallowance.preaaquestions.routes
 
-
 class ScottishTaxpayerFrom2016SummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()

@@ -155,7 +155,9 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.StopPayingPublicPensionController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual preAARoutes.StopPayingPublicPensionController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 

@@ -177,7 +177,9 @@ class ScottishTaxpayerFrom2016ControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual preAARoutes.WhichYearsScottishTaxpayerController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -201,7 +203,9 @@ class ScottishTaxpayerFrom2016ControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.PayingPublicPensionSchemeController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual preAARoutes.PayingPublicPensionSchemeController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -225,7 +229,9 @@ class ScottishTaxpayerFrom2016ControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(CheckMode).url
+        redirectLocation(result).value mustEqual preAARoutes.WhichYearsScottishTaxpayerController
+          .onPageLoad(CheckMode)
+          .url
       }
     }
 

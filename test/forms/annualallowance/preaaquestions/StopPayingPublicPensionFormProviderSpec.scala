@@ -20,7 +20,6 @@ import java.time.LocalDate
 
 import forms.behaviours.DateBehaviours
 
-
 class StopPayingPublicPensionFormProviderSpec extends DateBehaviours {
 
   val form = new StopPayingPublicPensionFormProvider()()

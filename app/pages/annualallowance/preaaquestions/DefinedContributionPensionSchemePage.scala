@@ -43,13 +43,13 @@ case object DefinedContributionPensionSchemePage extends QuestionPage[Boolean] {
     answers.get(DefinedContributionPensionSchemePage) match {
       case Some(true)  => preAARoutes.FlexiblyAccessedPensionController.onPageLoad(CheckMode)
       case Some(false) => routes.CheckYourAnswersController.onPageLoad
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true => super.cleanup(value, userAnswers)
+        case true  => super.cleanup(value, userAnswers)
         case false => userAnswers.remove(FlexiblyAccessedPensionPage).flatMap(_.remove(FlexibleAccessStartDatePage))
       }
       .getOrElse(super.cleanup(value, userAnswers))

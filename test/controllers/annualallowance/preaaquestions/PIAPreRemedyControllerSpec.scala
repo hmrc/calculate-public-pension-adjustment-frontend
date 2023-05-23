@@ -73,7 +73,10 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers =
-        UserAnswers(userAnswersId).set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), validAnswer).success.value
+        UserAnswers(userAnswersId)
+          .set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), validAnswer)
+          .success
+          .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -112,11 +115,13 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
+        val expectedAnswers =
+          emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
 
         println(contentAsString(result))
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear)
+        redirectLocation(result).value mustEqual preaaquestions
+          .PIAPreRemedyPage(validPreRemedyTaxYear)
           .navigate(NormalMode, expectedAnswers)
           .url
       }
@@ -142,10 +147,12 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
+        val expectedAnswers =
+          emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear)
+        redirectLocation(result).value mustEqual preaaquestions
+          .PIAPreRemedyPage(validPreRemedyTaxYear)
           .navigate(CheckMode, expectedAnswers)
           .url
       }

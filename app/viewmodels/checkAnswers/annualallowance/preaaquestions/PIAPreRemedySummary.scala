@@ -37,7 +37,7 @@ object PIAPreRemedySummary {
     )
 
   private def row(answers: UserAnswers, taxYear: TaxYear)(implicit
-                                                          messages: Messages
+    messages: Messages
   ): Option[SummaryListRow] =
     answers.get(preaaquestions.PIAPreRemedyPage(taxYear)).map { answer =>
       SummaryListRowViewModel(

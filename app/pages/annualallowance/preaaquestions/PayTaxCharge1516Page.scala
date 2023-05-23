@@ -36,22 +36,22 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
       case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
-      case Some(true) => routes.CheckYourAnswersController.onPageLoad // TODO once subsequent page is implemented
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  => routes.CheckYourAnswersController.onPageLoad // TODO once subsequent page is implemented
+      case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
       case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
-      case Some(true) => routes.CheckYourAnswersController.onPageLoad
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  => routes.CheckYourAnswersController.onPageLoad
+      case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
         case false => super.cleanup(value, userAnswers)
-        case true =>
+        case true  =>
           userAnswers
             .remove(PIAPreRemedyPage(TaxYear2012))
             .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(TaxYear2013)))

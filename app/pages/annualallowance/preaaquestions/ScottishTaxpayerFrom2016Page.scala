@@ -33,22 +33,22 @@ case object ScottishTaxpayerFrom2016Page extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ScottishTaxpayerFrom2016Page) match {
-      case Some(true) => preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode)
+      case Some(true)  => preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode)
       case Some(false) => preAARoutes.PayingPublicPensionSchemeController.onPageLoad(NormalMode)
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ScottishTaxpayerFrom2016Page) match {
-      case Some(true) => preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(CheckMode)
+      case Some(true)  => preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(CheckMode)
       case Some(false) => routes.CheckYourAnswersController.onPageLoad
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true => super.cleanup(value, userAnswers)
+        case true  => super.cleanup(value, userAnswers)
         case false => userAnswers.remove(WhichYearsScottishTaxpayerPage)
       }
       .getOrElse(super.cleanup(value, userAnswers))

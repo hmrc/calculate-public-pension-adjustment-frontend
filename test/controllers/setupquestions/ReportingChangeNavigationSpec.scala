@@ -98,7 +98,9 @@ class ReportingChangeNavigationSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual preAARoutes.ScottishTaxpayerFrom2016Controller
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -150,7 +152,9 @@ class ReportingChangeNavigationSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(CheckMode).url
+        redirectLocation(result).value mustEqual preAARoutes.ScottishTaxpayerFrom2016Controller
+          .onPageLoad(CheckMode)
+          .url
       }
     }
 

@@ -33,7 +33,7 @@ case class PIAPreRemedyPage(taxYear: TaxYear) extends QuestionPage[BigInt] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PIAPreRemedyPage(taxYear)) match {
       case Some(_) => navigateInNormalMode
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   private def navigateInNormalMode =
@@ -46,6 +46,6 @@ case class PIAPreRemedyPage(taxYear: TaxYear) extends QuestionPage[BigInt] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PIAPreRemedyPage(taxYear)) match {
       case Some(_) => routes.CheckYourAnswersController.onPageLoad
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
