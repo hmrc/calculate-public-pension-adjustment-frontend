@@ -54,7 +54,7 @@ class CheckYourAnswersController @Inject() (
       PayTaxCharge1516Summary.row(request.userAnswers),
       HadBenefitCrystallisationEventSummary.row(request.userAnswers),
       DateOfBenefitCrystallisationEventSummary.row(request.userAnswers)
-      ) ++ PIAPreRemedySummary.rows(request.userAnswers)
+    ) ++ PIAPreRemedySummary.rows(request.userAnswers)
 
     Ok(view(SummaryListViewModel(rows.flatten)))
   }

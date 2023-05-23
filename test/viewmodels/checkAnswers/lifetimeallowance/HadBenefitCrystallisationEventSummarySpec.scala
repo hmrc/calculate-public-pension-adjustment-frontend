@@ -20,7 +20,6 @@ import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.PayingPublicPensionSchemePage
 import pages.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
@@ -44,7 +43,10 @@ class HadBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matcher
           key = "hadBenefitCrystallisationEvent.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url
+            )
               .withVisuallyHiddenText("hadBenefitCrystallisationEvent.change.hidden")
           )
         )
@@ -63,7 +65,10 @@ class HadBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matcher
           key = "hadBenefitCrystallisationEvent.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url
+            )
               .withVisuallyHiddenText("hadBenefitCrystallisationEvent.change.hidden")
           )
         )

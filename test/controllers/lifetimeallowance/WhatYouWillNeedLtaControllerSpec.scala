@@ -19,7 +19,7 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.WhatYouWillNeedLtaView
+import views.html.lifetimeallowance.WhatYouWillNeedLtaView
 
 class WhatYouWillNeedLtaControllerSpec extends SpecBase {
 

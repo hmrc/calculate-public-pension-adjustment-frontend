@@ -19,7 +19,6 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
-import forms.ReportingChangeFormProvider
 import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -37,11 +36,8 @@ class HadBenefitCrystallisationEventNavigationSpec extends SpecBase with Mockito
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new ReportingChangeFormProvider()
-  val form         = formProvider()
-
   lazy val normalRoute = ltaRoutes.HadBenefitCrystallisationEventController.onPageLoad(NormalMode).url
-  lazy val checkRoute = ltaRoutes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url
+  lazy val checkRoute  = ltaRoutes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url
 
   "HadBenefitCrystallisationEvent Controller" - {
 
@@ -51,10 +47,12 @@ class HadBenefitCrystallisationEventNavigationSpec extends SpecBase with Mockito
 
       running(application) {
         val request = aFakePostRequest(normalRoute, "true")
-        val result = route(application, request).value
+        val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual ltaRoutes.DateOfBenefitCrystallisationEventController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -78,7 +76,7 @@ class HadBenefitCrystallisationEventNavigationSpec extends SpecBase with Mockito
 
       running(application) {
         val request = aFakePostRequest(checkRoute, "true")
-        val result = route(application, request).value
+        val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual generalRoutes.CheckYourAnswersController.onPageLoad.url

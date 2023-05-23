@@ -19,9 +19,8 @@ package generators
 import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
-import pages.lifetimeallowance.{DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
-import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
+import pages.lifetimeallowance.{DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
 import pages.setupquestions.ReportingChangePage
 import play.api.libs.json.{JsValue, Json}
 

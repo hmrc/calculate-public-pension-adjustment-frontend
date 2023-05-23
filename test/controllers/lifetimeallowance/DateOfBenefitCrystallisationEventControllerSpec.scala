@@ -17,8 +17,8 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.{routes => generalRoutes}
 import forms.LifetimeAllowance.DateOfBenefitCrystallisationEventFormProvider
 import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -30,9 +30,9 @@ import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.DateOfBenefitCrystallisationEventView
+import views.html.lifetimeallowance.DateOfBenefitCrystallisationEventView
 
-import java.time.{LocalDate, ZoneOffset}
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with MockitoSugar {

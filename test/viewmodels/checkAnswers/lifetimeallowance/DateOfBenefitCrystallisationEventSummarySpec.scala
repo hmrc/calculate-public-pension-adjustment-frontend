@@ -19,7 +19,6 @@ package viewmodels.checkAnswers.lifetimeallowance
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.StopPayingPublicPensionPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
@@ -48,7 +47,10 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
           key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
           value = ValueViewModel(Text("6 April 2015").toString()),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.DateOfBenefitCrystallisationEventController.onPageLoad(CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.DateOfBenefitCrystallisationEventController.onPageLoad(CheckMode).url
+            )
               .withVisuallyHiddenText("dateOfBenefitCrystallisationEvent.change.hidden")
           )
         )

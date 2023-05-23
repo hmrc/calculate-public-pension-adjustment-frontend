@@ -58,6 +58,8 @@ unauthorised.heading = cy: You can’t access this service with this account
 
 annualAllowance.caption = cy: Annual allowance
 
+lifetimeAllowance.caption = cy: Lifetime allowance
+
 savingsStatement.title = cy: Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.heading = cy: Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.yes = cy: Yes
@@ -171,6 +173,7 @@ flexibleAccessStartDate.hint1 = cy: You can find this on your flexible access st
 flexibleAccessStartDate.hint2 = cy: For example 25 2 2015
 flexibleAccessStartDate.change.hidden = cy: When did you start flexibly accessing defined contribution pension savings?
 flexibleAccessStartDate.error.required.all = cy: Enter the date that you flexibly accessed your defined contribution pension savings as day, month, year
+
 flexibleAccessStartDate.error.invalid = cy: Enter a real date for the date that you flexibly accessed your defined contribution pension savings as day, month, year
 flexibleAccessStartDate.error.required = cy:  The date must include {0}
 flexibleAccessStartDate.error.required.two = cy: The date must include {0} and {1}
@@ -181,18 +184,52 @@ payTaxCharge1516.title = cy: Did you pay a tax charge between 6 April 2015 and 5
 payTaxCharge1516.heading = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
 payTaxCharge1516.hint = cy: You can find this on a bank statement.
 payTaxCharge1516.checkYourAnswersLabel = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
-payTaxCharge1516.error.required = cy: Select yes if you paid a tax charge between 6 April 2015 to 5 April 2016
+payTaxCharge1516.error.required = cy: Select yes if you paid a tax charge between 6 April 2015 and 5 April 2016
 payTaxCharge1516.change.hidden = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
 
-pIAPreRemedy.title = cy: What was your pension input amount from 6 April {0} to 5 April {1}?
-pIAPreRemedy.heading = cy: What was your pension input amount from 6 April {0} to 5 April {1}?
+pIAPreRemedy.title = cy: What was your pension input amount between 6 April {0} and 5 April {1}?
+pIAPreRemedy.heading = cy: What was your pension input amount between 6 April {0} and 5 April {1}?
 pIAPreRemedy.hint1 = cy: This is the total pension contributions during a period, such as 6 April 2020 to 5 April 2021.
 pIAPreRemedy.hint2 = cy: Amounts must be rounded down to the nearest pound, for example 2300.
-pIAPreRemedy.checkYourAnswersLabel.2012 = cy: What was your pension input amount from 6 April 2012 to 5 April 2013?
-pIAPreRemedy.checkYourAnswersLabel.2013 = cy: What was your pension input amount from 6 April 2013 to 5 April 2014?
-pIAPreRemedy.checkYourAnswersLabel.2014 = cy: What was your pension input amount from 6 April 2014 to 5 April 2015?
+pIAPreRemedy.checkYourAnswersLabel.2012 = cy: What was your pension input amount between 6 April 2012 and 5 April 2013?
+pIAPreRemedy.checkYourAnswersLabel.2013 = cy: What was your pension input amount between 6 April 2013 and 5 April 2014?
+pIAPreRemedy.checkYourAnswersLabel.2014 = cy: What was your pension input amount between 6 April 2014 and 5 April 2015?
 pIAPreRemedy.error.nonNumeric = cy: You have entered non-numerical characters for your pension input amount. You must enter numerical characters
 pIAPreRemedy.error.required = cy: Enter an amount for pension input amount in the space provided
 pIAPreRemedy.error.wholeNumber = cy: You have not entered a whole number for your pension input amount. You cannot use decimals.
 pIAPreRemedy.error.outOfRange = cy: You have entered too many characters for your pension input amount. The maximum number of characters you can enter is 12
-pIAPreRemedy.change.hidden = cy: What was your pension input amount from 6 April {0} to 5 April {1}??
+pIAPreRemedy.change.hidden = cy: What was your pension input amount between 6 April {0} and 5 April {1}?
+
+whatYouWillNeedLta.title = cy: Lifetime allowance
+whatYouWillNeedLta.heading = cy: Lifetime allowance
+whatYouWillNeedLta.message1 = cy: This is the most amount you can draw from pensions in your lifetime without paying extra tax.
+whatYouWillNeedLta.message2 = cy: You will need to have details of any:
+whatYouWillNeedLta.list1 = cy: changes in your lifetime allowance percentage during or after the remedy period
+whatYouWillNeedLta.list2 = cy: lifetime allowance protections
+whatYouWillNeedLta.list3 = cy: previous lifetime allowance charges during or after the remedy period or in 2022 to 2023
+
+hadBenefitCrystallisationEvent.title = cy: Have you had a benefit crystallisation event in your pension?
+hadBenefitCrystallisationEvent.heading = cy: Have you had a benefit crystallisation event in your pension?
+hadBenefitCrystallisationEvent.checkYourAnswersLabel = cy: Have you had a benefit crystallisation event in your pension?
+hadBenefitCrystallisationEvent.error.required = cy: Select yes if you have had a benefit crystallisation event in your pension
+hadBenefitCrystallisationEvent.change.hidden = cy: HadBenefitCrystallisationEvent
+hadBenefitCrystallisationEvent.hint = cy: Benefit crystallisation events are tests done each time you draw from a pension. This makes sure a tax charge is applied if the amount taken out is more than the lifetime allowance.
+hadBenefitCrystallisationEvent.hint2 = cy: Say if a benefit crystallisation event happened in your public service pension after 1 April 2015.
+
+dateOfBenefitCrystallisationEvent.title = cy: What was the date of the benefit crystallisation event?
+dateOfBenefitCrystallisationEvent.heading = cy: What was the date of the benefit crystallisation event?
+dateOfBenefitCrystallisationEvent.hint1 = cy: You can find this on your benefit crystallisation event statement.
+dateOfBenefitCrystallisationEvent.hint2 = cy: For example 25 5 2015.
+dateOfBenefitCrystallisationEvent.checkYourAnswersLabel = cy: What was the date of the benefit crystallisation event?
+dateOfBenefitCrystallisationEvent.error.required.all = cy: Enter the date of your benefit crystallisation event into the spaces provided as day, month, year
+dateOfBenefitCrystallisationEvent.error.required.two = cy: Enter a real date for your benefit crystallisation event into the spaces provided as day, month, year
+dateOfBenefitCrystallisationEvent.error.required = cy: Enter a real date for your benefit crystallisation event into the spaces provided as day, month, year
+dateOfBenefitCrystallisationEvent.error.invalid = cy: Enter a real date for your benefit crystallisation event into the spaces provided as day, month, year
+dateOfBenefitCrystallisationEvent.change.hidden = cy: What was the date of the benefit crystallisation event?
+dateOfBenefitCrystallisationEvent.error.min = cy: You have entered a pre-remedy date your benefit crystallisation event, it must be within the remedy period 6 April 2015 to 5 April 2022
+dateOfBenefitCrystallisationEvent.error.max = cy: You have entered a future date your benefit crystallisation event, it must be within the remedy period 6 April 2015 to 5 April 2022
+
+notAbleToUseThisServiceLta.title = cy: Not able to use this service
+notAbleToUseThisServiceLta.heading = cy: Not able to use this service
+notAbleToUseThisServiceLta.message1 = cy: You are not able to use this service for your lifetime allowance.
+notAbleToUseThisServiceLta.message2 = cy: If you have not had a benefit crystallisation event, you have not accessed your pension. This means that will not have paid a lifetime allowance charge.
