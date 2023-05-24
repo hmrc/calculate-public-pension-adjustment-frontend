@@ -28,7 +28,7 @@ class DateOfBenefitCrystallisationEventFormProvider @Inject() extends Mappings {
   def apply(): Form[LocalDate] = {
 
     val min                               = LocalDate.of(2015, 4, 6)
-    val max                               = LocalDate.of(2019, 4, 5)
+    val max                               = LocalDate.of(2022, 4, 5)
     val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
 
     Form(
