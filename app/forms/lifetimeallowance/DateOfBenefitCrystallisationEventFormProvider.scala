@@ -38,8 +38,8 @@ class DateOfBenefitCrystallisationEventFormProvider @Inject() extends Mappings {
         twoRequiredKey = "dateOfBenefitCrystallisationEvent.error.required.two",
         requiredKey = "dateOfBenefitCrystallisationEvent.error.required"
       )
-        .verifying(maxDate(max, "flexibleAccessStartDate.error.max", max.format(dateTimeFormat)))
-        .verifying(minDate(min, "flexibleAccessStartDate.error.min", min.format(dateTimeFormat)))
+        .verifying(maxDate(max, "dateOfBenefitCrystallisationEvent.error.max", max.format(dateTimeFormat)))
+        .verifying(minDate(min, "dateOfBenefitCrystallisationEvent.error.min", min.format(dateTimeFormat)))
     )
   }
 }
