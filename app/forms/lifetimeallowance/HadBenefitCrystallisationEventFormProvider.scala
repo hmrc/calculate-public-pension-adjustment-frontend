@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package forms.LifetimeAllowance
+package forms.lifetimeallowance
 
 import forms.mappings.Mappings
 import play.api.data.Form

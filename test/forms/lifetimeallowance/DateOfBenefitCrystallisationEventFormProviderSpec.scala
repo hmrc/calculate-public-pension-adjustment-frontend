@@ -14,32 +14,25 @@
  * limitations under the License.
  */
 
-package forms.LifetimeAllowance
+package forms.lifetimeallowance
 
-import forms.behaviours.BooleanFieldBehaviours
-import play.api.data.FormError
+import forms.behaviours.DateBehaviours
 
-class HadBenefitCrystallisationEventFormProviderSpec extends BooleanFieldBehaviours {
+import java.time.LocalDate
 
-  val requiredKey = "hadBenefitCrystallisationEvent.error.required"
-  val invalidKey  = "error.boolean"
+class DateOfBenefitCrystallisationEventFormProviderSpec extends DateBehaviours {
 
-  val form = new HadBenefitCrystallisationEventFormProvider()()
+  val form = new DateOfBenefitCrystallisationEventFormProvider()()
 
   ".value" - {
 
-    val fieldName = "value"
-
-    behave like booleanField(
-      form,
-      fieldName,
-      invalidError = FormError(fieldName, invalidKey)
+    val validData = datesBetween(
+      min = LocalDate.of(2015, 4, 6),
+      max = LocalDate.of(2019, 4, 5)
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like dateField(form, "value", validData)
+
+    behave like mandatoryDateField(form, "value", "dateOfBenefitCrystallisationEvent.error.required.all")
   }
 }

@@ -19,7 +19,7 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
-import forms.LifetimeAllowance.DateOfBenefitCrystallisationEventFormProvider
+import forms.lifetimeallowance.DateOfBenefitCrystallisationEventFormProvider
 import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when

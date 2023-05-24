@@ -17,7 +17,7 @@
 package controllers.lifetimeallowance
 
 import controllers.actions._
-import forms.LifetimeAllowance.HadBenefitCrystallisationEventFormProvider
+import forms.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
 import models.Mode
 import pages.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.i18n.{I18nSupport, MessagesApi}
