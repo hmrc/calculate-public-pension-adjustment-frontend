@@ -86,3 +86,17 @@ GET        /pia-pre-remedy/:taxYear                     controllers.annualallowa
 POST       /pia-pre-remedy/:taxYear                     controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = NormalMode, taxYear: TaxYear)
 GET        /change-pia-pre-remedy/:taxYear              controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = CheckMode,taxYear: TaxYear)
 POST       /change-pia-pre-remedy/:taxYear              controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = CheckMode, taxYear: TaxYear)
+
+GET        /what-you-will-need-lta                       controllers.lifetimeallowance.WhatYouWillNeedLtaController.onPageLoad()
+
+GET        /had-benefit-crystallisation-event            controllers.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
+POST       /had-benefit-crystallisation-event            controllers.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
+GET        /change-had-benefit-crystallisation-event     controllers.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-had-benefit-crystallisation-event     controllers.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
+
+GET        /date-of-benefit-crystallisation-event                  controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
+POST       /date-of-benefit-crystallisation-event                  controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
+GET        /change-date-of-benefit-crystallisation-event           controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-date-of-benefit-crystallisation-event           controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
+
+GET        /not-able-to-use-this-service-lta                       controllers.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()

@@ -58,6 +58,8 @@ unauthorised.heading = You can’t access this service with this account
 
 annualAllowance.caption = Annual allowance
 
+lifetimeAllowance.caption = Lifetime allowance
+
 savingsStatement.title = Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.heading = Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.yes = Yes
@@ -84,7 +86,7 @@ reasonForResubmission.hint = Provide the reason for your resubmission in the spa
 
 ineligible.title = Check your eligibility
 ineligible.heading = Check your eligibility
-ineligible.message = Your are currently unable to use the service.
+ineligible.message = You are currently unable to use the service.
 ineligible.message1 = Unless you have been contacted by HMRC or your Pension Scheme Administrator (PSA) stating you may have been affected by Public Service Pension Remediation, you cannot currently make a calculation.
 ineligible.message2 = You can:
 ineligible.message3 = You can also contact customer services for more information or alternatively, click the link below.
@@ -197,3 +199,37 @@ pIAPreRemedy.error.required = Enter an amount for pension input amount in the sp
 pIAPreRemedy.error.wholeNumber = You have not entered a whole number for your pension input amount. You cannot use decimals.
 pIAPreRemedy.error.outOfRange = You have entered too many characters for your pension input amount. The maximum number of characters you can enter is 12
 pIAPreRemedy.change.hidden = What was your pension input amount between 6 April {0} and 5 April {1}?
+
+whatYouWillNeedLta.title = Lifetime allowance
+whatYouWillNeedLta.heading = Lifetime allowance
+whatYouWillNeedLta.message1 = This is the most amount you can draw from pensions in your lifetime without paying extra tax.
+whatYouWillNeedLta.message2 = You will need to have details of any:
+whatYouWillNeedLta.list1 = changes in your lifetime allowance percentage during or after the remedy period
+whatYouWillNeedLta.list2 = lifetime allowance protections
+whatYouWillNeedLta.list3 = previous lifetime allowance charges during or after the remedy period or in 2022 to 2023
+
+hadBenefitCrystallisationEvent.title = Have you had a benefit crystallisation event in your pension?
+hadBenefitCrystallisationEvent.heading = Have you had a benefit crystallisation event in your pension?
+hadBenefitCrystallisationEvent.checkYourAnswersLabel = Have you had a benefit crystallisation event in your pension?
+hadBenefitCrystallisationEvent.error.required = Select yes if you have had a benefit crystallisation event in your pension
+hadBenefitCrystallisationEvent.change.hidden = HadBenefitCrystallisationEvent
+hadBenefitCrystallisationEvent.hint = Benefit crystallisation events are tests done each time you draw from a pension. This makes sure a tax charge is applied if the amount taken out is more than the lifetime allowance.
+hadBenefitCrystallisationEvent.hint2 = Say if a benefit crystallisation event happened in your public service pension after 1 April 2015.
+
+dateOfBenefitCrystallisationEvent.title = What was the date of the benefit crystallisation event?
+dateOfBenefitCrystallisationEvent.heading = What was the date of the benefit crystallisation event?
+dateOfBenefitCrystallisationEvent.hint1 = You can find this on your benefit crystallisation event statement.
+dateOfBenefitCrystallisationEvent.hint2 = For example 25 5 2015.
+dateOfBenefitCrystallisationEvent.checkYourAnswersLabel = What was the date of the benefit crystallisation event?
+dateOfBenefitCrystallisationEvent.error.required.all = Enter the date of your benefit crystallisation event into the spaces provided as day, month, year
+dateOfBenefitCrystallisationEvent.error.required.two = Enter a real date for your benefit crystallisation event into the spaces provided as day, month, year
+dateOfBenefitCrystallisationEvent.error.required = Enter a real date for your benefit crystallisation event into the spaces provided as day, month, year
+dateOfBenefitCrystallisationEvent.error.invalid = Enter a real date for your benefit crystallisation event into the spaces provided as day, month, year
+dateOfBenefitCrystallisationEvent.change.hidden = What was the date of the benefit crystallisation event?
+dateOfBenefitCrystallisationEvent.error.min = You have entered a pre-remedy date your benefit crystallisation event, it must be within the remedy period 6 April 2015 to 5 April 2022
+dateOfBenefitCrystallisationEvent.error.max = You have entered a future date your benefit crystallisation event, it must be within the remedy period 6 April 2015 to 5 April 2022
+
+notAbleToUseThisServiceLta.title = Not able to use this service
+notAbleToUseThisServiceLta.heading = Not able to use this service
+notAbleToUseThisServiceLta.message1 = You are not able to use this service for your lifetime allowance.
+notAbleToUseThisServiceLta.message2 = If you have not had a benefit crystallisation event, you have not accessed your pension. This means that will not have paid a lifetime allowance charge.

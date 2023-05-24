@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
-package forms
+package forms.lifetimeallowance
 
-import javax.inject.Inject
+import forms.behaviours.DateBehaviours
 
-import forms.mappings.Mappings
-import play.api.data.Form
+import java.time.LocalDate
 
-class ReasonForResubmissionFormProvider @Inject() extends Mappings {
+class DateOfBenefitCrystallisationEventFormProviderSpec extends DateBehaviours {
 
-  def apply(): Form[String] =
-    Form(
-      "value" -> text("reasonForResubmission.error.required")
-        .verifying(maxLength(500, "reasonForResubmission.error.length"))
+  val form = new DateOfBenefitCrystallisationEventFormProvider()()
+
+  ".value" - {
+
+    val validData = datesBetween(
+      min = LocalDate.of(2015, 4, 6),
+      max = LocalDate.of(2022, 4, 5)
     )
+
+    behave like dateField(form, "value", validData)
+
+    behave like mandatoryDateField(form, "value", "dateOfBenefitCrystallisationEvent.error.required.all")
+  }
 }

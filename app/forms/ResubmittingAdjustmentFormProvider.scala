@@ -16,15 +16,15 @@
 
 package forms
 
-import javax.inject.Inject
-
 import forms.mappings.Mappings
 import play.api.data.Form
 
-class SavingsStatementFormProvider @Inject() extends Mappings {
+import javax.inject.Inject
+
+class ResubmittingAdjustmentFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
     Form(
-      "value" -> boolean("savingsStatement.error.required")
+      "value" -> boolean("resubmittingAdjustment.error.required")
     )
 }

@@ -14,54 +14,53 @@
  * limitations under the License.
  */
 
-package controllers.annualallowance.preaaquestions
-
-import java.time.LocalDate
+package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.routes
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
-import forms.annualallowance.preaaquestions.StopPayingPublicPensionFormProvider
+import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.{routes => generalRoutes}
+import forms.lifetimeallowance.DateOfBenefitCrystallisationEventFormProvider
 import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
+import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.annualallowance.preaaquestions.StopPayingPublicPensionView
+import views.html.lifetimeallowance.DateOfBenefitCrystallisationEventView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
-class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
+class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new StopPayingPublicPensionFormProvider()
+  val formProvider = new DateOfBenefitCrystallisationEventFormProvider()
   private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer: LocalDate = LocalDate.of(2015, 4, 6)
+  val validAnswer: LocalDate = LocalDate.of(2016, 4, 6)
 
-  lazy val NormalRoute = preAARoutes.StopPayingPublicPensionController.onPageLoad(NormalMode).url
-  lazy val CheckRoute  = preAARoutes.StopPayingPublicPensionController.onPageLoad(CheckMode).url
+  lazy val normalRoute = ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode).url
+  lazy val checkRoute  = ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(CheckMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
   def getRequest(mode: Mode): FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest(GET, preAARoutes.StopPayingPublicPensionController.onPageLoad(mode).url)
+    FakeRequest(GET, ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(mode).url)
 
   def postRequest(mode: Mode): FakeRequest[AnyContentAsFormUrlEncoded] =
-    FakeRequest(POST, preAARoutes.StopPayingPublicPensionController.onPageLoad(mode).url)
+    FakeRequest(POST, ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(mode).url)
       .withFormUrlEncodedBody(
         "value.day"   -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
         "value.year"  -> validAnswer.getYear.toString
       )
 
-  "StopPayingPublicPension Controller" - {
+  "DateOfBenefitCrystallisationEvent Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
@@ -70,7 +69,7 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val result = route(application, getRequest(NormalMode)).value
 
-        val view = application.injector.instanceOf[StopPayingPublicPensionView]
+        val view = application.injector.instanceOf[DateOfBenefitCrystallisationEventView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(getRequest(NormalMode), messages(application)).toString
@@ -79,12 +78,12 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(StopPayingPublicPensionPage, validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(DateOfBenefitCrystallisationEventPage, validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val view = application.injector.instanceOf[StopPayingPublicPensionView]
+        val view = application.injector.instanceOf[DateOfBenefitCrystallisationEventView]
 
         val result = route(application, getRequest(NormalMode)).value
 
@@ -112,10 +111,11 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val result = route(application, postRequest(NormalMode)).value
 
-        val expectedAnswers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2015, 4, 6)).success.value
+        val expectedAnswers =
+          emptyUserAnswers.set(DateOfBenefitCrystallisationEventPage, LocalDate.of(2016, 4, 6)).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual StopPayingPublicPensionPage
+        redirectLocation(result).value mustEqual DateOfBenefitCrystallisationEventPage
           .navigate(NormalMode, expectedAnswers)
           .url
       }
@@ -137,10 +137,11 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val result = route(application, postRequest(CheckMode)).value
 
-        val expectedAnswers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2015, 4, 6)).success.value
+        val expectedAnswers =
+          emptyUserAnswers.set(DateOfBenefitCrystallisationEventPage, LocalDate.of(2016, 4, 6)).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual StopPayingPublicPensionPage
+        redirectLocation(result).value mustEqual DateOfBenefitCrystallisationEventPage
           .navigate(CheckMode, expectedAnswers)
           .url
       }
@@ -151,13 +152,13 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       val request =
-        FakeRequest(POST, NormalRoute)
+        FakeRequest(POST, normalRoute)
           .withFormUrlEncodedBody(("value", "invalid value"))
 
       running(application) {
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[StopPayingPublicPensionView]
+        val view = application.injector.instanceOf[DateOfBenefitCrystallisationEventView]
 
         val result = route(application, request).value
 
@@ -174,7 +175,7 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, getRequest(NormalMode)).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -186,7 +187,7 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, postRequest(NormalMode)).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
       }
     }
   }

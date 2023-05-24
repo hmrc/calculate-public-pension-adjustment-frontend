@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package forms
+package pages.lifetimeallowance
 
-import javax.inject.Inject
+import pages.behaviours.PageBehaviours
 
-import forms.mappings.Mappings
-import play.api.data.Form
+class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
-class ResubmittingAdjustmentFormProvider @Inject() extends Mappings {
+  "HadBenefitCrystallisationEventPage" - {
 
-  def apply(): Form[Boolean] =
-    Form(
-      "value" -> boolean("resubmittingAdjustment.error.required")
-    )
+    beRetrievable[Boolean](HadBenefitCrystallisationEventPage)
+
+    beSettable[Boolean](HadBenefitCrystallisationEventPage)
+
+    beRemovable[Boolean](HadBenefitCrystallisationEventPage)
+  }
 }
