@@ -115,3 +115,18 @@ POST       /change-pia-pre-remedy/:taxYear              controllers.annualallowa
 
 GET        /task-list                                   controllers.TaskListController.onPageLoad
 POST       /task-list                                   controllers.TaskListController.onSubmit
+
+GET        /lta-protection-or-enhancements              controllers.lifetimeallowance.LtaProtectionOrEnhancementsController.onPageLoad(mode: Mode = NormalMode)
+POST       /lta-protection-or-enhancements              controllers.lifetimeallowance.LtaProtectionOrEnhancementsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-lta-protection-or-enhancements       controllers.lifetimeallowance.LtaProtectionOrEnhancementsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-lta-protection-or-enhancements       controllers.lifetimeallowance.LtaProtectionOrEnhancementsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /protection-type                             controllers.lifetimeallowance.ProtectionTypeController.onPageLoad(mode: Mode = NormalMode)
+POST       /protection-type                             controllers.lifetimeallowance.ProtectionTypeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-protection-type                      controllers.lifetimeallowance.ProtectionTypeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-protection-type                      controllers.lifetimeallowance.ProtectionTypeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /protection-reference                        controllers.lifetimeallowance.ProtectionReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST       /protection-reference                        controllers.lifetimeallowance.ProtectionReferenceController.onSubmit(mode: Mode = NormalMode)
+GET        /change-protection-reference                 controllers.lifetimeallowance.ProtectionReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-protection-reference                 controllers.lifetimeallowance.ProtectionReferenceController.onSubmit(mode: Mode = CheckMode)

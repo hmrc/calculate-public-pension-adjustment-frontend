@@ -20,16 +20,19 @@ import models.UserAnswers
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 import org.scalatest.TryValues
-import pages.lifetimeallowance.{ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
 import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
+import pages.lifetimeallowance._
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersGenerator extends TryValues {
   self: Generators =>
 
   val generators: Seq[Gen[(QuestionPage[_], JsValue)]] =
-    arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] ::
+    arbitrary[(ProtectionReferencePage.type, JsValue)] ::
+      arbitrary[(ProtectionTypePage.type, JsValue)] ::
+      arbitrary[(LtaProtectionOrEnhancementsPage.type, JsValue)] ::
+      arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] ::
       arbitrary[(HadBenefitCrystallisationEventPage.type, JsValue)] ::
       arbitrary[(WhichYearsScottishTaxpayerPage.type, JsValue)] ::
       arbitrary[(ScottishTaxpayerFrom2016Page.type, JsValue)] ::
