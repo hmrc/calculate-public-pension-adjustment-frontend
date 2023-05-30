@@ -192,6 +192,10 @@ changeInTaxCharge.heading = cy: Has the change led to a new, increased or decrea
 changeInTaxCharge.message = cy: Any amount that goes over the level of lifetime allowance available is taxed under the lifetime allowance charge.
 changeInTaxCharge.error.required = cy: Select if the change led to a new, increased or decreased tax charge
 changeInTaxCharge.checkYourAnswersLabel = cy: Has the change led to a new, increased or decreased tax charge?
+changeInTaxCharge.option1 = cy: New charge
+changeInTaxCharge.option2 = cy: Increased charge
+changeInTaxCharge.option3 = cy: Decreased charge
+changeInTaxCharge.option4 = cy: None
 
 payTaxCharge1516.title = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
 payTaxCharge1516.heading = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?

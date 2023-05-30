@@ -24,10 +24,10 @@ sealed trait ChangeInTaxCharge
 
 object ChangeInTaxCharge extends Enumerable.Implicits {
 
-  case object NewCharge extends WithName("New charge") with ChangeInTaxCharge
-  case object IncreasedCharge extends WithName("Increased charge") with ChangeInTaxCharge
-  case object DecreasedCharge extends WithName("Decreased charge") with ChangeInTaxCharge
-  case object None extends WithName("None") with ChangeInTaxCharge
+  case object NewCharge extends WithName(s"changeInTaxCharge.option1") with ChangeInTaxCharge
+  case object IncreasedCharge extends WithName(s"changeInTaxCharge.option2") with ChangeInTaxCharge
+  case object DecreasedCharge extends WithName(s"changeInTaxCharge.option3") with ChangeInTaxCharge
+  case object None extends WithName(s"changeInTaxCharge.option4") with ChangeInTaxCharge
 
   val values: Seq[ChangeInTaxCharge] = Seq(
     NewCharge,

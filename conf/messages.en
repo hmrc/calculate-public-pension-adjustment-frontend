@@ -57,9 +57,7 @@ unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
 annualAllowance.caption = Annual allowance
-LifetimeAllowance.caption = Lifetime allowance
-
-lifetimeAllowance.caption = Lifetime allowance
+lifetimeAllowance.caption= Lifetime allowance
 
 savingsStatement.title = Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.heading = Have you received a remedial service statement from your public service pension scheme?
@@ -193,6 +191,10 @@ changeInTaxCharge.heading = Has the change led to a new, increased or decreased 
 changeInTaxCharge.message = Any amount that goes over the level of lifetime allowance available is taxed under the lifetime allowance charge.
 changeInTaxCharge.error.required = Select if the change led to a new, increased or decreased tax charge
 changeInTaxCharge.checkYourAnswersLabel = Has the change led to a new, increased or decreased tax charge?
+changeInTaxCharge.option1 = New charge
+changeInTaxCharge.option2 = Increased charge
+changeInTaxCharge.option3 = Decreased charge
+changeInTaxCharge.option4 = None
 
 payTaxCharge1516.title = Did you pay a tax charge between 6 April 2015 and 5 April 2016?
 payTaxCharge1516.heading = Did you pay a tax charge between 6 April 2015 and 5 April 2016?
