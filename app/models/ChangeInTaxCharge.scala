@@ -16,7 +16,7 @@
 
 package models
 
-import play.api.i18n.{Messages}
+import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
@@ -37,15 +37,14 @@ object ChangeInTaxCharge extends Enumerable.Implicits {
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = {
-    val normalOptions = values.zipWithIndex.map {
-      case (value, index) =>
-        RadioItem(
-          content = Text(messages(s"${value.toString}")),
-          value = Some(value.toString),
-          id = Some(s"value_$index")
-        )
+    val normalOptions = values.zipWithIndex.map { case (value, index) =>
+      RadioItem(
+        content = Text(messages(s"${value.toString}")),
+        value = Some(value.toString),
+        id = Some(s"value_$index")
+      )
     }
-    val orOption = RadioItem(
+    val orOption      = RadioItem(
       id = Some(messages(s"divider")),
       disabled = true,
       divider = Some(messages(s"divider"))
@@ -56,4 +55,3 @@ object ChangeInTaxCharge extends Enumerable.Implicits {
   implicit val enumerable: Enumerable[ChangeInTaxCharge] =
     Enumerable(values.map(v => v.toString -> v): _*)
 }
-
