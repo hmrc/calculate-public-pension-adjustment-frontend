@@ -16,6 +16,7 @@
 
 package pages.lifetimeallowance
 
+import controllers.routes
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -33,5 +34,5 @@ case object DateOfBenefitCrystallisationEventPage extends QuestionPage[LocalDate
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode)
   override protected def navigateInCheckMode(answers: UserAnswers): Call  =
-    ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(CheckMode)
+    routes.CheckYourAnswersController.onPageLoad
 }

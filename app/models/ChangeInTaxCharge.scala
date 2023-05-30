@@ -45,9 +45,9 @@ object ChangeInTaxCharge extends Enumerable.Implicits {
       )
     }
     val orOption      = RadioItem(
-      id = Some(messages(s"divider")),
+      id = Some(messages("divider")),
       disabled = true,
-      divider = Some(messages(s"divider"))
+      divider = Some(messages("divider"))
     )
     normalOptions.slice(0, 3) ++ Seq(orOption) ++ normalOptions.slice(3, normalOptions.length)
   }

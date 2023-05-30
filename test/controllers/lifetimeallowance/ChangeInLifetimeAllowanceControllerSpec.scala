@@ -126,7 +126,7 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.ChangeInTaxChargeController.onPageLoad(CheckMode).url
+        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
       }
     }
 

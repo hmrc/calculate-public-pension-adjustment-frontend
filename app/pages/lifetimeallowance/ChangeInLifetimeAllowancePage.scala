@@ -40,7 +40,7 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ChangeInLifetimeAllowancePage) match {
-      case Some(true)  => ltaRoutes.ChangeInTaxChargeController.onPageLoad(CheckMode)
+      case Some(true)  => routes.CheckYourAnswersController.onPageLoad
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
