@@ -30,16 +30,18 @@ object ChangeInTaxCharge extends Enumerable.Implicits {
   case object None extends WithName("None") with ChangeInTaxCharge
 
   val values: Seq[ChangeInTaxCharge] = Seq(
-    NewCharge, IncreasedCharge, DecreasedCharge,None
+    NewCharge,
+    IncreasedCharge,
+    DecreasedCharge,
+    None
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
+  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
+    RadioItem(
+      content = Text(messages(s"${value.toString}")),
+      value = Some(value.toString),
+      id = Some(s"value_$index")
+    )
   }
 
   implicit val enumerable: Enumerable[ChangeInTaxCharge] =

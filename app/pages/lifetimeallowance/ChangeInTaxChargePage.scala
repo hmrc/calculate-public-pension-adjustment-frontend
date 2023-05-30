@@ -30,6 +30,6 @@ case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     routes.CheckYourAnswersController.onPageLoad
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers): Call  =
     routes.CheckYourAnswersController.onPageLoad
 }

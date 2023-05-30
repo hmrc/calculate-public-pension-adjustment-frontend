@@ -39,10 +39,10 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   lazy val normalRoute = ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode).url
-  lazy val checkRoute = ltaRoutes.ChangeInTaxChargeController.onPageLoad(CheckMode).url
+  lazy val checkRoute  = ltaRoutes.ChangeInTaxChargeController.onPageLoad(CheckMode).url
 
   val formProvider = new ChangeInTaxChargeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "ChangeInTaxCharge Controller" - {
 
@@ -64,7 +64,8 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ChangeInTaxChargePage, ChangeInTaxCharge.values.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(ChangeInTaxChargePage, ChangeInTaxCharge.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -76,7 +77,10 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ChangeInTaxCharge.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ChangeInTaxCharge.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -101,7 +105,9 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual onwardRoute.url //Change to appropriate route when completed
+        redirectLocation(
+          result
+        ).value mustEqual routes.CheckYourAnswersController.onPageLoad.url // Change to appropriate route when completed
       }
     }
 

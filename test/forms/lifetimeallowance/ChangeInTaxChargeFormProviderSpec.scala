@@ -26,13 +26,13 @@ class ChangeInTaxChargeFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "changeInTaxCharge.error.required"
 
     behave like optionsField[ChangeInTaxCharge](
       form,
       fieldName,
-      validValues  = ChangeInTaxCharge.values,
+      validValues = ChangeInTaxCharge.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

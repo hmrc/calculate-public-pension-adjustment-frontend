@@ -29,4 +29,9 @@ trait ModelGenerators {
     Arbitrary {
       Gen.oneOf(WhichYearsScottishTaxpayer.values)
     }
+
+  implicit lazy val arbitraryChangeInTaxCharge: Arbitrary[ChangeInTaxCharge] =
+    Arbitrary {
+      Gen.oneOf(ChangeInTaxCharge.values.toSeq)
+    }
 }

@@ -32,10 +32,8 @@ class ChangeInTaxChargeSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
 
       val gen = Gen.oneOf(ChangeInTaxCharge.values.toSeq)
 
-      forAll(gen) {
-        changeInTaxCharge =>
-
-          JsString(changeInTaxCharge.toString).validate[ChangeInTaxCharge].asOpt.value mustEqual changeInTaxCharge
+      forAll(gen) { changeInTaxCharge =>
+        JsString(changeInTaxCharge.toString).validate[ChangeInTaxCharge].asOpt.value mustEqual changeInTaxCharge
       }
     }
 
@@ -43,10 +41,8 @@ class ChangeInTaxChargeSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
 
       val gen = arbitrary[String] suchThat (!ChangeInTaxCharge.values.map(_.toString).contains(_))
 
-      forAll(gen) {
-        invalidValue =>
-
-          JsString(invalidValue).validate[ChangeInTaxCharge] mustEqual JsError("error.invalid")
+      forAll(gen) { invalidValue =>
+        JsString(invalidValue).validate[ChangeInTaxCharge] mustEqual JsError("error.invalid")
       }
     }
 
@@ -54,10 +50,8 @@ class ChangeInTaxChargeSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
 
       val gen = Gen.oneOf(ChangeInTaxCharge.values.toSeq)
 
-      forAll(gen) {
-        changeInTaxCharge =>
-
-          Json.toJson(changeInTaxCharge) mustEqual JsString(changeInTaxCharge.toString)
+      forAll(gen) { changeInTaxCharge =>
+        Json.toJson(changeInTaxCharge) mustEqual JsString(changeInTaxCharge.toString)
       }
     }
   }

@@ -39,10 +39,10 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ChangeInLifetimeAllowanceFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val normalRoute = ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode).url
-  lazy val checkRoute = ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(CheckMode).url
+  lazy val checkRoute  = ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(CheckMode).url
 
   "ChangeInLifetimeAllowance Controller" - {
 
@@ -101,7 +101,7 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode)
+        redirectLocation(result).value mustEqual ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode).url
       }
     }
 
@@ -126,11 +126,11 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode)
+        redirectLocation(result).value mustEqual ltaRoutes.ChangeInTaxChargeController.onPageLoad(CheckMode).url
       }
     }
 
-    "must redirect to NotAbleToUseThisServicePage when user answer No" in {
+    "must redirect to NotAbleToUseThisServicePage when user answer No in normal mode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -151,7 +151,32 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+        redirectLocation(result).value mustEqual ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url
+      }
+    }
+
+    "must redirect to NotAbleToUseThisServicePage when user answer No in check mode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, checkRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url
       }
     }
 

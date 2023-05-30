@@ -20,7 +20,7 @@ import models.UserAnswers
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 import org.scalatest.TryValues
-import pages.lifetimeallowance.{DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
+import pages.lifetimeallowance.{ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
 import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import play.api.libs.json.{JsValue, Json}
@@ -33,6 +33,7 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(HadBenefitCrystallisationEventPage.type, JsValue)] ::
       arbitrary[(WhichYearsScottishTaxpayerPage.type, JsValue)] ::
       arbitrary[(ScottishTaxpayerFrom2016Page.type, JsValue)] ::
+      arbitrary[(ChangeInTaxChargePage.type, JsValue)] ::
       Nil
 
   implicit lazy val arbitraryUserData: Arbitrary[UserAnswers] = {
