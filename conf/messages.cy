@@ -57,8 +57,8 @@ unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account
 
 annualAllowance.caption = cy: Annual allowance
-
 lifetimeAllowance.caption = cy: Lifetime allowance
+divider = cy:or
 
 savingsStatement.title = cy: Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.heading = cy: Have you received a remedial service statement from your public service pension scheme?

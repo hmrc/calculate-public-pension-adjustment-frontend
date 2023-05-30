@@ -58,6 +58,7 @@ unauthorised.heading = You can’t access this service with this account
 
 annualAllowance.caption = Annual allowance
 lifetimeAllowance.caption= Lifetime allowance
+divider = or
 
 savingsStatement.title = Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.heading = Have you received a remedial service statement from your public service pension scheme?
