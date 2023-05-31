@@ -16,7 +16,6 @@
 
 package pages.setupquestions
 
-import controllers.routes
 import controllers.setupquestions.{routes => setupRoutes}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -33,5 +32,5 @@ case object ReasonForResubmissionPage extends QuestionPage[String] {
     setupRoutes.ReportingChangeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad
+    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
 }

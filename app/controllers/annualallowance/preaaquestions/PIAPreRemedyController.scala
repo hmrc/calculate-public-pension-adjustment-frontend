@@ -19,7 +19,7 @@ package controllers.annualallowance.preaaquestions
 import controllers.actions._
 import forms.annualallowance.preaaquestions.PIAPreRemedyFormProvider
 import javax.inject.Inject
-import models.{Mode, TaxYear}
+import models.{Mode, PIAPreRemedyTaxYear}
 import pages.annualallowance.preaaquestions
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -44,7 +44,7 @@ class PIAPreRemedyController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, taxYear: TaxYear): Action[AnyContent] =
+  def onPageLoad(mode: Mode, taxYear: PIAPreRemedyTaxYear): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
       val preparedForm = request.userAnswers.get(preaaquestions.PIAPreRemedyPage(taxYear)) match {
         case None        => form
@@ -54,7 +54,7 @@ class PIAPreRemedyController @Inject() (
       Ok(view(preparedForm, mode, taxYear))
     }
 
-  def onSubmit(mode: Mode, taxYear: TaxYear): Action[AnyContent] =
+  def onSubmit(mode: Mode, taxYear: PIAPreRemedyTaxYear): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()

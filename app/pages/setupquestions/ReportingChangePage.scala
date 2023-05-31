@@ -17,9 +17,8 @@
 package pages.setupquestions
 
 import controllers.routes
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
-import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
-import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
+import models.tasklist.PreAASection
+import models.{ReportingChange, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -33,20 +32,13 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
   override def toString: String = "reportingChange"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
-    case Some(set) if set.contains(ReportingChange.AnnualAllowance)  =>
-      preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
-    case Some(set) if !set.contains(ReportingChange.AnnualAllowance) => routes.CheckYourAnswersController.onPageLoad
-    case _                                                           => routes.JourneyRecoveryController.onPageLoad(None)
+    case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
+    case _       => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
-    case Some(set) if set.contains(ReportingChange.AnnualAllowance)  =>
-      answers.get(ScottishTaxpayerFrom2016Page) match {
-        case None    => preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(CheckMode)
-        case Some(_) => routes.CheckYourAnswersController.onPageLoad
-      }
-    case Some(set) if !set.contains(ReportingChange.AnnualAllowance) => routes.CheckYourAnswersController.onPageLoad
-    case _                                                           => routes.JourneyRecoveryController.onPageLoad(None)
+    case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
+    case _       => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override def cleanup(value: Option[Set[ReportingChange]], userAnswers: UserAnswers): Try[UserAnswers] =
@@ -54,7 +46,7 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
       .map { set =>
         if (set.contains(ReportingChange.AnnualAllowance)) {
           super.cleanup(value, userAnswers)
-        } else { userAnswers.remove(ScottishTaxpayerFrom2016Page).flatMap(_.remove(WhichYearsScottishTaxpayerPage)) }
+        } else { Try(PreAASection.removeAllUserAnswers(userAnswers)) }
       }
       .getOrElse(super.cleanup(value, userAnswers))
 

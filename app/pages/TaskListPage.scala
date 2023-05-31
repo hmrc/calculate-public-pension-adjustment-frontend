@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package models
+package pages
 
-trait TaxYear {
-  def period: Period
-}
+object TaskListPage {}

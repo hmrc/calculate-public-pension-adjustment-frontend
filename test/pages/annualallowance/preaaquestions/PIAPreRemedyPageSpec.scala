@@ -16,8 +16,8 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
-import models.{CheckMode, NormalMode, TaxYear, UserAnswers}
+import models.PIAPreRemedyTaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
+import models.{CheckMode, NormalMode, PIAPreRemedyTaxYear, UserAnswers}
 import pages.annualallowance.preaaquestions
 import pages.behaviours.PageBehaviours
 import play.api.mvc.Call
@@ -26,11 +26,11 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
   "PIAPreRemedyPage" - {
 
-    beRetrievable[BigInt](PIAPreRemedyPage(TaxYear(1)))
+    beRetrievable[BigInt](PIAPreRemedyPage(PIAPreRemedyTaxYear(1)))
 
-    beSettable[BigInt](preaaquestions.PIAPreRemedyPage(TaxYear(1)))
+    beSettable[BigInt](preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(1)))
 
-    beRemovable[BigInt](preaaquestions.PIAPreRemedyPage(TaxYear(1)))
+    beRemovable[BigInt](preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(1)))
 
     "normal mode navigation" - {
 
@@ -55,21 +55,25 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = preaaquestions.PIAPreRemedyPage(TaxYear2014).navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/check-your-answers")
+        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
       }
 
       "next page should be journey recovery if tax year is before pre remedy window" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(TaxYear(2011)), BigInt(1)).get
+        val userAnswers =
+          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(2011)), BigInt(1)).get
 
-        val nextPageUrl: Call = preaaquestions.PIAPreRemedyPage(TaxYear(2011)).navigate(NormalMode, userAnswers)
+        val nextPageUrl: Call =
+          preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(2011)).navigate(NormalMode, userAnswers)
 
         check(nextPageUrl, "/there-is-a-problem")
       }
 
       "next page should be JourneyRecovery if tax year is after pre remedy window" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(TaxYear(2015)), BigInt(1)).get
+        val userAnswers =
+          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(2015)), BigInt(1)).get
 
-        val nextPageUrl: Call = preaaquestions.PIAPreRemedyPage(TaxYear(2015)).navigate(NormalMode, userAnswers)
+        val nextPageUrl: Call =
+          preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(2015)).navigate(NormalMode, userAnswers)
 
         check(nextPageUrl, "/there-is-a-problem")
       }
@@ -82,7 +86,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = preaaquestions.PIAPreRemedyPage(TaxYear2012).navigate(CheckMode, userAnswers)
 
-        check(nextPageUrl, "/check-your-answers")
+        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
       }
 
       "next page should be JourneyRecovery if the user answers does not contain data for the relevant year" in {

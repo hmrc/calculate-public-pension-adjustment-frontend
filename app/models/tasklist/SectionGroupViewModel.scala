@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package models
+package models.tasklist
 
-trait TaxYear {
-  def period: Period
-}
+case class SectionGroupViewModel(displayNumber: Int, heading: String, sections: Seq[SectionViewModel])

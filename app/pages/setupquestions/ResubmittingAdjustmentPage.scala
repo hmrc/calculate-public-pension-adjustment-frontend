@@ -41,7 +41,7 @@ case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ResubmittingAdjustmentPage) match {
       case Some(true)  => setupRoutes.ReasonForResubmissionController.onPageLoad(CheckMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad
+      case Some(false) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

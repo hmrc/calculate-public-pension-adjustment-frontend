@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-package models
+package models.tasklist
 
-trait TaxYear {
-  def period: Period
-}
+import play.api.mvc.Call
+
+final case class SectionViewModel(name: String, call: Call, status: SectionStatus)

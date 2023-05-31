@@ -17,7 +17,6 @@
 package controllers.setupquestions
 
 import base.SpecBase
-import controllers.routes
 import controllers.setupquestions.{routes => setupRoutes}
 import forms.SavingsStatementFormProvider
 import models.{CheckMode, NormalMode, UserAnswers}
@@ -195,7 +194,9 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url
       }
     }
 

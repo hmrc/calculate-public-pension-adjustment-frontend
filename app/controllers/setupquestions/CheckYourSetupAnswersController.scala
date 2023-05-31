@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.setupquestions
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import models.{NormalMode, ReportingChange}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.annualallowance.preaaquestions.{DefinedContributionPensionSchemeSummary, FlexibleAccessStartDateSummary, FlexiblyAccessedPensionSummary, PIAPreRemedySummary, PayTaxCharge1516Summary, PayingPublicPensionSchemeSummary, ScottishTaxpayerFrom2016Summary, StopPayingPublicPensionSummary, WhichYearsScottishTaxpayerSummary}
 import viewmodels.checkAnswers.setupquestions.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary}
-import viewmodels.checkAnswers.lifetimeallowance.{ChangeInLifetimeAllowanceSummary, ChangeInTaxChargeSummary, DateOfBenefitCrystallisationEventSummary, HadBenefitCrystallisationEventSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
+import pages.setupquestions.ReportingChangePage
+import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 
-class CheckYourAnswersController @Inject() (
+class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
@@ -43,21 +44,18 @@ class CheckYourAnswersController @Inject() (
       SavingsStatementSummary.row(request.userAnswers),
       ResubmittingAdjustmentSummary.row(request.userAnswers),
       ReasonForResubmissionSummary.row(request.userAnswers),
-      ReportingChangeSummary.row(request.userAnswers),
-      ScottishTaxpayerFrom2016Summary.row(request.userAnswers),
-      WhichYearsScottishTaxpayerSummary.row(request.userAnswers),
-      PayingPublicPensionSchemeSummary.row(request.userAnswers),
-      StopPayingPublicPensionSummary.row(request.userAnswers),
-      DefinedContributionPensionSchemeSummary.row(request.userAnswers),
-      FlexiblyAccessedPensionSummary.row(request.userAnswers),
-      FlexibleAccessStartDateSummary.row(request.userAnswers),
-      PayTaxCharge1516Summary.row(request.userAnswers),
-      HadBenefitCrystallisationEventSummary.row(request.userAnswers),
-      DateOfBenefitCrystallisationEventSummary.row(request.userAnswers),
-      ChangeInLifetimeAllowanceSummary.row(request.userAnswers),
-      ChangeInTaxChargeSummary.row(request.userAnswers)
-    ) ++ PIAPreRemedySummary.rows(request.userAnswers)
+      ReportingChangeSummary.row(request.userAnswers)
+    )
 
-    Ok(view(SummaryListViewModel(rows.flatten)))
+    val continueURL = request.userAnswers.get(ReportingChangePage) match {
+      case Some(set) if set.contains(ReportingChange.AnnualAllowance) =>
+        request.userAnswers.get(ScottishTaxpayerFrom2016Page) match {
+          case None    =>
+            controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
+          case Some(_) => controllers.routes.TaskListController.onPageLoad
+        }
+      case _                                                          => controllers.routes.TaskListController.onPageLoad
+    }
+    Ok(view(continueURL, SummaryListViewModel(rows.flatten)))
   }
 }

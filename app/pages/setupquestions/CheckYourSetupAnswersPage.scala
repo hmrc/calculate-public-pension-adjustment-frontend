@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
-package models
+package pages.setupquestions
 
-trait TaxYear {
-  def period: Period
+import models.UserAnswers
+import pages.Page
+import play.api.mvc.Call
+
+object CheckYourSetupAnswersPage extends Page {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
 }

@@ -16,7 +16,7 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
+import models.PIAPreRemedyTaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.annualallowance.preaaquestions
 import pages.behaviours.PageBehaviours
@@ -39,7 +39,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = PayTaxCharge1516Page.navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/check-your-answers")
+        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
       }
 
       "next page should be PIAPreRemedy for 2012 when user did not pay a tax charge in 2015/2016" in {
@@ -58,7 +58,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = PayTaxCharge1516Page.navigate(CheckMode, userAnswers)
 
-        check(nextPageUrl, "/check-your-answers")
+        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
       }
 
       "next page should be PIAPreRemedy for 2012 when user did not pay a tax charge in 2015/2016" in {

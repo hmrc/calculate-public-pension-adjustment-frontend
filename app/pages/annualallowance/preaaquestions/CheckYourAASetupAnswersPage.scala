@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
-package models
+package pages.annualallowance.preaaquestions
 
-trait TaxYear {
-  def period: Period
+import models.UserAnswers
+import pages.Page
+import play.api.mvc.Call
+
+object CheckYourAASetupAnswersPage extends Page {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
 }

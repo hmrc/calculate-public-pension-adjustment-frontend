@@ -16,8 +16,8 @@
 
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
-import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
-import models.{CheckMode, TaxYear, UserAnswers}
+import models.PIAPreRemedyTaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
+import models.{CheckMode, PIAPreRemedyTaxYear, UserAnswers}
 import pages.annualallowance.preaaquestions
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -36,7 +36,7 @@ object PIAPreRemedySummary {
       row(answers, TaxYear2014)
     )
 
-  private def row(answers: UserAnswers, taxYear: TaxYear)(implicit
+  private def row(answers: UserAnswers, taxYear: PIAPreRemedyTaxYear)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
     answers.get(preaaquestions.PIAPreRemedyPage(taxYear)).map { answer =>
