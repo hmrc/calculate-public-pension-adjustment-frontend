@@ -39,7 +39,11 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val list = SummaryListViewModel(Seq.empty)
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(controllers.routes.TaskListController.onPageLoad, list)(
+        contentAsString(result) mustEqual view(
+          "checkYourAnswers.setup.subHeading",
+          controllers.routes.TaskListController.onPageLoad,
+          list
+        )(
           request,
           messages(application)
         ).toString

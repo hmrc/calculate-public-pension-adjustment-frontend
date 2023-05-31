@@ -42,6 +42,12 @@ class CheckYourLTAAnswersController @Inject() (
       DateOfBenefitCrystallisationEventSummary.row(request.userAnswers)
     )
 
-    Ok(view(controllers.routes.TaskListController.onPageLoad, SummaryListViewModel(rows.flatten)))
+    Ok(
+      view(
+        "checkYourAnswers.lta.subHeading",
+        controllers.routes.TaskListController.onPageLoad,
+        SummaryListViewModel(rows.flatten)
+      )
+    )
   }
 }

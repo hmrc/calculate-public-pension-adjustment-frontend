@@ -37,7 +37,7 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
     answers.get(PayTaxCharge1516Page) match {
       case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
       case Some(true)  =>
-        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad // TODO once subsequent page is implemented
+        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

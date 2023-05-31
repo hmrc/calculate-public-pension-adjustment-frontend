@@ -118,7 +118,6 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
         val expectedAnswers =
           emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
 
-        println(contentAsString(result))
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual preaaquestions
           .PIAPreRemedyPage(validPreRemedyTaxYear)

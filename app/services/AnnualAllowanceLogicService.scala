@@ -32,9 +32,6 @@ class AnnualAllowanceLogicService @Inject() (
       case _                                          => false
     }
 
-  private def remedyPeriodsFor(exitDate: LocalDate): Seq[Period] =
-    allRemedyPeriods.filter(period => !period.start.isAfter(exitDate))
-
   def relevantPeriods(answers: UserAnswers): Seq[Period] = {
 
     val exitDateOption = answers.get(StopPayingPublicPensionPage)
@@ -44,6 +41,9 @@ class AnnualAllowanceLogicService @Inject() (
       case None           => allRemedyPeriods
     }
   }
+
+  private def remedyPeriodsFor(exitDate: LocalDate): Seq[Period] =
+    allRemedyPeriods.filter(period => !period.start.isAfter(exitDate))
 
   private def allRemedyPeriods =
     Seq(

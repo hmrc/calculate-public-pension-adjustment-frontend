@@ -24,19 +24,10 @@ final case class TaskListViewModel(
   calculationResult: Option[String] = None
 ) {
 
-  def allGroups = Seq(Some(startupGroup), aaGroup, ltaGroup, adminGroup)
+  def allGroups: Seq[Option[SectionGroupViewModel]] = Seq(Some(startupGroup), aaGroup, ltaGroup, adminGroup)
 
-  def sectionCount() =
-    count(_ => true)
+  def completedGroupCount: Int =
+    allGroups.filter(groupOption => groupOption.isDefined).count(group => group.get.isComplete)
 
-  def completedSectionCount() =
-    count(section => section.status == SectionStatus.Completed)
-
-  private def count(predicate: SectionViewModel => Boolean) =
-    allGroups.map { group =>
-      group match {
-        case Some(value) => value.sections.filter(predicate).size
-        case None        => 0
-      }
-    }.sum
+  def groupCount: Int = allGroups.count(groupOption => groupOption.isDefined)
 }

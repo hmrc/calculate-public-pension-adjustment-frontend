@@ -49,7 +49,7 @@ class TaskListController @Inject() (
 
   def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
-    val allTasksCompleted: Boolean           = taskListViewModel.completedSectionCount() == taskListViewModel.sectionCount()
+    val allTasksCompleted: Boolean           = taskListViewModel.completedGroupCount == taskListViewModel.groupCount
     if (!allTasksCompleted)
       Future.successful(BadRequest(view(form.withGlobalError("tasklist.error.tasksToComplete"), taskListViewModel)))
     else

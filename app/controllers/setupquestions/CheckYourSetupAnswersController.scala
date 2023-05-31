@@ -56,6 +56,6 @@ class CheckYourSetupAnswersController @Inject() (
         }
       case _                                                          => controllers.routes.TaskListController.onPageLoad
     }
-    Ok(view(continueURL, SummaryListViewModel(rows.flatten)))
+    Ok(view("checkYourAnswers.setup.subHeading", continueURL, SummaryListViewModel(rows.flatten)))
   }
 }

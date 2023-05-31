@@ -27,18 +27,18 @@
 @(form: Form[_], taskListViewModel: TaskListViewModel)(implicit request: Request[_], messages: Messages)
 
 @numberOfSections = @{
-    taskListViewModel.sectionCount()
+    taskListViewModel.groupCount
 }
 @completedSections = @{
-    taskListViewModel.completedSectionCount()
+    taskListViewModel.completedGroupCount
 }
 
 @layout(
-    pageTitle = titleNoForm(messages("")),
+    pageTitle = titleNoForm(messages("taskList.title")),
     showBackLink = true
 ) {
 
-    <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
+    <h1 class="govuk-heading-xl">@messages("taskList.heading")</h1>
 
     @if(numberOfSections == completedSections) {
         <h2 class="govuk-heading-m">@messages("taskList.complete")</h2>

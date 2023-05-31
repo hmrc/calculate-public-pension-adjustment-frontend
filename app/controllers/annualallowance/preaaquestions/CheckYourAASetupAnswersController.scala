@@ -48,6 +48,12 @@ class CheckYourAASetupAnswersController @Inject() (
       PayTaxCharge1516Summary.row(request.userAnswers)
     ) ++ PIAPreRemedySummary.rows(request.userAnswers)
 
-    Ok(view(controllers.routes.TaskListController.onPageLoad, SummaryListViewModel(rows.flatten)))
+    Ok(
+      view(
+        "checkYourAnswers.aa.subHeading",
+        controllers.routes.TaskListController.onPageLoad,
+        SummaryListViewModel(rows.flatten)
+      )
+    )
   }
 }
