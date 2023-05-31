@@ -100,3 +100,13 @@ GET        /change-date-of-benefit-crystallisation-event           controllers.l
 POST       /change-date-of-benefit-crystallisation-event           controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
 GET        /not-able-to-use-this-service-lta                       controllers.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
+
+GET        /told-change-in-lta-percentage                controllers.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = NormalMode)
+POST       /told-change-in-lta-percentage                controllers.lifetimeallowance.ChangeInLifetimeAllowanceController.onSubmit(mode: Mode = NormalMode)
+GET        /change-told-change-in-lta-percentage         controllers.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-told-change-in-lta-percentage         controllers.lifetimeallowance.ChangeInLifetimeAllowanceController.onSubmit(mode: Mode = CheckMode)
+
+GET        /percentage-caused-change-in-charge           controllers.lifetimeallowance.ChangeInTaxChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /percentage-caused-change-in-charge           controllers.lifetimeallowance.ChangeInTaxChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-percentage-caused-change-in-charge    controllers.lifetimeallowance.ChangeInTaxChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-percentage-caused-change-in-charge    controllers.lifetimeallowance.ChangeInTaxChargeController.onSubmit(mode: Mode = CheckMode)

@@ -20,7 +20,7 @@ import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
-import pages.lifetimeallowance.{DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
+import pages.lifetimeallowance.{ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
 import pages.setupquestions.ReportingChangePage
 import play.api.libs.json.{JsValue, Json}
 
@@ -66,6 +66,14 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       for {
         page  <- arbitrary[ScottishTaxpayerFrom2016Page.type]
         value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryChangeInTaxChargeUserAnswersEntry: Arbitrary[(ChangeInTaxChargePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ChangeInTaxChargePage.type]
+        value <- arbitrary[ChangeInTaxCharge].map(Json.toJson(_))
       } yield (page, value)
     }
 }

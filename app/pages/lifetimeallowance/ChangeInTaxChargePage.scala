@@ -17,22 +17,19 @@
 package pages.lifetimeallowance
 
 import controllers.routes
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{ChangeInTaxCharge, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-import java.time.LocalDate
-
-case object DateOfBenefitCrystallisationEventPage extends QuestionPage[LocalDate] {
+case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "dateOfBenefitCrystallisationEvent"
+  override def toString: String = "changeInTaxCharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode)
+    routes.CheckYourAnswersController.onPageLoad
   override protected def navigateInCheckMode(answers: UserAnswers): Call  =
     routes.CheckYourAnswersController.onPageLoad
 }

@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package generators
+package forms.lifetimeallowance
 
-import models._
-import org.scalacheck.{Arbitrary, Gen}
+import forms.mappings.Mappings
+import models.ChangeInTaxCharge
+import play.api.data.Form
 
-trait ModelGenerators {
-  implicit lazy val arbitraryReportingChange: Arbitrary[ReportingChange] =
-    Arbitrary {
-      Gen.oneOf(ReportingChange.values)
-    }
+import javax.inject.Inject
 
-  implicit lazy val arbitraryWhichYearsScottishTaxpayer: Arbitrary[WhichYearsScottishTaxpayer] =
-    Arbitrary {
-      Gen.oneOf(WhichYearsScottishTaxpayer.values)
-    }
+class ChangeInTaxChargeFormProvider @Inject() extends Mappings {
 
-  implicit lazy val arbitraryChangeInTaxCharge: Arbitrary[ChangeInTaxCharge] =
-    Arbitrary {
-      Gen.oneOf(ChangeInTaxCharge.values.toSeq)
-    }
+  def apply(): Form[ChangeInTaxCharge] =
+    Form(
+      "value" -> enumerable[ChangeInTaxCharge]("changeInTaxCharge.error.required")
+    )
 }

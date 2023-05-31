@@ -57,8 +57,8 @@ unauthorised.title = cy: You can’t access this service with this account
 unauthorised.heading = cy: You can’t access this service with this account
 
 annualAllowance.caption = cy: Annual allowance
-
 lifetimeAllowance.caption = cy: Lifetime allowance
+divider = cy:or
 
 savingsStatement.title = cy: Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.heading = cy: Have you received a remedial service statement from your public service pension scheme?
@@ -179,6 +179,23 @@ flexibleAccessStartDate.error.required = cy:  The date must include {0}
 flexibleAccessStartDate.error.required.two = cy: The date must include {0} and {1}
 flexibleAccessStartDate.error.min = cy: You have entered a date for the date that you flexibly accessed your defined contribution pension savings before the remedy period, enter a date after 5 April 2015
 flexibleAccessStartDate.error.max = cy: You have entered a future date for the date that you flexibly accessed your defined contribution pension savings, it must be within the remedy period
+
+changeInLifetimeAllowance.title = cy: Have you been told about a change in the lifetime allowance percentage?
+changeInLifetimeAllowance.heading = cy: Have you been told about a change in the lifetime allowance percentage?
+changeInLifetimeAllowance.message = cy: This is the percentage of lifetime allowance used at your benefit crystallisation event.
+changeInLifetimeAllowance.hint = cy: You can find this on a revised benefit crystallisation event statement.
+changeInLifetimeAllowance.error.required = cy:  Select yes if you been told about a change in the lifetime allowance percentage
+changeInLifetimeAllowance.checkYourAnswersLabel = cy: Have you been told about a change in the lifetime allowance percentage?
+
+changeInTaxCharge.title = cy: Has the change led to a new, increased or decreased tax charge?
+changeInTaxCharge.heading = cy: Has the change led to a new, increased or decreased tax charge?
+changeInTaxCharge.message = cy: Any amount that goes over the level of lifetime allowance available is taxed under the lifetime allowance charge.
+changeInTaxCharge.error.required = cy: Select if the change led to a new, increased or decreased tax charge
+changeInTaxCharge.checkYourAnswersLabel = cy: Has the change led to a new, increased or decreased tax charge?
+changeInTaxCharge.option1 = cy: New charge
+changeInTaxCharge.option2 = cy: Increased charge
+changeInTaxCharge.option3 = cy: Decreased charge
+changeInTaxCharge.option4 = cy: None
 
 payTaxCharge1516.title = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
 payTaxCharge1516.heading = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?

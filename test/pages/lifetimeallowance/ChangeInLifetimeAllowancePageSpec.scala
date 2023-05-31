@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package generators
+package pages.lifetimeallowance
 
-import models._
-import org.scalacheck.{Arbitrary, Gen}
+import pages.behaviours.PageBehaviours
 
-trait ModelGenerators {
-  implicit lazy val arbitraryReportingChange: Arbitrary[ReportingChange] =
-    Arbitrary {
-      Gen.oneOf(ReportingChange.values)
-    }
+class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryWhichYearsScottishTaxpayer: Arbitrary[WhichYearsScottishTaxpayer] =
-    Arbitrary {
-      Gen.oneOf(WhichYearsScottishTaxpayer.values)
-    }
+  "ChangeInLifetimeAllowancePage" - {
 
-  implicit lazy val arbitraryChangeInTaxCharge: Arbitrary[ChangeInTaxCharge] =
-    Arbitrary {
-      Gen.oneOf(ChangeInTaxCharge.values.toSeq)
-    }
+    beRetrievable[Boolean](ChangeInLifetimeAllowancePage)
+
+    beSettable[Boolean](ChangeInLifetimeAllowancePage)
+
+    beRemovable[Boolean](ChangeInLifetimeAllowancePage)
+  }
 }
