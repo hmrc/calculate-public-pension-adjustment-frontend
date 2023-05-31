@@ -35,7 +35,7 @@ case object ScottishTaxpayerFrom2016Page extends QuestionPage[Boolean] {
     answers.get(ScottishTaxpayerFrom2016Page) match {
       case Some(true)  => preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode)
       case Some(false) => preAARoutes.PayingPublicPensionSchemeController.onPageLoad(NormalMode)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =

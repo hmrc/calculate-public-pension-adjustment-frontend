@@ -14,6 +14,7 @@ GET         /there-is-a-problem                          controllers.JourneyReco
 
 GET         /check-your-answers-setup                    controllers.setupquestions.CheckYourSetupAnswersController.onPageLoad
 GET         /check-your-answers-annual-allowance-setup   controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad
+GET         /check-your-answers-lta                      controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad
 
 GET         /account/sign-out-survey                     controllers.auth.AuthController.signOut
 GET         /account/sign-out                            controllers.auth.AuthController.signOutNoSurvey

@@ -14,47 +14,34 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.lifetimeallowance
 
+import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.tasklist.TaskListViewModel
-import play.api.data.Form
-import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.TaskListService
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.TaskListView
+import viewmodels.checkAnswers.lifetimeallowance.{DateOfBenefitCrystallisationEventSummary, HadBenefitCrystallisationEventSummary}
+import viewmodels.govuk.summarylist._
+import views.html.CheckYourAnswersView
 
-import javax.inject.Inject
-import scala.concurrent.Future
-
-class TaskListController @Inject() (
+class CheckYourLTAAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: TaskListView,
-  taskListService: TaskListService
+  view: CheckYourAnswersView
 ) extends FrontendBaseController
     with I18nSupport {
 
-  val form = Form("_" -> ignored())
-
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
-    Ok(view(form, taskListViewModel))
-  }
+    val rows: Seq[Option[SummaryListRow]] = Seq(
+      HadBenefitCrystallisationEventSummary.row(request.userAnswers),
+      DateOfBenefitCrystallisationEventSummary.row(request.userAnswers)
+    )
 
-  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
-    val allTasksCompleted: Boolean           = taskListViewModel.completedSectionCount() == taskListViewModel.sectionCount()
-    if (!allTasksCompleted)
-      Future.successful(BadRequest(view(form.withGlobalError("tasklist.error.tasksToComplete"), taskListViewModel)))
-    else
-      Future.successful(
-        Ok(view(form, taskListViewModel.copy(calculationResult = Some("tasklist.calculationSuccess"))))
-      )
+    Ok(view(controllers.routes.TaskListController.onPageLoad, SummaryListViewModel(rows.flatten)))
   }
 }

@@ -112,8 +112,8 @@ class TaskListService @Inject() (
           Seq(
             SectionViewModel(
               "taskList.lta.addDetails",
-              controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad,
-              SectionStatus.NotStarted
+              LTASection.returnTo(answers).navigate(NormalMode, answers),
+              LTASection.status(answers)
             )
           )
         )

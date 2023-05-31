@@ -23,7 +23,6 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers.annualallowance.preaaquestions._
-import viewmodels.checkAnswers.lifetimeallowance.{ChangeInLifetimeAllowanceSummary, ChangeInTaxChargeSummary, DateOfBenefitCrystallisationEventSummary, HadBenefitCrystallisationEventSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -46,11 +45,7 @@ class CheckYourAASetupAnswersController @Inject() (
       DefinedContributionPensionSchemeSummary.row(request.userAnswers),
       FlexiblyAccessedPensionSummary.row(request.userAnswers),
       FlexibleAccessStartDateSummary.row(request.userAnswers),
-      PayTaxCharge1516Summary.row(request.userAnswers),
-      HadBenefitCrystallisationEventSummary.row(request.userAnswers),
-      DateOfBenefitCrystallisationEventSummary.row(request.userAnswers),
-      ChangeInLifetimeAllowanceSummary.row(request.userAnswers),
-      ChangeInTaxChargeSummary.row(request.userAnswers)
+      PayTaxCharge1516Summary.row(request.userAnswers)
     ) ++ PIAPreRemedySummary.rows(request.userAnswers)
 
     Ok(view(controllers.routes.TaskListController.onPageLoad, SummaryListViewModel(rows.flatten)))

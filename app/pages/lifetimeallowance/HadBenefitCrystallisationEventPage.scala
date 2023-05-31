@@ -33,12 +33,12 @@ case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
     answers.get(HadBenefitCrystallisationEventPage) match {
       case Some(true)  => ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode)
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad
-      case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case None        => ltaRoutes.HadBenefitCrystallisationEventController.onPageLoad(NormalMode)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(HadBenefitCrystallisationEventPage) match {
-      case Some(true)  => ???
+      case Some(true)  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad
       case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
