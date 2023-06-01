@@ -18,19 +18,22 @@ package models.tasklist
 
 import models.UserAnswers
 import pages.Page
-import pages.lifetimeallowance.{CheckYourLTAAnswersPage, DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
+import pages.lifetimeallowance.{ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, CheckYourLTAAnswersPage, DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
 
 case object LTASection extends Section {
   override def pages(): Seq[Page] =
-    Seq(HadBenefitCrystallisationEventPage, DateOfBenefitCrystallisationEventPage)
+    Seq(
+      HadBenefitCrystallisationEventPage,
+      DateOfBenefitCrystallisationEventPage,
+      ChangeInLifetimeAllowancePage,
+      ChangeInTaxChargePage
+    )
 
   override def status(answers: UserAnswers): SectionStatus =
     if (answers.get(HadBenefitCrystallisationEventPage).isDefined) {
-      answers.get(HadBenefitCrystallisationEventPage) match {
-        case Some(false)                                                                => SectionStatus.Completed
-        case Some(true) if answers.get(DateOfBenefitCrystallisationEventPage).isDefined =>
-          SectionStatus.Completed
-        case _                                                                          => SectionStatus.InProgress
+      answers.get(ChangeInTaxChargePage) match {
+        case Some(_) => SectionStatus.Completed
+        case None    => SectionStatus.InProgress
       }
     } else SectionStatus.NotStarted
 

@@ -17,8 +17,8 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.routes
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.{routes => generalRoutes}
 import forms.lifetimeallowance.ChangeInTaxChargeFormProvider
 import models.{ChangeInTaxCharge, CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -107,7 +107,7 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual routes.CheckYourAnswersController.onPageLoad.url // Change to appropriate route when completed
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
       }
     }
 
@@ -141,7 +141,7 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -158,7 +158,7 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
       }
     }
   }

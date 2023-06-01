@@ -22,16 +22,12 @@ import models.tasklist.{SectionGroupViewModel, SectionStatus, SectionViewModel, 
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.preaaquestions.PayTaxCharge1516Page
-import play.api.data.Form
-import play.api.data.Forms.ignored
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, _}
 import repositories.SessionRepository
 import services.TaskListService
-import views.html.TaskListView
 
 import scala.concurrent.Future
 class TaskListControllerTest extends SpecBase with MockitoSugar {
