@@ -37,6 +37,7 @@ class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoS
 
   val formProvider = new LifetimeAllowanceChargeAmountFormProvider()
   val form         = formProvider()
+  val form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
