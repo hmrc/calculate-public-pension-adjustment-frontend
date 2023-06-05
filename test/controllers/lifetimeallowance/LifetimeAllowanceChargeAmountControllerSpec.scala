@@ -19,7 +19,7 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import controllers.routes
 import forms.lifetimeallowance.LifetimeAllowanceChargeAmountFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,6 +43,8 @@ class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoS
   val validAnswer = BigInt(0)
 
   lazy val lifetimeAllowanceChargeAmountRoute = controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode).url
+
+  lazy val lifetimeAllowanceChargeAmountCheckRoute = controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(CheckMode).url
 
   "LifetimeAllowanceChargeAmount Controller" - {
 
@@ -158,6 +160,69 @@ class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoS
         status(result) mustEqual SEE_OTHER
 
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to the next page when valid data is submitted in NormalMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, lifetimeAllowanceChargeAmountRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
+
+        val result = route(application, request).value
+
+        val expectedAnswers =
+          emptyUserAnswers.set(LifetimeAllowanceChargeAmountPage, BigInt(1000)).success.value
+
+        println(contentAsString(result))
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual pages.lifetimeallowance
+          .LifetimeAllowanceChargeAmountPage
+          .navigate(NormalMode, expectedAnswers)
+          .url
+      }
+    }
+
+    "must redirect to the next page when valid data is submitted in CheckMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, lifetimeAllowanceChargeAmountCheckRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
+
+        val result = route(application, request).value
+
+        val expectedAnswers =
+          emptyUserAnswers.set(LifetimeAllowanceChargeAmountPage, BigInt(1000)).success.value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual pages.lifetimeallowance
+          .LifetimeAllowanceChargeAmountPage
+          .navigate(CheckMode, expectedAnswers)
+          .url
       }
     }
   }

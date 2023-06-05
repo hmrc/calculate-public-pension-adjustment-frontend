@@ -16,10 +16,13 @@
 
 package pages.lifetimeallowance
 
-import models.{NormalMode, UserAnswers}
+import controllers.routes
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
 
@@ -28,7 +31,23 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
   override def toString: String = "lifetimeAllowanceCharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
+    answers.get(LifetimeAllowanceChargePage) match {
+      case Some(true)  => controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
+      case Some(false) => controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode)
+    }
+
+
   override protected def navigateInCheckMode(answers: UserAnswers): Call  =
-    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+    answers.get(LifetimeAllowanceChargePage) match {
+      case Some(true)  => controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
+      case Some(false) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+    }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case true  => super.cleanup(value, userAnswers)
+        case false => userAnswers.remove(ExcessLifetimeAllowancePaidPage)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }
