@@ -38,7 +38,7 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new LifetimeAllowanceChargeFormProvider()
-  val form         = formProvider()
+  val form = formProvider()
 
   lazy val lifetimeAllowanceChargeRoute =
     controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(NormalMode).url
