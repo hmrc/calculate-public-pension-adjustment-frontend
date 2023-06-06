@@ -26,7 +26,7 @@ import play.api.mvc.Call
 
 case object LtaProtectionOrEnhancementsPage extends QuestionPage[LtaProtectionOrEnhancements] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "lta" \ toString
 
   override def toString: String = "ltaProtectionOrEnhancements"
 

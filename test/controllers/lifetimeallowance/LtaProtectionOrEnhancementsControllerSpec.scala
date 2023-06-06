@@ -146,6 +146,60 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
       }
     }
 
+    "must redirect to the ProtectionType page when valid data is submitted in NormalMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", LtaProtectionOrEnhancements.values.head.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.ProtectionTypeController.onPageLoad(NormalMode).url
+      }
+    }
+
+    "must redirect to the CheckYourLTAAnswers page when valid data is submitted in CheckMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, checkRoute)
+            .withFormUrlEncodedBody(("value", LtaProtectionOrEnhancements.values.head.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+      }
+    }
+
     "must return a Bad Request and errors when invalid data is submitted" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
