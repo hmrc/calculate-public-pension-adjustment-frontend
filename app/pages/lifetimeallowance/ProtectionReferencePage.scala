@@ -20,8 +20,7 @@ import models.UserAnswers
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.routes
-
+import controllers.lifetimeallowance.{routes => ltaRoutes}
 case object ProtectionReferencePage extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ toString
@@ -29,8 +28,8 @@ case object ProtectionReferencePage extends QuestionPage[String] {
   override def toString: String = "protectionReference"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad
+    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad
+    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
 }

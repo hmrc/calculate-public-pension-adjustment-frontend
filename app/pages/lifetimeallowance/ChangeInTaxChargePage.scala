@@ -17,7 +17,7 @@
 package pages.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.{ChangeInTaxCharge, UserAnswers}
+import models.{ChangeInTaxCharge, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -29,7 +29,7 @@ case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
   override def toString: String = "changeInTaxCharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+    ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
   override protected def navigateInCheckMode(answers: UserAnswers): Call  =
     ltaRoutes.CheckYourLTAAnswersController.onPageLoad
 }
