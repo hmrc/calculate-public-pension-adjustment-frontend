@@ -17,9 +17,7 @@
 package controllers.setupquestions
 
 import base.SpecBase
-import controllers.routes
 import controllers.setupquestions.{routes => setupRoutes}
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import forms.setupquestions.ReportingChangeFormProvider
 import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -98,9 +96,9 @@ class ReportingChangeNavigationSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.ScottishTaxpayerFrom2016Controller
-          .onPageLoad(NormalMode)
-          .url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url
       }
     }
 
@@ -116,7 +114,9 @@ class ReportingChangeNavigationSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url
       }
     }
 
@@ -138,7 +138,9 @@ class ReportingChangeNavigationSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url
       }
     }
 
@@ -152,9 +154,9 @@ class ReportingChangeNavigationSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.ScottishTaxpayerFrom2016Controller
-          .onPageLoad(CheckMode)
-          .url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url
       }
     }
 
@@ -170,7 +172,9 @@ class ReportingChangeNavigationSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url
       }
     }
   }

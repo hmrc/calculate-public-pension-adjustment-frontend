@@ -28,9 +28,9 @@
     <p class="govuk-body">@messages("notAbleToUseThisServiceLta.message2")</p>
 
     <p class="govuk-body">
-        @govukButton(
+    @govukButton(
         ButtonViewModel(messages("site.continue"))
-        .asLink(routes.CheckYourAnswersController.onPageLoad.url)
-        )
+                .asLink(controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url)
+    )
     </p>
 }

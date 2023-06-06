@@ -16,8 +16,8 @@
 
 package pages.lifetimeallowance
 
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.{routes => generalRoutes}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -33,12 +33,12 @@ case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
     answers.get(HadBenefitCrystallisationEventPage) match {
       case Some(true)  => ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode)
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad
-      case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case None        => ltaRoutes.HadBenefitCrystallisationEventController.onPageLoad(NormalMode)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(HadBenefitCrystallisationEventPage) match {
-      case Some(true)  => generalRoutes.CheckYourAnswersController.onPageLoad
+      case Some(true)  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad
       case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }

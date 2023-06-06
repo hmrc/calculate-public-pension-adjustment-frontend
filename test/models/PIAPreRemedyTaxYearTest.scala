@@ -18,27 +18,27 @@ package models
 
 import base.SpecBase
 
-class TaxYearTest extends SpecBase {
+class PIAPreRemedyTaxYearTest extends SpecBase {
 
   "TaxYear" - {
 
     "must be constructed when year string is valid" in {
-      val taxYearOption: Option[TaxYear] = TaxYear.fromString("2014-2015")
-      taxYearOption mustBe Some(TaxYear(2014))
+      val taxYearOption: Option[PIAPreRemedyTaxYear] = PIAPreRemedyTaxYear.fromString("2014-2015")
+      taxYearOption mustBe Some(PIAPreRemedyTaxYear(2014))
     }
 
     "must not be constructed when year string is invalid" in {
-      val taxYearOption: Option[TaxYear] = TaxYear.fromString("a-b")
+      val taxYearOption: Option[PIAPreRemedyTaxYear] = PIAPreRemedyTaxYear.fromString("a-b")
       taxYearOption mustBe None
     }
 
     "must not be constructed when year string is not valid range" in {
-      val taxYearOption: Option[TaxYear] = TaxYear.fromString("2014-2016")
+      val taxYearOption: Option[PIAPreRemedyTaxYear] = PIAPreRemedyTaxYear.fromString("2014-2016")
       taxYearOption mustBe None
     }
 
     "must not be constructed when is not a valid pre-remedy year" in {
-      val taxYearOption: Option[TaxYear] = TaxYear.fromString("2011-2012")
+      val taxYearOption: Option[PIAPreRemedyTaxYear] = PIAPreRemedyTaxYear.fromString("2011-2012")
       taxYearOption mustBe None
     }
   }

@@ -12,7 +12,9 @@ GET         /refresh-session                             controllers.KeepAliveCo
 
 GET         /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
-GET         /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
+GET         /check-your-answers-setup                    controllers.setupquestions.CheckYourSetupAnswersController.onPageLoad
+GET         /check-your-answers-annual-allowance-setup   controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad
+GET         /check-your-answers-lta                      controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad
 
 GET         /account/sign-out-survey                     controllers.auth.AuthController.signOut
 GET         /account/sign-out                            controllers.auth.AuthController.signOutNoSurvey
@@ -82,11 +84,6 @@ POST       /pay-tax-charge-from2015-2016                controllers.annualallowa
 GET        /change-pay-tax-charge-from2015-2016         controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onPageLoad(mode: Mode = CheckMode)
 POST       /change-pay-tax-charge-from2015-2016         controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onSubmit(mode: Mode = CheckMode)
 
-GET        /pia-pre-remedy/:taxYear                     controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = NormalMode,taxYear: TaxYear)
-POST       /pia-pre-remedy/:taxYear                     controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = NormalMode, taxYear: TaxYear)
-GET        /change-pia-pre-remedy/:taxYear              controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = CheckMode,taxYear: TaxYear)
-POST       /change-pia-pre-remedy/:taxYear              controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = CheckMode, taxYear: TaxYear)
-
 GET        /what-you-will-need-lta                       controllers.lifetimeallowance.WhatYouWillNeedLtaController.onPageLoad()
 
 GET        /had-benefit-crystallisation-event            controllers.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
@@ -110,3 +107,11 @@ GET        /percentage-caused-change-in-charge           controllers.lifetimeall
 POST       /percentage-caused-change-in-charge           controllers.lifetimeallowance.ChangeInTaxChargeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-percentage-caused-change-in-charge    controllers.lifetimeallowance.ChangeInTaxChargeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-percentage-caused-change-in-charge    controllers.lifetimeallowance.ChangeInTaxChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /pia-pre-remedy/:taxYear                     controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = NormalMode,taxYear: PIAPreRemedyTaxYear)
+POST       /pia-pre-remedy/:taxYear                     controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = NormalMode, taxYear: PIAPreRemedyTaxYear)
+GET        /change-pia-pre-remedy/:taxYear              controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = CheckMode,taxYear: PIAPreRemedyTaxYear)
+POST       /change-pia-pre-remedy/:taxYear              controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = CheckMode, taxYear: PIAPreRemedyTaxYear)
+
+GET        /task-list                                   controllers.TaskListController.onPageLoad
+POST       /task-list                                   controllers.TaskListController.onSubmit

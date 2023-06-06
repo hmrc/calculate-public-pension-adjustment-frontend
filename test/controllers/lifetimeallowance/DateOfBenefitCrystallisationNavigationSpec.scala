@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import controllers.{routes => generalRoutes}
 import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -79,7 +78,7 @@ class HadBenefitCrystallisationEventNavigationSpec extends SpecBase with Mockito
         val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual generalRoutes.CheckYourAnswersController.onPageLoad.url
+        redirectLocation(result).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
       }
     }
 

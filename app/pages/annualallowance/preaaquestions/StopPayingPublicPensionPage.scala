@@ -18,7 +18,6 @@ package pages.annualallowance.preaaquestions
 
 import java.time.LocalDate
 
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -35,5 +34,5 @@ case object StopPayingPublicPensionPage extends QuestionPage[LocalDate] {
     preAARoutes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad
+    controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
 }

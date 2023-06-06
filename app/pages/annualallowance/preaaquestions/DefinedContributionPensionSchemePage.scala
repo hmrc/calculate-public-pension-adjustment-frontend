@@ -42,7 +42,7 @@ case object DefinedContributionPensionSchemePage extends QuestionPage[Boolean] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(DefinedContributionPensionSchemePage) match {
       case Some(true)  => preAARoutes.FlexiblyAccessedPensionController.onPageLoad(CheckMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad
+      case Some(false) => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

@@ -16,8 +16,6 @@
 
 package pages.setupquestions
 
-import controllers.routes
-import controllers.setupquestions.{routes => setupRoutes}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -30,14 +28,14 @@ case object SavingsStatementPage extends QuestionPage[Boolean] {
   override def toString: String = "savingsStatement"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
-    case Some(true)  => setupRoutes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-    case Some(false) => setupRoutes.IneligibleController.onPageLoad
-    case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    case Some(true)  => controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
+    case Some(false) => controllers.setupquestions.routes.IneligibleController.onPageLoad
+    case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
-    case Some(true)  => routes.CheckYourAnswersController.onPageLoad
-    case Some(false) => setupRoutes.IneligibleController.onPageLoad
-    case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    case Some(true)  => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
+    case Some(false) => controllers.setupquestions.routes.IneligibleController.onPageLoad
+    case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
   }
 }

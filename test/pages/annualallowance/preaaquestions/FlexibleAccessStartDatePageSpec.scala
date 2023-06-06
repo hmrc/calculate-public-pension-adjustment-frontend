@@ -57,13 +57,11 @@ class FlexibleAccessStartDatePageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = FlexibleAccessStartDatePage.navigate(CheckMode, userAnswers)
 
-        check(nextPageUrl, "/check-your-answers")
+        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
       }
     }
 
-    def check(nextPageUrl: Call, expectedPath: String) = {
-      println(s"nextPageUrl:$nextPageUrl")
+    def check(nextPageUrl: Call, expectedPath: String) =
       nextPageUrl.url.endsWith(expectedPath) must be(true)
-    }
   }
 }

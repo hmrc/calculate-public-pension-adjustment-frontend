@@ -16,49 +16,6 @@
 
 package models
 
-import play.api.mvc.PathBindable
-
-import scala.util.matching.Regex
-
-case class TaxYear(value: Int)
-
-object TaxYear {
-
-  private val pattern: Regex = """(\d{4})-(\d{4})""".r.anchored
-
-  val TaxYear2012: TaxYear = TaxYear(2012)
-  val TaxYear2013: TaxYear = TaxYear(2013)
-  val TaxYear2014: TaxYear = TaxYear(2014)
-
-  val PreRemedyTaxYears = List(
-    TaxYear2012,
-    TaxYear2013,
-    TaxYear2014
-  )
-
-  def isValidTaxYear(fromYear: Int, toYear: Int) =
-    PreRemedyTaxYears.contains(TaxYear(fromYear)) && toYear == fromYear + 1
-
-  def fromString(string: String): Option[TaxYear] =
-    string match {
-      case pattern(fromYear, toYear) =>
-        if (isValidTaxYear(fromYear.toInt, toYear.toInt)) {
-          Some(TaxYear(fromYear.toInt))
-        } else None
-      case _                         =>
-        None
-    }
-
-  implicit def indexPathBindable(implicit intBinder: PathBindable[Int]): PathBindable[TaxYear] =
-    new PathBindable[TaxYear] {
-
-      override def bind(key: String, taxYearString: String): Either[String, TaxYear] =
-        fromString(taxYearString) match {
-          case Some(taxYear) => Right(taxYear)
-          case None          => Left("Invalid tax year")
-        }
-
-      override def unbind(key: String, taxYear: TaxYear): String =
-        intBinder.unbind(key, taxYear.value) + "-" + intBinder.unbind(key, taxYear.value + 1)
-    }
+trait TaxYear {
+  def period: Period
 }

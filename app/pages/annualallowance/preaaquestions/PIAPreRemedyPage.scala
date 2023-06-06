@@ -18,13 +18,13 @@ package pages.annualallowance.preaaquestions
 
 import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
-import models.TaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
-import models.{NormalMode, TaxYear, UserAnswers}
+import models.PIAPreRemedyTaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
+import models.{NormalMode, PIAPreRemedyTaxYear, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class PIAPreRemedyPage(taxYear: TaxYear) extends QuestionPage[BigInt] {
+case class PIAPreRemedyPage(taxYear: PIAPreRemedyTaxYear) extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ taxYear.value.toString \ toString
 
@@ -38,14 +38,14 @@ case class PIAPreRemedyPage(taxYear: TaxYear) extends QuestionPage[BigInt] {
 
   private def navigateInNormalMode =
     if (taxYear == TaxYear2012 || taxYear == TaxYear2013) {
-      preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear(taxYear.value + 1))
+      preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, PIAPreRemedyTaxYear(taxYear.value + 1))
     } else if (taxYear == TaxYear2014) {
-      routes.CheckYourAnswersController.onPageLoad
+      controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
     } else routes.JourneyRecoveryController.onPageLoad(None)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PIAPreRemedyPage(taxYear)) match {
-      case Some(_) => routes.CheckYourAnswersController.onPageLoad
+      case Some(_) => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
