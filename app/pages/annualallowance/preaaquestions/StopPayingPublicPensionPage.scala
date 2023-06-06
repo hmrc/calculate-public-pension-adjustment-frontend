@@ -16,13 +16,15 @@
 
 package pages.annualallowance.preaaquestions
 
-import java.time.LocalDate
-
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
-import models.{NormalMode, UserAnswers}
+import models.{NormalMode, Period, UserAnswers, UserAnswersPeriod}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import services.PeriodService
+
+import java.time.LocalDate
+import scala.util.Try
 
 case object StopPayingPublicPensionPage extends QuestionPage[LocalDate] {
 
@@ -35,4 +37,15 @@ case object StopPayingPublicPensionPage extends QuestionPage[LocalDate] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+
+  override def cleanup(value: Option[LocalDate], answers: UserAnswers): Try[UserAnswers] = {
+    val periodsToCleanup = PeriodService.notRelevantPeriods(answers)
+    Try(cleanup(answers, periodsToCleanup))
+  }
+
+  def cleanup(answers: UserAnswers, periods: Seq[Period]): UserAnswers =
+    periods.headOption match {
+      case Some(period) => cleanup(answers.remove(UserAnswersPeriod(period)).get, periods.tail)
+      case None         => answers
+    }
 }

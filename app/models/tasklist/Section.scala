@@ -28,8 +28,16 @@ trait Section {
   def checkYourAnswersPage: Page
 
   def remove(answers: UserAnswers, forPages: Seq[Page]): UserAnswers =
-    if (forPages.headOption.isDefined) {
-      remove(answers.remove(forPages.head.asInstanceOf[Settable[Any]]).get, forPages.tail)
+    if (forPages.nonEmpty) {
+      val page: Page = forPages.head
+
+      val updatedAnswers =
+        page match {
+          case settablePage: Settable[_] => answers.remove(settablePage).get
+          case _                         => answers
+        }
+
+      remove(updatedAnswers, forPages.tail)
     } else answers
 
   def returnTo(answers: UserAnswers): Page =

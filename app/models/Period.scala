@@ -17,12 +17,13 @@
 package models
 
 import play.api.libs.json._
+import play.api.mvc.PathBindable
 
 import java.time.LocalDate
 import scala.util.{Failure, Success, Try}
 
 sealed trait Period {
-
+  def isAAPeriod: Boolean = start.isAfter(Period._2015.end)
   def start: LocalDate
   def end: LocalDate
 }
@@ -104,4 +105,27 @@ object Period {
         }
     }
 
+  def fromString(string: String): Option[Period] =
+    string match {
+      case _2016PreAlignment.toString  => Some(_2016PreAlignment)
+      case _2016PostAlignment.toString => Some(_2016PostAlignment)
+      case yearString                  =>
+        Try(yearString.toInt) match {
+          case Success(year) if year >= 2013 && year <= 2023 => Some(Year(year))
+          case _                                             => None
+        }
+    }
+
+  implicit def indexPathBindable(implicit stringBinder: PathBindable[String]): PathBindable[Period] =
+    new PathBindable[Period] {
+
+      override def bind(key: String, periodString: String): Either[String, Period] =
+        fromString(periodString) match {
+          case Some(taxYear) => Right(taxYear)
+          case None          => Left("Invalid tax year")
+        }
+
+      override def unbind(key: String, period: Period): String =
+        stringBinder.unbind(key, period.toString)
+    }
 }

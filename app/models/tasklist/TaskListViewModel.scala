@@ -17,14 +17,14 @@
 package models.tasklist
 
 final case class TaskListViewModel(
-  startupGroup: SectionGroupViewModel,
+  setupGroup: SectionGroupViewModel,
   aaGroup: Option[SectionGroupViewModel],
   ltaGroup: Option[SectionGroupViewModel],
   adminGroup: Option[SectionGroupViewModel],
   calculationResult: Option[String] = None
 ) {
 
-  def allGroups: Seq[Option[SectionGroupViewModel]] = Seq(Some(startupGroup), aaGroup, ltaGroup, adminGroup)
+  def allGroups: Seq[Option[SectionGroupViewModel]] = Seq(Some(setupGroup), aaGroup, ltaGroup, adminGroup)
 
   def completedGroupCount: Int =
     allGroups.filter(groupOption => groupOption.isDefined).count(group => group.get.isComplete)

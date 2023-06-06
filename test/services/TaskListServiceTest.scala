@@ -27,7 +27,26 @@ import scala.util.Try
 
 class TaskListServiceTest extends SpecBase {
 
-  val taskListService: TaskListService = new TaskListService(new AnnualAllowanceLogicService)
+  val taskListService: TaskListService = new TaskListService
+
+  "Annual allowance reporting" - {
+
+    " is required when specified in UserAnswers" in {
+
+      val reportingChangeWithAA: Set[ReportingChange] = Set(AnnualAllowance)
+      val answers                                     = emptyUserAnswers.set(ReportingChangePage, reportingChangeWithAA)
+
+      taskListService.isRequired(answers.get, ReportingChange.AnnualAllowance) must be(true)
+    }
+
+    "is not required when not specified in UserAnswers" in {
+
+      val reportingChangeWithoutAA: Set[ReportingChange] = Set(LifetimeAllowance)
+      val answers                                        = emptyUserAnswers.set(ReportingChangePage, reportingChangeWithoutAA)
+
+      taskListService.isRequired(answers.get, ReportingChange.AnnualAllowance) must be(false)
+    }
+  }
 
   "when the view model is constructed" - {
 
@@ -37,7 +56,7 @@ class TaskListServiceTest extends SpecBase {
 
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
 
-      taskListViewModel.startupGroup mustNot be(null)
+      taskListViewModel.setupGroup mustNot be(null)
       taskListViewModel.aaGroup.isDefined    must be(true)
       taskListViewModel.ltaGroup.isDefined   must be(true)
       taskListViewModel.adminGroup.isDefined must be(false)
@@ -49,7 +68,7 @@ class TaskListServiceTest extends SpecBase {
 
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
 
-      taskListViewModel.startupGroup.displayNumber must be(1)
+      taskListViewModel.setupGroup.displayNumber   must be(1)
       taskListViewModel.ltaGroup.get.displayNumber must be(2)
     }
 
@@ -59,10 +78,10 @@ class TaskListServiceTest extends SpecBase {
 
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
 
-      taskListViewModel.startupGroup.heading   must be("taskList.startupGroupHeading")
-      taskListViewModel.aaGroup.get.heading    must be("taskList.aaGroupHeading")
-      taskListViewModel.ltaGroup.get.heading   must be("taskList.ltaGroupHeading")
-      taskListViewModel.adminGroup.get.heading must be("taskList.adminGroupHeading")
+      taskListViewModel.setupGroup.heading     must be("taskList.setup.groupHeading")
+      taskListViewModel.aaGroup.get.heading    must be("taskList.aa.groupHeading")
+      taskListViewModel.ltaGroup.get.heading   must be("taskList.lta.groupHeading")
+      taskListViewModel.adminGroup.get.heading must be("taskList.admin.groupHeading")
     }
 
     "sections must be fully populated" in {
@@ -71,7 +90,7 @@ class TaskListServiceTest extends SpecBase {
 
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
 
-      taskListViewModel.startupGroup.sections.size mustBe 1
+      taskListViewModel.setupGroup.sections.size mustBe 1
       taskListViewModel.aaGroup.get.sections.size mustBe 10 // one for each of the remedy periods plus one for the setup questions
       taskListViewModel.ltaGroup.get.sections.size mustBe 1
       taskListViewModel.adminGroup.get.sections.size mustBe 1

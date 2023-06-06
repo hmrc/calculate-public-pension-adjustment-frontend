@@ -103,4 +103,9 @@ trait PageBehaviours extends SpecBase with ScalaCheckPropertyChecks with Generat
   def beSettable[A]: BeSettable[A] = new BeSettable[A]
 
   def beRemovable[A]: BeRemovable[A] = new BeRemovable[A]
+
+  def checkNavigation(nextUrl: String, expectedUrl: String) = {
+    val urlWithNoContext = nextUrl.replace("/public-pension-adjustment", "")
+    urlWithNoContext must be(expectedUrl)
+  }
 }
