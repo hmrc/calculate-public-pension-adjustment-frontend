@@ -16,9 +16,8 @@
 
 package pages.lifetimeallowance
 
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.LtaProtectionOrEnhancements.{Both, Enhancements, Protection}
+import controllers.{routes => generalRoutes}
 import models.{LtaProtectionOrEnhancements, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath

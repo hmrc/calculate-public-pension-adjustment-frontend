@@ -21,6 +21,7 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+
 case object ProtectionReferencePage extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ "lta" \ toString
