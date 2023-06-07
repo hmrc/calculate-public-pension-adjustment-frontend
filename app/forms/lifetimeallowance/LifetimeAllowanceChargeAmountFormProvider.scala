@@ -28,6 +28,6 @@ class LifetimeAllowanceChargeAmountFormProvider @Inject() extends Mappings {
         "lifetimeAllowanceChargeAmount.error.required",
         "lifetimeAllowanceChargeAmount.error.wholeNumber",
         "lifetimeAllowanceChargeAmount.error.nonNumeric")
-          .verifying(inRange[BigInt](0, BigInt("1000000000000"), "lifetimeAllowanceChargeAmount.error.outOfRange"))
+          .verifying(inRange[BigInt](0, BigInt("999999999"), "lifetimeAllowanceChargeAmount.error.outOfRange"))
     )
 }

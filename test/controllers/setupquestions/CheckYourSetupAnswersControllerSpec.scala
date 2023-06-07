@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.setupquestions
 
 import base.SpecBase
+import controllers.routes
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
 
-class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
+class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
   "Check Your Answers Controller" - {
 

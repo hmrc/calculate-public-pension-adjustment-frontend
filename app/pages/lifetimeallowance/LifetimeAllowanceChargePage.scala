@@ -16,7 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.routes
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -34,6 +33,7 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
     answers.get(LifetimeAllowanceChargePage) match {
       case Some(true)  => controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
       case Some(false) => controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
 
@@ -41,6 +41,7 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
     answers.get(LifetimeAllowanceChargePage) match {
       case Some(true)  => controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
       case Some(false) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =

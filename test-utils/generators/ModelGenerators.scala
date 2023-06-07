@@ -36,13 +36,14 @@ trait ModelGenerators {
       Gen.oneOf(LtaProtectionOrEnhancements.values.toSeq)
     }
 
+  implicit lazy val arbitraryReportingChange: Arbitrary[ReportingChange] =
+    Arbitrary {
+      Gen.oneOf(ReportingChange.values)
+    }
+
   implicit lazy val arbitraryExcessLifetimeAllowancePaid: Arbitrary[ExcessLifetimeAllowancePaid] =
     Arbitrary {
       Gen.oneOf(ExcessLifetimeAllowancePaid.values.toSeq)
-    }
-  implicit lazy val arbitraryReportingChange: Arbitrary[ReportingChange]                         =
-    Arbitrary {
-      Gen.oneOf(ReportingChange.values)
     }
 
   implicit lazy val arbitraryWhichYearsScottishTaxpayer: Arbitrary[WhichYearsScottishTaxpayer] =
