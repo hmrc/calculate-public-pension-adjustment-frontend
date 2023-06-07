@@ -20,11 +20,36 @@ import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
-import pages.lifetimeallowance.{ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
+import pages.lifetimeallowance._
 import pages.setupquestions.ReportingChangePage
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+
+  implicit lazy val arbitraryProtectionReferenceUserAnswersEntry: Arbitrary[(ProtectionReferencePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ProtectionReferencePage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryProtectionTypeUserAnswersEntry: Arbitrary[(ProtectionTypePage.type, JsValue)]   =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ProtectionTypePage.type]
+        value <- arbitrary[ProtectionType].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryLtaProtectionOrEnhancementsUserAnswersEntry
+    : Arbitrary[(LtaProtectionOrEnhancementsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[LtaProtectionOrEnhancementsPage.type]
+        value <- arbitrary[LtaProtectionOrEnhancements].map(Json.toJson(_))
+      } yield (page, value)
+    }
 
   implicit lazy val arbitraryDateOfBenefitCrystallisationEventUserAnswersEntry
     : Arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] =

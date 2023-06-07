@@ -20,7 +20,17 @@ import models._
 import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
-  implicit lazy val arbitraryReportingChange: Arbitrary[ReportingChange] =
+
+  implicit lazy val arbitraryProtectionType: Arbitrary[ProtectionType] =
+    Arbitrary {
+      Gen.oneOf(ProtectionType.values.toSeq)
+    }
+
+  implicit lazy val arbitraryLtaProtectionOrEnhancements: Arbitrary[LtaProtectionOrEnhancements] =
+    Arbitrary {
+      Gen.oneOf(LtaProtectionOrEnhancements.values.toSeq)
+    }
+  implicit lazy val arbitraryReportingChange: Arbitrary[ReportingChange]                         =
     Arbitrary {
       Gen.oneOf(ReportingChange.values)
     }

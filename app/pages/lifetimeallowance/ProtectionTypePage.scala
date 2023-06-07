@@ -17,19 +17,27 @@
 package pages.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.{ChangeInTaxCharge, NormalMode, UserAnswers}
+import controllers.{routes => generalRoutes}
+import models.{NormalMode, ProtectionType, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
+case object ProtectionTypePage extends QuestionPage[ProtectionType] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "lta" \ toString
 
-  override def toString: String = "changeInTaxCharge"
+  override def toString: String = "protectionType"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
-  override protected def navigateInCheckMode(answers: UserAnswers): Call  =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+    answers.get(ProtectionTypePage) match {
+      case Some(_) => ltaRoutes.ProtectionReferenceController.onPageLoad(NormalMode)
+      case None    => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    answers.get(ProtectionTypePage) match {
+      case Some(_) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+      case None    => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

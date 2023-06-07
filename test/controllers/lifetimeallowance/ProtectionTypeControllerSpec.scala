@@ -17,34 +17,34 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
-import forms.lifetimeallowance.ChangeInTaxChargeFormProvider
-import models.{ChangeInTaxCharge, CheckMode, NormalMode, UserAnswers}
+import controllers.lifetimeallowance.{routes => ltaRoutes}
+import forms.lifetimeallowance.ProtectionTypeFormProvider
+import models.{CheckMode, NormalMode, ProtectionType, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.ChangeInTaxChargePage
+import pages.lifetimeallowance.ProtectionTypePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.lifetimeallowance.ChangeInTaxChargeView
+import views.html.lifetimeallowance.ProtectionTypeView
 
 import scala.concurrent.Future
 
-class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
+class ProtectionTypeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val normalRoute = ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.ChangeInTaxChargeController.onPageLoad(CheckMode).url
+  lazy val normalRoute = ltaRoutes.ProtectionTypeController.onPageLoad(NormalMode).url
+  lazy val checkRoute  = ltaRoutes.ProtectionTypeController.onPageLoad(CheckMode).url
 
-  val formProvider = new ChangeInTaxChargeFormProvider()
+  val formProvider = new ProtectionTypeFormProvider()
   val form         = formProvider()
 
-  "ChangeInTaxCharge Controller" - {
+  "ProtectionType Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
@@ -55,7 +55,7 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[ChangeInTaxChargeView]
+        val view = application.injector.instanceOf[ProtectionTypeView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -64,20 +64,19 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers =
-        UserAnswers(userAnswersId).set(ChangeInTaxChargePage, ChangeInTaxCharge.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(ProtectionTypePage, ProtectionType.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, normalRoute)
 
-        val view = application.injector.instanceOf[ChangeInTaxChargeView]
+        val view = application.injector.instanceOf[ProtectionTypeView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ChangeInTaxCharge.values.head), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(ProtectionType.values.head), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -100,14 +99,16 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", ChangeInTaxCharge.values.head.toString))
+            .withFormUrlEncodedBody(("value", ProtectionType.values.head.toString))
 
         val result = route(application, request).value
 
+        val expectedAnswers = emptyUserAnswers.set(ProtectionTypePage, ProtectionType.values.head).success.value
+
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual ProtectionTypePage
+          .navigate(NormalMode, expectedAnswers)
+          .url
       }
     }
 
@@ -127,7 +128,63 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", ChangeInTaxCharge.values.head.toString))
+            .withFormUrlEncodedBody(("value", ProtectionType.values.head.toString))
+
+        val result = route(application, request).value
+
+        val expectedAnswers = emptyUserAnswers.set(ProtectionTypePage, ProtectionType.values.head).success.value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual ProtectionTypePage
+          .navigate(CheckMode, expectedAnswers)
+          .url
+      }
+    }
+
+    "must redirect to the ProtectionReference page when valid data is submitted in NormalMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", ProtectionType.values.head.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.ProtectionReferenceController.onPageLoad(NormalMode).url
+      }
+    }
+
+    "must redirect to the CheckYourLTAAnswers page when valid data is submitted in CheckMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, checkRoute)
+            .withFormUrlEncodedBody(("value", ProtectionType.values.head.toString))
 
         val result = route(application, request).value
 
@@ -149,7 +206,7 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[ChangeInTaxChargeView]
+        val view = application.injector.instanceOf[ProtectionTypeView]
 
         val result = route(application, request).value
 
@@ -179,7 +236,7 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", ChangeInTaxCharge.values.head.toString))
+            .withFormUrlEncodedBody(("value", ProtectionType.values.head.toString))
 
         val result = route(application, request).value
 

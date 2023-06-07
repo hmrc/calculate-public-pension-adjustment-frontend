@@ -218,7 +218,6 @@ pIAPreRemedy.error.nonNumeric = cy: You have entered non-numerical characters fo
 pIAPreRemedy.error.required = cy: Enter an amount for pension input amount in the space provided
 pIAPreRemedy.error.wholeNumber = cy: You have not entered a whole number for your pension input amount. You cannot use decimals.
 pIAPreRemedy.error.outOfRange = cy: You have entered too many characters for your pension input amount. The maximum number of characters you can enter is 12
-
 pIAPreRemedy.change.hidden = cy: What was your pension input amount between 6 April {0} and 5 April {1}?
 
 whatYouWillNeedLta.title = cy: Lifetime allowance
@@ -289,3 +288,42 @@ taskList.lta.addDetails = cy: details of your events
 taskList.adminFees.administrationFees = cy: details of any fees for help with your pension
 tasklist.calculationSuccess = cy: Your calculation will be available soon.
 tasklist.error.tasksToComplete = cy: You have tasks that you need to complete
+
+ltaProtectionOrEnhancements.title = cy: Do you have lifetime allowance protection or enhancements?
+ltaProtectionOrEnhancements.heading = cy: Do you have lifetime allowance protection or enhancements?
+ltaProtectionOrEnhancements.protection = cy: Protection
+ltaProtectionOrEnhancements.enhancements = cy: Enhancements
+ltaProtectionOrEnhancements.both = cy: Both
+ltaProtectionOrEnhancements.hint1 = cy: You will need a Government Gateway user ID and password to check your protection.
+ltaProtectionOrEnhancements.hint2 = cy: Check the protection online (opens in a new tab)
+ltaProtectionOrEnhancements.hint3 = cy: Say if you had any protection or enhancements during a benefit crystallisation event.
+ltaProtectionOrEnhancements.both = cy: Both
+ltaProtectionOrEnhancements.checkYourAnswersLabel = cy: Do you have lifetime allowance protection or enhancements?
+ltaProtectionOrEnhancements.error.required = cy: Select if you have lifetime allowance protection or enhancements
+ltaProtectionOrEnhancements.change.hidden = cy:LtaProtectionOrEnhancements
+
+protectionType.title = cy: What is your protection type?
+protectionType.heading = cy: What is your protection type?
+protectionType.enhancedProtection = cy:Enhanced Protection
+protectionType.primaryProtection = cy: Primary Protection
+protectionType.fixedProtection = cy: Fixed protection
+protectionType.fixedProtection2014 = cy: Fixed protection 2014
+protectionType.fixedProtection2016 = cy: Fixed protection 2016
+protectionType.individualProtection2014 = cy: Individual protection 2014
+protectionType.individualProtection2016 = cy: Individual protection 2016
+protectionType.internationalEnhancement = cy: International enhancement
+protectionType.pensionCredit = cy: Pension credit
+protectionType.hint = cy: Check your existing protection type with a Government Gateway user ID.
+protectionType.checkYourAnswersLabel = cy: What is your protection type?
+protectionType.error.required = cy: Select your protection type
+protectionType.change.hidden = cy: ProtectionType
+
+protectionReference.title = cy: What is your protection reference?
+protectionReference.heading = cy: What is your protection reference?
+protectionReference.hint1 = cy: Your reference is on a protection certificate. You can also sign into Government Gateway to check.
+protectionReference.hint2 = cy: Check the protect your lifetime allowance service for your reference (opens in a new tab).
+protectionReference.hint3 = cy: The reference has a character limit of 15 and is a mixture of letters and numbers.
+protectionReference.checkYourAnswersLabel = cy: What is your protection reference?
+protectionReference.error.required = cy: Enter your protection reference.
+protectionReference.error.length = cy: You have entered too many characters for your protection reference. The maximum number of characters you can enter is 15
+protectionReference.change.hidden = cy: ProtectionReference
