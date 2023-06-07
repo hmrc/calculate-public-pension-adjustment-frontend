@@ -45,7 +45,10 @@ class LtaProtectionOrEnhancementsSummarySpec extends AnyFreeSpec with Matchers {
           key = "ltaProtectionOrEnhancements.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("ltaProtectionOrEnhancements.protection")),
           actions = Seq(
-            ActionItemViewModel("site.change", ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url
+            )
               .withVisuallyHiddenText("ltaProtectionOrEnhancements.change.hidden")
           )
         )
