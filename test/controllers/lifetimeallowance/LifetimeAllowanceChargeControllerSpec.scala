@@ -38,11 +38,13 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new LifetimeAllowanceChargeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val lifetimeAllowanceChargeRoute = controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(NormalMode).url
+  lazy val lifetimeAllowanceChargeRoute =
+    controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(NormalMode).url
 
-  lazy val lifetimeAllowanceChargeCheckRoute = controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(CheckMode).url
+  lazy val lifetimeAllowanceChargeCheckRoute =
+    controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(CheckMode).url
 
   "LifetimeAllowanceCharge Controller" - {
 
@@ -177,7 +179,11 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -201,7 +207,11 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -225,7 +235,11 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController
+          .onPageLoad(CheckMode)
+          .url
       }
     }
 
@@ -249,7 +263,9 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
       }
     }
   }

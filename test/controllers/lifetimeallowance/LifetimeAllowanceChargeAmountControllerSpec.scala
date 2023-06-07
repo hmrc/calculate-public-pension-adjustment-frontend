@@ -36,15 +36,17 @@ import scala.concurrent.Future
 class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new LifetimeAllowanceChargeAmountFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt(0)
 
-  lazy val lifetimeAllowanceChargeAmountRoute = controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode).url
+  lazy val lifetimeAllowanceChargeAmountRoute =
+    controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode).url
 
-  lazy val lifetimeAllowanceChargeAmountCheckRoute = controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(CheckMode).url
+  lazy val lifetimeAllowanceChargeAmountCheckRoute =
+    controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(CheckMode).url
 
   "LifetimeAllowanceChargeAmount Controller" - {
 
@@ -68,7 +70,8 @@ class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoS
 
       val userAnswers = UserAnswers(userAnswersId)
         .set(LifetimeAllowanceChargeAmountPage, validAnswer)
-        .success.value
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -80,7 +83,10 @@ class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoS
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -108,7 +114,9 @@ class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoS
           emptyUserAnswers.set(LifetimeAllowanceChargeAmountPage, BigInt(1000)).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual LifetimeAllowanceChargeAmountPage.navigate(NormalMode, expectedAnswers).url
+        redirectLocation(result).value mustEqual LifetimeAllowanceChargeAmountPage
+          .navigate(NormalMode, expectedAnswers)
+          .url
       }
     }
 
@@ -188,8 +196,7 @@ class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoS
 
         println(contentAsString(result))
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual pages.lifetimeallowance
-          .LifetimeAllowanceChargeAmountPage
+        redirectLocation(result).value mustEqual pages.lifetimeallowance.LifetimeAllowanceChargeAmountPage
           .navigate(NormalMode, expectedAnswers)
           .url
       }
@@ -219,8 +226,7 @@ class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoS
           emptyUserAnswers.set(LifetimeAllowanceChargeAmountPage, BigInt(1000)).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual pages.lifetimeallowance
-          .LifetimeAllowanceChargeAmountPage
+        redirectLocation(result).value mustEqual pages.lifetimeallowance.LifetimeAllowanceChargeAmountPage
           .navigate(CheckMode, expectedAnswers)
           .url
       }

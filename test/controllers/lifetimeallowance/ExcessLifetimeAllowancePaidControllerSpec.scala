@@ -37,12 +37,14 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val excessLifetimeAllowancePaidRoute = controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode).url
+  lazy val excessLifetimeAllowancePaidRoute =
+    controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode).url
 
-  lazy val excessLifetimeAllowancePaidCheckRoute = controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
+  lazy val excessLifetimeAllowancePaidCheckRoute =
+    controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
 
   val formProvider = new ExcessLifetimeAllowancePaidFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "ExcessLifetimeAllowancePaid Controller" - {
 
@@ -64,7 +66,10 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ExcessLifetimeAllowancePaidPage, ExcessLifetimeAllowancePaid.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(ExcessLifetimeAllowancePaidPage, ExcessLifetimeAllowancePaid.values.head)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -76,7 +81,10 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ExcessLifetimeAllowancePaid.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ExcessLifetimeAllowancePaid.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -100,10 +108,15 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(ExcessLifetimeAllowancePaidPage, models.ExcessLifetimeAllowancePaid.Lumpsum).success.value
+        val expectedAnswers = emptyUserAnswers
+          .set(ExcessLifetimeAllowancePaidPage, models.ExcessLifetimeAllowancePaid.Lumpsum)
+          .success
+          .value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ExcessLifetimeAllowancePaidPage.navigate(NormalMode, expectedAnswers).url
+        redirectLocation(result).value mustEqual ExcessLifetimeAllowancePaidPage
+          .navigate(NormalMode, expectedAnswers)
+          .url
       }
     }
 
@@ -178,7 +191,11 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -202,7 +219,11 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -226,7 +247,9 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
       }
     }
 
@@ -250,7 +273,9 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
       }
     }
   }

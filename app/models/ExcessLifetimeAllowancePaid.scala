@@ -28,16 +28,16 @@ object ExcessLifetimeAllowancePaid extends Enumerable.Implicits {
   case object Lumpsum extends WithName("lumpSum") with ExcessLifetimeAllowancePaid
 
   val values: Seq[ExcessLifetimeAllowancePaid] = Seq(
-    Annualpayment, Lumpsum
+    Annualpayment,
+    Lumpsum
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"excessLifetimeAllowancePaid.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
+  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
+    RadioItem(
+      content = Text(messages(s"excessLifetimeAllowancePaid.${value.toString}")),
+      value = Some(value.toString),
+      id = Some(s"value_$index")
+    )
   }
 
   implicit val enumerable: Enumerable[ExcessLifetimeAllowancePaid] =

@@ -43,7 +43,10 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
           key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.annualPayment")),
           actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
+            )
               .withVisuallyHiddenText("excessLifetimeAllowancePaid.change.hidden")
           )
         )
@@ -62,7 +65,10 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
           key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.lumpSum")),
           actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
+            )
               .withVisuallyHiddenText("excessLifetimeAllowancePaid.change.hidden")
           )
         )

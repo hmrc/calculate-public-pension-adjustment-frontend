@@ -32,7 +32,10 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad.url)
+        val request = FakeRequest(
+          GET,
+          controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad.url
+        )
 
         val result = route(application, request).value
 
@@ -56,7 +59,10 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad.url)
+        val request = FakeRequest(
+          GET,
+          controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad.url
+        )
 
         val result = route(application, request).value
 

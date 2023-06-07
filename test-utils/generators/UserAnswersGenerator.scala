@@ -36,7 +36,7 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(ReferenceNewProtectionTypeEnhancementPage.type, JsValue)] ::
       arbitrary[(ProtectionTypeEnhancementChangedPage.type, JsValue)] ::
       arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] ::
-    arbitrary[(LifetimeAllowanceChargeAmountPage.type, JsValue)] ::
+      arbitrary[(LifetimeAllowanceChargeAmountPage.type, JsValue)] ::
       arbitrary[(ExcessLifetimeAllowancePaidPage.type, JsValue)] ::
       arbitrary[(LifetimeAllowanceChargePage.type, JsValue)] ::
       arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] ::

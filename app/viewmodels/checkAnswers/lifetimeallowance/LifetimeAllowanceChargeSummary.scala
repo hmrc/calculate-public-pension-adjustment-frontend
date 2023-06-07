@@ -26,18 +26,19 @@ import viewmodels.implicits._
 object LifetimeAllowanceChargeSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(LifetimeAllowanceChargePage).map {
-      answer =>
+    answers.get(LifetimeAllowanceChargePage).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
-          value = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("lifetimeAllowanceCharge.change.hidden"))
+      SummaryListRowViewModel(
+        key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("lifetimeAllowanceCharge.change.hidden"))
         )
+      )
     }
 }

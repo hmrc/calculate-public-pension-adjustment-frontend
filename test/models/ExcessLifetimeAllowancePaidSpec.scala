@@ -24,7 +24,11 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.libs.json.{JsError, JsString, Json}
 
-class ExcessLifetimeAllowancePaidSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues {
+class ExcessLifetimeAllowancePaidSpec
+    extends AnyFreeSpec
+    with Matchers
+    with ScalaCheckPropertyChecks
+    with OptionValues {
 
   "ExcessLifetimeAllowancePaid" - {
 
@@ -32,10 +36,11 @@ class ExcessLifetimeAllowancePaidSpec extends AnyFreeSpec with Matchers with Sca
 
       val gen = Gen.oneOf(ExcessLifetimeAllowancePaid.values.toSeq)
 
-      forAll(gen) {
-        excessLifetimeAllowancePaid =>
-
-          JsString(excessLifetimeAllowancePaid.toString).validate[ExcessLifetimeAllowancePaid].asOpt.value mustEqual excessLifetimeAllowancePaid
+      forAll(gen) { excessLifetimeAllowancePaid =>
+        JsString(excessLifetimeAllowancePaid.toString)
+          .validate[ExcessLifetimeAllowancePaid]
+          .asOpt
+          .value mustEqual excessLifetimeAllowancePaid
       }
     }
 
@@ -43,10 +48,8 @@ class ExcessLifetimeAllowancePaidSpec extends AnyFreeSpec with Matchers with Sca
 
       val gen = arbitrary[String] suchThat (!ExcessLifetimeAllowancePaid.values.map(_.toString).contains(_))
 
-      forAll(gen) {
-        invalidValue =>
-
-          JsString(invalidValue).validate[ExcessLifetimeAllowancePaid] mustEqual JsError("error.invalid")
+      forAll(gen) { invalidValue =>
+        JsString(invalidValue).validate[ExcessLifetimeAllowancePaid] mustEqual JsError("error.invalid")
       }
     }
 
@@ -54,10 +57,8 @@ class ExcessLifetimeAllowancePaidSpec extends AnyFreeSpec with Matchers with Sca
 
       val gen = Gen.oneOf(ExcessLifetimeAllowancePaid.values.toSeq)
 
-      forAll(gen) {
-        excessLifetimeAllowancePaid =>
-
-          Json.toJson(excessLifetimeAllowancePaid) mustEqual JsString(excessLifetimeAllowancePaid.toString)
+      forAll(gen) { excessLifetimeAllowancePaid =>
+        Json.toJson(excessLifetimeAllowancePaid) mustEqual JsString(excessLifetimeAllowancePaid.toString)
       }
     }
   }

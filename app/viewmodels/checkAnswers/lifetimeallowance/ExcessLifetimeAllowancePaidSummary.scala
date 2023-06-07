@@ -28,22 +28,23 @@ import viewmodels.implicits._
 object ExcessLifetimeAllowancePaidSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ExcessLifetimeAllowancePaidPage).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"excessLifetimeAllowancePaid.$answer"))
-          )
+    answers.get(ExcessLifetimeAllowancePaidPage).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"excessLifetimeAllowancePaid.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
-          value = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("excessLifetimeAllowancePaid.change.hidden"))
+      SummaryListRowViewModel(
+        key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("excessLifetimeAllowancePaid.change.hidden"))
         )
+      )
     }
 }

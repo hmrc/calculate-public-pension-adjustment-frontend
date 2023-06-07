@@ -26,13 +26,13 @@ class ExcessLifetimeAllowancePaidFormProviderSpec extends OptionFieldBehaviours 
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "excessLifetimeAllowancePaid.error.required"
 
     behave like optionsField[ExcessLifetimeAllowancePaid](
       form,
       fieldName,
-      validValues  = ExcessLifetimeAllowancePaid.values,
+      validValues = ExcessLifetimeAllowancePaid.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

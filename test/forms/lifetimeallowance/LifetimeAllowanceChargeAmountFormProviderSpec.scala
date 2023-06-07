@@ -41,7 +41,7 @@ class LifetimeAllowanceChargeAmountFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "lifetimeAllowanceChargeAmount.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "lifetimeAllowanceChargeAmount.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "lifetimeAllowanceChargeAmount.error.wholeNumber")
     )
 

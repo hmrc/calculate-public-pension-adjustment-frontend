@@ -50,14 +50,13 @@
 
     <p class="govuk-body">@messages("taskList.detailsForReporting")</p>
 
-    <ol class="app-task-list">
+    @taskListViewModel.allGroups.map { group =>
 
-        @taskListViewModel.allGroups.map { group =>
+        @if(group.isDefined) {
 
-            @if(group.isDefined) {
+            <h2 class="govuk-heading-m">@group.get.displayNumber. @messages(group.get.heading)</h2>
 
-                <h2 class="govuk-heading-m">@group.get.displayNumber. @messages(group.get.heading)</h2>
-
+            <ol class="app-task-list">
                 <li>
                     <ul class="app-task-list__items govuk-!-padding-left-0">
                     @group.get.sections.map { section =>
@@ -72,25 +71,24 @@
                     }
                     </ul>
                 </li>
+            </ol>
 
-            }
         }
+    }
 
-        <h2 class="govuk-heading-m">@messages("taskList.calculateAnswers")</h2>
-        <p class="govuk-body">@messages("taskList.compensationOrTaxCharge")</p>
+    <h2 class="govuk-heading-m">@messages("taskList.calculateAnswers")</h2>
+    <p class="govuk-body">@messages("taskList.compensationOrTaxCharge")</p>
 
-        @formHelper(action = routes.TaskListController.onSubmit, 'autoComplete -> "off") {
-            @if(form.errors.nonEmpty) {
-                @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
-            }
-            @govukButton(
-                ButtonViewModel(messages("taskList.calculate"))
-            )
+    @formHelper(action = routes.TaskListController.onSubmit, 'autoComplete -> "off") {
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
         }
+        @govukButton(
+            ButtonViewModel(messages("taskList.calculate"))
+        )
+    }
 
-        @if(taskListViewModel.calculationResult.isDefined) {
-            <h2 class="govuk-heading-m">@messages(taskListViewModel.calculationResult.get)</h2>
-        }
-
-    </ol>
+    @if(taskListViewModel.calculationResult.isDefined) {
+        <h2 class="govuk-heading-m">@messages(taskListViewModel.calculationResult.get)</h2>
+    }
 }

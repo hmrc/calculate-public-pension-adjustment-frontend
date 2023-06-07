@@ -31,15 +31,17 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(LifetimeAllowanceChargePage) match {
-      case Some(true)  => controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
-      case Some(false) => controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode)
+      case Some(true)  =>
+        controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
+      case Some(false) =>
+        controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
-
-  override protected def navigateInCheckMode(answers: UserAnswers): Call  =
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(LifetimeAllowanceChargePage) match {
-      case Some(true)  => controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
+      case Some(true)  =>
+        controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
       case Some(false) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
