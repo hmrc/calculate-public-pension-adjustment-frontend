@@ -496,3 +496,36 @@ schemeNameAndTaxRef.taxRef.error.required = Enter the pension scheme tax referen
 schemeNameAndTaxRef.name.error.length = The name of your pension scheme must be 100 characters or less
 schemeNameAndTaxRef.taxRef.invalid = Enter your pension tax reference in the format 00348916RT
 schemeNameAndTaxRef.change.hidden = What is the name and tax reference of the scheme that paid the lifetime allowance charge?
+
+valueNewLtaCharge.title = What is the value of the new lifetime allowance charge?
+valueNewLtaCharge.heading = What is the value of the new lifetime allowance charge?
+valueNewLtaCharge.hint = Amounts must be rounded down to the nearest pound, for example 2300.
+valueNewLtaCharge.checkYourAnswersLabel = What is the value of the new lifetime allowance charge?
+valueNewLtaCharge.error.nonNumeric = You have entered non-numerical characters for your extra lifetime allowance charge. You must enter numerical characters
+valueNewLtaCharge.error.required = Enter an amount for your extra lifetime allowance charge
+valueNewLtaCharge.error.wholeNumber = You have not entered a whole number for your extra lifetime allowance charge. You cannot use decimals.
+valueNewLtaCharge.error.outOfRange = You have entered too many characters for your extra lifetime allowance charge. The maximum number of characters you can enter is 9
+valueNewLtaCharge.change.hidden = What is the value of the new lifetime allowance charge?
+
+whoPayingExtraLtaCharge.title = Who is paying the extra lifetime allowance charge?
+whoPayingExtraLtaCharge.heading = Who is paying the extra lifetime allowance charge?
+whoPayingExtraLtaCharge.you = You
+whoPayingExtraLtaCharge.pensionScheme = Pension Scheme
+whoPayingExtraLtaCharge.checkYourAnswersLabel = Who is paying the extra lifetime allowance charge?
+whoPayingExtraLtaCharge.error.required = Select who is paying the extra lifetime allowance charge.
+whoPayingExtraLtaCharge.change.hidden = Who is paying the extra lifetime allowance charge?
+
+ltaPensionSchemeDetails.title = What is the name and tax reference of the scheme that paid the lifetime allowance charge?
+ltaPensionSchemeDetails.heading = What is the name and tax reference of the scheme that paid the lifetime allowance charge?
+ltaPensionSchemeDetails.name = Name of the pension scheme
+ltaPensionSchemeDetails.taxRef = Pension scheme tax reference
+ltaPensionSchemeDetails.message = If more than one pension scheme has paid or agreed to pay the tax, you can add them later.
+ltaPensionSchemeDetails.hint1 = Type the name in the space provided.
+ltaPensionSchemeDetails.hint2 = You can find the PSTR on your pension scheme’s annual statement. For example, 00348916RT.
+ltaPensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the scheme that paid the charge?
+ltaPensionSchemeDetails.error.name.length = The name of your pension scheme must be 100 characters or less
+ltaPensionSchemeDetails.Name.change.hidden = Name of the pension scheme
+ltaPensionSchemeDetails.Reference.change.hidden = Pension scheme tax reference
+ltaPensionSchemeDetails.error.name.required = Enter the name of the pension scheme that paid the lifetime allowance charge
+ltaPensionSchemeDetails.error.taxRef.required = Enter the pension scheme tax reference of the scheme that paid the lifetime allowance charge
+ltaPensionSchemeDetails.taxRef.invalid = Enter your pension tax reference in the format 00348916RT
