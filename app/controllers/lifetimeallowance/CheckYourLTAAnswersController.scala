@@ -22,7 +22,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.lifetimeallowance.{ChangeInLifetimeAllowanceSummary, ChangeInTaxChargeSummary, DateOfBenefitCrystallisationEventSummary, HadBenefitCrystallisationEventSummary, LtaProtectionOrEnhancementsSummary, ProtectionReferenceSummary, ProtectionTypeSummary}
+import viewmodels.checkAnswers.lifetimeallowance._
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -43,8 +43,11 @@ class CheckYourLTAAnswersController @Inject() (
       ChangeInLifetimeAllowanceSummary.row(request.userAnswers),
       ChangeInTaxChargeSummary.row(request.userAnswers),
       LtaProtectionOrEnhancementsSummary.row(request.userAnswers),
+      ProtectionTypeSummary.row(request.userAnswers),
       ProtectionReferenceSummary.row(request.userAnswers),
-      ProtectionTypeSummary.row(request.userAnswers)
+      ProtectionTypeEnhancementChangedSummary.row(request.userAnswers),
+      WhatNewProtectionTypeEnhancementSummary.row(request.userAnswers),
+      ReferenceNewProtectionTypeEnhancementSummary.row(request.userAnswers)
     )
 
     Ok(

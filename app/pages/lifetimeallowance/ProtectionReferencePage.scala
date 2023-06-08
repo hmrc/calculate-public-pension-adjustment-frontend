@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.UserAnswers
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -29,8 +29,8 @@ case object ProtectionReferencePage extends QuestionPage[String] {
   override def toString: String = "protectionReference"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+    ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+    ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(CheckMode)
 }

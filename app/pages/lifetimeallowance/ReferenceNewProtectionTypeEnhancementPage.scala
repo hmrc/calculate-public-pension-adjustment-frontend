@@ -25,13 +25,13 @@ import play.api.mvc.Call
 
 case object ReferenceNewProtectionTypeEnhancementPage extends QuestionPage[String] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "lta" \ toString
 
   override def toString: String = "referenceNewProtectionTypeEnhancement"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad
+    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    routes.CheckYourAnswersController.onPageLoad
+    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
 }

@@ -23,23 +23,33 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object ProtectionTypeEnhancementChangedPage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "lta" \ toString
 
   override def toString: String = "protectionTypeEnhancementChanged"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ProtectionTypeEnhancementChangedPage) match {
-      case Some(true) => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad //Change to approporiate
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
+      case Some(false) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad // Change to approporiate
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ProtectionTypeEnhancementChangedPage) match {
-      case Some(true) => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode)
-      case Some(false) => routes.CheckYourAnswersController.onPageLoad //Change to approporiate
-      case None => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode)
+      case Some(false) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad // Change to approporiate
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case true => super.cleanup(value, userAnswers)
+        case false => userAnswers.remove(WhatNewProtectionTypeEnhancementPage).flatMap(_.remove(ReferenceNewProtectionTypeEnhancementPage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

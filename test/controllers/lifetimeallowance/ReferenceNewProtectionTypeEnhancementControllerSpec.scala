@@ -104,7 +104,7 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual routes.CheckYourAnswersController.onPageLoad.url // Change to appropriate page
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url // Change to appropriate page
       }
     }
 
