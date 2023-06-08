@@ -80,7 +80,7 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must redirect to the next page when valid data is submitted in normal mode" in {
+    "must redirect to the ChangeInTaxCharge page when valid data is submitted in normal mode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -105,7 +105,7 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must redirect to the next page when valid data is submitted in check mode" in {
+    "must redirect to the ChangeInTaxCharge in normal mode when valid data is submitted in check mode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -126,7 +126,7 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+        redirectLocation(result).value mustEqual ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode).url
       }
     }
 

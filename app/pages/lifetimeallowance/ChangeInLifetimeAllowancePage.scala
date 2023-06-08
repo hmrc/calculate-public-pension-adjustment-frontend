@@ -40,7 +40,7 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ChangeInLifetimeAllowancePage) match {
-      case Some(true)  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+      case Some(true)  => ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode)
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
@@ -49,7 +49,12 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
     value
       .map {
         case true  => super.cleanup(value, userAnswers)
-        case false => userAnswers.remove(ChangeInTaxChargePage)
+        case false =>
+          userAnswers
+            .remove(ChangeInTaxChargePage)
+            .flatMap(_.remove(LtaProtectionOrEnhancementsPage))
+            .flatMap(_.remove(ProtectionReferencePage))
+            .flatMap(_.remove(ProtectionTypePage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }
