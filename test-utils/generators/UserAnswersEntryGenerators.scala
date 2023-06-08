@@ -51,6 +51,34 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+
+  implicit lazy val arbitraryWhatNewProtectionTypeEnhancementUserAnswersEntry
+  : Arbitrary[(WhatNewProtectionTypeEnhancementPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page <- arbitrary[WhatNewProtectionTypeEnhancementPage.type]
+        value <- arbitrary[WhatNewProtectionTypeEnhancement].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryReferenceNewProtectionTypeEnhancementUserAnswersEntry
+  : Arbitrary[(ReferenceNewProtectionTypeEnhancementPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page <- arbitrary[ReferenceNewProtectionTypeEnhancementPage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryProtectionTypeEnhancementChangedUserAnswersEntry
+  : Arbitrary[(ProtectionTypeEnhancementChangedPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page <- arbitrary[ProtectionTypeEnhancementChangedPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryDateOfBenefitCrystallisationEventUserAnswersEntry
     : Arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] =
     Arbitrary {

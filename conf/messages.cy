@@ -327,3 +327,37 @@ protectionReference.checkYourAnswersLabel = cy: What is your protection referenc
 protectionReference.error.required = cy: Enter your protection reference.
 protectionReference.error.length = cy: You have entered too many characters for your protection reference. The maximum number of characters you can enter is 15
 protectionReference.change.hidden = cy: ProtectionReference
+
+protectionTypeEnhancementChanged.title = cy: Has your protection type or enhancement changed?
+protectionTypeEnhancementChanged.heading = cy: Has your protection type or enhancement changed?
+protectionTypeEnhancementChanged.hint = cy: Say if either your protection or enhancements have changed in the remedy period. The remedy period is 6 April 2015 to 5 April 2023.
+protectionTypeEnhancementChanged.checkYourAnswersLabel = cy: Has your protection type or enhancement changed?
+protectionTypeEnhancementChanged.error.required = cy: Select yes if your protection or enhancement has changed
+protectionTypeEnhancementChanged.change.hidden = cy: Has your protection type or enhancement changed?
+
+referenceNewProtectionTypeEnhancement.title = cy: What is the reference of the new protection type or enhancement?
+referenceNewProtectionTypeEnhancement.heading = cy: What is the reference of the new protection type or enhancement?
+referenceNewProtectionTypeEnhancement.hint1 = cy: Your reference is on a protection certificate. You can also sign into Government Gateway to check.
+referenceNewProtectionTypeEnhancement.hint2 = cy: Check the protect your lifetime allowance service for your reference (opens in a new tab).
+referenceNewProtectionTypeEnhancement.hint3 = cy: The reference has a maximum character limit of 15. It is a mixture of letters and numbers.
+referenceNewProtectionTypeEnhancement.checkYourAnswersLabel = cy: What is the reference of the new protection type or enhancement?
+referenceNewProtectionTypeEnhancement.error.required = cy: Enter your the reference for your new protection type or enhancement
+referenceNewProtectionTypeEnhancement.error.length = cy: You have entered too many characters for your new protection type or enhancement. The maximum number of characters you can enter is 15
+referenceNewProtectionTypeEnhancement.change.hidden = cy: What is the reference of the new protection type or enhancement?
+
+whatNewProtectionTypeEnhancement.title = cy: What is the new protection or enhancement?
+whatNewProtectionTypeEnhancement.heading = cy: What is the new protection or enhancement?
+whatNewProtectionTypeEnhancement.hint1 = cy: Check your existing protection type with a Government Gateway user ID.
+whatNewProtectionTypeEnhancement.hint2 = cy: Select from the options below.
+whatNewProtectionTypeEnhancement.option1 = cy: Enhanced protection
+whatNewProtectionTypeEnhancement.option2 = cy: Primary protection
+whatNewProtectionTypeEnhancement.option3 = cy: Fixed protection
+whatNewProtectionTypeEnhancement.option4 = cy: Fixed protection 2014
+whatNewProtectionTypeEnhancement.option5 = cy: Fixed protection 2016
+whatNewProtectionTypeEnhancement.option6 = cy: Individual protection 2014
+whatNewProtectionTypeEnhancement.option7 = cy: Individual protection 2016
+whatNewProtectionTypeEnhancement.option8 = cy: International enhancement
+whatNewProtectionTypeEnhancement.option9 = cy: Pension credit
+whatNewProtectionTypeEnhancement.checkYourAnswersLabel = cy: What is the new protection or enhancement?
+whatNewProtectionTypeEnhancement.error.required = cy: Select your new protection type or enhancement
+whatNewProtectionTypeEnhancement.change.hidden = cy: What is the new protection or enhancement?

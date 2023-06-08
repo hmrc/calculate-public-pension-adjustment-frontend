@@ -26,6 +26,11 @@ trait ModelGenerators {
       Gen.oneOf(ProtectionType.values.toSeq)
     }
 
+  implicit lazy val arbitraryWhatNewProtectionTypeEnhancement: Arbitrary[WhatNewProtectionTypeEnhancement] =
+    Arbitrary {
+      Gen.oneOf(WhatNewProtectionTypeEnhancement.values.toSeq)
+    }
+
   implicit lazy val arbitraryLtaProtectionOrEnhancements: Arbitrary[LtaProtectionOrEnhancements] =
     Arbitrary {
       Gen.oneOf(LtaProtectionOrEnhancements.values.toSeq)
