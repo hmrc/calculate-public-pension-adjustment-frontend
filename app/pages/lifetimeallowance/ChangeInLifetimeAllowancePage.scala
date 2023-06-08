@@ -53,7 +53,6 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
           userAnswers
             .remove(ChangeInTaxChargePage)
             .flatMap(_.remove(LtaProtectionOrEnhancementsPage))
-            .flatMap(_.remove(LtaProtectionOrEnhancementsPage))
             .flatMap(_.remove(ProtectionReferencePage))
             .flatMap(_.remove(ProtectionTypePage))
       }
