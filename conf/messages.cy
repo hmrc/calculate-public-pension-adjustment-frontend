@@ -322,8 +322,7 @@ protectionReference.heading = cy: What is your protection reference?
 protectionReference.hint1 = cy: Your reference is on a protection certificate. You can also sign into Government Gateway to check.
 protectionReference.hint2 = cy: Check the protect your lifetime allowance service for your reference (opens in a new tab).
 protectionReference.hint3 = cy: The reference has a character limit of 15 and is a mixture of letters and numbers.
-protectionReference.hint4 = For example, R41AB678TR23355.
-
+protectionReference.hint4 = cy: For example, R41AB678TR23355.
 protectionReference.checkYourAnswersLabel = cy: What is your protection reference?
 protectionReference.error.required = cy: Enter your protection reference.
 protectionReference.error.length = cy: You have entered too many characters for your protection reference. The maximum number of characters you can enter is 15
