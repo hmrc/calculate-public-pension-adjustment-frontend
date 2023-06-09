@@ -40,8 +40,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("protectionTypeEnhancementChanged.heading")).asPageHeading()
-
+                legend = HmrcPageHeadingLegend(
+                content = messages("protectionTypeEnhancementChanged.heading"),
+                caption = HmrcSectionCaption(messages("lifetimeAllowance.caption"))
+            )
             ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
