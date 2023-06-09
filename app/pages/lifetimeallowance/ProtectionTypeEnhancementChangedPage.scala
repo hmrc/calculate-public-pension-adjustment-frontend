@@ -48,8 +48,11 @@ case object ProtectionTypeEnhancementChangedPage extends QuestionPage[Boolean] {
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true => super.cleanup(value, userAnswers)
-        case false => userAnswers.remove(WhatNewProtectionTypeEnhancementPage).flatMap(_.remove(ReferenceNewProtectionTypeEnhancementPage))
+        case true  => super.cleanup(value, userAnswers)
+        case false =>
+          userAnswers
+            .remove(WhatNewProtectionTypeEnhancementPage)
+            .flatMap(_.remove(ReferenceNewProtectionTypeEnhancementPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

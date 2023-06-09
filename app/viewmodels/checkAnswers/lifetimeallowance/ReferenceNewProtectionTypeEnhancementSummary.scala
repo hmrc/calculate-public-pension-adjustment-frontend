@@ -25,19 +25,20 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ReferenceNewProtectionTypeEnhancementSummary  {
+object ReferenceNewProtectionTypeEnhancementSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ReferenceNewProtectionTypeEnhancementPage).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("referenceNewProtectionTypeEnhancement.change.hidden"))
+    answers.get(ReferenceNewProtectionTypeEnhancementPage).map { answer =>
+      SummaryListRowViewModel(
+        key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            routes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("referenceNewProtectionTypeEnhancement.change.hidden"))
         )
+      )
     }
 }

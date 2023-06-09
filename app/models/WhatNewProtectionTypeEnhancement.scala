@@ -35,18 +35,23 @@ object WhatNewProtectionTypeEnhancement extends Enumerable.Implicits {
   case object PensionCredit extends WithName(s"option9") with WhatNewProtectionTypeEnhancement
 
   val values: Seq[WhatNewProtectionTypeEnhancement] = Seq(
-    EnhancedProtection, PrimaryProtection, FixedProtection,
-    FixedProtection2014, FixedProtection2016, IndividualProtection2014,
-    IndividualProtection2016, InternationalEnhancement, PensionCredit
+    EnhancedProtection,
+    PrimaryProtection,
+    FixedProtection,
+    FixedProtection2014,
+    FixedProtection2016,
+    IndividualProtection2014,
+    IndividualProtection2016,
+    InternationalEnhancement,
+    PensionCredit
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"whatNewProtectionTypeEnhancement.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
+  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
+    RadioItem(
+      content = Text(messages(s"whatNewProtectionTypeEnhancement.${value.toString}")),
+      value = Some(value.toString),
+      id = Some(s"value_$index")
+    )
   }
 
   implicit val enumerable: Enumerable[WhatNewProtectionTypeEnhancement] =
