@@ -359,6 +359,6 @@ whatNewProtectionTypeEnhancement.option6 = Individual protection 2014
 whatNewProtectionTypeEnhancement.option7 = Individual protection 2016
 whatNewProtectionTypeEnhancement.option8 = International enhancement
 whatNewProtectionTypeEnhancement.option9 = Pension credit
-whatNewProtectionTypeEnhancement.checkYourAnswersLabel = What is the new protection or enhancement?
+whatNewProtectionTypeEnhancement.checkYourAnswersLabel = What is the new protection type or enhancement?
 whatNewProtectionTypeEnhancement.error.required = Select your new protection type or enhancement
 whatNewProtectionTypeEnhancement.change.hidden = What is the new protection type or enhancement?
