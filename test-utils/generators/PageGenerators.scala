@@ -33,15 +33,15 @@ trait PageGenerators {
     Arbitrary(LtaProtectionOrEnhancementsPage)
 
   implicit lazy val arbitraryWhatNewProtectionTypeEnhancementPage
-  : Arbitrary[WhatNewProtectionTypeEnhancementPage.type] =
+    : Arbitrary[WhatNewProtectionTypeEnhancementPage.type] =
     Arbitrary(WhatNewProtectionTypeEnhancementPage)
 
   implicit lazy val arbitraryReferenceNewProtectionTypeEnhancementPage
-  : Arbitrary[ReferenceNewProtectionTypeEnhancementPage.type] =
+    : Arbitrary[ReferenceNewProtectionTypeEnhancementPage.type] =
     Arbitrary(ReferenceNewProtectionTypeEnhancementPage)
 
   implicit lazy val arbitraryProtectionTypeEnhancementChangedPage
-  : Arbitrary[ProtectionTypeEnhancementChangedPage.type] =
+    : Arbitrary[ProtectionTypeEnhancementChangedPage.type] =
     Arbitrary(ProtectionTypeEnhancementChangedPage)
 
   implicit lazy val arbitraryLifetimeAllowanceChargeAmountPage: Arbitrary[LifetimeAllowanceChargeAmountPage.type] =

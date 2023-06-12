@@ -146,7 +146,6 @@ POST       /protection-changed-new-type                        controllers.lifet
 GET        /change-protection-changed-new-type                 controllers.lifetimeallowance.WhatNewProtectionTypeEnhancementController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-protection-changed-new-type                 controllers.lifetimeallowance.WhatNewProtectionTypeEnhancementController.onSubmit(mode: Mode = CheckMode)
 
-
 GET        /lta-charge-2015-2023                        controllers.lifetimeallowance.LifetimeAllowanceChargeController.onPageLoad(mode: Mode = NormalMode)
 POST       /lta-charge-2015-2023                        controllers.lifetimeallowance.LifetimeAllowanceChargeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-lta-charge-2015-2023                 controllers.lifetimeallowance.LifetimeAllowanceChargeController.onPageLoad(mode: Mode = CheckMode)

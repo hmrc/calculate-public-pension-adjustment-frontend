@@ -363,7 +363,6 @@ whatNewProtectionTypeEnhancement.checkYourAnswersLabel = cy: What is the new pro
 whatNewProtectionTypeEnhancement.error.required = cy: Select your new protection type or enhancement
 whatNewProtectionTypeEnhancement.change.hidden = cy: What is the new protection type or enhancement?
 
-
 lifetimeAllowanceCharge.title = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
 lifetimeAllowanceCharge.heading = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
 lifetimeAllowanceCharge.checkYourAnswersLabel = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
