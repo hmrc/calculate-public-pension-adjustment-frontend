@@ -107,7 +107,7 @@ class ProtectionTypeEnhancementChangedControllerSpec extends SpecBase with Mocki
       }
     }
 
-    "must redirect to the -------- page when false is submitted in NormalMode" in {
+    "must redirect to the LifetimeAllowanceCharge page when false is submitted in NormalMode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -130,7 +130,7 @@ class ProtectionTypeEnhancementChangedControllerSpec extends SpecBase with Mocki
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url // change to appropriate page
+        ).value mustEqual ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode).url
       }
     }
 
@@ -161,7 +161,7 @@ class ProtectionTypeEnhancementChangedControllerSpec extends SpecBase with Mocki
       }
     }
 
-    "must redirect to the -------- page when false selected in checkmode" in {
+    "must redirect to the LifetimeAllowanceCharge page when false selected in CheckMode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -184,7 +184,7 @@ class ProtectionTypeEnhancementChangedControllerSpec extends SpecBase with Mocki
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url // change to appropriate page
+        ).value mustEqual ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(CheckMode).url
       }
     }
 

@@ -145,3 +145,19 @@ GET        /protection-changed-new-type                        controllers.lifet
 POST       /protection-changed-new-type                        controllers.lifetimeallowance.WhatNewProtectionTypeEnhancementController.onSubmit(mode: Mode = NormalMode)
 GET        /change-protection-changed-new-type                 controllers.lifetimeallowance.WhatNewProtectionTypeEnhancementController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-protection-changed-new-type                 controllers.lifetimeallowance.WhatNewProtectionTypeEnhancementController.onSubmit(mode: Mode = CheckMode)
+
+
+GET        /lta-charge-2015-2023                        controllers.lifetimeallowance.LifetimeAllowanceChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /lta-charge-2015-2023                        controllers.lifetimeallowance.LifetimeAllowanceChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-lta-charge-2015-2023                 controllers.lifetimeallowance.LifetimeAllowanceChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-lta-charge-2015-2023                 controllers.lifetimeallowance.LifetimeAllowanceChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /how-excess-was-paid                         controllers.lifetimeallowance.ExcessLifetimeAllowancePaidController.onPageLoad(mode: Mode = NormalMode)
+POST       /how-excess-was-paid                         controllers.lifetimeallowance.ExcessLifetimeAllowancePaidController.onSubmit(mode: Mode = NormalMode)
+GET        /change-how-excess-was-paid                  controllers.lifetimeallowance.ExcessLifetimeAllowancePaidController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-how-excess-was-paid                  controllers.lifetimeallowance.ExcessLifetimeAllowancePaidController.onSubmit(mode: Mode = CheckMode)
+
+GET        /how-much-lta-charge                         controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /how-much-lta-charge                         controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /change-how-much-lta-charge                  controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-how-much-lta-charge                  controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onSubmit(mode: Mode = CheckMode)

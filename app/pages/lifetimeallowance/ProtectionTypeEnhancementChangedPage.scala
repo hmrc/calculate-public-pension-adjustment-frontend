@@ -34,14 +34,14 @@ case object ProtectionTypeEnhancementChangedPage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ProtectionTypeEnhancementChangedPage) match {
       case Some(true)  => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
-      case Some(false) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad // Change to approporiate
+      case Some(false) => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ProtectionTypeEnhancementChangedPage) match {
       case Some(true)  => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
-      case Some(false) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad // Change to approporiate
+      case Some(false) => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(CheckMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

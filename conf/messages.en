@@ -362,3 +362,28 @@ whatNewProtectionTypeEnhancement.option9 = Pension credit
 whatNewProtectionTypeEnhancement.checkYourAnswersLabel = What is the new protection type or enhancement?
 whatNewProtectionTypeEnhancement.error.required = Select your new protection type or enhancement
 whatNewProtectionTypeEnhancement.change.hidden = What is the new protection type or enhancement?
+
+lifetimeAllowanceCharge.title = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+lifetimeAllowanceCharge.heading = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+lifetimeAllowanceCharge.checkYourAnswersLabel = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+lifetimeAllowanceCharge.error.required = Select yes if you have had a lifetime allowance charge from 6 April 2015 to 5 April 2023
+lifetimeAllowanceCharge.change.hidden = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+
+excessLifetimeAllowancePaid.title = How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.heading = How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.annualPayment = Annual payment
+excessLifetimeAllowancePaid.lumpSum = Lump sum
+excessLifetimeAllowancePaid.checkYourAnswersLabel = How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.error.required = Select how the excess above your lifetime allowance paid to you
+excessLifetimeAllowancePaid.change.hidden = How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.hint = You can find this on your pension or bank statement.
+
+lifetimeAllowanceChargeAmount.title = What was the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.heading = What was the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.checkYourAnswersLabel = What was the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.error.nonNumeric = You have entered non-numerical characters for your lifetime allowance charge. You must enter numerical characters
+lifetimeAllowanceChargeAmount.error.required = Enter an amount for your lifetime allowance charge
+lifetimeAllowanceChargeAmount.error.wholeNumber = You have not entered a whole number for your lifetime allowance charge. You cannot use decimals.
+lifetimeAllowanceChargeAmount.error.outOfRange = You have entered too many characters for your lifetime allowance charge. The maximum number of characters you can enter is 9
+lifetimeAllowanceChargeAmount.change.hidden = What was the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.hint = Amounts must be rounded down to the nearest pound, for example 2300.
