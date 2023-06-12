@@ -20,7 +20,7 @@ import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.lifetimeallowance.{ChangeInLifetimeAllowancePage, ProtectionTypeEnhancementChangedPage}
+import pages.lifetimeallowance.ProtectionTypeEnhancementChangedPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._

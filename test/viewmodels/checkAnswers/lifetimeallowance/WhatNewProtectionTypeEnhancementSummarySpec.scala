@@ -17,12 +17,11 @@
 package viewmodels.checkAnswers.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.ProtectionType.EnhancedProtection
 import models.WhatNewProtectionTypeEnhancement.PrimaryProtection
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.lifetimeallowance.{ProtectionTypePage, WhatNewProtectionTypeEnhancementPage}
+import pages.lifetimeallowance.WhatNewProtectionTypeEnhancementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
@@ -46,7 +45,10 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
           key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.option2")),
           actions = Seq(
-            ActionItemViewModel("site.change", ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode).url)
+            ActionItemViewModel(
+              "site.change",
+              ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
+            )
               .withVisuallyHiddenText("whatNewProtectionTypeEnhancement.change.hidden")
           )
         )

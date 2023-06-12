@@ -17,10 +17,10 @@
 package viewmodels.checkAnswers.lifetimeallowance
 
 import controllers.lifetimeallowance.routes
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.lifetimeallowance.{ProtectionReferencePage, ReferenceNewProtectionTypeEnhancementPage}
+import pages.lifetimeallowance.ReferenceNewProtectionTypeEnhancementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
@@ -40,11 +40,14 @@ class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with 
         .get
       ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "ReferenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText("ReferenceNewProtectionTypeEnhancement.change.hidden")
+            ActionItemViewModel(
+              "site.change",
+              routes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText("referenceNewProtectionTypeEnhancement.change.hidden")
           )
         )
       )

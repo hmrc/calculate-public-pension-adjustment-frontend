@@ -80,7 +80,7 @@ class ProtectionTypeEnhancementChangedControllerSpec extends SpecBase with Mocki
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when valid data is submitted in NormalMode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -104,6 +104,33 @@ class ProtectionTypeEnhancementChangedControllerSpec extends SpecBase with Mocki
         redirectLocation(result).value mustEqual ltaRoutes.WhatNewProtectionTypeEnhancementController
           .onPageLoad(NormalMode)
           .url
+      }
+    }
+
+    "must redirect to the -------- page when false is submitted in NormalMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url // change to appropriate page
       }
     }
 
@@ -134,7 +161,7 @@ class ProtectionTypeEnhancementChangedControllerSpec extends SpecBase with Mocki
       }
     }
 
-    "must redirect to the ------------- page when valid data is submitted" in {
+    "must redirect to the -------- page when false selected in checkmode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
