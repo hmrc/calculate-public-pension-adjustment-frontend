@@ -18,7 +18,7 @@ package services
 
 import base.SpecBase
 import models.{PSTR, PensionSchemeDetails, Period, SchemeIndex}
-import pages.annualallowance.PensionSchemeDetailsPage
+import pages.annualallowance.taxyear.PensionSchemeDetailsPage
 
 class SchemeServiceTest extends SpecBase {
 

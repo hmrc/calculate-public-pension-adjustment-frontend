@@ -17,7 +17,7 @@
 package services
 
 import models.{PSTR, PensionSchemeDetails, Period, SchemeIndex, UserAnswers, WhichScheme}
-import pages.annualallowance.PensionSchemeDetailsPage
+import pages.annualallowance.taxyear.PensionSchemeDetailsPage
 
 object SchemeService {
 

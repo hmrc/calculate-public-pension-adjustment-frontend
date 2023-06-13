@@ -17,8 +17,8 @@
 package services
 
 import models.{Period, ReportingChange, UserAnswers}
-import pages.annualallowance.MemberMoreThanOnePensionPage
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
+import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import pages.setupquestions.ReportingChangePage
 
 import java.time.LocalDate

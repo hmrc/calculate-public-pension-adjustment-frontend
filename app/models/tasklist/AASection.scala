@@ -18,7 +18,7 @@ package models.tasklist
 
 import models.{Period, SchemeIndex, UserAnswers}
 import pages.Page
-import pages.annualallowance._
+import pages.annualallowance.taxyear._
 
 case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
 

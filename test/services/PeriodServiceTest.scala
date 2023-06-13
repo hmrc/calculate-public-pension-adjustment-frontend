@@ -18,8 +18,8 @@ package services
 
 import base.SpecBase
 import models.Period
-import pages.annualallowance.MemberMoreThanOnePensionPage
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
+import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 
 import java.time.LocalDate
 

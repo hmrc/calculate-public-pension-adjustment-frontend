@@ -431,7 +431,7 @@ pensionSchemeDetails.schemeName.change.hidden = cy: What is the name and tax ref
 pensionSchemeDetails.schemeTaxRef.change.hidden = cy: What is the name and tax reference of the scheme that paid the charge?
 
 pensionSchemeInputAmounts.title = cy: Pension scheme that has paid
-pensionSchemeInputAmounts.heading = cy: Pensions scheme [Name for SchemeIndex {1}] that has paid {0}
+pensionSchemeInputAmounts.heading = cy: Pension scheme [Name for SchemeIndex {1}] that has paid {0}
 pensionSchemeInputAmounts.originalPIA = cy: What is your pension input amount?
 pensionSchemeInputAmounts.revisedPIA = cy: What is your revised pension input amount?
 pensionSchemeInputAmounts.checkYourAnswersLabel = cy: Pensions scheme [Name for SchemeIndex {1}] that has paid {0}
