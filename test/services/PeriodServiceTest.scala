@@ -17,33 +17,26 @@
 package services
 
 import base.SpecBase
-import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
-import models.{Period, ReportingChange}
+import models.Period
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
-import pages.setupquestions.ReportingChangePage
+import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 
 import java.time.LocalDate
 
-class AnnualAllowanceLogicServiceTest extends SpecBase {
+class PeriodServiceTest extends SpecBase {
 
-  val aaLogicService = new AnnualAllowanceLogicService
+  "First period" - {
 
-  "Annual allowance reporting" - {
+    "is identified correctly when a user has not completed any previous year" in {
+      val answers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2018), false).get
 
-    " is required when specified in UserAnswers" in {
-
-      val reportingChangeWithAA: Set[ReportingChange] = Set(AnnualAllowance)
-      val answers                                     = emptyUserAnswers.set(ReportingChangePage, reportingChangeWithAA)
-
-      aaLogicService.isRequired(answers.get, ReportingChange.AnnualAllowance) must be(true)
+      PeriodService.isFirstPeriod(answers, Period._2018) must be(true)
     }
 
-    "is not required when not specified in UserAnswers" in {
+    "is identified correctly when a user has completed a previous year" in {
+      val answers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2019), false).get
 
-      val reportingChangeWithoutAA: Set[ReportingChange] = Set(LifetimeAllowance)
-      val answers                                        = emptyUserAnswers.set(ReportingChangePage, reportingChangeWithoutAA)
-
-      aaLogicService.isRequired(answers.get, ReportingChange.AnnualAllowance) must be(false)
+      PeriodService.isFirstPeriod(answers, Period._2018) must be(false)
     }
   }
 
@@ -59,7 +52,7 @@ class AnnualAllowanceLogicServiceTest extends SpecBase {
         Period._2018
       )
 
-      aaLogicService.relevantPeriods(answers.get) must be(expectedPeriods)
+      PeriodService.relevantPeriods(answers.get) must be(expectedPeriods)
     }
 
     "are included for all remedy periods if the user did not stop paying in" in {
@@ -77,7 +70,7 @@ class AnnualAllowanceLogicServiceTest extends SpecBase {
         Period._2023
       )
 
-      aaLogicService.relevantPeriods(answers) must be(expectedPeriods)
+      PeriodService.relevantPeriods(answers) must be(expectedPeriods)
     }
 
     "are included for pre alignment period" in {
@@ -87,7 +80,7 @@ class AnnualAllowanceLogicServiceTest extends SpecBase {
         Period._2016PreAlignment
       )
 
-      aaLogicService.relevantPeriods(answers.get) must be(expectedPeriods)
+      PeriodService.relevantPeriods(answers.get) must be(expectedPeriods)
     }
 
     "are included for post alignment period" in {
@@ -98,7 +91,7 @@ class AnnualAllowanceLogicServiceTest extends SpecBase {
         Period._2016PostAlignment
       )
 
-      aaLogicService.relevantPeriods(answers.get) must be(expectedPeriods)
+      PeriodService.relevantPeriods(answers.get) must be(expectedPeriods)
     }
   }
 }

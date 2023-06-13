@@ -17,12 +17,12 @@
 package services
 
 import models.tasklist._
-import models.{NormalMode, Period, ReportingChange, UserAnswers}
+import models.{NormalMode, Period, ReportingChange, SchemeIndex, UserAnswers}
+import pages.setupquestions.ReportingChangePage
 
 import javax.inject.Inject
 
 class TaskListService @Inject() (
-  aaLogicService: AnnualAllowanceLogicService
 ) {
 
   def taskListViewModel(answers: UserAnswers): TaskListViewModel = {
@@ -32,9 +32,9 @@ class TaskListService @Inject() (
     counter += 1
 
     val aaGroup: Option[SectionGroupViewModel] =
-      if (aaLogicService.isRequired(answers, ReportingChange.AnnualAllowance)) {
-        val aaPeriods: Seq[Period]                  = aaLogicService.relevantPeriods(answers)
-        val aaPeriodSections: Seq[SectionViewModel] = aaPeriodSectionsSeq(aaPeriods)
+      if (isRequired(answers, ReportingChange.AnnualAllowance)) {
+        val aaPeriods: Seq[Period]                  = PeriodService.relevantPeriods(answers)
+        val aaPeriodSections: Seq[SectionViewModel] = aaPeriodSectionsSeq(answers, aaPeriods)
         Some(aaGroupSeq(answers, aaPeriodSections, counter))
       } else None
 
@@ -47,25 +47,31 @@ class TaskListService @Inject() (
     TaskListViewModel(setupGroup, aaGroup, ltaGroup, adminGroup)
   }
 
+  def isRequired(answers: UserAnswers, reportingChange: ReportingChange): Boolean =
+    answers.get(ReportingChangePage) match {
+      case Some(set) if set.contains(reportingChange) => true
+      case _                                          => false
+    }
+
   private def setupGroupSeq(answers: UserAnswers, displayNumber: Int): SectionGroupViewModel =
     SectionGroupViewModel(
       displayNumber,
-      "taskList.startupGroupHeading",
+      "taskList.setup.groupHeading",
       Seq(
         SectionViewModel(
-          "taskList.setupQuestion.changeDetails",
+          "taskList.setup.sectionName",
           SetupSection.returnTo(answers).navigate(NormalMode, answers),
           SetupSection.status(answers)
         )
       )
     )
 
-  private def aaPeriodSectionsSeq(relevantAAPeriods: Seq[Period]): Seq[SectionViewModel] =
+  private def aaPeriodSectionsSeq(answers: UserAnswers, relevantAAPeriods: Seq[Period]): Seq[SectionViewModel] =
     relevantAAPeriods.map(period =>
       SectionViewModel(
-        s"taskList.aa.detailsFor${period.toString}",
-        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad,
-        SectionStatus.NotStarted
+        s"taskList.aa.sectionNameFor${period.toString}",
+        AASection(period, SchemeIndex(0)).returnTo(answers).navigate(NormalMode, answers),
+        AASection(period, SchemeIndex(0)).status(answers)
       )
     )
 
@@ -76,10 +82,10 @@ class TaskListService @Inject() (
   ): SectionGroupViewModel =
     SectionGroupViewModel(
       displayNumber,
-      "taskList.aaGroupHeading",
+      "taskList.aa.groupHeading",
       Seq(
         SectionViewModel(
-          s"taskList.aa.preAAQuestion",
+          s"taskList.aa.setup.sectionName",
           PreAASection.returnTo(answers).navigate(NormalMode, answers),
           PreAASection.status(answers)
         )
@@ -87,14 +93,14 @@ class TaskListService @Inject() (
     )
 
   private def adminGroupSeq(answers: UserAnswers, displayNumber: Int): Option[SectionGroupViewModel] =
-    if (aaLogicService.isRequired(answers, ReportingChange.OtherCompensation)) {
+    if (isRequired(answers, ReportingChange.OtherCompensation)) {
       Some(
         SectionGroupViewModel(
           displayNumber,
-          "taskList.adminGroupHeading",
+          "taskList.admin.groupHeading",
           Seq(
             SectionViewModel(
-              "taskList.adminFees.administrationFees",
+              "taskList.admin.sectionName",
               controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad,
               SectionStatus.Completed
             )
@@ -104,14 +110,14 @@ class TaskListService @Inject() (
     } else None
 
   private def ltaGroupSeq(answers: UserAnswers, displayNumber: Int): Option[SectionGroupViewModel] =
-    if (aaLogicService.isRequired(answers, ReportingChange.LifetimeAllowance)) {
+    if (isRequired(answers, ReportingChange.LifetimeAllowance)) {
       Some(
         SectionGroupViewModel(
           displayNumber,
-          "taskList.ltaGroupHeading",
+          "taskList.lta.groupHeading",
           Seq(
             SectionViewModel(
-              "taskList.lta.addDetails",
+              "taskList.lta.sectionName",
               LTASection.returnTo(answers).navigate(NormalMode, answers),
               LTASection.status(answers)
             )

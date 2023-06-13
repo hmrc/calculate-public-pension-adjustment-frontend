@@ -18,13 +18,17 @@ package services
 
 import models.{Period, ReportingChange, UserAnswers}
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
+import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import pages.setupquestions.ReportingChangePage
 
 import java.time.LocalDate
-import javax.inject.Inject
 
-class AnnualAllowanceLogicService @Inject() (
-) {
+object PeriodService {
+
+  def isFirstPeriod(answers: UserAnswers, thisPeriod: Period) =
+    !allRemedyPeriods
+      .filter(period => period != thisPeriod)
+      .exists(period => answers.get(MemberMoreThanOnePensionPage(period)).isDefined)
 
   def isRequired(answers: UserAnswers, reportingChange: ReportingChange): Boolean =
     answers.get(ReportingChangePage) match {
@@ -42,10 +46,13 @@ class AnnualAllowanceLogicService @Inject() (
     }
   }
 
+  def notRelevantPeriods(answers: UserAnswers): Seq[Period] =
+    allRemedyPeriods.diff(relevantPeriods(answers))
+
   private def remedyPeriodsFor(exitDate: LocalDate): Seq[Period] =
     allRemedyPeriods.filter(period => !period.start.isAfter(exitDate))
 
-  private def allRemedyPeriods =
+  def allRemedyPeriods =
     Seq(
       Period._2016PreAlignment,
       Period._2016PostAlignment,

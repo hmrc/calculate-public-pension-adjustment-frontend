@@ -18,6 +18,7 @@ package utils
 
 trait CurrencyFormatter {
   def currencyFormat(amt: BigInt): String = f"&pound;$amt"
+  def currencyFormat(amt: Int): String    = f"&pound;$amt"
 }
 
 object CurrencyFormatter extends CurrencyFormatter

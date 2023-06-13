@@ -17,6 +17,7 @@
 package models
 
 import pages.Page
+import play.api.Logging
 import play.api.libs.json._
 import queries.{Gettable, Settable}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
@@ -28,7 +29,7 @@ final case class UserAnswers(
   id: String,
   data: JsObject = Json.obj(),
   lastUpdated: Instant = Instant.now
-) {
+) extends Logging {
 
   def get[A](page: Gettable[A])(implicit rds: Reads[A]): Option[A] =
     Reads.optionNoError(Reads.at(page.path)).reads(data).getOrElse(None)
@@ -52,6 +53,8 @@ final case class UserAnswers(
   }
 
   def remove[A](page: Settable[A]): Try[UserAnswers] = {
+
+    logger.info(s"removing data for path : ${page.path}")
 
     val updatedData = data.removeObject(page.path) match {
       case JsSuccess(jsValue, _) =>
