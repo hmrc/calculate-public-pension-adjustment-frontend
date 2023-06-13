@@ -18,6 +18,7 @@ package services
 
 import base.SpecBase
 import models.Period
+import pages.annualallowance.MemberMoreThanOnePensionPage
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 
 import java.time.LocalDate
@@ -26,30 +27,14 @@ class PeriodServiceTest extends SpecBase {
 
   "First period" - {
 
-    "is identified correctly when user did not stop paying in and period is pre_2016" in {
-      val answers = emptyUserAnswers
-      PeriodService.isFirstPeriod(answers, Period._2016PreAlignment) must be(true)
+    "is identified correctly when a user has not completed any previous year" in {
+      val answers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2018), false).get
+
+      PeriodService.isFirstPeriod(answers, Period._2018) must be(true)
     }
 
-    "is identified correctly when user did not stop paying in and period is post_2016" in {
-      val answers = emptyUserAnswers
-      PeriodService.isFirstPeriod(answers, Period._2016PostAlignment) must be(false)
-    }
-
-    "is identified correctly when user stopped paying in and period is pre_2016" in {
-      val answers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2018, 1, 1)).get
-
-      PeriodService.isFirstPeriod(answers, Period._2016PreAlignment) must be(true)
-    }
-
-    "is identified correctly when user stopped paying in and period is after stop date" in {
-      val answers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2018, 1, 1)).get
-
-      PeriodService.isFirstPeriod(answers, Period._2023) must be(false)
-    }
-
-    "is identified correctly when user stopped paying in and period is before stop date" in {
-      val answers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2020, 1, 1)).get
+    "is identified correctly when a user has completed a previous year" in {
+      val answers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2019), false).get
 
       PeriodService.isFirstPeriod(answers, Period._2018) must be(false)
     }

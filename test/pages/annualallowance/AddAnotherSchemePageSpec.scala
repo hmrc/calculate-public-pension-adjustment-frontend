@@ -42,7 +42,10 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
     "when answer yes and current period is not first period then select which scheme with incremented index" in {
       val page = AddAnotherSchemePage(Period._2018, SchemeIndex(1))
 
-      val userAnswers = emptyUserAnswers.set(page, true).get
+      val answersWithAPreviousPeriodCompleted =
+        emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false).get
+
+      val userAnswers = answersWithAPreviousPeriodCompleted.set(page, true).get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 

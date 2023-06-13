@@ -17,6 +17,7 @@
 package services
 
 import models.{Period, ReportingChange, UserAnswers}
+import pages.annualallowance.MemberMoreThanOnePensionPage
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import pages.setupquestions.ReportingChangePage
 
@@ -24,8 +25,10 @@ import java.time.LocalDate
 
 object PeriodService {
 
-  def isFirstPeriod(answers: UserAnswers, period: Period) =
-    period == relevantPeriods(answers).head
+  def isFirstPeriod(answers: UserAnswers, thisPeriod: Period) =
+    !allRemedyPeriods
+      .filter(period => period != thisPeriod)
+      .exists(period => answers.get(MemberMoreThanOnePensionPage(period)).isDefined)
 
   def isRequired(answers: UserAnswers, reportingChange: ReportingChange): Boolean =
     answers.get(ReportingChangePage) match {

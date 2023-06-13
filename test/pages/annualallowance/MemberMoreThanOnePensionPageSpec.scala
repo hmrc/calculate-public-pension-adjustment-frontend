@@ -16,7 +16,7 @@
 
 package pages.annualallowance
 
-import models.{NormalMode, Period, UserAnswers}
+import models.{NormalMode, Period}
 import pages.behaviours.PageBehaviours
 
 class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
@@ -32,7 +32,7 @@ class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
     "normal mode navigation" - {
 
       "when current period is first relevant period then capture scheme details for current period, scheme index 0" in {
-        val userAnswers = UserAnswers("1")
+        val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false).get
 
         val nextPageUrl: String =
           MemberMoreThanOnePensionPage(Period._2016PreAlignment).navigate(NormalMode, userAnswers).url
@@ -41,7 +41,7 @@ class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
       }
 
       "when current period is not first relevant period then select which scheme for current period, scheme index 0" in {
-        val userAnswers = UserAnswers("1")
+        val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false).get
 
         val nextUrl: String =
           MemberMoreThanOnePensionPage(Period._2016PostAlignment).navigate(NormalMode, userAnswers).url

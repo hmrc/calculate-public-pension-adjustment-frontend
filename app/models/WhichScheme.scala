@@ -16,16 +16,15 @@
 
 package models
 
-import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
 case class WhichScheme(values: Seq[String]) {
 
-  def options(implicit messages: Messages): Seq[RadioItem] =
+  def options(): Seq[RadioItem] =
     values.zipWithIndex.map { case (value, index) =>
       RadioItem(
-        content = Text(messages(s"whichScheme.${value.toString}")),
+        content = Text(s"${value.toString}"),
         value = Some(value.toString),
         id = Some(s"value_$index")
       )
