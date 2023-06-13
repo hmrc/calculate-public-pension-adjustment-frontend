@@ -16,8 +16,8 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode, UserAnswers}
 import controllers.routes
+import models.{CheckMode, NormalMode, UserAnswers}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -39,6 +39,7 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
         controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
+
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(LifetimeAllowanceChargePage) match {

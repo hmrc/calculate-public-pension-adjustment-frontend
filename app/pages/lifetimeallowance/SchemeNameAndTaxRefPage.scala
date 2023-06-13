@@ -28,9 +28,9 @@ case object SchemeNameAndTaxRefPage extends QuestionPage[SchemeNameAndTaxRef] {
   override def toString: String = "schemeNameAndTaxRef"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.routes.CheckYourAnswersController.onPageLoad
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-     controllers.routes.CheckYourAnswersController.onPageLoad
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
 
 }
