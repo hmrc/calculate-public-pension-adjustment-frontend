@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.lifetimeallowance
 
 import base.SpecBase
+import controllers.routes
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
 
-class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
+class CheckYourLTAAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
   "Check Your Answers Controller" - {
 
@@ -31,7 +32,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url)
+        val request =
+          FakeRequest(GET, controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url)
 
         val result = route(application, request).value
 
@@ -40,7 +42,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          "checkYourAnswers.setup.subHeading",
+          "checkYourAnswers.lta.subHeading",
           controllers.routes.TaskListController.onPageLoad,
           list
         )(
@@ -55,7 +57,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url)
+        val request =
+          FakeRequest(GET, controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url)
 
         val result = route(application, request).value
 

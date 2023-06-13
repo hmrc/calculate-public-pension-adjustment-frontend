@@ -78,6 +78,33 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryLifetimeAllowanceChargeAmountUserAnswersEntry
+    : Arbitrary[(LifetimeAllowanceChargeAmountPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[LifetimeAllowanceChargeAmountPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryExcessLifetimeAllowancePaidUserAnswersEntry
+    : Arbitrary[(ExcessLifetimeAllowancePaidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ExcessLifetimeAllowancePaidPage.type]
+        value <- arbitrary[ExcessLifetimeAllowancePaid].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryLifetimeAllowanceChargeUserAnswersEntry
+    : Arbitrary[(LifetimeAllowanceChargePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[LifetimeAllowanceChargePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryDateOfBenefitCrystallisationEventUserAnswersEntry
     : Arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] =
     Arbitrary {

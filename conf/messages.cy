@@ -362,3 +362,28 @@ whatNewProtectionTypeEnhancement.option9 = cy: Pension credit
 whatNewProtectionTypeEnhancement.checkYourAnswersLabel = cy: What is the new protection type or enhancement?
 whatNewProtectionTypeEnhancement.error.required = cy: Select your new protection type or enhancement
 whatNewProtectionTypeEnhancement.change.hidden = cy: What is the new protection type or enhancement?
+
+lifetimeAllowanceCharge.title = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+lifetimeAllowanceCharge.heading = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+lifetimeAllowanceCharge.checkYourAnswersLabel = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+lifetimeAllowanceCharge.error.required = cy: Select yes if you have had a lifetime allowance charge from 6 April 2015 to 5 April 2023
+lifetimeAllowanceCharge.change.hidden = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+
+excessLifetimeAllowancePaid.title = cy: How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.heading = cy: How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.annualPayment = cy: Annual payment
+excessLifetimeAllowancePaid.lumpSum = cy: Lump sum
+excessLifetimeAllowancePaid.checkYourAnswersLabel = cy: How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.error.required = cy: Select how the excess above your lifetime allowance paid to you
+excessLifetimeAllowancePaid.change.hidden = cy: How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.hint = cy: You can find this on your pension or bank statement.
+
+lifetimeAllowanceChargeAmount.title = cy: What was the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.heading = cy: What was the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.checkYourAnswersLabel = cy: What was the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.error.nonNumeric = cy: You have entered non-numerical characters for your lifetime allowance charge. You must enter numerical characters
+lifetimeAllowanceChargeAmount.error.required = cy: Enter an amount for your lifetime allowance charge
+lifetimeAllowanceChargeAmount.error.wholeNumber = cy: You have not entered a whole number for your lifetime allowance charge. You cannot use decimals.
+lifetimeAllowanceChargeAmount.error.outOfRange = cy: You have entered too many characters for your lifetime allowance charge. The maximum number of characters you can enter is 9
+lifetimeAllowanceChargeAmount.change.hidden = cy: What was the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300.

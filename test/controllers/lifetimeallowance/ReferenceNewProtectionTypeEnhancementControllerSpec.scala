@@ -81,7 +81,7 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the LifetimeAllowanceCharge page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -104,11 +104,11 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url // Change to appropriate page
+        ).value mustEqual ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode).url
       }
     }
 
-    "must redirect to the next page in checkmode when valid data is submitted" in {
+    "must redirect to the LifetimeAllowanceCharge page in CheckMode when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -131,7 +131,7 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url // Change to appropriate page
+        ).value mustEqual ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(CheckMode).url
       }
     }
 

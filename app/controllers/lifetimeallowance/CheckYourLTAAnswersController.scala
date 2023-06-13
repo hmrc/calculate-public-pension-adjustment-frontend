@@ -47,7 +47,10 @@ class CheckYourLTAAnswersController @Inject() (
       ProtectionReferenceSummary.row(request.userAnswers),
       ProtectionTypeEnhancementChangedSummary.row(request.userAnswers),
       WhatNewProtectionTypeEnhancementSummary.row(request.userAnswers),
-      ReferenceNewProtectionTypeEnhancementSummary.row(request.userAnswers)
+      ReferenceNewProtectionTypeEnhancementSummary.row(request.userAnswers),
+      LifetimeAllowanceChargeSummary.row(request.userAnswers),
+      ExcessLifetimeAllowancePaidSummary.row(request.userAnswers),
+      LifetimeAllowanceChargeAmountSummary.row(request.userAnswers)
     )
 
     Ok(

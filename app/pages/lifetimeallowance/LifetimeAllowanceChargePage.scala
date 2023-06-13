@@ -16,8 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import controllers.routes
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -25,34 +23,34 @@ import play.api.mvc.Call
 
 import scala.util.Try
 
-case object ProtectionTypeEnhancementChangedPage extends QuestionPage[Boolean] {
+case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "lta" \ toString
 
-  override def toString: String = "protectionTypeEnhancementChanged"
+  override def toString: String = "lifetimeAllowanceCharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(ProtectionTypeEnhancementChangedPage) match {
-      case Some(true)  => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
-      case Some(false) => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(LifetimeAllowanceChargePage) match {
+      case Some(true)  =>
+        controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
+      case Some(false) =>
+        controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(ProtectionTypeEnhancementChangedPage) match {
-      case Some(true)  => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
-      case Some(false) => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(CheckMode)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(LifetimeAllowanceChargePage) match {
+      case Some(true)  =>
+        controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
+      case Some(false) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
         case true  => super.cleanup(value, userAnswers)
-        case false =>
-          userAnswers
-            .remove(WhatNewProtectionTypeEnhancementPage)
-            .flatMap(_.remove(ReferenceNewProtectionTypeEnhancementPage))
+        case false => userAnswers.remove(ExcessLifetimeAllowancePaidPage)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

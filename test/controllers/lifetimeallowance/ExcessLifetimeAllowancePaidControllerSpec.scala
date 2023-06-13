@@ -1,0 +1,282 @@
+/*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package controllers.lifetimeallowance
+
+import base.SpecBase
+import controllers.routes
+import forms.lifetimeallowance.ExcessLifetimeAllowancePaidFormProvider
+import models.{CheckMode, ExcessLifetimeAllowancePaid, NormalMode, UserAnswers}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar
+import pages.lifetimeallowance.ExcessLifetimeAllowancePaidPage
+import play.api.inject.bind
+import play.api.mvc.Call
+import play.api.test.FakeRequest
+import play.api.test.Helpers._
+import repositories.SessionRepository
+import views.html.lifetimeallowance.ExcessLifetimeAllowancePaidView
+
+import scala.concurrent.Future
+
+class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSugar {
+
+  def onwardRoute = Call("GET", "/foo")
+
+  lazy val excessLifetimeAllowancePaidRoute =
+    controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode).url
+
+  lazy val excessLifetimeAllowancePaidCheckRoute =
+    controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
+
+  val formProvider = new ExcessLifetimeAllowancePaidFormProvider()
+  val form         = formProvider()
+
+  "ExcessLifetimeAllowancePaid Controller" - {
+
+    "must return OK and the correct view for a GET" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, excessLifetimeAllowancePaidRoute)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[ExcessLifetimeAllowancePaidView]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+      }
+    }
+
+    "must populate the view correctly on a GET when the question has previously been answered" in {
+
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(ExcessLifetimeAllowancePaidPage, ExcessLifetimeAllowancePaid.values.head)
+        .success
+        .value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, excessLifetimeAllowancePaidRoute)
+
+        val view = application.injector.instanceOf[ExcessLifetimeAllowancePaidView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(form.fill(ExcessLifetimeAllowancePaid.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must redirect to the next page when valid data is submitted" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, excessLifetimeAllowancePaidRoute)
+            .withFormUrlEncodedBody(("value", ExcessLifetimeAllowancePaid.values.head.toString))
+
+        val result = route(application, request).value
+
+        val expectedAnswers = emptyUserAnswers
+          .set(ExcessLifetimeAllowancePaidPage, models.ExcessLifetimeAllowancePaid.Lumpsum)
+          .success
+          .value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual ExcessLifetimeAllowancePaidPage
+          .navigate(NormalMode, expectedAnswers)
+          .url
+      }
+    }
+
+    "must return a Bad Request and errors when invalid data is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, excessLifetimeAllowancePaidRoute)
+            .withFormUrlEncodedBody(("value", "invalid value"))
+
+        val boundForm = form.bind(Map("value" -> "invalid value"))
+
+        val view = application.injector.instanceOf[ExcessLifetimeAllowancePaidView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+
+      val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val request = FakeRequest(GET, excessLifetimeAllowancePaidRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "redirect to Journey Recovery for a POST if no existing data is found" in {
+
+      val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, excessLifetimeAllowancePaidRoute)
+            .withFormUrlEncodedBody(("value", ExcessLifetimeAllowancePaid.values.head.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "redirect to LifetimeAllowanceChargeAmount page when user answers Annual payment in Normal Mode" in {
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, excessLifetimeAllowancePaidRoute)
+            .withFormUrlEncodedBody(("value", "annualPayment"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController
+          .onPageLoad(NormalMode)
+          .url
+      }
+    }
+
+    "redirect to LifetimeAllowanceChargeAmount page when user answers Lump sum in Normal Mode" in {
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, excessLifetimeAllowancePaidRoute)
+            .withFormUrlEncodedBody(("value", "lumpSum"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController
+          .onPageLoad(NormalMode)
+          .url
+      }
+    }
+
+    "redirect to CheckYourAnswer page when user answers Annual payment in Check Mode" in {
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, excessLifetimeAllowancePaidCheckRoute)
+            .withFormUrlEncodedBody(("value", "annualPayment"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
+      }
+    }
+
+    "redirect to CheckYourAnswer page when user answers Lump sum in Check Mode" in {
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, excessLifetimeAllowancePaidCheckRoute)
+            .withFormUrlEncodedBody(("value", "lumpSum"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
+      }
+    }
+  }
+}
