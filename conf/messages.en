@@ -340,7 +340,7 @@ protectionReference.change.hidden = ProtectionReference
 
 protectionTypeEnhancementChanged.title = Has your protection type or enhancement changed?
 protectionTypeEnhancementChanged.heading = Has your protection type or enhancement changed?
-protectionTypeEnhancementChanged.hixnt =  Say if either your protection or enhancements have changed in the remedy period. The remedy period is 6 April 2015 to 5 April 2023.
+protectionTypeEnhancementChanged.hint =  Say if either your protection or enhancements have changed in the remedy period. The remedy period is 6 April 2015 to 5 April 2023.
 protectionTypeEnhancementChanged.checkYourAnswersLabel = Has your protection type or enhancement changed?
 protectionTypeEnhancementChanged.error.required = Select yes if your protection or enhancement has changed
 protectionTypeEnhancementChanged.change.hidden = Has your protection type or enhancement changed?
