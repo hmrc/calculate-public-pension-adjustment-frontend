@@ -21,6 +21,11 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryWhoPaidAACharge: Arbitrary[WhoPaidAACharge] =
+    Arbitrary {
+      Gen.oneOf(WhoPaidAACharge.values.toSeq)
+    }
+
   implicit lazy val arbitraryProtectionType: Arbitrary[ProtectionType] =
     Arbitrary {
       Gen.oneOf(ProtectionType.values.toSeq)

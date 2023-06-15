@@ -17,10 +17,12 @@
 package pages.annualallowance.taxyear
 
 import controllers.routes
-import models.{Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[Boolean] {
 
@@ -30,10 +32,42 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayAChargePage(period, schemeIndex)) match {
-      case Some(true)  => addAnotherMaybe(answers) // TODO until who paid pages are added
+      case Some(true)  => navigateToWhoPaidOrHowMuchSchemePaid(answers)
       case Some(false) => addAnotherMaybe(answers)
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    answers.get(PayAChargePage(period, schemeIndex)) match {
+      case Some(true)  => navigateToWhoPaidOrHowMuchSchemePaid(answers)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case _           => routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case false =>
+          for {
+            updated1 <- userAnswers.remove(WhoPaidAAChargePage(period, schemeIndex))
+            updated2 <- updated1.remove(HowMuchAAChargeYouPaidPage(period, schemeIndex))
+            updated3 <- updated2.remove(HowMuchAAChargeSchemePaidPage(period, schemeIndex))
+          } yield updated3
+        case true  => super.cleanup(value, userAnswers)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
+
+  private def navigateToWhoPaidOrHowMuchSchemePaid(answers: UserAnswers) =
+    if (isFirstSchemeInPeriod)
+      controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController
+        .onPageLoad(NormalMode, period, schemeIndex)
+    else
+      controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
+        .onPageLoad(NormalMode, period, schemeIndex)
+
+  private def isFirstSchemeInPeriod =
+    schemeIndex.value == 0
 
   def addAnotherMaybe(answers: UserAnswers): Call = answers.get(MemberMoreThanOnePensionPage(period)) match {
     case Some(true)  =>
@@ -44,6 +78,4 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
     case None        => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
 }

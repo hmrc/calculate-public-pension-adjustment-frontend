@@ -23,7 +23,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.annualallowance.taxyear.{PayAChargeSummary, PensionSchemeDetailsSummary, PensionSchemeInputAmountsSummary}
+import viewmodels.checkAnswers.annualallowance.taxyear._
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -45,7 +45,10 @@ class CheckYourAAPeriodAnswersController @Inject() (
         Seq(
           PensionSchemeDetailsSummary.row(request.userAnswers, period, index),
           PensionSchemeInputAmountsSummary.row(request.userAnswers, period, index),
-          PayAChargeSummary.row(request.userAnswers, period, index)
+          PayAChargeSummary.row(request.userAnswers, period, index),
+          WhoPaidAAChargeSummary.row(request.userAnswers, period, index),
+          HowMuchAAChargeYouPaidSummary.row(request.userAnswers, period, index),
+          HowMuchAAChargeSchemePaidSummary.row(request.userAnswers, period, index)
         )
       )
 

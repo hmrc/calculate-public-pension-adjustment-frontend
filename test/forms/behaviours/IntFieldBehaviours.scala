@@ -73,12 +73,12 @@ trait IntFieldBehaviours extends FieldBehaviours {
       }
     }
 
-//  def intFieldWithRange(form: Form[_], fieldName: String, minimum: Int, maximum: Int, expectedError: FormError): Unit =
-//    s"not bind integers outside the range $minimum to $maximum" in {
-//
-//      forAll(intsOutsideRange(minimum, maximum) -> "intOutsideRange") { number =>
-//        val result = form.bind(Map(fieldName -> number.toString)).apply(fieldName)
-//        result.errors must contain only expectedError
-//      }
-//    }
+  def intFieldWithRange(form: Form[_], fieldName: String, minimum: Int, maximum: Int, expectedError: FormError): Unit =
+    s"not bind integers outside the range $minimum to $maximum" in {
+
+      forAll(intsOutsideRange(minimum, maximum) -> "intOutsideRange") { number =>
+        val result = form.bind(Map(fieldName -> number.toString)).apply(fieldName)
+        result.errors must contain only expectedError
+      }
+    }
 }
