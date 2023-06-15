@@ -26,6 +26,11 @@ trait ModelGenerators {
       Gen.oneOf(WhoPaidAACharge.values.toSeq)
     }
 
+  implicit lazy val arbitrarySchemeNameAndTaxRefType: Arbitrary[SchemeNameAndTaxRef] =
+    Arbitrary {
+      Gen.oneOf(SchemeNameAndTaxRef.values.toSeq)
+    }
+
   implicit lazy val arbitraryProtectionType: Arbitrary[ProtectionType] =
     Arbitrary {
       Gen.oneOf(ProtectionType.values.toSeq)

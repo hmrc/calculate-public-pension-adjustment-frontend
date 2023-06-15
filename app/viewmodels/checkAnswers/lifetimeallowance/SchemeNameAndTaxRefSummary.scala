@@ -20,6 +20,7 @@ import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.SchemeNameAndTaxRefPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
@@ -29,10 +30,12 @@ object SchemeNameAndTaxRefSummary {
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(SchemeNameAndTaxRefPage).map {
       answer =>
+        val value =
+          HtmlFormat.escape(answer.name).toString + " / " + HtmlFormat.escape(answer.taxRef).toString
 
         SummaryListRowViewModel(
           key = "schemeNameAndTaxRef.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlFormat.escape(answer.name).toString),
+          value = ValueViewModel(HtmlContent(value)),
           actions = Seq(
             ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("schemeNameAndTaxRef.change.hidden"))

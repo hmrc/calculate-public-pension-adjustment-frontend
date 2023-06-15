@@ -15,6 +15,7 @@
  *@
 
 @import viewmodels.InputWidth._
+@import viewmodels.LabelSize
 @import controllers.lifetimeallowance.routes
 
 @this(
@@ -35,22 +36,23 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <span class="govuk-caption-l">@messages("lifetimeAllowance.caption")</span>
         <h1 class="govuk-heading-xl">@messages("schemeNameAndTaxRef.heading")</h1>
 
         @govukInput(
             InputViewModel(
                 field = form("name"),
-                label = LabelViewModel(messages("schemeNameAndTaxRef.name.heading"))
-            )
-            .withWidth(Full)
+                label = LabelViewModel(messages("schemeNameAndTaxRef.name.heading")).asPageHeading(LabelSize.Medium)
+                ).withHint(HintViewModel(messages("schemeNameAndTaxRef.schemeName.hint")))
+            .withWidth(Fixed10)
         )
 
         @govukInput(
             InputViewModel(
                 field = form("taxRef"),
-                label = LabelViewModel(messages("schemeNameAndTaxRef.taxRef.heading"))
-            )
-            .withWidth(Full)
+                label = LabelViewModel(messages("schemeNameAndTaxRef.taxRef.heading")).asPageHeading(LabelSize.Medium)
+                ).withHint(HintViewModel(messages("schemeNameAndTaxRef.taxRef.hint")))
+            .withWidth(Fixed10)
         )
 
         @govukButton(
