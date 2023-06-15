@@ -18,6 +18,7 @@ package generators
 
 import models._
 import org.scalacheck.{Arbitrary, Gen}
+import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
@@ -26,9 +27,19 @@ trait ModelGenerators {
       Gen.oneOf(WhoPaidAACharge.values.toSeq)
     }
 
+  def taxRef: Gen[String] =
+    for {
+      digit <- Gen.listOfN(8, Gen.numChar).map(_.mkString)
+      letter<- Gen.listOfN(2, Gen.alphaUpperChar).map(_.mkString)
+
+    } yield s"$digit$letter"
+
   implicit lazy val arbitrarySchemeNameAndTaxRefType: Arbitrary[SchemeNameAndTaxRef] =
     Arbitrary {
-      Gen.oneOf(SchemeNameAndTaxRef.values.toSeq)
+      for {
+        name <- arbitrary[String]
+        taxRef <- taxRef
+      } yield SchemeNameAndTaxRef(name, taxRef)
     }
 
   implicit lazy val arbitraryProtectionType: Arbitrary[ProtectionType] =

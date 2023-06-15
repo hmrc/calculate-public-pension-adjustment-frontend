@@ -37,8 +37,10 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whoPaidLTACharge.heading")).asPageHeading(),
-                items  = WhoPaidLTACharge.options
+                items  = WhoPaidLTACharge.options,
+                legend = HmrcPageHeadingLegend(
+                content = messages("whoPaidLTACharge.heading"),
+                caption = HmrcSectionCaption(messages("lifetimeAllowance.caption")))
             )
         )
 

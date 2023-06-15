@@ -44,6 +44,8 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val schemeNameAndTaxRefCheckRoute = controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
 
+  private val validAnswer = SchemeNameAndTaxRef("Some scheme", "00348916RT")
+
   "SchemeNameAndTaxRef Controller" - {
 
     "must return OK and the correct view for a GET" in {
@@ -87,7 +89,7 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when valid data is NormalMode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -103,12 +105,17 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, schemeNameAndTaxRefRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
 
         val result = route(application, request).value
 
+        val expectedAnswers = emptyUserAnswers.set(SchemeNameAndTaxRefPage, validAnswer).success.value
+
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual onwardRoute.url
+        redirectLocation(result).value mustEqual SchemeNameAndTaxRefPage
+          .navigate(NormalMode, expectedAnswers)
+          .url
+
       }
     }
 

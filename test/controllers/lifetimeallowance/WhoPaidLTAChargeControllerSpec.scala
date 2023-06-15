@@ -80,7 +80,7 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when valid data is submitted in NormalMode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -100,8 +100,43 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
+        val expectedAnswers =
+          emptyUserAnswers.set(WhoPaidLTAChargePage, WhoPaidLTACharge.values.head).success.value
+
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual onwardRoute.url
+        redirectLocation(result).value mustEqual pages.lifetimeallowance.WhoPaidLTAChargePage
+          .navigate(NormalMode, expectedAnswers)
+          .url
+      }
+    }
+
+    "must redirect to the next page when valid data is submitted in CheckMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, whoPaidLTAChargeCheckRoute)
+            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.values.head.toString))
+
+        val result = route(application, request).value
+
+        val expectedAnswers =
+          emptyUserAnswers.set(WhoPaidLTAChargePage, WhoPaidLTACharge.values.head).success.value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual pages.lifetimeallowance.WhoPaidLTAChargePage
+          .navigate(CheckMode, expectedAnswers)
+          .url
       }
     }
 

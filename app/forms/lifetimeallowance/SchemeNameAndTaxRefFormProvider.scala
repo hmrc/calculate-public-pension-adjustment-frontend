@@ -23,8 +23,6 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
-import scala.util.matching.Regex
-
 class SchemeNameAndTaxRefFormProvider @Inject() extends Mappings {
 
   private val pattern: String = """(\d{8})[A-Z]{2}"""
@@ -39,7 +37,6 @@ class SchemeNameAndTaxRefFormProvider @Inject() extends Mappings {
       "name" -> text("schemeNameAndTaxRef.name.error.required")
         .verifying(maxLength(100, "schemeNameAndTaxRef.name.error.length")),
       "taxRef" -> text("schemeNameAndTaxRef.taxRef.error.required")
-        .verifying(maxLength(100, "schemeNameAndTaxRef.taxRef.error.length"))
           .verifying(validateFieldsRegex("schemeNameAndTaxRef.taxRef.invalid", pattern))
     )(SchemeNameAndTaxRef.apply)(SchemeNameAndTaxRef.unapply)
   )
