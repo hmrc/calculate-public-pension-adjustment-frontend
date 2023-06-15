@@ -18,7 +18,7 @@ package pages.annualallowance.taxyear
 
 import controllers.routes
 import models.WhoPaidAACharge.{Both, You}
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -49,5 +49,14 @@ case class HowMuchAAChargeYouPaidPage(period: Period, schemeIndex: SchemeIndex) 
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    answers.get(WhoPaidAAChargePage(period, schemeIndex)) match {
+      case Some(You)  =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
+          .onPageLoad(period)
+      case Some(Both) =>
+        controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
+          .onPageLoad(CheckMode, period, schemeIndex)
+
+      case _ => routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

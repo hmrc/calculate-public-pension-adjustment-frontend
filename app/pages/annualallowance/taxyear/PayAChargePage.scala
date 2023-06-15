@@ -17,7 +17,7 @@
 package pages.annualallowance.taxyear
 
 import controllers.routes
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Mode, NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -32,14 +32,14 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayAChargePage(period, schemeIndex)) match {
-      case Some(true)  => navigateToWhoPaidOrHowMuchSchemePaid(answers)
+      case Some(true)  => navigateToWhoPaidOrHowMuchSchemePaid(NormalMode)
       case Some(false) => addAnotherMaybe(answers)
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayAChargePage(period, schemeIndex)) match {
-      case Some(true)  => navigateToWhoPaidOrHowMuchSchemePaid(answers)
+      case Some(true)  => navigateToWhoPaidOrHowMuchSchemePaid(CheckMode)
       case Some(false) =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
@@ -58,13 +58,12 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
       }
       .getOrElse(super.cleanup(value, userAnswers))
 
-  private def navigateToWhoPaidOrHowMuchSchemePaid(answers: UserAnswers) =
+  private def navigateToWhoPaidOrHowMuchSchemePaid(mode: Mode) =
     if (isFirstSchemeInPeriod)
-      controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController
-        .onPageLoad(NormalMode, period, schemeIndex)
+      controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController.onPageLoad(mode, period, schemeIndex)
     else
       controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
-        .onPageLoad(NormalMode, period, schemeIndex)
+        .onPageLoad(mode, period, schemeIndex)
 
   private def isFirstSchemeInPeriod =
     schemeIndex.value == 0

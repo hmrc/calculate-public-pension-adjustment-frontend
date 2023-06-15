@@ -37,7 +37,7 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("howMuchAAChargeSchemePaid.heading")).asPageHeading()
+                label = LabelViewModel(messages("howMuchAAChargeSchemePaid.heading", period, schemeIndex)).asPageHeading()
             )
             .asNumeric()
             .withWidth(Fixed10)

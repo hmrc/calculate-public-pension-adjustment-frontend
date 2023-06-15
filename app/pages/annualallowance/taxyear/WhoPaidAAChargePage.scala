@@ -18,7 +18,7 @@ package pages.annualallowance.taxyear
 
 import controllers.routes
 import models.WhoPaidAACharge.{Both, Scheme, You}
-import models.{NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidAACharge}
+import models.{CheckMode, Mode, NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidAACharge}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -31,21 +31,21 @@ case class WhoPaidAAChargePage(period: Period, schemeIndex: SchemeIndex) extends
 
   override def toString: String = "whoPaidAACharge"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = navigateInEitherMode(answers)
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = navigateInEitherMode(answers, NormalMode)
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = navigateInEitherMode(answers)
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = navigateInEitherMode(answers, CheckMode)
 
-  private def navigateInEitherMode(answers: UserAnswers): Call =
+  private def navigateInEitherMode(answers: UserAnswers, mode: Mode): Call =
     answers.get(WhoPaidAAChargePage(period, schemeIndex)) match {
       case Some(You)    =>
         controllers.annualallowance.taxyear.routes.HowMuchAAChargeYouPaidController
-          .onPageLoad(NormalMode, period, schemeIndex)
+          .onPageLoad(mode, period, schemeIndex)
       case Some(Both)   =>
         controllers.annualallowance.taxyear.routes.HowMuchAAChargeYouPaidController
-          .onPageLoad(NormalMode, period, schemeIndex)
+          .onPageLoad(mode, period, schemeIndex)
       case Some(Scheme) =>
         controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
-          .onPageLoad(NormalMode, period, schemeIndex)
+          .onPageLoad(mode, period, schemeIndex)
 
       case _ => routes.JourneyRecoveryController.onPageLoad(None)
     }
