@@ -119,6 +119,36 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    "must redirect to the next page when valid data is CheckMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, schemeNameAndTaxRefCheckRoute)
+            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
+
+        val result = route(application, request).value
+
+        val expectedAnswers = emptyUserAnswers.set(SchemeNameAndTaxRefPage, validAnswer).success.value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual SchemeNameAndTaxRefPage
+          .navigate(NormalMode, expectedAnswers)
+          .url
+
+      }
+    }
+
     "must return a Bad Request and errors when invalid data is submitted" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()

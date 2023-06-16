@@ -21,15 +21,14 @@ import play.api.data.FormError
 
 class SchemeNameAndTaxRefFormProviderSpec extends StringFieldBehaviours {
 
-  val requiredKey = "schemeNameAndTaxRef.error.required"
-  val lengthKey = "schemeNameAndTaxRef.error.length"
-  val maxLength = 100
-
   val form = new SchemeNameAndTaxRefFormProvider()()
 
-  ".value" - {
+  ".name" - {
 
-    val fieldName = "value"
+    val fieldName = "name"
+    val requiredKey = "schemeNameAndTaxRef.name.error.required"
+    val lengthKey = "schemeNameAndTaxRef.name.error.length"
+    val maxLength = 100
 
     behave like fieldThatBindsValidData(
       form,
@@ -42,6 +41,25 @@ class SchemeNameAndTaxRefFormProviderSpec extends StringFieldBehaviours {
       fieldName,
       maxLength = maxLength,
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
+
+  ".taxRef" - {
+
+    val fieldName = "taxRef"
+    val requiredKey = "schemeNameAndTaxRef.taxRef.error.required"
+
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      validPstrs
     )
 
     behave like mandatoryField(
