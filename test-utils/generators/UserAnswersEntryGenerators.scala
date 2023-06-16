@@ -20,11 +20,38 @@ import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
+import pages.annualallowance.taxyear.{HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, WhoPaidAAChargePage}
 import pages.lifetimeallowance._
 import pages.setupquestions.ReportingChangePage
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+
+  implicit lazy val arbitraryWhoPaidAAChargeUserAnswersEntry: Arbitrary[(WhoPaidAAChargePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[WhoPaidAAChargePage.type]
+        value <- arbitrary[WhoPaidAACharge].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHowMuchAAChargeYouPaidUserAnswersEntry
+    : Arbitrary[(HowMuchAAChargeYouPaidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HowMuchAAChargeYouPaidPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHowMuchAAChargeSchemePaidUserAnswersEntry
+    : Arbitrary[(HowMuchAAChargeSchemePaidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HowMuchAAChargeSchemePaidPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
 
   implicit lazy val arbitraryProtectionReferenceUserAnswersEntry: Arbitrary[(ProtectionReferencePage.type, JsValue)] =
     Arbitrary {

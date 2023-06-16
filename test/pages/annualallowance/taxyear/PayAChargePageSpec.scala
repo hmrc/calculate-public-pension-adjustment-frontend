@@ -52,14 +52,14 @@ class PayAChargePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/check-your-answers-period/2018") // TODO until onward pages are added
     }
 
-    "when did pay charge then then check onward navigation" in {
+    "when did pay charge then check onward navigation" in {
       val page = PayAChargePage(Period._2018, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers.set(page, true).get.set(MemberMoreThanOnePensionPage(Period._2018), true).get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/add-another-scheme/2018/0") // TODO until who paid pages are added
+      checkNavigation(nextPageUrl, "/who-paid-annual-allowance-charge/2018/0")
     }
   }
 }

@@ -18,45 +18,45 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import controllers.routes
-import forms.annualallowance.taxyear.PayAChargeFormProvider
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import forms.annualallowance.taxyear.WhoPaidAAChargeFormProvider
+import models.{NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidAACharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.{MemberMoreThanOnePensionPage, PayAChargePage}
+import pages.annualallowance.taxyear.WhoPaidAAChargePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.annualallowance.taxyear.PayAChargeView
+import views.html.annualallowance.taxyear.WhoPaidAAChargeView
 
 import scala.concurrent.Future
 
-class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
+class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new PayAChargeFormProvider()
-  val form         = formProvider()
-
-  lazy val payAChargeRoute =
-    controllers.annualallowance.taxyear.routes.PayAChargeController
+  lazy val whoPaidAAChargeRoute =
+    controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
       .url
 
-  "PayACharge Controller" - {
+  val formProvider = new WhoPaidAAChargeFormProvider()
+  val form         = formProvider()
+
+  "WhoPaidAACharge Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, payAChargeRoute)
+        val request = FakeRequest(GET, whoPaidAAChargeRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[PayAChargeView]
+        val view = application.injector.instanceOf[WhoPaidAAChargeView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0))(
@@ -68,19 +68,27 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(PayAChargePage(Period._2018, SchemeIndex(0)), true).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(WhoPaidAAChargePage(Period._2018, SchemeIndex(0)), WhoPaidAACharge.values.head)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, payAChargeRoute)
+        val request = FakeRequest(GET, whoPaidAAChargeRoute)
 
-        val view = application.injector.instanceOf[PayAChargeView]
+        val view = application.injector.instanceOf[WhoPaidAAChargeView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(
+          form.fill(WhoPaidAACharge.values.head),
+          NormalMode,
+          Period._2018,
+          SchemeIndex(0)
+        )(
           request,
           messages(application)
         ).toString
@@ -102,18 +110,15 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, payAChargeRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+          FakeRequest(POST, whoPaidAAChargeRoute)
+            .withFormUrlEncodedBody(("value", WhoPaidAACharge.values.head.toString))
 
-        val userAnswers = emptyUserAnswers
-          .set(PayAChargePage(Period._2018, SchemeIndex(0)), true)
-          .get
-          .set(MemberMoreThanOnePensionPage(Period._2018), false)
+        val userAnswers = emptyUserAnswers.set(WhoPaidAAChargePage(Period._2018, SchemeIndex(0)), WhoPaidAACharge.You)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual PayAChargePage(Period._2018, SchemeIndex(0))
+        redirectLocation(result).value mustEqual WhoPaidAAChargePage(Period._2018, SchemeIndex(0))
           .navigate(NormalMode, userAnswers.get)
           .url
       }
@@ -125,12 +130,12 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, payAChargeRoute)
-            .withFormUrlEncodedBody(("value", ""))
+          FakeRequest(POST, whoPaidAAChargeRoute)
+            .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = form.bind(Map("value" -> ""))
+        val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[PayAChargeView]
+        val view = application.injector.instanceOf[WhoPaidAAChargeView]
 
         val result = route(application, request).value
 
@@ -147,7 +152,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, payAChargeRoute)
+        val request = FakeRequest(GET, whoPaidAAChargeRoute)
 
         val result = route(application, request).value
 
@@ -156,18 +161,19 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to Journey Recovery for a POST if no existing data is found" in {
+    "redirect to Journey Recovery for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
         val request =
-          FakeRequest(POST, payAChargeRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+          FakeRequest(POST, whoPaidAAChargeRoute)
+            .withFormUrlEncodedBody(("value", WhoPaidAACharge.values.head.toString))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }
