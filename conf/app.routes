@@ -145,3 +145,15 @@ GET        /protection-changed-new-type                        controllers.lifet
 POST       /protection-changed-new-type                        controllers.lifetimeallowance.WhatNewProtectionTypeEnhancementController.onSubmit(mode: Mode = NormalMode)
 GET        /change-protection-changed-new-type                 controllers.lifetimeallowance.WhatNewProtectionTypeEnhancementController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-protection-changed-new-type                 controllers.lifetimeallowance.WhatNewProtectionTypeEnhancementController.onSubmit(mode: Mode = CheckMode)
+
+GET        /what-you-will-need-admin                           controllers.admin.WhatYouWillNeedAdminController.onPageLoad()
+
+GET        /admin-fee-amount                                   controllers.admin.AdminFeeAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /admin-fee-amount                                   controllers.admin.AdminFeeAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /change-admin-fee-amount                            controllers.admin.AdminFeeAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-admin-fee-amount                            controllers.admin.AdminFeeAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /admin-fees                                         controllers.admin.AdminFeeDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /admin-fees                                         controllers.admin.AdminFeeDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-admin-fees                                  controllers.admin.AdminFeeDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-admin-fees                                  controllers.admin.AdminFeeDetailsController.onSubmit(mode: Mode = CheckMode)

@@ -362,3 +362,28 @@ whatNewProtectionTypeEnhancement.option9 = Pension credit
 whatNewProtectionTypeEnhancement.checkYourAnswersLabel = What is the new protection type or enhancement?
 whatNewProtectionTypeEnhancement.error.required = Select your new protection type or enhancement
 whatNewProtectionTypeEnhancement.change.hidden = What is the new protection type or enhancement?
+
+whatYouWillNeedAdmin.title = Administration fees
+whatYouWillNeedAdmin.heading = Administration fees
+whatYouWillNeedAdmin.message1 = Administration Fees are fees you have paid to solicitors, legal advisors, accountants or professional services for help with your pensions
+whatYouWillNeedAdmin.message2 = You will need to provide details of any other compensation being claimed:
+whatYouWillNeedAdmin.list1 = Professional fees
+whatYouWillNeedAdmin.list2 = Other fees
+
+adminFeeAmount.title = What is the value of your administration fees?
+adminFeeAmount.heading = What is the value of your administration fees?
+adminFeeAmount.hint = Amounts must be rounded down to the nearest pound, for example 2300.
+adminFeeAmount.checkYourAnswersLabel = What is the value of your administration fees?
+adminFeeAmount.error.nonNumeric = You have entered non-numerical characters for your administration fees. You must enter numerical characters
+adminFeeAmount.error.required = Enter your adminFeeAmount
+adminFeeAmount.error.wholeNumber = Enter your adminFeeAmount using whole numbers
+adminFeeAmount.error.outOfRange = AdminFeeAmount must be between {0} and {1}
+adminFeeAmount.change.hidden = AdminFeeAmount
+
+adminFeeDetails.title = adminFeeDetails
+adminFeeDetails.heading = adminFeeDetails
+adminFeeDetails.hint = adminFeeDetails
+adminFeeDetails.checkYourAnswersLabel = adminFeeDetails
+adminFeeDetails.error.required = Enter adminFeeDetails
+adminFeeDetails.error.length = AdminFeeDetails must be 500 characters or less
+adminFeeDetails.change.hidden = AdminFeeDetails

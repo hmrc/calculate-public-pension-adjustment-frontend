@@ -23,6 +23,12 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryAdminFeeDetailsPage: Arbitrary[AdminFeeDetailsPage.type] =
+    Arbitrary(AdminFeeDetailsPage)
+
+  implicit lazy val arbitraryAdminFeeAmountPage: Arbitrary[AdminFeeAmountPage.type] =
+    Arbitrary(AdminFeeAmountPage)
+
   implicit lazy val arbitraryProtectionReferencePage: Arbitrary[ProtectionReferencePage.type] =
     Arbitrary(ProtectionReferencePage)
 
