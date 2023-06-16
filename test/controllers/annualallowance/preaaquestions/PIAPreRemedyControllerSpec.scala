@@ -17,11 +17,10 @@
 package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import controllers.routes
 import forms.annualallowance.preaaquestions.PIAPreRemedyFormProvider
-import models.PIAPreRemedyTaxYear.TaxYear2012
-import models.{CheckMode, NormalMode, PIAPreRemedyTaxYear, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -44,7 +43,7 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
   val validAnswer = BigInt(0)
 
-  val validPreRemedyTaxYear: PIAPreRemedyTaxYear = TaxYear2012
+  val validPreRemedyTaxYear: Period = Period._2013
 
   lazy val normalRoute = preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, validPreRemedyTaxYear).url
   lazy val checkRoute  = preAARoutes.PIAPreRemedyController.onPageLoad(CheckMode, validPreRemedyTaxYear).url

@@ -109,10 +109,10 @@ POST        /percentage-caused-change-in-charge                              con
 GET         /change-percentage-caused-change-in-charge                       controllers.lifetimeallowance.ChangeInTaxChargeController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-percentage-caused-change-in-charge                       controllers.lifetimeallowance.ChangeInTaxChargeController.onSubmit(mode: Mode = CheckMode)
 
-GET         /pia-pre-remedy/:taxYear                                         controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = NormalMode,taxYear: PIAPreRemedyTaxYear)
-POST        /pia-pre-remedy/:taxYear                                         controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = NormalMode, taxYear: PIAPreRemedyTaxYear)
-GET         /change-pia-pre-remedy/:taxYear                                  controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = CheckMode,taxYear: PIAPreRemedyTaxYear)
-POST        /change-pia-pre-remedy/:taxYear                                  controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = CheckMode, taxYear: PIAPreRemedyTaxYear)
+GET         /pia-pre-remedy/:period                                          controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = NormalMode, period: Period)
+POST        /pia-pre-remedy/:period                                          controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = NormalMode, period: Period)
+GET         /change-pia-pre-remedy/:period                                   controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = CheckMode, period: Period)
+POST        /change-pia-pre-remedy/:period                                   controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = CheckMode, period: Period)
 
 GET         /lta-protection-or-enhancements                                  controllers.lifetimeallowance.LtaProtectionOrEnhancementsController.onPageLoad(mode: Mode = NormalMode)
 POST        /lta-protection-or-enhancements                                  controllers.lifetimeallowance.LtaProtectionOrEnhancementsController.onSubmit(mode: Mode = NormalMode)

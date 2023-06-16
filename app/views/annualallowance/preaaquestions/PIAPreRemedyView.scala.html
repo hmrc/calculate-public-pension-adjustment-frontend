@@ -25,16 +25,16 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, taxYear : PIAPreRemedyTaxYear)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period : Period)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
     <p>@messages("pIAPreRemedy.hint1")</p>
     <p>@messages("pIAPreRemedy.hint2")</p>
 }
 
-@layout(pageTitle = title(form, messages("pIAPreRemedy.title", taxYear.value.toString, (taxYear.value + 1).toString))) {
+@layout(pageTitle = title(form, messages("pIAPreRemedy.title", period.start.getYear.toString, period.end.getYear.toString))) {
 
-    @formHelper(action = routes.PIAPreRemedyController.onSubmit(mode, taxYear), 'autoComplete -> "off") {
+    @formHelper(action = routes.PIAPreRemedyController.onSubmit(mode, period), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
@@ -44,7 +44,7 @@
             InputViewModel(
                 field = form("value"),
                 label = HmrcPageHeadingLabel(
-                    content = messages("pIAPreRemedy.heading", taxYear.value.toString, (taxYear.value + 1).toString),
+                    content = messages("pIAPreRemedy.heading", period.start.getYear.toString, period.end.getYear.toString),
                     caption = messages("annualAllowance.caption")
                 )
             )

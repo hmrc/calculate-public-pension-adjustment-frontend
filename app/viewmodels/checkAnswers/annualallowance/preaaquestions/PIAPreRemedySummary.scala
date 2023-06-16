@@ -16,8 +16,8 @@
 
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
-import models.PIAPreRemedyTaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
-import models.{CheckMode, PIAPreRemedyTaxYear, UserAnswers}
+import controllers.annualallowance.preaaquestions.routes
+import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.preaaquestions
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -25,26 +25,25 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
-import controllers.annualallowance.preaaquestions.routes
 
 object PIAPreRemedySummary {
 
   def rows(answers: UserAnswers)(implicit messages: Messages): Seq[Option[SummaryListRow]] =
     Seq(
-      row(answers, TaxYear2012),
-      row(answers, TaxYear2013),
-      row(answers, TaxYear2014)
+      row(answers, Period._2013),
+      row(answers, Period._2014),
+      row(answers, Period._2015)
     )
 
-  private def row(answers: UserAnswers, taxYear: PIAPreRemedyTaxYear)(implicit
+  private def row(answers: UserAnswers, period: Period)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(preaaquestions.PIAPreRemedyPage(taxYear)).map { answer =>
+    answers.get(preaaquestions.PIAPreRemedyPage(period)).map { answer =>
       SummaryListRowViewModel(
-        key = s"pIAPreRemedy.checkYourAnswersLabel.${taxYear.value}",
+        key = s"pIAPreRemedy.checkYourAnswersLabel.$period",
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.PIAPreRemedyController.onPageLoad(CheckMode, taxYear).url)
+          ActionItemViewModel("site.change", routes.PIAPreRemedyController.onPageLoad(CheckMode, period).url)
             .withVisuallyHiddenText(messages("pIAPreRemedy.change.hidden"))
         )
       )
