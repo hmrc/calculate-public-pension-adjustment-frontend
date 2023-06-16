@@ -16,10 +16,9 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
-import models.PIAPreRemedyTaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
-import models.{NormalMode, UserAnswers}
+import controllers.routes
+import models.{NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import pages.annualallowance.preaaquestions
 import play.api.libs.json.JsPath
@@ -35,7 +34,7 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
-      case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
+      case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2013)
       case Some(true)  =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
@@ -43,7 +42,7 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
-      case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, TaxYear2012)
+      case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2013)
       case Some(true)  => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
@@ -54,9 +53,9 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
         case false => super.cleanup(value, userAnswers)
         case true  =>
           userAnswers
-            .remove(PIAPreRemedyPage(TaxYear2012))
-            .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(TaxYear2013)))
-            .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(TaxYear2014)))
+            .remove(PIAPreRemedyPage(Period._2013))
+            .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(Period._2014)))
+            .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(Period._2015)))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

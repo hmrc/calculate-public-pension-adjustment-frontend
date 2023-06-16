@@ -16,11 +16,9 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.PIAPreRemedyTaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.annualallowance.preaaquestions
 import pages.behaviours.PageBehaviours
-import play.api.mvc.Call
 
 class PayTaxCharge1516PageSpec extends PageBehaviours {
 
@@ -37,17 +35,17 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
       "next page should be CheckYourAnswers when user paid a tax charge in 2015/2016" in {
         val userAnswers = UserAnswers("1").set(PayTaxCharge1516Page, true).get
 
-        val nextPageUrl: Call = PayTaxCharge1516Page.navigate(NormalMode, userAnswers)
+        val nextPageUrl = PayTaxCharge1516Page.navigate(NormalMode, userAnswers).url
 
-        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
+        checkNavigation(nextPageUrl, "/check-your-answers-annual-allowance-setup")
       }
 
       "next page should be PIAPreRemedy for 2012 when user did not pay a tax charge in 2015/2016" in {
         val userAnswers = UserAnswers("1").set(PayTaxCharge1516Page, false).get
 
-        val nextPageUrl: Call = PayTaxCharge1516Page.navigate(NormalMode, userAnswers)
+        val nextPageUrl = PayTaxCharge1516Page.navigate(NormalMode, userAnswers).url
 
-        check(nextPageUrl, "/pia-pre-remedy/2012-2013")
+        checkNavigation(nextPageUrl, "/pia-pre-remedy/2013")
       }
     }
 
@@ -56,17 +54,17 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
       "next page should be CheckYourAnswers when user paid a tax charge in 2015/2016" in {
         val userAnswers = UserAnswers("1").set(PayTaxCharge1516Page, true).get
 
-        val nextPageUrl: Call = PayTaxCharge1516Page.navigate(CheckMode, userAnswers)
+        val nextPageUrl = PayTaxCharge1516Page.navigate(CheckMode, userAnswers).url
 
-        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
+        checkNavigation(nextPageUrl, "/check-your-answers-annual-allowance-setup")
       }
 
       "next page should be PIAPreRemedy for 2012 when user did not pay a tax charge in 2015/2016" in {
         val userAnswers = UserAnswers("1").set(PayTaxCharge1516Page, false).get
 
-        val nextPageUrl: Call = PayTaxCharge1516Page.navigate(CheckMode, userAnswers)
+        val nextPageUrl = PayTaxCharge1516Page.navigate(CheckMode, userAnswers).url
 
-        check(nextPageUrl, "/pia-pre-remedy/2012-2013")
+        checkNavigation(nextPageUrl, "/pia-pre-remedy/2013")
       }
     }
 
@@ -76,36 +74,33 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val userAnswers =
           UserAnswers("1")
-            .set(PIAPreRemedyPage(TaxYear2012), BigInt(1))
-            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(TaxYear2013), BigInt(1)))
-            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(TaxYear2014), BigInt(1)))
+            .set(PIAPreRemedyPage(Period._2013), BigInt(1))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2014), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2015), BigInt(1)))
             .get
 
         val cleanedAnswers: UserAnswers = PayTaxCharge1516Page.cleanup(Some(true), userAnswers).get
 
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(TaxYear2012)) must be(None)
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(TaxYear2013)) must be(None)
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(TaxYear2014)) must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2013)) must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2014)) must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2015)) must be(None)
       }
 
       "should not remove answers related to PIAs when user did not pay a tax charge in 2015/2016" in {
 
         val userAnswers =
           UserAnswers("1")
-            .set(preaaquestions.PIAPreRemedyPage(TaxYear2012), BigInt(1))
-            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(TaxYear2013), BigInt(1)))
-            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(TaxYear2014), BigInt(1)))
+            .set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2014), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2015), BigInt(1)))
             .get
 
         val cleanedAnswers: UserAnswers = PayTaxCharge1516Page.cleanup(Some(false), userAnswers).get
 
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(TaxYear2012)) must be(Some(1))
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(TaxYear2013)) must be(Some(1))
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(TaxYear2014)) must be(Some(1))
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2013)) must be(Some(1))
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2014)) must be(Some(1))
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2015)) must be(Some(1))
       }
     }
   }
-
-  private def check(nextPageUrl: Call, expectedPath: String) =
-    nextPageUrl.url.endsWith(expectedPath) must be(true)
 }

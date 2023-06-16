@@ -16,9 +16,9 @@
 
 package models.tasklist
 
-import models.{PIAPreRemedyTaxYear, UserAnswers}
+import models.{Period, UserAnswers}
 import pages.Page
-import pages.annualallowance.preaaquestions.{CheckYourAASetupAnswersPage, DefinedContributionPensionSchemePage, FlexibleAccessStartDatePage, FlexiblyAccessedPensionPage, PIAPreRemedyPage, PayTaxCharge1516Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
+import pages.annualallowance.preaaquestions._
 
 case object PreAASection extends Section {
   override def pages(): Seq[Page] = Seq(
@@ -30,18 +30,18 @@ case object PreAASection extends Section {
     FlexiblyAccessedPensionPage,
     FlexibleAccessStartDatePage,
     PayTaxCharge1516Page,
-    PIAPreRemedyPage(PIAPreRemedyTaxYear.TaxYear2012),
-    PIAPreRemedyPage(PIAPreRemedyTaxYear.TaxYear2013),
-    PIAPreRemedyPage(PIAPreRemedyTaxYear.TaxYear2014)
+    PIAPreRemedyPage(Period._2013),
+    PIAPreRemedyPage(Period._2014),
+    PIAPreRemedyPage(Period._2015)
   )
 
   override def status(answers: UserAnswers): SectionStatus =
     if (answers.get(ScottishTaxpayerFrom2016Page).isDefined) {
       answers.get(PayTaxCharge1516Page) match {
-        case Some(true)                                                                              => SectionStatus.Completed
-        case Some(false) if answers.get(PIAPreRemedyPage(PIAPreRemedyTaxYear.TaxYear2014)).isDefined =>
+        case Some(true)                                                           => SectionStatus.Completed
+        case Some(false) if answers.get(PIAPreRemedyPage(Period._2015)).isDefined =>
           SectionStatus.Completed
-        case _                                                                                       => SectionStatus.InProgress
+        case _                                                                    => SectionStatus.InProgress
       }
     } else SectionStatus.NotStarted
 

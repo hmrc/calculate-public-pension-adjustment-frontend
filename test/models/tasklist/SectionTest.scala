@@ -17,7 +17,7 @@
 package models.tasklist
 
 import base.SpecBase
-import models.{PIAPreRemedyTaxYear, UserAnswers}
+import models.{Period, UserAnswers}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page}
 import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.libs.json.Json
@@ -56,11 +56,11 @@ class SectionTest extends SpecBase {
       val userAnswers: UserAnswers = emptyUserAnswers
         .set(DefinedContributionPensionSchemePage, true)
         .get
-        .set(PIAPreRemedyPage(PIAPreRemedyTaxYear.TaxYear2013), BigInt(1))
+        .set(PIAPreRemedyPage(Period._2013), BigInt(1))
         .get
 
       val userAnswersWithRemovals = PreAASection.removeAllUserAnswers(userAnswers)
-      userAnswersWithRemovals.get(PIAPreRemedyPage(PIAPreRemedyTaxYear.TaxYear2013)) mustBe None
+      userAnswersWithRemovals.get(PIAPreRemedyPage(Period._2013)) mustBe None
     }
   }
 

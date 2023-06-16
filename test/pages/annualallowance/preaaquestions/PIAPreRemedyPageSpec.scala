@@ -16,89 +16,84 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.PIAPreRemedyTaxYear.{TaxYear2012, TaxYear2013, TaxYear2014}
-import models.{CheckMode, NormalMode, PIAPreRemedyTaxYear, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.annualallowance.preaaquestions
 import pages.behaviours.PageBehaviours
-import play.api.mvc.Call
 
 class PIAPreRemedyPageSpec extends PageBehaviours {
 
   "PIAPreRemedyPage" - {
 
-    beRetrievable[BigInt](PIAPreRemedyPage(PIAPreRemedyTaxYear(1)))
+    beRetrievable[BigInt](PIAPreRemedyPage(Period._2013))
 
-    beSettable[BigInt](preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(1)))
+    beSettable[BigInt](preaaquestions.PIAPreRemedyPage(Period._2013))
 
-    beRemovable[BigInt](preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(1)))
+    beRemovable[BigInt](preaaquestions.PIAPreRemedyPage(Period._2013))
 
     "normal mode navigation" - {
 
-      "next page should be PIAPreRemedy capture for 2013 when this page is for 2012" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(TaxYear2012), BigInt(1)).get
+      "next page should be PIAPreRemedy capture for 2013-2014 when this page is for 2012-2013" in {
+        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1)).get
 
-        val nextPageUrl: Call = preaaquestions.PIAPreRemedyPage(TaxYear2012).navigate(NormalMode, userAnswers)
+        val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2013).navigate(NormalMode, userAnswers).url
 
-        check(nextPageUrl, "/pia-pre-remedy/2013-2014")
+        checkNavigation(nextPageUrl, "/pia-pre-remedy/2014")
       }
 
-      "next page should be PIAPreRemedy capture for 2014 when this page is for 2013" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(TaxYear2013), BigInt(1)).get
+      "next page should be PIAPreRemedy capture for 2014-2015 when this page is for 2013-2014" in {
+        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2014), BigInt(1)).get
 
-        val nextPageUrl: Call = preaaquestions.PIAPreRemedyPage(TaxYear2013).navigate(NormalMode, userAnswers)
+        val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2014).navigate(NormalMode, userAnswers).url
 
-        check(nextPageUrl, "/pia-pre-remedy/2014-2015")
+        checkNavigation(nextPageUrl, "/pia-pre-remedy/2015")
       }
 
-      "next page should be CheckYourAnswers when this page is for 2014" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(TaxYear2014), BigInt(1)).get
+      "next page should be CheckYourAnswers when this page is for 2014-2015" in {
+        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2015), BigInt(1)).get
 
-        val nextPageUrl: Call = preaaquestions.PIAPreRemedyPage(TaxYear2014).navigate(NormalMode, userAnswers)
+        val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2015).navigate(NormalMode, userAnswers).url
 
-        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
+        checkNavigation(nextPageUrl, "/check-your-answers-annual-allowance-setup")
       }
 
       "next page should be journey recovery if tax year is before pre remedy window" in {
         val userAnswers =
-          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(2011)), BigInt(1)).get
+          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period.Year(2012)), BigInt(1)).get
 
-        val nextPageUrl: Call =
-          preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(2011)).navigate(NormalMode, userAnswers)
+        val nextPageUrl =
+          preaaquestions.PIAPreRemedyPage(Period.Year(2012)).navigate(NormalMode, userAnswers).url
 
-        check(nextPageUrl, "/there-is-a-problem")
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
       }
 
       "next page should be JourneyRecovery if tax year is after pre remedy window" in {
         val userAnswers =
-          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(2015)), BigInt(1)).get
+          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2016PreAlignment), BigInt(1)).get
 
-        val nextPageUrl: Call =
-          preaaquestions.PIAPreRemedyPage(PIAPreRemedyTaxYear(2015)).navigate(NormalMode, userAnswers)
+        val nextPageUrl =
+          preaaquestions.PIAPreRemedyPage(Period._2016PreAlignment).navigate(NormalMode, userAnswers).url
 
-        check(nextPageUrl, "/there-is-a-problem")
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
       }
     }
 
     "check mode navigation" - {
 
       "next page should be CheckYourAnswers if the user answers contains data for the relevant year" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(TaxYear2012), BigInt(1)).get
+        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1)).get
 
-        val nextPageUrl: Call = preaaquestions.PIAPreRemedyPage(TaxYear2012).navigate(CheckMode, userAnswers)
+        val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2013).navigate(CheckMode, userAnswers).url
 
-        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
+        checkNavigation(nextPageUrl, "/check-your-answers-annual-allowance-setup")
       }
 
       "next page should be JourneyRecovery if the user answers does not contain data for the relevant year" in {
         val userAnswers = UserAnswers("1")
 
-        val nextPageUrl: Call = preaaquestions.PIAPreRemedyPage(TaxYear2012).navigate(CheckMode, userAnswers)
+        val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2013).navigate(CheckMode, userAnswers).url
 
-        check(nextPageUrl, "/there-is-a-problem")
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
       }
     }
   }
-
-  private def check(nextPageUrl: Call, expectedPath: String) =
-    nextPageUrl.url.endsWith(expectedPath) must be(true)
 }
