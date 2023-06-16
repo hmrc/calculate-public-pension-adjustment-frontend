@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.lifetimeallowance.SchemeNameAndTaxRefFormProvider
 import javax.inject.Inject
 import models.Mode
-import pages.lifetimeallowance.{SchemeNameAndTaxRefPage, WhoPaidLTAChargePage}
+import pages.lifetimeallowance.SchemeNameAndTaxRefPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
