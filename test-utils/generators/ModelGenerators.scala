@@ -29,15 +29,15 @@ trait ModelGenerators {
 
   def taxRef: Gen[String] =
     for {
-      digit <- Gen.listOfN(8, Gen.numChar).map(_.mkString)
-      letter<- Gen.listOfN(2, Gen.alphaUpperChar).map(_.mkString)
+      digit  <- Gen.listOfN(8, Gen.numChar).map(_.mkString)
+      letter <- Gen.listOfN(2, Gen.alphaUpperChar).map(_.mkString)
 
     } yield s"$digit$letter"
 
   implicit lazy val arbitrarySchemeNameAndTaxRefType: Arbitrary[SchemeNameAndTaxRef] =
     Arbitrary {
       for {
-        name <- arbitrary[String]
+        name   <- arbitrary[String]
         taxRef <- taxRef
       } yield SchemeNameAndTaxRef(name, taxRef)
     }

@@ -34,10 +34,10 @@ class SchemeNameAndTaxRefFormProvider @Inject() extends Mappings {
 
   def apply(): Form[SchemeNameAndTaxRef] = Form(
     mapping(
-      "name" -> text("schemeNameAndTaxRef.name.error.required")
+      "name"   -> text("schemeNameAndTaxRef.name.error.required")
         .verifying(maxLength(100, "schemeNameAndTaxRef.name.error.length")),
       "taxRef" -> text("schemeNameAndTaxRef.taxRef.error.required")
-          .verifying(validateFieldsRegex("schemeNameAndTaxRef.taxRef.invalid", pattern))
+        .verifying(validateFieldsRegex("schemeNameAndTaxRef.taxRef.invalid", pattern))
     )(SchemeNameAndTaxRef.apply)(SchemeNameAndTaxRef.unapply)
   )
 }

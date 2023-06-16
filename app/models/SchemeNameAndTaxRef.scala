@@ -18,10 +18,8 @@ package models
 
 import play.api.libs.json._
 
-case class SchemeNameAndTaxRef (name: String, taxRef: String)
+case class SchemeNameAndTaxRef(name: String, taxRef: String)
 
 object SchemeNameAndTaxRef {
   implicit val format = Json.format[SchemeNameAndTaxRef]
 }
-
-

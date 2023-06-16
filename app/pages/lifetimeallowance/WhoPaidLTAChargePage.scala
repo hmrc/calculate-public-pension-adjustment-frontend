@@ -28,15 +28,17 @@ case object WhoPaidLTAChargePage extends QuestionPage[WhoPaidLTACharge] {
   override def toString: String = "whoPaidLTACharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(WhoPaidLTAChargePage) match {
-    case Some(WhoPaidLTACharge.PensionScheme)  => controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(NormalMode)
-    case Some(WhoPaidLTACharge.You) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
-    case _                          => controllers.routes.JourneyRecoveryController.onPageLoad()
+    case Some(WhoPaidLTACharge.PensionScheme) =>
+      controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(NormalMode)
+    case Some(WhoPaidLTACharge.You)           => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+    case _                                    => controllers.routes.JourneyRecoveryController.onPageLoad()
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(WhoPaidLTAChargePage) match {
-    case Some(WhoPaidLTACharge.PensionScheme)  => controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode)
-    case Some(WhoPaidLTACharge.You)  => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
-    case _                          => controllers.routes.JourneyRecoveryController.onPageLoad()
+    case Some(WhoPaidLTACharge.PensionScheme) =>
+      controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode)
+    case Some(WhoPaidLTACharge.You)           => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+    case _                                    => controllers.routes.JourneyRecoveryController.onPageLoad()
   }
 
 }

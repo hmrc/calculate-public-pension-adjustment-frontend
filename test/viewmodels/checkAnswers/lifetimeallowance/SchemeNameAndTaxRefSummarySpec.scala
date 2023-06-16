@@ -36,7 +36,7 @@ class SchemeNameAndTaxRefSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           SchemeNameAndTaxRefPage,
-          models.SchemeNameAndTaxRef("Some scheme","Some Tax Ref")
+          models.SchemeNameAndTaxRef("Some scheme", "Some Tax Ref")
         )
         .get
       SchemeNameAndTaxRefSummary.row(userAnswers) shouldBe Some(

@@ -23,7 +23,7 @@ import play.api.mvc.Call
 
 case object SchemeNameAndTaxRefPage extends QuestionPage[SchemeNameAndTaxRef] {
 
-  override def path: JsPath = JsPath \ "lta" \toString
+  override def path: JsPath = JsPath \ "lta" \ toString
 
   override def toString: String = "schemeNameAndTaxRef"
 

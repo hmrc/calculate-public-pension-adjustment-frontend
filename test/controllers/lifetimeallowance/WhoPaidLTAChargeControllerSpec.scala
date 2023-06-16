@@ -37,12 +37,14 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val whoPaidLTAChargeRoute = controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(NormalMode).url
+  lazy val whoPaidLTAChargeRoute =
+    controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(NormalMode).url
 
-  lazy val whoPaidLTAChargeCheckRoute = controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(CheckMode).url
+  lazy val whoPaidLTAChargeCheckRoute =
+    controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(CheckMode).url
 
   val formProvider = new WhoPaidLTAChargeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "WhoPaidLTACharge Controller" - {
 
@@ -76,7 +78,10 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhoPaidLTACharge.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(WhoPaidLTACharge.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

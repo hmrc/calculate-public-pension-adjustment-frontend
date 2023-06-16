@@ -36,7 +36,7 @@ import scala.concurrent.Future
 class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new LifetimeAllowanceChargeAmountFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 

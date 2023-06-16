@@ -28,22 +28,23 @@ import viewmodels.implicits._
 object WhoPaidLTAChargeSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(WhoPaidLTAChargePage).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"whoPaidLTACharge.$answer"))
-          )
+    answers.get(WhoPaidLTAChargePage).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"whoPaidLTACharge.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key = "whoPaidLTACharge.checkYourAnswersLabel",
-          value = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("whoPaidLTACharge.change.hidden"))
+      SummaryListRowViewModel(
+        key = "whoPaidLTACharge.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("whoPaidLTACharge.change.hidden"))
         )
+      )
     }
 }

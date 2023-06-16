@@ -26,13 +26,13 @@ class WhoPaidLTAChargeFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "whoPaidLTACharge.error.required"
 
     behave like optionsField[WhoPaidLTACharge](
       form,
       fieldName,
-      validValues  = WhoPaidLTACharge.values,
+      validValues = WhoPaidLTACharge.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

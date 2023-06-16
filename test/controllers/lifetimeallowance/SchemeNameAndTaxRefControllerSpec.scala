@@ -19,7 +19,7 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import controllers.routes
 import forms.lifetimeallowance.SchemeNameAndTaxRefFormProvider
-import models.{CheckMode, NormalMode, UserAnswers, SchemeNameAndTaxRef}
+import models.{CheckMode, NormalMode, SchemeNameAndTaxRef, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -38,11 +38,13 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new SchemeNameAndTaxRefFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val schemeNameAndTaxRefRoute = controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
+  lazy val schemeNameAndTaxRefRoute =
+    controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
 
-  lazy val schemeNameAndTaxRefCheckRoute = controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
+  lazy val schemeNameAndTaxRefCheckRoute =
+    controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
 
   private val validAnswer = SchemeNameAndTaxRef("Some scheme", "00348916RT")
 
@@ -84,8 +86,10 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(SchemeNameAndTaxRef("someSchemeName", "someSchemeTaxRef")), NormalMode)(
-          request, messages(application)).toString
+        contentAsString(result) mustEqual view(
+          form.fill(SchemeNameAndTaxRef("someSchemeName", "someSchemeTaxRef")),
+          NormalMode
+        )(request, messages(application)).toString
       }
     }
 

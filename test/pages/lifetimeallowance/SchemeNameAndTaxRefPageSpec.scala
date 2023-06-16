@@ -19,7 +19,6 @@ package pages.lifetimeallowance
 import pages.behaviours.PageBehaviours
 import models.SchemeNameAndTaxRef
 
-
 class SchemeNameAndTaxRefPageSpec extends PageBehaviours {
 
   "SchemeNameAndTaxRefPage" - {
