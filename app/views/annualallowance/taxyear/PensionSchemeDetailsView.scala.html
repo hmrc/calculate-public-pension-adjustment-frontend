@@ -15,6 +15,7 @@
  *@
 
 @import viewmodels.InputWidth._
+@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
@@ -34,22 +35,24 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <span class="govuk-caption-l">@messages("annualAllowance.period.caption", period.start.getYear.toString, period.end.getYear.toString)</span>
         <h1 class="govuk-heading-xl">@messages("pensionSchemeDetails.heading", period, schemeIndex)</h1>
+        <p class="govuk-body">@messages("pensionSchemeDetails.hint")</p>
 
         @govukInput(
             InputViewModel(
                 field = form("schemeName"),
-                label = LabelViewModel(messages("pensionSchemeDetails.schemeName", period, schemeIndex))
+                label = LabelViewModel(messages("pensionSchemeDetails.schemeName")).asPageHeading(LabelSize.Medium)
             )
-            .withWidth(Full)
+            .withWidth(Fixed10)
         )
 
         @govukInput(
             InputViewModel(
                 field = form("schemeTaxRef"),
-                label = LabelViewModel(messages("pensionSchemeDetails.schemeTaxRef", period, schemeIndex))
-            )
-            .withWidth(Full)
+                label = LabelViewModel(messages("pensionSchemeDetails.schemeTaxRef")).asPageHeading(LabelSize.Medium)
+            ).withHint(HintViewModel(messages("schemeNameAndTaxRef.taxRef.hint")))
+            .withWidth(Fixed10)
         )
 
         @govukButton(

@@ -72,6 +72,7 @@ unauthorised.heading = You can’t access this service with this account
 annualAllowance.caption = Annual allowance
 lifetimeAllowance.caption= Lifetime allowance
 divider = or
+annualAllowance.period.caption = Annual allowance between {0} to {1}
 
 savingsStatement.title = Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.heading = Have you received a remedial service statement from your public service pension scheme?
@@ -449,17 +450,19 @@ payACharge.checkYourAnswersLabel = Did you pay a charge?
 payACharge.error.required = Select yes if you paid a charge
 payACharge.change.hidden = Did you pay a charge?
 
-pensionSchemeDetails.title = What is the name and tax reference of the scheme that paid the charge?
-pensionSchemeDetails.heading = What is the name and tax reference of the scheme that paid the charge? {0} {1}
+pensionSchemeDetails.title = What is the name and tax reference of the pension scheme?
+pensionSchemeDetails.heading = What is the name and tax reference of the pension scheme?
+pensionSchemeDetails.hint = If more than one pension scheme has paid or agreed to pay the tax, you can add them later.
 pensionSchemeDetails.schemeName = Name of the pension scheme
 pensionSchemeDetails.schemeTaxRef = Pension scheme tax reference
-pensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the scheme that paid the charge?
-pensionSchemeDetails.error.schemeName.required = Enter schemeName
-pensionSchemeDetails.error.schemeTaxRef.required = Enter schemeTaxRef
-pensionSchemeDetails.error.schemeName.length = schemeName must be schemeTaxRef characters or less
-pensionSchemeDetails.error.schemeTaxRef.length = schemeTaxRef must be 100 characters or less
-pensionSchemeDetails.schemeName.change.hidden = What is the name and tax reference of the scheme that paid the charge?
-pensionSchemeDetails.schemeTaxRef.change.hidden = What is the name and tax reference of the scheme that paid the charge?
+pensionSchemeDetails.schemeTaxRef.hint = You can find the PSTR on your pension scheme’s annual statement. For example, 00348916RT.
+pensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the pension scheme?
+pensionSchemeDetails.error.schemeName.required = Enter the name of the first pension scheme that you were a member of?
+pensionSchemeDetails.error.schemeTaxRef.required = Enter the pension scheme tax reference of the pension scheme that you were a member of?
+pensionSchemeDetails.error.schemeName.length = The name of your pension scheme must be 100 characters or less
+pensionSchemeDetails.error.schemeTaxRef.invalid = Enter your pension tax reference in the format 00348916RT
+pensionSchemeDetails.schemeName.change.hidden = What is the name and tax reference of the pension scheme?
+pensionSchemeDetails.schemeTaxRef.change.hidden = What is the name and tax reference of the pension scheme?
 
 pensionSchemeInputAmounts.title = Pension scheme that has paid
 pensionSchemeInputAmounts.heading = Pension scheme [Name for SchemeIndex {1}] that has paid {0}
