@@ -18,12 +18,28 @@ package generators
 
 import models._
 import org.scalacheck.{Arbitrary, Gen}
+import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
   implicit lazy val arbitraryWhoPaidAACharge: Arbitrary[WhoPaidAACharge] =
     Arbitrary {
       Gen.oneOf(WhoPaidAACharge.values.toSeq)
+    }
+
+  def taxRef: Gen[String] =
+    for {
+      digit  <- Gen.listOfN(8, Gen.numChar).map(_.mkString)
+      letter <- Gen.listOfN(2, Gen.alphaUpperChar).map(_.mkString)
+
+    } yield s"$digit$letter"
+
+  implicit lazy val arbitrarySchemeNameAndTaxRefType: Arbitrary[SchemeNameAndTaxRef] =
+    Arbitrary {
+      for {
+        name   <- arbitrary[String]
+        taxRef <- taxRef
+      } yield SchemeNameAndTaxRef(name, taxRef)
     }
 
   implicit lazy val arbitraryProtectionType: Arbitrary[ProtectionType] =
@@ -41,14 +57,18 @@ trait ModelGenerators {
       Gen.oneOf(LtaProtectionOrEnhancements.values.toSeq)
     }
 
-  implicit lazy val arbitraryReportingChange: Arbitrary[ReportingChange] =
+  implicit lazy val arbitraryWhoPaidLTACharge: Arbitrary[WhoPaidLTACharge] =
     Arbitrary {
-      Gen.oneOf(ReportingChange.values)
+      Gen.oneOf(WhoPaidLTACharge.values.toSeq)
     }
 
   implicit lazy val arbitraryExcessLifetimeAllowancePaid: Arbitrary[ExcessLifetimeAllowancePaid] =
     Arbitrary {
       Gen.oneOf(ExcessLifetimeAllowancePaid.values.toSeq)
+    }
+  implicit lazy val arbitraryReportingChange: Arbitrary[ReportingChange]                         =
+    Arbitrary {
+      Gen.oneOf(ReportingChange.values)
     }
 
   implicit lazy val arbitraryWhichYearsScottishTaxpayer: Arbitrary[WhichYearsScottishTaxpayer] =

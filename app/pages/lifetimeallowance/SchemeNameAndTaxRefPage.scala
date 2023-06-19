@@ -16,19 +16,21 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{SchemeNameAndTaxRef, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object LifetimeAllowanceChargeAmountPage extends QuestionPage[BigInt] {
+case object SchemeNameAndTaxRefPage extends QuestionPage[SchemeNameAndTaxRef] {
 
   override def path: JsPath = JsPath \ "lta" \ toString
 
-  override def toString: String = "lifetimeAllowanceChargeAmount"
+  override def toString: String = "schemeNameAndTaxRef"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(NormalMode)
-  override protected def navigateInCheckMode(answers: UserAnswers): Call  =
-    controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(CheckMode)
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+
 }

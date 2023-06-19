@@ -33,6 +33,12 @@ trait PageGenerators {
   implicit lazy val arbitraryHowMuchAAChargeSchemePaidPage: Arbitrary[HowMuchAAChargeSchemePaidPage.type] =
     Arbitrary(HowMuchAAChargeSchemePaidPage)
 
+  implicit lazy val arbitrarySchemeNameAndTaxRefPage: Arbitrary[SchemeNameAndTaxRefPage.type] =
+    Arbitrary(SchemeNameAndTaxRefPage)
+
+  implicit lazy val arbitraryWhoPaidLTAChargePage: Arbitrary[WhoPaidLTAChargePage.type] =
+    Arbitrary(WhoPaidLTAChargePage)
+
   implicit lazy val arbitraryProtectionReferencePage: Arbitrary[ProtectionReferencePage.type] =
     Arbitrary(ProtectionReferencePage)
 

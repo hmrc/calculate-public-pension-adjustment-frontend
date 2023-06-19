@@ -194,7 +194,6 @@ class LifetimeAllowanceChargeAmountControllerSpec extends SpecBase with MockitoS
         val expectedAnswers =
           emptyUserAnswers.set(LifetimeAllowanceChargeAmountPage, BigInt(1000)).success.value
 
-        println(contentAsString(result))
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual pages.lifetimeallowance.LifetimeAllowanceChargeAmountPage
           .navigate(NormalMode, expectedAnswers)

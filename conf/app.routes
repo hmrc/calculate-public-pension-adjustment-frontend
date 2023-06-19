@@ -159,6 +159,16 @@ POST        /how-much-lta-charge                                             con
 GET         /change-how-much-lta-charge                                      controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-how-much-lta-charge                                      controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onSubmit(mode: Mode = CheckMode)
 
+GET        /who-paid-lta-charge                         controllers.lifetimeallowance.WhoPaidLTAChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /who-paid-lta-charge                         controllers.lifetimeallowance.WhoPaidLTAChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-who-paid-lta-charge                  controllers.lifetimeallowance.WhoPaidLTAChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-who-paid-lta-charge                  controllers.lifetimeallowance.WhoPaidLTAChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /scheme-paid-lta-charge                        controllers.lifetimeallowance.SchemeNameAndTaxRefController.onPageLoad(mode: Mode = NormalMode)
+POST       /scheme-paid-lta-charge                        controllers.lifetimeallowance.SchemeNameAndTaxRefController.onSubmit(mode: Mode = NormalMode)
+GET        /change-scheme-paid-lta-charge                 controllers.lifetimeallowance.SchemeNameAndTaxRefController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-scheme-paid-lta-charge                 controllers.lifetimeallowance.SchemeNameAndTaxRefController.onSubmit(mode: Mode = CheckMode)
+
 GET         /task-list                                                       controllers.TaskListController.onPageLoad
 POST        /task-list                                                       controllers.TaskListController.onSubmit
 

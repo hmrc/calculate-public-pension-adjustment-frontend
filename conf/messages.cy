@@ -475,3 +475,24 @@ howMuchAAChargeYouPaid.error.required = cy: Enter your how much you paid
 howMuchAAChargeYouPaid.error.wholeNumber = cy: Enter your how much you paid using whole numbers
 howMuchAAChargeYouPaid.error.outOfRange = cy: How much you paid must be between {0} and {1}
 howMuchAAChargeYouPaid.change.hidden = cy: How much of the charge did you pay?
+
+whoPaidLTACharge.title = cy: Who paid your lifetime allowance charge?
+whoPaidLTACharge.heading = cy: Who paid your lifetime allowance charge?
+whoPaidLTACharge.you = cy: You
+whoPaidLTACharge.pensionScheme = cy: Pension Scheme
+whoPaidLTACharge.checkYourAnswersLabel = cy: Who paid your lifetime allowance charge?
+whoPaidLTACharge.error.required = cy: Select who paid your lifetime allowance charge
+whoPaidLTACharge.change.hidden = cy: Who paid your lifetime allowance charge?
+
+schemeNameAndTaxRef.title = cy: What is the name and tax reference of the scheme that paid the lifetime allowance charge?
+schemeNameAndTaxRef.heading = cy: What is the name and tax reference of the scheme that paid the lifetime allowance charge?
+schemeNameAndTaxRef.name.heading = cy: Name of the pension scheme
+schemeNameAndTaxRef.taxRef.heading = cy: Pension scheme tax reference
+schemeNameAndTaxRef.schemeName.hint = cy: Type the name in the space provided.
+schemeNameAndTaxRef.taxRef.hint = cy: You can find the PSTR on your pension scheme’s annual statement. For example, 00348916RT.
+schemeNameAndTaxRef.checkYourAnswersLabel = cy: What is the name and tax reference of the scheme that paid the lifetime allowance charge?
+schemeNameAndTaxRef.name.error.required = cy: Enter the name of the pension scheme that paid the lifetime allowance charge
+schemeNameAndTaxRef.taxRef.error.required = cy: Enter the pension scheme tax reference of the scheme that paid the lifetime allowance charge
+schemeNameAndTaxRef.name.error.length = cy: The name of your pension scheme must be 100 characters or less
+schemeNameAndTaxRef.taxRef.invalid = cy: Enter your pension tax reference in the format 00348916RT
+schemeNameAndTaxRef.change.hidden = cy: What is the name and tax reference of the scheme that paid the lifetime allowance charge?

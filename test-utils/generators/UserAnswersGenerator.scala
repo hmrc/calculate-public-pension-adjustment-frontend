@@ -36,14 +36,16 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(ReferenceNewProtectionTypeEnhancementPage.type, JsValue)] ::
       arbitrary[(ProtectionTypeEnhancementChangedPage.type, JsValue)] ::
       arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] ::
-      arbitrary[(LifetimeAllowanceChargeAmountPage.type, JsValue)] ::
-      arbitrary[(ExcessLifetimeAllowancePaidPage.type, JsValue)] ::
-      arbitrary[(LifetimeAllowanceChargePage.type, JsValue)] ::
       arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] ::
       arbitrary[(HadBenefitCrystallisationEventPage.type, JsValue)] ::
       arbitrary[(WhichYearsScottishTaxpayerPage.type, JsValue)] ::
       arbitrary[(ScottishTaxpayerFrom2016Page.type, JsValue)] ::
       arbitrary[(ChangeInTaxChargePage.type, JsValue)] ::
+      arbitrary[(LifetimeAllowanceChargeAmountPage.type, JsValue)] ::
+      arbitrary[(ExcessLifetimeAllowancePaidPage.type, JsValue)] ::
+      arbitrary[(LifetimeAllowanceChargePage.type, JsValue)] ::
+      arbitrary[(SchemeNameAndTaxRefPage.type, JsValue)] ::
+      arbitrary[(WhoPaidLTAChargePage.type, JsValue)] ::
       Nil
 
   implicit lazy val arbitraryUserData: Arbitrary[UserAnswers] = {
