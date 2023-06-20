@@ -33,9 +33,9 @@ case object ValueNewLtaChargePage extends QuestionPage[BigInt] {
     (answers.get(ValueNewLtaChargePage), answers.get(LifetimeAllowanceChargeAmountPage)) match {
       case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge <= oldLtaCharge =>
         ltaRoutes.CheckYourLTAAnswersController.onPageLoad
-      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge > oldLtaCharge =>
+      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge > oldLtaCharge  =>
         ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
-      case _                                                                       =>
+      case _                                                                        =>
         ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
     }
 
@@ -45,7 +45,7 @@ case object ValueNewLtaChargePage extends QuestionPage[BigInt] {
       answers.get(LifetimeAllowanceChargeAmountPage),
       answers.get(WhoPayingExtraLtaChargePage)
     ) match {
-      case (Some(newLtaCharge), Some(oldLtaCharge), None) if newLtaCharge >= oldLtaCharge =>
+      case (Some(newLtaCharge), Some(oldLtaCharge), None) if newLtaCharge > oldLtaCharge =>
         ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
       case (Some(_), None, None)                                                         =>
         ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
@@ -57,10 +57,10 @@ case object ValueNewLtaChargePage extends QuestionPage[BigInt] {
     (value, userAnswers.get(LifetimeAllowanceChargeAmountPage)) match {
       case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge <= oldLtaCharge =>
         userAnswers.remove(WhoPayingExtraLtaChargePage).flatMap(_.remove(LtaPensionSchemeDetailsPage))
-      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge > oldLtaCharge =>
+      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge > oldLtaCharge  =>
         super.cleanup(value, userAnswers)
-      case (Some(_), None)                                                         =>
+      case (Some(_), None)                                                          =>
         super.cleanup(value, userAnswers)
-      case _                                                                       => super.cleanup(value, userAnswers)
+      case _                                                                        => super.cleanup(value, userAnswers)
     }
 }

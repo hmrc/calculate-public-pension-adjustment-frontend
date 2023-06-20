@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 class LtaPensionSchemeDetailsFormProvider @Inject() extends Mappings {
 
-  private val pattern: String                                                    = """(\d{8})[A-Z]{2}"""
+  private val pattern: String = """(\d{8})[A-Z]{2}"""
 
   def apply(): Form[LtaPensionSchemeDetails] = Form(
     mapping(
