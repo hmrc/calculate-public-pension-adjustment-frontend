@@ -216,3 +216,7 @@ POST        /how-much-you-pay-charge/:period/:schemeIndex                       
 GET         /change-how-much-you-pay-charge/:period/:schemeIndex                                    controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 POST        /change-how-much-you-pay-charge/:period/:schemeIndex                                    controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 
+GET        /otherDefinedBenefitOrContribution/:period/:schemeIndex                        controllers.annualallowance.taxyear.OtherDefinedBenefitOrContributionController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST       /otherDefinedBenefitOrContribution/:period/:schemeIndex                        controllers.annualallowance.taxyear.OtherDefinedBenefitOrContributionController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET        /changeOtherDefinedBenefitOrContribution/:period/:schemeIndex                  controllers.annualallowance.taxyear.OtherDefinedBenefitOrContributionController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST       /changeOtherDefinedBenefitOrContribution/:period/:schemeIndex                  controllers.annualallowance.taxyear.OtherDefinedBenefitOrContributionController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
