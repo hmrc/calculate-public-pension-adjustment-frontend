@@ -29,6 +29,6 @@ class PIAPreRemedyFormProvider @Inject() extends Mappings {
         "pIAPreRemedy.error.wholeNumber",
         "pIAPreRemedy.error.nonNumeric"
       )
-        .verifying(inRange[BigInt](0, BigInt("1000000000000"), "pIAPreRemedy.error.outOfRange"))
+        .verifying(inRange[BigInt](0, BigInt("100000000"), "pIAPreRemedy.error.outOfRange"))
     )
 }

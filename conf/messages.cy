@@ -227,7 +227,7 @@ pIAPreRemedy.checkYourAnswersLabel.2015 = cy: What was your pension input amount
 pIAPreRemedy.error.nonNumeric = cy: You have entered non-numerical characters for your pension input amount. You must enter numerical characters
 pIAPreRemedy.error.required = cy: Enter an amount for pension input amount in the space provided
 pIAPreRemedy.error.wholeNumber = cy: You have not entered a whole number for your pension input amount. You cannot use decimals.
-pIAPreRemedy.error.outOfRange = cy: You have entered too many characters for your pension input amount. The maximum number of characters you can enter is 12
+pIAPreRemedy.error.outOfRange = cy: You have entered too many characters for your pension input amount. The maximum number of characters you can enter is 9
 pIAPreRemedy.change.hidden = cy: What was your pension input amount between 6 April {0} and 5 April {1}?
 
 whatYouWillNeedLta.title = cy: Lifetime allowance
