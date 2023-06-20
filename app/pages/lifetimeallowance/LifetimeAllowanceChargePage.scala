@@ -34,7 +34,7 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
       case Some(true)  =>
         controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
       case Some(false) =>
-        controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode)
+        controllers.lifetimeallowance.routes.ValueNewLtaChargeController.onPageLoad(NormalMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
@@ -50,7 +50,12 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
     value
       .map {
         case true  => super.cleanup(value, userAnswers)
-        case false => userAnswers.remove(ExcessLifetimeAllowancePaidPage)
+        case false =>
+          userAnswers
+            .remove(ExcessLifetimeAllowancePaidPage)
+            .flatMap(_.remove(LifetimeAllowanceChargeAmountPage))
+            .flatMap(_.remove(WhoPaidLTAChargePage))
+            .flatMap(_.remove(SchemeNameAndTaxRefPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

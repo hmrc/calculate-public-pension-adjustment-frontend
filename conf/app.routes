@@ -14,7 +14,7 @@ GET         /there-is-a-problem                                              con
 
 GET         /check-your-answers-setup                                        controllers.setupquestions.CheckYourSetupAnswersController.onPageLoad
 GET         /check-your-answers-annual-allowance-setup                       controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad
-GET         /check-your-answers-lta                                          controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad
+GET         /check-your-lta-answers                                          controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad
 GET         /check-your-answers-period/:period                               controllers.annualallowance.taxyear.CheckYourAAPeriodAnswersController.onPageLoad(period:Period)
 
 GET         /account/sign-out-survey                                         controllers.auth.AuthController.signOut
@@ -159,15 +159,15 @@ POST        /how-much-lta-charge                                             con
 GET         /change-how-much-lta-charge                                      controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-how-much-lta-charge                                      controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onSubmit(mode: Mode = CheckMode)
 
-GET        /who-paid-lta-charge                         controllers.lifetimeallowance.WhoPaidLTAChargeController.onPageLoad(mode: Mode = NormalMode)
-POST       /who-paid-lta-charge                         controllers.lifetimeallowance.WhoPaidLTAChargeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-who-paid-lta-charge                  controllers.lifetimeallowance.WhoPaidLTAChargeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-who-paid-lta-charge                  controllers.lifetimeallowance.WhoPaidLTAChargeController.onSubmit(mode: Mode = CheckMode)
+GET        /who-paid-lta-charge                                              controllers.lifetimeallowance.WhoPaidLTAChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /who-paid-lta-charge                                              controllers.lifetimeallowance.WhoPaidLTAChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-who-paid-lta-charge                                       controllers.lifetimeallowance.WhoPaidLTAChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-who-paid-lta-charge                                       controllers.lifetimeallowance.WhoPaidLTAChargeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /scheme-paid-lta-charge                        controllers.lifetimeallowance.SchemeNameAndTaxRefController.onPageLoad(mode: Mode = NormalMode)
-POST       /scheme-paid-lta-charge                        controllers.lifetimeallowance.SchemeNameAndTaxRefController.onSubmit(mode: Mode = NormalMode)
-GET        /change-scheme-paid-lta-charge                 controllers.lifetimeallowance.SchemeNameAndTaxRefController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-scheme-paid-lta-charge                 controllers.lifetimeallowance.SchemeNameAndTaxRefController.onSubmit(mode: Mode = CheckMode)
+GET        /scheme-paid-lta-charge                                           controllers.lifetimeallowance.SchemeNameAndTaxRefController.onPageLoad(mode: Mode = NormalMode)
+POST       /scheme-paid-lta-charge                                           controllers.lifetimeallowance.SchemeNameAndTaxRefController.onSubmit(mode: Mode = NormalMode)
+GET        /change-scheme-paid-lta-charge                                    controllers.lifetimeallowance.SchemeNameAndTaxRefController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-scheme-paid-lta-charge                                    controllers.lifetimeallowance.SchemeNameAndTaxRefController.onSubmit(mode: Mode = CheckMode)
 
 GET         /task-list                                                       controllers.TaskListController.onPageLoad
 POST        /task-list                                                       controllers.TaskListController.onSubmit
@@ -201,18 +201,32 @@ POST        /which-scheme/:period/:schemeIndex                               con
 GET         /change-which-scheme/:period/:schemeIndex                        controllers.annualallowance.taxyear.WhichSchemeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 POST        /change-which-scheme/:period/:schemeIndex                        controllers.annualallowance.taxyear.WhichSchemeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 
-GET         /who-paid-annual-allowance-charge/:period/:schemeIndex                                                 controllers.annualallowance.taxyear.WhoPaidAAChargeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-POST        /who-paid-annual-allowance-charge/:period/:schemeIndex                                                 controllers.annualallowance.taxyear.WhoPaidAAChargeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-GET         /change-who-paid-annual-allowance-charge/:period/:schemeIndex                                           controllers.annualallowance.taxyear.WhoPaidAAChargeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
-POST        /change-who-paid-annual-allowance-charge/:period/:schemeIndex                                           controllers.annualallowance.taxyear.WhoPaidAAChargeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+GET         /who-paid-annual-allowance-charge/:period/:schemeIndex           controllers.annualallowance.taxyear.WhoPaidAAChargeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST        /who-paid-annual-allowance-charge/:period/:schemeIndex           controllers.annualallowance.taxyear.WhoPaidAAChargeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET         /change-who-paid-annual-allowance-charge/:period/:schemeIndex    controllers.annualallowance.taxyear.WhoPaidAAChargeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST        /change-who-paid-annual-allowance-charge/:period/:schemeIndex    controllers.annualallowance.taxyear.WhoPaidAAChargeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 
-GET         /how-much-pension-pay-charge/:period/:schemeIndex                                       controllers.annualallowance.taxyear.HowMuchAAChargeSchemePaidController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-POST        /how-much-pension-pay-charge/:period/:schemeIndex                                       controllers.annualallowance.taxyear.HowMuchAAChargeSchemePaidController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-GET         /change-how-much-pension-pay-charge/:period/:schemeIndex                                controllers.annualallowance.taxyear.HowMuchAAChargeSchemePaidController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
-POST        /change-how-much-pension-pay-charge/:period/:schemeIndex                                 controllers.annualallowance.taxyear.HowMuchAAChargeSchemePaidController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+GET         /how-much-pension-pay-charge/:period/:schemeIndex                controllers.annualallowance.taxyear.HowMuchAAChargeSchemePaidController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST        /how-much-pension-pay-charge/:period/:schemeIndex                controllers.annualallowance.taxyear.HowMuchAAChargeSchemePaidController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET         /change-how-much-pension-pay-charge/:period/:schemeIndex         controllers.annualallowance.taxyear.HowMuchAAChargeSchemePaidController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST        /change-how-much-pension-pay-charge/:period/:schemeIndex         controllers.annualallowance.taxyear.HowMuchAAChargeSchemePaidController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 
-GET         /how-much-you-pay-charge/:period/:schemeIndex                                          controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-POST        /how-much-you-pay-charge/:period/:schemeIndex                                          controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-GET         /change-how-much-you-pay-charge/:period/:schemeIndex                                    controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
-POST        /change-how-much-you-pay-charge/:period/:schemeIndex                                    controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+GET         /how-much-you-pay-charge/:period/:schemeIndex                    controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST        /how-much-you-pay-charge/:period/:schemeIndex                    controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET         /change-how-much-you-pay-charge/:period/:schemeIndex             controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST        /change-how-much-you-pay-charge/:period/:schemeIndex             controllers.annualallowance.taxyear.HowMuchAAChargeYouPaidController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 
+GET        /value-new-lta-charge                                             controllers.lifetimeallowance.ValueNewLtaChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /value-new-lta-charge                                             controllers.lifetimeallowance.ValueNewLtaChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-value-new-lta-charge                                      controllers.lifetimeallowance.ValueNewLtaChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-value-new-lta-charge                                      controllers.lifetimeallowance.ValueNewLtaChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /who-paying-extra-lta-charge                                      controllers.lifetimeallowance.WhoPayingExtraLtaChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /who-paying-extra-lta-charge                                      controllers.lifetimeallowance.WhoPayingExtraLtaChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-who-paying-extra-lta-charge                               controllers.lifetimeallowance.WhoPayingExtraLtaChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-who-paying-extra-lta-charge                               controllers.lifetimeallowance.WhoPayingExtraLtaChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /scheme-paid-extra-lta-charge                                     controllers.lifetimeallowance.LtaPensionSchemeDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /scheme-paid-extra-lta-charge                                     controllers.lifetimeallowance.LtaPensionSchemeDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-scheme-paid-extra-lta-charge                              controllers.lifetimeallowance.LtaPensionSchemeDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-scheme-paid-extra-lta-charge                              controllers.lifetimeallowance.LtaPensionSchemeDetailsController.onSubmit(mode: Mode = CheckMode)

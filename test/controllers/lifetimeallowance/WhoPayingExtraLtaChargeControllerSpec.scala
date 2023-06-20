@@ -17,48 +17,45 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.routes
+import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import forms.lifetimeallowance.WhoPaidLTAChargeFormProvider
-import models.{CheckMode, NormalMode, UserAnswers, WhoPaidLTACharge}
+import forms.lifetimeallowance.WhoPayingExtraLtaChargeFormProvider
+import models.{CheckMode, NormalMode, UserAnswers, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.WhoPaidLTAChargePage
+import pages.lifetimeallowance.WhoPayingExtraLtaChargePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.lifetimeallowance.WhoPaidLTAChargeView
+import views.html.lifetimeallowance.WhoPayingExtraLtaChargeView
 
 import scala.concurrent.Future
 
-class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
+class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val whoPaidLTAChargeRoute =
-    controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(NormalMode).url
+  lazy val normalRoute = ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode).url
+  lazy val checkRoute  = ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(CheckMode).url
 
-  lazy val whoPaidLTAChargeCheckRoute =
-    controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(CheckMode).url
-
-  val formProvider = new WhoPaidLTAChargeFormProvider()
+  val formProvider = new WhoPayingExtraLtaChargeFormProvider()
   val form         = formProvider()
 
-  "WhoPaidLTACharge Controller" - {
+  "WhoPayingExtraLtaCharge Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, whoPaidLTAChargeRoute)
+        val request = FakeRequest(GET, normalRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[WhoPaidLTAChargeView]
+        val view = application.injector.instanceOf[WhoPayingExtraLtaChargeView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -67,26 +64,27 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(WhoPaidLTAChargePage, WhoPaidLTACharge.values.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, whoPaidLTAChargeRoute)
+        val request = FakeRequest(GET, normalRoute)
 
-        val view = application.injector.instanceOf[WhoPaidLTAChargeView]
+        val view = application.injector.instanceOf[WhoPayingExtraLtaChargeView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhoPaidLTACharge.values.head), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(WhoPayingExtraLtaCharge.values.head), NormalMode)(
           request,
           messages(application)
         ).toString
       }
     }
 
-    "must redirect to the next page when 'You' is submitted in NormalMode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -101,20 +99,50 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, whoPaidLTAChargeRoute)
-            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.You.toString))
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.values.head.toString))
+
+        val result = route(application, request).value
+
+        val expectedAnswers =
+          emptyUserAnswers.set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.values.head).success.value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual WhoPayingExtraLtaChargePage
+          .navigate(NormalMode, expectedAnswers)
+          .url
+      }
+    }
+
+    "redirect to LtaPensionSchemeDetails page when user answers PensionScheme in Normal Mode" in {
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.PensionScheme.toString))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.ValueNewLtaChargeController.onPageLoad(NormalMode).url
+        ).value mustEqual ltaRoutes.LtaPensionSchemeDetailsController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
-    "must redirect to the next page when 'PensionScheme' is submitted in NormalMode" in {
-
+    "redirect to CheckYourLTAAnswersController page when user answers you in Normal Mode" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -128,35 +156,8 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, whoPaidLTAChargeRoute)
-            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.PensionScheme.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
-      }
-    }
-
-    "must redirect to the next page when 'You' is submitted in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, whoPaidLTAChargeCheckRoute)
-            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.You.toString))
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.You.toString))
 
         val result = route(application, request).value
 
@@ -167,8 +168,7 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when 'PensionScheme' is submitted in CheckMode" in {
-
+    "redirect to LtaPensionSchemeDetails page when user answers PensionScheme in Check Mode" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -182,15 +182,43 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, whoPaidLTAChargeCheckRoute)
-            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.PensionScheme.toString))
+          FakeRequest(POST, checkRoute)
+            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.PensionScheme.toString))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
+        ).value mustEqual ltaRoutes.LtaPensionSchemeDetailsController
+          .onPageLoad(NormalMode)
+          .url
+      }
+    }
+
+    "redirect to CheckYourLTAAnswersController page when user answers you in Check Mode" in {
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, checkRoute)
+            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.You.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
       }
     }
 
@@ -200,12 +228,12 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, whoPaidLTAChargeRoute)
+          FakeRequest(POST, normalRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[WhoPaidLTAChargeView]
+        val view = application.injector.instanceOf[WhoPayingExtraLtaChargeView]
 
         val result = route(application, request).value
 
@@ -219,12 +247,12 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, whoPaidLTAChargeRoute)
+        val request = FakeRequest(GET, normalRoute)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -234,14 +262,14 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, whoPaidLTAChargeRoute)
-            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.values.head.toString))
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.values.head.toString))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
       }
     }
   }

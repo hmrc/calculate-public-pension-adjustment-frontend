@@ -22,6 +22,19 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryLtaPensionSchemeDetails: Arbitrary[LtaPensionSchemeDetails] =
+    Arbitrary {
+      for {
+        name   <- arbitrary[String]
+        taxRef <- taxRef
+      } yield LtaPensionSchemeDetails(name, taxRef)
+    }
+
+  implicit lazy val arbitraryWhoPayingExtraLtaCharge: Arbitrary[WhoPayingExtraLtaCharge] =
+    Arbitrary {
+      Gen.oneOf(WhoPayingExtraLtaCharge.values.toSeq)
+    }
+
   implicit lazy val arbitraryWhoPaidAACharge: Arbitrary[WhoPaidAACharge] =
     Arbitrary {
       Gen.oneOf(WhoPaidAACharge.values.toSeq)
