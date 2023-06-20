@@ -27,17 +27,11 @@ class SchemeNameAndTaxRefFormProvider @Inject() extends Mappings {
 
   private val pattern: String = """(\d{8})[A-Z]{2}"""
 
-  def validateFieldsRegex(errorKey: String, pattern: String): Constraint[String] =
-    Constraint { text =>
-      if (text.isEmpty || text.matches(pattern)) Valid else Invalid(errorKey)
-    }
-
   def apply(): Form[SchemeNameAndTaxRef] = Form(
     mapping(
       "name"   -> text("schemeNameAndTaxRef.name.error.required")
         .verifying(maxLength(100, "schemeNameAndTaxRef.name.error.length")),
-      "taxRef" -> text("schemeNameAndTaxRef.taxRef.error.required")
-        .verifying(validateFieldsRegex("schemeNameAndTaxRef.taxRef.invalid", pattern))
+      "taxRef" -> pstr("schemeNameAndTaxRef.taxRef.error.required", "schemeNameAndTaxRef.taxRef.invalid")
     )(SchemeNameAndTaxRef.apply)(SchemeNameAndTaxRef.unapply)
   )
 }

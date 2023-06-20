@@ -31,7 +31,7 @@ case object ValueNewLtaChargePage extends QuestionPage[BigInt] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     (answers.get(ValueNewLtaChargePage), answers.get(LifetimeAllowanceChargeAmountPage)) match {
-      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge < oldLtaCharge =>
+      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge <= oldLtaCharge =>
         ltaRoutes.CheckYourLTAAnswersController.onPageLoad
       case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge > oldLtaCharge =>
         ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
@@ -45,7 +45,7 @@ case object ValueNewLtaChargePage extends QuestionPage[BigInt] {
       answers.get(LifetimeAllowanceChargeAmountPage),
       answers.get(WhoPayingExtraLtaChargePage)
     ) match {
-      case (Some(newLtaCharge), Some(oldLtaCharge), None) if newLtaCharge > oldLtaCharge =>
+      case (Some(newLtaCharge), Some(oldLtaCharge), None) if newLtaCharge >= oldLtaCharge =>
         ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
       case (Some(_), None, None)                                                         =>
         ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
@@ -55,7 +55,7 @@ case object ValueNewLtaChargePage extends QuestionPage[BigInt] {
 
   override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
     (value, userAnswers.get(LifetimeAllowanceChargeAmountPage)) match {
-      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge < oldLtaCharge =>
+      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge <= oldLtaCharge =>
         userAnswers.remove(WhoPayingExtraLtaChargePage).flatMap(_.remove(LtaPensionSchemeDetailsPage))
       case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge > oldLtaCharge =>
         super.cleanup(value, userAnswers)

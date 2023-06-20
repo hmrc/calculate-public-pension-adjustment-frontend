@@ -27,17 +27,12 @@ import javax.inject.Inject
 class LtaPensionSchemeDetailsFormProvider @Inject() extends Mappings {
 
   private val pattern: String                                                    = """(\d{8})[A-Z]{2}"""
-  def validateFieldsRegex(errorKey: String, pattern: String): Constraint[String] =
-    Constraint { text =>
-      if (text.isEmpty || text.matches(pattern)) Valid else Invalid(errorKey)
-    }
 
   def apply(): Form[LtaPensionSchemeDetails] = Form(
     mapping(
       "name"   -> text("ltaPensionSchemeDetails.error.name.required")
         .verifying(maxLength(100, "ltaPensionSchemeDetails.error.name.length")),
-      "taxRef" -> text("ltaPensionSchemeDetails.error.taxRef.required")
-        .verifying(validateFieldsRegex("ltaPensionSchemeDetails.taxRef.invalid", pattern))
+      "taxRef" -> pstr("ltaPensionSchemeDetails.error.taxRef.required", "ltaPensionSchemeDetails.taxRef.invalid")
     )(LtaPensionSchemeDetails.apply)(LtaPensionSchemeDetails.unapply)
   )
 }
