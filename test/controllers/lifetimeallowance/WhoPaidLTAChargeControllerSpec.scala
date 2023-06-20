@@ -18,6 +18,7 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import controllers.routes
+import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.WhoPaidLTAChargeFormProvider
 import models.{CheckMode, NormalMode, UserAnswers, WhoPaidLTACharge}
 import org.mockito.ArgumentMatchers.any
@@ -85,7 +86,7 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted in NormalMode" in {
+    "must redirect to the next page when 'You' is submitted in NormalMode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -101,21 +102,45 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whoPaidLTAChargeRoute)
-            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.values.head.toString))
+            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.You.toString))
 
         val result = route(application, request).value
 
-        val expectedAnswers =
-          emptyUserAnswers.set(WhoPaidLTAChargePage, WhoPaidLTACharge.values.head).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual pages.lifetimeallowance.WhoPaidLTAChargePage
-          .navigate(NormalMode, expectedAnswers)
-          .url
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.ValueNewLtaChargeController.onPageLoad(NormalMode).url
       }
     }
 
-    "must redirect to the next page when valid data is submitted in CheckMode" in {
+    "must redirect to the next page when 'PensionScheme' is submitted in NormalMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, whoPaidLTAChargeRoute)
+            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.PensionScheme.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
+      }
+    }
+
+    "must redirect to the next page when 'You' is submitted in CheckMode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -131,17 +156,41 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whoPaidLTAChargeCheckRoute)
-            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.values.head.toString))
+            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.You.toString))
 
         val result = route(application, request).value
 
-        val expectedAnswers =
-          emptyUserAnswers.set(WhoPaidLTAChargePage, WhoPaidLTACharge.values.head).success.value
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+      }
+    }
+
+    "must redirect to the next page when 'PensionScheme' is submitted in CheckMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, whoPaidLTAChargeCheckRoute)
+            .withFormUrlEncodedBody(("value", WhoPaidLTACharge.PensionScheme.toString))
+
+        val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual pages.lifetimeallowance.WhoPaidLTAChargePage
-          .navigate(CheckMode, expectedAnswers)
-          .url
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
       }
     }
 

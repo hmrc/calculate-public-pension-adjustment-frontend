@@ -17,9 +17,8 @@
 package viewmodels.checkAnswers.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.LtaProtectionOrEnhancements.Protection
 import models.WhoPayingExtraLtaCharge.PensionScheme
-import models.{CheckMode, UserAnswers, WhoPayingExtraLtaCharge}
+import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.lifetimeallowance.WhoPayingExtraLtaChargePage

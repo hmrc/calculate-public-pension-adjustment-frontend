@@ -40,7 +40,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   lazy val normalRoute = ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode).url
-  lazy val checkRoute = ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode).url
+  lazy val checkRoute  = ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode).url
 
   val formProvider = new LtaPensionSchemeDetailsFormProvider()
   val form         = formProvider()
@@ -51,7 +51,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
     userAnswersId,
     Json.obj(
       LtaPensionSchemeDetailsPage.toString -> Json.obj(
-        "name"      -> "value1",
+        "name"   -> "value1",
         "taxRef" -> "00348916RT"
       )
     )
@@ -95,8 +95,10 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(LtaPensionSchemeDetails("someSchemeName", "00348916RT")), NormalMode)(
-          request, messages(application)).toString
+        contentAsString(result) mustEqual view(
+          form.fill(LtaPensionSchemeDetails("someSchemeName", "00348916RT")),
+          NormalMode
+        )(request, messages(application)).toString
       }
     }
 

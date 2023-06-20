@@ -20,7 +20,7 @@ import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.lifetimeallowance.{LtaPensionSchemeDetailsPage}
+import pages.lifetimeallowance.LtaPensionSchemeDetailsPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
@@ -36,7 +36,7 @@ class LtaPensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           LtaPensionSchemeDetailsPage,
-          models.LtaPensionSchemeDetails("Some scheme","Some Tax Ref")
+          models.LtaPensionSchemeDetails("Some scheme", "Some Tax Ref")
         )
         .get
       LtaPensionSchemeDetailsSummary.row(userAnswers) shouldBe Some(

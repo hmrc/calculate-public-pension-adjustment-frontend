@@ -18,6 +18,7 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import controllers.routes
+import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.SchemeNameAndTaxRefFormProvider
 import models.{CheckMode, NormalMode, SchemeNameAndTaxRef, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -39,6 +40,9 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new SchemeNameAndTaxRefFormProvider()
   val form         = formProvider()
+
+  lazy val normalRoute = ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
+  lazy val checkRoute  = ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
 
   lazy val schemeNameAndTaxRefRoute =
     controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
@@ -143,12 +147,10 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(SchemeNameAndTaxRefPage, validAnswer).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual SchemeNameAndTaxRefPage
-          .navigate(NormalMode, expectedAnswers)
-          .url
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
 
       }
     }

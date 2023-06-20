@@ -28,10 +28,10 @@ import play.api.libs.json.{JsValue, Json}
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
   implicit lazy val arbitraryWhoPayingExtraLtaChargeUserAnswersEntry
-  : Arbitrary[(WhoPayingExtraLtaChargePage.type, JsValue)] =
+    : Arbitrary[(WhoPayingExtraLtaChargePage.type, JsValue)] =
     Arbitrary {
       for {
-        page <- arbitrary[WhoPayingExtraLtaChargePage.type]
+        page  <- arbitrary[WhoPayingExtraLtaChargePage.type]
         value <- arbitrary[WhoPayingExtraLtaCharge].map(Json.toJson(_))
       } yield (page, value)
     }
@@ -39,7 +39,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
   implicit lazy val arbitraryValueNewLtaChargeUserAnswersEntry: Arbitrary[(ValueNewLtaChargePage.type, JsValue)] =
     Arbitrary {
       for {
-        page <- arbitrary[ValueNewLtaChargePage.type]
+        page  <- arbitrary[ValueNewLtaChargePage.type]
         value <- arbitrary[Int].map(Json.toJson(_))
       } yield (page, value)
     }
@@ -53,7 +53,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryHowMuchAAChargeYouPaidUserAnswersEntry
-  : Arbitrary[(HowMuchAAChargeYouPaidPage.type, JsValue)] =
+    : Arbitrary[(HowMuchAAChargeYouPaidPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[HowMuchAAChargeYouPaidPage.type]
@@ -62,7 +62,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryHowMuchAAChargeSchemePaidUserAnswersEntry
-  : Arbitrary[(HowMuchAAChargeSchemePaidPage.type, JsValue)] =
+    : Arbitrary[(HowMuchAAChargeSchemePaidPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[HowMuchAAChargeSchemePaidPage.type]
@@ -87,7 +87,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryLtaProtectionOrEnhancementsUserAnswersEntry
-  : Arbitrary[(LtaProtectionOrEnhancementsPage.type, JsValue)] =
+    : Arbitrary[(LtaProtectionOrEnhancementsPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[LtaProtectionOrEnhancementsPage.type]
@@ -96,7 +96,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryWhatNewProtectionTypeEnhancementUserAnswersEntry
-  : Arbitrary[(WhatNewProtectionTypeEnhancementPage.type, JsValue)] =
+    : Arbitrary[(WhatNewProtectionTypeEnhancementPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[WhatNewProtectionTypeEnhancementPage.type]
@@ -105,7 +105,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryReferenceNewProtectionTypeEnhancementUserAnswersEntry
-  : Arbitrary[(ReferenceNewProtectionTypeEnhancementPage.type, JsValue)] =
+    : Arbitrary[(ReferenceNewProtectionTypeEnhancementPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[ReferenceNewProtectionTypeEnhancementPage.type]
@@ -114,7 +114,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryProtectionTypeEnhancementChangedUserAnswersEntry
-  : Arbitrary[(ProtectionTypeEnhancementChangedPage.type, JsValue)] =
+    : Arbitrary[(ProtectionTypeEnhancementChangedPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[ProtectionTypeEnhancementChangedPage.type]
@@ -139,7 +139,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryLifetimeAllowanceChargeAmountUserAnswersEntry
-  : Arbitrary[(LifetimeAllowanceChargeAmountPage.type, JsValue)] =
+    : Arbitrary[(LifetimeAllowanceChargeAmountPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[LifetimeAllowanceChargeAmountPage.type]
@@ -148,7 +148,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryExcessLifetimeAllowancePaidUserAnswersEntry
-  : Arbitrary[(ExcessLifetimeAllowancePaidPage.type, JsValue)] =
+    : Arbitrary[(ExcessLifetimeAllowancePaidPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[ExcessLifetimeAllowancePaidPage.type]
@@ -157,7 +157,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryLifetimeAllowanceChargeUserAnswersEntry
-  : Arbitrary[(LifetimeAllowanceChargePage.type, JsValue)] =
+    : Arbitrary[(LifetimeAllowanceChargePage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[LifetimeAllowanceChargePage.type]
@@ -166,7 +166,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryDateOfBenefitCrystallisationEventUserAnswersEntry
-  : Arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] =
+    : Arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[DateOfBenefitCrystallisationEventPage.type]
@@ -175,7 +175,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryHadBenefitCrystallisationEventUserAnswersEntry
-  : Arbitrary[(HadBenefitCrystallisationEventPage.type, JsValue)] =
+    : Arbitrary[(HadBenefitCrystallisationEventPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[HadBenefitCrystallisationEventPage.type]
@@ -191,7 +191,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryWhichYearsScottishTaxpayerUserAnswersEntry
-  : Arbitrary[(WhichYearsScottishTaxpayerPage.type, JsValue)] =
+    : Arbitrary[(WhichYearsScottishTaxpayerPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[WhichYearsScottishTaxpayerPage.type]
@@ -200,7 +200,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryScottishTaxpayerFrom2016UserAnswersEntry
-  : Arbitrary[(ScottishTaxpayerFrom2016Page.type, JsValue)] =
+    : Arbitrary[(ScottishTaxpayerFrom2016Page.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[ScottishTaxpayerFrom2016Page.type]

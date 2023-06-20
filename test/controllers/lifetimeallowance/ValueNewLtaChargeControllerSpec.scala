@@ -42,7 +42,7 @@ class ValueNewLtaChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   lazy val normalRoute = ltaRoutes.ValueNewLtaChargeController.onPageLoad(NormalMode).url
-  lazy val checkRoute = ltaRoutes.ValueNewLtaChargeController.onPageLoad(CheckMode).url
+  lazy val checkRoute  = ltaRoutes.ValueNewLtaChargeController.onPageLoad(CheckMode).url
 
   val validAnswer = BigInt(0)
 

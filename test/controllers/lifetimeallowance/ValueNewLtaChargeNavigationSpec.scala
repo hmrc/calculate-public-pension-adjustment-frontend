@@ -17,16 +17,13 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.setupquestions.ReportingChangeFormProvider
-import models.{CheckMode, NormalMode, ReportingChange, UserAnswers, WhoPayingExtraLtaCharge}
+import models.{CheckMode, NormalMode, UserAnswers, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import pages.lifetimeallowance.{LifetimeAllowanceChargeAmountPage, ValueNewLtaChargePage, WhoPayingExtraLtaChargePage}
-import pages.setupquestions.ReportingChangePage
 import play.api.Application
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -44,7 +41,7 @@ class ValueNewLtaChargeNavigationSpec extends SpecBase with MockitoSugar {
   val form         = formProvider()
 
   lazy val normalRoute = ltaRoutes.ValueNewLtaChargeController.onPageLoad(NormalMode).url
-  lazy val checkRoute = ltaRoutes.ValueNewLtaChargeController.onPageLoad(CheckMode).url
+  lazy val checkRoute  = ltaRoutes.ValueNewLtaChargeController.onPageLoad(CheckMode).url
 
   val validAnswer = BigInt(1000)
 
@@ -53,41 +50,40 @@ class ValueNewLtaChargeNavigationSpec extends SpecBase with MockitoSugar {
     "must redirect to the WhoPayingExtraLtaChargeController page when valid data is submitted and " +
       "LifetimeAllowanceChargeAmountPage doesn't exist in NormalMode" in {
 
-      val application: Application = constructApplication(Some(emptyUserAnswers))
+        val application: Application = constructApplication(Some(emptyUserAnswers))
 
-      running(application) {
-        val request = aFakePostRequestToTheNormalRoute
+        running(application) {
+          val request = aFakePostRequestToTheNormalRoute
 
-        val result = route(application, request).value
+          val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController
-          .onPageLoad(NormalMode)
-          .url
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(
+            result
+          ).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController
+            .onPageLoad(NormalMode)
+            .url
+        }
       }
-    }
 
     "must redirect to the WhoPayingExtraLtaChargeController page when valid data is submitted and " +
       "LifetimeAllowanceChargeAmountPage doesn't exist in CheckMode" in {
 
-      val application: Application = constructApplication(Some(emptyUserAnswers))
+        val application: Application = constructApplication(Some(emptyUserAnswers))
 
-      running(application) {
-        val request = aFakePostRequestToTheCheckRoute
+        running(application) {
+          val request = aFakePostRequestToTheCheckRoute
 
-        val result = route(application, request).value
+          val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController
-          .onPageLoad(NormalMode)
-          .url
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(
+            result
+          ).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController
+            .onPageLoad(NormalMode)
+            .url
+        }
       }
-    }
-
 
     "must redirect to CheckYourAnswers when user is in NormalMode and answers are less than the old charge" in {
 
@@ -95,7 +91,6 @@ class ValueNewLtaChargeNavigationSpec extends SpecBase with MockitoSugar {
         .set(LifetimeAllowanceChargeAmountPage, BigInt(5000))
         .success
         .value
-
         .set(ValueNewLtaChargePage, BigInt(1000))
         .success
         .value
@@ -120,7 +115,6 @@ class ValueNewLtaChargeNavigationSpec extends SpecBase with MockitoSugar {
         .set(LifetimeAllowanceChargeAmountPage, BigInt(500))
         .success
         .value
-
         .set(ValueNewLtaChargePage, BigInt(1000))
         .success
         .value
@@ -144,112 +138,107 @@ class ValueNewLtaChargeNavigationSpec extends SpecBase with MockitoSugar {
     "must redirect to WhoPayingExtraLtaCharge when user is in CheckMode and answers are bigger than the old charge " +
       "and WhoPayingExtraLtaChargePage does not exist" in {
 
-      val answers = emptyUserAnswers
-        .set(LifetimeAllowanceChargeAmountPage, BigInt(500))
-        .success
-        .value
+        val answers = emptyUserAnswers
+          .set(LifetimeAllowanceChargeAmountPage, BigInt(500))
+          .success
+          .value
+          .set(ValueNewLtaChargePage, BigInt(1000))
+          .success
+          .value
 
-        .set(ValueNewLtaChargePage, BigInt(1000))
-        .success
-        .value
+        val application: Application = constructApplication(Some(answers))
 
-      val application: Application = constructApplication(Some(answers))
+        running(application) {
+          val request = aFakePostRequestToTheCheckRoute
 
-      running(application) {
-        val request = aFakePostRequestToTheCheckRoute
+          val result = route(application, request).value
 
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.WhoPayingExtraLtaChargeController
-          .onPageLoad(NormalMode)
-          .url
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(
+            result
+          ).value mustEqual ltaRoutes.WhoPayingExtraLtaChargeController
+            .onPageLoad(NormalMode)
+            .url
+        }
       }
-    }
 
     "must redirect to WhoPayingExtraLtaCharge when user is in CheckMode and answers are bigger than the old charge " +
       "and WhoPayingExtraLtaChargePage DOES exist" in {
 
-      val answers = emptyUserAnswers
-        .set(LifetimeAllowanceChargeAmountPage, BigInt(500))
-        .success
-        .value
+        val answers = emptyUserAnswers
+          .set(LifetimeAllowanceChargeAmountPage, BigInt(500))
+          .success
+          .value
+          .set(ValueNewLtaChargePage, BigInt(1000))
+          .success
+          .value
+          .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.values.head)
+          .success
+          .value
 
-        .set(ValueNewLtaChargePage, BigInt(1000))
-        .success
-        .value
+        val application: Application = constructApplication(Some(answers))
 
-        .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.values.head)
-        .success
-        .value
+        running(application) {
+          val request = aFakePostRequestToTheCheckRoute
 
-      val application: Application = constructApplication(Some(answers))
+          val result = route(application, request).value
 
-      running(application) {
-        val request = aFakePostRequestToTheCheckRoute
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(
+            result
+          ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+        }
       }
-    }
 
     "must redirect to CheckYourLTAAnswersController when user is in CheckMode and answers are smaller than the old charge " +
       "and WhoPayingExtraLtaChargePage DOES exist" in {
 
-      val answers = emptyUserAnswers
-        .set(LifetimeAllowanceChargeAmountPage, BigInt(5000))
-        .success
-        .value
+        val answers = emptyUserAnswers
+          .set(LifetimeAllowanceChargeAmountPage, BigInt(5000))
+          .success
+          .value
+          .set(ValueNewLtaChargePage, BigInt(1000))
+          .success
+          .value
+          .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.values.head)
+          .success
+          .value
 
-        .set(ValueNewLtaChargePage, BigInt(1000))
-        .success
-        .value
+        val application: Application = constructApplication(Some(answers))
 
-        .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.values.head)
-        .success
-        .value
+        running(application) {
+          val request = aFakePostRequestToTheCheckRoute
 
-      val application: Application = constructApplication(Some(answers))
+          val result = route(application, request).value
 
-      running(application) {
-        val request = aFakePostRequestToTheCheckRoute
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(
+            result
+          ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+        }
       }
-    }
 
     "must redirect to CheckYourLTAAnswersController when there is no old charge" +
       "and WhoPayingExtraLtaChargePage DOES exist" in {
 
-      val answers = emptyUserAnswers
-        .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.values.head)
-        .success
-        .value
+        val answers = emptyUserAnswers
+          .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.values.head)
+          .success
+          .value
 
-      val application: Application = constructApplication(Some(answers))
+        val application: Application = constructApplication(Some(answers))
 
-      running(application) {
-        val request = aFakePostRequestToTheCheckRoute
+        running(application) {
+          val request = aFakePostRequestToTheCheckRoute
 
-        val result = route(application, request).value
+          val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(
+            result
+          ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+        }
       }
-    }
   }
 
   private def constructApplication(userAnswers: Option[UserAnswers] = Some(emptyUserAnswers)) = {

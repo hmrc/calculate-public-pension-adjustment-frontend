@@ -39,7 +39,7 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   lazy val normalRoute = ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode).url
-  lazy val checkRoute = ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(CheckMode).url
+  lazy val checkRoute  = ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(CheckMode).url
 
   val formProvider = new WhoPayingExtraLtaChargeFormProvider()
   val form         = formProvider()
@@ -164,9 +164,7 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController
-          .onPageLoad
-          .url
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
       }
     }
 
@@ -220,12 +218,9 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController
-          .onPageLoad
-          .url
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
       }
     }
-
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
