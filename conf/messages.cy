@@ -496,3 +496,10 @@ schemeNameAndTaxRef.taxRef.error.required = cy: Enter the pension scheme tax ref
 schemeNameAndTaxRef.name.error.length = cy: The name of your pension scheme must be 100 characters or less
 schemeNameAndTaxRef.taxRef.invalid = cy: Enter your pension tax reference in the format 00348916RT
 schemeNameAndTaxRef.change.hidden = cy: What is the name and tax reference of the scheme that paid the lifetime allowance charge?
+
+otherDefinedBenefitOrContribution.title = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+otherDefinedBenefitOrContribution.heading = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+otherDefinedBenefitOrContribution.checkYourAnswersLabel = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+otherDefinedBenefitOrContribution.error.required = cy: Select yes if you have contributed to any other defined benefit or defined contribution schemes
+otherDefinedBenefitOrContribution.change.hidden = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+
