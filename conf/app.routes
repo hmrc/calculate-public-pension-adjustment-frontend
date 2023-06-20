@@ -220,3 +220,8 @@ GET        /otherDefinedBenefitOrContribution/:period/:schemeIndex              
 POST       /otherDefinedBenefitOrContribution/:period/:schemeIndex                        controllers.annualallowance.taxyear.OtherDefinedBenefitOrContributionController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
 GET        /changeOtherDefinedBenefitOrContribution/:period/:schemeIndex                  controllers.annualallowance.taxyear.OtherDefinedBenefitOrContributionController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 POST       /changeOtherDefinedBenefitOrContribution/:period/:schemeIndex                  controllers.annualallowance.taxyear.OtherDefinedBenefitOrContributionController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+
+GET        /thresholdIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.ThresholdIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST       /thresholdIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.ThresholdIncomeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET        /changeThresholdIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.ThresholdIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST       /changeThresholdIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.ThresholdIncomeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)

@@ -502,3 +502,9 @@ otherDefinedBenefitOrContribution.heading = Have you contributed to any other de
 otherDefinedBenefitOrContribution.checkYourAnswersLabel = Have you contributed to any other defined benefit or defined contribution scheme?
 otherDefinedBenefitOrContribution.error.required = Select yes if you have contributed to any other defined benefit or defined contribution schemes
 otherDefinedBenefitOrContribution.change.hidden = Have you contributed to any other defined benefit or defined contribution scheme?
+
+thresholdIncome.title = thresholdIncome
+thresholdIncome.heading = thresholdIncome
+thresholdIncome.checkYourAnswersLabel = thresholdIncome
+thresholdIncome.error.required = Select yes if thresholdIncome
+thresholdIncome.change.hidden = ThresholdIncome

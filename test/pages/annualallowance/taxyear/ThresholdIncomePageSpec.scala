@@ -16,36 +16,36 @@
 
 package pages.annualallowance.taxyear
 
-import pages.behaviours.PageBehaviours
-import models.{CheckMode, NormalMode, Period, SchemeIndex}
 import models.Period._2013
+import models.{CheckMode, NormalMode, Period, SchemeIndex}
+import pages.behaviours.PageBehaviours
 
-class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
+class ThresholdIncomePageSpec extends PageBehaviours {
 
-  "OtherDefinedBenefitOrContributionPage" - {
+  "ThresholdIncomePage" - {
 
-    beRetrievable[Boolean](OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)))
+    beRetrievable[Boolean](ThresholdIncomePage(Period._2013, SchemeIndex(0)))
 
-    beSettable[Boolean](OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)))
+    beSettable[Boolean](ThresholdIncomePage(Period._2013, SchemeIndex(0)))
 
-    beRemovable[Boolean](OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)))
+    beRemovable[Boolean](ThresholdIncomePage(Period._2013, SchemeIndex(0)))
 
     "must Navigate correctly in normal mode" - {
 
       "to page CYA when answered true" in {
         val ua = emptyUserAnswers.set(
-          OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), true
+          ThresholdIncomePage(Period._2013, SchemeIndex(0)), true
         ).success.value
-        val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(1)).navigate(NormalMode, ua).url
+        val result = ThresholdIncomePage(_2013, SchemeIndex(1)).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/check-your-answers-period/2013")
       }
 
       "to page CYA when answered false" in {
         val ua = emptyUserAnswers.set(
-          OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), false
+          ThresholdIncomePage(Period._2013, SchemeIndex(0)), false
         ).success.value
-        val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(1)).navigate(NormalMode, ua).url
+        val result = ThresholdIncomePage(_2013, SchemeIndex(1)).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/check-your-answers-period/2013")
       }
@@ -53,9 +53,9 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
 
     "must Navigate correctly to CYA in check mode" in {
       val ua = emptyUserAnswers.set(
-        OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), false
+        ThresholdIncomePage(Period._2013, SchemeIndex(0)), false
       ).success.value
-      val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(1)).navigate(CheckMode, ua).url
+      val result = ThresholdIncomePage(_2013, SchemeIndex(1)).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/check-your-answers-period/2013")
     }

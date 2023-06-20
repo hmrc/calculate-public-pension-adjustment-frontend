@@ -18,11 +18,14 @@ package generators
 
 import org.scalacheck.Arbitrary
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear.{HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, OtherDefinedBenefitOrContributionPage, WhoPaidAAChargePage}
+import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
 import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryThresholdIncomePage: Arbitrary[ThresholdIncomePage.type] =
+    Arbitrary(ThresholdIncomePage)
 
   implicit lazy val arbitraryOtherDefinedBenefitOrContributionPage: Arbitrary[OtherDefinedBenefitOrContributionPage.type] =
     Arbitrary(OtherDefinedBenefitOrContributionPage)

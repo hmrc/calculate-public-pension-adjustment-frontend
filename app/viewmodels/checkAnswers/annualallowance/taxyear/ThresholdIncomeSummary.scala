@@ -17,30 +17,30 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
-import pages.annualallowance.taxyear.OtherDefinedBenefitOrContributionPage
+import pages.annualallowance.taxyear.ThresholdIncomePage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object OtherDefinedBenefitOrContributionSummary {
+object ThresholdIncomeSummary {
 
   def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)).map {
+    answers.get(ThresholdIncomePage(period, schemeIndex)).map {
       answer =>
 
         val value = if (answer) "site.yes" else "site.no"
 
         SummaryListRowViewModel(
-          key = "otherDefinedBenefitOrContribution.checkYourAnswersLabel",
+          key = "thresholdIncome.checkYourAnswersLabel",
           value = ValueViewModel(value),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController.onPageLoad(
+              controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(
                 CheckMode, period, schemeIndex
               ).url
-            ).withVisuallyHiddenText(messages("otherDefinedBenefitOrContribution.change.hidden"))
+            ).withVisuallyHiddenText(messages("thresholdIncome.change.hidden"))
           )
         )
     }
