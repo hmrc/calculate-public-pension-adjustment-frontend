@@ -16,7 +16,9 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, SchemeIndex, UserAnswers}
+import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, ThresholdIncomeController}
+import controllers.routes
+import models.{NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -27,9 +29,14 @@ case class OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: Sc
 
   override def toString: String = "otherDefinedBenefitOrContribution"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+    answers.get(OtherDefinedBenefitOrContributionPage(period, schemeIndex)) match {
+      case Some(true)  => CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case Some(false) => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    }
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    CheckYourAAPeriodAnswersController.onPageLoad(period)
 }

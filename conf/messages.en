@@ -503,8 +503,8 @@ otherDefinedBenefitOrContribution.checkYourAnswersLabel = Have you contributed t
 otherDefinedBenefitOrContribution.error.required = Select yes if you have contributed to any other defined benefit or defined contribution schemes
 otherDefinedBenefitOrContribution.change.hidden = Have you contributed to any other defined benefit or defined contribution scheme?
 
-thresholdIncome.title = thresholdIncome
-thresholdIncome.heading = thresholdIncome
-thresholdIncome.checkYourAnswersLabel = thresholdIncome
-thresholdIncome.error.required = Select yes if thresholdIncome
-thresholdIncome.change.hidden = ThresholdIncome
+thresholdIncome.title = Was your threshold income more than £110,000?
+thresholdIncome.heading = Was your threshold income more than £110,000?
+thresholdIncome.checkYourAnswersLabel = Was your threshold income more than £110,000?
+thresholdIncome.error.required = Select yes if your threshold income was more than £110,000
+thresholdIncome.change.hidden = Was your threshold income more than £110,000?

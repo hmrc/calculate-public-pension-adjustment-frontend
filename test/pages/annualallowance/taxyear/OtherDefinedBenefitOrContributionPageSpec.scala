@@ -36,18 +36,26 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         val ua = emptyUserAnswers.set(
           OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), true
         ).success.value
-        val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(1)).navigate(NormalMode, ua).url
+        val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/check-your-answers-period/2013")
       }
 
-      "to page CYA when answered false" in {
+      "to ThresholdIncomePage when answered false" in {
         val ua = emptyUserAnswers.set(
           OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), false
         ).success.value
-        val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(1)).navigate(NormalMode, ua).url
+        val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers-period/2013")
+        checkNavigation(result, "/thresholdIncome/2013/0")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val result = OtherDefinedBenefitOrContributionPage(
+          _2013, SchemeIndex(0)
+        ).navigate(NormalMode, emptyUserAnswers).url
+
+        checkNavigation(result, "/there-is-a-problem")
       }
     }
 
@@ -55,7 +63,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
       val ua = emptyUserAnswers.set(
         OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), false
       ).success.value
-      val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(1)).navigate(CheckMode, ua).url
+      val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(0)).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/check-your-answers-period/2013")
     }

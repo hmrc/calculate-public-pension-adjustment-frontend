@@ -36,7 +36,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
         val ua = emptyUserAnswers.set(
           ThresholdIncomePage(Period._2013, SchemeIndex(0)), true
         ).success.value
-        val result = ThresholdIncomePage(_2013, SchemeIndex(1)).navigate(NormalMode, ua).url
+        val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/check-your-answers-period/2013")
       }
@@ -45,7 +45,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
         val ua = emptyUserAnswers.set(
           ThresholdIncomePage(Period._2013, SchemeIndex(0)), false
         ).success.value
-        val result = ThresholdIncomePage(_2013, SchemeIndex(1)).navigate(NormalMode, ua).url
+        val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/check-your-answers-period/2013")
       }
@@ -55,7 +55,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
       val ua = emptyUserAnswers.set(
         ThresholdIncomePage(Period._2013, SchemeIndex(0)), false
       ).success.value
-      val result = ThresholdIncomePage(_2013, SchemeIndex(1)).navigate(CheckMode, ua).url
+      val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/check-your-answers-period/2013")
     }
