@@ -29,46 +29,51 @@ import views.html.annualallowance.taxyear.OtherDefinedBenefitOrContributionView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class OtherDefinedBenefitOrContributionController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: OtherDefinedBenefitOrContributionFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: OtherDefinedBenefitOrContributionView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class OtherDefinedBenefitOrContributionController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: OtherDefinedBenefitOrContributionFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: OtherDefinedBenefitOrContributionView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-
+  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+    (identify andThen getData andThen requireData) { implicit request =>
       val preparedForm = request.userAnswers.get(
         OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)
       ) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
       Ok(view(preparedForm, mode, period, schemeIndex))
-  }
+    }
 
-  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(
-              request.userAnswers.set(OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex), value)
+  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+    (identify andThen getData andThen requireData).async { implicit request =>
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          value =>
+            for {
+              updatedAnswers <-
+                Future.fromTry(
+                  request.userAnswers
+                    .set(OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex), value)
+                )
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(
+              OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)
+                .navigate(mode, updatedAnswers)
             )
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex).navigate(mode, updatedAnswers))
-      )
-  }
+        )
+    }
 }

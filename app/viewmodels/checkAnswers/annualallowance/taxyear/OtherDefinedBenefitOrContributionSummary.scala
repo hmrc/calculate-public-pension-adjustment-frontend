@@ -25,23 +25,27 @@ import viewmodels.implicits._
 
 object OtherDefinedBenefitOrContributionSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)).map {
-      answer =>
+  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key = "otherDefinedBenefitOrContribution.checkYourAnswersLabel",
-          value = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController.onPageLoad(
-                CheckMode, period, schemeIndex
-              ).url
-            ).withVisuallyHiddenText(messages("otherDefinedBenefitOrContribution.change.hidden"))
-          )
+      SummaryListRowViewModel(
+        key = "otherDefinedBenefitOrContribution.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
+              .onPageLoad(
+                CheckMode,
+                period,
+                schemeIndex
+              )
+              .url
+          ).withVisuallyHiddenText(messages("otherDefinedBenefitOrContribution.change.hidden"))
         )
+      )
     }
 }

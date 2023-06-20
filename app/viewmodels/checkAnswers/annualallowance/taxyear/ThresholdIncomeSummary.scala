@@ -25,23 +25,27 @@ import viewmodels.implicits._
 
 object ThresholdIncomeSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ThresholdIncomePage(period, schemeIndex)).map {
-      answer =>
+  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(ThresholdIncomePage(period, schemeIndex)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key = "thresholdIncome.checkYourAnswersLabel",
-          value = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(
-                CheckMode, period, schemeIndex
-              ).url
-            ).withVisuallyHiddenText(messages("thresholdIncome.change.hidden"))
-          )
+      SummaryListRowViewModel(
+        key = "thresholdIncome.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.ThresholdIncomeController
+              .onPageLoad(
+                CheckMode,
+                period,
+                schemeIndex
+              )
+              .url
+          ).withVisuallyHiddenText(messages("thresholdIncome.change.hidden"))
         )
+      )
     }
 }

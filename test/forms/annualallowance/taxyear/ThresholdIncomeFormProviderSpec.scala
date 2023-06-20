@@ -22,7 +22,7 @@ import play.api.data.FormError
 class ThresholdIncomeFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "thresholdIncome.error.required"
-  val invalidKey = "error.boolean"
+  val invalidKey  = "error.boolean"
 
   val form = new ThresholdIncomeFormProvider()()
 

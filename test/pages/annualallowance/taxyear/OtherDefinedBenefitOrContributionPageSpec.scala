@@ -33,18 +33,26 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
     "must Navigate correctly in normal mode" - {
 
       "to page CYA when answered true" in {
-        val ua = emptyUserAnswers.set(
-          OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), true
-        ).success.value
+        val ua     = emptyUserAnswers
+          .set(
+            OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)),
+            true
+          )
+          .success
+          .value
         val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/check-your-answers-period/2013")
       }
 
       "to ThresholdIncomePage when answered false" in {
-        val ua = emptyUserAnswers.set(
-          OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), false
-        ).success.value
+        val ua     = emptyUserAnswers
+          .set(
+            OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)),
+            false
+          )
+          .success
+          .value
         val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/thresholdIncome/2013/0")
@@ -52,7 +60,8 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
 
       "to JourneyRecovery when not answered" in {
         val result = OtherDefinedBenefitOrContributionPage(
-          _2013, SchemeIndex(0)
+          _2013,
+          SchemeIndex(0)
         ).navigate(NormalMode, emptyUserAnswers).url
 
         checkNavigation(result, "/there-is-a-problem")
@@ -60,9 +69,13 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
     }
 
     "must Navigate correctly to CYA in check mode" in {
-      val ua = emptyUserAnswers.set(
-        OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), false
-      ).success.value
+      val ua     = emptyUserAnswers
+        .set(
+          OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)),
+          false
+        )
+        .success
+        .value
       val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(0)).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/check-your-answers-period/2013")

@@ -23,19 +23,19 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[Boolean] {
+case class OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)
+    extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
 
   override def toString: String = "otherDefinedBenefitOrContribution"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(OtherDefinedBenefitOrContributionPage(period, schemeIndex)) match {
       case Some(true)  => CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(false) => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     CheckYourAAPeriodAnswersController.onPageLoad(period)

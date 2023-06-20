@@ -38,12 +38,16 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ThresholdIncomeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val thresholdIncomeRoute =
-    controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(
-      NormalMode, Period._2013, SchemeIndex(0)
-    ).url
+    controllers.annualallowance.taxyear.routes.ThresholdIncomeController
+      .onPageLoad(
+        NormalMode,
+        Period._2013,
+        SchemeIndex(0)
+      )
+      .url
 
   "ThresholdIncome Controller" - {
 
@@ -60,16 +64,23 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form, NormalMode, Period._2013, SchemeIndex(0)
+          form,
+          NormalMode,
+          Period._2013,
+          SchemeIndex(0)
         )(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(
-        ThresholdIncomePage(Period._2013, SchemeIndex(0)), true
-      ).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(
+          ThresholdIncomePage(Period._2013, SchemeIndex(0)),
+          true
+        )
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -82,7 +93,10 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(true), NormalMode, Period._2013, SchemeIndex(0)
+          form.fill(true),
+          NormalMode,
+          Period._2013,
+          SchemeIndex(0)
         )(request, messages(application)).toString
       }
     }
@@ -126,7 +140,10 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual BAD_REQUEST
         contentAsString(result) mustEqual view(
-          boundForm, NormalMode, Period._2013, SchemeIndex(0)
+          boundForm,
+          NormalMode,
+          Period._2013,
+          SchemeIndex(0)
         )(request, messages(application)).toString
       }
     }
