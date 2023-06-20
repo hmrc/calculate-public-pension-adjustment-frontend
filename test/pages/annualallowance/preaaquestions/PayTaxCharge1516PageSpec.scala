@@ -74,9 +74,9 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val userAnswers =
           UserAnswers("1")
-            .set(PIAPreRemedyPage(Period._2013), BigInt(1))
-            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2014), BigInt(1)))
-            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2015), BigInt(1)))
+            .set(PIAPreRemedyPage(Period._2013), 1)
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2014), 1))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2015), 1))
             .get
 
         val cleanedAnswers: UserAnswers = PayTaxCharge1516Page.cleanup(Some(true), userAnswers).get
@@ -90,9 +90,9 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val userAnswers =
           UserAnswers("1")
-            .set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1))
-            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2014), BigInt(1)))
-            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2015), BigInt(1)))
+            .set(preaaquestions.PIAPreRemedyPage(Period._2013), 1)
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2014), 1))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2015), 1))
             .get
 
         val cleanedAnswers: UserAnswers = PayTaxCharge1516Page.cleanup(Some(false), userAnswers).get

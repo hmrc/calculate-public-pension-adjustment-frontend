@@ -56,7 +56,7 @@ class SectionTest extends SpecBase {
       val userAnswers: UserAnswers = emptyUserAnswers
         .set(DefinedContributionPensionSchemePage, true)
         .get
-        .set(PIAPreRemedyPage(Period._2013), BigInt(1))
+        .set(PIAPreRemedyPage(Period._2013), 1)
         .get
 
       val userAnswersWithRemovals = PreAASection.removeAllUserAnswers(userAnswers)

@@ -41,7 +41,7 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = BigInt(0)
+  val validAnswer = 0
 
   val validPreRemedyTaxYear: Period = Period._2013
 
@@ -115,7 +115,7 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         val expectedAnswers =
-          emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
+          emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), 1000).success.value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual preaaquestions
@@ -146,7 +146,7 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         val expectedAnswers =
-          emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
+          emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), 1000).success.value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual preaaquestions

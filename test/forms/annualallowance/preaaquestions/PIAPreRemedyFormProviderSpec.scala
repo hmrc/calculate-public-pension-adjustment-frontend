@@ -28,7 +28,7 @@ class PIAPreRemedyFormProviderSpec extends IntFieldBehaviours {
     val fieldName = "value"
 
     val minimum = 0
-    val maximum = 100000000
+    val maximum = 999999999
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 

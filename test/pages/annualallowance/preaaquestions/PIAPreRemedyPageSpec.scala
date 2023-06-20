@@ -24,16 +24,16 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
   "PIAPreRemedyPage" - {
 
-    beRetrievable[BigInt](PIAPreRemedyPage(Period._2013))
+    beRetrievable[Int](PIAPreRemedyPage(Period._2013))
 
-    beSettable[BigInt](preaaquestions.PIAPreRemedyPage(Period._2013))
+    beSettable[Int](preaaquestions.PIAPreRemedyPage(Period._2013))
 
-    beRemovable[BigInt](preaaquestions.PIAPreRemedyPage(Period._2013))
+    beRemovable[Int](preaaquestions.PIAPreRemedyPage(Period._2013))
 
     "normal mode navigation" - {
 
       "next page should be PIAPreRemedy capture for 2013-2014 when this page is for 2012-2013" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1)).get
+        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2013), 1).get
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2013).navigate(NormalMode, userAnswers).url
 
@@ -41,7 +41,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
       }
 
       "next page should be PIAPreRemedy capture for 2014-2015 when this page is for 2013-2014" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2014), BigInt(1)).get
+        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2014), 1).get
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2014).navigate(NormalMode, userAnswers).url
 
@@ -49,7 +49,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
       }
 
       "next page should be CheckYourAnswers when this page is for 2014-2015" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2015), BigInt(1)).get
+        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2015), 1).get
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2015).navigate(NormalMode, userAnswers).url
 
@@ -58,7 +58,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
       "next page should be journey recovery if tax year is before pre remedy window" in {
         val userAnswers =
-          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period.Year(2012)), BigInt(1)).get
+          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period.Year(2012)), 1).get
 
         val nextPageUrl =
           preaaquestions.PIAPreRemedyPage(Period.Year(2012)).navigate(NormalMode, userAnswers).url
@@ -68,7 +68,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
       "next page should be JourneyRecovery if tax year is after pre remedy window" in {
         val userAnswers =
-          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2016PreAlignment), BigInt(1)).get
+          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2016PreAlignment), 1).get
 
         val nextPageUrl =
           preaaquestions.PIAPreRemedyPage(Period._2016PreAlignment).navigate(NormalMode, userAnswers).url
@@ -80,7 +80,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
     "check mode navigation" - {
 
       "next page should be CheckYourAnswers if the user answers contains data for the relevant year" in {
-        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1)).get
+        val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2013), 1).get
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2013).navigate(CheckMode, userAnswers).url
 

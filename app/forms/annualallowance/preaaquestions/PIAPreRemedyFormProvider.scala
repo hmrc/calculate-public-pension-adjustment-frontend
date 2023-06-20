@@ -22,13 +22,13 @@ import play.api.data.Form
 
 class PIAPreRemedyFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(): Form[Int] =
     Form(
-      "value" -> bigInt(
+      "value" -> int(
         "pIAPreRemedy.error.required",
         "pIAPreRemedy.error.wholeNumber",
         "pIAPreRemedy.error.nonNumeric"
       )
-        .verifying(inRange[BigInt](0, BigInt("100000000"), "pIAPreRemedy.error.outOfRange"))
+        .verifying(inRange[Int](0, 999999999, "pIAPreRemedy.error.outOfRange"))
     )
 }

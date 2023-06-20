@@ -23,7 +23,7 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class PIAPreRemedyPage(period: Period) extends QuestionPage[BigInt] {
+case class PIAPreRemedyPage(period: Period) extends QuestionPage[Int] {
 
   override def path: JsPath = JsPath \ period.toString \ toString
 
