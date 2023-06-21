@@ -31,7 +31,7 @@ class AdjustedIncomePageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "to CYA page when answered" in {
+      "to TotalIncome page when answered" in {
         val ua = emptyUserAnswers
           .set(
             AdjustedIncomePage(Period._2013, SchemeIndex(0)),
@@ -39,7 +39,7 @@ class AdjustedIncomePageSpec extends PageBehaviours {
           ).success.value
         val result = AdjustedIncomePage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers-period/2013")
+        checkNavigation(result, "/totalIncome/2013/0")
       }
     }
 

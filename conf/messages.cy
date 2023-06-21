@@ -538,3 +538,12 @@ adjustedIncome.error.required = cy: Enter your adjustedIncome
 adjustedIncome.error.wholeNumber = cy: Enter your adjustedIncome using whole numbers
 adjustedIncome.error.outOfRange = cy: AdjustedIncome must be between {0} and {1}
 adjustedIncome.change.hidden = cy: What was your adjusted income?
+
+totalIncome.title = cy: What was your total income?
+totalIncome.heading = cy: What was your total income?
+totalIncome.checkYourAnswersLabel = cy: What was your total income?
+totalIncome.error.nonNumeric = cy: Enter your totalIncome using numbers
+totalIncome.error.required = cy: Enter your totalIncome
+totalIncome.error.wholeNumber = cy: Enter your totalIncome using whole numbers
+totalIncome.error.outOfRange = cy: TotalIncome must be between {0} and {1}
+totalIncome.change.hidden = cy: What was your total income?
