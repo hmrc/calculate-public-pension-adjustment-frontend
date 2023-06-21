@@ -49,7 +49,7 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/which-scheme/2018/2")
+      checkNavigation(nextPageUrl, "/which-scheme-details/2018/2")
     }
 
     "when answer no then onward navigation" in {
