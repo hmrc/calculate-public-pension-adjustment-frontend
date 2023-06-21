@@ -37,10 +37,16 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("howMuchAAChargeSchemePaid.heading", period, schemeIndex)).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("howMuchAAChargeSchemePaid.heading"),
+                    caption = messages("annualAllowance.period.caption." + period)
+                )
             )
             .asNumeric()
             .withWidth(Fixed10)
+            .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
+            .withHint(HintViewModel(messages("howMuchAAChargeSchemePaid.hint")))
         )
 
         @govukButton(

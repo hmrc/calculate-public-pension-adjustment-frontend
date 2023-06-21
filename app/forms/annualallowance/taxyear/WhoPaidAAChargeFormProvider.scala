@@ -17,15 +17,15 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
-import models.WhoPaidAACharge
+import models.{Period, WhoPaidAACharge}
 import play.api.data.Form
 
 import javax.inject.Inject
 
 class WhoPaidAAChargeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[WhoPaidAACharge] =
+  def apply(period: Period): Form[WhoPaidAACharge] =
     Form(
-      "value" -> enumerable[WhoPaidAACharge]("whoPaidAACharge.error.required")
+      "value" -> enumerable[WhoPaidAACharge]("whoPaidAACharge.error.required." + period)
     )
 }

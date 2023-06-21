@@ -23,13 +23,13 @@ import javax.inject.Inject
 
 class HowMuchAAChargeSchemePaidFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Int] =
+  def apply(): Form[BigInt] =
     Form(
-      "value" -> int(
+      "value" -> bigInt(
         "howMuchAAChargeSchemePaid.error.required",
         "howMuchAAChargeSchemePaid.error.wholeNumber",
         "howMuchAAChargeSchemePaid.error.nonNumeric"
       )
-        .verifying(inRange(0, Int.MaxValue, "howMuchAAChargeSchemePaid.error.outOfRange"))
+        .verifying(inRange[BigInt](0, BigInt("999999999"), "howMuchAAChargeSchemePaid.error.outOfRange"))
     )
 }

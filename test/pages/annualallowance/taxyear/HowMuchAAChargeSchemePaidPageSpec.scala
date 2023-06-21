@@ -23,10 +23,10 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
 
   "HowMuchAAChargeSchemePaidPage" - {
 
-    beRetrievable[Int](HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)))
+    beRetrievable[BigInt](HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)))
 
-    beSettable[Int](HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)))
+    beSettable[BigInt](HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)))
 
-    beRemovable[Int](HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)))
+    beRemovable[BigInt](HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)))
   }
 }
