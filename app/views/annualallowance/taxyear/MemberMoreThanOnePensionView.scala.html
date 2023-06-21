@@ -24,7 +24,7 @@
 
 @(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("memberMoreThanOnePension.title", period))) {
+@layout(pageTitle = title(form, messages("memberMoreThanOnePension.title"))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.MemberMoreThanOnePensionController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -35,9 +35,34 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("memberMoreThanOnePension.heading", period)).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("memberMoreThanOnePension.heading"),
+                    caption = HmrcSectionCaption(messages("periodDateRangeAA.caption") + " " + (messages("periodDateRangeAA." + period)))
+                    )
+                )
             )
-        )
+
+        <p class="govuk-body">@messages("memberMoreThanOnePension.message1")</p>
+
+        <ul class="govuk-body">
+
+            <li>
+                @messages("memberMoreThanOnePension.list1")
+            </li>
+
+            <li>
+                @messages("memberMoreThanOnePension.list2")
+            </li>
+
+            <li>
+                @messages("memberMoreThanOnePension.list3")
+            </li>
+
+            <li>
+                @messages("memberMoreThanOnePension.list4")
+            </li>
+
+        </ul>
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))
