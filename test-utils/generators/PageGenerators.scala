@@ -24,6 +24,9 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryTotalIncomePage: Arbitrary[TotalIncomePage.type] =
+    Arbitrary(TotalIncomePage)
+
   implicit lazy val arbitraryAdjustedIncomePage: Arbitrary[AdjustedIncomePage.type] =
     Arbitrary(AdjustedIncomePage)
 

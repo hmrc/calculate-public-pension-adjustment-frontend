@@ -235,3 +235,8 @@ GET        /adjustedIncome/:period/:schemeIndex                  controllers.ann
 POST       /adjustedIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
 GET        /changeAdjustedIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.AdjustedIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 POST       /changeAdjustedIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+
+GET        /totalIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST       /totalIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET        /changeTotalIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST       /changeTotalIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
