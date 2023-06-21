@@ -37,7 +37,7 @@ import scala.concurrent.Future
 class AdjustedIncomeControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new AdjustedIncomeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -60,14 +60,18 @@ class AdjustedIncomeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form, NormalMode, Period._2013, SchemeIndex(0)
+          form,
+          NormalMode,
+          Period._2013,
+          SchemeIndex(0)
         )(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(AdjustedIncomePage(Period._2013, SchemeIndex(0)), validAnswer).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(AdjustedIncomePage(Period._2013, SchemeIndex(0)), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -79,7 +83,10 @@ class AdjustedIncomeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -123,8 +130,9 @@ class AdjustedIncomeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(
-          boundForm, NormalMode, Period._2013, SchemeIndex(0))(request, messages(application)
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2013, SchemeIndex(0))(
+          request,
+          messages(application)
         ).toString
       }
     }

@@ -37,7 +37,7 @@ import scala.concurrent.Future
 class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new TotalIncomeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -59,13 +59,17 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[TotalIncomeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(TotalIncomePage(Period._2013, SchemeIndex(0)), validAnswer).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(TotalIncomePage(Period._2013, SchemeIndex(0)), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -78,7 +82,10 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(validAnswer), NormalMode, Period._2013, SchemeIndex(0)
+          form.fill(validAnswer),
+          NormalMode,
+          Period._2013,
+          SchemeIndex(0)
         )(request, messages(application)).toString
       }
     }
@@ -122,7 +129,10 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual BAD_REQUEST
         contentAsString(result) mustEqual view(
-          boundForm, NormalMode, Period._2013, SchemeIndex(0)
+          boundForm,
+          NormalMode,
+          Period._2013,
+          SchemeIndex(0)
         )(request, messages(application)).toString
       }
     }

@@ -26,19 +26,19 @@ import viewmodels.implicits._
 
 object AdjustedIncomeSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(AdjustedIncomePage(period, schemeIndex)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key = "adjustedIncome.checkYourAnswersLabel",
-          value = ValueViewModel(answer.toString),
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              AdjustedIncomeController.onPageLoad(CheckMode, period, schemeIndex).url
-            ).withVisuallyHiddenText(messages("adjustedIncome.change.hidden"))
-          )
+  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(AdjustedIncomePage(period, schemeIndex)).map { answer =>
+      SummaryListRowViewModel(
+        key = "adjustedIncome.checkYourAnswersLabel",
+        value = ValueViewModel(answer.toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            AdjustedIncomeController.onPageLoad(CheckMode, period, schemeIndex).url
+          ).withVisuallyHiddenText(messages("adjustedIncome.change.hidden"))
         )
+      )
     }
 }

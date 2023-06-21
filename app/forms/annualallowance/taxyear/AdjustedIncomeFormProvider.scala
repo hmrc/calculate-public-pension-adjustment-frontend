@@ -28,7 +28,8 @@ class AdjustedIncomeFormProvider @Inject() extends Mappings {
       "value" -> int(
         "adjustedIncome.error.required",
         "adjustedIncome.error.wholeNumber",
-        "adjustedIncome.error.nonNumeric")
-          .verifying(inRange(0, 10000000, "adjustedIncome.error.outOfRange"))
+        "adjustedIncome.error.nonNumeric"
+      )
+        .verifying(inRange(0, 10000000, "adjustedIncome.error.outOfRange"))
     )
 }

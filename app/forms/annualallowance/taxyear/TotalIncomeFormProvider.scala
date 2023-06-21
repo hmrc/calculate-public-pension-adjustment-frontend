@@ -25,10 +25,7 @@ class TotalIncomeFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Int] =
     Form(
-      "value" -> int(
-        "totalIncome.error.required",
-        "totalIncome.error.wholeNumber",
-        "totalIncome.error.nonNumeric")
-          .verifying(inRange(0, 10000000, "totalIncome.error.outOfRange"))
+      "value" -> int("totalIncome.error.required", "totalIncome.error.wholeNumber", "totalIncome.error.nonNumeric")
+        .verifying(inRange(0, 10000000, "totalIncome.error.outOfRange"))
     )
 }

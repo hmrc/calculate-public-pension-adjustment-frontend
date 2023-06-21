@@ -29,42 +29,42 @@ import views.html.annualallowance.taxyear.AdjustedIncomeView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class AdjustedIncomeController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: AdjustedIncomeFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: AdjustedIncomeView
-                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class AdjustedIncomeController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: AdjustedIncomeFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: AdjustedIncomeView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-
+  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+    (identify andThen getData andThen requireData) { implicit request =>
       val preparedForm = request.userAnswers.get(AdjustedIncomePage(period, schemeIndex)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
       Ok(view(preparedForm, mode, period, schemeIndex))
-  }
+    }
 
-  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(AdjustedIncomePage(period, schemeIndex), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(AdjustedIncomePage(period, schemeIndex).navigate(mode, updatedAnswers))
-      )
-  }
+  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+    (identify andThen getData andThen requireData).async { implicit request =>
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(AdjustedIncomePage(period, schemeIndex), value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(AdjustedIncomePage(period, schemeIndex).navigate(mode, updatedAnswers))
+        )
+    }
 }

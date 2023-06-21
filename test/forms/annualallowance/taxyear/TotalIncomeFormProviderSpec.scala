@@ -41,15 +41,15 @@ class TotalIncomeFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "totalIncome.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "totalIncome.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "totalIncome.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
       form,
       fieldName,
-      minimum       = minimum,
-      maximum       = maximum,
+      minimum = minimum,
+      maximum = maximum,
       expectedError = FormError(fieldName, "totalIncome.error.outOfRange", Seq(minimum, maximum))
     )
 
