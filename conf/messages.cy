@@ -529,3 +529,12 @@ ltaPensionSchemeDetails.Reference.change.hidden = cy: Pension scheme tax referen
 ltaPensionSchemeDetails.error.name.required = cy: Enter the name of the pension scheme that paid the tax charge
 ltaPensionSchemeDetails.error.taxRef.required = cy: Enter the pension scheme tax reference of the scheme that paid the tax charge
 ltaPensionSchemeDetails.taxRef.invalid = cy: Enter your pension tax reference in the format 00348916RT
+
+adjustedIncome.title = cy: What was your adjusted income?
+adjustedIncome.heading = cy: What was your adjusted income?
+adjustedIncome.checkYourAnswersLabel = cy: What was your adjusted income?
+adjustedIncome.error.nonNumeric = cy: Enter your adjustedIncome using numbers
+adjustedIncome.error.required = cy: Enter your adjustedIncome
+adjustedIncome.error.wholeNumber = cy: Enter your adjustedIncome using whole numbers
+adjustedIncome.error.outOfRange = cy: AdjustedIncome must be between {0} and {1}
+adjustedIncome.change.hidden = cy: What was your adjusted income?
