@@ -230,3 +230,8 @@ GET        /scheme-paid-extra-lta-charge                                     con
 POST       /scheme-paid-extra-lta-charge                                     controllers.lifetimeallowance.LtaPensionSchemeDetailsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-scheme-paid-extra-lta-charge                              controllers.lifetimeallowance.LtaPensionSchemeDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-scheme-paid-extra-lta-charge                              controllers.lifetimeallowance.LtaPensionSchemeDetailsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /adjustedIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.AdjustedIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST       /adjustedIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET        /changeAdjustedIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.AdjustedIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST       /changeAdjustedIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
