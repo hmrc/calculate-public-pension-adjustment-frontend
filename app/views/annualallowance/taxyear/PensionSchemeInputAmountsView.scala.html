@@ -40,6 +40,7 @@
     <br/>
     @messages("pensionSchemeInputAmounts.revisedPIA.hint2")
 }
+
 @layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", period, schemeIndex))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController.onSubmit(mode, period, schemeIndex), 'autoComplete -> "off") {

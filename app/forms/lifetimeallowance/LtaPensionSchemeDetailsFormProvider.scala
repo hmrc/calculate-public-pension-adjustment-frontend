@@ -20,13 +20,10 @@ import forms.mappings.Mappings
 import models.LtaPensionSchemeDetails
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.validation.{Constraint, Invalid, Valid}
 
 import javax.inject.Inject
 
 class LtaPensionSchemeDetailsFormProvider @Inject() extends Mappings {
-
-  private val pattern: String = """(\d{8})[A-Z]{2}"""
 
   def apply(): Form[LtaPensionSchemeDetails] = Form(
     mapping(

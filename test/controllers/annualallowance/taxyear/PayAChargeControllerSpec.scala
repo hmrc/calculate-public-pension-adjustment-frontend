@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import controllers.routes
 import forms.annualallowance.taxyear.PayAChargeFormProvider
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,6 +43,11 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
   lazy val payAChargeRoute =
     controllers.annualallowance.taxyear.routes.PayAChargeController
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
+      .url
+
+  lazy val payAChargeCheckRoute =
+    controllers.annualallowance.taxyear.routes.PayAChargeController
+      .onPageLoad(CheckMode, Period._2018, SchemeIndex(0))
       .url
 
   "PayACharge Controller" - {
@@ -87,7 +92,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when valid data is submitted in Normal Mode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -115,6 +120,70 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual PayAChargePage(Period._2018, SchemeIndex(0))
           .navigate(NormalMode, userAnswers.get)
+          .url
+      }
+    }
+
+    "must redirect to the next page when valid data is submitted in Check Mode when true" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, payAChargeCheckRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val userAnswers = emptyUserAnswers
+          .set(PayAChargePage(Period._2018, SchemeIndex(0)), true)
+          .get
+          .set(MemberMoreThanOnePensionPage(Period._2018), false)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual PayAChargePage(Period._2018, SchemeIndex(0))
+          .navigate(CheckMode, userAnswers.get)
+          .url
+      }
+    }
+
+    "must redirect to the next page when valid data is submitted in Check Mode when false" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, payAChargeCheckRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val userAnswers = emptyUserAnswers
+          .set(PayAChargePage(Period._2018, SchemeIndex(0)), false)
+          .get
+          .set(MemberMoreThanOnePensionPage(Period._2018), false)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual PayAChargePage(Period._2018, SchemeIndex(0))
+          .navigate(CheckMode, userAnswers.get)
           .url
       }
     }

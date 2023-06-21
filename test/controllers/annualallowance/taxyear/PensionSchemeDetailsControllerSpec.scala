@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import controllers.routes
 import forms.annualallowance.taxyear.PensionSchemeDetailsFormProvider
-import models.{NormalMode, PensionSchemeDetails, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -44,6 +44,11 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
   lazy val pensionSchemeDetailsRoute =
     controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
+      .url
+
+  lazy val pensionSchemeDetailsCheckRoute =
+    controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
+      .onPageLoad(CheckMode, Period._2018, SchemeIndex(0))
       .url
 
   val userAnswers = UserAnswers(
@@ -109,7 +114,7 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when valid data is submitted in Normal Mode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -138,6 +143,38 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))
           .navigate(NormalMode, userAnswers.get)
+          .url
+      }
+    }
+
+    "must redirect to the next page when valid data is submitted in Check Mode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, pensionSchemeDetailsCheckRoute)
+            .withFormUrlEncodedBody(("schemeName", "value 1"), ("schemeTaxRef", "12345678RL"))
+
+        val userAnswers =
+          emptyUserAnswers.set(
+            PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)),
+            PensionSchemeDetails("schemeName", "12345678RL")
+          )
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2018)
           .url
       }
     }
