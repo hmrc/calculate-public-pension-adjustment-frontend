@@ -50,7 +50,9 @@ class CheckYourAAPeriodAnswersController @Inject() (
           HowMuchAAChargeYouPaidSummary.row(request.userAnswers, period, index),
           HowMuchAAChargeSchemePaidSummary.row(request.userAnswers, period, index),
           OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period, index),
-          ThresholdIncomeSummary.row(request.userAnswers, period, index)
+          ThresholdIncomeSummary.row(request.userAnswers, period, index),
+          AdjustedIncomeSummary.row(request.userAnswers, period, index),
+          TotalIncomeSummary.row(request.userAnswers, period, index)
         )
       )
 

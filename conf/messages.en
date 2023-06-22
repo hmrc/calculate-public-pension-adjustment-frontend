@@ -572,3 +572,21 @@ ltaPensionSchemeDetails.Reference.change.hidden = Pension scheme tax reference
 ltaPensionSchemeDetails.error.name.required = Enter the name of the pension scheme that paid the lifetime allowance charge
 ltaPensionSchemeDetails.error.taxRef.required = Enter the pension scheme tax reference of the scheme that paid the lifetime allowance charge
 ltaPensionSchemeDetails.taxRef.invalid = Enter your pension tax reference in the format 00348916RT
+
+adjustedIncome.title = What was your adjusted income?
+adjustedIncome.heading = What was your adjusted income?
+adjustedIncome.checkYourAnswersLabel = What was your adjusted income?
+adjustedIncome.error.nonNumeric = Enter your adjustedIncome using numbers
+adjustedIncome.error.required = Enter your adjustedIncome
+adjustedIncome.error.wholeNumber = Enter your adjustedIncome using whole numbers
+adjustedIncome.error.outOfRange = AdjustedIncome must be between {0} and {1}
+adjustedIncome.change.hidden = What was your adjusted income?
+
+totalIncome.title = What was your total income?
+totalIncome.heading = What was your total income?
+totalIncome.checkYourAnswersLabel = What was your total income?
+totalIncome.error.nonNumeric = Enter your totalIncome using numbers
+totalIncome.error.required = Enter your totalIncome
+totalIncome.error.wholeNumber = Enter your totalIncome using whole numbers
+totalIncome.error.outOfRange = TotalIncome must be between {0} and {1}
+totalIncome.change.hidden = What was your total income?

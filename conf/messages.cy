@@ -573,3 +573,20 @@ ltaPensionSchemeDetails.error.name.required = cy: Enter the name of the pension 
 ltaPensionSchemeDetails.error.taxRef.required = cy: Enter the pension scheme tax reference of the scheme that paid the tax charge
 ltaPensionSchemeDetails.taxRef.invalid = cy: Enter your pension tax reference in the format 00348916RT
 
+adjustedIncome.title = cy: What was your adjusted income?
+adjustedIncome.heading = cy: What was your adjusted income?
+adjustedIncome.checkYourAnswersLabel = cy: What was your adjusted income?
+adjustedIncome.error.nonNumeric = cy: Enter your adjustedIncome using numbers
+adjustedIncome.error.required = cy: Enter your adjustedIncome
+adjustedIncome.error.wholeNumber = cy: Enter your adjustedIncome using whole numbers
+adjustedIncome.error.outOfRange = cy: AdjustedIncome must be between {0} and {1}
+adjustedIncome.change.hidden = cy: What was your adjusted income?
+
+totalIncome.title = cy: What was your total income?
+totalIncome.heading = cy: What was your total income?
+totalIncome.checkYourAnswersLabel = cy: What was your total income?
+totalIncome.error.nonNumeric = cy: Enter your totalIncome using numbers
+totalIncome.error.required = cy: Enter your totalIncome
+totalIncome.error.wholeNumber = cy: Enter your totalIncome using whole numbers
+totalIncome.error.outOfRange = cy: TotalIncome must be between {0} and {1}
+totalIncome.change.hidden = cy: What was your total income?
