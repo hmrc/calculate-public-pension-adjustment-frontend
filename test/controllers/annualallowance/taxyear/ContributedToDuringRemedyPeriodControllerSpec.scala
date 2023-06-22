@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPeriodController
+import controllers.routes
 import forms.annualallowance.taxyear.ContributedToDuringRemedyPeriodFormProvider
 import models.Period._2013
-import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{ContributedToDuringRemedyPeriod, NormalMode, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar

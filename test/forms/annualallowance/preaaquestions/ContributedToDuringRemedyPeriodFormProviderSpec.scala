@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package forms
+package forms.annualallowance.preaaquestions
 
 import forms.annualallowance.taxyear.ContributedToDuringRemedyPeriodFormProvider
 import forms.behaviours.CheckboxFieldBehaviours

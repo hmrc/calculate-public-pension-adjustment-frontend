@@ -24,6 +24,9 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryDefinedContributionAmountPage: Arbitrary[DefinedContributionAmountPage.type] =
+    Arbitrary(DefinedContributionAmountPage)
+
   implicit lazy val arbitraryContributedToDuringRemedyPeriodPage: Arbitrary[ContributedToDuringRemedyPeriodPage.type] =
     Arbitrary(ContributedToDuringRemedyPeriodPage)
 

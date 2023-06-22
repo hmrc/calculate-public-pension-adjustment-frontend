@@ -235,3 +235,8 @@ GET        /contributedToDuringRemedyPeriod/:period/:schemeIndex                
 POST       /contributedToDuringRemedyPeriod/:period/:schemeIndex                        controllers.annualallowance.taxyear.ContributedToDuringRemedyPeriodController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
 GET        /changeContributedToDuringRemedyPeriod/:period/:schemeIndex                  controllers.annualallowance.taxyear.ContributedToDuringRemedyPeriodController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 POST       /changeContributedToDuringRemedyPeriod/:period/:schemeIndex                  controllers.annualallowance.taxyear.ContributedToDuringRemedyPeriodController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+
+GET        /definedContributionAmount/:period/:schemeIndex                  controllers.annualallowance.taxyear.DefinedContributionAmountController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST       /definedContributionAmount/:period/:schemeIndex                  controllers.annualallowance.taxyear.DefinedContributionAmountController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET        /changeDefinedContributionAmount/:period/:schemeIndex            controllers.annualallowance.taxyear.DefinedContributionAmountController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST       /changeDefinedContributionAmount/:period/:schemeIndex            controllers.annualallowance.taxyear.DefinedContributionAmountController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)

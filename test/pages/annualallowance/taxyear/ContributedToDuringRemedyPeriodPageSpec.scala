@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package pages
+package pages.annualallowance.taxyear
 
 import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period, SchemeIndex}
-import pages.annualallowance.taxyear.ContributedToDuringRemedyPeriodPage
 import pages.behaviours.PageBehaviours
 
 class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
