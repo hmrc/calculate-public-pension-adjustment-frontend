@@ -17,53 +17,58 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.routes
+import forms.lifetimeallowance.LtaPensionSchemeDetailsFormProvider
+import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import forms.lifetimeallowance.SchemeNameAndTaxRefFormProvider
-import models.{CheckMode, NormalMode, SchemeNameAndTaxRef, UserAnswers}
+import models.{CheckMode, LtaPensionSchemeDetails, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.SchemeNameAndTaxRefPage
+import pages.lifetimeallowance.LtaPensionSchemeDetailsPage
 import play.api.inject.bind
+import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.lifetimeallowance.SchemeNameAndTaxRefView
+import views.html.lifetimeallowance.LtaPensionSchemeDetailsView
 
 import scala.concurrent.Future
 
-class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
+class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new SchemeNameAndTaxRefFormProvider()
+  lazy val normalRoute = ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode).url
+  lazy val checkRoute  = ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode).url
+
+  val formProvider = new LtaPensionSchemeDetailsFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
+  lazy val ltaPensionSchemeDetailsRoute = routes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode).url
 
-  lazy val schemeNameAndTaxRefRoute =
-    controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
+  val userAnswers = UserAnswers(
+    userAnswersId,
+    Json.obj(
+      LtaPensionSchemeDetailsPage.toString -> Json.obj(
+        "name"   -> "value1",
+        "taxRef" -> "00348916RT"
+      )
+    )
+  )
 
-  lazy val schemeNameAndTaxRefCheckRoute =
-    controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
-
-  private val validAnswer = SchemeNameAndTaxRef("Some scheme", "00348916RT")
-
-  "SchemeNameAndTaxRef Controller" - {
+  "LtaPensionSchemeDetails Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, schemeNameAndTaxRefRoute)
+        val request = FakeRequest(GET, normalRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[SchemeNameAndTaxRefView]
+        val view = application.injector.instanceOf[LtaPensionSchemeDetailsView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -74,8 +79,8 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers = UserAnswers(userAnswersId)
         .set(
-          SchemeNameAndTaxRefPage,
-          SchemeNameAndTaxRef("someSchemeName", "someSchemeTaxRef")
+          LtaPensionSchemeDetailsPage,
+          LtaPensionSchemeDetails("someSchemeName", "00348916RT")
         )
         .success
         .value
@@ -83,15 +88,15 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, schemeNameAndTaxRefRoute)
+        val request = FakeRequest(GET, normalRoute)
 
-        val view = application.injector.instanceOf[SchemeNameAndTaxRefView]
+        val view = application.injector.instanceOf[LtaPensionSchemeDetailsView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(SchemeNameAndTaxRef("someSchemeName", "someSchemeTaxRef")),
+          form.fill(LtaPensionSchemeDetails("someSchemeName", "00348916RT")),
           NormalMode
         )(request, messages(application)).toString
       }
@@ -112,22 +117,19 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, schemeNameAndTaxRefRoute)
+          FakeRequest(POST, normalRoute)
             .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(SchemeNameAndTaxRefPage, validAnswer).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual SchemeNameAndTaxRefPage
-          .navigate(NormalMode, expectedAnswers)
-          .url
-
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
       }
     }
 
-    "must redirect to the next page when valid data is CheckMode" in {
+    "must redirect to the CheckYourLTAAnswers page when valid data is submitted in CheckMode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -142,7 +144,7 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, schemeNameAndTaxRefCheckRoute)
+          FakeRequest(POST, checkRoute)
             .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
 
         val result = route(application, request).value
@@ -151,7 +153,6 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
         redirectLocation(
           result
         ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
-
       }
     }
 
@@ -161,12 +162,12 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, schemeNameAndTaxRefRoute)
-            .withFormUrlEncodedBody(("value", ""))
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = form.bind(Map("value" -> ""))
+        val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[SchemeNameAndTaxRefView]
+        val view = application.injector.instanceOf[LtaPensionSchemeDetailsView]
 
         val result = route(application, request).value
 
@@ -180,12 +181,12 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, schemeNameAndTaxRefRoute)
+        val request = FakeRequest(GET, normalRoute)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
@@ -195,13 +196,13 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, schemeNameAndTaxRefRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("Name", "value 1"), ("Reference", "value 2"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
       }
     }
   }

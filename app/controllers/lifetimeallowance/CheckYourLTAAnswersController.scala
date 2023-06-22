@@ -52,7 +52,10 @@ class CheckYourLTAAnswersController @Inject() (
       ExcessLifetimeAllowancePaidSummary.row(request.userAnswers),
       LifetimeAllowanceChargeAmountSummary.row(request.userAnswers),
       WhoPaidLTAChargeSummary.row(request.userAnswers),
-      SchemeNameAndTaxRefSummary.row(request.userAnswers)
+      SchemeNameAndTaxRefSummary.row(request.userAnswers),
+      ValueNewLtaChargeSummary.row(request.userAnswers),
+      WhoPayingExtraLtaChargeSummary.row(request.userAnswers),
+      LtaPensionSchemeDetailsSummary.row(request.userAnswers)
     )
 
     Ok(

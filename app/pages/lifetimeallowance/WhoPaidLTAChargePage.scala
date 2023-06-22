@@ -16,10 +16,14 @@
 
 package pages.lifetimeallowance
 
+import models.WhoPaidLTACharge.You
+import models.WhoPaidLTACharge.PensionScheme
 import models.{CheckMode, NormalMode, UserAnswers, WhoPaidLTACharge}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object WhoPaidLTAChargePage extends QuestionPage[WhoPaidLTACharge] {
 
@@ -30,7 +34,8 @@ case object WhoPaidLTAChargePage extends QuestionPage[WhoPaidLTACharge] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(WhoPaidLTAChargePage) match {
     case Some(WhoPaidLTACharge.PensionScheme) =>
       controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(NormalMode)
-    case Some(WhoPaidLTACharge.You)           => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+    case Some(WhoPaidLTACharge.You)           =>
+      controllers.lifetimeallowance.routes.ValueNewLtaChargeController.onPageLoad(NormalMode)
     case _                                    => controllers.routes.JourneyRecoveryController.onPageLoad()
   }
 
@@ -40,5 +45,13 @@ case object WhoPaidLTAChargePage extends QuestionPage[WhoPaidLTACharge] {
     case Some(WhoPaidLTACharge.You)           => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
     case _                                    => controllers.routes.JourneyRecoveryController.onPageLoad()
   }
+
+  override def cleanup(value: Option[WhoPaidLTACharge], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case PensionScheme => super.cleanup(value, userAnswers)
+        case You           => userAnswers.remove(SchemeNameAndTaxRefPage)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 
 }

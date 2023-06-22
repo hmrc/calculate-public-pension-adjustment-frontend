@@ -17,21 +17,15 @@
 package forms.lifetimeallowance
 
 import forms.mappings.Mappings
-import javax.inject.Inject
-import models.SchemeNameAndTaxRef
+import models.WhoPayingExtraLtaCharge
 import play.api.data.Form
-import play.api.data.Forms.mapping
-import play.api.data.validation.{Constraint, Invalid, Valid}
 
-class SchemeNameAndTaxRefFormProvider @Inject() extends Mappings {
+import javax.inject.Inject
 
-  private val pattern: String = """(\d{8})[A-Z]{2}"""
+class WhoPayingExtraLtaChargeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[SchemeNameAndTaxRef] = Form(
-    mapping(
-      "name"   -> text("schemeNameAndTaxRef.name.error.required")
-        .verifying(maxLength(100, "schemeNameAndTaxRef.name.error.length")),
-      "taxRef" -> pstr("schemeNameAndTaxRef.taxRef.error.required", "schemeNameAndTaxRef.taxRef.invalid")
-    )(SchemeNameAndTaxRef.apply)(SchemeNameAndTaxRef.unapply)
-  )
+  def apply(): Form[WhoPayingExtraLtaCharge] =
+    Form(
+      "value" -> enumerable[WhoPayingExtraLtaCharge]("whoPayingExtraLtaCharge.error.required")
+    )
 }

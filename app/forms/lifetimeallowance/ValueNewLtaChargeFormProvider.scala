@@ -17,21 +17,19 @@
 package forms.lifetimeallowance
 
 import forms.mappings.Mappings
-import javax.inject.Inject
-import models.SchemeNameAndTaxRef
 import play.api.data.Form
-import play.api.data.Forms.mapping
-import play.api.data.validation.{Constraint, Invalid, Valid}
 
-class SchemeNameAndTaxRefFormProvider @Inject() extends Mappings {
+import javax.inject.Inject
 
-  private val pattern: String = """(\d{8})[A-Z]{2}"""
+class ValueNewLtaChargeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[SchemeNameAndTaxRef] = Form(
-    mapping(
-      "name"   -> text("schemeNameAndTaxRef.name.error.required")
-        .verifying(maxLength(100, "schemeNameAndTaxRef.name.error.length")),
-      "taxRef" -> pstr("schemeNameAndTaxRef.taxRef.error.required", "schemeNameAndTaxRef.taxRef.invalid")
-    )(SchemeNameAndTaxRef.apply)(SchemeNameAndTaxRef.unapply)
-  )
+  def apply(): Form[BigInt] =
+    Form(
+      "value" -> bigInt(
+        "valueNewLtaCharge.error.required",
+        "valueNewLtaCharge.error.wholeNumber",
+        "valueNewLtaCharge.error.nonNumeric"
+      )
+        .verifying(inRange[BigInt](0, BigInt("999999999"), "valueNewLtaCharge.error.outOfRange"))
+    )
 }

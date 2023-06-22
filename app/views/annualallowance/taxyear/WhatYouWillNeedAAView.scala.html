@@ -14,17 +14,69 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.newtablinkhelper.NewTabLinkHelper
+
 @this(
         layout: templates.Layout,
         formHelper: FormWithCSRF,
-        govukButton: GovukButton
+        govukButton: GovukButton,
+        newTabLink: HmrcNewTabLinkHelper
 )
 
 @(period: Period)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("whatYouWillNeedAA.title", period))) {
+@layout(pageTitle = titleNoForm(messages("periodDateRangeAA." + period, period) + " " + messages("whatYouWillNeedAA.title"))) {
 
-    <h1 class="govuk-heading-xl">@messages("whatYouWillNeedAA.heading", period)</h1>
+    <span class="govuk-caption-xl">@messages("whatYouWillNeedAA.caption")</span>
+
+    <h1 class="govuk-heading-xl">@messages("periodDateRangeAA." + period, period) @messages("whatYouWillNeedAA.heading")</h1>
+
+    <p class="govuk-body">@messages("whatYouWillNeedAA.message1")</p>
+
+    <p class="govuk-body">@messages("whatYouWillNeedAA.message2")</p>
+
+    <p class="govuk-body">@messages("whatYouWillNeedAA.message3")</p>
+
+    <ul class="govuk-body">
+        <li>
+            @messages("whatYouWillNeedAA.list1")
+        </li>
+
+        <li>
+            @messages("whatYouWillNeedAA.list.your.start")
+            <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#threshold" rel="noreferrer noopener" target="_blank">
+                @messages("whatYouWillNeedAA.list2.link.text") <span class="govuk-visually-hidden">(opens in new tab)</span>
+            </a>
+            @messages("whatYouWillNeedAA.list2.end")
+        </li>
+
+        <li>
+            @messages("whatYouWillNeedAA.list.your.start")
+            <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#adjusted" rel="noreferrer noopener" target="_blank">
+                @messages("whatYouWillNeedAA.list3.link.text") <span class="govuk-visually-hidden">(opens in new tab)</span>
+            </a>
+            @messages("whatYouWillNeedAA.list3.end")
+        </li>
+
+        <li>
+            @messages("whatYouWillNeedAA.list.your.start")
+            <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#threshold" rel="noreferrer noopener" target="_blank">
+                @messages("whatYouWillNeedAA.list4.link.text") <span class="govuk-visually-hidden">(opens in new tab)</span>
+            </a>
+            @messages("whatYouWillNeedAA.list4.end")
+        </li>
+
+        <li>
+            @messages("whatYouWillNeedAA.list.your.start")
+            <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#adjusted" rel="noreferrer noopener" target="_blank">
+                @messages("whatYouWillNeedAA.list5.link.text") <span class="govuk-visually-hidden">(opens in new tab)</span>
+            </a>
+            @messages("whatYouWillNeedAA.list5.end")
+        </li>
+
+    </ul>
+
+    <p class="govuk-body">@messages("whatYouWillNeedAA.message4")</p>
 
  @formHelper(action = controllers.annualallowance.taxyear.routes.MemberMoreThanOnePensionController.onPageLoad(NormalMode, period), 'autoComplete -> "off") {
   @govukButton(

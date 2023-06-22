@@ -46,6 +46,15 @@ trait PageGenerators {
   implicit lazy val arbitraryWhoPaidLTAChargePage: Arbitrary[WhoPaidLTAChargePage.type] =
     Arbitrary(WhoPaidLTAChargePage)
 
+  implicit lazy val arbitraryLtaPensionSchemeDetailsPage: Arbitrary[LtaPensionSchemeDetailsPage.type] =
+    Arbitrary(LtaPensionSchemeDetailsPage)
+
+  implicit lazy val arbitraryWhoPayingExtraLtaChargePage: Arbitrary[WhoPayingExtraLtaChargePage.type] =
+    Arbitrary(WhoPayingExtraLtaChargePage)
+
+  implicit lazy val arbitraryValueNewLtaChargePage: Arbitrary[ValueNewLtaChargePage.type] =
+    Arbitrary(ValueNewLtaChargePage)
+
   implicit lazy val arbitraryProtectionReferencePage: Arbitrary[ProtectionReferencePage.type] =
     Arbitrary(ProtectionReferencePage)
 
