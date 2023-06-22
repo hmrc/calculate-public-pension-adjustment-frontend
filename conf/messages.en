@@ -472,7 +472,7 @@ pensionSchemeDetails.error.schemeTaxRef.invalid = Enter your pension tax referen
 pensionSchemeDetails.schemeName.change.hidden = What is the name and tax reference of the pension scheme?
 pensionSchemeDetails.schemeTaxRef.change.hidden = What is the name and tax reference of the pension scheme?
 
-pensionSchemeInputAmounts.title = Pension scheme input amounts
+pensionSchemeInputAmounts.title = Pension scheme {0} input amounts
 pensionSchemeInputAmounts.heading = Pension scheme {0} input amounts
 pensionSchemeInputAmounts.hint = If more than one pension scheme paid or agreed to pay the tax, you can add them later.
 pensionSchemeInputAmounts.originalPIA = What is your pension input amount?
