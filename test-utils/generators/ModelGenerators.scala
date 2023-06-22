@@ -22,6 +22,11 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryContributedToDuringRemedyPeriod: Arbitrary[ContributedToDuringRemedyPeriod] =
+    Arbitrary {
+      Gen.oneOf(ContributedToDuringRemedyPeriod.values)
+    }
+
   implicit lazy val arbitraryLtaPensionSchemeDetails: Arbitrary[LtaPensionSchemeDetails] =
     Arbitrary {
       for {
