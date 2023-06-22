@@ -528,6 +528,18 @@ schemeNameAndTaxRef.name.error.length = cy: The name of your pension scheme must
 schemeNameAndTaxRef.taxRef.invalid = cy: Enter your pension tax reference in the format 00348916RT
 schemeNameAndTaxRef.change.hidden = cy: What is the name and tax reference of the scheme that paid the lifetime allowance charge?
 
+otherDefinedBenefitOrContribution.title = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+otherDefinedBenefitOrContribution.heading = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+otherDefinedBenefitOrContribution.checkYourAnswersLabel = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+otherDefinedBenefitOrContribution.error.required = cy: Select yes if you have contributed to any other defined benefit or defined contribution schemes
+otherDefinedBenefitOrContribution.change.hidden = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+
+thresholdIncome.title = cy: Was your threshold income more than £110,000?
+thresholdIncome.heading = cy: Was your threshold income more than £110,000?
+thresholdIncome.checkYourAnswersLabel = cy: Was your threshold income more than £110,000?
+thresholdIncome.error.required = cy: Select yes if your threshold income was more than £110,000
+thresholdIncome.change.hidden = cy: Was your threshold income more than £110,000?
+
 valueNewLtaCharge.title = cy: What is the value of the new lifetime allowance charge?
 valueNewLtaCharge.heading = cy: What is the value of the new lifetime allowance charge?
 valueNewLtaCharge.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300.
@@ -560,3 +572,4 @@ ltaPensionSchemeDetails.Reference.change.hidden = cy: Pension scheme tax referen
 ltaPensionSchemeDetails.error.name.required = cy: Enter the name of the pension scheme that paid the tax charge
 ltaPensionSchemeDetails.error.taxRef.required = cy: Enter the pension scheme tax reference of the scheme that paid the tax charge
 ltaPensionSchemeDetails.taxRef.invalid = cy: Enter your pension tax reference in the format 00348916RT
+
