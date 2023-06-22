@@ -481,14 +481,14 @@ pensionSchemeInputAmounts.originalPIA.hint2 = cy: Amounts must be rounded down t
 pensionSchemeInputAmounts.revisedPIA = cy: What is your revised pension input amount?
 pensionSchemeInputAmounts.revisedPIA.hint1 = cy: Amounts must be rounded down to the nearest pound, for example 2300.
 pensionSchemeInputAmounts.checkYourAnswersLabel = cy: Pension scheme {0} input amounts
-pensionSchemeInputAmounts.error.originalPIA.required = cy: Enter an amount for pension input amount in the space provided.
-pensionSchemeInputAmounts.error.revisedPIA.required = cy: Enter an amount for revised pension input amount in the space provided.
+pensionSchemeInputAmounts.error.originalPIA.required = cy: Enter an amount for pension input amount.
+pensionSchemeInputAmounts.error.revisedPIA.required = cy: Enter an amount for revised pension input amount.
 pensionSchemeInputAmounts.error.originalPIA.wholeNumber = cy: You have not entered a whole number for your pension input amount. You cannot use decimals.
 pensionSchemeInputAmounts.error.revisedPIA.wholeNumber = cy: You have not entered a whole number for your revised pension input amount. You cannot use decimals.
 pensionSchemeInputAmounts.error.originalPIA.nonNumeric = cy: You have entered non-numerical characters for your pension input amount. You must enter numerical characters.
 pensionSchemeInputAmounts.error.revisedPIA.nonNumeric = cy: You have entered non-numerical characters for your revised pension input amount. You must enter numerical characters.
 pensionSchemeInputAmounts.error.originalPIA.length = cy: You have entered too many characters for your pension input amount. The maximum number of characters you can enter is 9.
-pensionSchemeInputAmounts.error.revisedPIA.length = cy: You have entered too many characters for your revised pension input amount. The maximum number of characters you can enter is 9.
+pensionSchemeInputAmounts.error.revisedPIA.length = cy: You have entered too many characters for your revised pension input amount. The maximum number of characters you can enter is 9.-
 pensionSchemeInputAmounts.originalPIA.change.hidden = cy:  What is your pension input amount?
 pensionSchemeInputAmounts.revisedPIA.change.hidden = cy: What is your revised pension input amount?
 
