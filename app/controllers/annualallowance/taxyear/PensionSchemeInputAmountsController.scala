@@ -50,8 +50,8 @@ class PensionSchemeInputAmountsController @Inject() (
         case None        => form
         case Some(value) => form.fill(value)
       }
-      val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
-         answer.schemeName
+      val schemeName   = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
+        answer.schemeName
       }
 
       Ok(view(preparedForm, mode, period, schemeIndex, schemeName.getOrElse("")))
@@ -66,8 +66,9 @@ class PensionSchemeInputAmountsController @Inject() (
       form
         .bindFromRequest()
         .fold(
-            formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse("")))),
-            value =>
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse("")))),
+          value =>
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(PensionSchemeInputAmountsPage(period, schemeIndex), value))

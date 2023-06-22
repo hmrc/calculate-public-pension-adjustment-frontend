@@ -32,7 +32,7 @@ class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when Yes is selected, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
@@ -45,7 +45,10 @@ class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
           key = "payACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.PayAChargeController.onPageLoad(CheckMode, period, schemeIndex).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.PayAChargeController.onPageLoad(CheckMode, period, schemeIndex).url
+            )
               .withVisuallyHiddenText("payACharge.change.hidden")
           )
         )
@@ -53,7 +56,7 @@ class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when No is selected, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
@@ -66,7 +69,10 @@ class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
           key = "payACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.PayAChargeController.onPageLoad(CheckMode, period, schemeIndex).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.PayAChargeController.onPageLoad(CheckMode, period, schemeIndex).url
+            )
               .withVisuallyHiddenText("payACharge.change.hidden")
           )
         )
@@ -75,7 +81,7 @@ class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       PayAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }

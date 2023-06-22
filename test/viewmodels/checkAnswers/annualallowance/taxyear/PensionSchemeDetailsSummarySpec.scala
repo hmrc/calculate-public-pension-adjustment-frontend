@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
-import models.{CheckMode, UserAnswers, Period, SchemeIndex}
+import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.PensionSchemeDetailsPage
@@ -33,7 +33,7 @@ class PensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when value is entered, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
@@ -46,7 +46,10 @@ class PensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
           key = "pensionSchemeDetails.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Some scheme / 08765432TR")),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.PensionSchemeDetailsController.onPageLoad(CheckMode, period, schemeIndex).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.PensionSchemeDetailsController.onPageLoad(CheckMode, period, schemeIndex).url
+            )
               .withVisuallyHiddenText("pensionSchemeDetails.change.hidden")
           )
         )
@@ -54,7 +57,7 @@ class PensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
       PensionSchemeDetailsSummary.row(userAnswers, period, schemeIndex) shouldBe None
