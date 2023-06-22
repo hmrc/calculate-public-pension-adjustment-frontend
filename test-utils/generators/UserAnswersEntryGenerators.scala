@@ -45,10 +45,10 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   implicit lazy val arbitraryWhoPayingExtraLtaChargeUserAnswersEntry
-  : Arbitrary[(WhoPayingExtraLtaChargePage.type, JsValue)] =
+    : Arbitrary[(WhoPayingExtraLtaChargePage.type, JsValue)] =
     Arbitrary {
       for {
-        page <- arbitrary[WhoPayingExtraLtaChargePage.type]
+        page  <- arbitrary[WhoPayingExtraLtaChargePage.type]
         value <- arbitrary[WhoPayingExtraLtaCharge].map(Json.toJson(_))
       } yield (page, value)
     }
@@ -56,7 +56,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
   implicit lazy val arbitraryValueNewLtaChargeUserAnswersEntry: Arbitrary[(ValueNewLtaChargePage.type, JsValue)] =
     Arbitrary {
       for {
-        page <- arbitrary[ValueNewLtaChargePage.type]
+        page  <- arbitrary[ValueNewLtaChargePage.type]
         value <- arbitrary[Int].map(Json.toJson(_))
       } yield (page, value)
     }
