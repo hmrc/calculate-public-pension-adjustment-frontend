@@ -240,3 +240,8 @@ GET        /definedContributionAmount/:period/:schemeIndex                  cont
 POST       /definedContributionAmount/:period/:schemeIndex                  controllers.annualallowance.taxyear.DefinedContributionAmountController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
 GET        /changeDefinedContributionAmount/:period/:schemeIndex            controllers.annualallowance.taxyear.DefinedContributionAmountController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 POST       /changeDefinedContributionAmount/:period/:schemeIndex            controllers.annualallowance.taxyear.DefinedContributionAmountController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+
+GET        /definedBenefitAmount/:period/:schemeIndex                  controllers.annualallowance.taxyear.DefinedBenefitAmountController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST       /definedBenefitAmount/:period/:schemeIndex                  controllers.annualallowance.taxyear.DefinedBenefitAmountController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET        /changeDefinedBenefitAmount/:period/:schemeIndex            controllers.annualallowance.taxyear.DefinedBenefitAmountController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST       /changeDefinedBenefitAmount/:period/:schemeIndex            controllers.annualallowance.taxyear.DefinedBenefitAmountController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)

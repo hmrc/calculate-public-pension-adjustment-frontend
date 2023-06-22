@@ -576,3 +576,12 @@ definedContributionAmount.error.required = Enter your definedContributionAmount
 definedContributionAmount.error.wholeNumber = Enter your definedContributionAmount using whole numbers
 definedContributionAmount.error.outOfRange = DefinedContributionAmount must be between {0} and {1}
 definedContributionAmount.change.hidden = DefinedContributionAmount
+
+definedBenefitAmount.title = DefinedBenefitAmount
+definedBenefitAmount.heading = DefinedBenefitAmount
+definedBenefitAmount.checkYourAnswersLabel = DefinedBenefitAmount
+definedBenefitAmount.error.nonNumeric = Enter your definedBenefitAmount using numbers
+definedBenefitAmount.error.required = Enter your definedBenefitAmount
+definedBenefitAmount.error.wholeNumber = Enter your definedBenefitAmount using whole numbers
+definedBenefitAmount.error.outOfRange = DefinedBenefitAmount must be between {0} and {1}
+definedBenefitAmount.change.hidden = DefinedBenefitAmount
