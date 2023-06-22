@@ -30,7 +30,6 @@ object PensionSchemeInputAmountsSummary {
   def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-
     answers.get(PensionSchemeInputAmountsPage(period, schemeIndex)).map { answer =>
       val value = HtmlContent(currencyFormat(answer.originalPIA) + " / " + currencyFormat(answer.revisedPIA))
 
@@ -39,7 +38,7 @@ object PensionSchemeInputAmountsSummary {
       }
 
       SummaryListRowViewModel(
-        key = messages("pensionSchemeInputAmounts.checkYourAnswersLabel",schemeName.get),
+        key = messages("pensionSchemeInputAmounts.checkYourAnswersLabel", schemeName.get),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
