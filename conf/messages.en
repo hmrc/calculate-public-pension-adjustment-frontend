@@ -448,7 +448,6 @@ memberMoreThanOnePension.list4 = splitting your pensions
 
 addAnotherScheme.title = Do you need to add another pension scheme?
 addAnotherScheme.heading = Do you need to add another pension scheme?
-addAnotherScheme.caption = Annual allowance {0}
 addAnotherScheme.checkYourAnswersLabel = Do you need to add another pension scheme?
 addAnotherScheme.hint = The pension scheme will be added to this summary.
 addAnotherScheme.error.required = Select yes if you need to add another pension scheme
