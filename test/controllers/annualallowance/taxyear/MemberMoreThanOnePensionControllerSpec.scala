@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import controllers.routes
 import forms.annualallowance.taxyear.MemberMoreThanOnePensionFormProvider
-import models.{NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,6 +43,11 @@ class MemberMoreThanOnePensionControllerSpec extends SpecBase with MockitoSugar 
   lazy val memberMoreThanOnePensionRoute =
     controllers.annualallowance.taxyear.routes.MemberMoreThanOnePensionController
       .onPageLoad(NormalMode, Period._2018)
+      .url
+
+  lazy val memberMoreThanOnePensionCheckRoute =
+    controllers.annualallowance.taxyear.routes.MemberMoreThanOnePensionController
+      .onPageLoad(CheckMode, Period._2018)
       .url
 
   "MemberMoreThanOnePension Controller" - {
@@ -109,6 +114,109 @@ class MemberMoreThanOnePensionControllerSpec extends SpecBase with MockitoSugar 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual MemberMoreThanOnePensionPage(Period._2018)
           .navigate(NormalMode, userAnswers.get)
+          .url
+      }
+    }
+
+    "must redirect to Pension Scheme Details Controller when user is entering first period in NormalMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val answers = emptyUserAnswers
+        .set(MemberMoreThanOnePensionPage(Period._2018), true)
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(answers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, memberMoreThanOnePensionRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
+          .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
+          .url
+      }
+    }
+
+    "must redirect to Which Scheme Controller when user is entering second or greater period" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val answers = emptyUserAnswers
+        .set(MemberMoreThanOnePensionPage(Period._2018), true)
+        .success
+        .value
+        .set(MemberMoreThanOnePensionPage(Period._2017), true)
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(answers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, memberMoreThanOnePensionRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.WhichSchemeController
+          .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
+          .url
+      }
+    }
+
+    "must redirect to Check AA Period Answers Controller when user resubmits answers from check page" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val answers = emptyUserAnswers
+        .set(MemberMoreThanOnePensionPage(Period._2018), true)
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(answers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, memberMoreThanOnePensionCheckRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
+          .onPageLoad(Period._2018)
           .url
       }
     }

@@ -398,13 +398,44 @@ lifetimeAllowanceChargeAmount.error.outOfRange = cy: You have entered too many c
 lifetimeAllowanceChargeAmount.change.hidden = cy: What was the value of your lifetime allowance charge?
 lifetimeAllowanceChargeAmount.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300.
 
-whatYouWillNeedAA.title = cy: Remedy period
-whatYouWillNeedAA.heading = cy: {0} Remedy period
+periodDateRangeAA.caption = cy: Annual allowance between
+periodDateRangeAA.2016-pre = cy: 6 April 2015 to July 8 2015
+periodDateRangeAA.2016-post = cy: 9 July 2015 to 5 April 2016
+periodDateRangeAA.2017 = cy: 6 April 2016 to 5 April 2017
+periodDateRangeAA.2018 = cy: 6 April 2017 to 5 April 2018
+periodDateRangeAA.2019 = cy: 6 April 2018 to 5 April 2019
+periodDateRangeAA.2020 = cy: 6 April 2019 to 5 April 2020
+periodDateRangeAA.2021 = cy: 6 April 2020 to 5 April 2021
+periodDateRangeAA.2022 = cy: 6 April 2021 to 5 April 2022
+periodDateRangeAA.2023 = cy: 6 April 2022 to 5 April 2023
+
+whatYouWillNeedAA.title = cy: remedy period
+whatYouWillNeedAA.heading = cy: remedy period
+whatYouWillNeedAA.caption = cy: Annual allowance
+whatYouWillNeedAA.message1 = cy: This is the most pension savings you can have each year with tax relief.
+whatYouWillNeedAA.message2 = cy: Links below will open in a new tab.
+whatYouWillNeedAA.message3 = cy: You will need to provide information about if:
+whatYouWillNeedAA.message4 = cy: You will also need to give details of any previous annual allowance charges during or after the remedy period or in 2022 to 2023 and who paid them
+whatYouWillNeedAA.list1 = cy: and when you have flexibly accessed your pension savings
+whatYouWillNeedAA.list.your.start = cy: your
+whatYouWillNeedAA.list2.link.text = cy: threshold net income is more than £110,000
+whatYouWillNeedAA.list2.end = cy: between 6 April 2016 and 5 April 2020
+whatYouWillNeedAA.list3.link.text = cy: adjusted net income is more than £150,000
+whatYouWillNeedAA.list3.end = cy: between 6 April 2016 and 5 April 2020
+whatYouWillNeedAA.list4.link.text = cy: threshold net income is more than £200,000
+whatYouWillNeedAA.list4.end = cy: between 6 April 2020 and 5 April 2023
+whatYouWillNeedAA.list5.link.text = cy: adjusted net income is more than £240,000
+whatYouWillNeedAA.list5.end = cy: between 6 April 2020 and 5 April 2023
 
 memberMoreThanOnePension.title = cy: Were you a member of more than one public service pension scheme?
-memberMoreThanOnePension.heading = cy: Were you a member of more than one public service pension scheme? {0}
+memberMoreThanOnePension.heading = cy: Were you a member of more than one public service pension scheme?
 memberMoreThanOnePension.error.required = cy: Select yes if you were a member of more than one public service pension scheme
 memberMoreThanOnePension.change.hidden = cy: Were you a member of more than one public service pension scheme?
+memberMoreThanOnePension.message1 = cy: When you may have been in more than one public pension scheme. This may have happened by:
+memberMoreThanOnePension.list1 = cy: moving jobs
+memberMoreThanOnePension.list2 = cy: having more than one job
+memberMoreThanOnePension.list3 = cy: leaving and coming back to public service work
+memberMoreThanOnePension.list4 = cy: splitting your pensions
 
 addAnotherScheme.title = cy: Do you need to add another pension scheme?
 addAnotherScheme.heading = cy: Do you need to add another pension scheme? {0} {1}
@@ -496,6 +527,18 @@ schemeNameAndTaxRef.taxRef.error.required = cy: Enter the pension scheme tax ref
 schemeNameAndTaxRef.name.error.length = cy: The name of your pension scheme must be 100 characters or less
 schemeNameAndTaxRef.taxRef.invalid = cy: Enter your pension tax reference in the format 00348916RT
 schemeNameAndTaxRef.change.hidden = cy: What is the name and tax reference of the scheme that paid the lifetime allowance charge?
+
+otherDefinedBenefitOrContribution.title = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+otherDefinedBenefitOrContribution.heading = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+otherDefinedBenefitOrContribution.checkYourAnswersLabel = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+otherDefinedBenefitOrContribution.error.required = cy: Select yes if you have contributed to any other defined benefit or defined contribution schemes
+otherDefinedBenefitOrContribution.change.hidden = cy: Have you contributed to any other defined benefit or defined contribution scheme?
+
+thresholdIncome.title = cy: Was your threshold income more than £110,000?
+thresholdIncome.heading = cy: Was your threshold income more than £110,000?
+thresholdIncome.checkYourAnswersLabel = cy: Was your threshold income more than £110,000?
+thresholdIncome.error.required = cy: Select yes if your threshold income was more than £110,000
+thresholdIncome.change.hidden = cy: Was your threshold income more than £110,000?
 
 valueNewLtaCharge.title = cy: What is the value of the new lifetime allowance charge?
 valueNewLtaCharge.heading = cy: What is the value of the new lifetime allowance charge?
