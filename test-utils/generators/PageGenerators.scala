@@ -28,7 +28,7 @@ trait PageGenerators {
     Arbitrary(ThresholdIncomePage)
 
   implicit lazy val arbitraryOtherDefinedBenefitOrContributionPage
-  : Arbitrary[OtherDefinedBenefitOrContributionPage.type] =
+    : Arbitrary[OtherDefinedBenefitOrContributionPage.type] =
     Arbitrary(OtherDefinedBenefitOrContributionPage)
 
   implicit lazy val arbitraryTotalIncomePage: Arbitrary[TotalIncomePage.type] =
