@@ -21,11 +21,8 @@ import javax.inject.Inject
 import models.SchemeNameAndTaxRef
 import play.api.data.Form
 import play.api.data.Forms.mapping
-import play.api.data.validation.{Constraint, Invalid, Valid}
 
 class SchemeNameAndTaxRefFormProvider @Inject() extends Mappings {
-
-  private val pattern: String = """(\d{8})[A-Z]{2}"""
 
   def apply(): Form[SchemeNameAndTaxRef] = Form(
     mapping(

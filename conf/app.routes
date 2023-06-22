@@ -196,10 +196,10 @@ POST        /change-did-you-pay-a-charge/:period/:schemeIndex                con
 
 GET         /add-another-scheme/:period/:schemeIndex                         controllers.annualallowance.taxyear.AddAnotherSchemeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
 POST        /add-another-scheme/:period/:schemeIndex                         controllers.annualallowance.taxyear.AddAnotherSchemeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-GET         /which-scheme/:period/:schemeIndex                               controllers.annualallowance.taxyear.WhichSchemeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-POST        /which-scheme/:period/:schemeIndex                               controllers.annualallowance.taxyear.WhichSchemeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-GET         /change-which-scheme/:period/:schemeIndex                        controllers.annualallowance.taxyear.WhichSchemeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
-POST        /change-which-scheme/:period/:schemeIndex                        controllers.annualallowance.taxyear.WhichSchemeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+GET         /which-scheme-details/:period/:schemeIndex                               controllers.annualallowance.taxyear.WhichSchemeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST        /which-scheme-details/:period/:schemeIndex                               controllers.annualallowance.taxyear.WhichSchemeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET         /change-which-scheme-details/:period/:schemeIndex                        controllers.annualallowance.taxyear.WhichSchemeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST        /change-which-scheme-details/:period/:schemeIndex                        controllers.annualallowance.taxyear.WhichSchemeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 
 GET         /who-paid-annual-allowance-charge/:period/:schemeIndex           controllers.annualallowance.taxyear.WhoPaidAAChargeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
 POST        /who-paid-annual-allowance-charge/:period/:schemeIndex           controllers.annualallowance.taxyear.WhoPaidAAChargeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)

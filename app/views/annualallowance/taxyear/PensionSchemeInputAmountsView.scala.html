@@ -15,6 +15,7 @@
  *@
 
 @import viewmodels.InputWidth._
+@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
@@ -24,9 +25,20 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", period, schemeIndex))) {
+@contentHintForOriginalPIA = {
+    @messages("pensionSchemeInputAmounts.originalPIA.hint1")
+    <br/>
+    <br/>
+    @messages("pensionSchemeInputAmounts.originalPIA.hint2")
+}
+
+@contentHintForRevisedPIA = {
+    @messages("pensionSchemeInputAmounts.revisedPIA.hint1")
+}
+
+@layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", schemeName))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController.onSubmit(mode, period, schemeIndex), 'autoComplete -> "off") {
 
@@ -34,22 +46,28 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("pensionSchemeInputAmounts.heading", period, schemeIndex)</h1>
+        <span class="govuk-caption-l">@messages("annualAllowance.period.caption."+{period.toString})</span>
+        <h1 class="govuk-heading-l">@messages("pensionSchemeInputAmounts.heading", schemeName)</h1>
+        <p class="govuk-body">@messages("pensionSchemeInputAmounts.hint")</p>
 
         @govukInput(
             InputViewModel(
                 field = form("originalPIA"),
-                label = LabelViewModel(messages("pensionSchemeInputAmounts.originalPIA", period, schemeIndex))
-            )
-            .withWidth(Full)
+                label = LabelViewModel(messages("pensionSchemeInputAmounts.originalPIA", period, schemeIndex)).asPageHeading(LabelSize.Medium)
+            ).withHint(HintViewModel(HtmlContent(contentHintForOriginalPIA)))
+            .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
+            .withWidth(Fixed10)
         )
 
         @govukInput(
             InputViewModel(
                 field = form("revisedPIA"),
-                label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA", period, schemeIndex))
-            )
-            .withWidth(Full)
+                label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA", period, schemeIndex)).asPageHeading(LabelSize.Medium)
+            ).withHint(HintViewModel(HtmlContent(contentHintForRevisedPIA)))
+            .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
+            .withWidth(Fixed10)
         )
 
         @govukButton(

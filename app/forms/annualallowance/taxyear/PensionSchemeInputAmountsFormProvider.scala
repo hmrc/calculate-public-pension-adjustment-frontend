@@ -27,10 +27,18 @@ class PensionSchemeInputAmountsFormProvider @Inject() extends Mappings {
 
   def apply(): Form[PensionSchemeInputAmounts] = Form(
     mapping(
-      "originalPIA" -> int("pensionSchemeInputAmounts.error.originalPIA.required")
-        .verifying(inRange(0, Int.MaxValue, "pensionSchemeInputAmounts.error.originalPIA.length")),
-      "revisedPIA"  -> int("pensionSchemeInputAmounts.error.revisedPIA.required")
-        .verifying(inRange(0, Int.MaxValue, "pensionSchemeInputAmounts.error.revisedPIA.length"))
+      "originalPIA" -> bigInt(
+        "pensionSchemeInputAmounts.error.originalPIA.required",
+        "pensionSchemeInputAmounts.error.originalPIA.wholeNumber",
+        "pensionSchemeInputAmounts.error.originalPIA.nonNumeric"
+      )
+        .verifying(inRange[BigInt](0, BigInt("999999999"), "pensionSchemeInputAmounts.error.originalPIA.length")),
+      "revisedPIA"  -> bigInt(
+        "pensionSchemeInputAmounts.error.revisedPIA.required",
+        "pensionSchemeInputAmounts.error.revisedPIA.wholeNumber",
+        "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric"
+      )
+        .verifying(inRange[BigInt](0, BigInt("999999999"), "pensionSchemeInputAmounts.error.revisedPIA.length"))
     )(PensionSchemeInputAmounts.apply)(PensionSchemeInputAmounts.unapply)
   )
 }

@@ -46,7 +46,7 @@ class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
         val nextUrl: String =
           MemberMoreThanOnePensionPage(Period._2016PostAlignment).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextUrl, "/which-scheme/2016-post/0")
+        checkNavigation(nextUrl, "/which-scheme-details/2016-post/0")
       }
     }
   }
