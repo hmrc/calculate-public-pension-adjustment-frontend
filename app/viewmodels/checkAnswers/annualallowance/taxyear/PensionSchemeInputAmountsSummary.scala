@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
-import pages.annualallowance.taxyear.PensionSchemeInputAmountsPage
+import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInputAmountsPage}
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -30,11 +30,16 @@ object PensionSchemeInputAmountsSummary {
   def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
+
     answers.get(PensionSchemeInputAmountsPage(period, schemeIndex)).map { answer =>
       val value = HtmlContent(currencyFormat(answer.originalPIA) + " / " + currencyFormat(answer.revisedPIA))
 
+      val schemeName = answers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
+        answer.schemeName
+      }
+
       SummaryListRowViewModel(
-        key = "pensionSchemeInputAmounts.checkYourAnswersLabel",
+        key = messages("pensionSchemeInputAmounts.checkYourAnswersLabel",schemeName.get),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
