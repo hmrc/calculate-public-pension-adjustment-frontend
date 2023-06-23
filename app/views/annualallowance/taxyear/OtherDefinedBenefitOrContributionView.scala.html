@@ -24,13 +24,12 @@
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
-    <p>@messages("addAnotherScheme.hint")</p>
-}
+@layout(pageTitle = title(form, messages("otherDefinedBenefitOrContribution.title"))) {
 
-@layout(pageTitle = title(form, messages("addAnotherScheme.title", period))) {
-
-    @formHelper(action = controllers.annualallowance.taxyear.routes.AddAnotherSchemeController.onSubmit(period, schemeIndex), 'autoComplete -> "off") {
+    @formHelper(
+        action = controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController.onSubmit(mode, period, schemeIndex),
+        'autoComplete -> "off"
+    ) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
@@ -39,12 +38,9 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("addAnotherScheme.heading"),
-                    caption = HmrcSectionCaption(messages("annualAllowance.period.caption." + period))
-                )
-                ).withHint(HintViewModel(HtmlContent(contentHint)))
-                )
+                legend = LegendViewModel(messages("otherDefinedBenefitOrContribution.heading")).asPageHeading()
+            )
+        )
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

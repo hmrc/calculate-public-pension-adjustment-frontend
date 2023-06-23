@@ -35,9 +35,11 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whichScheme.heading", period, schemeIndex)).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                content = messages("whichScheme.heading", period, schemeIndex),
+                caption = HmrcSectionCaption(messages("annualAllowance.period.caption."+{period.toString}))),
                 items  = whichScheme.options
-            )
+            ).withHint(HintViewModel(messages("whichScheme.hint")))
         )
 
         @govukButton(

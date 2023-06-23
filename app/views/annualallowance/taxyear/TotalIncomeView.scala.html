@@ -15,7 +15,6 @@
  *@
 
 @import viewmodels.InputWidth._
-@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
@@ -27,31 +26,23 @@
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("pensionSchemeDetails.title", period, schemeIndex))) {
+@layout(pageTitle = title(form, messages("totalIncome.title"))) {
 
-    @formHelper(action = controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController.onSubmit(mode, period, schemeIndex), 'autoComplete -> "off") {
+    @formHelper(
+        action = controllers.annualallowance.taxyear.routes.TotalIncomeController.onSubmit(mode, period, schemeIndex),
+        'autoComplete -> "off"
+    ) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <span class="govuk-caption-l">@messages("annualAllowance.period.caption."+{period.toString})</span>
-        <h1 class="govuk-heading-xl">@messages("pensionSchemeDetails.heading", period, schemeIndex)</h1>
-        <p class="govuk-body">@messages("pensionSchemeDetails.hint")</p>
-
         @govukInput(
             InputViewModel(
-                field = form("schemeName"),
-                label = LabelViewModel(messages("pensionSchemeDetails.schemeName")).asPageHeading(LabelSize.Medium)
+                field = form("value"),
+                label = LabelViewModel(messages("totalIncome.heading")).asPageHeading()
             )
-            .withWidth(Fixed10)
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("schemeTaxRef"),
-                label = LabelViewModel(messages("pensionSchemeDetails.schemeTaxRef")).asPageHeading(LabelSize.Medium)
-            ).withHint(HintViewModel(messages("schemeNameAndTaxRef.taxRef.hint")))
+            .asNumeric()
             .withWidth(Fixed10)
         )
 

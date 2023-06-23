@@ -14,22 +14,18 @@
  * limitations under the License.
  */
 
-package forms.lifetimeallowance
+package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
-import models.LtaPensionSchemeDetails
 import play.api.data.Form
-import play.api.data.Forms._
 
 import javax.inject.Inject
 
-class LtaPensionSchemeDetailsFormProvider @Inject() extends Mappings {
+class TotalIncomeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[LtaPensionSchemeDetails] = Form(
-    mapping(
-      "name"   -> text("ltaPensionSchemeDetails.error.name.required")
-        .verifying(maxLength(100, "ltaPensionSchemeDetails.error.name.length")),
-      "taxRef" -> pstr("ltaPensionSchemeDetails.error.taxRef.required", "ltaPensionSchemeDetails.taxRef.invalid")
-    )(LtaPensionSchemeDetails.apply)(LtaPensionSchemeDetails.unapply)
-  )
+  def apply(): Form[Int] =
+    Form(
+      "value" -> int("totalIncome.error.required", "totalIncome.error.wholeNumber", "totalIncome.error.nonNumeric")
+        .verifying(inRange(0, 10000000, "totalIncome.error.outOfRange"))
+    )
 }

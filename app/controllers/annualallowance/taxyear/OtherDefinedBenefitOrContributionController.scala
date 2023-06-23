@@ -17,27 +17,27 @@
 package controllers.annualallowance.taxyear
 
 import controllers.actions._
-import forms.annualallowance.taxyear.PensionSchemeInputAmountsFormProvider
+import forms.annualallowance.taxyear.OtherDefinedBenefitOrContributionFormProvider
 import models.{Mode, Period, SchemeIndex}
-import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInputAmountsPage}
+import pages.annualallowance.taxyear.OtherDefinedBenefitOrContributionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.annualallowance.taxyear.PensionSchemeInputAmountsView
+import views.html.annualallowance.taxyear.OtherDefinedBenefitOrContributionView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PensionSchemeInputAmountsController @Inject() (
+class OtherDefinedBenefitOrContributionController @Inject() (
   override val messagesApi: MessagesApi,
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: PensionSchemeInputAmountsFormProvider,
+  formProvider: OtherDefinedBenefitOrContributionFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: PensionSchemeInputAmountsView
+  view: OtherDefinedBenefitOrContributionView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -46,34 +46,34 @@ class PensionSchemeInputAmountsController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(PensionSchemeInputAmountsPage(period, schemeIndex)) match {
+      val preparedForm = request.userAnswers.get(
+        OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)
+      ) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
-      val schemeName   = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
-        answer.schemeName
-      }
 
-      Ok(view(preparedForm, mode, period, schemeIndex, schemeName.getOrElse("")))
-
+      Ok(view(preparedForm, mode, period, schemeIndex))
     }
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
-      val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
-        answer.schemeName
-      }
       form
         .bindFromRequest()
         .fold(
-          formWithErrors =>
-            Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse("")))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
           value =>
             for {
               updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(PensionSchemeInputAmountsPage(period, schemeIndex), value))
+                Future.fromTry(
+                  request.userAnswers
+                    .set(OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex), value)
+                )
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(PensionSchemeInputAmountsPage(period, schemeIndex).navigate(mode, updatedAnswers))
+            } yield Redirect(
+              OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)
+                .navigate(mode, updatedAnswers)
+            )
         )
     }
 }

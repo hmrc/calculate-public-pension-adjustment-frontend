@@ -16,38 +16,28 @@
 
 package viewmodels.checkAnswers.annualallowance.taxyear
 
+import controllers.annualallowance.taxyear.routes.AdjustedIncomeController
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
-import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInputAmountsPage}
+import pages.annualallowance.taxyear.AdjustedIncomePage
 import play.api.i18n.Messages
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object PensionSchemeInputAmountsSummary {
+object AdjustedIncomeSummary {
 
   def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(PensionSchemeInputAmountsPage(period, schemeIndex)).map { answer =>
-      val value = HtmlContent(currencyFormat(answer.originalPIA) + " / " + currencyFormat(answer.revisedPIA))
-
-      val schemeName = answers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
-        answer.schemeName
-      }
-
+    answers.get(AdjustedIncomePage(period, schemeIndex)).map { answer =>
       SummaryListRowViewModel(
-        key = messages("pensionSchemeInputAmounts.checkYourAnswersLabel", schemeName.get),
-        value = ValueViewModel(value),
+        key = "adjustedIncome.checkYourAnswersLabel",
+        value = ValueViewModel(answer.toString),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
-              .onPageLoad(CheckMode, period, schemeIndex)
-              .url
-          )
-            .withVisuallyHiddenText(messages("pensionSchemeInputAmounts.change.hidden"))
+            AdjustedIncomeController.onPageLoad(CheckMode, period, schemeIndex).url
+          ).withVisuallyHiddenText(messages("adjustedIncome.change.hidden"))
         )
       )
     }

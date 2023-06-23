@@ -16,20 +16,30 @@
 
 package forms.annualallowance.taxyear
 
-import forms.mappings.Mappings
-import models.PensionSchemeDetails
-import play.api.data.Form
-import play.api.data.Forms._
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
 
-import javax.inject.Inject
+class ThresholdIncomeFormProviderSpec extends BooleanFieldBehaviours {
 
-class PensionSchemeDetailsFormProvider @Inject() extends Mappings {
+  val requiredKey = "thresholdIncome.error.required"
+  val invalidKey  = "error.boolean"
 
-  def apply(): Form[PensionSchemeDetails] = Form(
-    mapping(
-      "schemeName"   -> text("pensionSchemeDetails.error.schemeName.required")
-        .verifying(maxLength(100, "pensionSchemeDetails.error.schemeName.length")),
-      "schemeTaxRef" -> pstr("pensionSchemeDetails.error.schemeTaxRef.required", "schemeNameAndTaxRef.taxRef.invalid")
-    )(PensionSchemeDetails.apply)(PensionSchemeDetails.unapply)
-  )
+  val form = new ThresholdIncomeFormProvider()()
+
+  ".value" - {
+
+    val fieldName = "value"
+
+    behave like booleanField(
+      form,
+      fieldName,
+      invalidError = FormError(fieldName, invalidKey)
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
 }
