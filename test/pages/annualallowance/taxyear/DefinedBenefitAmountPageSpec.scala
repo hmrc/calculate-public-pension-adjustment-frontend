@@ -31,17 +31,55 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "to page CYA when answered" in {
-        val ua = emptyUserAnswers
-          .set(
-            DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)),
-            100
-          )
-          .success
-          .value
-        val result = DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+      "for pre 15-16" - {
+        val period: Period = Period._2016PreAlignment
 
-        checkNavigation(result, "/check-your-answers-period/2013")
+        "to CheckYourAnswersPage when answered" in {
+          val ua = emptyUserAnswers
+            .set(
+              DefinedBenefitAmountPage(period, SchemeIndex(0)),
+              100
+            )
+            .success
+            .value
+          val result = DefinedBenefitAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/check-your-answers-period/$period")
+        }
+      }
+
+      "for post 15-16" - {
+        val period: Period = Period._2016PostAlignment
+
+        "to TotalIncomePage when answered" in {
+          val ua = emptyUserAnswers
+            .set(
+              DefinedBenefitAmountPage(period, SchemeIndex(0)),
+              100
+            )
+            .success
+            .value
+          val result = DefinedBenefitAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/totalIncome/$period/0")
+        }
+      }
+
+      "for 16-17 onwards" - {
+        val period: Period = genPeriodNot2016.sample.value
+
+        "to ThresholdIncome when answered" in {
+          val ua = emptyUserAnswers
+            .set(
+              DefinedBenefitAmountPage(period, SchemeIndex(0)),
+              100
+            )
+            .success
+            .value
+          val result = DefinedBenefitAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/thresholdIncome/$period/0")
+        }
       }
     }
 
