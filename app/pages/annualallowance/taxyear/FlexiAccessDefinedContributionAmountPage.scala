@@ -16,7 +16,8 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, SchemeIndex, UserAnswers}
+import controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController
+import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -27,8 +28,26 @@ case class FlexiAccessDefinedContributionAmountPage(period: Period, schemeIndex:
 
   override def toString: String = "flexiAccessDefinedContributionAmount"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+    val definedBenefitExists = (
+      answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) map {
+        contributedTo => contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit)
+      }).isDefined
+
+    if (definedBenefitExists) {
+      DefinedBenefitAmountController.onPageLoad(NormalMode, period, schemeIndex)
+    } else {
+      answers.get(FlexiAccessDefinedContributionAmountPage(period, schemeIndex)) match {
+        case Some(_) if period == Period._2016PreAlignment =>
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+        case Some(_) if period == Period._2016PostAlignment =>
+          controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+        case Some(_) =>
+          controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+        case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    }
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)

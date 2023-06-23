@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, SchemeIndex}
+import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period, SchemeIndex}
 import pages.behaviours.PageBehaviours
 
 class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
@@ -31,17 +31,104 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "to page CYA when answered" in {
+      "for pre 15-16" - {
+
+        val period = Period._2016PreAlignment
+
+        "to DefinedBenefitPage when DB is selected" in {
+          val ua = emptyUserAnswers
+            .set(
+              FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
+              100
+            ).success.value
+            .set(
+              ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+            ).success.value
+          val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/definedBenefitAmount/$period/0")
+        }
+
+        "to CheckYourAnswersPage when no DB selected" in {
+          val ua = emptyUserAnswers
+            .set(
+              FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
+              100
+            ).success.value
+          val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/check-your-answers-period/$period")
+        }
+      }
+
+      "for post 15-16" - {
+
+        val period = Period._2016PostAlignment
+
+        "to DefinedBenefitPage when DB is selected" in {
+          val ua = emptyUserAnswers
+            .set(
+              FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
+              100
+            ).success.value
+            .set(
+              ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+            ).success.value
+          val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/definedBenefitAmount/$period/0")
+        }
+
+        "to TotalIncome when no DB selected" in {
+          val ua = emptyUserAnswers
+            .set(
+              FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
+              100
+            ).success.value
+          val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/totalIncome/$period/0")
+        }
+      }
+
+      "for 16-17 onwards" - {
+
+        val period = genPeriodNot2016.sample.value
+
+        "to DefinedBenefitPage when DB is selected" in {
+          val ua = emptyUserAnswers
+            .set(
+              FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
+              100
+            ).success.value
+            .set(
+              ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+            ).success.value
+          val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/definedBenefitAmount/$period/0")
+        }
+
+        "to ThresholdIncomePage when no DB selected" in {
+          val ua = emptyUserAnswers
+            .set(
+              FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
+              100
+            ).success.value
+          val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/thresholdIncome/$period/0")
+        }
+      }
+
+      "to JourneyRecovery when no answer" in {
         val ua = emptyUserAnswers
-          .set(
-            FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)),
-            100
-          )
-          .success
-          .value
         val result = FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers-period/2013")
+        checkNavigation(result, s"/there-is-a-problem")
       }
     }
 
