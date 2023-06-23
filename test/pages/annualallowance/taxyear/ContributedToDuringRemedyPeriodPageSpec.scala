@@ -43,7 +43,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .value
         val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/definedContributionAmount/2013/0")
+        checkNavigation(result, "/pia-for-dc-pension/2013/0")
       }
 
       "to page DefinedBenefitAmountPage when DB selected" in {
@@ -56,7 +56,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .value
         val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/definedBenefitAmount/2013/0")
+        checkNavigation(result, "/pia-for-db-pension/2013/0")
       }
 
       "to page DefinedContributionAmountPage when DB and DC selected" in {
@@ -72,7 +72,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .value
         val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/definedContributionAmount/2013/0")
+        checkNavigation(result, "/pia-for-dc-pension/2013/0")
       }
 
       "to JourneyRecoveryPage when not answered" in {

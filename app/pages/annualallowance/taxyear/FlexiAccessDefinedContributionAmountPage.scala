@@ -23,7 +23,7 @@ import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
 case class FlexiAccessDefinedContributionAmountPage(period: Period, schemeIndex: SchemeIndex)
-    extends QuestionPage[Int] {
+    extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
 

@@ -17,11 +17,15 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object FlexiAccessDefinedContributionAmountSummary {
 
@@ -29,8 +33,17 @@ object FlexiAccessDefinedContributionAmountSummary {
     messages: Messages
   ): Option[SummaryListRow] =
     answers.get(FlexiAccessDefinedContributionAmountPage(period, schemeIndex)).map { answer =>
+      val formatter         = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+      val flexibleStartDate = answers.get(FlexibleAccessStartDatePage)
+
+      val startEndDate: String = flexibleStartDate match {
+        case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
+          date.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
+        case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
+      }
+
       SummaryListRowViewModel(
-        key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
+        key = messages("flexiAccessDefinedContributionAmount.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(answer.toString),
         actions = Seq(
           ActionItemViewModel(

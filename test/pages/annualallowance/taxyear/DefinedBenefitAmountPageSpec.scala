@@ -23,11 +23,11 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
 
   "DefinedBenefitAmountPage" - {
 
-    beRetrievable[Int](DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)))
+    beRetrievable[BigInt](DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)))
 
-    beSettable[Int](DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)))
+    beSettable[BigInt](DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)))
 
-    beRemovable[Int](DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)))
+    beRemovable[BigInt](DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)))
 
     "must Navigate correctly in normal mode" - {
 
@@ -38,7 +38,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               DefinedBenefitAmountPage(period, SchemeIndex(0)),
-              100
+              BigInt("100")
             )
             .success
             .value
@@ -55,7 +55,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               DefinedBenefitAmountPage(period, SchemeIndex(0)),
-              100
+              BigInt("100")
             )
             .success
             .value
@@ -72,7 +72,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               DefinedBenefitAmountPage(period, SchemeIndex(0)),
-              100
+              BigInt("100")
             )
             .success
             .value
@@ -94,7 +94,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
       val ua     = emptyUserAnswers
         .set(
           DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)),
-          100
+          BigInt("100")
         )
         .success
         .value

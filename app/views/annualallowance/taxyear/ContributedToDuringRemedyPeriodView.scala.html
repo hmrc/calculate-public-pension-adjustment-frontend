@@ -39,8 +39,10 @@
             CheckboxesViewModel(
                 form   = form,
                 name   = "value",
-                legend = LegendViewModel(messages("contributedToDuringRemedyPeriod.heading")).asPageHeading(),
-                items  = ContributedToDuringRemedyPeriod.checkboxItems
+                items  = ContributedToDuringRemedyPeriod.checkboxItems,
+                legend = HmrcPageHeadingLegend(
+                content = messages("contributedToDuringRemedyPeriod.heading"),
+                caption = HmrcSectionCaption(messages("annualAllowance.period.caption." + period)))
             )
         )
 
