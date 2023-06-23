@@ -16,6 +16,8 @@
 
 package pages.annualallowance.taxyear
 
+import controllers.routes
+import models.ContributedToDuringRemedyPeriod.Definedcontribution
 import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -27,8 +29,16 @@ case class ContributedToDuringRemedyPeriodPage(period: Period, schemeIndex: Sche
 
   override def toString: String = "contributedToDuringRemedyPeriod"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+    answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) match {
+      case Some(contributions) if contributions.contains(Definedcontribution) =>
+        controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(NormalMode, period, schemeIndex)
+      case Some(_) =>
+        controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period, schemeIndex)
+      case None    =>
+        routes.JourneyRecoveryController.onPageLoad(None)
+    }
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
       controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
