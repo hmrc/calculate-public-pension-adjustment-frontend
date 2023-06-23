@@ -32,7 +32,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "to page CYA when answered true" in {
+      "to AdjustedIncomePage when answered true" in {
         val ua     = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2013, SchemeIndex(0)),
@@ -42,10 +42,10 @@ class ThresholdIncomePageSpec extends PageBehaviours {
           .value
         val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers-period/2013")
+        checkNavigation(result, "/adjustedIncome/2013/0")
       }
 
-      "to page CYA when answered false" in {
+      "to TotalIncomePage when answered false" in {
         val ua     = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2013, SchemeIndex(0)),
@@ -55,7 +55,14 @@ class ThresholdIncomePageSpec extends PageBehaviours {
           .value
         val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers-period/2013")
+        checkNavigation(result, "/totalIncome/2013/0")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua = emptyUserAnswers
+        val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
       }
     }
 

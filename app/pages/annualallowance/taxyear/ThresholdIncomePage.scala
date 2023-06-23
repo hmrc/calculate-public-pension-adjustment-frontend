@@ -16,7 +16,8 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, SchemeIndex, UserAnswers}
+import controllers.annualallowance.taxyear.routes.{AdjustedIncomeController, TotalIncomeController}
+import models.{NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -27,8 +28,13 @@ case class ThresholdIncomePage(period: Period, schemeIndex: SchemeIndex) extends
 
   override def toString: String = "thresholdIncome"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+    answers.get(ThresholdIncomePage(period, schemeIndex)) match {
+      case Some(true)  => AdjustedIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case Some(false) => TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
