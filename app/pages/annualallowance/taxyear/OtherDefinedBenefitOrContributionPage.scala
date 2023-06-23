@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, ThresholdIncomeController}
+import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, ContributedToDuringRemedyPeriodController, ThresholdIncomeController, TotalIncomeController}
 import controllers.routes
 import models.{NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
@@ -30,12 +30,17 @@ case class OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: Sc
 
   override def toString: String = "otherDefinedBenefitOrContribution"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     answers.get(OtherDefinedBenefitOrContributionPage(period, schemeIndex)) match {
-      case Some(true)  => CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case Some(false) if period == Period._2016PreAlignment =>
+        CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case Some(false) if period == Period._2016PostAlignment =>
+        TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
       case Some(false) => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case Some(true)  => ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, period, schemeIndex)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     CheckYourAAPeriodAnswersController.onPageLoad(period)

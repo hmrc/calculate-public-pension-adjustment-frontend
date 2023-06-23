@@ -16,8 +16,9 @@
 
 package generators
 
-import java.time.{Instant, LocalDate, ZoneOffset}
+import models.Period
 
+import java.time.{Instant, LocalDate, ZoneOffset}
 import org.scalacheck.Arbitrary._
 import org.scalacheck.Gen._
 import org.scalacheck.{Gen, Shrink}
@@ -25,6 +26,12 @@ import org.scalacheck.{Gen, Shrink}
 trait Generators extends UserAnswersGenerator with PageGenerators with ModelGenerators with UserAnswersEntryGenerators {
 
   implicit val dontShrink: Shrink[String] = Shrink.shrinkAny
+
+  def genPeriodNot2016: Gen[Period] =
+    Gen.oneOf(Set(
+      Period._2013, Period._2014, Period._2015, Period._2017, Period._2018,
+      Period._2019, Period._2020, Period._2021, Period._2022, Period._2023
+    ))
 
   def genIntersperseString(gen: Gen[String], value: String, frequencyV: Int = 1, frequencyN: Int = 10): Gen[String] = {
 

@@ -32,30 +32,95 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "to page CYA when answered true" in {
-        val ua     = emptyUserAnswers
-          .set(
-            OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)),
-            true
-          )
-          .success
-          .value
-        val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+      "for pre 15-16" - {
 
-        checkNavigation(result, "/check-your-answers-period/2013")
+        val period = Period._2016PreAlignment
+
+        "to ContributedToDuringRemedyPeriodPage when answered true" in {
+          val ua = emptyUserAnswers
+            .set(
+              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              true
+            )
+            .success
+            .value
+          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, "/contributedToDuringRemedyPeriod/2016-pre/0")
+        }
+
+        "to CheckYourAnswersPage when answered false" in {
+          val ua = emptyUserAnswers
+            .set(
+              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              false
+            )
+            .success
+            .value
+          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, "/check-your-answers-period/2016-pre")
+        }
       }
 
-      "to ThresholdIncomePage when answered false" in {
-        val ua     = emptyUserAnswers
-          .set(
-            OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)),
-            false
-          )
-          .success
-          .value
-        val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+      "for post 15-16" - {
+        val period = Period._2016PostAlignment
 
-        checkNavigation(result, "/thresholdIncome/2013/0")
+        "to ContributedToDuringRemedyPeriodPage when answered true" in {
+          val ua = emptyUserAnswers
+            .set(
+              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              true
+            )
+            .success
+            .value
+          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, "/contributedToDuringRemedyPeriod/2016-post/0")
+        }
+
+        "to TotalIncomePage when answered false" in {
+          val ua = emptyUserAnswers
+            .set(
+              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              false
+            )
+            .success
+            .value
+          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, "/totalIncome/2016-post/0")
+        }
+      }
+
+      "for 16-17 onwards" - {
+        val period: Period = genPeriodNot2016.sample.value
+
+        "to ContributedToDuringRemedyPeriodPage when answered true" in {
+          val ua = emptyUserAnswers
+            .set(
+              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              true
+            )
+            .success
+            .value
+          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/contributedToDuringRemedyPeriod/$period/0")
+        }
+
+        "to ThresholdIncomePage when answered false" in {
+          val ua = emptyUserAnswers
+            .set(
+              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              false
+            )
+            .success
+            .value
+          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/thresholdIncome/$period/0")
+        }
       }
 
       "to JourneyRecovery when not answered" in {
