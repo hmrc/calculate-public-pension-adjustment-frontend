@@ -26,17 +26,22 @@ import viewmodels.implicits._
 
 object DefinedBenefitAmountSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(DefinedBenefitAmountPage(period, schemeIndex)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key = "definedBenefitAmount.checkYourAnswersLabel",
-          value = ValueViewModel(answer.toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(CheckMode, period, schemeIndex).url)
-              .withVisuallyHiddenText(messages("definedBenefitAmount.change.hidden"))
+  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(DefinedBenefitAmountPage(period, schemeIndex)).map { answer =>
+      SummaryListRowViewModel(
+        key = "definedBenefitAmount.checkYourAnswersLabel",
+        value = ValueViewModel(answer.toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController
+              .onPageLoad(CheckMode, period, schemeIndex)
+              .url
           )
+            .withVisuallyHiddenText(messages("definedBenefitAmount.change.hidden"))
         )
+      )
     }
 }

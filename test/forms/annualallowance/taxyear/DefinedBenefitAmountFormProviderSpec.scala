@@ -41,15 +41,15 @@ class DefinedBenefitAmountFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "definedBenefitAmount.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "definedBenefitAmount.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "definedBenefitAmount.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
       form,
       fieldName,
-      minimum       = minimum,
-      maximum       = maximum,
+      minimum = minimum,
+      maximum = maximum,
       expectedError = FormError(fieldName, "definedBenefitAmount.error.outOfRange", Seq(minimum, maximum))
     )
 

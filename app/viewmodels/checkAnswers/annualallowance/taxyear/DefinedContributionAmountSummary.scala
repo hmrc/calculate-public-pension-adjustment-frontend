@@ -26,17 +26,20 @@ import viewmodels.implicits._
 
 object DefinedContributionAmountSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(DefinedContributionAmountPage(period, schemeIndex)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key = "definedContributionAmount.checkYourAnswersLabel",
-          value = ValueViewModel(answer.toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", DefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url)
-              .withVisuallyHiddenText(messages("definedContributionAmount.change.hidden"))
+  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(DefinedContributionAmountPage(period, schemeIndex)).map { answer =>
+      SummaryListRowViewModel(
+        key = "definedContributionAmount.checkYourAnswersLabel",
+        value = ValueViewModel(answer.toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            DefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url
           )
+            .withVisuallyHiddenText(messages("definedContributionAmount.change.hidden"))
         )
+      )
     }
 }

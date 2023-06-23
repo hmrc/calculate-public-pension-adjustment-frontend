@@ -37,13 +37,14 @@ import scala.concurrent.Future
 class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new DefinedContributionAmountFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = 0
 
-  lazy val definedContributionAmountRoute = DefinedContributionAmountController.onPageLoad(NormalMode, Period._2013, SchemeIndex(0)).url
+  lazy val definedContributionAmountRoute =
+    DefinedContributionAmountController.onPageLoad(NormalMode, Period._2013, SchemeIndex(0)).url
 
   "DefinedContributionAmount Controller" - {
 
@@ -59,13 +60,19 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
         val view = application.injector.instanceOf[DefinedContributionAmountView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(DefinedContributionAmountPage(Period._2013, SchemeIndex(0)), validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(DefinedContributionAmountPage(Period._2013, SchemeIndex(0)), validAnswer)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -77,7 +84,10 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -121,7 +131,10 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

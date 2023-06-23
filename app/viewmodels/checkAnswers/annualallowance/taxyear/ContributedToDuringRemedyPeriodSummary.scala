@@ -28,26 +28,30 @@ import viewmodels.implicits._
 
 object ContributedToDuringRemedyPeriodSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)).map {
-      answers =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            answers.map {
-              answer => HtmlFormat.escape(messages(s"contributedToDuringRemedyPeriod.$answer")).toString
+  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)).map { answers =>
+      val value = ValueViewModel(
+        HtmlContent(
+          answers
+            .map { answer =>
+              HtmlFormat.escape(messages(s"contributedToDuringRemedyPeriod.$answer")).toString
             }
-              .mkString(",<br>")
-          )
+            .mkString(",<br>")
         )
+      )
 
-        SummaryListRowViewModel(
-          key = "contributedToDuringRemedyPeriod.checkYourAnswersLabel",
-          value = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", ContributedToDuringRemedyPeriodController.onPageLoad(CheckMode, period, schemeIndex).url)
-              .withVisuallyHiddenText(messages("contributedToDuringRemedyPeriod.change.hidden"))
+      SummaryListRowViewModel(
+        key = "contributedToDuringRemedyPeriod.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            ContributedToDuringRemedyPeriodController.onPageLoad(CheckMode, period, schemeIndex).url
           )
+            .withVisuallyHiddenText(messages("contributedToDuringRemedyPeriod.change.hidden"))
         )
+      )
     }
 }

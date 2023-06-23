@@ -29,42 +29,43 @@ import views.html.annualallowance.taxyear.DefinedContributionAmountView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class DefinedContributionAmountController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: DefinedContributionAmountFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: DefinedContributionAmountView
-                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class DefinedContributionAmountController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: DefinedContributionAmountFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: DefinedContributionAmountView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-
+  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+    (identify andThen getData andThen requireData) { implicit request =>
       val preparedForm = request.userAnswers.get(DefinedContributionAmountPage(period, schemeIndex)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
       Ok(view(preparedForm, mode, period, schemeIndex))
-  }
+    }
 
-  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(DefinedContributionAmountPage(period, schemeIndex), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(DefinedContributionAmountPage(period, schemeIndex).navigate(mode, updatedAnswers))
-      )
-  }
+  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+    (identify andThen getData andThen requireData).async { implicit request =>
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          value =>
+            for {
+              updatedAnswers <-
+                Future.fromTry(request.userAnswers.set(DefinedContributionAmountPage(period, schemeIndex), value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(DefinedContributionAmountPage(period, schemeIndex).navigate(mode, updatedAnswers))
+        )
+    }
 }

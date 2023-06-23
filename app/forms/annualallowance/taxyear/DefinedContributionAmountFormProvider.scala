@@ -28,7 +28,8 @@ class DefinedContributionAmountFormProvider @Inject() extends Mappings {
       "value" -> int(
         "definedContributionAmount.error.required",
         "definedContributionAmount.error.wholeNumber",
-        "definedContributionAmount.error.nonNumeric")
-          .verifying(inRange(0, 10000000, "definedContributionAmount.error.outOfRange"))
+        "definedContributionAmount.error.nonNumeric"
+      )
+        .verifying(inRange(0, 10000000, "definedContributionAmount.error.outOfRange"))
     )
 }

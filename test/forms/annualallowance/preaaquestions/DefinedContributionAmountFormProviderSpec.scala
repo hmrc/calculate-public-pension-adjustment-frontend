@@ -42,15 +42,15 @@ class DefinedContributionAmountFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "definedContributionAmount.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "definedContributionAmount.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "definedContributionAmount.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
       form,
       fieldName,
-      minimum       = minimum,
-      maximum       = maximum,
+      minimum = minimum,
+      maximum = maximum,
       expectedError = FormError(fieldName, "definedContributionAmount.error.outOfRange", Seq(minimum, maximum))
     )
 

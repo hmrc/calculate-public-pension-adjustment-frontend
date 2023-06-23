@@ -28,10 +28,20 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
   implicit val dontShrink: Shrink[String] = Shrink.shrinkAny
 
   def genPeriodNot2016: Gen[Period] =
-    Gen.oneOf(Set(
-      Period._2013, Period._2014, Period._2015, Period._2017, Period._2018,
-      Period._2019, Period._2020, Period._2021, Period._2022, Period._2023
-    ))
+    Gen.oneOf(
+      Set(
+        Period._2013,
+        Period._2014,
+        Period._2015,
+        Period._2017,
+        Period._2018,
+        Period._2019,
+        Period._2020,
+        Period._2021,
+        Period._2022,
+        Period._2023
+      )
+    )
 
   def genIntersperseString(gen: Gen[String], value: String, frequencyV: Int = 1, frequencyN: Int = 10): Gen[String] = {
 

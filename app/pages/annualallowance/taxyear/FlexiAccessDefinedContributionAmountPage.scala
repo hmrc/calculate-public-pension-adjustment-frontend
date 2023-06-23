@@ -22,29 +22,30 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class FlexiAccessDefinedContributionAmountPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[Int] {
+case class FlexiAccessDefinedContributionAmountPage(period: Period, schemeIndex: SchemeIndex)
+    extends QuestionPage[Int] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
 
   override def toString: String = "flexiAccessDefinedContributionAmount"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    val definedBenefitExists = (
-      answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) map {
-        contributedTo => contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit)
-      }).isDefined
+    val definedBenefitExists = (answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) map {
+      contributedTo => contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit)
+    }).isDefined
 
     if (definedBenefitExists) {
       DefinedBenefitAmountController.onPageLoad(NormalMode, period, schemeIndex)
     } else {
       answers.get(FlexiAccessDefinedContributionAmountPage(period, schemeIndex)) match {
-        case Some(_) if period == Period._2016PreAlignment =>
+        case Some(_) if period == Period._2016PreAlignment  =>
           controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
         case Some(_) if period == Period._2016PostAlignment =>
           controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-        case Some(_) =>
-          controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-        case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+        case Some(_)                                        =>
+          controllers.annualallowance.taxyear.routes.ThresholdIncomeController
+            .onPageLoad(NormalMode, period, schemeIndex)
+        case None                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     }
   }

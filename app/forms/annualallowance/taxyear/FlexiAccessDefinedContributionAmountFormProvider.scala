@@ -28,7 +28,8 @@ class FlexiAccessDefinedContributionAmountFormProvider @Inject() extends Mapping
       "value" -> int(
         "flexiAccessDefinedContributionAmount.error.required",
         "flexiAccessDefinedContributionAmount.error.wholeNumber",
-        "flexiAccessDefinedContributionAmount.error.nonNumeric")
-          .verifying(inRange(0, 10000000, "flexiAccessDefinedContributionAmount.error.outOfRange"))
+        "flexiAccessDefinedContributionAmount.error.nonNumeric"
+      )
+        .verifying(inRange(0, 10000000, "flexiAccessDefinedContributionAmount.error.outOfRange"))
     )
 }

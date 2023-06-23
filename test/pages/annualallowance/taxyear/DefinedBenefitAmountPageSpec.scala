@@ -35,7 +35,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
         val period: Period = Period._2016PreAlignment
 
         "to CheckYourAnswersPage when answered" in {
-          val ua = emptyUserAnswers
+          val ua     = emptyUserAnswers
             .set(
               DefinedBenefitAmountPage(period, SchemeIndex(0)),
               100
@@ -52,7 +52,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
         val period: Period = Period._2016PostAlignment
 
         "to TotalIncomePage when answered" in {
-          val ua = emptyUserAnswers
+          val ua     = emptyUserAnswers
             .set(
               DefinedBenefitAmountPage(period, SchemeIndex(0)),
               100
@@ -69,7 +69,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
         val period: Period = genPeriodNot2016.sample.value
 
         "to ThresholdIncome when answered" in {
-          val ua = emptyUserAnswers
+          val ua     = emptyUserAnswers
             .set(
               DefinedBenefitAmountPage(period, SchemeIndex(0)),
               100
@@ -83,7 +83,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
       }
 
       "to JourneyRecoveryPage when not answerd" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
         checkNavigation(result, s"/there-is-a-problem")
@@ -91,7 +91,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
     }
 
     "must Navigate correctly to CYA in check mode" in {
-      val ua = emptyUserAnswers
+      val ua     = emptyUserAnswers
         .set(
           DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)),
           100

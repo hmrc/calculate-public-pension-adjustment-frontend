@@ -24,7 +24,12 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatest.OptionValues
 import play.api.libs.json.{JsError, JsString, Json}
 
-class ContributedToDuringRemedyPeriodSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues with ModelGenerators {
+class ContributedToDuringRemedyPeriodSpec
+    extends AnyFreeSpec
+    with Matchers
+    with ScalaCheckPropertyChecks
+    with OptionValues
+    with ModelGenerators {
 
   "ContributedToDuringRemedyPeriod" - {
 
@@ -32,10 +37,11 @@ class ContributedToDuringRemedyPeriodSpec extends AnyFreeSpec with Matchers with
 
       val gen = arbitrary[ContributedToDuringRemedyPeriod]
 
-      forAll(gen) {
-        contributedToDuringRemedyPeriod =>
-
-          JsString(contributedToDuringRemedyPeriod.toString).validate[ContributedToDuringRemedyPeriod].asOpt.value mustEqual contributedToDuringRemedyPeriod
+      forAll(gen) { contributedToDuringRemedyPeriod =>
+        JsString(contributedToDuringRemedyPeriod.toString)
+          .validate[ContributedToDuringRemedyPeriod]
+          .asOpt
+          .value mustEqual contributedToDuringRemedyPeriod
       }
     }
 
@@ -43,10 +49,8 @@ class ContributedToDuringRemedyPeriodSpec extends AnyFreeSpec with Matchers with
 
       val gen = arbitrary[String] suchThat (!ContributedToDuringRemedyPeriod.values.map(_.toString).contains(_))
 
-      forAll(gen) {
-        invalidValue =>
-
-          JsString(invalidValue).validate[ContributedToDuringRemedyPeriod] mustEqual JsError("error.invalid")
+      forAll(gen) { invalidValue =>
+        JsString(invalidValue).validate[ContributedToDuringRemedyPeriod] mustEqual JsError("error.invalid")
       }
     }
 
@@ -54,10 +58,8 @@ class ContributedToDuringRemedyPeriodSpec extends AnyFreeSpec with Matchers with
 
       val gen = arbitrary[ContributedToDuringRemedyPeriod]
 
-      forAll(gen) {
-        contributedToDuringRemedyPeriod =>
-
-          Json.toJson(contributedToDuringRemedyPeriod) mustEqual JsString(contributedToDuringRemedyPeriod.toString)
+      forAll(gen) { contributedToDuringRemedyPeriod =>
+        Json.toJson(contributedToDuringRemedyPeriod) mustEqual JsString(contributedToDuringRemedyPeriod.toString)
       }
     }
   }

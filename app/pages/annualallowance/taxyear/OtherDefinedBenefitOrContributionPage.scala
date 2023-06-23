@@ -30,17 +30,16 @@ case class OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: Sc
 
   override def toString: String = "otherDefinedBenefitOrContribution"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(OtherDefinedBenefitOrContributionPage(period, schemeIndex)) match {
-      case Some(false) if period == Period._2016PreAlignment =>
+      case Some(false) if period == Period._2016PreAlignment  =>
         CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(false) if period == Period._2016PostAlignment =>
         TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case Some(false) => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case Some(true)  => ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, period, schemeIndex)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case Some(true)                                         => ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, period, schemeIndex)
+      case None                                               => routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     CheckYourAAPeriodAnswersController.onPageLoad(period)

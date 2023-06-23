@@ -59,7 +59,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
       }
 
       "to JourneyRecovery when not answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")

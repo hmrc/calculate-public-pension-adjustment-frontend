@@ -28,13 +28,12 @@ case class ThresholdIncomePage(period: Period, schemeIndex: SchemeIndex) extends
 
   override def toString: String = "thresholdIncome"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ThresholdIncomePage(period, schemeIndex)) match {
       case Some(true)  => AdjustedIncomeController.onPageLoad(NormalMode, period, schemeIndex)
       case Some(false) => TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)

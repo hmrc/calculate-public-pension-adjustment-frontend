@@ -23,7 +23,9 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
 
   "ContributedToDuringRemedyPeriodPage" - {
 
-    beRetrievable[Set[ContributedToDuringRemedyPeriod]](ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)))
+    beRetrievable[Set[ContributedToDuringRemedyPeriod]](
+      ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0))
+    )
 
     beSettable[Set[ContributedToDuringRemedyPeriod]](ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)))
 
@@ -32,7 +34,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
     "must Navigate correctly in normal mode" - {
 
       "to page DefinedContributionAmountPage when DC selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)),
             Set(ContributedToDuringRemedyPeriod.values.head)
@@ -45,7 +47,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
       }
 
       "to page DefinedBenefitAmountPage when DB selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)),
             Set(ContributedToDuringRemedyPeriod.values.tail.head)
@@ -58,7 +60,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
       }
 
       "to page DefinedContributionAmountPage when DB and DC selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)),
             Set(
@@ -74,7 +76,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
       }
 
       "to JourneyRecoveryPage when not answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
         val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
@@ -82,7 +84,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
     }
 
     "must Navigate correctly to CYA in check mode" in {
-      val ua = emptyUserAnswers
+      val ua     = emptyUserAnswers
         .set(
           ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)),
           Set(ContributedToDuringRemedyPeriod.values.head)

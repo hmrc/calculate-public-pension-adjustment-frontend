@@ -25,17 +25,22 @@ import viewmodels.implicits._
 
 object FlexiAccessDefinedContributionAmountSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(FlexiAccessDefinedContributionAmountPage(period, schemeIndex)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
-          value = ValueViewModel(answer.toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.FlexiAccessDefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url)
-              .withVisuallyHiddenText(messages("flexiAccessDefinedContributionAmount.change.hidden"))
+  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] =
+    answers.get(FlexiAccessDefinedContributionAmountPage(period, schemeIndex)).map { answer =>
+      SummaryListRowViewModel(
+        key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
+        value = ValueViewModel(answer.toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.FlexiAccessDefinedContributionAmountController
+              .onPageLoad(CheckMode, period, schemeIndex)
+              .url
           )
+            .withVisuallyHiddenText(messages("flexiAccessDefinedContributionAmount.change.hidden"))
         )
+      )
     }
 }

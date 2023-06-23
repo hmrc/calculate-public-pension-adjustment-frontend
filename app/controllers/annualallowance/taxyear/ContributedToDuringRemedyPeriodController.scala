@@ -29,42 +29,43 @@ import views.html.annualallowance.taxyear.ContributedToDuringRemedyPeriodView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class ContributedToDuringRemedyPeriodController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: ContributedToDuringRemedyPeriodFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: ContributedToDuringRemedyPeriodView
-                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class ContributedToDuringRemedyPeriodController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: ContributedToDuringRemedyPeriodFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: ContributedToDuringRemedyPeriodView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-
+  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+    (identify andThen getData andThen requireData) { implicit request =>
       val preparedForm = request.userAnswers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
       Ok(view(preparedForm, mode, period, schemeIndex))
-  }
+    }
 
-  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ContributedToDuringRemedyPeriodPage(period, schemeIndex), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(ContributedToDuringRemedyPeriodPage(period, schemeIndex).navigate(mode, updatedAnswers))
-      )
-  }
+  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+    (identify andThen getData andThen requireData).async { implicit request =>
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          value =>
+            for {
+              updatedAnswers <-
+                Future.fromTry(request.userAnswers.set(ContributedToDuringRemedyPeriodPage(period, schemeIndex), value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(ContributedToDuringRemedyPeriodPage(period, schemeIndex).navigate(mode, updatedAnswers))
+        )
+    }
 }

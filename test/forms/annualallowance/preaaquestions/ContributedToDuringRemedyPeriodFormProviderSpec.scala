@@ -27,13 +27,13 @@ class ContributedToDuringRemedyPeriodFormProviderSpec extends CheckboxFieldBehav
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "contributedToDuringRemedyPeriod.error.required"
 
     behave like checkboxField[ContributedToDuringRemedyPeriod](
       form,
       fieldName,
-      validValues  = ContributedToDuringRemedyPeriod.values,
+      validValues = ContributedToDuringRemedyPeriod.values,
       invalidError = FormError(s"$fieldName[0]", "error.invalid")
     )
 

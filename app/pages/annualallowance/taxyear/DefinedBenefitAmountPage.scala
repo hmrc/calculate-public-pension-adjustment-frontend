@@ -28,16 +28,15 @@ case class DefinedBenefitAmountPage(period: Period, schemeIndex: SchemeIndex) ex
 
   override def toString: String = "definedBenefitAmount"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(DefinedBenefitAmountPage(period, schemeIndex)) match {
       case Some(_) if period == Period._2016PreAlignment  =>
         CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(_) if period == Period._2016PostAlignment =>
         TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case Some(_) => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case None                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     CheckYourAAPeriodAnswersController.onPageLoad(period)

@@ -39,10 +39,11 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val contributedToDuringRemedyPeriodRoute = ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, _2013, SchemeIndex(0)).url
+  lazy val contributedToDuringRemedyPeriodRoute =
+    ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, _2013, SchemeIndex(0)).url
 
   val formProvider = new ContributedToDuringRemedyPeriodFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "ContributedToDuringRemedyPeriod Controller" - {
 
@@ -59,13 +60,19 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
 
         status(result) mustEqual OK
 
-        contentAsString(result) mustEqual view(form, NormalMode, _2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, _2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ContributedToDuringRemedyPeriodPage(_2013, SchemeIndex(0)), ContributedToDuringRemedyPeriod.values.toSet).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(ContributedToDuringRemedyPeriodPage(_2013, SchemeIndex(0)), ContributedToDuringRemedyPeriod.values.toSet)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -77,7 +84,12 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ContributedToDuringRemedyPeriod.values.toSet), NormalMode, _2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(
+          form.fill(ContributedToDuringRemedyPeriod.values.toSet),
+          NormalMode,
+          _2013,
+          SchemeIndex(0)
+        )(request, messages(application)).toString
       }
     }
 
@@ -121,7 +133,10 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, _2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, _2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

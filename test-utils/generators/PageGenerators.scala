@@ -24,14 +24,15 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
-  implicit lazy val arbitraryFlexiAccessDefinedContributionAmountPage: Arbitrary[FlexiAccessDefinedContributionAmountPage.type] =
+  implicit lazy val arbitraryFlexiAccessDefinedContributionAmountPage
+    : Arbitrary[FlexiAccessDefinedContributionAmountPage.type] =
     Arbitrary(FlexiAccessDefinedContributionAmountPage)
 
   implicit lazy val arbitraryThresholdIncomePage: Arbitrary[ThresholdIncomePage.type] =
     Arbitrary(ThresholdIncomePage)
 
   implicit lazy val arbitraryOtherDefinedBenefitOrContributionPage
-  : Arbitrary[OtherDefinedBenefitOrContributionPage.type] =
+    : Arbitrary[OtherDefinedBenefitOrContributionPage.type] =
     Arbitrary(OtherDefinedBenefitOrContributionPage)
 
   implicit lazy val arbitraryTotalIncomePage: Arbitrary[TotalIncomePage.type] =

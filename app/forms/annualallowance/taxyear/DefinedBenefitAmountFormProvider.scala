@@ -28,7 +28,8 @@ class DefinedBenefitAmountFormProvider @Inject() extends Mappings {
       "value" -> int(
         "definedBenefitAmount.error.required",
         "definedBenefitAmount.error.wholeNumber",
-        "definedBenefitAmount.error.nonNumeric")
-          .verifying(inRange(0, 10000000, "definedBenefitAmount.error.outOfRange"))
+        "definedBenefitAmount.error.nonNumeric"
+      )
+        .verifying(inRange(0, 10000000, "definedBenefitAmount.error.outOfRange"))
     )
 }

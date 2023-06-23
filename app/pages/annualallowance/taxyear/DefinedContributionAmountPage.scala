@@ -31,24 +31,23 @@ case class DefinedContributionAmountPage(period: Period, schemeIndex: SchemeInde
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     val flexiAccessExists    = answers.get(FlexibleAccessStartDatePage).isDefined
-    val definedBenefitExists = (
-      answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) map {
-        contributedTo => contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit)
-      }).isDefined
+    val definedBenefitExists = (answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) map {
+      contributedTo => contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit)
+    }).isDefined
 
     answers.get(DefinedContributionAmountPage(period, schemeIndex)) match {
-        case Some(_) if flexiAccessExists =>
-          FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, period, schemeIndex)
-        case Some(_) if definedBenefitExists =>
-          DefinedBenefitAmountController.onPageLoad(NormalMode, period, schemeIndex)
-        case Some(_) if period == Period._2016PreAlignment =>
-          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-        case Some(_) if period == Period._2016PostAlignment =>
-          controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-        case Some(_) =>
-          controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-        case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-      }
+      case Some(_) if flexiAccessExists                   =>
+        FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, period, schemeIndex)
+      case Some(_) if definedBenefitExists                =>
+        DefinedBenefitAmountController.onPageLoad(NormalMode, period, schemeIndex)
+      case Some(_) if period == Period._2016PreAlignment  =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case Some(_) if period == Period._2016PostAlignment =>
+        controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case Some(_)                                        =>
+        controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case None                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =

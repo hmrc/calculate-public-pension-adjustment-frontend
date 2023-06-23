@@ -41,16 +41,17 @@ class FlexiAccessDefinedContributionAmountFormProviderSpec extends IntFieldBehav
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
       form,
       fieldName,
-      minimum       = minimum,
-      maximum       = maximum,
-      expectedError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.outOfRange", Seq(minimum, maximum))
+      minimum = minimum,
+      maximum = maximum,
+      expectedError =
+        FormError(fieldName, "flexiAccessDefinedContributionAmount.error.outOfRange", Seq(minimum, maximum))
     )
 
     behave like mandatoryField(

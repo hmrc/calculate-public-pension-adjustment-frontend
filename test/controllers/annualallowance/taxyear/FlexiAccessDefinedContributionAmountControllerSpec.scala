@@ -37,13 +37,14 @@ import scala.concurrent.Future
 class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new FlexiAccessDefinedContributionAmountFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = 0
 
-  lazy val flexiAccessDefinedContributionAmountRoute = FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2013, SchemeIndex(0)).url
+  lazy val flexiAccessDefinedContributionAmountRoute =
+    FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2013, SchemeIndex(0)).url
 
   "FlexiAccessDefinedContributionAmount Controller" - {
 
@@ -59,13 +60,19 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
         val view = application.injector.instanceOf[FlexiAccessDefinedContributionAmountView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)), validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)), validAnswer)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -77,7 +84,10 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -121,7 +131,10 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2013, SchemeIndex(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2013, SchemeIndex(0))(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

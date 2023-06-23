@@ -27,6 +27,7 @@ class ContributedToDuringRemedyPeriodFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Set[ContributedToDuringRemedyPeriod]] =
     Form(
-      "value" -> set(enumerable[ContributedToDuringRemedyPeriod]("contributedToDuringRemedyPeriod.error.required")).verifying(nonEmptySet("contributedToDuringRemedyPeriod.error.required"))
+      "value" -> set(enumerable[ContributedToDuringRemedyPeriod]("contributedToDuringRemedyPeriod.error.required"))
+        .verifying(nonEmptySet("contributedToDuringRemedyPeriod.error.required"))
     )
 }

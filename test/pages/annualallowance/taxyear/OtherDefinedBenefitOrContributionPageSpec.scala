@@ -37,7 +37,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         val period = Period._2016PreAlignment
 
         "to ContributedToDuringRemedyPeriodPage when answered true" in {
-          val ua = emptyUserAnswers
+          val ua     = emptyUserAnswers
             .set(
               OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
               true
@@ -50,7 +50,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         }
 
         "to CheckYourAnswersPage when answered false" in {
-          val ua = emptyUserAnswers
+          val ua     = emptyUserAnswers
             .set(
               OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
               false
@@ -67,7 +67,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         val period = Period._2016PostAlignment
 
         "to ContributedToDuringRemedyPeriodPage when answered true" in {
-          val ua = emptyUserAnswers
+          val ua     = emptyUserAnswers
             .set(
               OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
               true
@@ -80,7 +80,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         }
 
         "to TotalIncomePage when answered false" in {
-          val ua = emptyUserAnswers
+          val ua     = emptyUserAnswers
             .set(
               OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
               false
@@ -97,7 +97,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         val period: Period = genPeriodNot2016.sample.value
 
         "to ContributedToDuringRemedyPeriodPage when answered true" in {
-          val ua = emptyUserAnswers
+          val ua     = emptyUserAnswers
             .set(
               OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
               true
@@ -110,7 +110,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         }
 
         "to ThresholdIncomePage when answered false" in {
-          val ua = emptyUserAnswers
+          val ua     = emptyUserAnswers
             .set(
               OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
               false
