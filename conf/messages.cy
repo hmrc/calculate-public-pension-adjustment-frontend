@@ -82,6 +82,16 @@ annualAllowance.period.caption.2021 = cy: Annual allowance between 2020 to 2021
 annualAllowance.period.caption.2022 = cy: Annual allowance between 2021 to 2022
 annualAllowance.period.caption.2023 = cy: Annual allowance between 2022 to 2023
 
+annualAllowance.period.caption.2016-pre = cy: Annual allowance between 6 April to 8 July 2015
+annualAllowance.period.caption.2016-post = cy: Annual allowance between 9 July to 5 April 2016
+annualAllowance.period.caption.2017 = cy: Annual allowance between 2016 to 2017
+annualAllowance.period.caption.2018 = cy: Annual allowance between 2017 to 2018
+annualAllowance.period.caption.2019 = cy: Annual allowance between 2018 to 2019
+annualAllowance.period.caption.2020 = cy: Annual allowance between 2019 to 2020
+annualAllowance.period.caption.2021 = cy: Annual allowance between 2020 to 2021
+annualAllowance.period.caption.2022 = cy: Annual allowance between 2021 to 2022
+annualAllowance.period.caption.2023 = cy: Annual allowance between 2022 to 2023
+
 savingsStatement.title = cy: Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.heading = cy: Have you received a remedial service statement from your public service pension scheme?
 savingsStatement.yes = cy: Yes
@@ -447,8 +457,9 @@ memberMoreThanOnePension.list3 = cy: leaving and coming back to public service w
 memberMoreThanOnePension.list4 = cy: splitting your pensions
 
 addAnotherScheme.title = cy: Do you need to add another pension scheme?
-addAnotherScheme.heading = cy: Do you need to add another pension scheme? {0} {1}
+addAnotherScheme.heading = cy: Do you need to add another pension scheme?
 addAnotherScheme.checkYourAnswersLabel = cy: Do you need to add another pension scheme?
+addAnotherScheme.hint = cy: The pension scheme will be added to this summary.
 addAnotherScheme.error.required = cy: Select yes if you need to add another pension scheme
 addAnotherScheme.change.hidden = cy: Do you need to add another pension scheme?
 
