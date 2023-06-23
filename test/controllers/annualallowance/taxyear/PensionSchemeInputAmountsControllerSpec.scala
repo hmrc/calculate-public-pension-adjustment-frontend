@@ -23,7 +23,7 @@ import models.{CheckMode, NormalMode, PensionSchemeInputAmounts, Period, SchemeI
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.PensionSchemeInputAmountsPage
+import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInputAmountsPage}
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Call
@@ -56,6 +56,10 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
       PensionSchemeInputAmountsPage.toString -> Json.obj(
         "originalPIA" -> "value 1",
         "revisedPIA"  -> "value 2"
+      ),
+      PensionSchemeDetailsPage.toString -> Json.obj(
+        "schemeName" -> "Some Scheme",
+        "schemeTaxRef" -> "12345678KL"
       )
     )
   )
@@ -71,15 +75,15 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
       running(application) {
         val request = FakeRequest(GET, pensionSchemeInputAmountsRoute)
 
-        // val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
+         val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-//        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0), "Some Scheme")(
-//          request,
-//          messages(application)
-//        ).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0), "")(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -95,21 +99,21 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
       running(application) {
         val request = FakeRequest(GET, pensionSchemeInputAmountsRoute)
 
-        // val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
+        val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-//        contentAsString(result) mustEqual view(
-//          form.fill(PensionSchemeInputAmounts(1, 2)),
-//          NormalMode,
-//          Period._2018,
-//          SchemeIndex(0),
-//          "Some Scheme"
-//        )(
-//          request,
-//          messages(application)
-//        ).toString
+        contentAsString(result) mustEqual view(
+          form.fill(PensionSchemeInputAmounts(1, 2)),
+          NormalMode,
+          Period._2018,
+          SchemeIndex(0),
+          ""
+        )(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -190,17 +194,17 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
           FakeRequest(POST, pensionSchemeInputAmountsRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
-        // val boundForm = form.bind(Map("value" -> "invalid value"))
+         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        // val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
+         val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-//        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "Some Scheme")(
-//          request,
-//          messages(application)
-//        ).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "")(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

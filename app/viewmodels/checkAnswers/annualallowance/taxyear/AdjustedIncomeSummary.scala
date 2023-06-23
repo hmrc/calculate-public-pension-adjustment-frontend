@@ -31,7 +31,7 @@ object AdjustedIncomeSummary {
   ): Option[SummaryListRow] =
     answers.get(AdjustedIncomePage(period, schemeIndex)).map { answer =>
       SummaryListRowViewModel(
-        key = "adjustedIncome.checkYourAnswersLabel",
+        key = messages("adjustedIncome.checkYourAnswersLabel", period.start.getYear.toString, period.end.getYear.toString),
         value = ValueViewModel(answer.toString),
         actions = Seq(
           ActionItemViewModel(

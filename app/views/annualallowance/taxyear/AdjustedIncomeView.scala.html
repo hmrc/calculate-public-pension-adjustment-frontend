@@ -15,6 +15,7 @@
  *@
 
 @import viewmodels.InputWidth._
+@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
@@ -26,7 +27,7 @@
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("adjustedIncome.title"))) {
+@layout(pageTitle = title(form, messages("adjustedIncome.title",period.start.getYear.toString, period.end.getYear.toString))) {
 
     @formHelper(
         action = controllers.annualallowance.taxyear.routes.AdjustedIncomeController.onSubmit(
@@ -39,14 +40,31 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <div>
+            <span class="govuk-caption-l">@messages("annualAllowance.period.caption."+{period.toString})</span>
+            <h1 class="govuk-heading-l">@messages("adjustedIncome.heading1")</h1>
+            <p class="govuk-body">@messages("adjustedIncome.hint1")</p>
+            <p class="govuk-body govuk-!-font-weight-bold">@messages("adjustedIncome.hint2")</p>
+            <ul>
+                <li class="govuk-body">@messages("adjustedIncome.hint3")</li>
+                <li class="govuk-body">@messages("adjustedIncome.hint4")</li>
+                <li class="govuk-body">@messages("adjustedIncome.hint5")</li>
+                <li class="govuk-body">@messages("adjustedIncome.hint6")</li>
+                <li class="govuk-body">@messages("adjustedIncome.hint7")</li>
+                <li class="govuk-body">@messages("adjustedIncome.hint8")</li>
+            </ul>
+        </div>
+
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("adjustedIncome.heading")).asPageHeading()
-            )
-            .asNumeric()
+                LabelViewModel(messages("adjustedIncome.heading2",period.start.getYear.toString, period.end.getYear.toString)).asPageHeading(LabelSize.Medium)
+            ).withHint(HintViewModel(messages("adjustedIncome.hint9")))
+            .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)
-        )
+
+)
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

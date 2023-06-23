@@ -23,9 +23,9 @@ import javax.inject.Inject
 
 class TotalIncomeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Int] =
+  def apply(): Form[BigInt] =
     Form(
-      "value" -> int("totalIncome.error.required", "totalIncome.error.wholeNumber", "totalIncome.error.nonNumeric")
-        .verifying(inRange(0, 10000000, "totalIncome.error.outOfRange"))
+      "value" -> bigInt("totalIncome.error.required", "totalIncome.error.wholeNumber", "totalIncome.error.nonNumeric")
+        .verifying(inRange[BigInt](0, BigInt("999999999"), "totalIncome.error.outOfRange"))
     )
 }

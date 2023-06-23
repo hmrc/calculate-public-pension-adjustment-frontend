@@ -165,12 +165,6 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
           FakeRequest(POST, pensionSchemeDetailsCheckRoute)
             .withFormUrlEncodedBody(("schemeName", "value 1"), ("schemeTaxRef", "12345678RL"))
 
-        val userAnswers =
-          emptyUserAnswers.set(
-            PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)),
-            PensionSchemeDetails("schemeName", "12345678RL")
-          )
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
