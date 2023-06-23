@@ -178,6 +178,13 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         checkNavigation(result, s"/thresholdIncome/$period/0")
       }
     }
+
+    "to JourneyRecovery when no answer given" in {
+      val ua = emptyUserAnswers
+      val result = DefinedContributionAmountPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+      checkNavigation(result, s"/there-is-a-problem")
+    }
   }
 
   "must Navigate correctly to CYA in check mode" in {

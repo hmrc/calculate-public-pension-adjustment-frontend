@@ -81,6 +81,13 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
           checkNavigation(result, s"/thresholdIncome/$period/0")
         }
       }
+
+      "to JourneyRecoveryPage when not answerd" in {
+        val ua = emptyUserAnswers
+        val result = DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+        checkNavigation(result, s"/there-is-a-problem")
+      }
     }
 
     "must Navigate correctly to CYA in check mode" in {

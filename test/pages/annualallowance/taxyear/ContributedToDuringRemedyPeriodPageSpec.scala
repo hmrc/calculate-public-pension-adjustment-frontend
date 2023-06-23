@@ -72,6 +72,13 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
 
         checkNavigation(result, "/definedContributionAmount/2013/0")
       }
+
+      "to JourneyRecoveryPage when not answered" in {
+        val ua = emptyUserAnswers
+        val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
     }
 
     "must Navigate correctly to CYA in check mode" in {
