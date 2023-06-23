@@ -266,3 +266,8 @@ GET        /definedBenefitAmount/:period/:schemeIndex                  controlle
 POST       /definedBenefitAmount/:period/:schemeIndex                  controllers.annualallowance.taxyear.DefinedBenefitAmountController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
 GET        /changeDefinedBenefitAmount/:period/:schemeIndex            controllers.annualallowance.taxyear.DefinedBenefitAmountController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 POST       /changeDefinedBenefitAmount/:period/:schemeIndex            controllers.annualallowance.taxyear.DefinedBenefitAmountController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+
+GET        /flexiAccessDefinedContributionAmount/:period/:schemeIndex                  controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST       /flexiAccessDefinedContributionAmount/:period/:schemeIndex                  controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET        /changeFlexiAccessDefinedContributionAmount/:period/:schemeIndex                        controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST       /changeFlexiAccessDefinedContributionAmount/:period/:schemeIndex                        controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)

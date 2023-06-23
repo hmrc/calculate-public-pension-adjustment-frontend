@@ -27,6 +27,14 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryFlexiAccessDefinedContributionAmountUserAnswersEntry: Arbitrary[(FlexiAccessDefinedContributionAmountPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[FlexiAccessDefinedContributionAmountPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryThresholdIncomeUserAnswersEntry: Arbitrary[(ThresholdIncomePage.type, JsValue)] =
     Arbitrary {
       for {
