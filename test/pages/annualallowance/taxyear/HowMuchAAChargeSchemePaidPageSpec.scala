@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, SchemeIndex}
+import models.{CheckMode, NormalMode, Period, SchemeIndex, WhoPaidAACharge}
 import pages.behaviours.PageBehaviours
 
 class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
@@ -28,5 +28,40 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     beSettable[BigInt](HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)))
 
     beRemovable[BigInt](HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)))
+  }
+
+  "must redirect to add another scheme page when user answer member more than one scheme true" in {
+
+    val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0))
+
+    val userAnswers = emptyUserAnswers
+      .set(MemberMoreThanOnePensionPage(Period._2018), true)
+      .success
+      .value
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/add-another-scheme/2018/0")
+  }
+
+  "must redirect to check your answers page when user answer member more than one scheme false" in {
+
+    val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0))
+
+    val userAnswers = emptyUserAnswers
+      .set(MemberMoreThanOnePensionPage(Period._2018), false)
+      .success
+      .value
+    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+    checkNavigation(nextPageUrl, "/check-your-answers-period/2018")
+  }
+
+  "must redirect to check your answers controller when user submits in check mode" in {
+
+    val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0))
+
+    val nextPageUrl: String = page.navigate(CheckMode, emptyUserAnswers).url
+
+    checkNavigation(nextPageUrl, "/check-your-answers-period/2018")
   }
 }
