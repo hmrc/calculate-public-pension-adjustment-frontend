@@ -52,7 +52,10 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("totalIncome.heading",period.start.getYear.toString, period.end.getYear.toString)).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                content = messages("totalIncome.heading", period.start.getYear.toString, period.end.getYear.toString),
+                caption = messages("totalIncome.caption", period.start.getYear.toString, period.end.getYear.toString)
+                )
             ).withHint(HintViewModel(HtmlContent(contentHint)))
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
