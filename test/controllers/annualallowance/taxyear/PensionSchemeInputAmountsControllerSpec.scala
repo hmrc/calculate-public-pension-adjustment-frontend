@@ -57,8 +57,8 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
         "originalPIA" -> "value 1",
         "revisedPIA"  -> "value 2"
       ),
-      PensionSchemeDetailsPage.toString -> Json.obj(
-        "schemeName" -> "Some Scheme",
+      PensionSchemeDetailsPage.toString      -> Json.obj(
+        "schemeName"   -> "Some Scheme",
         "schemeTaxRef" -> "12345678KL"
       )
     )
@@ -75,7 +75,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
       running(application) {
         val request = FakeRequest(GET, pensionSchemeInputAmountsRoute)
 
-         val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
+        val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
 
         val result = route(application, request).value
 
@@ -194,9 +194,9 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
           FakeRequest(POST, pensionSchemeInputAmountsRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
-         val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = form.bind(Map("value" -> "invalid value"))
 
-         val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
+        val view = application.injector.instanceOf[PensionSchemeInputAmountsView]
 
         val result = route(application, request).value
 

@@ -32,7 +32,7 @@ class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when value is entered, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
@@ -56,7 +56,7 @@ class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
       TotalIncomeSummary.row(userAnswers, period, schemeIndex) shouldBe None

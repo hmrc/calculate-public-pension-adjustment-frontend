@@ -20,7 +20,7 @@ import controllers.annualallowance.taxyear.routes
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.annualallowance.taxyear.{PensionSchemeInputAmountsPage, PensionSchemeDetailsPage}
+import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInputAmountsPage}
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -33,13 +33,14 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when value is entered, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
           PensionSchemeInputAmountsPage(period, schemeIndex),
-          models.PensionSchemeInputAmounts(BigInt("100"), BigInt("100")),
-        ).get
+          models.PensionSchemeInputAmounts(BigInt("100"), BigInt("100"))
+        )
+        .get
         .set(
           PensionSchemeDetailsPage(period, schemeIndex),
           models.PensionSchemeDetails("SomeScheme", "01234567TR")
@@ -61,7 +62,7 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when answer unavailable, return empty" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
       PensionSchemeInputAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe None
