@@ -34,7 +34,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
 
     val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0))
 
-    val userAnswers = emptyUserAnswers
+    val userAnswers         = emptyUserAnswers
       .set(MemberMoreThanOnePensionPage(Period._2018), true)
       .success
       .value
@@ -47,7 +47,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
 
     val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0))
 
-    val userAnswers = emptyUserAnswers
+    val userAnswers         = emptyUserAnswers
       .set(MemberMoreThanOnePensionPage(Period._2018), false)
       .success
       .value

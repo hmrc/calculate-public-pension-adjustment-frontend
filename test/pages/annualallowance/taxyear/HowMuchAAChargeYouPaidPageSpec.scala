@@ -33,7 +33,7 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
   "must redirect to how much charge scheme paid when user answers both to who paid AA charge" in {
     val page = HowMuchAAChargeYouPaidPage(Period._2018, SchemeIndex(0))
 
-    val userAnswers = emptyUserAnswers
+    val userAnswers         = emptyUserAnswers
       .set(WhoPaidAAChargePage(Period._2018, SchemeIndex(0)), WhoPaidAACharge.Both)
       .success
       .value
