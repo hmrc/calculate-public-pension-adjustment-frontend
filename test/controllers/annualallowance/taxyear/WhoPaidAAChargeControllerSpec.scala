@@ -19,7 +19,6 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import controllers.routes
 import forms.annualallowance.taxyear.WhoPaidAAChargeFormProvider
-import models.WhoPaidAACharge.You
 import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidAACharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when

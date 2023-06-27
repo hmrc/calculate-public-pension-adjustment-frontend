@@ -23,7 +23,7 @@ import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidA
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.{HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, WhoPaidAAChargePage}
+import pages.annualallowance.taxyear.{HowMuchAAChargeYouPaidPage, WhoPaidAAChargePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

@@ -30,19 +30,21 @@ case class AddAnotherSchemePage(period: Period, schemeIndex: SchemeIndex) extend
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(AddAnotherSchemePage(period, schemeIndex)) match {
-      case Some(true)  =>
-        val nextSchemeIndex = SchemeIndex(schemeIndex.value + 1)
-        if (PeriodService.isFirstPeriod(answers, period)) {
-          controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
-            .onPageLoad(NormalMode, period, nextSchemeIndex)
-        } else
-          controllers.annualallowance.taxyear.routes.WhichSchemeController
-            .onPageLoad(NormalMode, period, nextSchemeIndex)
-      case Some(false) =>
-        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-          .onPageLoad(period) // TODO until onward pages are added
+      case Some(true)  => addAnotherScheme(answers)
+      case Some(false) => AddAnotherSchemeMaybe.exitSchemeLoopNavigation(answers, period, schemeIndex)
       case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  private def addAnotherScheme(answers: UserAnswers) = {
+    val nextSchemeIndex = SchemeIndex(schemeIndex.value + 1)
+
+    if (PeriodService.isFirstPeriod(answers, period)) {
+      controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
+        .onPageLoad(NormalMode, period, nextSchemeIndex)
+    } else
+      controllers.annualallowance.taxyear.routes.WhichSchemeController
+        .onPageLoad(NormalMode, period, nextSchemeIndex)
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)

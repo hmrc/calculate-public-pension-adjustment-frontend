@@ -27,14 +27,16 @@ object AddAnotherSchemeMaybe {
     answers.get(MemberMoreThanOnePensionPage(period)) match {
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.AddAnotherSchemeController.onPageLoad(period, schemeIndex)
-      case Some(false) =>
-        answers.get(DefinedContributionPensionSchemePage) match {
-          case Some(true)  =>
-            controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
-              .onPageLoad(NormalMode, period, schemeIndex)
-          case Some(false) => noDCNavigation(period, schemeIndex)
-          case None        => routes.JourneyRecoveryController.onPageLoad(None)
-        }
+      case Some(false) => exitSchemeLoopNavigation(answers, period, schemeIndex)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  def exitSchemeLoopNavigation(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex) =
+    answers.get(DefinedContributionPensionSchemePage) match {
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
+          .onPageLoad(NormalMode, period, schemeIndex)
+      case Some(false) => noDCNavigation(period, schemeIndex)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -47,5 +49,4 @@ object AddAnotherSchemeMaybe {
       case Period.Year(_)            =>
         controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
     }
-
 }

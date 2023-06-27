@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, SchemeIndex, WhoPaidAACharge}
+import models.{CheckMode, NormalMode, Period, SchemeIndex}
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.behaviours.PageBehaviours
 
@@ -31,7 +31,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     beRemovable[BigInt](HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)))
   }
 
-  "must redirect to add another scheme page when user answer member more than one scheme true" in {
+  "must redirect to add another scheme page when member more than one scheme" in {
 
     val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0))
 

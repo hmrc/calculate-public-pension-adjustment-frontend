@@ -40,7 +40,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/add-another-scheme/2018/0") // TODO until onward pages are added
+      checkNavigation(nextPageUrl, "/add-another-scheme/2018/0")
     }
 
     "when did not pay charge in standard period and not member of more than one scheme and does have DC scheme then check onward navigation" in {
