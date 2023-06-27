@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, SchemeIndex, WhoPaidAACharge}
+import models.{CheckMode, NormalMode, Period, SchemeIndex, WhoPaidAACharge}
 import pages.behaviours.PageBehaviours
 
 class WhoPaidAAChargeSpec extends PageBehaviours {
@@ -28,5 +28,57 @@ class WhoPaidAAChargeSpec extends PageBehaviours {
     beSettable[WhoPaidAACharge](WhoPaidAAChargePage(Period._2018, SchemeIndex(0)))
 
     beRemovable[WhoPaidAACharge](WhoPaidAAChargePage(Period._2018, SchemeIndex(0)))
+
+    "must redirect to how much charge you paid page when user selects you" in {
+      val page = WhoPaidAAChargePage(Period._2018, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, WhoPaidAACharge.You)
+        .success
+        .value
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/how-much-you-pay-charge/2018/0")
+    }
+
+    "must redirect to how much charge scheme paid page when user selects scheme" in {
+      val page = WhoPaidAAChargePage(Period._2018, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, WhoPaidAACharge.Scheme)
+        .success
+        .value
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/how-much-pension-pay-charge/2018/0")
+    }
+
+    "must redirect to how much charge you paid page when user selects both" in {
+      val page = WhoPaidAAChargePage(Period._2018, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, WhoPaidAACharge.Both)
+        .success
+        .value
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/how-much-you-pay-charge/2018/0")
+    }
+
+    "must redirect user to adjust charge when user resubmits answers in check mode" in {
+      val page = WhoPaidAAChargePage(Period._2018, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, WhoPaidAACharge.You)
+        .success
+        .value
+
+      val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-how-much-you-pay-charge/2018/0")
+    }
   }
 }
