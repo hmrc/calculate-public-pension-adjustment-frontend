@@ -36,10 +36,10 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
   "must Navigate correctly in normal mode" - {
 
     "to FlexiAccessDefinedContributionAmountPage when flexi date is for the same period and flexi access selected" in {
-      val period = arbitraryPeriod.arbitrary.sample.value
+      val period    = arbitraryPeriod.arbitrary.sample.value
       val flexiDate = period.start
 
-      val ua = emptyUserAnswers
+      val ua     = emptyUserAnswers
         .set(
           DefinedContributionAmountPage(period, SchemeIndex(0)),
           100
@@ -58,10 +58,10 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
     }
 
     "to DefinedBenefitAmountPage when flexi date answered but for a different period and DB selected" in {
-      val period = arbitraryPeriod.arbitrary.sample.value
+      val period    = arbitraryPeriod.arbitrary.sample.value
       val flexiDate = period.end.plusMonths(1)
 
-      val ua = emptyUserAnswers
+      val ua     = emptyUserAnswers
         .set(
           DefinedContributionAmountPage(period, SchemeIndex(0)),
           100
@@ -128,7 +128,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       }
 
       "to CheckYourAnswersPage when answered and no flexi access selected and no DB selected" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
             100
@@ -149,7 +149,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       "to CheckYourAnswersPage when flexi date answered but for a different period and no DB selected" in {
         val flexiDate = period.end.plusMonths(1)
 
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
             100
@@ -238,7 +238,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       "to TotalIncomePage when flexi date answered but for a different period and no DB selected" in {
         val flexiDate = period.end.plusMonths(1)
 
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
             100
@@ -327,7 +327,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       "to ThresholdIncome when flexi date answered but for a different period and no DB selected" in {
         val flexiDate = period.end.plusMonths(1)
 
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
             100

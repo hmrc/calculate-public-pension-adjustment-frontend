@@ -29,16 +29,16 @@ case class DefinedContributionAmountPage(period: Period, schemeIndex: SchemeInde
 
   override def toString: String = "definedContributionAmount"
 
-  //noinspection ScalaStyle
+  // noinspection ScalaStyle
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    val flexiAccessExistsForPeriod    = answers.get(FlexibleAccessStartDatePage) match {
+    val flexiAccessExistsForPeriod = answers.get(FlexibleAccessStartDatePage) match {
       case Some(date) => period.start.minusDays(1).isBefore(date) && period.end.plusDays(1).isAfter(date)
-      case None => false
+      case None       => false
     }
 
     val definedBenefitExists = answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) match {
       case Some(contributedTo) if contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit) => true
-      case _  => false
+      case _                                                                                             => false
     }
 
     answers.get(DefinedContributionAmountPage(period, schemeIndex)) match {

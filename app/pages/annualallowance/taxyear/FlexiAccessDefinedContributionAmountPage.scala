@@ -29,11 +29,11 @@ case class FlexiAccessDefinedContributionAmountPage(period: Period, schemeIndex:
 
   override def toString: String = "flexiAccessDefinedContributionAmount"
 
-  //noinspection ScalaStyle
+  // noinspection ScalaStyle
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     val definedBenefitExists = answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) match {
       case Some(contributedTo) if contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit) => true
-      case _ => false
+      case _                                                                                             => false
     }
 
     if (definedBenefitExists) {
