@@ -648,11 +648,11 @@ definedBenefitAmount.error.wholeNumber = Enter your definedBenefitAmount using w
 definedBenefitAmount.error.outOfRange = DefinedBenefitAmount must be between {0} and {1}
 definedBenefitAmount.change.hidden = What was your pension input amount for defined benefit pension schemes?
 
-flexiAccessDefinedContributionAmount.title = FlexiAccessDefinedContributionAmount
-flexiAccessDefinedContributionAmount.heading = FlexiAccessDefinedContributionAmount
-flexiAccessDefinedContributionAmount.checkYourAnswersLabel = FlexiAccessDefinedContributionAmount
+flexiAccessDefinedContributionAmount.title = What was your Flexi access pension input amount for defined contribution pension schemes?
+flexiAccessDefinedContributionAmount.heading = What was your Flexi access pension input amount for defined contribution pension schemes?
+flexiAccessDefinedContributionAmount.checkYourAnswersLabel = What was your Flexi access pension input amount for defined contribution pension schemes?
 flexiAccessDefinedContributionAmount.error.nonNumeric = Enter your flexiAccessDefinedContributionAmount using numbers
 flexiAccessDefinedContributionAmount.error.required = Enter your flexiAccessDefinedContributionAmount
 flexiAccessDefinedContributionAmount.error.wholeNumber = Enter your flexiAccessDefinedContributionAmount using whole numbers
 flexiAccessDefinedContributionAmount.error.outOfRange = FlexiAccessDefinedContributionAmount must be between {0} and {1}
-flexiAccessDefinedContributionAmount.change.hidden = FlexiAccessDefinedContributionAmount
+flexiAccessDefinedContributionAmount.change.hidden = What was your Flexi access pension input amount for defined contribution pension schemes?

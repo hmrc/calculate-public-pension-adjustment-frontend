@@ -621,3 +621,13 @@ totalIncome.error.required = cy: Enter your totalIncome
 totalIncome.error.wholeNumber = cy: Enter your totalIncome using whole numbers
 totalIncome.error.outOfRange = cy: TotalIncome must be between {0} and {1}
 totalIncome.change.hidden = cy: What was your total income?
+
+flexiAccessDefinedContributionAmount.title = cy: What was your Flexi access pension input amount for defined contribution pension schemes?
+flexiAccessDefinedContributionAmount.heading = cy: What was your Flexi access pension input amount for defined contribution pension schemes?
+flexiAccessDefinedContributionAmount.checkYourAnswersLabel = cy: What was your Flexi access pension input amount for defined contribution pension schemes?
+flexiAccessDefinedContributionAmount.error.nonNumeric = cy: Enter your flexiAccessDefinedContributionAmount using numbers
+flexiAccessDefinedContributionAmount.error.required = cy: Enter your flexiAccessDefinedContributionAmount
+flexiAccessDefinedContributionAmount.error.wholeNumber = cy: Enter your flexiAccessDefinedContributionAmount using whole numbers
+flexiAccessDefinedContributionAmount.error.outOfRange = cy: FlexiAccessDefinedContributionAmount must be between {0} and {1}
+flexiAccessDefinedContributionAmount.change.hidden = cy: What was your Flexi access pension input amount for defined contribution pension schemes?
+
