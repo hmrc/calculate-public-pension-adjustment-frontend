@@ -28,7 +28,7 @@ class HowMuchAAChargeYouPaidFormProviderSpec extends IntFieldBehaviours {
     val fieldName = "value"
 
     val minimum = 0
-    val maximum = Int.MaxValue
+    val maximum = 999999999
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 

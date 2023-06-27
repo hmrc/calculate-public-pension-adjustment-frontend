@@ -19,11 +19,11 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import controllers.routes
 import forms.annualallowance.taxyear.HowMuchAAChargeYouPaidFormProvider
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidAACharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.HowMuchAAChargeYouPaidPage
+import pages.annualallowance.taxyear.{HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, WhoPaidAAChargePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -40,11 +40,16 @@ class HowMuchAAChargeYouPaidControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = 0
+  val validAnswer = BigInt(0)
 
   lazy val howMuchAAChargeYouPaidRoute =
     controllers.annualallowance.taxyear.routes.HowMuchAAChargeYouPaidController
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
+      .url
+
+  lazy val howMuchAAChargeYouPaidCheckRoute =
+    controllers.annualallowance.taxyear.routes.HowMuchAAChargeYouPaidController
+      .onPageLoad(CheckMode, Period._2018, SchemeIndex(0))
       .url
 
   "HowMuchAAChargeYouPaid Controller" - {
@@ -110,7 +115,7 @@ class HowMuchAAChargeYouPaidControllerSpec extends SpecBase with MockitoSugar {
           FakeRequest(POST, howMuchAAChargeYouPaidRoute)
             .withFormUrlEncodedBody(("value", validAnswer.toString))
 
-        val userAnswers = emptyUserAnswers.set(HowMuchAAChargeYouPaidPage(Period._2018, SchemeIndex(0)), 1000)
+        val userAnswers = emptyUserAnswers.set(HowMuchAAChargeYouPaidPage(Period._2018, SchemeIndex(0)), BigInt(1000))
 
         val result = route(application, request).value
 
@@ -172,6 +177,40 @@ class HowMuchAAChargeYouPaidControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
 
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to how much charge scheme paid when user answers both" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val answers = emptyUserAnswers
+        .set(WhoPaidAAChargePage(Period._2018, SchemeIndex(0)), WhoPaidAACharge.Both)
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(answers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, howMuchAAChargeYouPaidRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
+          .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
+          .url
       }
     }
   }
