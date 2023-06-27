@@ -33,9 +33,7 @@ case class HowMuchAAChargeSchemePaidPage(period: Period, schemeIndex: SchemeInde
   def addAnotherMaybe(answers: UserAnswers): Call = answers.get(MemberMoreThanOnePensionPage(period)) match {
     case Some(true)  =>
       controllers.annualallowance.taxyear.routes.AddAnotherSchemeController.onPageLoad(period, schemeIndex)
-    case Some(false) =>
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-        .onPageLoad(period) // TODO until onward pages are added
+    case Some(false) => AddAnotherSchemeMaybe.navigate(answers, period, schemeIndex)
     case None        => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
