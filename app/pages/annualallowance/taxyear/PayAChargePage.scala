@@ -19,6 +19,7 @@ package pages.annualallowance.taxyear
 import controllers.routes
 import models.{CheckMode, Mode, NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
+import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -72,9 +73,23 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
     case Some(true)  =>
       controllers.annualallowance.taxyear.routes.AddAnotherSchemeController.onPageLoad(period, schemeIndex)
     case Some(false) =>
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-        .onPageLoad(period) // TODO until onward pages are added
+      answers.get(DefinedContributionPensionSchemePage) match {
+        case Some(true)  =>
+          controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
+            .onPageLoad(NormalMode, period, schemeIndex)
+        case Some(false) => noDCNavigation()
+        case None        => routes.JourneyRecoveryController.onPageLoad(None)
+      }
     case None        => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
+  private def noDCNavigation(): Call =
+    period match {
+      case Period._2016PreAlignment  =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case Period._2016PostAlignment =>
+        controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case Period.Year(_)            =>
+        controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+    }
 }

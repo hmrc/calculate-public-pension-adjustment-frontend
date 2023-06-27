@@ -17,6 +17,7 @@
 package pages.annualallowance.taxyear
 
 import models.{NormalMode, Period, SchemeIndex}
+import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.behaviours.PageBehaviours
 
 class PayAChargePageSpec extends PageBehaviours {
@@ -42,14 +43,100 @@ class PayAChargePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/add-another-scheme/2018/0") // TODO until onward pages are added
     }
 
-    "when did not pay charge and not member of more than one scheme then check onward navigation" in {
+    "when did not pay charge in standard period and not member of more than one scheme and does have DC scheme then check onward navigation" in {
       val page = PayAChargePage(Period._2018, SchemeIndex(0))
 
-      val userAnswers = emptyUserAnswers.set(page, false).get.set(MemberMoreThanOnePensionPage(Period._2018), false).get
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2018), false)
+        .get
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-period/2018") // TODO until onward pages are added
+      checkNavigation(nextPageUrl, "/otherDefinedBenefitOrContribution/2018/0")
+    }
+
+    "when did not pay charge in standard period and not member of more than one scheme and does not have DC scheme then check onward navigation" in {
+      val page = PayAChargePage(Period._2018, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2018), false)
+        .get
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/thresholdIncome/2018/0")
+    }
+
+    "when did not pay charge in 2016-pre period and not member of more than one scheme and does have DC scheme then check onward navigation" in {
+      val page = PayAChargePage(Period._2016PreAlignment, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
+        .get
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/otherDefinedBenefitOrContribution/2016-pre/0")
+    }
+
+    "when did not pay charge in 2016-pre period and not member of more than one scheme and does not have DC scheme then check onward navigation" in {
+      val page = PayAChargePage(Period._2016PreAlignment, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
+        .get
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-period/2016-pre")
+    }
+
+    "when did not pay charge in 2016-post period and not member of more than one scheme and does have DC scheme then check onward navigation" in {
+      val page = PayAChargePage(Period._2016PostAlignment, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
+        .get
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/otherDefinedBenefitOrContribution/2016-post/0")
+    }
+
+    "when did not pay charge in 2016-post period and not member of more than one scheme and does not have DC scheme then check onward navigation" in {
+      val page = PayAChargePage(Period._2016PostAlignment, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
+        .get
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/totalIncome/2016-post/0")
     }
 
     "when did pay charge then check onward navigation" in {
