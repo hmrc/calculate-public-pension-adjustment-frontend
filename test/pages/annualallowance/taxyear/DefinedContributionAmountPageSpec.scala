@@ -35,6 +35,56 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
   "must Navigate correctly in normal mode" - {
 
+    "to FlexiAccessDefinedContributionAmountPage when flexi date is for the same period and flexi access selected" in {
+      val period = arbitraryPeriod.arbitrary.sample.value
+      val flexiDate = period.start
+
+      val ua = emptyUserAnswers
+        .set(
+          DefinedContributionAmountPage(period, SchemeIndex(0)),
+          100
+        )
+        .success
+        .value
+        .set(
+          FlexibleAccessStartDatePage,
+          flexiDate
+        )
+        .success
+        .value
+      val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+      checkNavigation(result, s"/flexiAccessDefinedContributionAmount/$period/0")
+    }
+
+    "to DefinedBenefitAmountPage when flexi date answered but for a different period and DB selected" in {
+      val period = arbitraryPeriod.arbitrary.sample.value
+      val flexiDate = period.end.plusMonths(1)
+
+      val ua = emptyUserAnswers
+        .set(
+          DefinedContributionAmountPage(period, SchemeIndex(0)),
+          100
+        )
+        .success
+        .value
+        .set(
+          ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+          Set(ContributedToDuringRemedyPeriod.values.tail.head)
+        )
+        .success
+        .value
+        .set(
+          FlexibleAccessStartDatePage,
+          flexiDate
+        )
+        .success
+        .value
+      val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+      checkNavigation(result, s"/definedBenefitAmount/$period/0")
+    }
+
     "for pre 15-16" - {
 
       val period = Period._2016PreAlignment
@@ -49,7 +99,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
           .set(
             FlexibleAccessStartDatePage,
-            LocalDate.now()
+            period.start
           )
           .success
           .value
@@ -78,10 +128,43 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       }
 
       "to CheckYourAnswersPage when answered and no flexi access selected and no DB selected" in {
-        val ua     = emptyUserAnswers
+        val ua = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
             100
+          )
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+            Set(ContributedToDuringRemedyPeriod.values.head)
+          )
+          .success
+          .value
+        val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+        checkNavigation(result, s"/check-your-answers-period/$period")
+      }
+
+      "to CheckYourAnswersPage when flexi date answered but for a different period and no DB selected" in {
+        val flexiDate = period.end.plusMonths(1)
+
+        val ua = emptyUserAnswers
+          .set(
+            DefinedContributionAmountPage(period, SchemeIndex(0)),
+            100
+          )
+          .success
+          .value
+          .set(
+            FlexibleAccessStartDatePage,
+            flexiDate
+          )
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+            Set(ContributedToDuringRemedyPeriod.values.head)
           )
           .success
           .value
@@ -105,7 +188,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
           .set(
             FlexibleAccessStartDatePage,
-            LocalDate.now()
+            period.end
           )
           .success
           .value
@@ -141,6 +224,39 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           )
           .success
           .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+            Set(ContributedToDuringRemedyPeriod.values.head)
+          )
+          .success
+          .value
+        val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+        checkNavigation(result, s"/totalIncome/$period/0")
+      }
+
+      "to TotalIncomePage when flexi date answered but for a different period and no DB selected" in {
+        val flexiDate = period.end.plusMonths(1)
+
+        val ua = emptyUserAnswers
+          .set(
+            DefinedContributionAmountPage(period, SchemeIndex(0)),
+            100
+          )
+          .success
+          .value
+          .set(
+            FlexibleAccessStartDatePage,
+            flexiDate
+          )
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+            Set(ContributedToDuringRemedyPeriod.values.head)
+          )
+          .success
+          .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
         checkNavigation(result, s"/totalIncome/$period/0")
@@ -161,7 +277,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
           .set(
             FlexibleAccessStartDatePage,
-            LocalDate.now()
+            period.start
           )
           .success
           .value
@@ -194,6 +310,39 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
             100
+          )
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+            Set(ContributedToDuringRemedyPeriod.values.head)
+          )
+          .success
+          .value
+        val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+
+        checkNavigation(result, s"/thresholdIncome/$period/0")
+      }
+
+      "to ThresholdIncome when flexi date answered but for a different period and no DB selected" in {
+        val flexiDate = period.end.plusMonths(1)
+
+        val ua = emptyUserAnswers
+          .set(
+            DefinedContributionAmountPage(period, SchemeIndex(0)),
+            100
+          )
+          .success
+          .value
+          .set(
+            FlexibleAccessStartDatePage,
+            flexiDate
+          )
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+            Set(ContributedToDuringRemedyPeriod.values.head)
           )
           .success
           .value

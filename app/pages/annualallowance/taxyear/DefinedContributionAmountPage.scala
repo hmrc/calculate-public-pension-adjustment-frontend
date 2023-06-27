@@ -29,14 +29,20 @@ case class DefinedContributionAmountPage(period: Period, schemeIndex: SchemeInde
 
   override def toString: String = "definedContributionAmount"
 
+  //noinspection ScalaStyle
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    val flexiAccessExists    = answers.get(FlexibleAccessStartDatePage).isDefined
-    val definedBenefitExists = (answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) map {
-      contributedTo => contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit)
-    }).isDefined
+    val flexiAccessExistsForPeriod    = answers.get(FlexibleAccessStartDatePage) match {
+      case Some(date) => period.start.minusDays(1).isBefore(date) && period.end.plusDays(1).isAfter(date)
+      case None => false
+    }
+
+    val definedBenefitExists = answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) match {
+      case Some(contributedTo) if contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit) => true
+      case _  => false
+    }
 
     answers.get(DefinedContributionAmountPage(period, schemeIndex)) match {
-      case Some(_) if flexiAccessExists                   =>
+      case Some(_) if flexiAccessExistsForPeriod          =>
         FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, period, schemeIndex)
       case Some(_) if definedBenefitExists                =>
         DefinedBenefitAmountController.onPageLoad(NormalMode, period, schemeIndex)

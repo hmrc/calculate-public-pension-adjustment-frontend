@@ -62,6 +62,12 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             )
             .success
             .value
+            .set(
+              ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+              Set(ContributedToDuringRemedyPeriod.values.head)
+            )
+            .success
+            .value
           val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
           checkNavigation(result, s"/check-your-answers-period/$period")
@@ -99,6 +105,12 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             )
             .success
             .value
+            .set(
+              ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+              Set(ContributedToDuringRemedyPeriod.values.head)
+            )
+            .success
+            .value
           val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
           checkNavigation(result, s"/totalIncome/$period/0")
@@ -133,6 +145,12 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             .set(
               FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
               100
+            )
+            .success
+            .value
+            .set(
+              ContributedToDuringRemedyPeriodPage(period, SchemeIndex(0)),
+              Set(ContributedToDuringRemedyPeriod.values.head)
             )
             .success
             .value
