@@ -15,14 +15,14 @@
  *@
 
 @import models.tasklist.TaskListViewModel
-
+@import models.tasklist.TaskListStatus
 @this(
         layout: templates.Layout,
         formHelper: FormWithCSRF,
-        govukTag: GovukTag,
         govukButton: GovukButton,
         govukErrorSummary: GovukErrorSummary,
 )
+
 
 @(form: Form[_], taskListViewModel: TaskListViewModel)(implicit request: Request[_], messages: Messages)
 
@@ -62,10 +62,10 @@
                     @group.get.sections.map { section =>
                         <li class="app-task-list__item">
                             <span class="app-task-list__task-name">
-                                <a href="@section.call.url" class="govuk-link">@messages(s"taskList.${section.status.toString}") @messages(section.name)</a>
+                                <a href="@section.call.url" class="govuk-link" aria-describedby="@section.id">@messages(s"taskList.${section.status.toString}") @messages(section.name)</a>
                             </span>
-                            <span class="hmrc-status-tag">
-                            @govukTag(section.status.tag)
+                            <span class="hmrc-status-tag" id="@section.id">
+                            @TaskListStatus(section.status, messages)
                             </span>
                         </li>
                     }

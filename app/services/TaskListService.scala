@@ -61,7 +61,8 @@ class TaskListService @Inject() (
         SectionViewModel(
           "taskList.setup.sectionName",
           SetupSection.returnTo(answers).navigate(NormalMode, answers),
-          SetupSection.status(answers)
+          SetupSection.status(answers),
+          "setup-questions"
         )
       )
     )
@@ -71,7 +72,8 @@ class TaskListService @Inject() (
       SectionViewModel(
         s"taskList.aa.sectionNameFor${period.toString}",
         AASection(period, SchemeIndex(0)).returnTo(answers).navigate(NormalMode, answers),
-        AASection(period, SchemeIndex(0)).status(answers)
+        AASection(period, SchemeIndex(0)).status(answers),
+        s"annual-allowance-details-${period.toString}"
       )
     )
 
@@ -87,7 +89,8 @@ class TaskListService @Inject() (
         SectionViewModel(
           s"taskList.aa.setup.sectionName",
           PreAASection.returnTo(answers).navigate(NormalMode, answers),
-          PreAASection.status(answers)
+          PreAASection.status(answers),
+          "annual-allowance-setup-questions"
         )
       ) ++ aaPeriodSections
     )
@@ -102,7 +105,8 @@ class TaskListService @Inject() (
             SectionViewModel(
               "taskList.admin.sectionName",
               controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad,
-              SectionStatus.Completed
+              SectionStatus.Completed,
+              "admin-questions"
             )
           )
         )
@@ -119,7 +123,8 @@ class TaskListService @Inject() (
             SectionViewModel(
               "taskList.lta.sectionName",
               LTASection.returnTo(answers).navigate(NormalMode, answers),
-              LTASection.status(answers)
+              LTASection.status(answers),
+              "lifetime-allowance-questions"
             )
           )
         )
