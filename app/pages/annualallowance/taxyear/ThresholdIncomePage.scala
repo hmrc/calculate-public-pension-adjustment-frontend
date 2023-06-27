@@ -33,7 +33,7 @@ case class ThresholdIncomePage(period: Period, schemeIndex: SchemeIndex) extends
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true => super.cleanup(value, userAnswers)
+        case true  => super.cleanup(value, userAnswers)
         case false =>
           userAnswers
             .remove(AdjustedIncomePage(period, schemeIndex))
@@ -49,8 +49,8 @@ case class ThresholdIncomePage(period: Period, schemeIndex: SchemeIndex) extends
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ThresholdIncomePage(period, schemeIndex)) match {
-      case Some(true) => AdjustedIncomeController.onPageLoad(CheckMode, period, schemeIndex)
+      case Some(true)  => AdjustedIncomeController.onPageLoad(CheckMode, period, schemeIndex)
       case Some(false) => CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

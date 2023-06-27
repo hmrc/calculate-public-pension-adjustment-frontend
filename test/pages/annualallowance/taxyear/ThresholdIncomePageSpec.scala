@@ -82,7 +82,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
     }
 
     "must Navigate correctly to CYA in check mode when answered yes" in {
-      val ua = emptyUserAnswers
+      val ua     = emptyUserAnswers
         .set(
           ThresholdIncomePage(Period._2013, SchemeIndex(0)),
           true
