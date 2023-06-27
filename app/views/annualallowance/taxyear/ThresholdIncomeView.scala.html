@@ -24,7 +24,29 @@
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("thresholdIncome.title"))) {
+@contentHint = {
+        <p class="govuk-body">@messages("thresholdIncome.heading.hint1")</p>
+        <p class="govuk-heading-s">@messages("thresholdIncome.heading.hint2")</p>
+        <ul>
+            <li class="govuk-body">
+                @messages("thresholdIncome.heading.list1")
+            </li>
+            <li class="govuk-body">
+                @messages("thresholdIncome.heading.list2")
+            </li>
+            <li class="govuk-body">
+                @messages("thresholdIncome.heading.list3")
+            </li>
+            <li class="govuk-body">
+                @messages("thresholdIncome.heading.list4")
+            </li>
+            <li class="govuk-body">
+                @messages("thresholdIncome.heading.list5")
+            </li>
+        </ul>
+}
+
+@layout(pageTitle = title(form, messages("thresholdIncome.title." + period))) {
 
     @formHelper(
         action = controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onSubmit(
@@ -39,10 +61,12 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("thresholdIncome.heading")).asPageHeading()
-            )
+                legend = HmrcPageHeadingLegend(
+                content = messages("thresholdIncome.heading." + period),
+                caption = HmrcSectionCaption((messages("annualAllowance.period.caption." + period)))
+                )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
-
         @govukButton(
             ButtonViewModel(messages("site.continue"))
         )

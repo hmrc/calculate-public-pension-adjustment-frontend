@@ -321,7 +321,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/thresholdIncome/$period/0")
+        checkNavigation(result, s"/threshold-income/$period/0")
       }
 
       "to ThresholdIncome when flexi date answered but for a different period and no DB selected" in {
@@ -348,7 +348,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/thresholdIncome/$period/0")
+        checkNavigation(result, s"/threshold-income/$period/0")
       }
     }
 

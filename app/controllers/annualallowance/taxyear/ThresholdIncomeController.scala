@@ -42,10 +42,9 @@ class ThresholdIncomeController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
-
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
+      val form         = formProvider(period)
       val preparedForm = request.userAnswers.get(ThresholdIncomePage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -56,6 +55,7 @@ class ThresholdIncomeController @Inject() (
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
+      val form = formProvider(period)
       form
         .bindFromRequest()
         .fold(

@@ -32,7 +32,7 @@ object ThresholdIncomeSummary {
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "thresholdIncome.checkYourAnswersLabel",
+        key = "thresholdIncome.checkYourAnswersLabel." + period,
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
