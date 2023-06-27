@@ -640,3 +640,38 @@ totalIncome.error.required = Enter your totalIncome
 totalIncome.error.wholeNumber = Enter your totalIncome using whole numbers
 totalIncome.error.outOfRange = TotalIncome must be between {0} and {1}
 totalIncome.change.hidden = What was your total income?
+
+contributedToDuringRemedyPeriod.title = Which have you contributed to during the remedy period?
+contributedToDuringRemedyPeriod.heading = Which have you contributed to during the remedy period?
+contributedToDuringRemedyPeriod.definedContribution = Defined Contribution
+contributedToDuringRemedyPeriod.definedBenefit = Defined Benefit
+contributedToDuringRemedyPeriod.checkYourAnswersLabel = Which have you contributed to during the remedy period?
+contributedToDuringRemedyPeriod.error.required = Select contributedToDuringRemedyPeriod
+contributedToDuringRemedyPeriod.change.hidden = ContributedToDuringRemedyPeriod
+
+definedContributionAmount.title = What was your pension input amount for defined contribution pension schemes?
+definedContributionAmount.heading = What was your pension input amount for defined contribution pension schemes?
+definedContributionAmount.checkYourAnswersLabel = What was your pension input amount for defined contribution pension schemes?
+definedContributionAmount.error.nonNumeric = Enter your definedContributionAmount using numbers
+definedContributionAmount.error.required = Enter your definedContributionAmount
+definedContributionAmount.error.wholeNumber = Enter your definedContributionAmount using whole numbers
+definedContributionAmount.error.outOfRange = DefinedContributionAmount must be between {0} and {1}
+definedContributionAmount.change.hidden = What was your pension input amount for defined contribution pension schemes?
+
+definedBenefitAmount.title = What was your pension input amount for defined benefit pension schemes?
+definedBenefitAmount.heading = What was your pension input amount for defined benefit pension schemes?
+definedBenefitAmount.checkYourAnswersLabel = What was your pension input amount for defined benefit pension schemes?
+definedBenefitAmount.error.nonNumeric = Enter your definedBenefitAmount using numbers
+definedBenefitAmount.error.required = Enter your definedBenefitAmount
+definedBenefitAmount.error.wholeNumber = Enter your definedBenefitAmount using whole numbers
+definedBenefitAmount.error.outOfRange = DefinedBenefitAmount must be between {0} and {1}
+definedBenefitAmount.change.hidden = What was your pension input amount for defined benefit pension schemes?
+
+flexiAccessDefinedContributionAmount.title = What was your Flexi access pension input amount for defined contribution pension schemes?
+flexiAccessDefinedContributionAmount.heading = What was your Flexi access pension input amount for defined contribution pension schemes?
+flexiAccessDefinedContributionAmount.checkYourAnswersLabel = What was your Flexi access pension input amount for defined contribution pension schemes?
+flexiAccessDefinedContributionAmount.error.nonNumeric = Enter your flexiAccessDefinedContributionAmount using numbers
+flexiAccessDefinedContributionAmount.error.required = Enter your flexiAccessDefinedContributionAmount
+flexiAccessDefinedContributionAmount.error.wholeNumber = Enter your flexiAccessDefinedContributionAmount using whole numbers
+flexiAccessDefinedContributionAmount.error.outOfRange = FlexiAccessDefinedContributionAmount must be between {0} and {1}
+flexiAccessDefinedContributionAmount.change.hidden = What was your Flexi access pension input amount for defined contribution pension schemes?

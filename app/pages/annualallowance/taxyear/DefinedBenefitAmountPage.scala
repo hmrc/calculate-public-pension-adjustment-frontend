@@ -16,29 +16,26 @@
 
 package pages.annualallowance.taxyear
 
-import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, ContributedToDuringRemedyPeriodController, ThresholdIncomeController, TotalIncomeController}
-import controllers.routes
+import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, ThresholdIncomeController, TotalIncomeController}
 import models.{NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)
-    extends QuestionPage[Boolean] {
+case class DefinedBenefitAmountPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[Int] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
 
-  override def toString: String = "otherDefinedBenefitOrContribution"
+  override def toString: String = "definedBenefitAmount"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(OtherDefinedBenefitOrContributionPage(period, schemeIndex)) match {
-      case Some(false) if period == Period._2016PreAlignment  =>
+    answers.get(DefinedBenefitAmountPage(period, schemeIndex)) match {
+      case Some(_) if period == Period._2016PreAlignment  =>
         CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case Some(false) if period == Period._2016PostAlignment =>
+      case Some(_) if period == Period._2016PostAlignment =>
         TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case Some(false)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case Some(true)                                         => ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, period, schemeIndex)
-      case None                                               => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+      case None                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =

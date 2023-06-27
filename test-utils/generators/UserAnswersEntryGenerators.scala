@@ -27,6 +27,15 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryFlexiAccessDefinedContributionAmountUserAnswersEntry
+    : Arbitrary[(FlexiAccessDefinedContributionAmountPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[FlexiAccessDefinedContributionAmountPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryThresholdIncomeUserAnswersEntry: Arbitrary[(ThresholdIncomePage.type, JsValue)] =
     Arbitrary {
       for {
@@ -57,6 +66,32 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       for {
         page  <- arbitrary[AdjustedIncomePage.type]
         value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryDefinedBenefitAmountUserAnswersEntry: Arbitrary[(DefinedBenefitAmountPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DefinedBenefitAmountPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryDefinedContributionAmountUserAnswersEntry
+    : Arbitrary[(DefinedContributionAmountPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DefinedContributionAmountPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryContributedToDuringRemedyPeriodUserAnswersEntry
+    : Arbitrary[(ContributedToDuringRemedyPeriodPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ContributedToDuringRemedyPeriodPage.type]
+        value <- arbitrary[ContributedToDuringRemedyPeriod].map(Json.toJson(_))
       } yield (page, value)
     }
 

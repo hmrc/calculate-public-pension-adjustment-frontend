@@ -22,6 +22,30 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryPeriod: Arbitrary[Period] =
+    Arbitrary {
+      Gen.oneOf(
+        Set(
+          Period._2013,
+          Period._2014,
+          Period._2015,
+          Period._2016PreAlignment,
+          Period._2016PostAlignment,
+          Period._2017,
+          Period._2019,
+          Period._2020,
+          Period._2021,
+          Period._2022,
+          Period._2023
+        )
+      )
+    }
+
+  implicit lazy val arbitraryContributedToDuringRemedyPeriod: Arbitrary[ContributedToDuringRemedyPeriod] =
+    Arbitrary {
+      Gen.oneOf(ContributedToDuringRemedyPeriod.values)
+    }
+
   implicit lazy val arbitraryLtaPensionSchemeDetails: Arbitrary[LtaPensionSchemeDetails] =
     Arbitrary {
       for {
