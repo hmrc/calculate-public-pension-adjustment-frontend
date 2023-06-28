@@ -26,6 +26,8 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.DefinedBenefitAmountView
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -51,7 +53,7 @@ class DefinedBenefitAmountController @Inject() (
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period, schemeIndex))
+      Ok(view(preparedForm, mode, period, startEndDate(period), schemeIndex))
     }
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
@@ -59,7 +61,8 @@ class DefinedBenefitAmountController @Inject() (
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period), schemeIndex))),
           value =>
             for {
               updatedAnswers <-
@@ -68,4 +71,9 @@ class DefinedBenefitAmountController @Inject() (
             } yield Redirect(DefinedBenefitAmountPage(period, schemeIndex).navigate(mode, updatedAnswers))
         )
     }
+
+  private def startEndDate(period: Period): String = {
+    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+    period.start.format(formatter) + " to " + period.end.format(formatter)
+  }
 }

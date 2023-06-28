@@ -46,7 +46,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
             .value
           val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/contributedToDuringRemedyPeriod/2016-pre/0")
+          checkNavigation(result, "/which-contributed-during-remedy-period/2016-pre/0")
         }
 
         "to CheckYourAnswersPage when answered false" in {
@@ -76,7 +76,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
             .value
           val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/contributedToDuringRemedyPeriod/2016-post/0")
+          checkNavigation(result, "/which-contributed-during-remedy-period/2016-post/0")
         }
 
         "to TotalIncomePage when answered false" in {
@@ -106,7 +106,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
             .value
           val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/contributedToDuringRemedyPeriod/$period/0")
+          checkNavigation(result, s"/which-contributed-during-remedy-period/$period/0")
         }
 
         "to ThresholdIncomePage when answered false" in {

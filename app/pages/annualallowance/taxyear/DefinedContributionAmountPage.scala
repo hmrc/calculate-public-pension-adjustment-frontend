@@ -16,14 +16,14 @@
 
 package pages.annualallowance.taxyear
 
-import controllers.annualallowance.taxyear.routes.{DefinedBenefitAmountController, FlexiAccessDefinedContributionAmountController, ThresholdIncomeController}
+import controllers.annualallowance.taxyear.routes.{DefinedBenefitAmountController, FlexiAccessDefinedContributionAmountController}
 import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class DefinedContributionAmountPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[Int] {
+case class DefinedContributionAmountPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
 

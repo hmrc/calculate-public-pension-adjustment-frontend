@@ -24,9 +24,14 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("definedBenefitAmount.title"))) {
+@contentHint = {
+    <p>@messages("definedBenefitAmount.hint1")</p>
+    <p>@messages("definedBenefitAmount.hint2")</p>
+}
+
+@layout(pageTitle = title(form, messages("definedBenefitAmount.title", startEndDate))) {
 
     @formHelper(
         action = controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onSubmit(mode, period, schemeIndex),
@@ -40,11 +45,15 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("definedBenefitAmount.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                content = messages("definedBenefitAmount.heading", startEndDate),
+                caption = messages("annualAllowance.period.caption." + period)
             )
-            .asNumeric()
-            .withWidth(Fixed10)
         )
+        .withWidth(Fixed10)
+        .withCssClass("govuk-currency-input__inner__input")
+        .withPrefix(PrefixOrSuffix(content = Text("£")))
+        .withHint(HintViewModel(HtmlContent(contentHint))))
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

@@ -23,11 +23,11 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
 
   "FlexiAccessDefinedContributionAmountPage" - {
 
-    beRetrievable[Int](FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
+    beRetrievable[BigInt](FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
 
-    beSettable[Int](FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
+    beSettable[BigInt](FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
 
-    beRemovable[Int](FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
+    beRemovable[BigInt](FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
 
     "must Navigate correctly in normal mode" - {
 
@@ -39,7 +39,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
-              100
+              BigInt("100")
             )
             .success
             .value
@@ -51,14 +51,14 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             .value
           val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/definedBenefitAmount/$period/0")
+          checkNavigation(result, s"/pia-for-db-pension/$period/0")
         }
 
         "to CheckYourAnswersPage when no DB selected" in {
           val ua     = emptyUserAnswers
             .set(
               FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
-              100
+              BigInt("100")
             )
             .success
             .value
@@ -82,7 +82,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
-              100
+              BigInt("100")
             )
             .success
             .value
@@ -94,14 +94,14 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             .value
           val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/definedBenefitAmount/$period/0")
+          checkNavigation(result, s"/pia-for-db-pension/$period/0")
         }
 
         "to TotalIncome when no DB selected" in {
           val ua     = emptyUserAnswers
             .set(
               FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
-              100
+              BigInt("100")
             )
             .success
             .value
@@ -125,7 +125,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
-              100
+              BigInt("100")
             )
             .success
             .value
@@ -137,14 +137,14 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             .value
           val result = FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/definedBenefitAmount/$period/0")
+          checkNavigation(result, s"/pia-for-db-pension/$period/0")
         }
 
         "to ThresholdIncomePage when no DB selected" in {
           val ua     = emptyUserAnswers
             .set(
               FlexiAccessDefinedContributionAmountPage(period, SchemeIndex(0)),
-              100
+              BigInt("100")
             )
             .success
             .value
@@ -172,7 +172,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
       val ua     = emptyUserAnswers
         .set(
           FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)),
-          100
+          BigInt("100")
         )
         .success
         .value

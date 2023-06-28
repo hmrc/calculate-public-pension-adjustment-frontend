@@ -24,11 +24,11 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
   "DefinedContributionAmountPage" - {
 
-    beRetrievable[Int](DefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
+    beRetrievable[BigInt](DefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
 
-    beSettable[Int](DefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
+    beSettable[BigInt](DefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
 
-    beRemovable[Int](DefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
+    beRemovable[BigInt](DefinedContributionAmountPage(Period._2013, SchemeIndex(0)))
   }
 
   "must Navigate correctly in normal mode" - {
@@ -40,7 +40,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       val ua     = emptyUserAnswers
         .set(
           DefinedContributionAmountPage(period, SchemeIndex(0)),
-          100
+          BigInt("100")
         )
         .success
         .value
@@ -52,7 +52,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         .value
       val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-      checkNavigation(result, s"/flexiAccessDefinedContributionAmount/$period/0")
+      checkNavigation(result, s"/pia-for-dc-pension-flexible/$period/0")
     }
 
     "to DefinedBenefitAmountPage when flexi date answered but for a different period and DB selected" in {
@@ -62,7 +62,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       val ua     = emptyUserAnswers
         .set(
           DefinedContributionAmountPage(period, SchemeIndex(0)),
-          100
+          BigInt("100")
         )
         .success
         .value
@@ -80,7 +80,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         .value
       val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-      checkNavigation(result, s"/definedBenefitAmount/$period/0")
+      checkNavigation(result, s"/pia-for-db-pension/$period/0")
     }
 
     "for pre 15-16" - {
@@ -91,7 +91,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -103,14 +103,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/flexiAccessDefinedContributionAmount/$period/0")
+        checkNavigation(result, s"/pia-for-dc-pension-flexible/$period/0")
       }
 
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -122,14 +122,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/definedBenefitAmount/$period/0")
+        checkNavigation(result, s"/pia-for-db-pension/$period/0")
       }
 
       "to CheckYourAnswersPage when answered and no flexi access selected and no DB selected" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -150,7 +150,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -180,7 +180,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -192,14 +192,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/flexiAccessDefinedContributionAmount/$period/0")
+        checkNavigation(result, s"/pia-for-dc-pension-flexible/$period/0")
       }
 
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -211,14 +211,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/definedBenefitAmount/$period/0")
+        checkNavigation(result, s"/pia-for-db-pension/$period/0")
       }
 
       "to TotalIncomePage when answered and no flexi access selected and no DB selected" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -239,7 +239,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -269,7 +269,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -281,14 +281,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/flexiAccessDefinedContributionAmount/$period/0")
+        checkNavigation(result, s"/pia-for-dc-pension-flexible/$period/0")
       }
 
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -300,14 +300,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/definedBenefitAmount/$period/0")
+        checkNavigation(result, s"/pia-for-db-pension/$period/0")
       }
 
       "to ThresholdIncome when answered and no flexi access selected and no DB selected" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -328,7 +328,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period, SchemeIndex(0)),
-            100
+            BigInt("100")
           )
           .success
           .value
@@ -362,7 +362,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
     val ua     = emptyUserAnswers
       .set(
         DefinedContributionAmountPage(Period._2013, SchemeIndex(0)),
-        100
+        BigInt("100")
       )
       .success
       .value

@@ -19,6 +19,7 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.FlexiAccessDefinedContributionAmountFormProvider
 import models.{Mode, Period, SchemeIndex}
+import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -26,6 +27,9 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.FlexiAccessDefinedContributionAmountView
 
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -51,15 +55,22 @@ class FlexiAccessDefinedContributionAmountController @Inject() (
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period, schemeIndex))
+      val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
+
+      Ok(view(preparedForm, mode, period, getStartEndDate(period, flexibleStartDate), schemeIndex))
     }
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
+      val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
+
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          formWithErrors =>
+            Future.successful(
+              BadRequest(view(formWithErrors, mode, period, getStartEndDate(period, flexibleStartDate), schemeIndex))
+            ),
           value =>
             for {
               updatedAnswers <-
@@ -72,4 +83,14 @@ class FlexiAccessDefinedContributionAmountController @Inject() (
             )
         )
     }
+
+  def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate]): String = {
+    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+
+    flexibleStartDate match {
+      case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
+        date.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
+      case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
+    }
+  }
 }

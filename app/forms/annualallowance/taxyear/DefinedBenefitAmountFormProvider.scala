@@ -23,13 +23,13 @@ import javax.inject.Inject
 
 class DefinedBenefitAmountFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Int] =
+  def apply(): Form[BigInt] =
     Form(
-      "value" -> int(
+      "value" -> bigInt(
         "definedBenefitAmount.error.required",
         "definedBenefitAmount.error.wholeNumber",
         "definedBenefitAmount.error.nonNumeric"
       )
-        .verifying(inRange(0, 10000000, "definedBenefitAmount.error.outOfRange"))
+        .verifying(inRange[BigInt](0, BigInt("999999999"), "definedBenefitAmount.error.outOfRange"))
     )
 }
