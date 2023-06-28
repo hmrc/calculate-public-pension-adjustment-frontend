@@ -24,6 +24,22 @@
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+        <p class="govuk-heading-s">@messages("otherDefinedBenefitOrContribution.definedContribution")</p>
+        <p class="govuk-body">@messages("otherDefinedBenefitOrContribution.definedContribution.hint")</p>
+        <ul>
+            <li>
+                @messages("otherDefinedBenefitOrContribution.definedContribution.list1")
+            </li>
+            <li>
+                @messages("otherDefinedBenefitOrContribution.definedContribution.list2")
+            </li>
+        </ul>
+
+        <p class="govuk-heading-s">@messages("otherDefinedBenefitOrContribution.definedBenefit")</p>
+        <p> @messages("otherDefinedBenefitOrContribution.definedBenefit.hint")</p>
+}
+
 @layout(pageTitle = title(form, messages("otherDefinedBenefitOrContribution.title"))) {
 
     @formHelper(
@@ -38,8 +54,11 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("otherDefinedBenefitOrContribution.heading")).asPageHeading()
-            )
+                legend = HmrcPageHeadingLegend(
+                content = messages("otherDefinedBenefitOrContribution.heading"),
+                caption = HmrcSectionCaption((messages("annualAllowance.period.caption." + period)))
+                )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

@@ -38,7 +38,7 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ThresholdIncomeFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(Period._2013)
 
   lazy val thresholdIncomeRoute =
     controllers.annualallowance.taxyear.routes.ThresholdIncomeController
