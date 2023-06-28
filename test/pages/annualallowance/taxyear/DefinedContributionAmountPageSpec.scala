@@ -20,8 +20,6 @@ import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period, S
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.behaviours.PageBehaviours
 
-import java.time.LocalDate
-
 class DefinedContributionAmountPageSpec extends PageBehaviours {
 
   "DefinedContributionAmountPage" - {
@@ -232,7 +230,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/totalIncome/$period/0")
+        checkNavigation(result, s"/total-income/$period/0")
       }
 
       "to TotalIncomePage when flexi date answered but for a different period and no DB selected" in {
@@ -259,7 +257,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/totalIncome/$period/0")
+        checkNavigation(result, s"/total-income/$period/0")
       }
     }
 

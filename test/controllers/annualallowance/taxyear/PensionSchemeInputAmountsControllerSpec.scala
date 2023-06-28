@@ -30,6 +30,7 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import views.html.annualallowance.taxyear.PensionSchemeInputAmountsView
 
 import scala.concurrent.Future
 
@@ -167,12 +168,6 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
         val request =
           FakeRequest(POST, pensionSchemeInputAmountsCheckRoute)
             .withFormUrlEncodedBody(("originalPIA", "1"), ("revisedPIA", "2"))
-
-        val userAnswers =
-          emptyUserAnswers.set(
-            PensionSchemeInputAmountsPage(Period._2018, SchemeIndex(0)),
-            PensionSchemeInputAmounts(1, 2)
-          )
 
         val result = route(application, request).value
 

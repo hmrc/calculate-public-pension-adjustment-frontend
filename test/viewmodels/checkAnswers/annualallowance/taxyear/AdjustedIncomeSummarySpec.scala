@@ -23,7 +23,6 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.AdjustedIncomePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 

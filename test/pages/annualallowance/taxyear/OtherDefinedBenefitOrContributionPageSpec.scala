@@ -89,7 +89,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
             .value
           val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/totalIncome/2016-post/0")
+          checkNavigation(result, "/total-income/2016-post/0")
         }
       }
 

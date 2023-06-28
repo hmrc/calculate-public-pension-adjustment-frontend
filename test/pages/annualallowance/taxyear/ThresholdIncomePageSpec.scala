@@ -17,10 +17,8 @@
 package pages.annualallowance.taxyear
 
 import models.Period._2013
-import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, NormalMode, Period, SchemeIndex}
 import pages.behaviours.PageBehaviours
-
-import scala.util.Try
 
 class ThresholdIncomePageSpec extends PageBehaviours {
 
@@ -44,7 +42,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
           .value
         val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/adjustedIncome/2013/0")
+        checkNavigation(result, "/adjusted-income/2013/0")
       }
 
       "to TotalIncomePage when answered false" in {
@@ -57,7 +55,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
           .value
         val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/totalIncome/2013/0")
+        checkNavigation(result, "/total-income/2013/0")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -91,14 +89,14 @@ class ThresholdIncomePageSpec extends PageBehaviours {
         .value
       val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/changeAdjustedIncome/2013/0")
+      checkNavigation(result, "/change-adjusted-income/2013/0")
     }
 
     "must cleanup correctly when answered no" in {
       val ua = emptyUserAnswers
         .set(
           AdjustedIncomePage(Period._2013, SchemeIndex(0)),
-          100
+          BigInt("100")
         )
         .success
         .value
