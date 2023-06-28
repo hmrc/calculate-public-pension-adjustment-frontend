@@ -17,6 +17,7 @@
 package pages.annualallowance.taxyear
 
 import models.{NormalMode, Period, SchemeIndex}
+import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.behaviours.PageBehaviours
 
 class AddAnotherSchemePageSpec extends PageBehaviours {
@@ -52,14 +53,88 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/which-scheme-details/2018/2")
     }
 
-    "when answer no then onward navigation" in {
+    "must redirect to other db/dc page when answer no and have dc scheme in standard period" in {
       val page = AddAnotherSchemePage(Period._2018, SchemeIndex(0))
 
-      val userAnswers = emptyUserAnswers.set(page, false).get
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-period/2018") // TODO until onward pages are added
+      checkNavigation(nextPageUrl, "/otherDefinedBenefitOrContribution/2018/0")
+    }
+
+    "must redirect to threshold income page when when answer no and do not have dc scheme in standard period" in {
+      val page = AddAnotherSchemePage(Period._2018, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/thresholdIncome/2018/0")
+    }
+
+    "must redirect to other db/dc page when when answer no and have dc scheme in 2016-pre period" in {
+      val page = AddAnotherSchemePage(Period._2016PreAlignment, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/otherDefinedBenefitOrContribution/2016-pre/0")
+    }
+
+    "must redirect to check your answers when answer no and do not have dc scheme in 2016-pre period" in {
+      val page = AddAnotherSchemePage(Period._2016PreAlignment, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-period/2016-pre")
+    }
+
+    "must redirect to other db/dc page when answer no and have dc scheme in 2016-post period" in {
+      val page = AddAnotherSchemePage(Period._2016PostAlignment, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/otherDefinedBenefitOrContribution/2016-post/0")
+    }
+
+    "must redirect to total income page when answer no and do not have dc scheme in 2016-post period" in {
+      val page = AddAnotherSchemePage(Period._2016PostAlignment, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, false)
+        .get
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/totalIncome/2016-post/0")
     }
   }
 }

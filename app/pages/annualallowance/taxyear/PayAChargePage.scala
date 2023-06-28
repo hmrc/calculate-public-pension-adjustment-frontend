@@ -33,7 +33,7 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayAChargePage(period, schemeIndex)) match {
       case Some(true)  => navigateToWhoPaidOrHowMuchSchemePaid(NormalMode)
-      case Some(false) => addAnotherMaybe(answers)
+      case Some(false) => AddAnotherSchemeMaybe.navigate(answers, period, schemeIndex)
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -67,14 +67,5 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
 
   private def isFirstSchemeInPeriod =
     schemeIndex.value == 0
-
-  def addAnotherMaybe(answers: UserAnswers): Call = answers.get(MemberMoreThanOnePensionPage(period)) match {
-    case Some(true)  =>
-      controllers.annualallowance.taxyear.routes.AddAnotherSchemeController.onPageLoad(period, schemeIndex)
-    case Some(false) =>
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-        .onPageLoad(period) // TODO until onward pages are added
-    case None        => routes.JourneyRecoveryController.onPageLoad(None)
-  }
 
 }

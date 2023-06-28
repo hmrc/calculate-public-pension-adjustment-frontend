@@ -31,22 +31,13 @@ case class HowMuchAAChargeYouPaidPage(period: Period, schemeIndex: SchemeIndex) 
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(WhoPaidAAChargePage(period, schemeIndex)) match {
-      case Some(You)  => addAnotherMaybe(answers)
+      case Some(You)  => AddAnotherSchemeMaybe.navigate(answers, period, schemeIndex)
       case Some(Both) =>
         controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
           .onPageLoad(NormalMode, period, schemeIndex)
 
       case _ => routes.JourneyRecoveryController.onPageLoad(None)
     }
-
-  def addAnotherMaybe(answers: UserAnswers): Call = answers.get(MemberMoreThanOnePensionPage(period)) match {
-    case Some(true)  =>
-      controllers.annualallowance.taxyear.routes.AddAnotherSchemeController.onPageLoad(period, schemeIndex)
-    case Some(false) =>
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-        .onPageLoad(period) // TODO until onward pages are added
-    case None        => routes.JourneyRecoveryController.onPageLoad(None)
-  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(WhoPaidAAChargePage(period, schemeIndex)) match {
