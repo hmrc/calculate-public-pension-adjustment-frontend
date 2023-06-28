@@ -85,7 +85,7 @@ class DefinedContributionAmountController @Inject() (
 
     flexibleStartDate match {
       case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
-        date.minusDays(1).format(formatter) + " to " + date.format(formatter)
+        period.start.format(formatter) + " to " + date.format(formatter)
       case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
     }
   }
