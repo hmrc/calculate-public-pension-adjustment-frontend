@@ -23,11 +23,11 @@ class TotalIncomePageSpec extends PageBehaviours {
 
   "TotalIncomePage" - {
 
-    beRetrievable[Int](TotalIncomePage(Period._2013, SchemeIndex(0)))
+    beRetrievable[BigInt](TotalIncomePage(Period._2013, SchemeIndex(0)))
 
-    beSettable[Int](TotalIncomePage(Period._2013, SchemeIndex(0)))
+    beSettable[BigInt](TotalIncomePage(Period._2013, SchemeIndex(0)))
 
-    beRemovable[Int](TotalIncomePage(Period._2013, SchemeIndex(0)))
+    beRemovable[BigInt](TotalIncomePage(Period._2013, SchemeIndex(0)))
 
     "must Navigate correctly in normal mode" - {
 
@@ -35,7 +35,7 @@ class TotalIncomePageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             TotalIncomePage(Period._2013, SchemeIndex(0)),
-            100
+            BigInt(100)
           )
           .success
           .value
@@ -49,7 +49,7 @@ class TotalIncomePageSpec extends PageBehaviours {
       val ua     = emptyUserAnswers
         .set(
           TotalIncomePage(Period._2013, SchemeIndex(0)),
-          100
+          BigInt(100)
         )
         .success
         .value

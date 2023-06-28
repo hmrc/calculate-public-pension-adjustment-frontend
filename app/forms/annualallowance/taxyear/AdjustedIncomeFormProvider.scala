@@ -23,13 +23,12 @@ import javax.inject.Inject
 
 class AdjustedIncomeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Int] =
+  def apply(): Form[BigInt] =
     Form(
-      "value" -> int(
+      "value" -> bigInt(
         "adjustedIncome.error.required",
         "adjustedIncome.error.wholeNumber",
         "adjustedIncome.error.nonNumeric"
-      )
-        .verifying(inRange(0, 10000000, "adjustedIncome.error.outOfRange"))
+      ).verifying(inRange[BigInt](0, BigInt("999999999"), "adjustedIncome.error.outOfRange"))
     )
 }

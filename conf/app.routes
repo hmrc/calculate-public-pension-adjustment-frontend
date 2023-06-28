@@ -241,15 +241,15 @@ POST       /scheme-paid-extra-lta-charge                                     con
 GET        /change-scheme-paid-extra-lta-charge                              controllers.lifetimeallowance.LtaPensionSchemeDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-scheme-paid-extra-lta-charge                              controllers.lifetimeallowance.LtaPensionSchemeDetailsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /adjustedIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.AdjustedIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-POST       /adjustedIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-GET        /changeAdjustedIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.AdjustedIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
-POST       /changeAdjustedIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+GET        /adjusted-income/:period/:schemeIndex                             controllers.annualallowance.taxyear.AdjustedIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST       /adjusted-income/:period/:schemeIndex                             controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET        /change-adjusted-income/:period/:schemeIndex                      controllers.annualallowance.taxyear.AdjustedIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST       /change-adjusted-income/:period/:schemeIndex                      controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 
-GET        /totalIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-POST       /totalIncome/:period/:schemeIndex                  controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
-GET        /changeTotalIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
-POST       /changeTotalIncome/:period/:schemeIndex                        controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+GET        /total-income/:period/:schemeIndex                                controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST       /total-income/:period/:schemeIndex                                controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET        /change-total-income/:period/:schemeIndex                         controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST       /change-total-income/:period/:schemeIndex                         controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 
 
 GET        /contributedToDuringRemedyPeriod/:period/:schemeIndex                        controllers.annualallowance.taxyear.ContributedToDuringRemedyPeriodController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)

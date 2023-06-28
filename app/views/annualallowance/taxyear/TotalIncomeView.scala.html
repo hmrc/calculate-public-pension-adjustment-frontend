@@ -26,7 +26,19 @@
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("totalIncome.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("totalIncome.hint1")</p>
+    <ul class="govuk-body">
+        <li>@messages("totalIncome.hint2")</li>
+        <li>@messages("totalIncome.hint3")</li>
+        <li>@messages("totalIncome.hint4")</li>
+        <li>@messages("totalIncome.hint5")</li>
+        <li>@messages("totalIncome.hint6")</li>
+    </ul>
+    <p class="govuk-hint">@messages("totalIncome.hint7")</p>
+}
+
+@layout(pageTitle = title(form, messages("totalIncome.title",period.start.getYear.toString, period.end.getYear.toString))) {
 
     @formHelper(
         action = controllers.annualallowance.taxyear.routes.TotalIncomeController.onSubmit(mode, period, schemeIndex),
@@ -40,9 +52,13 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("totalIncome.heading")).asPageHeading()
-            )
-            .asNumeric()
+                label = HmrcPageHeadingLabel(
+                content = messages("totalIncome.heading", period.start.getYear.toString, period.end.getYear.toString),
+                caption = messages("totalIncome.caption", period.start.getYear.toString, period.end.getYear.toString)
+                )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
+            .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)
         )
 

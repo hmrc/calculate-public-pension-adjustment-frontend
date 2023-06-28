@@ -61,7 +61,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
             .value
           val result = DefinedBenefitAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/totalIncome/$period/0")
+          checkNavigation(result, s"/total-income/$period/0")
         }
       }
 

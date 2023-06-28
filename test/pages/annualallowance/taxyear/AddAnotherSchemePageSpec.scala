@@ -134,7 +134,7 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/totalIncome/2016-post/0")
+      checkNavigation(nextPageUrl, "/total-income/2016-post/0")
     }
   }
 }

@@ -131,7 +131,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
       .value
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/totalIncome/2016-post/0")
+    checkNavigation(nextPageUrl, "/total-income/2016-post/0")
   }
 
   "must redirect to check your answers controller when user submits in check mode" in {
