@@ -32,7 +32,7 @@ case object ValueNewLtaChargePage extends QuestionPage[BigInt] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     (answers.get(ValueNewLtaChargePage), answers.get(LifetimeAllowanceChargeAmountPage)) match {
       case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge <= oldLtaCharge =>
-        ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+        ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
       case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge > oldLtaCharge  =>
         ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
       case _                                                                        =>
@@ -50,7 +50,7 @@ case object ValueNewLtaChargePage extends QuestionPage[BigInt] {
       case (Some(_), None, None)                                                         =>
         ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
       case _                                                                             =>
-        ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+        ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
     }
 
   override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =

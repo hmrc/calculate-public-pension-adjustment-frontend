@@ -143,6 +143,7 @@ package object models {
                   }
                 }
             }
+        case _                                                                         => JsError(s"unexpected path and value")
       }
   }
 }

@@ -196,7 +196,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 

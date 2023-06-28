@@ -34,5 +34,5 @@ case object DateOfBenefitCrystallisationEventPage extends QuestionPage[LocalDate
     ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+    ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
 }

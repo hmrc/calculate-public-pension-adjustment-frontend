@@ -32,7 +32,7 @@
 
 @layout(pageTitle = title(form, messages("changeInLifetimeAllowance.title"))) {
 
-    @formHelper(action = routes.ChangeInLifetimeAllowanceController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.ChangeInLifetimeAllowanceController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

@@ -105,7 +105,7 @@ class ValueNewLtaChargeNavigationSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 
@@ -186,7 +186,7 @@ class ValueNewLtaChargeNavigationSpec extends SpecBase with MockitoSugar {
           status(result) mustEqual SEE_OTHER
           redirectLocation(
             result
-          ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+          ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
         }
       }
 
@@ -214,7 +214,7 @@ class ValueNewLtaChargeNavigationSpec extends SpecBase with MockitoSugar {
           status(result) mustEqual SEE_OTHER
           redirectLocation(
             result
-          ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+          ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
         }
       }
 
@@ -236,12 +236,12 @@ class ValueNewLtaChargeNavigationSpec extends SpecBase with MockitoSugar {
           status(result) mustEqual SEE_OTHER
           redirectLocation(
             result
-          ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+          ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
         }
       }
   }
 
-  private def constructApplication(userAnswers: Option[UserAnswers] = Some(emptyUserAnswers)) = {
+  private def constructApplication(userAnswers: Option[UserAnswers]) = {
     val mockSessionRepository = mock[SessionRepository]
 
     when(mockSessionRepository.set(any())) thenReturn Future.successful(true)

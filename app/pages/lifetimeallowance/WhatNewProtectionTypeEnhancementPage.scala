@@ -32,6 +32,6 @@ case object WhatNewProtectionTypeEnhancementPage extends QuestionPage[WhatNewPro
     ltaRoutes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+    ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
 
 }

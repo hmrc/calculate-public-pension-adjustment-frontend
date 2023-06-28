@@ -249,7 +249,7 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
+        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 
@@ -275,7 +275,7 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url
+        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
   }

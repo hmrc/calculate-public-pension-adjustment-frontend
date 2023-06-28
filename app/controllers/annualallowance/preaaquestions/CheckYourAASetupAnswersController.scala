@@ -51,7 +51,7 @@ class CheckYourAASetupAnswersController @Inject() (
     Ok(
       view(
         "checkYourAnswers.aa.subHeading",
-        controllers.routes.TaskListController.onPageLoad,
+        controllers.routes.TaskListController.onPageLoad(),
         SummaryListViewModel(rows.flatten)
       )
     )

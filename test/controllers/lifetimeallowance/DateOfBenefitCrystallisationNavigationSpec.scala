@@ -65,7 +65,7 @@ class HadBenefitCrystallisationEventNavigationSpec extends SpecBase with Mockito
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad.url
+        redirectLocation(result).value mustEqual ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url
       }
     }
 
@@ -78,7 +78,7 @@ class HadBenefitCrystallisationEventNavigationSpec extends SpecBase with Mockito
         val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+        redirectLocation(result).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 
@@ -92,7 +92,7 @@ class HadBenefitCrystallisationEventNavigationSpec extends SpecBase with Mockito
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad.url
+        redirectLocation(result).value mustEqual ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url
       }
     }
   }

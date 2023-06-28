@@ -28,7 +28,7 @@
 
 @layout(pageTitle = title(form, messages("reportingChange.title"))) {
 
-    @formHelper(action = routes.ReportingChangeController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.ReportingChangeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))

@@ -36,14 +36,15 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
     answers.get(PayTaxCharge1516Page) match {
       case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2013)
       case Some(true)  =>
-        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
       case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2013)
-      case Some(true)  => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+      case Some(true)  =>
+        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

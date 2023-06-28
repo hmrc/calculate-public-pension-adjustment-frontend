@@ -44,7 +44,7 @@
 
     @formHelper(
         action = controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController.onSubmit(mode, period, schemeIndex),
-        'autoComplete -> "off"
+        Symbol("autoComplete") -> "off"
     ) {
 
         @if(form.errors.nonEmpty) {

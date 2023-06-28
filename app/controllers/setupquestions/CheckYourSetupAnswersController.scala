@@ -52,9 +52,9 @@ class CheckYourSetupAnswersController @Inject() (
         request.userAnswers.get(ScottishTaxpayerFrom2016Page) match {
           case None    =>
             controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
-          case Some(_) => controllers.routes.TaskListController.onPageLoad
+          case Some(_) => controllers.routes.TaskListController.onPageLoad()
         }
-      case _                                                          => controllers.routes.TaskListController.onPageLoad
+      case _                                                          => controllers.routes.TaskListController.onPageLoad()
     }
     Ok(view("checkYourAnswers.setup.subHeading", continueURL, SummaryListViewModel(rows.flatten)))
   }

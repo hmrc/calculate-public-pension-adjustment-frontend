@@ -28,7 +28,7 @@
 
 @layout(pageTitle = title(form, messages("howMuchAAChargeSchemePaid.title"))) {
 
-    @formHelper(action = controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController.onSubmit(mode,period, schemeIndex), 'autoComplete -> "off") {
+    @formHelper(action = controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController.onSubmit(mode,period, schemeIndex), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

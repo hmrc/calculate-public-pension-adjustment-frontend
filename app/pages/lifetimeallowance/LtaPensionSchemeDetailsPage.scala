@@ -27,8 +27,8 @@ case object LtaPensionSchemeDetailsPage extends QuestionPage[LtaPensionSchemeDet
   override def path: JsPath = JsPath \ "lta" \ toString
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+    ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+    ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
 }

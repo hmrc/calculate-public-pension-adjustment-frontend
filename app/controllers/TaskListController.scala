@@ -40,7 +40,7 @@ class TaskListController @Inject() (
 ) extends FrontendBaseController
     with I18nSupport {
 
-  val form = Form("_" -> ignored())
+  val form = Form("_" -> ignored(()))
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)

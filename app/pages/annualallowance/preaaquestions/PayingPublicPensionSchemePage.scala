@@ -40,7 +40,8 @@ case object PayingPublicPensionSchemePage extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayingPublicPensionSchemePage) match {
-      case Some(true)  => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+      case Some(true)  =>
+        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case Some(false) => preAARoutes.StopPayingPublicPensionController.onPageLoad(CheckMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }

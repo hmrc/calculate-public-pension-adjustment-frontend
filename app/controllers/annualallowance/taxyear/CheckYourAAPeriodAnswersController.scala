@@ -62,7 +62,7 @@ class CheckYourAAPeriodAnswersController @Inject() (
       Ok(
         view(
           s"checkYourAnswers.aa.period.subHeading.$period",
-          controllers.routes.TaskListController.onPageLoad,
+          controllers.routes.TaskListController.onPageLoad(),
           SummaryListViewModel(rows.flatten)
         )
       )

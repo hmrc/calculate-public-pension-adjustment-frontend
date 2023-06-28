@@ -33,7 +33,7 @@
 
 @layout(pageTitle = title(form, messages("flexibleAccessStartDate.title"))) {
 
-    @formHelper(action = routes.FlexibleAccessStartDateController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.FlexibleAccessStartDateController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value.day")))

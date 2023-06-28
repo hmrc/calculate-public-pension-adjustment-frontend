@@ -32,12 +32,12 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
   override def toString: String = "reportingChange"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
-    case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
+    case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
     case _       => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
-    case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
+    case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
     case _       => routes.JourneyRecoveryController.onPageLoad(None)
   }
 

@@ -42,7 +42,7 @@ case object WhoPaidLTAChargePage extends QuestionPage[WhoPaidLTACharge] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(WhoPaidLTAChargePage) match {
     case Some(WhoPaidLTACharge.PensionScheme) =>
       controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode)
-    case Some(WhoPaidLTACharge.You)           => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+    case Some(WhoPaidLTACharge.You)           => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
     case _                                    => controllers.routes.JourneyRecoveryController.onPageLoad()
   }
 

@@ -32,7 +32,8 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url)
+        val request =
+          FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url)
 
         val result = route(application, request).value
 
@@ -42,7 +43,7 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           "checkYourAnswers.setup.subHeading",
-          controllers.routes.TaskListController.onPageLoad,
+          controllers.routes.TaskListController.onPageLoad(),
           list
         )(
           request,
@@ -56,7 +57,8 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url)
+        val request =
+          FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url)
 
         val result = route(application, request).value
 

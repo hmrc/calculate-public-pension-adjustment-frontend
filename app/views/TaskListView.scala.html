@@ -79,7 +79,7 @@
     <h2 class="govuk-heading-m">@messages("taskList.calculateAnswers")</h2>
     <p class="govuk-body">@messages("taskList.compensationOrTaxCharge")</p>
 
-    @formHelper(action = routes.TaskListController.onSubmit, 'autoComplete -> "off") {
+    @formHelper(action = routes.TaskListController.onSubmit(), Symbol("autoComplete") -> "off") {
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
         }

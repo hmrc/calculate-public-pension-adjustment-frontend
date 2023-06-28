@@ -26,7 +26,7 @@
 
 @layout(pageTitle = title(form, messages("whichScheme.title"))) {
 
-    @formHelper(action = controllers.annualallowance.taxyear.routes.WhichSchemeController.onSubmit(mode, period, schemeIndex), 'autoComplete -> "off") {
+    @formHelper(action = controllers.annualallowance.taxyear.routes.WhichSchemeController.onSubmit(mode, period, schemeIndex), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
@@ -38,7 +38,7 @@
                 legend = HmrcPageHeadingLegend(
                 content = messages("whichScheme.heading", period, schemeIndex),
                 caption = HmrcSectionCaption(messages("annualAllowance.period.caption."+{period.toString}))),
-                items  = whichScheme.options
+                items  = whichScheme.options()
             ).withHint(HintViewModel(messages("whichScheme.hint")))
         )
 

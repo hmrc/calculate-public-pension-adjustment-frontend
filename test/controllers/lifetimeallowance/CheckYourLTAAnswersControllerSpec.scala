@@ -33,7 +33,7 @@ class CheckYourLTAAnswersControllerSpec extends SpecBase with SummaryListFluency
 
       running(application) {
         val request =
-          FakeRequest(GET, controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url)
+          FakeRequest(GET, controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url)
 
         val result = route(application, request).value
 
@@ -43,7 +43,7 @@ class CheckYourLTAAnswersControllerSpec extends SpecBase with SummaryListFluency
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           "checkYourAnswers.lta.subHeading",
-          controllers.routes.TaskListController.onPageLoad,
+          controllers.routes.TaskListController.onPageLoad(),
           list
         )(
           request,
@@ -58,7 +58,7 @@ class CheckYourLTAAnswersControllerSpec extends SpecBase with SummaryListFluency
 
       running(application) {
         val request =
-          FakeRequest(GET, controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url)
+          FakeRequest(GET, controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url)
 
         val result = route(application, request).value
 

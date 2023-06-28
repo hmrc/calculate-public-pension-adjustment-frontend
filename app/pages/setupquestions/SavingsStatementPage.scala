@@ -34,7 +34,7 @@ case object SavingsStatementPage extends QuestionPage[Boolean] {
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
-    case Some(true)  => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
+    case Some(true)  => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
     case Some(false) => controllers.setupquestions.routes.IneligibleController.onPageLoad
     case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
   }

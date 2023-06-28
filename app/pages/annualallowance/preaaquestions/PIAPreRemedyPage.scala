@@ -39,12 +39,12 @@ case class PIAPreRemedyPage(period: Period) extends QuestionPage[BigInt] {
     if (period == Period._2013 || period == Period._2014) {
       preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period.Year(period.end.getYear + 1))
     } else if (period == Period._2015) {
-      controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+      controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
     } else routes.JourneyRecoveryController.onPageLoad(None)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PIAPreRemedyPage(period)) match {
-      case Some(_) => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+      case Some(_) => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

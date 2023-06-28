@@ -37,7 +37,7 @@
 
 @layout(pageTitle = title(form, messages("ltaProtectionOrEnhancements.title"))) {
 
-    @formHelper(action = routes.LtaProtectionOrEnhancementsController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.LtaProtectionOrEnhancementsController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
