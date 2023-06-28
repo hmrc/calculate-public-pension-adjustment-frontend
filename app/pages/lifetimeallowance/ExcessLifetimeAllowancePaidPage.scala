@@ -30,5 +30,5 @@ case object ExcessLifetimeAllowancePaidPage extends QuestionPage[ExcessLifetimeA
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode)
   override protected def navigateInCheckMode(answers: UserAnswers): Call  =
-    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
 }

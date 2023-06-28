@@ -28,7 +28,7 @@
 
 @layout(pageTitle = title(form, messages("resubmittingAdjustment.title"))) {
 
-    @formHelper(action = routes.ResubmittingAdjustmentController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.ResubmittingAdjustmentController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

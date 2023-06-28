@@ -31,6 +31,6 @@ case object SchemeNameAndTaxRefPage extends QuestionPage[SchemeNameAndTaxRef] {
     controllers.lifetimeallowance.routes.ValueNewLtaChargeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
 
 }

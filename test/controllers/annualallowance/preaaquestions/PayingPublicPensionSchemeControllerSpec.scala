@@ -184,7 +184,9 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad.url // Change to appropriate page upon implementation
+        ).value mustEqual controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController
+          .onPageLoad()
+          .url // Change to appropriate page upon implementation
       }
     }
 

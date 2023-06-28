@@ -33,7 +33,7 @@
         action = controllers.annualallowance.taxyear.routes.AdjustedIncomeController.onSubmit(
             mode, period, schemeIndex
         ),
-        'autoComplete -> "off"
+        Symbol("autoComplete") -> "off"
     ) {
 
         @if(form.errors.nonEmpty) {

@@ -125,7 +125,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 
@@ -152,7 +152,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad.url
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 

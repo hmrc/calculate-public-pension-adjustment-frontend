@@ -39,7 +39,7 @@ case object FlexibleAccessStartDatePage extends QuestionPage[LocalDate] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(FlexibleAccessStartDatePage) match {
-      case Some(_) => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+      case Some(_) => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

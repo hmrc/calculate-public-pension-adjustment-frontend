@@ -257,7 +257,9 @@ class ScottishTaxpayerFrom2016ControllerSpec extends SpecBase with MockitoSugar 
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad.url
+        ).value mustEqual controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController
+          .onPageLoad()
+          .url
       }
     }
   }

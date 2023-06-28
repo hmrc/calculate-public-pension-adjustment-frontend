@@ -28,7 +28,7 @@
 
 @layout(pageTitle = title(form, messages("scottishTaxpayerFrom2016.title"))) {
 
-    @formHelper(action = routes.ScottishTaxpayerFrom2016Controller.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.ScottishTaxpayerFrom2016Controller.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

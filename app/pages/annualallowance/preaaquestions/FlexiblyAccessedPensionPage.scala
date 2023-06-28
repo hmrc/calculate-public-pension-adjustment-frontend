@@ -42,7 +42,8 @@ case object FlexiblyAccessedPensionPage extends QuestionPage[Boolean] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(FlexiblyAccessedPensionPage) match {
       case Some(true)  => preAARoutes.FlexibleAccessStartDateController.onPageLoad(CheckMode)
-      case Some(false) => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+      case Some(false) =>
+        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

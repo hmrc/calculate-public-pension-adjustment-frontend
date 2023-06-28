@@ -52,7 +52,7 @@
         action = controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onSubmit(
             mode, period, schemeIndex
         ),
-        'autoComplete -> "off"
+        Symbol("autoComplete") -> "off"
     ) {
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

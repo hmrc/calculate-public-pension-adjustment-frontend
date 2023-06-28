@@ -245,7 +245,9 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad.url
+        ).value mustEqual controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController
+          .onPageLoad()
+          .url
       }
     }
   }

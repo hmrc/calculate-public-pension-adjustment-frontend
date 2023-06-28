@@ -34,7 +34,7 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
       running(application) {
         val request = FakeRequest(
           GET,
-          controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad.url
+          controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad().url
         )
 
         val result = route(application, request).value
@@ -45,7 +45,7 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           "checkYourAnswers.aa.subHeading",
-          controllers.routes.TaskListController.onPageLoad,
+          controllers.routes.TaskListController.onPageLoad(),
           list
         )(
           request,
@@ -61,7 +61,7 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
       running(application) {
         val request = FakeRequest(
           GET,
-          controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad.url
+          controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad().url
         )
 
         val result = route(application, request).value

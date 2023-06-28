@@ -35,14 +35,14 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(WhoPayingExtraLtaChargePage) match {
       case Some(PensionScheme) => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
-      case Some(You)           => ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+      case Some(You)           => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
       case None                => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(WhoPayingExtraLtaChargePage) match {
       case Some(PensionScheme) => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
-      case Some(You)           => ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+      case Some(You)           => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
       case None                => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 

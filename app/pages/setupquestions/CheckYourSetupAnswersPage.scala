@@ -22,8 +22,8 @@ import play.api.mvc.Call
 
 object CheckYourSetupAnswersPage extends Page {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
+    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad
+    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
 }

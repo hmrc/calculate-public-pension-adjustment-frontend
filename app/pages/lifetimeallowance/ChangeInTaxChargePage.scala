@@ -31,5 +31,5 @@ case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
   override protected def navigateInCheckMode(answers: UserAnswers): Call  =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+    ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
 }

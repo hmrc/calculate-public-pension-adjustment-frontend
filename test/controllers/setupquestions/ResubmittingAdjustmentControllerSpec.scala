@@ -253,7 +253,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad.url
+        ).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url
       }
     }
   }

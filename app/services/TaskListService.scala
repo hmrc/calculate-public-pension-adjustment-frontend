@@ -104,7 +104,7 @@ class TaskListService @Inject() (
           Seq(
             SectionViewModel(
               "taskList.admin.sectionName",
-              controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad,
+              controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad(),
               SectionStatus.Completed,
               "admin-questions"
             )

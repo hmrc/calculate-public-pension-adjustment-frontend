@@ -37,7 +37,7 @@ case object ProtectionTypePage extends QuestionPage[ProtectionType] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ProtectionTypePage) match {
-      case Some(_) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+      case Some(_) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
       case None    => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 }

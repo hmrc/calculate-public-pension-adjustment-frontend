@@ -28,7 +28,7 @@
 
 @layout(pageTitle = title(form, messages("savingsStatement.title"))) {
 
-    @formHelper(action = routes.SavingsStatementController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.SavingsStatementController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

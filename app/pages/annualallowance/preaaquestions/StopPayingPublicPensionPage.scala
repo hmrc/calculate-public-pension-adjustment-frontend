@@ -36,7 +36,7 @@ case object StopPayingPublicPensionPage extends QuestionPage[LocalDate] {
     preAARoutes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+    controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
 
   override def cleanup(value: Option[LocalDate], answers: UserAnswers): Try[UserAnswers] = {
     val periodsToCleanup = PeriodService.notRelevantPeriods(answers)

@@ -30,7 +30,7 @@
     <p class="govuk-body">
     @govukButton(
         ButtonViewModel(messages("site.continue"))
-                .asLink(controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad.url)
+                .asLink(controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url)
     )
     </p>
 }

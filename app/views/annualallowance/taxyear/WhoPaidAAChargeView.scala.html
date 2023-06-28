@@ -30,7 +30,7 @@
 
 @layout(pageTitle = title(form, messages("whoPaidAACharge.title." + period) + "?")) {
 
-    @formHelper(action = controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController.onSubmit(mode,period, schemeIndex), 'autoComplete -> "off") {
+    @formHelper(action = controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController.onSubmit(mode,period, schemeIndex), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))

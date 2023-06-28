@@ -2,26 +2,26 @@
 
 ->          /hmrc-frontend                                                   hmrcfrontend.Routes
 
-GET         /                                                                controllers.IndexController.onPageLoad
+GET         /                                                                controllers.IndexController.onPageLoad()
 
 GET         /assets/*file                                                    controllers.Assets.versioned(path="/public", file: Asset)
 
 GET         /language/:lang                                                  controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
-GET         /refresh-session                                                 controllers.KeepAliveController.keepAlive
+GET         /refresh-session                                                 controllers.KeepAliveController.keepAlive()
 
 GET         /there-is-a-problem                                              controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
-GET         /check-your-answers-setup                                        controllers.setupquestions.CheckYourSetupAnswersController.onPageLoad
-GET         /check-your-answers-annual-allowance-setup                       controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad
-GET         /check-your-lta-answers                                          controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad
+GET         /check-your-answers-setup                                        controllers.setupquestions.CheckYourSetupAnswersController.onPageLoad()
+GET         /check-your-answers-annual-allowance-setup                       controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad()
+GET         /check-your-lta-answers                                          controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad()
 GET         /check-your-answers-period/:period                               controllers.annualallowance.taxyear.CheckYourAAPeriodAnswersController.onPageLoad(period:Period)
 
-GET         /account/sign-out-survey                                         controllers.auth.AuthController.signOut
-GET         /account/sign-out                                                controllers.auth.AuthController.signOutNoSurvey
-GET         /account/signed-out                                              controllers.auth.SignedOutController.onPageLoad
+GET         /account/sign-out-survey                                         controllers.auth.AuthController.signOut()
+GET         /account/sign-out                                                controllers.auth.AuthController.signOutNoSurvey()
+GET         /account/signed-out                                              controllers.auth.SignedOutController.onPageLoad()
 
-GET         /unauthorised                                                    controllers.UnauthorisedController.onPageLoad
+GET         /unauthorised                                                    controllers.UnauthorisedController.onPageLoad()
 
 GET         /savings-statement                                               controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
 POST        /savings-statement                                               controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
@@ -169,8 +169,8 @@ POST       /scheme-paid-lta-charge                                           con
 GET        /change-scheme-paid-lta-charge                                    controllers.lifetimeallowance.SchemeNameAndTaxRefController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-scheme-paid-lta-charge                                    controllers.lifetimeallowance.SchemeNameAndTaxRefController.onSubmit(mode: Mode = CheckMode)
 
-GET         /task-list                                                       controllers.TaskListController.onPageLoad
-POST        /task-list                                                       controllers.TaskListController.onSubmit
+GET         /task-list                                                       controllers.TaskListController.onPageLoad()
+POST        /task-list                                                       controllers.TaskListController.onSubmit()
 
 GET         /what-you-will-need-aa/:period                                   controllers.annualallowance.taxyear.WhatYouWillNeedAAController.onPageLoad(period:Period)
 

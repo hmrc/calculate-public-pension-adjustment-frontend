@@ -34,7 +34,7 @@ class TaskListControllerTest extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val normalRoute = routes.TaskListController.onPageLoad.url
+  lazy val normalRoute = routes.TaskListController.onPageLoad().url
 
   "TaskList Controller" - {
 

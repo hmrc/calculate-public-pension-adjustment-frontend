@@ -27,7 +27,7 @@
 
 @layout(pageTitle = title(form, messages("whoPayingExtraLtaCharge.title"))) {
 
-    @formHelper(action = routes.WhoPayingExtraLtaChargeController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.WhoPayingExtraLtaChargeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))

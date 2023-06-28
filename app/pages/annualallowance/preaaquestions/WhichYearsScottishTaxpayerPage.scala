@@ -38,7 +38,7 @@ case object WhichYearsScottishTaxpayerPage extends QuestionPage[Set[WhichYearsSc
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(WhichYearsScottishTaxpayerPage) match {
       case Some(set) if set.nonEmpty =>
-        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad
+        controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _                         => routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
