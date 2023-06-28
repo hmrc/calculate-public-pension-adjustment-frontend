@@ -76,11 +76,9 @@
 
     </ul>
 
-    <p class="govuk-body">@messages("whatYouWillNeedAA.message4")</p>
+    <p class="govuk-body">@messages("whatYouWillNeedAA.message4") </p>
 
- @formHelper(action = controllers.annualallowance.taxyear.routes.MemberMoreThanOnePensionController.onPageLoad(NormalMode, period), Symbol("autoComplete") -> "off") {
-  @govukButton(
-   ButtonViewModel(messages("site.continue"))
-  )
- }
+    @govukButton(
+        ButtonViewModel(messages("site.continue")).asLink(controllers.annualallowance.taxyear.routes.MemberMoreThanOnePensionController.onPageLoad(NormalMode, period).url)
+    )
 }
