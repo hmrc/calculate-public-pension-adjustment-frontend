@@ -16,6 +16,14 @@
 
 package models.tasklist
 
-import play.api.mvc.Call
+import play.api.i18n.Messages
 
-final case class SectionViewModel(name: String, call: Call, status: SectionStatus, id: String)
+final case class TaskListStatus(sectionStatus: SectionStatus, messages: Messages) {
+
+  override def toString(): String =
+    sectionStatus match {
+      case SectionStatus.NotStarted => messages("taskList.status.notStarted")
+      case SectionStatus.InProgress => messages("taskList.status.inProgress")
+      case SectionStatus.Completed  => messages("taskList.status.completed")
+    }
+}

@@ -115,7 +115,7 @@ class TaskListServiceTest extends SpecBase {
 
     "group count should match the number of defined groups" in {
       val section: Seq[SectionViewModel]      =
-        Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.NotStarted))
+        Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.NotStarted, "id"))
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", section)
 
       val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, Some(sectionGroup), None, None)
@@ -125,7 +125,7 @@ class TaskListServiceTest extends SpecBase {
 
     "completed group count should be correct when a group with a single section is complete" in {
       val sections: Seq[SectionViewModel]     =
-        Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.Completed))
+        Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id"))
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
 
       val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, None)
@@ -136,8 +136,8 @@ class TaskListServiceTest extends SpecBase {
 
     "completed group count should be correct for a group with multiple sections of which only one is complete" in {
       val sections: Seq[SectionViewModel] = Seq(
-        SectionViewModel("name", Call("method", "url"), SectionStatus.InProgress),
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed)
+        SectionViewModel("name", Call("method", "url"), SectionStatus.InProgress, "id"),
+        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
       )
 
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
@@ -150,8 +150,8 @@ class TaskListServiceTest extends SpecBase {
 
     "completed group count should be correct for a group with multiple sections when all are complete" in {
       val sections: Seq[SectionViewModel] = Seq(
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed),
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed)
+        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id"),
+        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
       )
 
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
@@ -164,15 +164,15 @@ class TaskListServiceTest extends SpecBase {
 
     "all counts should be correct when some sections are complete and some are incomplete " in {
       val sections: Seq[SectionViewModel] = Seq(
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed),
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed)
+        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id"),
+        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
       )
 
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
 
       val incompleteSections: Seq[SectionViewModel] = Seq(
-        SectionViewModel("name", Call("method", "url"), SectionStatus.InProgress),
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed)
+        SectionViewModel("name", Call("method", "url"), SectionStatus.InProgress, "id"),
+        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
       )
 
       val incompleteSectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", incompleteSections)
