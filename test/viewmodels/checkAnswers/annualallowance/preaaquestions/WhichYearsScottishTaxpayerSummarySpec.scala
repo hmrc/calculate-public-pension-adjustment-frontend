@@ -45,13 +45,13 @@ class WhichYearsScottishTaxpayerSummarySpec extends AnyFreeSpec with Matchers {
           key = "whichYearsScottishTaxpayer.checkYourAnswersLabel",
           value = ValueViewModel(
             HtmlContent(
-              "whichYearsScottishTaxpayer.2021,<br>" +
-                "whichYearsScottishTaxpayer.2018,<br>" +
+              "whichYearsScottishTaxpayer.2023,<br>" +
+                "whichYearsScottishTaxpayer.2022,<br>" +
+                "whichYearsScottishTaxpayer.2021,<br>" +
                 "whichYearsScottishTaxpayer.2020,<br>" +
                 "whichYearsScottishTaxpayer.2019,<br>" +
-                "whichYearsScottishTaxpayer.2017,<br>" +
-                "whichYearsScottishTaxpayer.2023,<br>" +
-                "whichYearsScottishTaxpayer.2022"
+                "whichYearsScottishTaxpayer.2018,<br>" +
+                "whichYearsScottishTaxpayer.2017"
             )
           ),
           actions = Seq(

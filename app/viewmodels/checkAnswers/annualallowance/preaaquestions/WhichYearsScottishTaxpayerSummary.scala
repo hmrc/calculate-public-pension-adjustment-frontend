@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, UserAnswers, WhichYearsScottishTaxpayer}
 import pages.annualallowance.preaaquestions.WhichYearsScottishTaxpayerPage
 import controllers.annualallowance.preaaquestions.routes
 import play.api.i18n.Messages
@@ -30,9 +30,11 @@ object WhichYearsScottishTaxpayerSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(WhichYearsScottishTaxpayerPage).map { answers =>
+      val sortedAnswers = answers.toList.sortBy(_.toString).reverse
+
       val value = ValueViewModel(
         HtmlContent(
-          answers
+          sortedAnswers
             .map { answer =>
               HtmlFormat.escape(messages(s"whichYearsScottishTaxpayer.$answer")).toString
             }
