@@ -24,23 +24,22 @@ import viewmodels.govuk.checkbox._
 sealed trait WhichYearsScottishTaxpayer
 
 object WhichYearsScottishTaxpayer extends Enumerable.Implicits {
-
-  case object ToTwentyThree extends WithName("toTwentyThree") with WhichYearsScottishTaxpayer
-  case object ToTwentyTwo extends WithName("toTwentyTwo") with WhichYearsScottishTaxpayer
-  case object ToTwentyOne extends WithName("toTwentyOne") with WhichYearsScottishTaxpayer
-  case object ToTwenty extends WithName("toTwenty") with WhichYearsScottishTaxpayer
-  case object ToNineteen extends WithName("toNineteen") with WhichYearsScottishTaxpayer
-  case object ToEighteen extends WithName("toEighteen") with WhichYearsScottishTaxpayer
-  case object ToSeventeen extends WithName("toSeventeen") with WhichYearsScottishTaxpayer
+  case object _2023 extends WithName("2023") with WhichYearsScottishTaxpayer
+  case object _2022 extends WithName("2022") with WhichYearsScottishTaxpayer
+  case object _2021 extends WithName("2021") with WhichYearsScottishTaxpayer
+  case object _2020 extends WithName("2020") with WhichYearsScottishTaxpayer
+  case object _2019 extends WithName("2019") with WhichYearsScottishTaxpayer
+  case object _2018 extends WithName("2018") with WhichYearsScottishTaxpayer
+  case object _2017 extends WithName("2017") with WhichYearsScottishTaxpayer
 
   val values: Seq[WhichYearsScottishTaxpayer] = Seq(
-    ToTwentyThree,
-    ToTwentyTwo,
-    ToTwentyOne,
-    ToTwenty,
-    ToNineteen,
-    ToEighteen,
-    ToSeventeen
+    _2023,
+    _2022,
+    _2021,
+    _2020,
+    _2019,
+    _2018,
+    _2017
   )
 
   def checkboxItems(implicit messages: Messages): Seq[CheckboxItem] =

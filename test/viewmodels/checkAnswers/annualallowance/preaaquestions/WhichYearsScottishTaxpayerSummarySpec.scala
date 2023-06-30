@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
-import models.WhichYearsScottishTaxpayer.{ToEighteen, ToNineteen, ToSeventeen, ToTwenty, ToTwentyOne, ToTwentyThree, ToTwentyTwo}
+import models.WhichYearsScottishTaxpayer.{_2017, _2018, _2019, _2020, _2021, _2022, _2023}
 import models.{CheckMode, UserAnswers, _}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -37,7 +37,7 @@ class WhichYearsScottishTaxpayerSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set[Set[WhichYearsScottishTaxpayer]](
           WhichYearsScottishTaxpayerPage,
-          Set(ToTwentyThree, ToTwentyTwo, ToTwentyOne, ToTwenty, ToNineteen, ToEighteen, ToSeventeen)
+          Set(_2023, _2022, _2021, _2020, _2019, _2018, _2017)
         )
         .get
       WhichYearsScottishTaxpayerSummary.row(userAnswers) shouldBe Some(
@@ -45,13 +45,13 @@ class WhichYearsScottishTaxpayerSummarySpec extends AnyFreeSpec with Matchers {
           key = "whichYearsScottishTaxpayer.checkYourAnswersLabel",
           value = ValueViewModel(
             HtmlContent(
-              "whichYearsScottishTaxpayer.toTwentyOne,<br>" +
-                "whichYearsScottishTaxpayer.toSeventeen,<br>" +
-                "whichYearsScottishTaxpayer.toTwentyTwo,<br>" +
-                "whichYearsScottishTaxpayer.toTwenty,<br>" +
-                "whichYearsScottishTaxpayer.toNineteen,<br>" +
-                "whichYearsScottishTaxpayer.toEighteen,<br>" +
-                "whichYearsScottishTaxpayer.toTwentyThree"
+              "whichYearsScottishTaxpayer.2023,<br>" +
+                "whichYearsScottishTaxpayer.2022,<br>" +
+                "whichYearsScottishTaxpayer.2021,<br>" +
+                "whichYearsScottishTaxpayer.2020,<br>" +
+                "whichYearsScottishTaxpayer.2019,<br>" +
+                "whichYearsScottishTaxpayer.2018,<br>" +
+                "whichYearsScottishTaxpayer.2017"
             )
           ),
           actions = Seq(
