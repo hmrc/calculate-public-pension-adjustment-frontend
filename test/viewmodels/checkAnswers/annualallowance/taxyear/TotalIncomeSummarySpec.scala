@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.TotalIncomePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -43,7 +44,7 @@ class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
       TotalIncomeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = "totalIncome.checkYourAnswersLabel",
-          value = ValueViewModel("100"),
+          value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

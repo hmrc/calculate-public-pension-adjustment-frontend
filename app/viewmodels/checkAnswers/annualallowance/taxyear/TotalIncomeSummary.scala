@@ -20,7 +20,9 @@ import controllers.annualallowance.taxyear.routes.TotalIncomeController
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import pages.annualallowance.taxyear.TotalIncomePage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -32,7 +34,7 @@ object TotalIncomeSummary {
     answers.get(TotalIncomePage(period, schemeIndex)).map { answer =>
       SummaryListRowViewModel(
         key = messages("totalIncome.checkYourAnswersLabel", period.start.getYear.toString, period.end.getYear.toString),
-        value = ValueViewModel(answer.toString),
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
             "site.change",

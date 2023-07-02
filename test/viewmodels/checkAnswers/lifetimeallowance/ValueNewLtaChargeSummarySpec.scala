@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.lifetimeallowance.ValueNewLtaChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -41,7 +42,7 @@ class ValueNewLtaChargeSummarySpec extends AnyFreeSpec with Matchers {
       ValueNewLtaChargeSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "valueNewLtaCharge.checkYourAnswersLabel",
-          value = ValueViewModel("999"),
+          value = ValueViewModel(HtmlContent("&pound;999")),
           actions = Seq(
             ActionItemViewModel("site.change", routes.ValueNewLtaChargeController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText("valueNewLtaCharge.change.hidden")
