@@ -502,7 +502,7 @@ whichScheme.checkYourAnswersLabel = cy: Select which scheme paid the charge or a
 whichScheme.error.required = cy: Select which scheme you are entering details for
 whichScheme.change.hidden = cy: Which scheme are you entering details for?
 
-whoPaidAACharge.title.2016-pre = cy: Who paid the annual allowance charge for 6 April 2015 to July 8 2015
+whoPaidAACharge.title.2016-pre = cy: Who paid the annual allowance charge for 6 April 2015 to 8 July 2015
 whoPaidAACharge.title.2016-post = cy: Who paid the annual allowance charge for 9 July 2015 to 5 April 2016
 whoPaidAACharge.title.2017 = cy: Who paid the annual allowance charge for 6 April 2016 to 5 April 2017
 whoPaidAACharge.title.2018 = cy: Who paid the annual allowance charge for 6 April 2017 to 5 April 2018
