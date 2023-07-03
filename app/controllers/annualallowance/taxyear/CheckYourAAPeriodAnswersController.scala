@@ -61,7 +61,6 @@ class CheckYourAAPeriodAnswersController @Inject() (
         )
       )
 
-      val finalRows =
         Ok(
           view(
             s"checkYourAnswers.aa.period.subHeading.$period",
