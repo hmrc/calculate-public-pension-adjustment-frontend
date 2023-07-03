@@ -20,47 +20,69 @@ import controllers.annualallowance.taxyear.routes
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.annualallowance.taxyear.DefinedContributionAmountPage
+import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
+class MemberMoreThanOnePensionSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when Yes is selected, return the summary row" in {
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          DefinedContributionAmountPage(period, schemeIndex),
-          BigInt("100")
+          MemberMoreThanOnePensionPage(Period._2018),
+          true
         )
         .get
-      DefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      MemberMoreThanOnePensionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
-          key = "definedContributionAmount.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          key = "memberMoreThanOnePension.checkYourAnswersLabel",
+          value = ValueViewModel("site.yes"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.DefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.MemberMoreThanOnePensionController.onPageLoad(CheckMode, period).url
             )
-              .withVisuallyHiddenText("definedContributionAmount.change.hidden")
+              .withVisuallyHiddenText("memberMoreThanOnePension.change.hidden")
+          )
+        )
+      )
+    }
+
+    "when No is selected, return the summary row" in {
+      val period      = Period._2018
+      val userAnswers = UserAnswers("id")
+        .set(
+          MemberMoreThanOnePensionPage(Period._2018),
+          false
+        )
+        .get
+      MemberMoreThanOnePensionSummary.row(userAnswers, period) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "memberMoreThanOnePension.checkYourAnswersLabel",
+          value = ValueViewModel("site.no"),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              routes.MemberMoreThanOnePensionController.onPageLoad(CheckMode, period).url
+            )
+              .withVisuallyHiddenText("memberMoreThanOnePension.change.hidden")
           )
         )
       )
     }
 
     "when answer unavailable, return empty" in {
+      val userAnswers = UserAnswers("id")
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
-      val userAnswers = UserAnswers("id")
-      DefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      MemberMoreThanOnePensionSummary.row(userAnswers, period) shouldBe None
     }
   }
 

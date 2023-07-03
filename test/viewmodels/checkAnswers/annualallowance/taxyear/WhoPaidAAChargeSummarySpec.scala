@@ -33,7 +33,7 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when You is selected, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
@@ -57,7 +57,7 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when Scheme is selected, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
@@ -81,7 +81,7 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when Both is selected, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
@@ -106,7 +106,7 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }

@@ -20,7 +20,9 @@ import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -44,7 +46,7 @@ object FlexiAccessDefinedContributionAmountSummary {
 
       SummaryListRowViewModel(
         key = messages("flexiAccessDefinedContributionAmount.checkYourAnswersLabel", startEndDate),
-        value = ValueViewModel(answer.toString),
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
             "site.change",

@@ -540,7 +540,7 @@ whoPaidAACharge.error.required.2023 = cy: Enter who paid the annual allowance ch
 
 howMuchAAChargeSchemePaid.title = cy: How much of the charge did your pension scheme pay?
 howMuchAAChargeSchemePaid.heading = cy: How much of the charge did your pension scheme pay?
-howMuchAAChargeSchemePaid.checkYourAnswersLabel = cy: How much of the charge did your scheme pay?
+howMuchAAChargeSchemePaid.checkYourAnswersLabel = cy: How much of the charge did your pension scheme pay?
 howMuchAAChargeSchemePaid.error.nonNumeric = cy: You have entered non-numerical characters for how much your scheme paid. You must enter numerical characters
 howMuchAAChargeSchemePaid.error.required = cy: Enter your how much your scheme paid
 howMuchAAChargeSchemePaid.error.wholeNumber = cy: You have not entered a whole number for how much your scheme paid. You cannot use decimals

@@ -20,14 +20,14 @@ import controllers.annualallowance.taxyear.routes
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.annualallowance.taxyear.DefinedContributionAmountPage
+import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
+class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
@@ -37,20 +37,20 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          DefinedContributionAmountPage(period, schemeIndex),
+          FlexiAccessDefinedContributionAmountPage(period, schemeIndex),
           BigInt("100")
         )
         .get
-      DefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
-          key = "definedContributionAmount.checkYourAnswersLabel",
+          key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.DefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.FlexiAccessDefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url
             )
-              .withVisuallyHiddenText("definedContributionAmount.change.hidden")
+              .withVisuallyHiddenText("flexiAccessDefinedContributionAmount.change.hidden")
           )
         )
       )
@@ -60,7 +60,7 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      DefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }
   }
 

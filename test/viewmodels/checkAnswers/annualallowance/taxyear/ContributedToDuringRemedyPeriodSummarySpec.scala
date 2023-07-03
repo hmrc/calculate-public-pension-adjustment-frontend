@@ -17,50 +17,51 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
+import models.ContributedToDuringRemedyPeriod.{Definedbenefit, Definedcontribution}
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.annualallowance.taxyear.DefinedContributionAmountPage
+import pages.annualallowance.taxyear.ContributedToDuringRemedyPeriodPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
+class ContributedToDuringRemedyPeriodSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
-      val period      = Period._2018
+    "when You is selected, return the summary row" in {
+      val period = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-        .set(
-          DefinedContributionAmountPage(period, schemeIndex),
-          BigInt("100")
+        .set[Set[models.ContributedToDuringRemedyPeriod]](
+          ContributedToDuringRemedyPeriodPage(Period._2018, SchemeIndex(0)),
+          Set(Definedcontribution, Definedbenefit )
         )
         .get
-      DefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
-          key = "definedContributionAmount.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          key = "contributedToDuringRemedyPeriod.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent("contributedToDuringRemedyPeriod.definedContribution,<br>contributedToDuringRemedyPeriod.definedBenefit")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.DefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.ContributedToDuringRemedyPeriodController.onPageLoad(CheckMode, period, schemeIndex).url
             )
-              .withVisuallyHiddenText("definedContributionAmount.change.hidden")
+              .withVisuallyHiddenText("contributedToDuringRemedyPeriod.change.hidden")
           )
         )
       )
     }
 
     "when answer unavailable, return empty" in {
-      val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      DefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      val period = Period._2018
+      val schemeIndex = SchemeIndex(0)
+      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }
   }
 
