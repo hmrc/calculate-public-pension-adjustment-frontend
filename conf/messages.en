@@ -445,6 +445,7 @@ memberMoreThanOnePension.list1 = moving jobs
 memberMoreThanOnePension.list2 = having more than one job
 memberMoreThanOnePension.list3 = leaving and coming back to public service work
 memberMoreThanOnePension.list4 = splitting your pensions
+memberMoreThanOnePension.checkYourAnswersLabel = Were you a member of more than one public service pension scheme?
 
 addAnotherScheme.title = Do you need to add another pension scheme?
 addAnotherScheme.heading = Do you need to add another pension scheme?

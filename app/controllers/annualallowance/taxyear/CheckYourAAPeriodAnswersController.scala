@@ -19,6 +19,7 @@ package controllers.annualallowance.taxyear
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.{Period, SchemeIndex}
+import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -50,21 +51,23 @@ class CheckYourAAPeriodAnswersController @Inject() (
           HowMuchAAChargeYouPaidSummary.row(request.userAnswers, period, index),
           HowMuchAAChargeSchemePaidSummary.row(request.userAnswers, period, index),
           OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period, index),
+          ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period, index),
+          FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period, index),
+          DefinedContributionAmountSummary.row(request.userAnswers, period, index),
+          DefinedBenefitAmountSummary.row(request.userAnswers, period, index),
           ThresholdIncomeSummary.row(request.userAnswers, period, index),
           AdjustedIncomeSummary.row(request.userAnswers, period, index),
-          TotalIncomeSummary.row(request.userAnswers, period, index),
-          DefinedContributionAmountSummary.row(request.userAnswers, period, index),
-          FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period, index),
-          DefinedBenefitAmountSummary.row(request.userAnswers, period, index)
+          TotalIncomeSummary.row(request.userAnswers, period, index)
         )
       )
 
-      Ok(
-        view(
-          s"checkYourAnswers.aa.period.subHeading.$period",
-          controllers.routes.TaskListController.onPageLoad(),
-          SummaryListViewModel(rows.flatten)
+      val finalRows =
+        Ok(
+          view(
+            s"checkYourAnswers.aa.period.subHeading.$period",
+            controllers.routes.TaskListController.onPageLoad(),
+            SummaryListViewModel(rows.flatten)
+          )
         )
-      )
   }
 }

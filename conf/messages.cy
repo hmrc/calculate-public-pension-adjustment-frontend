@@ -445,6 +445,7 @@ memberMoreThanOnePension.list1 = cy: moving jobs
 memberMoreThanOnePension.list2 = cy: having more than one job
 memberMoreThanOnePension.list3 = cy: leaving and coming back to public service work
 memberMoreThanOnePension.list4 = cy: splitting your pensions
+memberMoreThanOnePension.checkYourAnswersLabel = cy: Were you a member of more than one public service pension scheme?
 
 addAnotherScheme.title = cy: Do you need to add another pension scheme?
 addAnotherScheme.heading = cy: Do you need to add another pension scheme?

@@ -16,38 +16,32 @@
 
 package viewmodels.checkAnswers.annualallowance.taxyear
 
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
-import pages.annualallowance.taxyear.WhoPaidAAChargePage
+import models.{CheckMode, Period, UserAnswers}
+import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import play.api.i18n.Messages
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object WhoPaidAAChargeSummary {
+object MemberMoreThanOnePensionSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+  def row(answers: UserAnswers, period: Period)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(WhoPaidAAChargePage(period, schemeIndex)).map { answer =>
-      val value = ValueViewModel(
-        HtmlContent(
-          HtmlFormat.escape(messages(s"whoPaidAACharge.$answer"))
-        )
-      )
+    answers.get(MemberMoreThanOnePensionPage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = s"whoPaidAACharge.heading.$period",
-        value = value,
+        key = "memberMoreThanOnePension.checkYourAnswersLabel",
+        value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController
-              .onPageLoad(CheckMode, period, schemeIndex)
+            controllers.annualallowance.taxyear.routes.MemberMoreThanOnePensionController
+              .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("whoPaidAACharge.change.hidden"))
+            .withVisuallyHiddenText(messages("memberMoreThanOnePension.change.hidden"))
         )
       )
     }
