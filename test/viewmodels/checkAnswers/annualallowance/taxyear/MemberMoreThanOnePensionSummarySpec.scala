@@ -33,7 +33,6 @@ class MemberMoreThanOnePensionSummarySpec extends AnyFreeSpec with Matchers {
   "row" - {
     "when Yes is selected, return the summary row" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
           MemberMoreThanOnePensionPage(Period._2018),
@@ -81,7 +80,6 @@ class MemberMoreThanOnePensionSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       MemberMoreThanOnePensionSummary.row(userAnswers, period) shouldBe None
     }
   }

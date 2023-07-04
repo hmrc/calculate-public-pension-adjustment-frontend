@@ -19,7 +19,9 @@ package viewmodels.checkAnswers.lifetimeallowance
 import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.LifetimeAllowanceChargeAmountPage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -29,7 +31,7 @@ object LifetimeAllowanceChargeAmountSummary {
     answers.get(LifetimeAllowanceChargeAmountPage).map { answer =>
       SummaryListRowViewModel(
         key = "lifetimeAllowanceChargeAmount.checkYourAnswersLabel",
-        value = ValueViewModel(answer.toString),
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
             "site.change",

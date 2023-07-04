@@ -19,7 +19,6 @@ package controllers.annualallowance.taxyear
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.{Period, SchemeIndex}
-import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
