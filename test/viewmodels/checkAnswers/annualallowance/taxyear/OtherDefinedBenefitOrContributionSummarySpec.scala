@@ -32,7 +32,7 @@ class OtherDefinedBenefitOrContributionSummarySpec extends AnyFreeSpec with Matc
 
   "row" - {
     "when Yes is selected, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
@@ -56,7 +56,7 @@ class OtherDefinedBenefitOrContributionSummarySpec extends AnyFreeSpec with Matc
     }
 
     "when No is selected, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
@@ -81,7 +81,7 @@ class OtherDefinedBenefitOrContributionSummarySpec extends AnyFreeSpec with Matc
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       OtherDefinedBenefitOrContributionSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }

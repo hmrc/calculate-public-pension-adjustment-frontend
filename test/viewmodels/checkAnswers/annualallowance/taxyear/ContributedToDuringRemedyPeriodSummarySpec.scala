@@ -34,18 +34,22 @@ class ContributedToDuringRemedyPeriodSummarySpec extends AnyFreeSpec with Matche
 
   "row" - {
     "when You is selected, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set[Set[models.ContributedToDuringRemedyPeriod]](
           ContributedToDuringRemedyPeriodPage(Period._2018, SchemeIndex(0)),
-          Set(Definedcontribution, Definedbenefit )
+          Set(Definedcontribution, Definedbenefit)
         )
         .get
       ContributedToDuringRemedyPeriodSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = "contributedToDuringRemedyPeriod.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("contributedToDuringRemedyPeriod.definedContribution,<br>contributedToDuringRemedyPeriod.definedBenefit")),
+          value = ValueViewModel(
+            HtmlContent(
+              "contributedToDuringRemedyPeriod.definedContribution,<br>contributedToDuringRemedyPeriod.definedBenefit"
+            )
+          ),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
@@ -59,7 +63,7 @@ class ContributedToDuringRemedyPeriodSummarySpec extends AnyFreeSpec with Matche
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      val period = Period._2018
+      val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       ContributedToDuringRemedyPeriodSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }
