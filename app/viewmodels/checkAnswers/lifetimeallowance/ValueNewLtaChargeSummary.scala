@@ -20,7 +20,9 @@ import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.ValueNewLtaChargePage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -30,7 +32,7 @@ object ValueNewLtaChargeSummary {
     answers.get(ValueNewLtaChargePage).map { answer =>
       SummaryListRowViewModel(
         key = "valueNewLtaCharge.checkYourAnswersLabel",
-        value = ValueViewModel(answer.toString),
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel("site.change", routes.ValueNewLtaChargeController.onPageLoad(CheckMode).url)
             .withVisuallyHiddenText(messages("valueNewLtaCharge.change.hidden"))

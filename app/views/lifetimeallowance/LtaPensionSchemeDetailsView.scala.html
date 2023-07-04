@@ -15,6 +15,7 @@
  *@
 
 @import viewmodels.InputWidth._
+@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
@@ -26,15 +27,6 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 @import controllers.lifetimeallowance.routes
-
-@nameTitle = {
-<p class="govuk-heading-m">@messages("ltaPensionSchemeDetails.name")</p>
-}
-
-@refTitle = {
-<p class="govuk-heading-m">@messages("ltaPensionSchemeDetails.taxRef")</p>
-}
-
 
 @layout(pageTitle = title(form, messages("ltaPensionSchemeDetails.title"))) {
 
@@ -50,7 +42,7 @@
         @govukInput(
             InputViewModel(
                 field = form("name"),
-                label = LabelViewModel(HtmlContent(nameTitle))
+                label = LabelViewModel(messages("ltaPensionSchemeDetails.name")).asPageHeading(LabelSize.Medium)
             )
             .withWidth(Fixed10).withHint(HintViewModel(messages("ltaPensionSchemeDetails.hint1")))
         )
@@ -58,7 +50,7 @@
         @govukInput(
             InputViewModel(
                 field = form("taxRef"),
-                label = LabelViewModel(HtmlContent(refTitle))
+                label = LabelViewModel(messages("ltaPensionSchemeDetails.taxRef")).asPageHeading(LabelSize.Medium)
             )
             .withWidth(Fixed10).withHint(HintViewModel(messages("ltaPensionSchemeDetails.hint2")))
         )

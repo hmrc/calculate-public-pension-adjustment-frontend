@@ -20,14 +20,14 @@ import controllers.annualallowance.taxyear.routes
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.annualallowance.taxyear.TotalIncomePage
+import pages.annualallowance.taxyear.DefinedBenefitAmountPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
+class DefinedBenefitAmountSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
@@ -37,20 +37,20 @@ class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          TotalIncomePage(period, schemeIndex),
+          DefinedBenefitAmountPage(period, schemeIndex),
           BigInt("100")
         )
         .get
-      TotalIncomeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      DefinedBenefitAmountSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
-          key = "totalIncome.checkYourAnswersLabel",
+          key = "definedBenefitAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.TotalIncomeController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.DefinedBenefitAmountController.onPageLoad(CheckMode, period, schemeIndex).url
             )
-              .withVisuallyHiddenText("totalIncome.change.hidden")
+              .withVisuallyHiddenText("definedBenefitAmount.change.hidden")
           )
         )
       )
@@ -60,7 +60,7 @@ class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      TotalIncomeSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      DefinedBenefitAmountSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }
   }
 

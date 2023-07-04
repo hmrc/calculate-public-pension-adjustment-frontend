@@ -28,7 +28,7 @@
     <p> @messages("whoPaidAACharge.hint")</p>
 }
 
-@layout(pageTitle = title(form, messages("whoPaidAACharge.title." + period) + "?")) {
+@layout(pageTitle = title(form, messages("whoPaidAACharge.title." + period))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController.onSubmit(mode,period, schemeIndex), Symbol("autoComplete") -> "off") {
 
@@ -40,7 +40,7 @@
             RadiosViewModel(
                 field  = form("value"),
                 legend = HmrcPageHeadingLegend(
-                    content = messages("whoPaidAACharge.heading." + period) + "?",
+                    content = messages("whoPaidAACharge.heading." + period),
                     caption = HmrcSectionCaption(messages("annualAllowance.period.caption." + period) )),
                 items  = WhoPaidAACharge.options
             ).withHint(HintViewModel(HtmlContent(contentHint)))

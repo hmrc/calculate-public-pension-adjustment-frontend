@@ -38,7 +38,7 @@ object WhoPaidAAChargeSummary {
       )
 
       SummaryListRowViewModel(
-        key = "whoPaidAACharge.checkYourAnswersLabel",
+        key = s"whoPaidAACharge.heading.$period",
         value = value,
         actions = Seq(
           ActionItemViewModel(

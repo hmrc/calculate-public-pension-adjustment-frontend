@@ -50,12 +50,13 @@ class CheckYourAAPeriodAnswersController @Inject() (
           HowMuchAAChargeYouPaidSummary.row(request.userAnswers, period, index),
           HowMuchAAChargeSchemePaidSummary.row(request.userAnswers, period, index),
           OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period, index),
+          ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period, index),
+          FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period, index),
+          DefinedContributionAmountSummary.row(request.userAnswers, period, index),
+          DefinedBenefitAmountSummary.row(request.userAnswers, period, index),
           ThresholdIncomeSummary.row(request.userAnswers, period, index),
           AdjustedIncomeSummary.row(request.userAnswers, period, index),
-          TotalIncomeSummary.row(request.userAnswers, period, index),
-          DefinedContributionAmountSummary.row(request.userAnswers, period, index),
-          FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period, index),
-          DefinedBenefitAmountSummary.row(request.userAnswers, period, index)
+          TotalIncomeSummary.row(request.userAnswers, period, index)
         )
       )
 

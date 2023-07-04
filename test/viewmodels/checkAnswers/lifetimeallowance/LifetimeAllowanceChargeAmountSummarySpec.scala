@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.lifetimeallowance.LifetimeAllowanceChargeAmountPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -41,7 +42,7 @@ class LifetimeAllowanceChargeAmountSummarySpec extends AnyFreeSpec with Matchers
       LifetimeAllowanceChargeAmountSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "lifetimeAllowanceChargeAmount.checkYourAnswersLabel",
-          value = ValueViewModel("999"),
+          value = ValueViewModel(HtmlContent("&pound;999")),
           actions = Seq(
             ActionItemViewModel("site.change", routes.LifetimeAllowanceChargeAmountController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText("lifetimeAllowanceChargeAmount.change.hidden")

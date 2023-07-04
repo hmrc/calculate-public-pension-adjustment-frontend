@@ -19,7 +19,9 @@ package viewmodels.checkAnswers.annualallowance.taxyear
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import pages.annualallowance.taxyear.HowMuchAAChargeSchemePaidPage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -31,7 +33,7 @@ object HowMuchAAChargeSchemePaidSummary {
     answers.get(HowMuchAAChargeSchemePaidPage(period, schemeIndex)).map { answer =>
       SummaryListRowViewModel(
         key = "howMuchAAChargeSchemePaid.checkYourAnswersLabel",
-        value = ValueViewModel(answer.toString),
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
