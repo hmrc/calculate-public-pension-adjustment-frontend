@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.ThresholdIncomePage
@@ -33,21 +33,20 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
   "row" - {
     "when Yes is selected, return the summary row" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          ThresholdIncomePage(Period._2018, SchemeIndex(0)),
+          ThresholdIncomePage(Period._2018),
           true
         )
         .get
-      ThresholdIncomeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      ThresholdIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = s"thresholdIncome.checkYourAnswersLabel.$period",
           value = ValueViewModel("site.yes"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.ThresholdIncomeController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.ThresholdIncomeController.onPageLoad(CheckMode, period).url
             )
               .withVisuallyHiddenText("thresholdIncome.change.hidden")
           )
@@ -57,21 +56,20 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when No is selected, return the summary row" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          ThresholdIncomePage(Period._2018, SchemeIndex(0)),
+          ThresholdIncomePage(Period._2018),
           false
         )
         .get
-      ThresholdIncomeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      ThresholdIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = s"thresholdIncome.checkYourAnswersLabel.$period",
           value = ValueViewModel("site.no"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.ThresholdIncomeController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.ThresholdIncomeController.onPageLoad(CheckMode, period).url
             )
               .withVisuallyHiddenText("thresholdIncome.change.hidden")
           )
@@ -82,8 +80,7 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
-      ThresholdIncomeSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      ThresholdIncomeSummary.row(userAnswers, period) shouldBe None
     }
   }
 

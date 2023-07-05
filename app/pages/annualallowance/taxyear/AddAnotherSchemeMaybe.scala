@@ -27,26 +27,26 @@ object AddAnotherSchemeMaybe {
     answers.get(MemberMoreThanOnePensionPage(period)) match {
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.AddAnotherSchemeController.onPageLoad(period, schemeIndex)
-      case Some(false) => exitSchemeLoopNavigation(answers, period, schemeIndex)
+      case Some(false) => exitSchemeLoopNavigation(answers, period)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  def exitSchemeLoopNavigation(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex) =
+  def exitSchemeLoopNavigation(answers: UserAnswers, period: Period) =
     answers.get(DefinedContributionPensionSchemePage) match {
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
-          .onPageLoad(NormalMode, period, schemeIndex)
-      case Some(false) => noDCNavigation(period, schemeIndex)
+          .onPageLoad(NormalMode, period)
+      case Some(false) => noDCNavigation(period)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  private def noDCNavigation(period: Period, schemeIndex: SchemeIndex): Call =
+  private def noDCNavigation(period: Period): Call =
     period match {
       case Period._2016PreAlignment  =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Period._2016PostAlignment =>
-        controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+        controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
       case Period.Year(_)            =>
-        controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+        controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
     }
 }

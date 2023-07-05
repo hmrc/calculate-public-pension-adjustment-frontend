@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers.annualallowance.taxyear
 
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.OtherDefinedBenefitOrContributionPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -25,10 +25,10 @@ import viewmodels.implicits._
 
 object OtherDefinedBenefitOrContributionSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+  def row(answers: UserAnswers, period: Period)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)).map { answer =>
+    answers.get(OtherDefinedBenefitOrContributionPage(period: Period)).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
@@ -40,8 +40,7 @@ object OtherDefinedBenefitOrContributionSummary {
             controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
               .onPageLoad(
                 CheckMode,
-                period,
-                schemeIndex
+                period
               )
               .url
           ).withVisuallyHiddenText(messages("otherDefinedBenefitOrContribution.change.hidden"))

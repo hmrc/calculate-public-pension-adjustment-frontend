@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes.TotalIncomeController
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.TotalIncomePage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -28,17 +28,17 @@ import viewmodels.implicits._
 
 object TotalIncomeSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+  def row(answers: UserAnswers, period: Period)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(TotalIncomePage(period, schemeIndex)).map { answer =>
+    answers.get(TotalIncomePage(period)).map { answer =>
       SummaryListRowViewModel(
         key = messages("totalIncome.checkYourAnswersLabel", period.start.getYear.toString, period.end.getYear.toString),
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            TotalIncomeController.onPageLoad(CheckMode, period, schemeIndex).url
+            TotalIncomeController.onPageLoad(CheckMode, period).url
           ).withVisuallyHiddenText(messages("totalIncome.change.hidden"))
         )
       )

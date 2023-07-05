@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes.DefinedContributionAmountController
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.DefinedContributionAmountPage
 import play.api.i18n.Messages
@@ -32,10 +32,10 @@ import java.util.Locale
 
 object DefinedContributionAmountSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+  def row(answers: UserAnswers, period: Period)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(DefinedContributionAmountPage(period, schemeIndex)).map { answer =>
+    answers.get(DefinedContributionAmountPage(period)).map { answer =>
       val formatter         = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
       val flexibleStartDate = answers.get(FlexibleAccessStartDatePage)
 
@@ -51,7 +51,7 @@ object DefinedContributionAmountSummary {
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            DefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url
+            DefinedContributionAmountController.onPageLoad(CheckMode, period).url
           )
             .withVisuallyHiddenText(messages("definedContributionAmount.change.hidden"))
         )

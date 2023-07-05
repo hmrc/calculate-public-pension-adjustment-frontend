@@ -20,7 +20,7 @@ import base.SpecBase
 import controllers.annualallowance.taxyear.routes.FlexiAccessDefinedContributionAmountController
 import controllers.routes
 import forms.annualallowance.taxyear.FlexiAccessDefinedContributionAmountFormProvider
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -44,7 +44,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
   val validAnswer = BigInt("0")
 
   lazy val flexiAccessDefinedContributionAmountRoute =
-    FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2013, SchemeIndex(0)).url
+    FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2013).url
 
   "FlexiAccessDefinedContributionAmount Controller" - {
 
@@ -64,8 +64,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
           form,
           NormalMode,
           Period._2013,
-          "6 April 2012 to 5 April 2013",
-          SchemeIndex(0)
+          "6 April 2012 to 5 April 2013"
         )(
           request,
           messages(application)
@@ -76,7 +75,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(FlexiAccessDefinedContributionAmountPage(Period._2013, SchemeIndex(0)), validAnswer)
+        .set(FlexiAccessDefinedContributionAmountPage(Period._2013), validAnswer)
         .success
         .value
 
@@ -94,8 +93,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
           form.fill(validAnswer),
           NormalMode,
           Period._2013,
-          "6 April 2012 to 5 April 2013",
-          SchemeIndex(0)
+          "6 April 2012 to 5 April 2013"
         )(
           request,
           messages(application)
@@ -147,8 +145,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
           boundForm,
           NormalMode,
           Period._2013,
-          "6 April 2012 to 5 April 2013",
-          SchemeIndex(0)
+          "6 April 2012 to 5 April 2013"
         )(
           request,
           messages(application)

@@ -22,12 +22,12 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("contributedToDuringRemedyPeriod.title"))) {
 
     @formHelper(
-        action = controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPeriodController.onSubmit(mode, period, schemeIndex),
+        action = controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPeriodController.onSubmit(mode, period),
         Symbol("autoComplete") -> "off"
     ) {
 

@@ -16,18 +16,18 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, SchemeIndex}
+import models.{CheckMode, NormalMode, Period}
 import pages.behaviours.PageBehaviours
 
 class DefinedBenefitAmountPageSpec extends PageBehaviours {
 
   "DefinedBenefitAmountPage" - {
 
-    beRetrievable[BigInt](DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)))
+    beRetrievable[BigInt](DefinedBenefitAmountPage(Period._2013))
 
-    beSettable[BigInt](DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)))
+    beSettable[BigInt](DefinedBenefitAmountPage(Period._2013))
 
-    beRemovable[BigInt](DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)))
+    beRemovable[BigInt](DefinedBenefitAmountPage(Period._2013))
 
     "must Navigate correctly in normal mode" - {
 
@@ -37,12 +37,12 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
         "to CheckYourAnswersPage when answered" in {
           val ua     = emptyUserAnswers
             .set(
-              DefinedBenefitAmountPage(period, SchemeIndex(0)),
+              DefinedBenefitAmountPage(period),
               BigInt("100")
             )
             .success
             .value
-          val result = DefinedBenefitAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+          val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
 
           checkNavigation(result, s"/check-your-answers-period/$period")
         }
@@ -54,14 +54,14 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
         "to TotalIncomePage when answered" in {
           val ua     = emptyUserAnswers
             .set(
-              DefinedBenefitAmountPage(period, SchemeIndex(0)),
+              DefinedBenefitAmountPage(period),
               BigInt("100")
             )
             .success
             .value
-          val result = DefinedBenefitAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+          val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/total-income/$period/0")
+          checkNavigation(result, s"/total-income/$period")
         }
       }
 
@@ -71,20 +71,20 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
         "to ThresholdIncome when answered" in {
           val ua     = emptyUserAnswers
             .set(
-              DefinedBenefitAmountPage(period, SchemeIndex(0)),
+              DefinedBenefitAmountPage(period),
               BigInt("100")
             )
             .success
             .value
-          val result = DefinedBenefitAmountPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+          val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/threshold-income/$period/0")
+          checkNavigation(result, s"/threshold-income/$period")
         }
       }
 
       "to JourneyRecoveryPage when not answerd" in {
         val ua     = emptyUserAnswers
-        val result = DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+        val result = DefinedBenefitAmountPage(Period._2013).navigate(NormalMode, ua).url
 
         checkNavigation(result, s"/there-is-a-problem")
       }
@@ -93,12 +93,12 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
     "must Navigate correctly to CYA in check mode" in {
       val ua     = emptyUserAnswers
         .set(
-          DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)),
+          DefinedBenefitAmountPage(Period._2013),
           BigInt("100")
         )
         .success
         .value
-      val result = DefinedBenefitAmountPage(Period._2013, SchemeIndex(0)).navigate(CheckMode, ua).url
+      val result = DefinedBenefitAmountPage(Period._2013).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/check-your-answers-period/2013")
     }

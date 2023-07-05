@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPeriodController
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.ContributedToDuringRemedyPeriodPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,10 +28,10 @@ import viewmodels.implicits._
 
 object ContributedToDuringRemedyPeriodSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+  def row(answers: UserAnswers, period: Period)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)).map { answers =>
+    answers.get(ContributedToDuringRemedyPeriodPage(period)).map { answers =>
       val value = ValueViewModel(
         HtmlContent(
           answers
@@ -48,7 +48,7 @@ object ContributedToDuringRemedyPeriodSummary {
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            ContributedToDuringRemedyPeriodController.onPageLoad(CheckMode, period, schemeIndex).url
+            ContributedToDuringRemedyPeriodController.onPageLoad(CheckMode, period).url
           )
             .withVisuallyHiddenText(messages("contributedToDuringRemedyPeriod.change.hidden"))
         )

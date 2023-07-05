@@ -18,7 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.DefinedBenefitAmountFormProvider
-import models.{Mode, Period, SchemeIndex}
+import models.{Mode, Period}
 import pages.annualallowance.taxyear.DefinedBenefitAmountPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -46,29 +46,28 @@ class DefinedBenefitAmountController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+  def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(DefinedBenefitAmountPage(period, schemeIndex)) match {
+      val preparedForm = request.userAnswers.get(DefinedBenefitAmountPage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period, startEndDate(period), schemeIndex))
+      Ok(view(preparedForm, mode, period, startEndDate(period)))
     }
 
-  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+  def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
-          formWithErrors =>
-            Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period), schemeIndex))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
             for {
               updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(DefinedBenefitAmountPage(period, schemeIndex), value))
+                Future.fromTry(request.userAnswers.set(DefinedBenefitAmountPage(period), value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(DefinedBenefitAmountPage(period, schemeIndex).navigate(mode, updatedAnswers))
+            } yield Redirect(DefinedBenefitAmountPage(period).navigate(mode, updatedAnswers))
         )
     }
 

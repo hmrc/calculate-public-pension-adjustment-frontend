@@ -16,19 +16,19 @@
 
 package pages.annualallowance.taxyear
 
-import pages.behaviours.PageBehaviours
-import models.{CheckMode, NormalMode, Period, SchemeIndex}
 import models.Period._2013
+import models.{CheckMode, NormalMode, Period}
+import pages.behaviours.PageBehaviours
 
 class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
 
   "OtherDefinedBenefitOrContributionPage" - {
 
-    beRetrievable[Boolean](OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)))
+    beRetrievable[Boolean](OtherDefinedBenefitOrContributionPage(Period._2013))
 
-    beSettable[Boolean](OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)))
+    beSettable[Boolean](OtherDefinedBenefitOrContributionPage(Period._2013))
 
-    beRemovable[Boolean](OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)))
+    beRemovable[Boolean](OtherDefinedBenefitOrContributionPage(Period._2013))
 
     "must Navigate correctly in normal mode" - {
 
@@ -39,25 +39,25 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         "to ContributedToDuringRemedyPeriodPage when answered true" in {
           val ua     = emptyUserAnswers
             .set(
-              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              OtherDefinedBenefitOrContributionPage(period),
               true
             )
             .success
             .value
-          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+          val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/which-contributed-during-remedy-period/2016-pre/0")
+          checkNavigation(result, "/which-contributed-during-remedy-period/2016-pre")
         }
 
         "to CheckYourAnswersPage when answered false" in {
           val ua     = emptyUserAnswers
             .set(
-              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              OtherDefinedBenefitOrContributionPage(period),
               false
             )
             .success
             .value
-          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+          val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
           checkNavigation(result, "/check-your-answers-period/2016-pre")
         }
@@ -69,27 +69,27 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         "to ContributedToDuringRemedyPeriodPage when answered true" in {
           val ua     = emptyUserAnswers
             .set(
-              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              OtherDefinedBenefitOrContributionPage(period),
               true
             )
             .success
             .value
-          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+          val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/which-contributed-during-remedy-period/2016-post/0")
+          checkNavigation(result, "/which-contributed-during-remedy-period/2016-post")
         }
 
         "to TotalIncomePage when answered false" in {
           val ua     = emptyUserAnswers
             .set(
-              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              OtherDefinedBenefitOrContributionPage(period),
               false
             )
             .success
             .value
-          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+          val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/total-income/2016-post/0")
+          checkNavigation(result, "/total-income/2016-post")
         }
       }
 
@@ -99,34 +99,33 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         "to ContributedToDuringRemedyPeriodPage when answered true" in {
           val ua     = emptyUserAnswers
             .set(
-              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              OtherDefinedBenefitOrContributionPage(period),
               true
             )
             .success
             .value
-          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+          val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/which-contributed-during-remedy-period/$period/0")
+          checkNavigation(result, s"/which-contributed-during-remedy-period/$period")
         }
 
         "to ThresholdIncomePage when answered false" in {
           val ua     = emptyUserAnswers
             .set(
-              OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)),
+              OtherDefinedBenefitOrContributionPage(period),
               false
             )
             .success
             .value
-          val result = OtherDefinedBenefitOrContributionPage(period, SchemeIndex(0)).navigate(NormalMode, ua).url
+          val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/threshold-income/$period/0")
+          checkNavigation(result, s"/threshold-income/$period")
         }
       }
 
       "to JourneyRecovery when not answered" in {
         val result = OtherDefinedBenefitOrContributionPage(
-          _2013,
-          SchemeIndex(0)
+          _2013
         ).navigate(NormalMode, emptyUserAnswers).url
 
         checkNavigation(result, "/there-is-a-problem")
@@ -136,12 +135,12 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
     "must Navigate correctly to CYA in check mode" in {
       val ua     = emptyUserAnswers
         .set(
-          OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)),
+          OtherDefinedBenefitOrContributionPage(Period._2013),
           false
         )
         .success
         .value
-      val result = OtherDefinedBenefitOrContributionPage(_2013, SchemeIndex(0)).navigate(CheckMode, ua).url
+      val result = OtherDefinedBenefitOrContributionPage(_2013).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/check-your-answers-period/2013")
     }

@@ -64,7 +64,7 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2018/0")
+      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2018")
     }
 
     "must redirect to threshold income page when when answer no and do not have dc scheme in standard period" in {
@@ -78,7 +78,7 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/threshold-income/2018/0")
+      checkNavigation(nextPageUrl, "/threshold-income/2018")
     }
 
     "must redirect to other db/dc page when when answer no and have dc scheme in 2016-pre period" in {
@@ -92,7 +92,7 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-pre/0")
+      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-pre")
     }
 
     "must redirect to check your answers when answer no and do not have dc scheme in 2016-pre period" in {
@@ -120,7 +120,7 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-post/0")
+      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-post")
     }
 
     "must redirect to total income page when answer no and do not have dc scheme in 2016-post period" in {
@@ -134,7 +134,7 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/total-income/2016-post/0")
+      checkNavigation(nextPageUrl, "/total-income/2016-post")
     }
   }
 }

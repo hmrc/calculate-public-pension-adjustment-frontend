@@ -18,7 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.DefinedContributionAmountFormProvider
-import models.{Mode, Period, SchemeIndex}
+import models.{Mode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.DefinedContributionAmountPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -48,19 +48,19 @@ class DefinedContributionAmountController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+  def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(DefinedContributionAmountPage(period, schemeIndex)) match {
+      val preparedForm = request.userAnswers.get(DefinedContributionAmountPage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
       val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
 
-      Ok(view(preparedForm, mode, period, getStartEndDate(period, flexibleStartDate), schemeIndex))
+      Ok(view(preparedForm, mode, period, getStartEndDate(period, flexibleStartDate)))
     }
 
-  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+  def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
       val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
 
@@ -69,14 +69,14 @@ class DefinedContributionAmountController @Inject() (
         .fold(
           formWithErrors =>
             Future.successful(
-              BadRequest(view(formWithErrors, mode, period, getStartEndDate(period, flexibleStartDate), schemeIndex))
+              BadRequest(view(formWithErrors, mode, period, getStartEndDate(period, flexibleStartDate)))
             ),
           value =>
             for {
               updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(DefinedContributionAmountPage(period, schemeIndex), value))
+                Future.fromTry(request.userAnswers.set(DefinedContributionAmountPage(period), value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(DefinedContributionAmountPage(period, schemeIndex).navigate(mode, updatedAnswers))
+            } yield Redirect(DefinedContributionAmountPage(period).navigate(mode, updatedAnswers))
         )
     }
 

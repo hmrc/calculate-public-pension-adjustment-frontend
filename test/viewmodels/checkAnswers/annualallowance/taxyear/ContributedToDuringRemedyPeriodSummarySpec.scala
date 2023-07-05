@@ -18,7 +18,7 @@ package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
 import models.ContributedToDuringRemedyPeriod.{Definedbenefit, Definedcontribution}
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.ContributedToDuringRemedyPeriodPage
@@ -35,14 +35,13 @@ class ContributedToDuringRemedyPeriodSummarySpec extends AnyFreeSpec with Matche
   "row" - {
     "when You is selected, return the summary row" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set[Set[models.ContributedToDuringRemedyPeriod]](
-          ContributedToDuringRemedyPeriodPage(Period._2018, SchemeIndex(0)),
+          ContributedToDuringRemedyPeriodPage(Period._2018),
           Set(Definedcontribution, Definedbenefit)
         )
         .get
-      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "contributedToDuringRemedyPeriod.checkYourAnswersLabel",
           value = ValueViewModel(
@@ -53,7 +52,7 @@ class ContributedToDuringRemedyPeriodSummarySpec extends AnyFreeSpec with Matche
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.ContributedToDuringRemedyPeriodController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.ContributedToDuringRemedyPeriodController.onPageLoad(CheckMode, period).url
             )
               .withVisuallyHiddenText("contributedToDuringRemedyPeriod.change.hidden")
           )
@@ -64,8 +63,7 @@ class ContributedToDuringRemedyPeriodSummarySpec extends AnyFreeSpec with Matche
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
-      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period) shouldBe None
     }
   }
 

@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period, SchemeIndex}
+import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period}
 import pages.behaviours.PageBehaviours
 
 class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
@@ -24,45 +24,45 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
   "ContributedToDuringRemedyPeriodPage" - {
 
     beRetrievable[Set[ContributedToDuringRemedyPeriod]](
-      ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0))
+      ContributedToDuringRemedyPeriodPage(Period._2013)
     )
 
-    beSettable[Set[ContributedToDuringRemedyPeriod]](ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)))
+    beSettable[Set[ContributedToDuringRemedyPeriod]](ContributedToDuringRemedyPeriodPage(Period._2013))
 
-    beRemovable[Set[ContributedToDuringRemedyPeriod]](ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)))
+    beRemovable[Set[ContributedToDuringRemedyPeriod]](ContributedToDuringRemedyPeriodPage(Period._2013))
 
     "must Navigate correctly in normal mode" - {
 
       "to page DefinedContributionAmountPage when DC selected" in {
         val ua     = emptyUserAnswers
           .set(
-            ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)),
+            ContributedToDuringRemedyPeriodPage(Period._2013),
             Set(ContributedToDuringRemedyPeriod.values.head)
           )
           .success
           .value
-        val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+        val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/pia-for-dc-pension/2013/0")
+        checkNavigation(result, "/pia-for-dc-pension/2013")
       }
 
       "to page DefinedBenefitAmountPage when DB selected" in {
         val ua     = emptyUserAnswers
           .set(
-            ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)),
+            ContributedToDuringRemedyPeriodPage(Period._2013),
             Set(ContributedToDuringRemedyPeriod.values.tail.head)
           )
           .success
           .value
-        val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+        val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/pia-for-db-pension/2013/0")
+        checkNavigation(result, "/pia-for-db-pension/2013")
       }
 
       "to page DefinedContributionAmountPage when DB and DC selected" in {
         val ua     = emptyUserAnswers
           .set(
-            ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)),
+            ContributedToDuringRemedyPeriodPage(Period._2013),
             Set(
               ContributedToDuringRemedyPeriod.values.head,
               ContributedToDuringRemedyPeriod.values.tail.head
@@ -70,14 +70,14 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           )
           .success
           .value
-        val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+        val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/pia-for-dc-pension/2013/0")
+        checkNavigation(result, "/pia-for-dc-pension/2013")
       }
 
       "to JourneyRecoveryPage when not answered" in {
         val ua     = emptyUserAnswers
-        val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+        val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -86,12 +86,12 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
     "must Navigate correctly to CYA in check mode" in {
       val ua     = emptyUserAnswers
         .set(
-          ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)),
+          ContributedToDuringRemedyPeriodPage(Period._2013),
           Set(ContributedToDuringRemedyPeriod.values.head)
         )
         .success
         .value
-      val result = ContributedToDuringRemedyPeriodPage(Period._2013, SchemeIndex(0)).navigate(CheckMode, ua).url
+      val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/check-your-answers-period/2013")
     }

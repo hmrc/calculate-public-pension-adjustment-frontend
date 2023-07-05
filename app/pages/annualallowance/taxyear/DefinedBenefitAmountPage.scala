@@ -17,24 +17,24 @@
 package pages.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, ThresholdIncomeController, TotalIncomeController}
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class DefinedBenefitAmountPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[BigInt] {
+case class DefinedBenefitAmountPage(period: Period) extends QuestionPage[BigInt] {
 
-  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "definedBenefitAmount"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(DefinedBenefitAmountPage(period, schemeIndex)) match {
+    answers.get(DefinedBenefitAmountPage(period)) match {
       case Some(_) if period == Period._2016PreAlignment  =>
         CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(_) if period == Period._2016PostAlignment =>
-        TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case Some(_)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+        TotalIncomeController.onPageLoad(NormalMode, period)
+      case Some(_)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period)
       case None                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

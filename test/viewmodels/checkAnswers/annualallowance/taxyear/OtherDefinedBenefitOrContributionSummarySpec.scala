@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.OtherDefinedBenefitOrContributionPage
@@ -33,21 +33,20 @@ class OtherDefinedBenefitOrContributionSummarySpec extends AnyFreeSpec with Matc
   "row" - {
     "when Yes is selected, return the summary row" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          OtherDefinedBenefitOrContributionPage(Period._2018, SchemeIndex(0)),
+          OtherDefinedBenefitOrContributionPage(Period._2018),
           true
         )
         .get
-      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "otherDefinedBenefitOrContribution.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.OtherDefinedBenefitOrContributionController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.OtherDefinedBenefitOrContributionController.onPageLoad(CheckMode, period).url
             )
               .withVisuallyHiddenText("otherDefinedBenefitOrContribution.change.hidden")
           )
@@ -57,21 +56,20 @@ class OtherDefinedBenefitOrContributionSummarySpec extends AnyFreeSpec with Matc
 
     "when No is selected, return the summary row" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          OtherDefinedBenefitOrContributionPage(Period._2018, SchemeIndex(0)),
+          OtherDefinedBenefitOrContributionPage(Period._2018),
           false
         )
         .get
-      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "otherDefinedBenefitOrContribution.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.OtherDefinedBenefitOrContributionController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.OtherDefinedBenefitOrContributionController.onPageLoad(CheckMode, period).url
             )
               .withVisuallyHiddenText("otherDefinedBenefitOrContribution.change.hidden")
           )
@@ -82,8 +80,7 @@ class OtherDefinedBenefitOrContributionSummarySpec extends AnyFreeSpec with Matc
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
-      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period) shouldBe None
     }
   }
 

@@ -18,7 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.ThresholdIncomeFormProvider
-import models.{Mode, Period, SchemeIndex}
+import models.{Mode, Period}
 import pages.annualallowance.taxyear.ThresholdIncomePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -42,29 +42,29 @@ class ThresholdIncomeController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+  def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
       val form         = formProvider(period)
-      val preparedForm = request.userAnswers.get(ThresholdIncomePage(period, schemeIndex)) match {
+      val preparedForm = request.userAnswers.get(ThresholdIncomePage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period, schemeIndex))
+      Ok(view(preparedForm, mode, period))
     }
 
-  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+  def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
       val form = formProvider(period)
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(ThresholdIncomePage(period, schemeIndex), value))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(ThresholdIncomePage(period), value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(ThresholdIncomePage(period, schemeIndex).navigate(mode, updatedAnswers))
+            } yield Redirect(ThresholdIncomePage(period).navigate(mode, updatedAnswers))
         )
     }
 }

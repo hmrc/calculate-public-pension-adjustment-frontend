@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers.annualallowance.taxyear
 
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.DefinedBenefitAmountPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -30,10 +30,10 @@ import java.util.Locale
 
 object DefinedBenefitAmountSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+  def row(answers: UserAnswers, period: Period)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(DefinedBenefitAmountPage(period, schemeIndex)).map { answer =>
+    answers.get(DefinedBenefitAmountPage(period)).map { answer =>
       val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
       val startEndDate: String = period.start.format(formatter) + " to " + period.end.format(formatter)
 
@@ -44,7 +44,7 @@ object DefinedBenefitAmountSummary {
           ActionItemViewModel(
             "site.change",
             controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController
-              .onPageLoad(CheckMode, period, schemeIndex)
+              .onPageLoad(CheckMode, period)
               .url
           )
             .withVisuallyHiddenText(messages("definedBenefitAmount.change.hidden"))
