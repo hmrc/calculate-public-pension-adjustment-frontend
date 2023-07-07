@@ -24,7 +24,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, startEndDate: String, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
     <p>@messages("definedBenefitAmount.hint1")</p>
@@ -34,7 +34,7 @@
 @layout(pageTitle = title(form, messages("definedBenefitAmount.title", startEndDate))) {
 
     @formHelper(
-        action = controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onSubmit(mode, period, schemeIndex),
+        action = controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onSubmit(mode, period),
         Symbol("autoComplete") -> "off"
     ) {
 

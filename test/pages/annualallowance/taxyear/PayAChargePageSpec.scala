@@ -56,7 +56,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2018/0")
+      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2018")
     }
 
     "when did not pay charge in standard period and not member of more than one scheme and does not have DC scheme then check onward navigation" in {
@@ -72,7 +72,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/threshold-income/2018/0")
+      checkNavigation(nextPageUrl, "/threshold-income/2018")
     }
 
     "when did not pay charge in 2016-pre period and not member of more than one scheme and does have DC scheme then check onward navigation" in {
@@ -88,7 +88,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-pre/0")
+      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-pre")
     }
 
     "when did not pay charge in 2016-pre period and not member of more than one scheme and does not have DC scheme then check onward navigation" in {
@@ -120,7 +120,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-post/0")
+      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-post")
     }
 
     "when did not pay charge in 2016-post period and not member of more than one scheme and does not have DC scheme then check onward navigation" in {
@@ -136,7 +136,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/total-income/2016-post/0")
+      checkNavigation(nextPageUrl, "/total-income/2016-post")
     }
 
     "when did pay charge then check onward navigation" in {

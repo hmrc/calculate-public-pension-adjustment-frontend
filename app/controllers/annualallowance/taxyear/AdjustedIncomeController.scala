@@ -18,7 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.AdjustedIncomeFormProvider
-import models.{Mode, Period, SchemeIndex}
+import models.{Mode, Period}
 import pages.annualallowance.taxyear.AdjustedIncomePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -44,27 +44,27 @@ class AdjustedIncomeController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+  def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(AdjustedIncomePage(period, schemeIndex)) match {
+      val preparedForm = request.userAnswers.get(AdjustedIncomePage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period, schemeIndex))
+      Ok(view(preparedForm, mode, period))
     }
 
-  def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
+  def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(AdjustedIncomePage(period, schemeIndex), value))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(AdjustedIncomePage(period), value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(AdjustedIncomePage(period, schemeIndex).navigate(mode, updatedAnswers))
+            } yield Redirect(AdjustedIncomePage(period).navigate(mode, updatedAnswers))
         )
     }
 }

@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
         <p class="govuk-body">@messages("thresholdIncome.heading.hint1")</p>
@@ -50,7 +50,7 @@
 
     @formHelper(
         action = controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onSubmit(
-            mode, period, schemeIndex
+            mode, period
         ),
         Symbol("autoComplete") -> "off"
     ) {

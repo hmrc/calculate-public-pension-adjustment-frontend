@@ -18,26 +18,25 @@ package pages.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, ContributedToDuringRemedyPeriodController, ThresholdIncomeController, TotalIncomeController}
 import controllers.routes
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class OtherDefinedBenefitOrContributionPage(period: Period, schemeIndex: SchemeIndex)
-    extends QuestionPage[Boolean] {
+case class OtherDefinedBenefitOrContributionPage(period: Period) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "otherDefinedBenefitOrContribution"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(OtherDefinedBenefitOrContributionPage(period, schemeIndex)) match {
+    answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
       case Some(false) if period == Period._2016PreAlignment  =>
         CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(false) if period == Period._2016PostAlignment =>
-        TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case Some(false)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
-      case Some(true)                                         => ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, period, schemeIndex)
+        TotalIncomeController.onPageLoad(NormalMode, period)
+      case Some(false)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period)
+      case Some(true)                                         => ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, period)
       case None                                               => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

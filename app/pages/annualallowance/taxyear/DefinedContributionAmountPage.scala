@@ -17,15 +17,15 @@
 package pages.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes.{DefinedBenefitAmountController, FlexiAccessDefinedContributionAmountController}
-import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class DefinedContributionAmountPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[BigInt] {
+case class DefinedContributionAmountPage(period: Period) extends QuestionPage[BigInt] {
 
-  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "definedContributionAmount"
 
@@ -36,22 +36,22 @@ case class DefinedContributionAmountPage(period: Period, schemeIndex: SchemeInde
       case None       => false
     }
 
-    val definedBenefitExists = answers.get(ContributedToDuringRemedyPeriodPage(period, schemeIndex)) match {
+    val definedBenefitExists = answers.get(ContributedToDuringRemedyPeriodPage(period)) match {
       case Some(contributedTo) if contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit) => true
       case _                                                                                             => false
     }
 
-    answers.get(DefinedContributionAmountPage(period, schemeIndex)) match {
+    answers.get(DefinedContributionAmountPage(period)) match {
       case Some(_) if flexiAccessExistsForPeriod          =>
-        FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, period, schemeIndex)
+        FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, period)
       case Some(_) if definedBenefitExists                =>
-        DefinedBenefitAmountController.onPageLoad(NormalMode, period, schemeIndex)
+        DefinedBenefitAmountController.onPageLoad(NormalMode, period)
       case Some(_) if period == Period._2016PreAlignment  =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(_) if period == Period._2016PostAlignment =>
-        controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+        controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
       case Some(_)                                        =>
-        controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period, schemeIndex)
+        controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
       case None                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }

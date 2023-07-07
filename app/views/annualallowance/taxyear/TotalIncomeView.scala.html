@@ -24,7 +24,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
     <p class="govuk-body">@messages("totalIncome.hint1")</p>
@@ -41,7 +41,7 @@
 @layout(pageTitle = title(form, messages("totalIncome.title",period.start.getYear.toString, period.end.getYear.toString))) {
 
     @formHelper(
-        action = controllers.annualallowance.taxyear.routes.TotalIncomeController.onSubmit(mode, period, schemeIndex),
+        action = controllers.annualallowance.taxyear.routes.TotalIncomeController.onSubmit(mode, period),
         Symbol("autoComplete") -> "off"
     ) {
 

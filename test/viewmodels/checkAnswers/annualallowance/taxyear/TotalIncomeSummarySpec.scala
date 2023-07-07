@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.TotalIncomePage
@@ -34,21 +34,20 @@ class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
   "row" - {
     "when value is entered, return the summary row" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          TotalIncomePage(period, schemeIndex),
+          TotalIncomePage(period),
           BigInt("100")
         )
         .get
-      TotalIncomeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      TotalIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "totalIncome.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.TotalIncomeController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.TotalIncomeController.onPageLoad(CheckMode, period).url
             )
               .withVisuallyHiddenText("totalIncome.change.hidden")
           )
@@ -58,9 +57,8 @@ class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      TotalIncomeSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      TotalIncomeSummary.row(userAnswers, period) shouldBe None
     }
   }
 

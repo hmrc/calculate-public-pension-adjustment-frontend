@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers.annualallowance.taxyear
 
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.ThresholdIncomePage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -25,10 +25,10 @@ import viewmodels.implicits._
 
 object ThresholdIncomeSummary {
 
-  def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
+  def row(answers: UserAnswers, period: Period)(implicit
     messages: Messages
   ): Option[SummaryListRow] =
-    answers.get(ThresholdIncomePage(period, schemeIndex)).map { answer =>
+    answers.get(ThresholdIncomePage(period)).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
@@ -38,11 +38,7 @@ object ThresholdIncomeSummary {
           ActionItemViewModel(
             "site.change",
             controllers.annualallowance.taxyear.routes.ThresholdIncomeController
-              .onPageLoad(
-                CheckMode,
-                period,
-                schemeIndex
-              )
+              .onPageLoad(CheckMode, period)
               .url
           ).withVisuallyHiddenText(messages("thresholdIncome.change.hidden"))
         )

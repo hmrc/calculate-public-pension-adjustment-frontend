@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import controllers.routes
 import forms.annualallowance.taxyear.ThresholdIncomeFormProvider
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -44,8 +44,7 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
     controllers.annualallowance.taxyear.routes.ThresholdIncomeController
       .onPageLoad(
         NormalMode,
-        Period._2013,
-        SchemeIndex(0)
+        Period._2013
       )
       .url
 
@@ -66,8 +65,7 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           form,
           NormalMode,
-          Period._2013,
-          SchemeIndex(0)
+          Period._2013
         )(request, messages(application)).toString
       }
     }
@@ -76,7 +74,7 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers = UserAnswers(userAnswersId)
         .set(
-          ThresholdIncomePage(Period._2013, SchemeIndex(0)),
+          ThresholdIncomePage(Period._2013),
           true
         )
         .success
@@ -95,8 +93,7 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           form.fill(true),
           NormalMode,
-          Period._2013,
-          SchemeIndex(0)
+          Period._2013
         )(request, messages(application)).toString
       }
     }
@@ -142,8 +139,7 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          Period._2013,
-          SchemeIndex(0)
+          Period._2013
         )(request, messages(application)).toString
       }
     }

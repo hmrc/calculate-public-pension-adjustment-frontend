@@ -41,30 +41,37 @@ class CheckYourAAPeriodAnswersController @Inject() (
     implicit request =>
       val schemeIndices = 0.to(4).map(i => SchemeIndex(i))
 
-      val rows: Seq[Option[SummaryListRow]] = schemeIndices.flatMap(index =>
+      val rowsThree: Seq[Option[SummaryListRow]] = Seq(
+        OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
+        ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
+        DefinedContributionAmountSummary.row(request.userAnswers, period),
+        FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period),
+        DefinedBenefitAmountSummary.row(request.userAnswers, period),
+        ThresholdIncomeSummary.row(request.userAnswers, period),
+        AdjustedIncomeSummary.row(request.userAnswers, period),
+        TotalIncomeSummary.row(request.userAnswers, period)
+      )
+
+      val rowsTwo: Seq[Option[SummaryListRow]] = schemeIndices.flatMap(index =>
         Seq(
           PensionSchemeDetailsSummary.row(request.userAnswers, period, index),
           PensionSchemeInputAmountsSummary.row(request.userAnswers, period, index),
           PayAChargeSummary.row(request.userAnswers, period, index),
           WhoPaidAAChargeSummary.row(request.userAnswers, period, index),
           HowMuchAAChargeYouPaidSummary.row(request.userAnswers, period, index),
-          HowMuchAAChargeSchemePaidSummary.row(request.userAnswers, period, index),
-          OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period, index),
-          ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period, index),
-          FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period, index),
-          DefinedContributionAmountSummary.row(request.userAnswers, period, index),
-          DefinedBenefitAmountSummary.row(request.userAnswers, period, index),
-          ThresholdIncomeSummary.row(request.userAnswers, period, index),
-          AdjustedIncomeSummary.row(request.userAnswers, period, index),
-          TotalIncomeSummary.row(request.userAnswers, period, index)
+          HowMuchAAChargeSchemePaidSummary.row(request.userAnswers, period, index)
         )
       )
+
+      val rowsOne: Seq[Option[SummaryListRow]] = Seq(
+        MemberMoreThanOnePensionSummary.row(request.userAnswers, period)
+      ) ++ rowsTwo ++ rowsThree
 
       Ok(
         view(
           s"checkYourAnswers.aa.period.subHeading.$period",
           controllers.routes.TaskListController.onPageLoad(),
-          SummaryListViewModel(rows.flatten)
+          SummaryListViewModel(rowsOne.flatten)
         )
       )
   }

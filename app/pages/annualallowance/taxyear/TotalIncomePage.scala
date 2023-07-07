@@ -16,14 +16,14 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, SchemeIndex, UserAnswers}
+import models.{Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class TotalIncomePage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[BigInt] {
+case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
 
-  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "totalIncome"
 

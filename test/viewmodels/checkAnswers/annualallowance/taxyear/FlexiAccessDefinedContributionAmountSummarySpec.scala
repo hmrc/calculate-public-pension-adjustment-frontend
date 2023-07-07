@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
@@ -34,21 +34,20 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
   "row" - {
     "when value is entered, return the summary row" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          FlexiAccessDefinedContributionAmountPage(period, schemeIndex),
+          FlexiAccessDefinedContributionAmountPage(period),
           BigInt("100")
         )
         .get
-      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.FlexiAccessDefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.FlexiAccessDefinedContributionAmountController.onPageLoad(CheckMode, period).url
             )
               .withVisuallyHiddenText("flexiAccessDefinedContributionAmount.change.hidden")
           )
@@ -58,9 +57,8 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
 
     "when answer unavailable, return empty" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe None
     }
   }
 

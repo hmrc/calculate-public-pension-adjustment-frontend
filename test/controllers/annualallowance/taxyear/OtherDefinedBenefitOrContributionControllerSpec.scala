@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import controllers.routes
 import forms.annualallowance.taxyear.OtherDefinedBenefitOrContributionFormProvider
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -44,8 +44,7 @@ class OtherDefinedBenefitOrContributionControllerSpec extends SpecBase with Mock
     controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
       .onPageLoad(
         NormalMode,
-        Period._2013,
-        SchemeIndex(0)
+        Period._2013
       )
       .url
 
@@ -66,8 +65,7 @@ class OtherDefinedBenefitOrContributionControllerSpec extends SpecBase with Mock
         contentAsString(result) mustEqual view(
           form,
           NormalMode,
-          Period._2013,
-          SchemeIndex(0)
+          Period._2013
         )(request, messages(application)).toString
       }
     }
@@ -75,7 +73,7 @@ class OtherDefinedBenefitOrContributionControllerSpec extends SpecBase with Mock
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(OtherDefinedBenefitOrContributionPage(Period._2013, SchemeIndex(0)), true)
+        .set(OtherDefinedBenefitOrContributionPage(Period._2013), true)
         .success
         .value
 
@@ -92,8 +90,7 @@ class OtherDefinedBenefitOrContributionControllerSpec extends SpecBase with Mock
         contentAsString(result) mustEqual view(
           form.fill(true),
           NormalMode,
-          Period._2013,
-          SchemeIndex(0)
+          Period._2013
         )(request, messages(application)).toString
       }
     }
@@ -141,8 +138,7 @@ class OtherDefinedBenefitOrContributionControllerSpec extends SpecBase with Mock
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          Period._2013,
-          SchemeIndex(0)
+          Period._2013
         )(request, messages(application)).toString
       }
     }

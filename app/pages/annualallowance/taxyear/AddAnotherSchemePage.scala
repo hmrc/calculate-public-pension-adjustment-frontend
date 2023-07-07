@@ -31,7 +31,7 @@ case class AddAnotherSchemePage(period: Period, schemeIndex: SchemeIndex) extend
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(AddAnotherSchemePage(period, schemeIndex)) match {
       case Some(true)  => addAnotherScheme(answers)
-      case Some(false) => AddAnotherSchemeMaybe.exitSchemeLoopNavigation(answers, period, schemeIndex)
+      case Some(false) => AddAnotherSchemeMaybe.exitSchemeLoopNavigation(answers, period)
       case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

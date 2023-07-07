@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
-import models.{CheckMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.DefinedContributionAmountPage
@@ -34,21 +34,20 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
   "row" - {
     "when value is entered, return the summary row" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
         .set(
-          DefinedContributionAmountPage(period, schemeIndex),
+          DefinedContributionAmountPage(period),
           BigInt("100")
         )
         .get
-      DefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "definedContributionAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.DefinedContributionAmountController.onPageLoad(CheckMode, period, schemeIndex).url
+              routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
             )
               .withVisuallyHiddenText("definedContributionAmount.change.hidden")
           )
@@ -58,9 +57,8 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      DefinedContributionAmountSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      DefinedContributionAmountSummary.row(userAnswers, period) shouldBe None
     }
   }
 

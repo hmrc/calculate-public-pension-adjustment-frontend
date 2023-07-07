@@ -21,7 +21,7 @@ import controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPerio
 import controllers.routes
 import forms.annualallowance.taxyear.ContributedToDuringRemedyPeriodFormProvider
 import models.Period._2013
-import models.{ContributedToDuringRemedyPeriod, NormalMode, SchemeIndex, UserAnswers}
+import models.{ContributedToDuringRemedyPeriod, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -40,7 +40,7 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
   def onwardRoute = Call("GET", "/foo")
 
   lazy val contributedToDuringRemedyPeriodRoute =
-    ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, _2013, SchemeIndex(0)).url
+    ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, _2013).url
 
   val formProvider = new ContributedToDuringRemedyPeriodFormProvider()
   val form         = formProvider()
@@ -60,7 +60,7 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
 
         status(result) mustEqual OK
 
-        contentAsString(result) mustEqual view(form, NormalMode, _2013, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(form, NormalMode, _2013)(
           request,
           messages(application)
         ).toString
@@ -70,7 +70,7 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(ContributedToDuringRemedyPeriodPage(_2013, SchemeIndex(0)), ContributedToDuringRemedyPeriod.values.toSet)
+        .set(ContributedToDuringRemedyPeriodPage(_2013), ContributedToDuringRemedyPeriod.values.toSet)
         .success
         .value
 
@@ -87,8 +87,7 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
         contentAsString(result) mustEqual view(
           form.fill(ContributedToDuringRemedyPeriod.values.toSet),
           NormalMode,
-          _2013,
-          SchemeIndex(0)
+          _2013
         )(request, messages(application)).toString
       }
     }
@@ -133,7 +132,7 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, _2013, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, _2013)(
           request,
           messages(application)
         ).toString

@@ -20,7 +20,7 @@ import base.SpecBase
 import controllers.annualallowance.taxyear.routes.TotalIncomeController
 import controllers.routes
 import forms.annualallowance.taxyear.TotalIncomeFormProvider
-import models.{NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,7 +43,7 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
 
   val validAnswer = BigInt(0)
 
-  lazy val totalIncomeRoute = TotalIncomeController.onPageLoad(NormalMode, Period._2018, SchemeIndex(0)).url
+  lazy val totalIncomeRoute = TotalIncomeController.onPageLoad(NormalMode, Period._2018).url
 
   "TotalIncome Controller" - {
 
@@ -59,7 +59,7 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[TotalIncomeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(
           request,
           messages(application)
         ).toString
@@ -69,7 +69,7 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers =
-        UserAnswers(userAnswersId).set(TotalIncomePage(Period._2018, SchemeIndex(0)), validAnswer).success.value
+        UserAnswers(userAnswersId).set(TotalIncomePage(Period._2018), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -84,8 +84,7 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           form.fill(validAnswer),
           NormalMode,
-          Period._2018,
-          SchemeIndex(0)
+          Period._2018
         )(request, messages(application)).toString
       }
     }
@@ -131,8 +130,7 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          Period._2018,
-          SchemeIndex(0)
+          Period._2018
         )(request, messages(application)).toString
       }
     }

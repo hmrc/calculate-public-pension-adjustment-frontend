@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
         <p class="govuk-heading-s">@messages("otherDefinedBenefitOrContribution.definedContribution")</p>
@@ -43,7 +43,7 @@
 @layout(pageTitle = title(form, messages("otherDefinedBenefitOrContribution.title"))) {
 
     @formHelper(
-        action = controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController.onSubmit(mode, period, schemeIndex),
+        action = controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController.onSubmit(mode, period),
         Symbol("autoComplete") -> "off"
     ) {
 

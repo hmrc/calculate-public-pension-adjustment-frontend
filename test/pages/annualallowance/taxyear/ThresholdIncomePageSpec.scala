@@ -17,50 +17,50 @@
 package pages.annualallowance.taxyear
 
 import models.Period._2013
-import models.{CheckMode, NormalMode, Period, SchemeIndex}
+import models.{CheckMode, NormalMode, Period}
 import pages.behaviours.PageBehaviours
 
 class ThresholdIncomePageSpec extends PageBehaviours {
 
   "ThresholdIncomePage" - {
 
-    beRetrievable[Boolean](ThresholdIncomePage(Period._2013, SchemeIndex(0)))
+    beRetrievable[Boolean](ThresholdIncomePage(Period._2013))
 
-    beSettable[Boolean](ThresholdIncomePage(Period._2013, SchemeIndex(0)))
+    beSettable[Boolean](ThresholdIncomePage(Period._2013))
 
-    beRemovable[Boolean](ThresholdIncomePage(Period._2013, SchemeIndex(0)))
+    beRemovable[Boolean](ThresholdIncomePage(Period._2013))
 
     "must Navigate correctly in normal mode" - {
 
       "to AdjustedIncomePage when answered true" in {
         val ua     = emptyUserAnswers
           .set(
-            ThresholdIncomePage(Period._2013, SchemeIndex(0)),
+            ThresholdIncomePage(Period._2013),
             true
           )
           .success
           .value
-        val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+        val result = ThresholdIncomePage(_2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/adjusted-income/2013/0")
+        checkNavigation(result, "/adjusted-income/2013")
       }
 
       "to TotalIncomePage when answered false" in {
         val ua     = emptyUserAnswers
           .set(
-            ThresholdIncomePage(Period._2013, SchemeIndex(0)),
+            ThresholdIncomePage(Period._2013),
             false
           )
           .success
           .value
-        val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+        val result = ThresholdIncomePage(_2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/total-income/2013/0")
+        checkNavigation(result, "/total-income/2013")
       }
 
       "to JourneyRecovery when not answered" in {
         val ua     = emptyUserAnswers
-        val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(NormalMode, ua).url
+        val result = ThresholdIncomePage(_2013).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
       }
@@ -69,12 +69,12 @@ class ThresholdIncomePageSpec extends PageBehaviours {
     "must Navigate correctly to CYA in check mode when answered no" in {
       val ua     = emptyUserAnswers
         .set(
-          ThresholdIncomePage(Period._2013, SchemeIndex(0)),
+          ThresholdIncomePage(Period._2013),
           false
         )
         .success
         .value
-      val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(CheckMode, ua).url
+      val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/check-your-answers-period/2013")
     }
@@ -82,27 +82,27 @@ class ThresholdIncomePageSpec extends PageBehaviours {
     "must Navigate correctly to CYA in check mode when answered yes" in {
       val ua     = emptyUserAnswers
         .set(
-          ThresholdIncomePage(Period._2013, SchemeIndex(0)),
+          ThresholdIncomePage(Period._2013),
           true
         )
         .success
         .value
-      val result = ThresholdIncomePage(_2013, SchemeIndex(0)).navigate(CheckMode, ua).url
+      val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/change-adjusted-income/2013/0")
+      checkNavigation(result, "/change-adjusted-income/2013")
     }
 
     "must cleanup correctly when answered no" in {
       val ua = emptyUserAnswers
         .set(
-          AdjustedIncomePage(Period._2013, SchemeIndex(0)),
+          AdjustedIncomePage(Period._2013),
           BigInt("100")
         )
         .success
         .value
 
-      val cleanedUserAnswers = ThresholdIncomePage(_2013, SchemeIndex(0)).cleanup(Some(false), ua).success.value
-      cleanedUserAnswers.get(AdjustedIncomePage(Period._2013, SchemeIndex(0))) mustBe None
+      val cleanedUserAnswers = ThresholdIncomePage(_2013).cleanup(Some(false), ua).success.value
+      cleanedUserAnswers.get(AdjustedIncomePage(Period._2013)) mustBe None
     }
   }
 }
