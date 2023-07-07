@@ -271,3 +271,5 @@ GET        /pia-for-dc-pension-flexible/:period                 controllers.annu
 POST       /pia-for-dc-pension-flexible/:period                  controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /change-pia-for-dc-pension-flexible/:period                      controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /change-pia-for-dc-pension-flexible/:period                       controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /calculation-results                       controllers.CalculationResultsController.onPageLoad()

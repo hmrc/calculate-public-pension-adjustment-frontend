@@ -1,0 +1,111 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.CalculationResults.CalculationResultsViewModel
+
+@this(
+        layout: templates.Layout,
+        govukButton: GovukButton
+)
+
+@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("calculationResults.title"))) {
+
+   <h1 class="govuk-heading-xl">@messages("calculationResults.heading")</h1>
+   <p class="govuk-body">@messages("calculationResults.hint1")</p>
+
+   <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">@messages("calculationResults.yourResult")</th>
+            <th scope="col" class="govuk-table__header">@messages("calculationResults.amount")</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+            @calculationResultsViewModel.calculationData.map { data =>
+            @data.map { section =>
+            <th scope="row" class="govuk-table__header">@messages(section.name)</th>
+            <td class="govuk-table__cell">@section.value</td>
+        </tr>
+            }
+            }
+        </tbody>
+    </table>
+
+   <p class="govuk-body">@messages("calculationResults.hint2")</p>
+
+   <h2 class="govuk-heading-m">@messages("calculationResults.annualResults.heading")</h2>
+   <p class="govuk-body">@messages("calculationResults.annualResults.hint1")</p>
+
+    @calculationResultsViewModel.resubmissionData.map { data =>
+        @data.map { section =>
+        @if(section.name == data.head.name) {
+        <p class="govuk-body"><b>@messages(section.name)</b></p>
+        }else {
+        <p class="govuk-body"><b>@messages(section.name)</b> @section.value</p>
+        }
+      }
+    }
+
+    @calculationResultsViewModel.annualResultsData.map { data =>
+    @data.map { section =>
+    @if(section.name == data.head.name) {
+        <h2 class="govuk-heading-m">@messages(section.name)</h2>
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">@messages("calculationResults.yourResult")</th>
+                <th scope="col" class="govuk-table__header">@messages("calculationResults.amount")</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+        } else if(section.name == data.last.name) {
+                <th scope="row" class="govuk-table__header">@messages(section.name)</th>
+                <td class="govuk-table__cell">@section.value</td>
+            </tr>
+            </tbody>
+        </table>
+        } else {
+            <th scope="row" class="govuk-table__header">@messages(section.name)</th>
+            <td class="govuk-table__cell">@section.value</td>
+            </tr>
+          }
+        }
+    }
+
+    <h2 class="govuk-heading-m">@messages("calculationResults.printYourResults.heading")</h2>
+    <p class="govuk-body">@messages("calculationResults.printYourResults.hint")</p>
+    <h2 class="govuk-heading-m">@messages("calculationResults.whatHappensNext.heading")</h2>
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint1")</p>
+    <ul class="govuk-body">
+        <li>@messages("calculationResults.whatHappensNext.hint1.list1")</li>
+        <li>@messages("calculationResults.whatHappensNext.hint1.list2")</li>
+        <li>@messages("calculationResults.whatHappensNext.hint1.list3")</li>
+        <li>@messages("calculationResults.whatHappensNext.hint1.list4")</li>
+        <li>@messages("calculationResults.whatHappensNext.hint1.list5")</li>
+    </ul>
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint2")</p>
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint3")</p>
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint4")</p>
+    <ul class="govuk-body">
+        <li>@messages("calculationResults.whatHappensNext.hint4.list1")</li>
+        <li>@messages("calculationResults.whatHappensNext.hint4.list2")</li>
+    </ul>
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint5")</p>
+}

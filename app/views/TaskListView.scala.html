@@ -83,8 +83,10 @@
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
         }
+
         @govukButton(
-            ButtonViewModel(messages("taskList.calculate"))
+        ButtonViewModel(messages("taskList.calculate"))
+        .asLink(controllers.routes.CalculationResultsController.onPageLoad().url)
         )
     }
 
