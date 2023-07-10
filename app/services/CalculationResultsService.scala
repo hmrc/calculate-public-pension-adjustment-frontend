@@ -21,7 +21,7 @@ import models.CalculationResults.{CalculationResponse, CalculationResultsViewMod
 import javax.inject.Inject
 
 class CalculationResultsService @Inject() () {
-  def calculationResultsViewModel(calculateResponse: CalculationResponse) = {
+  def calculationResultsViewModel(calculateResponse: CalculationResponse): CalculationResultsViewModel = {
     val resubmissionVal: Seq[RowViewModel]  = resubmission(calculateResponse)
     val totalAmountVal: Seq[RowViewModel]   = totalAmount(calculateResponse)
     val outDatesVal: Seq[Seq[RowViewModel]] = outDates(calculateResponse)
