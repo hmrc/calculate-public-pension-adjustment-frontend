@@ -1,7 +1,23 @@
+/*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package services
 
 import base.SpecBase
-import models.CalculationResults.{CalculationResponse, RowViewModel}
+import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, RowViewModel}
 import play.api.libs.json.{JsValue, Json}
 
 import scala.io.Source
@@ -9,17 +25,92 @@ import scala.io.Source
 class CalculationResultsServiceTest extends SpecBase {
 
   val calculationResultsService: CalculationResultsService = new CalculationResultsService
-  val source: String = Source.fromFile("test/resources/CalculationResultsTestData.json").getLines().mkString
-  val json: JsValue = Json.parse(source)
-  val calculationResult: CalculationResponse = json.as[CalculationResponse]
 
-  "Something" - {
-    val viewModel = calculationResultsService.calculationResultsViewModel(calculationResult)
-    val something = viewModel.
-
-
-
-
+  private def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
+    val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
+    val json: JsValue  = Json.parse(source)
+    json.as[CalculationResponse]
   }
 
+  "resubmission details should be well formed" in {
+    val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+    val viewModel: CalculationResultsViewModel =
+      calculationResultsService.calculationResultsViewModel(calculationResult)
+
+    val rows: Seq[RowViewModel] = viewModel.resubmissionVal
+
+    rows.size mustBe 2
+    checkRowNameAndValue(rows, 0, "calculationResults.annualResults.isResubmission", "")
+    checkRowNameAndValue(rows, 1, "calculationResults.annualResults.reason", "Change in amounts")
+  }
+
+  "total amounts should be well formed" in {
+    val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+    val viewModel: CalculationResultsViewModel =
+      calculationResultsService.calculationResultsViewModel(calculationResult)
+
+    val rows: Seq[RowViewModel] = viewModel.totalAmounts
+
+    rows.size mustBe 3
+    checkRowNameAndValue(rows, 0, "calculationResults.outDatesCompensation", "8400")
+    checkRowNameAndValue(rows, 1, "calculationResults.inDatesDebit", "0")
+    checkRowNameAndValue(rows, 2, "calculationResults.inDatesCredit", "0")
+  }
+
+  "out dates should be well formed" in {
+    val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+    val viewModel: CalculationResultsViewModel =
+      calculationResultsService.calculationResultsViewModel(calculationResult)
+
+    val sections: Seq[Seq[RowViewModel]] = viewModel.outDates
+    sections.size mustBe 5
+
+    val year = sections(0)
+
+    checkRowNameAndValue(year, 0, "periodDateRangeAA.2016-pre", "2016-pre")
+    checkRowNameAndValue(year, 1, "calculationResults.annualResults.chargePaidBySchemes", "0")
+    checkRowNameAndValue(year, 2, "calculationResults.annualResults.chargePaidByMember", "0")
+    checkRowNameAndValue(year, 3, "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0")
+    checkRowNameAndValue(year, 4, "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0")
+    checkRowNameAndValue(year, 5, "calculationResults.annualResults.directCompensation", "0")
+    checkRowNameAndValue(year, 6, "calculationResults.annualResults.indirectCompensation", "0")
+    checkRowNameAndValue(year, 7, "calculationResults.annualResults.unusedAnnualAllowance", "60000")
+  }
+
+  "all years in out dates should be well formed" in {
+    val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+    val viewModel: CalculationResultsViewModel =
+      calculationResultsService.calculationResultsViewModel(calculationResult)
+
+    val sections: Seq[Seq[RowViewModel]] = viewModel.outDates
+
+    sections.foreach(year => checkYear(year))
+  }
+
+  def checkYear(year: Seq[RowViewModel]) = {
+    year.size mustBe 8
+
+    year(0).value mustNot be(null)
+    checkRowName(year, 1, "calculationResults.annualResults.chargePaidBySchemes")
+    checkRowName(year, 2, "calculationResults.annualResults.chargePaidByMember")
+    checkRowName(year, 3, "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate")
+    checkRowName(year, 4, "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate")
+    checkRowName(year, 5, "calculationResults.annualResults.directCompensation")
+    checkRowName(year, 6, "calculationResults.annualResults.indirectCompensation")
+    checkRowName(year, 7, "calculationResults.annualResults.unusedAnnualAllowance")
+  }
+
+  def checkRowNameAndValue(rows: Seq[RowViewModel], index: Int, expectedName: String, expectedValue: String): Unit = {
+    rows(index).name mustBe expectedName
+    rows(index).value mustBe expectedValue
+  }
+
+  def checkRowName(rows: Seq[RowViewModel], index: Int, expectedName: String): Unit = {
+    rows(index).name mustBe expectedName
+    rows(index).value mustNot be(null)
+  }
 }
