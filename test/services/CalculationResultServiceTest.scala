@@ -17,7 +17,7 @@
 package services
 
 import base.SpecBase
-import connectors.CalculationResultConnector
+import connectors.{BackendConnector, CalculationResultConnector}
 import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, RowViewModel}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
@@ -32,8 +32,9 @@ import scala.io.Source
 class CalculationResultServiceTest extends SpecBase with MockitoSugar {
 
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
+  private val mockBackendConnector           = mock[BackendConnector]
 
-  private val service = new CalculationResultService(mockCalculationResultConnector)
+  private val service = new CalculationResultService(mockCalculationResultConnector, mockBackendConnector)
 
   private def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
     val source: String = Source.fromFile(calculationResponseFile).getLines().mkString

@@ -16,10 +16,11 @@
 
 package services
 
-import connectors.CalculationResultConnector
-import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, RowViewModel}
+import connectors.{BackendConnector, CalculationResultConnector}
+import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
+import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.{AnnualAllowance, CalculationUserAnswers, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, Resubmission, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
@@ -31,11 +32,36 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class CalculationResultService @Inject() (connector: CalculationResultConnector)(implicit ec: ExecutionContext)
-    extends Logging {
+class CalculationResultService @Inject() (connector: CalculationResultConnector, backendConnector: BackendConnector)(
+  implicit ec: ExecutionContext
+) extends Logging {
 
+  // TODO reinstate call using connector once local testing complete
   def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
-    connector.sendRequest(buildCalculationUserAnswers(userAnswers))
+    // connector.sendRequest(buildCalculationUserAnswers(userAnswers))
+    mockCalculationResponse
+
+  // TODO reinstate call using connector once local testing complete
+  def submitUserAnswersAndCalculation(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[SubmissionResponse] = {
+    val calculationUserAnswers: CalculationUserAnswers = buildCalculationUserAnswers(answers)
+
+    for {
+      // calculationResponse <- connector.sendRequest(calculationUserAnswers)
+      calculationResponse <- mockCalculationResponse
+      submissionResponse  <-
+        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationUserAnswers, Some(calculationResponse)))
+    } yield submissionResponse
+  }
+
+  private def mockCalculationResponse =
+    Future.successful(
+      CalculationResponse(
+        models.CalculationResults.Resubmission(false, None),
+        TotalAmounts(1, 2, 3),
+        List.empty[OutOfDatesTaxYearsCalculation],
+        List.empty[InDatesTaxYearsCalculation]
+      )
+    )
 
   def buildCalculationUserAnswers(userAnswers: UserAnswers): CalculationUserAnswers = {
 

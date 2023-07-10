@@ -58,8 +58,8 @@ class TaskListControllerTest extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Your calculation will be available soon.") mustBe true
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual "/public-pension-adjustment/calculation-result"
       }
     }
 

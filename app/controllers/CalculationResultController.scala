@@ -17,6 +17,9 @@
 package controllers
 
 import controllers.actions._
+import models.CalculationResults._
+import models.submission
+import models.submission.SubmissionResponse
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -26,7 +29,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.CalculationResultsView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class CalculationResultController @Inject() (
   override val messagesApi: MessagesApi,
@@ -54,4 +57,17 @@ class CalculationResultController @Inject() (
       )
     }
   }
+
+  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+    calculationResultService.submitUserAnswersAndCalculation(request.userAnswers).map {
+      submissionResponse: SubmissionResponse =>
+        submissionResponse match {
+          case submission.Success(uniqueId) => Redirect(buildSubmitFrontendUrl(uniqueId))
+          case submission.Failure(errors)   => ???
+        }
+    }
+  }
+
+  def buildSubmitFrontendUrl(uniqueId: String) =
+    s"http://localhost:12805/submit-public-pension-adjustment/landingPage?submissionUniqueId=$uniqueId"
 }
