@@ -25,7 +25,7 @@ import play.api.mvc.Call
 
 import scala.util.Try
 
-class TaskListServiceTest extends SpecBase {
+class TaskListServiceSpec extends SpecBase {
 
   val taskListService: TaskListService = new TaskListService
 

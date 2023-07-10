@@ -18,38 +18,36 @@ package connectors
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import models.CalculationResults.CalculationResponse
-import models.CalculationUserAnswers
+import models.submission.{SubmissionRequest, SubmissionResponse, Success}
 import play.api.Logging
 import play.api.http.Status._
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.{HttpClient, UpstreamErrorResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CalculationResultConnector @Inject() (
-  config: FrontendAppConfig,
-  httpClient1: HttpClient
-)(implicit
+class BackendConnector @Inject() (config: FrontendAppConfig, httpClient: HttpClient)(implicit
   ec: ExecutionContext
 ) extends Logging {
 
-  def sendRequest(
-    calculationUserAnswers: CalculationUserAnswers
-  ): Future[CalculationResponse] =
-    httpClient1
+  def sendSubmissionRequest(
+    submissionRequest: SubmissionRequest
+  ): Future[SubmissionResponse] = {
+    val body: JsValue = Json.toJson(submissionRequest)
+
+    httpClient
       .doPost(
-        s"${config.cppaBaseUrl}/calculate-public-pension-adjustment/show-calculation",
-        Json.toJson(calculationUserAnswers)
+        s"${config.cppaBaseUrl}/calculate-public-pension-adjustment/submission",
+        body
       )
       .flatMap { response =>
         response.status match {
-          case OK =>
-            Future.successful(response.json.as[CalculationResponse])
-          case _  =>
-            logger.error(s"Unexpected response from Cppa with status ${response.status}")
-            Future.failed(UpstreamErrorResponse("Unexpected response from Cppa", response.status))
+          case ACCEPTED =>
+            Future.successful(response.json.as[Success])
+          case _        =>
+            logger.error(s"Unexpected response from backend with status ${response.status}")
+            Future.failed(UpstreamErrorResponse("Unexpected response from backend", response.status))
         }
       }
-
+  }
 }
