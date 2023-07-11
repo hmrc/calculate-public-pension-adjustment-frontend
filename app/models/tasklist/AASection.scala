@@ -34,19 +34,19 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
       HowMuchAAChargeYouPaidPage(period, schemeIndex),
       HowMuchAAChargeSchemePaidPage(period, schemeIndex),
       AddAnotherSchemePage(period, schemeIndex),
-      OtherDefinedBenefitOrContributionPage(period, schemeIndex),
-      DefinedBenefitAmountPage(period, schemeIndex),
-      DefinedContributionAmountPage(period, schemeIndex),
-      ContributedToDuringRemedyPeriodPage(period, schemeIndex),
-      FlexiAccessDefinedContributionAmountPage(period, schemeIndex),
-      ThresholdIncomePage(period, schemeIndex),
-      AdjustedIncomePage(period, schemeIndex),
-      TotalIncomePage(period, schemeIndex)
+      OtherDefinedBenefitOrContributionPage(period),
+      DefinedBenefitAmountPage(period),
+      DefinedContributionAmountPage(period),
+      ContributedToDuringRemedyPeriodPage(period),
+      FlexiAccessDefinedContributionAmountPage(period),
+      ThresholdIncomePage(period),
+      AdjustedIncomePage(period),
+      TotalIncomePage(period)
     )
 
   override def status(answers: UserAnswers): SectionStatus =
     if (answers.get(MemberMoreThanOnePensionPage(period)).isDefined) {
-      answers.get(TotalIncomePage(period, schemeIndex)) match {
+      answers.get(TotalIncomePage(period)) match {
         case Some(_) => SectionStatus.Completed
         case None    => SectionStatus.InProgress
       }
