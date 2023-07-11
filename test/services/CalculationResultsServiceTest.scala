@@ -43,6 +43,11 @@ class CalculationResultsServiceTest extends SpecBase {
     rows.size mustBe 2
     checkRowNameAndValue(rows, 0, "calculationResults.annualResults.isResubmission", "")
     checkRowNameAndValue(rows, 1, "calculationResults.annualResults.reason", "Change in amounts")
+
+    viewModel.resubmissionVal mustBe List(
+      RowViewModel("calculationResults.annualResults.isResubmission", ""),
+      RowViewModel("calculationResults.annualResults.reason", "Change in amounts")
+    )
   }
 
   "total amounts should be well formed" in {
@@ -57,6 +62,14 @@ class CalculationResultsServiceTest extends SpecBase {
     checkRowNameAndValue(rows, 0, "calculationResults.outDatesCompensation", "8400")
     checkRowNameAndValue(rows, 1, "calculationResults.inDatesDebit", "0")
     checkRowNameAndValue(rows, 2, "calculationResults.inDatesCredit", "0")
+
+    viewModel.calculationData mustBe List(
+      List(
+        RowViewModel("calculationResults.outDatesCompensation", "8400"),
+        RowViewModel("calculationResults.inDatesDebit", "0"),
+        RowViewModel("calculationResults.inDatesCredit", "0")
+      )
+    )
   }
 
   "out dates should be well formed" in {
@@ -78,8 +91,105 @@ class CalculationResultsServiceTest extends SpecBase {
     checkRowNameAndValue(year, 5, "calculationResults.annualResults.directCompensation", "0")
     checkRowNameAndValue(year, 6, "calculationResults.annualResults.indirectCompensation", "0")
     checkRowNameAndValue(year, 7, "calculationResults.annualResults.unusedAnnualAllowance", "60000")
-  }
 
+    viewModel.annualResultsData mustBe List(
+      List(
+        RowViewModel("periodDateRangeAA.2016-pre", "2016-pre"),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.directCompensation", "0"),
+        RowViewModel("calculationResults.annualResults.indirectCompensation", "0"),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "60000")
+      ),
+      List(
+        RowViewModel("periodDateRangeAA.2016-post", "2016-post"),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", "7200"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.directCompensation", "7200"),
+        RowViewModel("calculationResults.annualResults.indirectCompensation", "0"),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "10000")
+      ),
+      List(
+        RowViewModel("periodDateRangeAA.2017", "2017"),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", "1200"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.directCompensation", "1200"),
+        RowViewModel("calculationResults.annualResults.indirectCompensation", "0"),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "0")
+      ),
+      List(
+        RowViewModel("periodDateRangeAA.2018", "2018"),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.directCompensation", "0"),
+        RowViewModel("calculationResults.annualResults.indirectCompensation", "0"),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "10000")
+      ),
+      List(
+        RowViewModel("periodDateRangeAA.2019", "2019"),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.directCompensation", "0"),
+        RowViewModel("calculationResults.annualResults.indirectCompensation", "0"),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "30000")
+      ),
+      List(
+        RowViewModel("periodDateRangeAA.2020", "2020"),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.memberCredit", "0"),
+        RowViewModel("calculationResults.annualResults.schemeCredit", "0"),
+        RowViewModel("calculationResults.annualResults.debit", "0"),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "48000")
+      ),
+      List(
+        RowViewModel("periodDateRangeAA.2021", "2021"),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.memberCredit", "0"),
+        RowViewModel("calculationResults.annualResults.schemeCredit", "0"),
+        RowViewModel("calculationResults.annualResults.debit", "0"),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "56000")
+      ),
+      List(
+        RowViewModel("periodDateRangeAA.2022", "2022"),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.memberCredit", "0"),
+        RowViewModel("calculationResults.annualResults.schemeCredit", "0"),
+        RowViewModel("calculationResults.annualResults.debit", "0"),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "54000")
+      ),
+      List(
+        RowViewModel("periodDateRangeAA.2023", "2023"),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+        RowViewModel("calculationResults.annualResults.memberCredit", "0"),
+        RowViewModel("calculationResults.annualResults.schemeCredit", "0"),
+        RowViewModel("calculationResults.annualResults.debit", "0"),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "54000")
+      )
+    )
+
+  }
   "all years in out dates should be well formed" in {
     val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
@@ -88,10 +198,58 @@ class CalculationResultsServiceTest extends SpecBase {
 
     val sections: Seq[Seq[RowViewModel]] = viewModel.outDates
 
-    sections.foreach(year => checkYear(year))
+    sections.foreach(year => checkYearOutDates(year))
   }
 
-  def checkYear(year: Seq[RowViewModel]) = {
+  "in dates should be well formed" in {
+    val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+    val viewModel: CalculationResultsViewModel =
+      calculationResultsService.calculationResultsViewModel(calculationResult)
+
+    val sections: Seq[Seq[RowViewModel]] = viewModel.inDates
+    sections.size mustBe 4
+
+    val year = sections(0)
+
+    checkRowNameAndValue(year, 0, "periodDateRangeAA.2020", "2020")
+    checkRowNameAndValue(year, 1, "calculationResults.annualResults.chargePaidBySchemes", "0")
+    checkRowNameAndValue(year, 2, "calculationResults.annualResults.chargePaidByMember", "0")
+    checkRowNameAndValue(year, 3, "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0")
+    checkRowNameAndValue(year, 4, "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0")
+    checkRowNameAndValue(year, 5, "calculationResults.annualResults.memberCredit", "0")
+    checkRowNameAndValue(year, 6, "calculationResults.annualResults.schemeCredit", "0")
+    checkRowNameAndValue(year, 7, "calculationResults.annualResults.debit", "0")
+    checkRowNameAndValue(year, 8, "calculationResults.annualResults.unusedAnnualAllowance", "48000")
+
+  }
+
+  "all years in in-dates should be well formed" in {
+    val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+    val viewModel: CalculationResultsViewModel =
+      calculationResultsService.calculationResultsViewModel(calculationResult)
+
+    val sections: Seq[Seq[RowViewModel]] = viewModel.inDates
+
+    sections.foreach(year => checkYearInDates(year))
+  }
+
+  def checkYearInDates(year: Seq[RowViewModel]) = {
+    year.size mustBe 9
+
+    year(0).value mustNot be(null)
+    checkRowName(year, 1, "calculationResults.annualResults.chargePaidBySchemes")
+    checkRowName(year, 2, "calculationResults.annualResults.chargePaidByMember")
+    checkRowName(year, 3, "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate")
+    checkRowName(year, 4, "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate")
+    checkRowName(year, 5, "calculationResults.annualResults.memberCredit")
+    checkRowName(year, 6, "calculationResults.annualResults.schemeCredit")
+    checkRowName(year, 7, "calculationResults.annualResults.debit")
+    checkRowName(year, 8, "calculationResults.annualResults.unusedAnnualAllowance")
+  }
+
+  def checkYearOutDates(year: Seq[RowViewModel]) = {
     year.size mustBe 8
 
     year(0).value mustNot be(null)
