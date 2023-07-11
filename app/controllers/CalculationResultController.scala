@@ -17,39 +17,34 @@
 package controllers
 
 import controllers.actions._
-import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel}
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.CalculationResultsService
+import services.CalculationResultService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.CalculationResultsView
 
 import javax.inject.Inject
-import scala.io.Source
+import scala.concurrent.ExecutionContext
 
-class CalculationResultsController @Inject() (
+class CalculationResultController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: CalculationResultsView,
-  calculationResultsService: CalculationResultsService
-) extends FrontendBaseController
+  calculationResultService: CalculationResultService
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   val form = Form("_" -> ignored(()))
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val source: String                         = Source.fromFile("app/assets/CalculationResults.json").getLines().mkString
-    val json: JsValue                          = Json.parse(source)
-    val calculationResult: CalculationResponse = json.as[CalculationResponse]
-
-    val calculationResultsViewModel: CalculationResultsViewModel =
-      calculationResultsService.calculationResultsViewModel(calculationResult)
-    Ok(view(form, calculationResultsViewModel))
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+    calculationResultService.sendRequest(request.userAnswers).map { calculationResponse =>
+      Ok(view(form, calculationResultService.calculationResultsViewModel(calculationResponse)))
+    }
   }
 }

@@ -18,6 +18,7 @@ package connectors
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
+import models.CalculationResults.CalculationResponse
 import models.CalculationUserAnswers
 import play.api.Logging
 import play.api.http.Status._
@@ -35,7 +36,7 @@ class CalculationResultConnector @Inject() (
 
   def sendRequest(
     calculationUserAnswers: CalculationUserAnswers
-  )(implicit hc: HeaderCarrier): Future[CalculationUserAnswers] =
+  )(implicit hc: HeaderCarrier): Future[CalculationResponse] =
     httpClient1
       .doPost(
         s"${config.cppaBaseUrl}/calculate-public-pension-adjustment/show-calculation",
@@ -44,7 +45,7 @@ class CalculationResultConnector @Inject() (
       .flatMap { response =>
         response.status match {
           case OK =>
-            Future.successful(response.json.as[CalculationUserAnswers])
+            Future.successful(response.json.as[CalculationResponse])
           case _  =>
             logger.error(s"Unexpected response from Cppa with status ${response.status}")
             Future.failed(UpstreamErrorResponse("Unexpected response from Cppa", response.status))
