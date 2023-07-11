@@ -18,6 +18,7 @@ package models.tasklist
 
 import models.{Period, SchemeIndex, UserAnswers}
 import pages.Page
+import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear._
 
 case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
@@ -46,9 +47,16 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
 
   override def status(answers: UserAnswers): SectionStatus =
     if (answers.get(MemberMoreThanOnePensionPage(period)).isDefined) {
-      answers.get(TotalIncomePage(period)) match {
-        case Some(_) => SectionStatus.Completed
-        case None    => SectionStatus.InProgress
+      if(period == Period._2016PreAlignment) {
+        answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
+          case Some(_) => SectionStatus.Completed
+          case None    => SectionStatus.InProgress
+        }
+      } else {
+        answers.get(TotalIncomePage(period)) match {
+          case Some(_) => SectionStatus.Completed
+          case None => SectionStatus.InProgress
+        }
       }
     } else SectionStatus.NotStarted
 
