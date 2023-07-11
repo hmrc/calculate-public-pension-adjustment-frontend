@@ -21,6 +21,7 @@ import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex, UserAnswers
 import pages.Page
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.annualallowance.taxyear._
+import models.WhoPaidAACharge.{Both, Scheme, You}
 
 case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
 
@@ -109,6 +110,27 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
 
   private def statusOfPayACharge(answers: UserAnswers) =
     answers.get(PayAChargePage(period, schemeIndex)) match {
+      case Some(true)  => whoPaidChargeCheck(answers: UserAnswers)
+      case Some(false) => SectionStatus.Completed
+      case None        => SectionStatus.InProgress
+    }
+
+  private def whoPaidChargeCheck(answers: UserAnswers) =
+    answers.get(WhoPaidAAChargePage(period, schemeIndex)) match {
+      case Some(You)    => whenUserPaid(answers)
+      case Some(Scheme) => whenSchemePaid(answers)
+      case Some(Both)   => whenSchemePaid(answers)
+      case None         => SectionStatus.InProgress
+    }
+
+  private def whenUserPaid(answers: UserAnswers) =
+    answers.get(HowMuchAAChargeYouPaidPage(period, schemeIndex)) match {
+      case Some(_) => SectionStatus.Completed
+      case None    => SectionStatus.InProgress
+    }
+
+  private def whenSchemePaid(answers: UserAnswers) =
+    answers.get(HowMuchAAChargeSchemePaidPage(period, schemeIndex)) match {
       case Some(_) => SectionStatus.Completed
       case None    => SectionStatus.InProgress
     }

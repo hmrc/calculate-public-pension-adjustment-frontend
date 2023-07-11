@@ -18,14 +18,43 @@ package models.tasklist
 
 import base.SpecBase
 import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex}
-import pages.annualallowance.taxyear.{ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, TotalIncomePage}
+import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
+import pages.annualallowance.taxyear.{ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, TotalIncomePage, WhoPaidAAChargePage}
 
 class AASectionSpec extends SpecBase {
 
   "Status is first period" - {
 
+    "when user has answered defined contribution as No in AA setup questions" in {
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+        .get
+        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), false)
+        .get
+
+      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+
+      status mustBe (SectionStatus.Completed)
+    }
+
+    "when user has answered defined contribution as yes in AA setup questions but not answered pay a charge page" in {
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+        .get
+
+      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+
+      status mustBe (SectionStatus.InProgress)
+    }
+
     "when user has defined benefit then status is complete when defined benefit amount page is answered" in {
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
         .get
         .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
@@ -45,6 +74,8 @@ class AASectionSpec extends SpecBase {
 
     "when user has defined benefit then status is in progress when defined benefit amount page is not answered" in {
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
         .get
         .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
@@ -62,6 +93,8 @@ class AASectionSpec extends SpecBase {
 
     "when user has not answered if defined contribution or defined benefit then the status is in progress" in {
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
         .get
         .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
@@ -74,6 +107,8 @@ class AASectionSpec extends SpecBase {
 
     "when user has defined contribution then status is complete when defined contribution amount page is answered" in {
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
         .get
         .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
@@ -93,6 +128,8 @@ class AASectionSpec extends SpecBase {
 
     "when user has defined contribution then status is in progress when defined contribution amount page is not answered" in {
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
         .get
         .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
@@ -110,6 +147,8 @@ class AASectionSpec extends SpecBase {
 
     "when user has other defined contribution and benefit is answered as false" in {
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
         .get
         .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), false)
@@ -122,6 +161,8 @@ class AASectionSpec extends SpecBase {
 
     "when user has other defined contribution and benefit is not answered" in {
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
         .get
 
@@ -135,6 +176,8 @@ class AASectionSpec extends SpecBase {
 
     "when user has defined benefit then status is complete when defined benefit amount page is answered" in {
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
         .set(MemberMoreThanOnePensionPage(Period._2017), true)
         .get
         .set(TotalIncomePage(Period._2017), BigInt(999))
@@ -147,6 +190,8 @@ class AASectionSpec extends SpecBase {
 
     "when user has defined benefit then status is complete when defined benefit amount page is not answered" in {
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
         .set(MemberMoreThanOnePensionPage(Period._2017), true)
         .get
 
