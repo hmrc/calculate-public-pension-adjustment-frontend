@@ -44,10 +44,7 @@ class CalculationResultsServiceTest extends SpecBase {
     checkRowNameAndValue(rows, 0, "calculationResults.annualResults.isResubmission", "")
     checkRowNameAndValue(rows, 1, "calculationResults.annualResults.reason", "Change in amounts")
 
-    viewModel.resubmissionVal mustBe List(
-      RowViewModel("calculationResults.annualResults.isResubmission", ""),
-      RowViewModel("calculationResults.annualResults.reason", "Change in amounts")
-    )
+    viewModel.resubmissionData mustBe List(List(RowViewModel("calculationResults.annualResults.isResubmission",""), RowViewModel("calculationResults.annualResults.reason","Change in amounts")))
   }
 
   "total amounts should be well formed" in {
