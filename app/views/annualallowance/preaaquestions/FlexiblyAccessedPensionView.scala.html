@@ -29,21 +29,11 @@
 @contentHint = {
     @messages("flexiblyAccessedPension.hint")
     <p>
-        <details class="govuk-details">
-            <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">@messages("flexiblyAccessedPension.detailsTitle")
-                </span>
-            </summary>
-            <div class="govuk-details__text">
-                <p>
-                    @messages("flexiblyAccessedPension.detailsContent")
-                    <ul>
-                        <li>@messages("flexiblyAccessedPension.detailsPoint1")</li>
-                        <li>@messages("flexiblyAccessedPension.detailsPoint2")</li>
-                    </ul>
-                </p>
-            </div>
-        </details>
+        @messages("flexiblyAccessedPension.detailsContent")
+        <ul>
+            <li>@messages("flexiblyAccessedPension.detailsPoint1")</li>
+            <li>@messages("flexiblyAccessedPension.detailsPoint2")</li>
+        </ul>
     </p>
 }
 
