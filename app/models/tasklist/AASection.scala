@@ -16,9 +16,9 @@
 
 package models.tasklist
 
-import models.{Period, SchemeIndex, UserAnswers}
+import models.ContributedToDuringRemedyPeriod.{Definedbenefit}
+import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex, UserAnswers}
 import pages.Page
-import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear._
 
 case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
@@ -46,19 +46,62 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
     )
 
   override def status(answers: UserAnswers): SectionStatus =
-    if (answers.get(MemberMoreThanOnePensionPage(period)).isDefined) {
-      if (period == Period._2016PreAlignment) {
-        answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
-          case Some(_) => SectionStatus.Completed
-          case None    => SectionStatus.InProgress
-        }
+    if (firstPageIsAnswered(answers)){
+      if (isFirstPeriod){
+        statusInFirstPeriod(answers)
       } else {
-        answers.get(TotalIncomePage(period)) match {
-          case Some(_) => SectionStatus.Completed
-          case None    => SectionStatus.InProgress
-        }
+        statusInSubsequentPeriod(answers)
       }
     } else SectionStatus.NotStarted
+
+  private def statusInFirstPeriod(answers: UserAnswers) =
+    answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
+      case Some(true) =>
+        answers.get(ContributedToDuringRemedyPeriodPage(period)) match {
+          case Some(contributions) => statusWhenContributionsInPeriod(answers, contributions)
+          case None => SectionStatus.InProgress
+        }
+      case Some(false) => statusWhenNoContributionsInPeriod(answers)
+      case None => SectionStatus.InProgress
+    }
+
+  private def statusInSubsequentPeriod(answers: UserAnswers) =
+    answers.get(TotalIncomePage(period)) match {
+      case Some(_) => SectionStatus.Completed
+      case None => SectionStatus.InProgress
+    }
+
+  private def statusWhenNoContributionsInPeriod(answers: UserAnswers) =
+    answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
+      case Some(_) => SectionStatus.Completed
+      case None => SectionStatus.InProgress
+    }
+
+  private def statusWhenContributionsInPeriod(answers: UserAnswers, contributions: Set[ContributedToDuringRemedyPeriod]) =
+    if (contributions.contains(Definedbenefit)){
+      statusWhenDefinedBenefitAmountSpecified(answers)
+    }
+    else{
+      statusWhenNoDefinedBenefitAmountSpecified(answers)
+    }
+
+  private def statusWhenNoDefinedBenefitAmountSpecified(answers: UserAnswers) =
+    answers.get(DefinedContributionAmountPage(period)) match {
+      case Some(_) => SectionStatus.Completed
+      case None => SectionStatus.InProgress
+    }
+
+  private def statusWhenDefinedBenefitAmountSpecified(answers: UserAnswers) =
+    answers.get(DefinedBenefitAmountPage(period)) match {
+      case Some(_) => SectionStatus.Completed
+      case None => SectionStatus.InProgress
+    }
+
+  private def isFirstPeriod =
+    period == Period._2016PreAlignment
+
+  private def firstPageIsAnswered(answers: UserAnswers) =
+    answers.get(MemberMoreThanOnePensionPage(period)).isDefined
 
   override def checkYourAnswersPage: Page = CheckYourAAPeriodAnswersPage(period)
 }
