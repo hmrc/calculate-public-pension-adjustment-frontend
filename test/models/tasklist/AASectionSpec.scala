@@ -17,15 +17,116 @@
 package models.tasklist
 
 import base.SpecBase
-import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex}
+import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex, WhoPaidAACharge}
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
-import pages.annualallowance.taxyear.{ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, TotalIncomePage, WhoPaidAAChargePage}
+import pages.annualallowance.taxyear.{ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, TotalIncomePage, WhoPaidAAChargePage}
 
 class AASectionSpec extends SpecBase {
 
   "Status is first period" - {
 
-    "when user has answered defined contribution as No in AA setup questions" in {
+    "when user has answered defined contribution as No in AA setup questions and Both as Who Paid" in {
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+        .get
+        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
+        .get
+        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.Both)
+        .get
+        .set(HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0)), BigInt(999))
+        .get
+
+      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+
+      status mustBe (SectionStatus.Completed)
+    }
+
+    "when user has answered defined contribution as No in AA setup questions and not answered how much scheme paid in case both paid" in {
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+        .get
+        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
+        .get
+        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.Both)
+        .get
+      val status      = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+
+      status mustBe (SectionStatus.InProgress)
+    }
+
+    "when user has answered defined contribution as No in AA setup questions and You as Who Paid" in {
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+        .get
+        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
+        .get
+        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.You)
+        .get
+        .set(HowMuchAAChargeYouPaidPage(Period._2016PreAlignment, SchemeIndex(0)), BigInt(999))
+        .get
+
+      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+
+      status mustBe (SectionStatus.Completed)
+    }
+
+    "when user has answered defined contribution as No in AA setup questions and not answered how much user paid" in {
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+        .get
+        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
+        .get
+        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.You)
+        .get
+
+      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+
+      status mustBe (SectionStatus.InProgress)
+    }
+
+    "when user has answered defined contribution as No in AA setup questions and Scheme as Who Paid" in {
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+        .get
+        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
+        .get
+        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.Scheme)
+        .get
+        .set(HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0)), BigInt(999))
+        .get
+
+      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+
+      status mustBe (SectionStatus.Completed)
+    }
+
+    "when user has answered defined contribution as No in AA setup questions and not answered how much scheme paid" in {
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+        .get
+        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
+        .get
+        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.Scheme)
+        .get
+
+      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+
+      status mustBe (SectionStatus.InProgress)
+    }
+
+    "when user has answered defined contribution as No in AA setup questions and No as if you paid a charge" in {
       val userAnswers = emptyUserAnswers
         .set(DefinedContributionPensionSchemePage, false)
         .get
