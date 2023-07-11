@@ -6,6 +6,7 @@ site.change = cy: Change
 site.no = cy: No
 site.yes = cy: Yes
 site.continue = cy: Continue
+site.continueSignIn = cy: Continue to sign in
 site.start = cy: Start now
 site.startAgain = cy: Start again
 site.signIn = cy: Sign in
