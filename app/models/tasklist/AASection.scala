@@ -47,7 +47,7 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
 
   override def status(answers: UserAnswers): SectionStatus =
     if (answers.get(MemberMoreThanOnePensionPage(period)).isDefined) {
-      if(period == Period._2016PreAlignment) {
+      if (period == Period._2016PreAlignment) {
         answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
           case Some(_) => SectionStatus.Completed
           case None    => SectionStatus.InProgress
@@ -55,7 +55,7 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
       } else {
         answers.get(TotalIncomePage(period)) match {
           case Some(_) => SectionStatus.Completed
-          case None => SectionStatus.InProgress
+          case None    => SectionStatus.InProgress
         }
       }
     } else SectionStatus.NotStarted
