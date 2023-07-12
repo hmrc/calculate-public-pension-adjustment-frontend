@@ -45,14 +45,11 @@ class CalculationResultController @Inject() (
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     calculationResultService.sendRequest(request.userAnswers).map { calculationResponse =>
       val includeCompensation2015: Boolean = calculationResponse.totalAmounts.outDatesCompensation > 0
-      val includeCompensation2019: Boolean =
-        (calculationResponse.totalAmounts.inDatesDebit + calculationResponse.totalAmounts.inDatesCredit) > 0
       Ok(
         view(
           form,
           calculationResultService.calculationResultsViewModel(calculationResponse),
-          includeCompensation2015,
-          includeCompensation2019
+          includeCompensation2015
         )
       )
     }

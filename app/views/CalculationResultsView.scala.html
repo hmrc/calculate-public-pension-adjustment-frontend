@@ -21,7 +21,7 @@
         govukButton: GovukButton
 )
 
-@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean, includeCompensation2019: Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("calculationResults.title"))) {
 
@@ -47,7 +47,7 @@
         </tbody>
     </table>
 
-   <p class="govuk-body">@messages("calculationResults.hint2." + includeCompensation2015) @messages("calculationResults.hint3." + includeCompensation2019)</p>
+   <p class="govuk-body">@messages("calculationResults.hint2." + includeCompensation2015) @messages("calculationResults.hint3")</p>
 
    <h2 class="govuk-heading-m">@messages("calculationResults.annualResults.heading")</h2>
    <p class="govuk-body">@messages("calculationResults.annualResults.hint1")</p>
