@@ -17,6 +17,7 @@
 package services
 
 import connectors.CalculationResultConnector
+import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, RowViewModel}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.{AnnualAllowance, CalculationUserAnswers, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, Resubmission, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
@@ -33,7 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class CalculationResultService @Inject() (connector: CalculationResultConnector)(implicit ec: ExecutionContext)
     extends Logging {
 
-  def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationUserAnswers] =
+  def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
     connector.sendRequest(buildCalculationUserAnswers(userAnswers))
 
   def buildCalculationUserAnswers(userAnswers: UserAnswers): CalculationUserAnswers = {
@@ -210,5 +211,73 @@ class CalculationResultService @Inject() (connector: CalculationResultConnector)
       None
 
   }
+
+  def calculationResultsViewModel(calculateResponse: CalculationResponse): CalculationResultsViewModel = {
+    val resubmissionVal: Seq[RowViewModel]  = resubmission(calculateResponse)
+    val totalAmountVal: Seq[RowViewModel]   = totalAmount(calculateResponse)
+    val outDatesVal: Seq[Seq[RowViewModel]] = outDates(calculateResponse)
+    val inDatesVal: Seq[Seq[RowViewModel]]  = inDates(calculateResponse)
+    CalculationResultsViewModel(totalAmountVal, resubmissionVal, outDatesVal, inDatesVal)
+  }
+
+  private def totalAmount(calculateResponse: CalculationResponse): Seq[RowViewModel] =
+    Seq(
+      RowViewModel(
+        "calculationResults.outDatesCompensation",
+        calculateResponse.totalAmounts.outDatesCompensation.toString()
+      )
+    ) ++
+      Seq(RowViewModel("calculationResults.inDatesDebit", calculateResponse.totalAmounts.inDatesDebit.toString())) ++
+      Seq(RowViewModel("calculationResults.inDatesCredit", calculateResponse.totalAmounts.inDatesCredit.toString()))
+
+  private def resubmission(calculateResponse: CalculationResponse): Seq[RowViewModel]  =
+    if (calculateResponse.resubmission.isResubmission) {
+      Seq(RowViewModel("calculationResults.annualResults.isResubmission", "")) ++
+        Seq(
+          RowViewModel("calculationResults.annualResults.reason", calculateResponse.resubmission.reason.getOrElse(""))
+        )
+    } else {
+      Seq(RowViewModel("calculationResults.annualResults.notResubmission", ""))
+    }
+  private def outDates(calculateResponse: CalculationResponse): Seq[Seq[RowViewModel]] =
+    calculateResponse.outDates.map { outDate =>
+      Seq(
+        RowViewModel("periodDateRangeAA." + outDate.period.toString, outDate.period.toString),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", outDate.chargePaidBySchemes.toString()),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", outDate.chargePaidByMember.toString()),
+        RowViewModel(
+          "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate",
+          outDate.revisedChargableAmountAfterTaxRate.toString()
+        ),
+        RowViewModel(
+          "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate",
+          outDate.revisedChargableAmountBeforeTaxRate.toString()
+        ),
+        RowViewModel("calculationResults.annualResults.directCompensation", outDate.directCompensation.toString()),
+        RowViewModel("calculationResults.annualResults.indirectCompensation", outDate.indirectCompensation.toString()),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", outDate.unusedAnnualAllowance.toString())
+      )
+    }
+
+  private def inDates(calculateResponse: CalculationResponse): Seq[Seq[RowViewModel]] =
+    calculateResponse.inDates.map { inDate =>
+      Seq(
+        RowViewModel("periodDateRangeAA." + inDate.period.toString(), inDate.period.toString()),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", inDate.chargePaidBySchemes.toString()),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", inDate.chargePaidByMember.toString()),
+        RowViewModel(
+          "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate",
+          inDate.revisedChargableAmountAfterTaxRate.toString()
+        ),
+        RowViewModel(
+          "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate",
+          inDate.revisedChargableAmountBeforeTaxRate.toString()
+        ),
+        RowViewModel("calculationResults.annualResults.memberCredit", inDate.memberCredit.toString()),
+        RowViewModel("calculationResults.annualResults.schemeCredit", inDate.schemeCredit.toString()),
+        RowViewModel("calculationResults.annualResults.debit", inDate.debit.toString()),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", inDate.unusedAnnualAllowance.toString())
+      )
+    }
 
 }
