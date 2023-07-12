@@ -19,7 +19,9 @@ package models.tasklist
 import base.SpecBase
 import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex, WhoPaidAACharge}
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
-import pages.annualallowance.taxyear.{ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, TotalIncomePage, WhoPaidAAChargePage}
+import pages.annualallowance.taxyear.{ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage,
+  DefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage,
+  OtherDefinedBenefitOrContributionPage, PayAChargePage, TotalIncomePage, WhoPaidAAChargePage}
 
 class AASectionSpec extends SpecBase {
 
