@@ -23,7 +23,7 @@ import models.CalculationUserAnswers
 import play.api.Logging
 import play.api.http.Status._
 import play.api.libs.json.Json
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{HttpClient, UpstreamErrorResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,7 +36,7 @@ class CalculationResultConnector @Inject() (
 
   def sendRequest(
     calculationUserAnswers: CalculationUserAnswers
-  )(implicit hc: HeaderCarrier): Future[CalculationResponse] =
+  ): Future[CalculationResponse] =
     httpClient1
       .doPost(
         s"${config.cppaBaseUrl}/calculate-public-pension-adjustment/show-calculation",

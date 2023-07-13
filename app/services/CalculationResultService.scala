@@ -26,7 +26,6 @@ import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPre
 import pages.annualallowance.taxyear._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
 import play.api.Logging
-import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
 import javax.inject.Inject
@@ -39,11 +38,11 @@ class CalculationResultService @Inject() (
   ec: ExecutionContext
 ) extends Logging {
 
-  def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
+  def sendRequest(userAnswers: UserAnswers): Future[CalculationResponse] =
     calculationResultConnector.sendRequest(buildCalculationUserAnswers(userAnswers))
   // mockCalculationResponse
 
-  def submitUserAnswersAndCalculation(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[SubmissionResponse] = {
+  def submitUserAnswersAndCalculation(answers: UserAnswers): Future[SubmissionResponse] = {
     val calculationUserAnswers: CalculationUserAnswers = buildCalculationUserAnswers(answers)
     for {
       calculationResponse <- calculationResultConnector.sendRequest(calculationUserAnswers)
@@ -257,7 +256,7 @@ class CalculationResultService @Inject() (
       Seq(RowViewModel("calculationResults.inDatesDebit", calculateResponse.totalAmounts.inDatesDebit.toString())) ++
       Seq(RowViewModel("calculationResults.inDatesCredit", calculateResponse.totalAmounts.inDatesCredit.toString()))
 
-  private def resubmission(calculateResponse: CalculationResponse): Seq[RowViewModel]  =
+  private def resubmission(calculateResponse: CalculationResponse): Seq[RowViewModel] =
     if (calculateResponse.resubmission.isResubmission) {
       Seq(RowViewModel("calculationResults.annualResults.isResubmission", "")) ++
         Seq(
@@ -266,6 +265,7 @@ class CalculationResultService @Inject() (
     } else {
       Seq(RowViewModel("calculationResults.annualResults.notResubmission", ""))
     }
+
   private def outDates(calculateResponse: CalculationResponse): Seq[Seq[RowViewModel]] =
     calculateResponse.outDates.map { outDate =>
       Seq(

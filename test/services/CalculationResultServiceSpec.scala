@@ -21,12 +21,11 @@ import connectors.{BackendConnector, CalculationResultConnector}
 import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, RowViewModel}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
-import models.submission.{Failure, Success}
+import models.submission.Success
 import models.{AnnualAllowance, CalculationUserAnswers, Period, Resubmission, TaxYear2013To2015, TaxYearScheme, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
-import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -50,593 +49,593 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
     val data1 = Json
       .parse(s"""
-                              |{
-                              |    "savingsStatement" : true,
-                              |    "resubmittingAdjustment" : true,
-                              |    "reasonForResubmission" : "Change in amounts",
-                              |    "reportingChange" : [ "annualAllowance" ],
-                              |    "scottishTaxpayerFrom2016" : false,
-                              |    "payingPublicPensionScheme" : true,
-                              |    "definedContributionPensionScheme" : true,
-                              |    "flexiblyAccessedPension" : true,
-                              |    "flexibleAccessStartDate" : "2015-05-25",
-                              |    "payTaxCharge1516" : false,
-                              |    "2013" : {
-                              |      "pIAPreRemedy" : 40000
-                              |    },
-                              |    "2014" : {
-                              |      "pIAPreRemedy" : 20000
-                              |    },
-                              |    "2015" : {
-                              |      "pIAPreRemedy" : 60000
-                              |    },
-                              |    "aa" : {
-                              |      "years" : {
-                              |        "2016-pre" : {
-                              |          "memberMoreThanOnePension" : false,
-                              |          "schemes" : {
-                              |            "0" : {
-                              |              "pensionSchemeDetails" : {
-                              |                "schemeName" : "Scheme 1",
-                              |                "schemeTaxRef" : "00348916RT"
-                              |              },
-                              |              "pensionSchemeInputAmounts" : {
-                              |                "originalPIA" : 35000,
-                              |                "revisedPIA" : 30000
-                              |              },
-                              |              "payACharge" : false
-                              |            }
-                              |          },
-                              |          "otherDefinedBenefitOrContribution" : true,
-                              |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
-                              |          "definedContributionAmount" : 6000,
-                              |          "flexiAccessDefinedContributionAmount" : 10000,
-                              |          "definedBenefitAmount" : 30000
-                              |        },
-                              |        "2016-post" : {
-                              |          "memberMoreThanOnePension" : false,
-                              |          "schemes" : {
-                              |            "0" : {
-                              |              "pensionSchemeDetails" : {
-                              |                "schemeName" : "Scheme 1",
-                              |                "schemeTaxRef" : "00348916RT"
-                              |              },
-                              |              "whichScheme" : "00348916RT",
-                              |              "pensionSchemeInputAmounts" : {
-                              |                "originalPIA" : 45000,
-                              |                "revisedPIA" : 40000
-                              |              },
-                              |              "payACharge" : true,
-                              |              "whoPaidAACharge" : "you",
-                              |              "howMuchAAChargeYouPaid" : 2000
-                              |            }
-                              |          },
-                              |          "otherDefinedBenefitOrContribution" : true,
-                              |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                              |          "definedBenefitAmount" : 40000,
-                              |          "totalIncome" : 60000
-                              |        },
-                              |        "2017" : {
-                              |          "memberMoreThanOnePension" : false,
-                              |          "schemes" : {
-                              |            "0" : {
-                              |              "pensionSchemeDetails" : {
-                              |                "schemeName" : "Scheme 1",
-                              |                "schemeTaxRef" : "00348916RT"
-                              |              },
-                              |              "whichScheme" : "00348916RT",
-                              |              "pensionSchemeInputAmounts" : {
-                              |                "originalPIA" : 40000,
-                              |                "revisedPIA" : 35000
-                              |              },
-                              |              "payACharge" : false
-                              |            }
-                              |          },
-                              |          "otherDefinedBenefitOrContribution" : true,
-                              |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                              |          "definedBenefitAmount" : 35000,
-                              |          "thresholdIncome" : false,
-                              |          "totalIncome" : 60000
-                              |        },
-                              |        "2018" : {
-                              |          "memberMoreThanOnePension" : false,
-                              |          "schemes" : {
-                              |            "0" : {
-                              |              "pensionSchemeDetails" : {
-                              |                "schemeName" : "Scheme 1",
-                              |                "schemeTaxRef" : "00348916RT"
-                              |              },
-                              |              "whichScheme" : "00348916RT",
-                              |              "pensionSchemeInputAmounts" : {
-                              |                "originalPIA" : 45000,
-                              |                "revisedPIA" : 40000
-                              |              },
-                              |              "payACharge" : true,
-                              |              "whoPaidAACharge" : "both",
-                              |              "howMuchAAChargeYouPaid" : 1000,
-                              |              "howMuchAAChargeSchemePaid" : 1000
-                              |            }
-                              |          },
-                              |          "otherDefinedBenefitOrContribution" : false,
-                              |          "thresholdIncome" : false,
-                              |          "totalIncome" : 60000
-                              |        },
-                              |        "2019" : {
-                              |          "memberMoreThanOnePension" : false,
-                              |          "schemes" : {
-                              |            "0" : {
-                              |              "pensionSchemeDetails" : {
-                              |                "schemeName" : "Scheme 1",
-                              |                "schemeTaxRef" : "00348916RT"
-                              |              },
-                              |              "whichScheme" : "00348916RT",
-                              |              "pensionSchemeInputAmounts" : {
-                              |                "originalPIA" : 37000,
-                              |                "revisedPIA" : 35000
-                              |              },
-                              |              "payACharge" : false
-                              |            }
-                              |          },
-                              |          "otherDefinedBenefitOrContribution" : true,
-                              |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                              |          "definedBenefitAmount" : 35000,
-                              |          "thresholdIncome" : false,
-                              |          "totalIncome" : 60000
-                              |        },
-                              |        "2020" : {
-                              |          "memberMoreThanOnePension" : false,
-                              |          "schemes" : {
-                              |            "0" : {
-                              |              "pensionSchemeDetails" : {
-                              |                "schemeName" : "Scheme 1",
-                              |                "schemeTaxRef" : "00348916RT"
-                              |              },
-                              |              "whichScheme" : "00348916RT",
-                              |              "pensionSchemeInputAmounts" : {
-                              |                "originalPIA" : 36000,
-                              |                "revisedPIA" : 34000
-                              |              },
-                              |              "payACharge" : false
-                              |            }
-                              |          },
-                              |          "otherDefinedBenefitOrContribution" : true,
-                              |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                              |          "definedBenefitAmount" : 34000,
-                              |          "thresholdIncome" : false,
-                              |          "totalIncome" : 60000
-                              |        },
-                              |        "2021" : {
-                              |          "memberMoreThanOnePension" : false,
-                              |          "schemes" : {
-                              |            "0" : {
-                              |              "pensionSchemeDetails" : {
-                              |                "schemeName" : "Scheme 1",
-                              |                "schemeTaxRef" : "00348916RT"
-                              |              },
-                              |              "whichScheme" : "00348916RT",
-                              |              "pensionSchemeInputAmounts" : {
-                              |                "originalPIA" : 38000,
-                              |                "revisedPIA" : 36000
-                              |              },
-                              |              "payACharge" : false
-                              |            }
-                              |          },
-                              |          "otherDefinedBenefitOrContribution" : false,
-                              |          "thresholdIncome" : false,
-                              |          "totalIncome" : 60000
-                              |        },
-                              |        "2022" : {
-                              |          "memberMoreThanOnePension" : false,
-                              |          "schemes" : {
-                              |            "0" : {
-                              |              "pensionSchemeDetails" : {
-                              |                "schemeName" : "Scheme 1",
-                              |                "schemeTaxRef" : "00348916RT"
-                              |              },
-                              |              "whichScheme" : "00348916RT",
-                              |              "pensionSchemeInputAmounts" : {
-                              |                "originalPIA" : 45000,
-                              |                "revisedPIA" : 44000
-                              |              },
-                              |              "payACharge" : false
-                              |            }
-                              |          },
-                              |          "otherDefinedBenefitOrContribution" : true,
-                              |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                              |          "definedBenefitAmount" : 44000,
-                              |          "thresholdIncome" : false,
-                              |          "totalIncome" : 60000
-                              |        },
-                              |        "2023" : {
-                              |          "memberMoreThanOnePension" : false,
-                              |          "schemes" : {
-                              |            "0" : {
-                              |              "pensionSchemeDetails" : {
-                              |                "schemeName" : "Scheme 1",
-                              |                "schemeTaxRef" : "00348916RT"
-                              |              },
-                              |              "whichScheme" : "00348916RT",
-                              |              "pensionSchemeInputAmounts" : {
-                              |                "originalPIA" : 55000,
-                              |                "revisedPIA" : 53000
-                              |              },
-                              |              "payACharge" : true,
-                              |              "whoPaidAACharge" : "scheme",
-                              |              "howMuchAAChargeSchemePaid" : 4400
-                              |            }
-                              |          },
-                              |          "otherDefinedBenefitOrContribution" : true,
-                              |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                              |          "definedBenefitAmount" : 53000,
-                              |          "thresholdIncome" : false,
-                              |          "totalIncome" : 60000
-                              |        }
-                              |      }
-                              |    }
-                              |  }
-                              |""".stripMargin)
+           |{
+           |    "savingsStatement" : true,
+           |    "resubmittingAdjustment" : true,
+           |    "reasonForResubmission" : "Change in amounts",
+           |    "reportingChange" : [ "annualAllowance" ],
+           |    "scottishTaxpayerFrom2016" : false,
+           |    "payingPublicPensionScheme" : true,
+           |    "definedContributionPensionScheme" : true,
+           |    "flexiblyAccessedPension" : true,
+           |    "flexibleAccessStartDate" : "2015-05-25",
+           |    "payTaxCharge1516" : false,
+           |    "2013" : {
+           |      "pIAPreRemedy" : 40000
+           |    },
+           |    "2014" : {
+           |      "pIAPreRemedy" : 20000
+           |    },
+           |    "2015" : {
+           |      "pIAPreRemedy" : 60000
+           |    },
+           |    "aa" : {
+           |      "years" : {
+           |        "2016-pre" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 35000,
+           |                "revisedPIA" : 30000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
+           |          "definedContributionAmount" : 6000,
+           |          "flexiAccessDefinedContributionAmount" : 10000,
+           |          "definedBenefitAmount" : 30000
+           |        },
+           |        "2016-post" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 45000,
+           |                "revisedPIA" : 40000
+           |              },
+           |              "payACharge" : true,
+           |              "whoPaidAACharge" : "you",
+           |              "howMuchAAChargeYouPaid" : 2000
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 40000,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2017" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 40000,
+           |                "revisedPIA" : 35000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 35000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2018" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 45000,
+           |                "revisedPIA" : 40000
+           |              },
+           |              "payACharge" : true,
+           |              "whoPaidAACharge" : "both",
+           |              "howMuchAAChargeYouPaid" : 1000,
+           |              "howMuchAAChargeSchemePaid" : 1000
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : false,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2019" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 37000,
+           |                "revisedPIA" : 35000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 35000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2020" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 36000,
+           |                "revisedPIA" : 34000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 34000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2021" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 38000,
+           |                "revisedPIA" : 36000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : false,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2022" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 45000,
+           |                "revisedPIA" : 44000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 44000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2023" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 55000,
+           |                "revisedPIA" : 53000
+           |              },
+           |              "payACharge" : true,
+           |              "whoPaidAACharge" : "scheme",
+           |              "howMuchAAChargeSchemePaid" : 4400
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 53000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        }
+           |      }
+           |    }
+           |  }
+           |""".stripMargin)
       .as[JsObject]
 
     val data2 = Json
       .parse(s"""
-                |{
-                |    "savingsStatement" : true,
-                |    "resubmittingAdjustment" : true,
-                |    "reasonForResubmission" : "Change in amounts",
-                |    "reportingChange" : [ "annualAllowance" ],
-                |    "scottishTaxpayerFrom2016" : false,
-                |    "payingPublicPensionScheme" : true,
-                |    "definedContributionPensionScheme" : true,
-                |    "flexiblyAccessedPension" : true,
-                |    "flexibleAccessStartDate" : "2015-05-25",
-                |    "payTaxCharge1516" : false,
-                |    "aa" : {
-                |      "years" : {
-                |        "2016-pre" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 35000,
-                |                "revisedPIA" : 30000
-                |              },
-                |              "payACharge" : false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
-                |          "definedContributionAmount" : 6000,
-                |          "flexiAccessDefinedContributionAmount" : 10000,
-                |          "definedBenefitAmount" : 30000
-                |        },
-                |        "2016-post" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 45000,
-                |                "revisedPIA" : 40000
-                |              },
-                |              "payACharge" : true,
-                |              "whoPaidAACharge" : "you",
-                |              "howMuchAAChargeYouPaid" : 2000
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                |          "definedBenefitAmount" : 40000,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2017" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 40000,
-                |                "revisedPIA" : 35000
-                |              },
-                |              "payACharge" : false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                |          "definedBenefitAmount" : 35000,
-                |          "thresholdIncome" : false,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2018" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 45000,
-                |                "revisedPIA" : 40000
-                |              },
-                |              "payACharge" : true,
-                |              "whoPaidAACharge" : "both",
-                |              "howMuchAAChargeYouPaid" : 1000,
-                |              "howMuchAAChargeSchemePaid" : 1000
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : false,
-                |          "thresholdIncome" : false,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2019" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 37000,
-                |                "revisedPIA" : 35000
-                |              },
-                |              "payACharge" : false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                |          "definedBenefitAmount" : 35000,
-                |          "thresholdIncome" : false,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2020" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 36000,
-                |                "revisedPIA" : 34000
-                |              },
-                |              "payACharge" : false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                |          "definedBenefitAmount" : 34000,
-                |          "thresholdIncome" : false,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2021" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 38000,
-                |                "revisedPIA" : 36000
-                |              },
-                |              "payACharge" : false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : false,
-                |          "thresholdIncome" : true,
-                |          "adjustedIncome" : 160000,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2022" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 45000,
-                |                "revisedPIA" : 44000
-                |              },
-                |              "payACharge" : false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                |          "definedBenefitAmount" : 44000,
-                |          "thresholdIncome" : false,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2023" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 55000,
-                |                "revisedPIA" : 53000
-                |              },
-                |              "payACharge" : true,
-                |              "whoPaidAACharge" : "scheme",
-                |              "howMuchAAChargeSchemePaid" : 4400
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                |          "definedBenefitAmount" : 53000,
-                |          "thresholdIncome" : true,
-                |          "adjustedIncome" : 120000,
-                |          "totalIncome" : 60000
-                |        }
-                |      }
-                |    }
-                |  }
-                |""".stripMargin)
+           |{
+           |    "savingsStatement" : true,
+           |    "resubmittingAdjustment" : true,
+           |    "reasonForResubmission" : "Change in amounts",
+           |    "reportingChange" : [ "annualAllowance" ],
+           |    "scottishTaxpayerFrom2016" : false,
+           |    "payingPublicPensionScheme" : true,
+           |    "definedContributionPensionScheme" : true,
+           |    "flexiblyAccessedPension" : true,
+           |    "flexibleAccessStartDate" : "2015-05-25",
+           |    "payTaxCharge1516" : false,
+           |    "aa" : {
+           |      "years" : {
+           |        "2016-pre" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 35000,
+           |                "revisedPIA" : 30000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
+           |          "definedContributionAmount" : 6000,
+           |          "flexiAccessDefinedContributionAmount" : 10000,
+           |          "definedBenefitAmount" : 30000
+           |        },
+           |        "2016-post" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 45000,
+           |                "revisedPIA" : 40000
+           |              },
+           |              "payACharge" : true,
+           |              "whoPaidAACharge" : "you",
+           |              "howMuchAAChargeYouPaid" : 2000
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 40000,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2017" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 40000,
+           |                "revisedPIA" : 35000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 35000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2018" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 45000,
+           |                "revisedPIA" : 40000
+           |              },
+           |              "payACharge" : true,
+           |              "whoPaidAACharge" : "both",
+           |              "howMuchAAChargeYouPaid" : 1000,
+           |              "howMuchAAChargeSchemePaid" : 1000
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : false,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2019" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 37000,
+           |                "revisedPIA" : 35000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 35000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2020" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 36000,
+           |                "revisedPIA" : 34000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 34000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2021" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 38000,
+           |                "revisedPIA" : 36000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : false,
+           |          "thresholdIncome" : true,
+           |          "adjustedIncome" : 160000,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2022" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 45000,
+           |                "revisedPIA" : 44000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 44000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2023" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 55000,
+           |                "revisedPIA" : 53000
+           |              },
+           |              "payACharge" : true,
+           |              "whoPaidAACharge" : "scheme",
+           |              "howMuchAAChargeSchemePaid" : 4400
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 53000,
+           |          "thresholdIncome" : true,
+           |          "adjustedIncome" : 120000,
+           |          "totalIncome" : 60000
+           |        }
+           |      }
+           |    }
+           |  }
+           |""".stripMargin)
       .as[JsObject]
 
     val data3 = Json
       .parse(s"""
-                |{
-                |    "savingsStatement" : true,
-                |    "resubmittingAdjustment" : false,
-                |    "reportingChange" : [ "annualAllowance" ],
-                |    "scottishTaxpayerFrom2016" : false,
-                |    "payingPublicPensionScheme" : true,
-                |    "definedContributionPensionScheme" : true,
-                |    "flexiblyAccessedPension" : true,
-                |    "flexibleAccessStartDate" : "2015-05-25",
-                |    "payTaxCharge1516" : false,
-                |    "2013" : {
-                |      "pIAPreRemedy" : 40000
-                |    },
-                |    "2014" : {
-                |      "pIAPreRemedy" : 20000
-                |    },
-                |    "2015" : {
-                |      "pIAPreRemedy" : 60000
-                |    },
-                |    "aa" : {
-                |      "years" : {
-                |        "2016-pre" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 35000,
-                |                "revisedPIA" : 30000
-                |              },
-                |              "payACharge" : false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
-                |          "definedContributionAmount" : 6000,
-                |          "flexiAccessDefinedContributionAmount" : 10000,
-                |          "definedBenefitAmount" : 30000
-                |        },
-                |        "2016-post" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 45000,
-                |                "revisedPIA" : 40000
-                |              },
-                |              "payACharge" : true,
-                |              "whoPaidAACharge" : "you",
-                |              "howMuchAAChargeYouPaid" : 2000
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                |          "definedBenefitAmount" : 40000,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2017" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 40000,
-                |                "revisedPIA" : 35000
-                |              },
-                |              "payACharge" : false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                |          "definedBenefitAmount" : 35000,
-                |          "thresholdIncome" : false,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2018" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 45000,
-                |                "revisedPIA" : 40000
-                |              },
-                |              "payACharge" : true,
-                |              "whoPaidAACharge" : "both",
-                |              "howMuchAAChargeYouPaid" : 1000,
-                |              "howMuchAAChargeSchemePaid" : 1000
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : false,
-                |          "thresholdIncome" : false,
-                |          "totalIncome" : 60000
-                |        },
-                |        "2019" : {
-                |          "memberMoreThanOnePension" : false,
-                |          "schemes" : {
-                |            "0" : {
-                |              "pensionSchemeDetails" : {
-                |                "schemeName" : "Scheme 1",
-                |                "schemeTaxRef" : "00348916RT"
-                |              },
-                |              "whichScheme" : "00348916RT",
-                |              "pensionSchemeInputAmounts" : {
-                |                "originalPIA" : 37000,
-                |                "revisedPIA" : 35000
-                |              },
-                |              "payACharge" : false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution" : true,
-                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-                |          "definedBenefitAmount" : 35000,
-                |          "thresholdIncome" : false,
-                |          "totalIncome" : 60000
-                |        }
-                |      }
-                |    }
-                |  }
-                |""".stripMargin)
+           |{
+           |    "savingsStatement" : true,
+           |    "resubmittingAdjustment" : false,
+           |    "reportingChange" : [ "annualAllowance" ],
+           |    "scottishTaxpayerFrom2016" : false,
+           |    "payingPublicPensionScheme" : true,
+           |    "definedContributionPensionScheme" : true,
+           |    "flexiblyAccessedPension" : true,
+           |    "flexibleAccessStartDate" : "2015-05-25",
+           |    "payTaxCharge1516" : false,
+           |    "2013" : {
+           |      "pIAPreRemedy" : 40000
+           |    },
+           |    "2014" : {
+           |      "pIAPreRemedy" : 20000
+           |    },
+           |    "2015" : {
+           |      "pIAPreRemedy" : 60000
+           |    },
+           |    "aa" : {
+           |      "years" : {
+           |        "2016-pre" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 35000,
+           |                "revisedPIA" : 30000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
+           |          "definedContributionAmount" : 6000,
+           |          "flexiAccessDefinedContributionAmount" : 10000,
+           |          "definedBenefitAmount" : 30000
+           |        },
+           |        "2016-post" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 45000,
+           |                "revisedPIA" : 40000
+           |              },
+           |              "payACharge" : true,
+           |              "whoPaidAACharge" : "you",
+           |              "howMuchAAChargeYouPaid" : 2000
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 40000,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2017" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 40000,
+           |                "revisedPIA" : 35000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 35000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2018" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 45000,
+           |                "revisedPIA" : 40000
+           |              },
+           |              "payACharge" : true,
+           |              "whoPaidAACharge" : "both",
+           |              "howMuchAAChargeYouPaid" : 1000,
+           |              "howMuchAAChargeSchemePaid" : 1000
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : false,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        },
+           |        "2019" : {
+           |          "memberMoreThanOnePension" : false,
+           |          "schemes" : {
+           |            "0" : {
+           |              "pensionSchemeDetails" : {
+           |                "schemeName" : "Scheme 1",
+           |                "schemeTaxRef" : "00348916RT"
+           |              },
+           |              "whichScheme" : "00348916RT",
+           |              "pensionSchemeInputAmounts" : {
+           |                "originalPIA" : 37000,
+           |                "revisedPIA" : 35000
+           |              },
+           |              "payACharge" : false
+           |            }
+           |          },
+           |          "otherDefinedBenefitOrContribution" : true,
+           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+           |          "definedBenefitAmount" : 35000,
+           |          "thresholdIncome" : false,
+           |          "totalIncome" : 60000
+           |        }
+           |      }
+           |    }
+           |  }
+           |""".stripMargin)
       .as[JsObject]
 
     val userAnswers1 = UserAnswers(
@@ -1235,20 +1234,20 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      when(mockCalculationResultConnector.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
-      when(mockBackendConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
+      when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
+      when(mockBackendConnector.sendSubmissionRequest(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers)(new HeaderCarrier())
+      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers)
       submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
     }
 
     "must fail when a valid calculation result cannot be obtained" in {
 
-      when(mockCalculationResultConnector.sendRequest(any)(any))
+      when(mockCalculationResultConnector.sendRequest(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
-      when(mockBackendConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
+      when(mockBackendConnector.sendSubmissionRequest(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)(new HeaderCarrier())
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
 
@@ -1256,11 +1255,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      when(mockCalculationResultConnector.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
-      when(mockBackendConnector.sendSubmissionRequest(any)(any))
+      when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
+      when(mockBackendConnector.sendSubmissionRequest(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)(new HeaderCarrier())
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
   }

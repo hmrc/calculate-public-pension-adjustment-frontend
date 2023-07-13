@@ -22,7 +22,7 @@ import models.submission.{SubmissionRequest, SubmissionResponse, Success}
 import play.api.Logging
 import play.api.http.Status._
 import play.api.libs.json.{JsValue, Json}
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{HttpClient, UpstreamErrorResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -32,7 +32,7 @@ class BackendConnector @Inject() (config: FrontendAppConfig, httpClient: HttpCli
 
   def sendSubmissionRequest(
     submissionRequest: SubmissionRequest
-  )(implicit hc: HeaderCarrier): Future[SubmissionResponse] = {
+  ): Future[SubmissionResponse] = {
     val body: JsValue = Json.toJson(submissionRequest)
 
     httpClient
