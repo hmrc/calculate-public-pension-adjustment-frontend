@@ -53,8 +53,6 @@ class TaskListController @Inject() (
     if (!allTasksCompleted)
       Future.successful(BadRequest(view(form.withGlobalError("tasklist.error.tasksToComplete"), taskListViewModel)))
     else
-      Future.successful(
-        Ok(view(form, taskListViewModel.copy(calculationResult = Some("tasklist.calculationSuccess"))))
-      )
+      Future.successful(Redirect(routes.CalculationResultController.onPageLoad()))
   }
 }

@@ -18,6 +18,7 @@
 
 @this(
         layout: templates.Layout,
+        formHelper: FormWithCSRF,
         govukButton: GovukButton
 )
 
@@ -110,7 +111,10 @@
     </ul>
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint5")</p>
 
-    @govukButton(
-        ButtonViewModel(messages("site.continueSignIn"))
-    )
+    @formHelper(action = routes.CalculationResultController.onSubmit(), Symbol("autoComplete") -> "off") {
+        @govukButton(
+            ButtonViewModel(messages("site.continueSignIn"))
+        )
+    }
+
 }

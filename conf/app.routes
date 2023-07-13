@@ -272,4 +272,6 @@ POST       /pia-for-dc-pension-flexible/:period                  controllers.ann
 GET        /change-pia-for-dc-pension-flexible/:period                      controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /change-pia-for-dc-pension-flexible/:period                       controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
 
+
 GET        /calculation-result                       controllers.CalculationResultController.onPageLoad()
+POST       /calculation-result                       controllers.CalculationResultController.onSubmit()
