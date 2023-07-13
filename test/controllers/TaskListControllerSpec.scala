@@ -30,7 +30,7 @@ import repositories.SessionRepository
 import services.TaskListService
 
 import scala.concurrent.Future
-class TaskListControllerTest extends SpecBase with MockitoSugar {
+class TaskListControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 

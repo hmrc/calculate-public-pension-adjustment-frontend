@@ -37,7 +37,7 @@ class BackendConnector @Inject() (config: FrontendAppConfig, httpClient: HttpCli
 
     httpClient
       .doPost(
-        s"${config.calculateBackendServiceUrl}/submission",
+        s"${config.cppaBaseUrl}/calculate-public-pension-adjustment/submission",
         body
       )
       .flatMap { response =>

@@ -16,8 +16,8 @@
 
 package controllers
 
+import config.FrontendAppConfig
 import controllers.actions._
-import models.CalculationResults._
 import models.submission
 import models.submission.SubmissionResponse
 import play.api.data.Form
@@ -29,7 +29,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.CalculationResultsView
 
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class CalculationResultController @Inject() (
   override val messagesApi: MessagesApi,
@@ -38,7 +38,8 @@ class CalculationResultController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: CalculationResultsView,
-  calculationResultService: CalculationResultService
+  calculationResultService: CalculationResultService,
+  config: FrontendAppConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -62,12 +63,12 @@ class CalculationResultController @Inject() (
     calculationResultService.submitUserAnswersAndCalculation(request.userAnswers).map {
       submissionResponse: SubmissionResponse =>
         submissionResponse match {
-          case submission.Success(uniqueId) => Redirect(buildSubmitFrontendUrl(uniqueId))
-          case submission.Failure(errors)   => ???
+          case submission.Success(uniqueId) => Redirect(submitFrontendLandingPageUrl(uniqueId))
+          case submission.Failure(_)        => Redirect(routes.JourneyRecoveryController.onPageLoad())
         }
     }
   }
 
-  def buildSubmitFrontendUrl(uniqueId: String) =
-    s"http://localhost:12805/submit-public-pension-adjustment/landingPage?submissionUniqueId=$uniqueId"
+  private def submitFrontendLandingPageUrl(uniqueId: String) =
+    s"${config.submitFrontend}/landing-page?submissionUniqueId=$uniqueId"
 }

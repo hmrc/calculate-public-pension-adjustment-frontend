@@ -32,32 +32,33 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class CalculationResultService @Inject() (connector: CalculationResultConnector, backendConnector: BackendConnector)(
-  implicit ec: ExecutionContext
+class CalculationResultService @Inject() (
+  calculationResultConnector: CalculationResultConnector,
+  backendConnector: BackendConnector
+)(implicit
+  ec: ExecutionContext
 ) extends Logging {
 
-  // TODO reinstate call using connector once local testing complete
   def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
-    // connector.sendRequest(buildCalculationUserAnswers(userAnswers))
-    mockCalculationResponse
+    calculationResultConnector.sendRequest(buildCalculationUserAnswers(userAnswers))
+  // mockCalculationResponse
 
-  // TODO reinstate call using connector once local testing complete
   def submitUserAnswersAndCalculation(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[SubmissionResponse] = {
     val calculationUserAnswers: CalculationUserAnswers = buildCalculationUserAnswers(answers)
-
     for {
-      // calculationResponse <- connector.sendRequest(calculationUserAnswers)
-      calculationResponse <- mockCalculationResponse
+      calculationResponse <- calculationResultConnector.sendRequest(calculationUserAnswers)
+      // calculationResponse <- mockCalculationResponse
       submissionResponse  <-
         backendConnector.sendSubmissionRequest(SubmissionRequest(calculationUserAnswers, Some(calculationResponse)))
     } yield submissionResponse
   }
 
+  // TODO remove this when no longer needed for local testing
   private def mockCalculationResponse =
     Future.successful(
       CalculationResponse(
         models.CalculationResults.Resubmission(false, None),
-        TotalAmounts(1, 2, 3),
+        TotalAmounts(0, 0, 0),
         List.empty[OutOfDatesTaxYearsCalculation],
         List.empty[InDatesTaxYearsCalculation]
       )

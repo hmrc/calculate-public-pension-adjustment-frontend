@@ -20,7 +20,7 @@ import base.SpecBase
 import models.{PSTR, PensionSchemeDetails, Period, SchemeIndex}
 import pages.annualallowance.taxyear.PensionSchemeDetailsPage
 
-class SchemeServiceTest extends SpecBase {
+class SchemeServiceSpec extends SpecBase {
 
   "WhichScheme" - {
 

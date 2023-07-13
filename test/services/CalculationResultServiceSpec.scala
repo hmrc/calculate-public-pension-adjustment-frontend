@@ -21,15 +21,19 @@ import connectors.{BackendConnector, CalculationResultConnector}
 import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, RowViewModel}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
+import models.submission.{Failure, Success}
 import models.{AnnualAllowance, CalculationUserAnswers, Period, Resubmission, TaxYear2013To2015, TaxYearScheme, UserAnswers}
+import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
+import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.io.Source
 
-class CalculationResultServiceTest extends SpecBase with MockitoSugar {
+class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
   private val mockBackendConnector           = mock[BackendConnector]
@@ -1225,4 +1229,39 @@ class CalculationResultServiceTest extends SpecBase with MockitoSugar {
 
   }
 
+  "submitting user answers and calculation to backend" - {
+
+    "when a valid calculation result is sent successfully a unique id should be returned" in {
+
+      val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      when(mockCalculationResultConnector.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockBackendConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
+
+      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers)(new HeaderCarrier())
+      submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
+    }
+
+    "must fail when a valid calculation result cannot be obtained" in {
+
+      when(mockCalculationResultConnector.sendRequest(any)(any))
+        .thenReturn(Future.failed(new RuntimeException("someError")))
+      when(mockBackendConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
+
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)(new HeaderCarrier())
+      an[RuntimeException] mustBe thrownBy(result.futureValue)
+    }
+
+    "must fail when a calculation result cannot sent" in {
+
+      val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      when(mockCalculationResultConnector.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockBackendConnector.sendSubmissionRequest(any)(any))
+        .thenReturn(Future.failed(new RuntimeException("someError")))
+
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)(new HeaderCarrier())
+      an[RuntimeException] mustBe thrownBy(result.futureValue)
+    }
+  }
 }
