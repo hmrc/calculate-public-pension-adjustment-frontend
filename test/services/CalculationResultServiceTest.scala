@@ -33,7 +33,9 @@ class CalculationResultServiceTest extends SpecBase with MockitoSugar {
 
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
 
-  private val service = new CalculationResultService(mockCalculationResultConnector)
+  private val mockAuditService = mock[AuditService]
+
+  private val service = new CalculationResultService(mockCalculationResultConnector, mockAuditService)
 
   private def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
     val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
