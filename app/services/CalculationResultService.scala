@@ -20,7 +20,7 @@ import connectors.CalculationResultConnector
 import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, RowViewModel}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
-import models.{AnnualAllowance, CalculationUserAnswers, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, Resubmission, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
+import models.{AnnualAllowance, CalculationSubmissionAuditEvent, CalculationUserAnswers, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, Resubmission, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
@@ -31,11 +31,18 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class CalculationResultService @Inject() (connector: CalculationResultConnector)(implicit ec: ExecutionContext)
-    extends Logging {
+class CalculationResultService @Inject() (connector: CalculationResultConnector, auditService: AuditService)(implicit
+  ec: ExecutionContext
+) extends Logging {
 
   def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
-    connector.sendRequest(buildCalculationUserAnswers(userAnswers))
+    for {
+      calculationUserAnswers <- Future.successful(buildCalculationUserAnswers(userAnswers))
+      calculationResponse    <- connector.sendRequest(calculationUserAnswers)
+      _                      <- auditService.auditCalculationSubmissionRequest(
+                                  CalculationSubmissionAuditEvent(calculationUserAnswers, calculationResponse)
+                                )
+    } yield calculationResponse
 
   def buildCalculationUserAnswers(userAnswers: UserAnswers): CalculationUserAnswers = {
 
