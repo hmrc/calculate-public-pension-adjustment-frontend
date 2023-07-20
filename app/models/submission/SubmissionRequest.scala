@@ -16,8 +16,7 @@
 
 package models.submission
 
-import models.CalculationResults.CalculationResponse
-import models.CalculationInputs
+import models.CalculationResults.{CalculationInputs, CalculationResponse}
 import play.api.libs.json.{Format, Json}
 
 case class SubmissionRequest(calculationInputs: CalculationInputs, calculation: Option[CalculationResponse])

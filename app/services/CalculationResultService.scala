@@ -21,7 +21,7 @@ import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.{AnnualAllowance, CalculationInputs, CalculationSubmissionAuditEvent, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, Resubmission, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
+import models.{AnnualAllowance, CalculationResults, CalculationSubmissionAuditEvent, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
@@ -98,7 +98,7 @@ class CalculationResultService @Inject() (
 
     val tYears: List[TaxYear] = _2013To2015TaxYears ++ _2016To2023TaxYears
 
-    CalculationInputs(resubmission, Some(AnnualAllowance(scottishTaxYears, tYears)), None)
+    CalculationResults.CalculationInputs(resubmission, Some(AnnualAllowance(scottishTaxYears, tYears)), None)
   }
 
   def toTaxYear2013To2015(userAnswers: UserAnswers, period: Period): Option[TaxYear2013To2015] =

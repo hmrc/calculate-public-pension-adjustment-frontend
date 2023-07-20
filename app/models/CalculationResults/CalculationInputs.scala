@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package models
+package models.CalculationResults
 
+import models.{AnnualAllowance, LifeTimeAllowance}
 import play.api.libs.json._
 
 case class CalculationInputs(

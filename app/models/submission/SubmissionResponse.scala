@@ -26,7 +26,9 @@ object Success {
   implicit lazy val format: OFormat[Success] = Json.format[Success]
 }
 
-final case class Failure(errors: Seq[String]) extends SubmissionResponse
+final case class Failure(errors: Seq[String]) extends SubmissionResponse {
+  implicit lazy val format: OFormat[Failure] = Json.format[Failure]
+}
 
 object Failure {
 

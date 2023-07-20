@@ -16,7 +16,7 @@
 
 package models
 
-import models.CalculationResults.CalculationResponse
+import models.CalculationResults.{CalculationInputs, CalculationResponse}
 import play.api.libs.json._
 
 case class CalculationSubmissionAuditEvent(

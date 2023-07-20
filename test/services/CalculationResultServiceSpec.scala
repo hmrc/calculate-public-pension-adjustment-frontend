@@ -18,11 +18,11 @@ package services
 
 import base.SpecBase
 import connectors.{BackendConnector, CalculationResultConnector}
-import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, RowViewModel}
+import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, Resubmission, RowViewModel}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
-import models.{AnnualAllowance, CalculationInputs, Period, Resubmission, TaxYear2013To2015, TaxYearScheme, UserAnswers}
+import models.{AnnualAllowance, CalculationResults, Period, TaxYear2013To2015, TaxYearScheme, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
@@ -825,7 +825,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1)
 
-        result mustBe CalculationInputs(
+        result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Change in amounts")),
           Some(
             AnnualAllowance(
@@ -924,7 +924,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1.copy(data = data3))
 
-        result mustBe CalculationInputs(
+        result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Some(
             AnnualAllowance(
