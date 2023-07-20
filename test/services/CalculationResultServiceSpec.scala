@@ -22,7 +22,7 @@ import models.CalculationResults.{CalculationResponse, CalculationResultsViewMod
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
-import models.{AnnualAllowance, CalculationUserAnswers, Period, Resubmission, TaxYear2013To2015, TaxYearScheme, UserAnswers}
+import models.{AnnualAllowance, CalculationInputs, Period, Resubmission, TaxYear2013To2015, TaxYearScheme, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
@@ -819,13 +819,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
     }
 
-    "buildCalculationUserAnswers" - {
+    "buildInputs" - {
 
-      "should return valid CalculationUserAnswers for a valid UserAnswers with all years" in {
+      "should return valid CalculationInputs for a valid UserAnswers with all years" in {
 
-        val result = service.buildCalculationUserAnswers(userAnswers1)
+        val result = service.buildCalculationInputs(userAnswers1)
 
-        result mustBe CalculationUserAnswers(
+        result mustBe CalculationInputs(
           Resubmission(true, Some("Change in amounts")),
           Some(
             AnnualAllowance(
@@ -920,11 +920,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         )
       }
 
-      "should return valid CalculationUserAnswers for a valid UserAnswers with missing years" in {
+      "should return valid CalculationInputs for a valid UserAnswers with missing years" in {
 
-        val result = service.buildCalculationUserAnswers(userAnswers1.copy(data = data3))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data3))
 
-        result mustBe CalculationUserAnswers(
+        result mustBe CalculationInputs(
           Resubmission(false, None),
           Some(
             AnnualAllowance(

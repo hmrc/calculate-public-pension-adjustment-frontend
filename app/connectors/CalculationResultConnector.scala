@@ -19,7 +19,7 @@ package connectors
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import models.CalculationResults.CalculationResponse
-import models.CalculationUserAnswers
+import models.CalculationInputs
 import play.api.Logging
 import play.api.http.Status._
 import play.api.libs.json.Json
@@ -35,12 +35,12 @@ class CalculationResultConnector @Inject() (
 ) extends Logging {
 
   def sendRequest(
-    calculationUserAnswers: CalculationUserAnswers
+    calculationInputs: CalculationInputs
   ): Future[CalculationResponse] =
     httpClient1
       .doPost(
         s"${config.cppaBaseUrl}/calculate-public-pension-adjustment/show-calculation",
-        Json.toJson(calculationUserAnswers)
+        Json.toJson(calculationInputs)
       )
       .flatMap { response =>
         response.status match {

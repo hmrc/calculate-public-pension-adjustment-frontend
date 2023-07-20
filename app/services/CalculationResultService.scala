@@ -21,7 +21,7 @@ import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.{AnnualAllowance, CalculationSubmissionAuditEvent, CalculationUserAnswers, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, Resubmission, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
+import models.{AnnualAllowance, CalculationInputs, CalculationSubmissionAuditEvent, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, Resubmission, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
@@ -42,23 +42,23 @@ class CalculationResultService @Inject() (
 
   def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
     for {
-      calculationUserAnswers <- Future.successful(buildCalculationUserAnswers(userAnswers))
-      calculationResponse    <- calculationResultConnector.sendRequest(calculationUserAnswers)
-      _                      <- auditService.auditCalculationSubmissionRequest(
-                                  CalculationSubmissionAuditEvent(calculationUserAnswers, calculationResponse)
-                                )
+      calculationInputs   <- Future.successful(buildCalculationInputs(userAnswers))
+      calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
+      _                   <- auditService.auditCalculationSubmissionRequest(
+                               CalculationSubmissionAuditEvent(calculationInputs, calculationResponse)
+                             )
     } yield calculationResponse
 
   def submitUserAnswersAndCalculation(answers: UserAnswers): Future[SubmissionResponse] = {
-    val calculationUserAnswers: CalculationUserAnswers = buildCalculationUserAnswers(answers)
+    val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
     for {
-      calculationResponse <- calculationResultConnector.sendRequest(calculationUserAnswers)
+      calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
       submissionResponse  <-
-        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationUserAnswers, Some(calculationResponse)))
+        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, Some(calculationResponse)))
     } yield submissionResponse
   }
 
-  def buildCalculationUserAnswers(userAnswers: UserAnswers): CalculationUserAnswers = {
+  def buildCalculationInputs(userAnswers: UserAnswers): CalculationInputs = {
 
     val resubmission: Resubmission = userAnswers
       .get(ResubmittingAdjustmentPage)
@@ -98,7 +98,7 @@ class CalculationResultService @Inject() (
 
     val tYears: List[TaxYear] = _2013To2015TaxYears ++ _2016To2023TaxYears
 
-    CalculationUserAnswers(resubmission, Some(AnnualAllowance(scottishTaxYears, tYears)), None)
+    CalculationInputs(resubmission, Some(AnnualAllowance(scottishTaxYears, tYears)), None)
   }
 
   def toTaxYear2013To2015(userAnswers: UserAnswers, period: Period): Option[TaxYear2013To2015] =

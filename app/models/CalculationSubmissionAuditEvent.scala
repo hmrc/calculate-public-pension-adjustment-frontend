@@ -20,7 +20,7 @@ import models.CalculationResults.CalculationResponse
 import play.api.libs.json._
 
 case class CalculationSubmissionAuditEvent(
-  calculationUserAnswers: CalculationUserAnswers,
+  calculationInputs: CalculationInputs,
   calculationResponse: CalculationResponse
 )
 

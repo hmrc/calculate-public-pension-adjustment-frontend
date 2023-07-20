@@ -17,10 +17,10 @@
 package models.submission
 
 import models.CalculationResults.CalculationResponse
-import models.CalculationUserAnswers
+import models.CalculationInputs
 import play.api.libs.json.{Format, Json}
 
-case class SubmissionRequest(userAnswers: CalculationUserAnswers, calculation: Option[CalculationResponse])
+case class SubmissionRequest(calculationInputs: CalculationInputs, calculation: Option[CalculationResponse])
 
 object SubmissionRequest {
 

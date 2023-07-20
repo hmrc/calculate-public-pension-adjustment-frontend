@@ -18,13 +18,13 @@ package models
 
 import play.api.libs.json._
 
-case class CalculationUserAnswers(
+case class CalculationInputs(
   resubmission: Resubmission,
   annualAllowance: Option[AnnualAllowance],
   lifeTimeAllowance: Option[LifeTimeAllowance]
 )
 
-object CalculationUserAnswers {
+object CalculationInputs {
 
-  implicit lazy val formats: Format[CalculationUserAnswers] = Json.format
+  implicit lazy val formats: Format[CalculationInputs] = Json.format
 }
