@@ -23,7 +23,7 @@ import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 
 import java.time.LocalDate
 
-class PeriodServiceTest extends SpecBase {
+class PeriodServiceSpec extends SpecBase {
 
   "First period" - {
 

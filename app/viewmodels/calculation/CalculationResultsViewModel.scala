@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-package models
+package viewmodels.calculation
 
-import models.CalculationResults.{CalculationInputs, CalculationResponse}
-import play.api.libs.json._
-
-case class CalculationSubmissionAuditEvent(
-  calculationInputs: CalculationInputs,
-  calculationResponse: CalculationResponse
-)
-
-object CalculationSubmissionAuditEvent {
-
-  implicit lazy val formats: Format[CalculationSubmissionAuditEvent] = Json.format
-}
+case class CalculationResultsViewModel(result: String) {}

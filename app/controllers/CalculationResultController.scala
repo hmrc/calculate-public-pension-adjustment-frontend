@@ -16,7 +16,10 @@
 
 package controllers
 
+import config.FrontendAppConfig
 import controllers.actions._
+import models.submission
+import models.submission.SubmissionResponse
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -35,7 +38,8 @@ class CalculationResultController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: CalculationResultsView,
-  calculationResultService: CalculationResultService
+  calculationResultService: CalculationResultService,
+  config: FrontendAppConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -54,4 +58,17 @@ class CalculationResultController @Inject() (
       )
     }
   }
+
+  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+    calculationResultService.submitUserAnswersAndCalculation(request.userAnswers).map {
+      submissionResponse: SubmissionResponse =>
+        submissionResponse match {
+          case submission.Success(uniqueId) => Redirect(submitFrontendLandingPageUrl(uniqueId))
+          case submission.Failure(_)        => Redirect(routes.JourneyRecoveryController.onPageLoad())
+        }
+    }
+  }
+
+  private def submitFrontendLandingPageUrl(uniqueId: String) =
+    s"${config.submitFrontend}/landing-page?submissionUniqueId=$uniqueId"
 }

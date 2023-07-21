@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-package models
+package models.submission
 
 import models.CalculationResults.{CalculationInputs, CalculationResponse}
-import play.api.libs.json._
+import play.api.libs.json.{Format, Json}
 
-case class CalculationSubmissionAuditEvent(
-  calculationInputs: CalculationInputs,
-  calculationResponse: CalculationResponse
-)
+case class SubmissionRequest(calculationInputs: CalculationInputs, calculation: Option[CalculationResponse])
 
-object CalculationSubmissionAuditEvent {
+object SubmissionRequest {
 
-  implicit lazy val formats: Format[CalculationSubmissionAuditEvent] = Json.format
+  implicit lazy val format: Format[SubmissionRequest] = Json.format
 }

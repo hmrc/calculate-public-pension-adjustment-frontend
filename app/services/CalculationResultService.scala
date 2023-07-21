@@ -16,11 +16,12 @@
 
 package services
 
-import connectors.CalculationResultConnector
-import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, RowViewModel}
+import connectors.{BackendConnector, CalculationResultConnector}
+import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
-import models.{AnnualAllowance, CalculationSubmissionAuditEvent, CalculationUserAnswers, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, Resubmission, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
+import models.submission.{SubmissionRequest, SubmissionResponse}
+import models.{AnnualAllowance, CalculationResults, CalculationSubmissionAuditEvent, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
@@ -31,20 +32,33 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class CalculationResultService @Inject() (connector: CalculationResultConnector, auditService: AuditService)(implicit
+class CalculationResultService @Inject() (
+  calculationResultConnector: CalculationResultConnector,
+  backendConnector: BackendConnector,
+  auditService: AuditService
+)(implicit
   ec: ExecutionContext
 ) extends Logging {
 
   def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
     for {
-      calculationUserAnswers <- Future.successful(buildCalculationUserAnswers(userAnswers))
-      calculationResponse    <- connector.sendRequest(calculationUserAnswers)
-      _                      <- auditService.auditCalculationSubmissionRequest(
-                                  CalculationSubmissionAuditEvent(calculationUserAnswers, calculationResponse)
-                                )
+      calculationInputs   <- Future.successful(buildCalculationInputs(userAnswers))
+      calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
+      _                   <- auditService.auditCalculationSubmissionRequest(
+                               CalculationSubmissionAuditEvent(calculationInputs, calculationResponse)
+                             )
     } yield calculationResponse
 
-  def buildCalculationUserAnswers(userAnswers: UserAnswers): CalculationUserAnswers = {
+  def submitUserAnswersAndCalculation(answers: UserAnswers): Future[SubmissionResponse] = {
+    val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
+    for {
+      calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
+      submissionResponse  <-
+        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, Some(calculationResponse)))
+    } yield submissionResponse
+  }
+
+  def buildCalculationInputs(userAnswers: UserAnswers): CalculationInputs = {
 
     val resubmission: Resubmission = userAnswers
       .get(ResubmittingAdjustmentPage)
@@ -84,7 +98,7 @@ class CalculationResultService @Inject() (connector: CalculationResultConnector,
 
     val tYears: List[TaxYear] = _2013To2015TaxYears ++ _2016To2023TaxYears
 
-    CalculationUserAnswers(resubmission, Some(AnnualAllowance(scottishTaxYears, tYears)), None)
+    CalculationResults.CalculationInputs(resubmission, Some(AnnualAllowance(scottishTaxYears, tYears)), None)
   }
 
   def toTaxYear2013To2015(userAnswers: UserAnswers, period: Period): Option[TaxYear2013To2015] =
@@ -237,7 +251,7 @@ class CalculationResultService @Inject() (connector: CalculationResultConnector,
       Seq(RowViewModel("calculationResults.inDatesDebit", calculateResponse.totalAmounts.inDatesDebit.toString())) ++
       Seq(RowViewModel("calculationResults.inDatesCredit", calculateResponse.totalAmounts.inDatesCredit.toString()))
 
-  private def resubmission(calculateResponse: CalculationResponse): Seq[RowViewModel]  =
+  private def resubmission(calculateResponse: CalculationResponse): Seq[RowViewModel] =
     if (calculateResponse.resubmission.isResubmission) {
       Seq(RowViewModel("calculationResults.annualResults.isResubmission", "")) ++
         Seq(
@@ -246,6 +260,7 @@ class CalculationResultService @Inject() (connector: CalculationResultConnector,
     } else {
       Seq(RowViewModel("calculationResults.annualResults.notResubmission", ""))
     }
+
   private def outDates(calculateResponse: CalculationResponse): Seq[Seq[RowViewModel]] =
     calculateResponse.outDates.map { outDate =>
       Seq(

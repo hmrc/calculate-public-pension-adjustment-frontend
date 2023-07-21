@@ -18,10 +18,10 @@ package services
 
 import akka.util.Timeout
 import base.SpecBase
-import models.CalculationResults.{CalculationResponse, OutOfDatesTaxYearSchemeCalculation, OutOfDatesTaxYearsCalculation, TotalAmounts}
+import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, CalculationSubmissionAuditEvent, CalculationUserAnswers, Period, Resubmission, TaxYear2013To2015, TaxYearScheme}
+import models.{AnnualAllowance, CalculationResults, CalculationSubmissionAuditEvent, Period, TaxYear2013To2015, TaxYearScheme}
 import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -58,7 +58,7 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
 
         implicit val hc = HeaderCarrier()
 
-        val calculationUserAnswers = CalculationUserAnswers(
+        val calculationInputs = CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Some(
             AnnualAllowance(
@@ -184,7 +184,7 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
         )
 
         val calculationSubmissionAuditEvent =
-          CalculationSubmissionAuditEvent(calculationUserAnswers, calculationResponse)
+          CalculationSubmissionAuditEvent(calculationInputs, calculationResponse)
 
         await(service.auditCalculationSubmissionRequest(calculationSubmissionAuditEvent)(hc)) mustBe ()
       }
