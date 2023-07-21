@@ -17,7 +17,7 @@
 package services
 
 import base.SpecBase
-import models.ReportingChange.{AnnualAllowance, LifetimeAllowance, OtherCompensation}
+import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.{SectionGroupViewModel, SectionStatus, SectionViewModel, TaskListViewModel}
 import models.{ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
@@ -57,9 +57,8 @@ class TaskListServiceSpec extends SpecBase {
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
 
       taskListViewModel.setupGroup mustNot be(null)
-      taskListViewModel.aaGroup.isDefined    must be(true)
-      taskListViewModel.ltaGroup.isDefined   must be(true)
-      taskListViewModel.adminGroup.isDefined must be(false)
+      taskListViewModel.aaGroup.isDefined  must be(true)
+      taskListViewModel.ltaGroup.isDefined must be(true)
     }
 
     "display numbers should be correct" in {
@@ -73,19 +72,18 @@ class TaskListServiceSpec extends SpecBase {
     }
 
     "headings must be defined" in {
-      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance, OtherCompensation)
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
       val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
 
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
 
-      taskListViewModel.setupGroup.heading     must be("taskList.setup.groupHeading")
-      taskListViewModel.aaGroup.get.heading    must be("taskList.aa.groupHeading")
-      taskListViewModel.ltaGroup.get.heading   must be("taskList.lta.groupHeading")
-      taskListViewModel.adminGroup.get.heading must be("taskList.admin.groupHeading")
+      taskListViewModel.setupGroup.heading   must be("taskList.setup.groupHeading")
+      taskListViewModel.aaGroup.get.heading  must be("taskList.aa.groupHeading")
+      taskListViewModel.ltaGroup.get.heading must be("taskList.lta.groupHeading")
     }
 
     "sections must be fully populated" in {
-      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance, OtherCompensation)
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
       val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
 
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
@@ -93,11 +91,10 @@ class TaskListServiceSpec extends SpecBase {
       taskListViewModel.setupGroup.sections.size mustBe 1
       taskListViewModel.aaGroup.get.sections.size mustBe 10 // one for each of the remedy periods plus one for the setup questions
       taskListViewModel.ltaGroup.get.sections.size mustBe 1
-      taskListViewModel.adminGroup.get.sections.size mustBe 1
     }
 
     "sections must be well formed" in {
-      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance, OtherCompensation)
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
       val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
 
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)

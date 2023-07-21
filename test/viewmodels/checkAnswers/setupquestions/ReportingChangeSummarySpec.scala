@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
-import models.ReportingChange.{AnnualAllowance, LifetimeAllowance, OtherCompensation}
+import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.{CheckMode, UserAnswers, _}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -39,8 +39,7 @@ class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
           ReportingChangePage,
           Set(
             AnnualAllowance,
-            LifetimeAllowance,
-            OtherCompensation
+            LifetimeAllowance
           )
         )
         .get
@@ -49,7 +48,7 @@ class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
           key = "reportingChange.checkYourAnswersLabel",
           value = ValueViewModel(
             HtmlContent(
-              "reportingChange.annualAllowance,<br>reportingChange.lifetimeAllowance,<br>reportingChange.otherCompensation"
+              "reportingChange.annualAllowance,<br>reportingChange.lifetimeAllowance"
             )
           ),
           actions = Seq(
