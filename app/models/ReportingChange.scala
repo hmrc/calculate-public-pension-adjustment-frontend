@@ -28,12 +28,10 @@ object ReportingChange extends Enumerable.Implicits {
 
   case object AnnualAllowance extends WithName("annualAllowance") with ReportingChange
   case object LifetimeAllowance extends WithName("lifetimeAllowance") with ReportingChange
-  case object OtherCompensation extends WithName("otherCompensation") with ReportingChange
 
   val values: Seq[ReportingChange] = Seq(
     AnnualAllowance,
-    LifetimeAllowance,
-    OtherCompensation
+    LifetimeAllowance
   )
 
   def checkboxItems(implicit messages: Messages): Seq[CheckboxItem] =

@@ -42,9 +42,8 @@ class TaskListService @Inject() (
     val ltaGroup: Option[SectionGroupViewModel] = ltaGroupSeq(answers, counter)
 
     if (ltaGroup.isDefined) counter += 1
-    val adminGroup: Option[SectionGroupViewModel] = adminGroupSeq(answers, counter)
 
-    TaskListViewModel(setupGroup, aaGroup, ltaGroup, adminGroup)
+    TaskListViewModel(setupGroup, aaGroup, ltaGroup)
   }
 
   def isRequired(answers: UserAnswers, reportingChange: ReportingChange): Boolean =
@@ -94,24 +93,6 @@ class TaskListService @Inject() (
         )
       ) ++ aaPeriodSections
     )
-
-  private def adminGroupSeq(answers: UserAnswers, displayNumber: Int): Option[SectionGroupViewModel] =
-    if (isRequired(answers, ReportingChange.OtherCompensation)) {
-      Some(
-        SectionGroupViewModel(
-          displayNumber,
-          "taskList.admin.groupHeading",
-          Seq(
-            SectionViewModel(
-              "taskList.admin.sectionName",
-              controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad(),
-              SectionStatus.Completed,
-              "admin-questions"
-            )
-          )
-        )
-      )
-    } else None
 
   private def ltaGroupSeq(answers: UserAnswers, displayNumber: Int): Option[SectionGroupViewModel] =
     if (isRequired(answers, ReportingChange.LifetimeAllowance)) {
