@@ -21,7 +21,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, CalculationResults, CalculationSubmissionAuditEvent, Period, TaxYear2013To2015, TaxYearScheme}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, Period, TaxYear2013To2015, TaxYearScheme}
 import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -184,9 +184,9 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
         )
 
         val calculationSubmissionAuditEvent =
-          CalculationSubmissionAuditEvent(calculationInputs, calculationResponse)
+          CalculationAuditEvent(calculationInputs, calculationResponse)
 
-        await(service.auditCalculationSubmissionRequest(calculationSubmissionAuditEvent)(hc)) mustBe ()
+        await(service.auditCalculationRequest(calculationSubmissionAuditEvent)(hc)) mustBe ()
       }
     }
 

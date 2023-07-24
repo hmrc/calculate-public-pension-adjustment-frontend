@@ -58,6 +58,6 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val cacheTtl: Int = configuration.get[Int]("mongodb.timeToLiveInSeconds")
 
-  val calculationSubmissionAuditEventName =
-    configuration.get[String]("auditing.calculation-submission-request-event-name")
+  val calculationAuditEventName =
+    configuration.get[String]("auditing.calculation-request-event-name")
 }
