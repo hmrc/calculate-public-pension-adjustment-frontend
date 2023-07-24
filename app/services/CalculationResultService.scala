@@ -21,7 +21,7 @@ import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.{AnnualAllowance, CalculationResults, CalculationSubmissionAuditEvent, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
@@ -44,8 +44,8 @@ class CalculationResultService @Inject() (
     for {
       calculationInputs   <- Future.successful(buildCalculationInputs(userAnswers))
       calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
-      _                   <- auditService.auditCalculationSubmissionRequest(
-                               CalculationSubmissionAuditEvent(calculationInputs, calculationResponse)
+      _                   <- auditService.auditCalculationRequest(
+                               CalculationAuditEvent(calculationInputs, calculationResponse)
                              )
     } yield calculationResponse
 
