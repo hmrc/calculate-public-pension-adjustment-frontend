@@ -46,25 +46,32 @@ case class ContributedToDuringRemedyPeriodPage(period: Period)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ContributedToDuringRemedyPeriodPage(period)) match {
-      case Some(contributions)
-        if contributions.contains(Definedcontribution) =>
-        answers.get(DefinedContributionAmountPage(period)) match {
-          case None =>
-            controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(NormalMode,period)
-          case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-        }
-      case Some(contributions)
-        if contributions.contains(Definedbenefit) =>
+      case Some(contributions) if !contributions.contains(Definedcontribution) && contributions.contains(Definedbenefit) =>
         answers.get(DefinedBenefitAmountPage(period)) match {
           case None =>
-            controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
+            controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(CheckMode, period)
           case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
         }
-
-      case Some(_) =>
-        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
+      case Some(contributions) if contributions.contains(Definedcontribution) && !contributions.contains(Definedbenefit) =>
+        answers.get(DefinedContributionAmountPage(period)) match {
+          case None =>
+            controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(CheckMode, period)
+          case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+        }
+      case Some(contributions) if contributions.contains(Definedcontribution) && contributions.contains(Definedbenefit) =>
+        answers.get(DefinedContributionAmountPage(period)) match {
+          case None =>
+            controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(CheckMode, period)
+          case Some(_) => answers.get(DefinedBenefitAmountPage(period)) match {
+            case None =>
+              controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(CheckMode, period)
+            case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+          }
+          }
+      case None => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
           .onPageLoad(period)
     }
+
 
   override def cleanup(value: Option[Set[ContributedToDuringRemedyPeriod]], userAnswers: UserAnswers): Try[UserAnswers] =
     value
