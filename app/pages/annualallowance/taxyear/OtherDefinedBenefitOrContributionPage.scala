@@ -45,23 +45,24 @@ case class OtherDefinedBenefitOrContributionPage(period: Period) extends Questio
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
       case Some(false) => CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case Some(true) => controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, period)
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPeriodController
+          .onPageLoad(NormalMode, period)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true => super.cleanup(value, userAnswers)
+        case true  => super.cleanup(value, userAnswers)
         case false =>
           removePages(userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 
-  private def removePages(userAnswers: UserAnswers) = {
-    userAnswers.remove(ContributedToDuringRemedyPeriodPage(period))
+  private def removePages(userAnswers: UserAnswers) =
+    userAnswers
+      .remove(ContributedToDuringRemedyPeriodPage(period))
       .flatMap(_.remove(DefinedContributionAmountPage(period)))
       .flatMap(_.remove(DefinedBenefitAmountPage(period)))
-  }
 }
-
