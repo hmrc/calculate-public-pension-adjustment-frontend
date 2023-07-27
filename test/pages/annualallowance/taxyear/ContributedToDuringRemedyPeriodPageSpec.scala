@@ -83,7 +83,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
       }
     }
 
-    "must Navigate correctly to CYA in check mode" in {
+    "must Navigate to DefinedContributionAmountPage in check mode when DC selected" in {
       val ua     = emptyUserAnswers
         .set(
           ContributedToDuringRemedyPeriodPage(Period._2013),
@@ -93,7 +93,58 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
         .value
       val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/check-your-answers-period/2013")
+      checkNavigation(result, "/change-pia-for-dc-pension/2013")
+    }
+
+    "must Navigate to DefinedBenefitAmountPage in check mode when DB selected" in {
+      val ua     = emptyUserAnswers
+        .set(
+          ContributedToDuringRemedyPeriodPage(Period._2013),
+          Set(ContributedToDuringRemedyPeriod.values.tail.head)
+        )
+        .success
+        .value
+      val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/change-pia-for-db-pension/2013")
+    }
+
+    "must Navigate to DefinedBenefitAmountPage in check mode when DB and DC selected and contribution amount answered" in {
+      val ua     = emptyUserAnswers
+        .set(
+          ContributedToDuringRemedyPeriodPage(Period._2013),
+          Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+        )
+        .success
+        .value
+        .set(
+          DefinedContributionAmountPage(Period._2013),
+          BigInt("100")
+        )
+        .success
+        .value
+      val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/change-pia-for-db-pension/2013")
+    }
+
+    "must Navigate to DefinedBenefitAmountPage in check mode when DB and DC selected and benefit amount answered" in {
+      val ua     = emptyUserAnswers
+        .set(
+          ContributedToDuringRemedyPeriodPage(Period._2013),
+          Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+        )
+        .success
+        .value
+        .set(
+          DefinedBenefitAmountPage(Period._2013),
+          BigInt("100")
+        )
+        .success
+        .value
+      val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/change-pia-for-dc-pension/2013")
     }
   }
 }
