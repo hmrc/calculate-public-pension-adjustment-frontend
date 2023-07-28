@@ -56,8 +56,7 @@ case class ContributedToDuringRemedyPeriodPage(period: Period)
           if contributions.contains(Definedcontribution) && contributions.contains(Definedbenefit) =>
         bothSelected(answers)
       case None =>
-        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-          .onPageLoad(period)
+        routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   private def bothSelected(answers: UserAnswers) =

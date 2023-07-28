@@ -146,5 +146,75 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
 
       checkNavigation(result, "/change-pia-for-dc-pension/2013")
     }
+
+    "must Navigate to CYA in check mode when DB and DC selected and benefit and contribution amount answered" in {
+      val ua     = emptyUserAnswers
+        .set(
+          ContributedToDuringRemedyPeriodPage(Period._2013),
+          Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+        )
+        .success
+        .value
+        .set(
+          DefinedBenefitAmountPage(Period._2013),
+          BigInt("100")
+        )
+        .success
+        .value
+        .set(
+          DefinedContributionAmountPage(Period._2013),
+          BigInt("100")
+        )
+        .success
+        .value
+      val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/check-your-answers-period/2013")
+    }
+
+    "must Navigate to CYA in check mode when DC selected and contribution amount answered" in {
+      val ua     = emptyUserAnswers
+        .set(
+          ContributedToDuringRemedyPeriodPage(Period._2013),
+          Set(ContributedToDuringRemedyPeriod.values.head)
+        )
+        .success
+        .value
+        .set(
+          DefinedContributionAmountPage(Period._2013),
+          BigInt("100")
+        )
+        .success
+        .value
+      val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/check-your-answers-period/2013")
+    }
+
+    "must Navigate to CYA in check mode when DB selected and benefit amount answered" in {
+      val ua     = emptyUserAnswers
+        .set(
+          ContributedToDuringRemedyPeriodPage(Period._2013),
+          Set(ContributedToDuringRemedyPeriod.values.tail.head)
+        )
+        .success
+        .value
+        .set(
+          DefinedBenefitAmountPage(Period._2013),
+          BigInt("100")
+        )
+        .success
+        .value
+      val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/check-your-answers-period/2013")
+    }
+
+    "to JourneyRecoveryPage when not answered in Check Mode" in {
+      val ua     = emptyUserAnswers
+      val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/there-is-a-problem")
+    }
   }
 }
