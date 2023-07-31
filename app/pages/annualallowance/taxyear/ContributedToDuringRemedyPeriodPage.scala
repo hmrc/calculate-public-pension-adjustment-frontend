@@ -17,11 +17,13 @@
 package pages.annualallowance.taxyear
 
 import controllers.routes
-import models.ContributedToDuringRemedyPeriod.Definedcontribution
-import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, UserAnswers}
+import models.ContributedToDuringRemedyPeriod.{Definedbenefit, Definedcontribution}
+import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case class ContributedToDuringRemedyPeriodPage(period: Period)
     extends QuestionPage[Set[ContributedToDuringRemedyPeriod]] {
@@ -43,5 +45,54 @@ case class ContributedToDuringRemedyPeriodPage(period: Period)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    answers.get(ContributedToDuringRemedyPeriodPage(period)) match {
+      case Some(contributions)
+          if !contributions.contains(Definedcontribution) && contributions.contains(Definedbenefit) =>
+        onlyDefinedBenefitSelected(answers)
+      case Some(contributions)
+          if contributions.contains(Definedcontribution) && !contributions.contains(Definedbenefit) =>
+        onlyDefinedContributionSelected(answers)
+      case Some(contributions)
+          if contributions.contains(Definedcontribution) && contributions.contains(Definedbenefit) =>
+        bothSelected(answers)
+      case None =>
+        routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  private def bothSelected(answers: UserAnswers) =
+    answers.get(DefinedContributionAmountPage(period)) match {
+      case None    =>
+        controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(CheckMode, period)
+      case Some(_) => onlyDefinedBenefitSelected(answers)
+    }
+
+  private def onlyDefinedContributionSelected(answers: UserAnswers) =
+    answers.get(DefinedContributionAmountPage(period)) match {
+      case None    =>
+        controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(CheckMode, period)
+      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    }
+
+  private def onlyDefinedBenefitSelected(answers: UserAnswers) =
+    answers.get(DefinedBenefitAmountPage(period)) match {
+      case None    =>
+        controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(CheckMode, period)
+      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    }
+
+  override def cleanup(
+    value: Option[Set[ContributedToDuringRemedyPeriod]],
+    userAnswers: UserAnswers
+  ): Try[UserAnswers] =
+    value
+      .map { set =>
+        if (!set.contains(ContributedToDuringRemedyPeriod.Definedcontribution)) {
+          userAnswers.remove(DefinedContributionAmountPage(period))
+        } else if (!set.contains(ContributedToDuringRemedyPeriod.Definedbenefit)) {
+          userAnswers.remove(DefinedBenefitAmountPage(period))
+        } else {
+          super.cleanup(value, userAnswers)
+        }
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

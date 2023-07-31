@@ -144,5 +144,26 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
 
       checkNavigation(result, "/check-your-answers-period/2013")
     }
+
+    "to JourneyRecovery when not answered in Check Mode" in {
+      val result = OtherDefinedBenefitOrContributionPage(
+        _2013
+      ).navigate(CheckMode, emptyUserAnswers).url
+
+      checkNavigation(result, "/there-is-a-problem")
+    }
+
+    "must Navigate correctly to ContributedToDuringRemedyPeriodPage in normal mode" in {
+      val ua     = emptyUserAnswers
+        .set(
+          OtherDefinedBenefitOrContributionPage(Period._2013),
+          true
+        )
+        .success
+        .value
+      val result = OtherDefinedBenefitOrContributionPage(_2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/which-contributed-during-remedy-period/2013")
+    }
   }
 }

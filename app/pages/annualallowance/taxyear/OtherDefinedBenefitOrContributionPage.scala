@@ -23,6 +23,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case class OtherDefinedBenefitOrContributionPage(period: Period) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
@@ -41,5 +43,26 @@ case class OtherDefinedBenefitOrContributionPage(period: Period) extends Questio
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    CheckYourAAPeriodAnswersController.onPageLoad(period)
+    answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
+      case Some(false) => CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPeriodController
+          .onPageLoad(NormalMode, period)
+      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case true  => super.cleanup(value, userAnswers)
+        case false =>
+          removePages(userAnswers)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
+
+  private def removePages(userAnswers: UserAnswers) =
+    userAnswers
+      .remove(ContributedToDuringRemedyPeriodPage(period))
+      .flatMap(_.remove(DefinedContributionAmountPage(period)))
+      .flatMap(_.remove(DefinedBenefitAmountPage(period)))
 }

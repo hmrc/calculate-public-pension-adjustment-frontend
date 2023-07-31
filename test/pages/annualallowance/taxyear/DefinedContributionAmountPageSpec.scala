@@ -68,7 +68,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         .value
         .set(
           ContributedToDuringRemedyPeriodPage(period),
-          Set(ContributedToDuringRemedyPeriod.values.tail.head)
+          Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
         )
         .success
         .value
@@ -116,7 +116,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
           .set(
             ContributedToDuringRemedyPeriodPage(period),
-            Set(ContributedToDuringRemedyPeriod.values.tail.head)
+            Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
           )
           .success
           .value
@@ -205,7 +205,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
           .set(
             ContributedToDuringRemedyPeriodPage(period),
-            Set(ContributedToDuringRemedyPeriod.values.tail.head)
+            Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
           )
           .success
           .value
@@ -287,14 +287,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {
         val ua     = emptyUserAnswers
           .set(
-            DefinedContributionAmountPage(period),
-            BigInt("100")
+            ContributedToDuringRemedyPeriodPage(period),
+            Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
           )
           .success
           .value
           .set(
-            ContributedToDuringRemedyPeriodPage(period),
-            Set(ContributedToDuringRemedyPeriod.values.tail.head)
+            DefinedContributionAmountPage(period),
+            BigInt("100")
           )
           .success
           .value
