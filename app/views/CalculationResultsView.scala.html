@@ -19,10 +19,11 @@
 @this(
         layout: templates.Layout,
         formHelper: FormWithCSRF,
+        printLink: PrintLink,
         govukButton: GovukButton
 )
 
-@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean, isInCredit: Boolean, isInDebit: Boolean)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("calculationResults.title"))) {
 
@@ -92,7 +93,7 @@
     }
     <br>
     <h2 class="govuk-heading-m">@messages("calculationResults.printYourResults.heading")</h2>
-    <p class="govuk-body">@messages("calculationResults.printYourResults.hint")</p>
+    <p class="govuk-body">@printLink("calculationResults.printYourResults.heading") @messages("calculationResults.printYourResults.hint")</p>
     <h2 class="govuk-heading-m">@messages("calculationResults.whatHappensNext.heading")</h2>
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint1")</p>
     <ul class="govuk-body">
@@ -103,18 +104,27 @@
         <li>@messages("calculationResults.whatHappensNext.hint1.list5")</li>
     </ul>
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint2")</p>
-    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint3")</p>
-    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint4")</p>
-    <ul class="govuk-body">
-        <li>@messages("calculationResults.whatHappensNext.hint4.list1")</li>
-        <li>@messages("calculationResults.whatHappensNext.hint4.list2")</li>
-    </ul>
+    @if(isInDebit) {
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint.inDebit")</p>
+    }
+    @if(isInCredit) {
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint.inCredit")</p>
+    }
+    @if(includeCompensation2015) {
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint.compensation")</p>
+        <ul class="govuk-body">
+            <li>@messages("calculationResults.whatHappensNext.hint.compensation.list1")</li>
+            <li>@messages("calculationResults.whatHappensNext.hint.compensation.list2")</li>
+        </ul>
+    }
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint5")</p>
 
-    @formHelper(action = routes.CalculationResultController.onSubmit(), Symbol("autoComplete") -> "off") {
-        @govukButton(
-            ButtonViewModel(messages("site.continueSignIn"))
-        )
+    @if(isInCredit || includeCompensation2015 || isInDebit) {
+        @formHelper(action = routes.CalculationResultController.onSubmit(), Symbol("autoComplete") -> "off") {
+            @govukButton(
+                ButtonViewModel(messages("site.continueSignIn"))
+            )
+        }
     }
 
 }

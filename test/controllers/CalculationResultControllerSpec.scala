@@ -24,7 +24,7 @@ import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.Call
+import play.api.mvc.{Call, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{route, status, _}
 import services.CalculationResultService
@@ -36,7 +36,12 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val normalRoute = routes.CalculationResultController.onPageLoad().url
+  lazy val normalRoute    = routes.CalculationResultController.onPageLoad().url
+  val dynamicDebit        = "You have extra tax charges to pay, you will receive a notice by post."
+  val dynamicCredit       =
+    "You are due a refund for tax charges, HMRC will pay this using the bank details you provide on your adjustment."
+  val dynamicCompensation =
+    "You are due compensation, HMRC will review your information and pass it to your pension scheme. They will then:"
 
   "CalculationResult Controller" - {
 
@@ -114,10 +119,98 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
-      val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
-      val json: JsValue  = Json.parse(source)
-      json.as[CalculationResponse]
+    "must display correct dynamic content when compensation, credit, debit are greater than 0" in {
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestDataAllTotals.json")
+
+      val result = returnResultFromBuiltApplication(calculationResult)
+
+      status(result) mustEqual OK
+      contentAsString(result).contains(dynamicDebit) mustBe true
+      contentAsString(result).contains(dynamicCredit) mustBe true
+      contentAsString(result).contains(dynamicCompensation) mustBe true
+      contentAsString(result).contains("Continue to sign in") mustBe true
+
+    }
+
+    "must display correct dynamic content when only credit is greater than 0" in {
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestDataCredit.json")
+
+      val result = returnResultFromBuiltApplication(calculationResult)
+
+      status(result) mustEqual OK
+
+      contentAsString(result).contains(dynamicDebit) mustBe false
+      contentAsString(result).contains(dynamicCredit) mustBe true
+      contentAsString(result).contains(dynamicCompensation) mustBe false
+      contentAsString(result).contains("Continue to sign in") mustBe true
+    }
+
+    "must display correct dynamic content when only debit is greater than 0" in {
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestDataDebit.json")
+
+      val result = returnResultFromBuiltApplication(calculationResult)
+
+      status(result) mustEqual OK
+
+      contentAsString(result).contains(dynamicDebit) mustBe true
+      contentAsString(result).contains(dynamicCredit) mustBe false
+      contentAsString(result).contains(dynamicCompensation) mustBe false
+      contentAsString(result).contains("Continue to sign in") mustBe true
+    }
+
+    "must display correct dynamic content when only compensation is greater than 0" in {
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      val result = returnResultFromBuiltApplication(calculationResult)
+
+      status(result) mustEqual OK
+
+      contentAsString(result).contains(dynamicDebit) mustBe false
+      contentAsString(result).contains(dynamicCredit) mustBe false
+      contentAsString(result).contains(dynamicCompensation) mustBe true
+      contentAsString(result).contains("Continue to sign in") mustBe true
+    }
+
+    "must not display dynamic content when no totals are greater than 0 and hide continue button" in {
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
+
+      val result = returnResultFromBuiltApplication(calculationResult)
+
+      status(result) mustEqual OK
+
+      contentAsString(result).contains(dynamicDebit) mustBe false
+      contentAsString(result).contains(dynamicCredit) mustBe false
+      contentAsString(result).contains(dynamicCompensation) mustBe false
+      contentAsString(result).contains("Continue to sign in") mustBe false
+    }
+  }
+  def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
+    val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
+    val json: JsValue  = Json.parse(source)
+    json.as[CalculationResponse]
+  }
+
+  def returnResultFromBuiltApplication(calculationResult: CalculationResponse): Future[Result] = {
+    val mockCalculationResultService = mock[CalculationResultService]
+    when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+    when(mockCalculationResultService.calculationResultsViewModel(any)).thenCallRealMethod()
+
+    val application =
+      applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(
+          bind[CalculationResultService].toInstance(mockCalculationResultService)
+        )
+        .build()
+
+    running(application) {
+      val request = FakeRequest(GET, normalRoute)
+
+      route(application, request).value
     }
   }
 }
