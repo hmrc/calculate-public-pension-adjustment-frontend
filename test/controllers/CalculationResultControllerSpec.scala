@@ -129,6 +129,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
       contentAsString(result).contains(dynamicDebit) mustBe true
       contentAsString(result).contains(dynamicCredit) mustBe true
       contentAsString(result).contains(dynamicCompensation) mustBe true
+      contentAsString(result).contains("Continue to sign in") mustBe true
 
     }
 
@@ -143,6 +144,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
       contentAsString(result).contains(dynamicDebit) mustBe false
       contentAsString(result).contains(dynamicCredit) mustBe true
       contentAsString(result).contains(dynamicCompensation) mustBe false
+      contentAsString(result).contains("Continue to sign in") mustBe true
     }
 
     "must display correct dynamic content when only debit is greater than 0" in {
@@ -156,6 +158,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
       contentAsString(result).contains(dynamicDebit) mustBe true
       contentAsString(result).contains(dynamicCredit) mustBe false
       contentAsString(result).contains(dynamicCompensation) mustBe false
+      contentAsString(result).contains("Continue to sign in") mustBe true
     }
 
     "must display correct dynamic content when only compensation is greater than 0" in {
@@ -169,6 +172,21 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
       contentAsString(result).contains(dynamicDebit) mustBe false
       contentAsString(result).contains(dynamicCredit) mustBe false
       contentAsString(result).contains(dynamicCompensation) mustBe true
+      contentAsString(result).contains("Continue to sign in") mustBe true
+    }
+
+    "must not display dynamic content when no totals are greater than 0 and hide continue button" in {
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
+
+      val result = returnResultFromBuiltApplication(calculationResult)
+
+      status(result) mustEqual OK
+
+      contentAsString(result).contains(dynamicDebit) mustBe false
+      contentAsString(result).contains(dynamicCredit) mustBe false
+      contentAsString(result).contains(dynamicCompensation) mustBe false
+      contentAsString(result).contains("Continue to sign in") mustBe false
     }
   }
   def readCalculationResult(calculationResponseFile: String): CalculationResponse = {

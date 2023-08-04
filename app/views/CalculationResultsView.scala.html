@@ -119,10 +119,12 @@
     }
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint5")</p>
 
-    @formHelper(action = routes.CalculationResultController.onSubmit(), Symbol("autoComplete") -> "off") {
-        @govukButton(
-            ButtonViewModel(messages("site.continueSignIn"))
-        )
+    @if(isInCredit || includeCompensation2015 || isInDebit) {
+        @formHelper(action = routes.CalculationResultController.onSubmit(), Symbol("autoComplete") -> "off") {
+            @govukButton(
+                ButtonViewModel(messages("site.continueSignIn"))
+            )
+        }
     }
 
 }
