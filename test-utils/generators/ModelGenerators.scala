@@ -22,6 +22,8 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  // scala fmt ignore
+
   implicit lazy val arbitraryPeriod: Arbitrary[Period] =
     Arbitrary {
       Gen.oneOf(
