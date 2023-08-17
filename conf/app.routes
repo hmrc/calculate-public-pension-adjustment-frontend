@@ -48,7 +48,7 @@ POST        /when-stop-paying-public-pension                                 con
 GET         /change-stop-paying-public-pension                               controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-stop-paying-public-pension                               controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = CheckMode)
 
-GET         /ineligible                                                      controllers.setupquestions.IneligibleController.onPageLoad
+GET         /cannot-use-service                                                      controllers.setupquestions.IneligibleController.onPageLoad
 
 GET         /reporting-change                                                controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = NormalMode)
 POST        /reporting-change                                                controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = NormalMode)

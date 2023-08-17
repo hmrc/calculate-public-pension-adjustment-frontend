@@ -98,7 +98,7 @@ savingsStatement.change.hidden = Change if you have been informed about Calculat
 resubmittingAdjustment.title = Are you resubmitting a public pension adjustment?
 resubmittingAdjustment.heading = Are you resubmitting a public pension adjustment?
 resubmittingAdjustment.checkYourAnswersLabel = Are you resubmitting a public pension adjustment?
-resubmittingAdjustment.error.required = You must select one of the options
+resubmittingAdjustment.error.required = You must select one of the optionsHave you been informed about using the calculate your public service pension adjustment?
 resubmittingAdjustment.change.hidden = Are you resubmitting a public pension adjustment?
 resubmittingAdjustment.hint = We are asking whether you are seeking an adjustment on your public service pension - either compensation or a tax charge.
 
@@ -111,14 +111,12 @@ reasonForResubmission.error.length = Your submission reason must be 500 characte
 reasonForResubmission.change.hidden = What is your reason for a resubmission?
 reasonForResubmission.hint = Provide the reason for your resubmission in the space below.
 
-ineligible.title = Check your eligibility
-ineligible.heading = Check your eligibility
-ineligible.message = You are currently unable to use the service.
-ineligible.message1 = Unless you have been contacted by HMRC or your Pension Scheme Administrator (PSA) stating you may have been affected by Public Service Pension Remediation, you cannot currently make a calculation.
+ineligible.title = You cannot use this service
+ineligible.heading = You cannot use this service
+ineligible.message1 = You cannot make an adjustment unless you have been contacted by HMRC or your pension scheme administrator (PSA).
 ineligible.message2 = You can:
-ineligible.message3 = You can also contact customer services for more information or alternatively, click the link below.
-ineligible.list = contact your PSA for further information
-ineligible.list1 = check if you are eligible or may have been affected, using the checker (opens in a new tab)
+ineligible.list = contact your PSA for more information about your pension scheme
+ineligible.list1 = contact the pension schemes helpline for more information about pension schemes (opens in a new tab)
 ineligible.redirect = Contact HMRC about pension schemes (opens in a new tab).
 
 reportingChange.title = What are you reporting?
