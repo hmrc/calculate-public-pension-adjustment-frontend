@@ -20,12 +20,13 @@ import base.SpecBase
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.{SectionGroupViewModel, SectionStatus, SectionViewModel, TaskListViewModel}
 import models.{ReportingChange, UserAnswers}
+import pages.behaviours.PageBehaviours
 import pages.setupquestions.ReportingChangePage
 import play.api.mvc.Call
 
 import scala.util.Try
 
-class TaskListServiceSpec extends SpecBase {
+class TaskListServiceSpec extends SpecBase with PageBehaviours {
 
   val taskListService: TaskListService = new TaskListService
 
@@ -101,9 +102,15 @@ class TaskListServiceSpec extends SpecBase {
       val allSectionsInAllGroups               = taskListViewModel.allGroups.flatMap(groupOption => groupOption.get.sections)
 
       allSectionsInAllGroups.foreach { sectionViewModel: SectionViewModel =>
-        sectionViewModel.status                       must not be null
+        sectionViewModel.status                       must (be(SectionStatus.NotStarted) or be(SectionStatus.CannotStartYet))
         sectionViewModel.name.startsWith("taskList.") must be(true)
-        sectionViewModel.call                         must not be null
+        sectionViewModel.call.url                     must (
+          include("/check-your-answers-setup") or
+            include("/had-benefit-crystallisation-event") or
+            include("/calculation-result") or
+            include("/scottish-taxpayer-from-2016") or
+            include("/what-you-will-need-aa")
+        )
       }
     }
   }

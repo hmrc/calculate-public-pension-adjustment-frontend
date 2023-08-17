@@ -17,13 +17,16 @@
 package models.tasklist
 
 import base.SpecBase
-import models.tasklist.sections.{PreAASection, SetupSection}
-import models.{Period, UserAnswers}
+import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
+import models.tasklist.sections.{NextStepsSection, PreAASection, SetupSection}
+import models.{Period, ReportingChange, UserAnswers}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page}
-import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
+import pages.behaviours.PageBehaviours
+import pages.setupquestions.{ReportingChangePage, ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.libs.json.Json
+import play.api.mvc.Call
 
-class SectionTest extends SpecBase {
+class SectionTest extends SpecBase with PageBehaviours {
 
   "Removing user answers from a section" - {
 
@@ -76,4 +79,108 @@ class SectionTest extends SpecBase {
       returnTo must be(PayingPublicPensionSchemePage)
     }
   }
+
+  "Next steps navigation" - {
+
+    "Must route to calculation result page when reporting a change that includes Annual Allowance details" in {
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+
+      val nextStepsTaskUrl = NextStepsSection.navigateTo(answers).url
+
+      checkNavigation(nextStepsTaskUrl, "/calculation-result")
+    }
+
+    "Must proceed to LTA submission when reporting a change that does not include Annual Allowance details" in {
+      val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+
+      val nextStepsTaskUrl = NextStepsSection.navigateTo(answers).url
+
+      checkNavigation(nextStepsTaskUrl, "/lta-submission")
+    }
+
+    "Must route to setup page when reporting change details have not been captured" in {
+      val nextStepsTaskUrl = NextStepsSection.navigateTo(emptyUserAnswers).url
+
+      checkNavigation(nextStepsTaskUrl, "/resubmitting-adjustment")
+    }
+  }
+
+  "Next steps section name" - {
+
+    "Must be 'Calculate' when reporting a change that includes Annual Allowance details" in {
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.calculate"
+    }
+
+    "Must be 'Continue to sign in' when reporting a change that does not include Annual Allowance details" in {
+      val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
+    }
+
+    "Must be 'Complete setup questions' when reporting change details have not been captured" in {
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(emptyUserAnswers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.setupRequired"
+    }
+  }
+
+  "Next steps section status" - {
+
+    "Must be 'Cannot start yet' if not all data capture sections are complete" in {
+      val dataCaptureSections = List(
+        Some(
+          SectionGroupViewModel(
+            1,
+            "heading",
+            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+          )
+        ),
+        Some(
+          SectionGroupViewModel(
+            1,
+            "heading",
+            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.InProgress, "id"))
+          )
+        ),
+        None
+      )
+
+      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections)
+      sectionStatus mustBe SectionStatus.CannotStartYet
+    }
+
+    "Must be 'Not started' if all specified data capture sections are complete" in {
+      val dataCaptureSections = List(
+        Some(
+          SectionGroupViewModel(
+            1,
+            "heading",
+            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+          )
+        ),
+        Some(
+          SectionGroupViewModel(
+            1,
+            "heading",
+            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+          )
+        ),
+        None
+      )
+
+      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections)
+      sectionStatus mustBe SectionStatus.NotStarted
+    }
+  }
+
 }

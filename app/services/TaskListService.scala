@@ -130,7 +130,7 @@ class TaskListService @Inject() (
       Seq(
         SectionViewModel(
           sectionNameOverride,
-          NextStepsSection.navigateTo(answers, dataCaptureSections),
+          NextStepsSection.navigateTo(answers),
           NextStepsSection.sectionStatus(dataCaptureSections),
           "next-steps-action",
           Some(sectionNameOverride)

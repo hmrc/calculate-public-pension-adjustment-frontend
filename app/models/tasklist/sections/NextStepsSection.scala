@@ -23,6 +23,7 @@ import pages.setupquestions.ReportingChangePage
 import play.api.mvc.Call
 
 case object NextStepsSection extends Section {
+
   def sectionStatus(dataCaptureSections: List[Option[SectionGroupViewModel]]): SectionStatus = {
     val allDataCaptureComplete: Boolean = dataCaptureSections.flatten.forall(_.isComplete)
 
@@ -33,18 +34,18 @@ case object NextStepsSection extends Section {
     }
   }
 
-  def navigateTo(answers: UserAnswers, dataCaptureSections: List[Option[SectionGroupViewModel]]): Call =
+  def navigateTo(answers: UserAnswers): Call =
     answers.get(ReportingChangePage) match {
-      case Some(rcs) if calculationRequired(rcs) => routes.CalculationResultController.onPageLoad()
-      case Some(_)                               => routes.SubmissionController.storeAndRedirect()
-      case None                                  => controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
+      case Some(rcs) if calculationRequired(rcs)  => routes.CalculationResultController.onPageLoad()
+      case Some(rcs) if !calculationRequired(rcs) => routes.SubmissionController.storeAndRedirect()
+      case _                                      => controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
     }
 
   def sectionNameOverride(answers: UserAnswers) =
     answers.get(ReportingChangePage) match {
-      case Some(rcs) if calculationRequired(rcs) => "taskList.nextSteps.calculate"
-      case Some(_)                               => "taskList.nextSteps.continueToSignIn"
-      case None                                  => "taskList.nextSteps.setupRequired"
+      case Some(rcs) if calculationRequired(rcs)  => "taskList.nextSteps.calculate"
+      case Some(rcs) if !calculationRequired(rcs) => "taskList.nextSteps.continueToSignIn"
+      case _                                      => "taskList.nextSteps.setupRequired"
     }
 
   private def calculationRequired(reportingChangeSet: Set[ReportingChange]): Boolean =
