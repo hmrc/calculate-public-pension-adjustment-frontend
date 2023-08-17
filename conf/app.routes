@@ -33,10 +33,10 @@ POST        /change-previous-adjustment                                      con
 GET         /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = CheckMode)
 
-GET         /reason-for-resubmission                                         controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = NormalMode)
-POST        /reason-for-resubmission                                         controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = NormalMode)
-GET         /change-reason-for-resubmission                                  controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-reason-for-resubmission                                  controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = CheckMode)
+GET         /change-reason                                                   controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = NormalMode)
+POST        /change-reason                                                   controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = NormalMode)
+GET         /change-change-reason                                            controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-change-reason                                            controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = CheckMode)
 
 GET         /paying-into-public-pension-scheme                               controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
 POST        /paying-into-public-pension-scheme                               controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = NormalMode)

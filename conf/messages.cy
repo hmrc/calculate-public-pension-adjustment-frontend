@@ -102,14 +102,13 @@ resubmittingAdjustment.error.required = cy: Select yes if you want to resubmit a
 resubmittingAdjustment.change.hidden = cy: Change if you want to resubmit an adjustment
 resubmittingAdjustment.hint = cy: We are asking whether you are seeking an adjustment on your public service pension - either compensation or a tax charge.
 
-reasonForResubmission.title = cy: What is your reason for a resubmission?
-reasonForResubmission.heading = cy: What is your reason for a resubmission?
-reasonForResubmission.label = cy: What is your reason for a resubmission?
-reasonForResubmission.checkYourAnswersLabel = cy: What is your reason for a resubmission?
-reasonForResubmission.error.required = cy: Enter your reason
-reasonForResubmission.error.length = cy: Your submission reason must be 500 characters or less
-reasonForResubmission.change.hidden = cy: What is your reason for a resubmission?
-reasonForResubmission.hint = cy: Provide the reason for your resubmission in the space below.
+reasonForResubmission.title = cy: Why do you want to resubmit an adjustment?
+reasonForResubmission.heading = cy: Why do you want to resubmit an adjustment?
+reasonForResubmission.label = cy: Why do you want to resubmit an adjustment?
+reasonForResubmission.checkYourAnswersLabel = cy: Reason for resubmitting an adjustment
+reasonForResubmission.error.required = cy: Enter the reason you want to resubmit an adjustment
+reasonForResubmission.error.length = cy: The reason you want to resubmit an adjustment must be 500 characters or fewer
+reasonForResubmission.change.hidden = cy: Change reason for changing previous adjustment
 
 ineligible.title = cy: You cannot use this service
 ineligible.heading = cy: You cannot use this service

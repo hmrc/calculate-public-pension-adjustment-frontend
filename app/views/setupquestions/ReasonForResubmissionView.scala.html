@@ -15,14 +15,14 @@
  *@
 
 @import viewmodels.InputWidth._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import controllers.setupquestions.routes
 
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
-    govukTextarea: GovukTextarea,
-    govukInput: GovukInput,
+    govukCharacterCount: GovukCharacterCount,
     govukButton: GovukButton
 )
 
@@ -35,16 +35,18 @@
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
-        
-        @govukTextarea(
-            TextareaViewModel(
-                field = form("value"),
-                label = LabelViewModel(messages("reasonForResubmission.heading")).asPageHeading()
+
+        @govukCharacterCount(
+            CharacterCount(
+                id = form("value").id,
+                name = form("value").name,
+                maxLength = Some(500),
+                label = LabelViewModel(messages("reasonForResubmission.heading")).asPageHeading(),
+                value = form("value").value,
+                errorMessage = form("value").error.map(error => ErrorMessage(content = error.format)),
+                threshold = Some(0)
                 )
-                .withRows(5)
-                .withAttribute("maxlength","500")
-                .withHint(HintViewModel(messages("reasonForResubmission.hint")))
-        )
+            )
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))
