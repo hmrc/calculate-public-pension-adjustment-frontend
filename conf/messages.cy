@@ -128,12 +128,12 @@ reportingChange.hint = cy: Select all options that apply
 reportingChange.checkYourAnswersLabel = cy: What are you reporting?
 reportingChange.change.hidden = cy: What are you reporting?
 
-scottishTaxpayerFrom2016.title = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
-scottishTaxpayerFrom2016.heading = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
-scottishTaxpayerFrom2016.hint = cy: Say if Scotland has been your main place of residence since April 2016.
-scottishTaxpayerFrom2016.checkYourAnswersLabel = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
-scottishTaxpayerFrom2016.error.required = cy: Select yes if you were ever a Scottish taxpayer from 6 April 2016 onwards
-scottishTaxpayerFrom2016.change.hidden = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
+scottishTaxpayerFrom2016.title = cy: Were you ever a Scottish taxpayer from 6 April 2016?
+scottishTaxpayerFrom2016.heading = cy: Were you ever a Scottish taxpayer from 6 April 2016?
+scottishTaxpayerFrom2016.message = cy: You would have been a Scottish taxpayer if Scotland was your main place of residence.
+scottishTaxpayerFrom2016.checkYourAnswersLabel = cy: Were you ever a Scottish taxpayer from 6 April 2016?
+scottishTaxpayerFrom2016.error.required = cy: Select yes if you were ever a Scottish taxpayer from 6 April 2016
+scottishTaxpayerFrom2016.change.hidden = cy: Change if you were ever a Scottish taxpayer from 6 April 2016
 
 whichYearsScottishTaxpayer.title = cy: In which years were you a Scottish taxpayer?
 whichYearsScottishTaxpayer.heading = cy: In which years were you a Scottish taxpayer?

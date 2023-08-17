@@ -55,10 +55,10 @@ POST        /reporting-change                                                con
 GET         /change-reporting-change                                         controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-reporting-change                                         controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = CheckMode)
 
-GET         /scottish-taxpayer-from-2016                                     controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = NormalMode)
-POST        /scottish-taxpayer-from-2016                                     controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = NormalMode)
-GET         /change-scottish-taxpayer-from-2016                              controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = CheckMode)
-POST        /change-scottish-taxpayer-from-2016                              controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = CheckMode)
+GET         /scottish-taxpayer                                               controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = NormalMode)
+POST        /scottish-taxpayer                                               controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = NormalMode)
+GET         /change-scottish-taxpayer                                        controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = CheckMode)
+POST        /change-scottish-taxpayer                                        controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = CheckMode)
 
 GET         /which-years-scottish-taxpayer                                   controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = NormalMode)
 POST        /which-years-scottish-taxpayer                                   controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = NormalMode)

@@ -1,4 +1,4 @@
-service.name = Calculate Public Pension Adjustment service
+service.name = Calculate your public service pension adjustment
 
 site.back = Back
 site.remove = Remove
@@ -128,12 +128,12 @@ reportingChange.hint = Select all options that apply
 reportingChange.checkYourAnswersLabel = What are you reporting?
 reportingChange.change.hidden = What are you reporting?
 
-scottishTaxpayerFrom2016.title = Were you ever a Scottish taxpayer from 6 April 2016 onwards?
-scottishTaxpayerFrom2016.heading = Were you ever a Scottish taxpayer from 6 April 2016 onwards?
-scottishTaxpayerFrom2016.hint = Say if Scotland has been your main place of residence since April 2016.
-scottishTaxpayerFrom2016.checkYourAnswersLabel = Were you ever a Scottish taxpayer from 6 April 2016 onwards?
-scottishTaxpayerFrom2016.error.required = Select yes if you were ever a Scottish taxpayer from 6 April 2016 onwards
-scottishTaxpayerFrom2016.change.hidden = Were you ever a Scottish taxpayer from 6 April 2016 onwards?
+scottishTaxpayerFrom2016.title = Were you ever a Scottish taxpayer from 6 April 2016?
+scottishTaxpayerFrom2016.heading = Were you ever a Scottish taxpayer from 6 April 2016?
+scottishTaxpayerFrom2016.message = You would have been a Scottish taxpayer if Scotland was your main place of residence.
+scottishTaxpayerFrom2016.checkYourAnswersLabel = Were you ever a Scottish taxpayer from 6 April 2016?
+scottishTaxpayerFrom2016.error.required = Select yes if you were ever a Scottish taxpayer from 6 April 2016
+scottishTaxpayerFrom2016.change.hidden = Change if you were ever a Scottish taxpayer from 6 April 2016
 
 whichYearsScottishTaxpayer.title = In which years were you a Scottish taxpayer?
 whichYearsScottishTaxpayer.heading = In which years were you a Scottish taxpayer?
