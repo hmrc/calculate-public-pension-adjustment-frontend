@@ -118,16 +118,15 @@ ineligible.list = cy: contact your PSA for more information about your pension s
 ineligible.list1 = cy: contact the pension schemes helpline for more information about pension schemes (opens in a new tab)
 ineligible.redirect = cy: Contact HMRC about pension schemes (opens in a new tab).
 
-reportingChange.title = cy: What are you reporting?
-reportingChange.heading = cy: What are you reporting?
-reportingChange.error.required = cy: You must select at least one of the options
+reportingChange.title = cy: Which tax charges would you like adjusted?
+reportingChange.heading = cy: Which tax charges would you like adjusted?
+reportingChange.error.required = cy: Select which charges you would like adjusted
 reportingChange.annualAllowance = cy: Annual allowance
 reportingChange.lifetimeAllowance = cy: Lifetime allowance
-reportingChange.annualAllowance.hint = cy: If you have paid annual allowance charges during the remedy period, you may be eligible for direct and/or indirect compensation or need to report a tax adjustment.
-reportingChange.lifetimeAllowance.hint = cy: If you have paid lifetime allowance charges during the remedy period, you may be eligible for direct compensation or need to report a tax adjustment.
-reportingChange.hint = cy: Select all options that apply
-reportingChange.checkYourAnswersLabel = cy: What are you reporting?
-reportingChange.change.hidden = cy: What are you reporting?
+reportingChange.hint = cy: Select all that apply.
+reportingChange.paragraph = cy: You may be able to claim tax back if you paid any of these charges during the remedy period.
+reportingChange.checkYourAnswersLabel = cy: Charges to be adjusted
+reportingChange.change.hidden = cy: Change charges to be adjusted
 
 scottishTaxpayerFrom2016.title = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
 scottishTaxpayerFrom2016.heading = cy: Were you ever a Scottish taxpayer from 6 April 2016 onwards?
