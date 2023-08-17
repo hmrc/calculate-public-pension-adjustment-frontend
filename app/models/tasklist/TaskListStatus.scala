@@ -22,8 +22,10 @@ final case class TaskListStatus(sectionStatus: SectionStatus, messages: Messages
 
   override def toString(): String =
     sectionStatus match {
-      case SectionStatus.NotStarted => messages("taskList.status.notStarted")
-      case SectionStatus.InProgress => messages("taskList.status.inProgress")
-      case SectionStatus.Completed  => messages("taskList.status.completed")
+      case SectionStatus.NotStarted     => messages("taskList.status.notStarted")
+      case SectionStatus.InProgress     => messages("taskList.status.inProgress")
+      case SectionStatus.Completed      => messages("taskList.status.completed")
+      case SectionStatus.CannotStartYet => messages("taskList.status.cannotStartYet")
+
     }
 }

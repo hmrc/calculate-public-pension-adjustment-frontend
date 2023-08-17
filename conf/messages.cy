@@ -278,9 +278,8 @@ taskList.complete = cy: Application complete
 taskList.status.notStarted = cy: Not started
 taskList.status.inProgress = cy: In progress
 taskList.status.completed = cy: Completed
+taskList.status.cannotStartYet = cy: Cannot start yet
 taskList.completedSections = cy: You’ve completed {0} of {1} sections.
-taskList.calculateAnswers = cy: Calculate your answers
-taskList.compensationOrTaxCharge = cy: Your results could be compensation or new tax charges that you will have to pay.
 taskList.calculate = cy: Calculate
 taskList.instructions = cy: To complete your calculation, you will need to have details for what you are reporting.
 taskList.setup.groupHeading = cy: Setup questions
@@ -305,6 +304,11 @@ taskList.lta.sectionName = cy: details of your events
 taskList.admin.sectionName = cy: details of any fees for help with your pension
 tasklist.calculationSuccess = cy: Your calculation will be available soon.
 tasklist.error.tasksToComplete = cy: You have tasks that you need to complete
+
+taskList.nextSteps.groupHeading = cy: Next steps
+taskList.nextSteps.calculate = cy: Calculate
+taskList.nextSteps.continueToSignIn = cy: Continue to sign in
+taskList.nextSteps.setupRequired = cy: Complete setup questions
 
 ltaProtectionOrEnhancements.title = cy: Do you have lifetime allowance protection or enhancements?
 ltaProtectionOrEnhancements.heading = cy: Do you have lifetime allowance protection or enhancements?

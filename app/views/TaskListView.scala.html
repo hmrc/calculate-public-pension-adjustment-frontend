@@ -16,13 +16,14 @@
 
 @import models.tasklist.TaskListViewModel
 @import models.tasklist.TaskListStatus
+@import models.tasklist.SectionStatus
+
 @this(
         layout: templates.Layout,
         formHelper: FormWithCSRF,
         govukButton: GovukButton,
         govukErrorSummary: GovukErrorSummary,
 )
-
 
 @(form: Form[_], taskListViewModel: TaskListViewModel)(implicit request: Request[_], messages: Messages)
 
@@ -62,11 +63,13 @@
                     @group.get.sections.map { section =>
                         <li class="app-task-list__item">
                             <span class="app-task-list__task-name">
-                                <a href="@section.call.url" class="govuk-link" aria-describedby="@section.id">@messages(s"taskList.${section.status.toString}") @messages(section.name)</a>
+                                @if(section.status == SectionStatus.CannotStartYet) {
+                                   @section.label(messages)
+                                } else {
+                                    <a href="@section.call.url" class="govuk-link" aria-describedby="@section.id">@section.label(messages)</a>
+                                }
                             </span>
-                            <span class="hmrc-status-tag" id="@section.id">
-                            @TaskListStatus(section.status, messages)
-                            </span>
+                            <span class="hmrc-status-tag" id="@section.id">@TaskListStatus(section.status, messages)</span>
                         </li>
                     }
                     </ul>
@@ -74,22 +77,5 @@
             </ol>
 
         }
-    }
-
-    <h2 class="govuk-heading-m">@messages("taskList.calculateAnswers")</h2>
-    <p class="govuk-body">@messages("taskList.compensationOrTaxCharge")</p>
-
-    @formHelper(action = routes.TaskListController.onSubmit(), Symbol("autoComplete") -> "off") {
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value_0")))
-        }
-
-        @govukButton(
-            ButtonViewModel(messages("taskList.calculate"))
-        )
-    }
-
-    @if(taskListViewModel.calculationResult.isDefined) {
-        <h2 class="govuk-heading-m">@messages(taskListViewModel.calculationResult.get)</h2>
     }
 }

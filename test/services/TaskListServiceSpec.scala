@@ -115,9 +115,10 @@ class TaskListServiceSpec extends SpecBase {
         Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.NotStarted, "id"))
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", section)
 
-      val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, Some(sectionGroup), None, None)
+      val taskListViewModel: TaskListViewModel =
+        TaskListViewModel(sectionGroup, Some(sectionGroup), None, SectionGroupViewModel(1, "heading", Seq()))
 
-      taskListViewModel.groupCount must be(2)
+      taskListViewModel.groupCount must be(3)
     }
 
     "completed group count should be correct when a group with a single section is complete" in {
@@ -125,10 +126,10 @@ class TaskListServiceSpec extends SpecBase {
         Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id"))
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
 
-      val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, None)
+      val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
 
-      taskListViewModel.groupCount          must be(1)
-      taskListViewModel.completedGroupCount must be(1)
+      taskListViewModel.groupCount          must be(2)
+      taskListViewModel.completedGroupCount must be(2)
     }
 
     "completed group count should be correct for a group with multiple sections of which only one is complete" in {
@@ -139,9 +140,9 @@ class TaskListServiceSpec extends SpecBase {
 
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
 
-      val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, None)
+      val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
 
-      taskListViewModel.groupCount          must be(1)
+      taskListViewModel.groupCount          must be(2)
       taskListViewModel.completedGroupCount must be(0)
     }
 
@@ -153,10 +154,10 @@ class TaskListServiceSpec extends SpecBase {
 
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
 
-      val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, None)
+      val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
 
-      taskListViewModel.groupCount          must be(1)
-      taskListViewModel.completedGroupCount must be(1)
+      taskListViewModel.groupCount          must be(2)
+      taskListViewModel.completedGroupCount must be(2)
     }
 
     "all counts should be correct when some sections are complete and some are incomplete " in {
@@ -175,9 +176,9 @@ class TaskListServiceSpec extends SpecBase {
       val incompleteSectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", incompleteSections)
 
       val taskListViewModel: TaskListViewModel =
-        TaskListViewModel(sectionGroup, Some(incompleteSectionGroup), None, None)
+        TaskListViewModel(sectionGroup, Some(incompleteSectionGroup), None, incompleteSectionGroup)
 
-      taskListViewModel.groupCount          must be(2)
+      taskListViewModel.groupCount          must be(3)
       taskListViewModel.completedGroupCount must be(1)
     }
   }

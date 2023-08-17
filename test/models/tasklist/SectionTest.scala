@@ -17,6 +17,7 @@
 package models.tasklist
 
 import base.SpecBase
+import models.tasklist.sections.{PreAASection, SetupSection}
 import models.{Period, UserAnswers}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page}
 import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
@@ -71,7 +72,7 @@ class SectionTest extends SpecBase {
       val userAnswers: UserAnswers =
         emptyUserAnswers.set(ScottishTaxpayerFrom2016Page, false).get.set(PayingPublicPensionSchemePage, true).get
 
-      val returnTo = PreAASection.returnTo(userAnswers)
+      val returnTo = PreAASection.navigateTo(userAnswers)
       returnTo must be(PayingPublicPensionSchemePage)
     }
   }

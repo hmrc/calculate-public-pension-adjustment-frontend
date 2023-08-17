@@ -27,7 +27,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.TaskListView
 
 import javax.inject.Inject
-import scala.concurrent.Future
 
 class TaskListController @Inject() (
   override val messagesApi: MessagesApi,
@@ -45,14 +44,5 @@ class TaskListController @Inject() (
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
     Ok(view(form, taskListViewModel))
-  }
-
-  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
-    val allTasksCompleted: Boolean           = taskListViewModel.completedGroupCount == taskListViewModel.groupCount
-    if (!allTasksCompleted)
-      Future.successful(BadRequest(view(form.withGlobalError("tasklist.error.tasksToComplete"), taskListViewModel)))
-    else
-      Future.successful(Redirect(routes.CalculationResultController.onPageLoad()))
   }
 }
