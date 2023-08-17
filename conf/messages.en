@@ -149,11 +149,13 @@ whichYearsScottishTaxpayer.checkYourAnswersLabel = Tax years you were a Scottish
 whichYearsScottishTaxpayer.error.required = Select which tax years you were a Scottish taxpayer
 whichYearsScottishTaxpayer.change.hidden = Change which tax years you were a Scottish taxpayer
 
-payingPublicPensionScheme.title = Are you paying into a public service pension scheme?
-payingPublicPensionScheme.heading = Are you paying into a public service pension scheme?
-payingPublicPensionScheme.hint = You must enter information for each year of your pension scheme.
-payingPublicPensionScheme.error.required = Select yes if you are paying into a public service pension scheme
-payingPublicPensionScheme.checkYourAnswersLabel = Are you paying into a public service pension scheme?
+payingPublicPensionScheme.title = Are you still paying into or increasing a public service pension scheme?
+payingPublicPensionScheme.heading = Are you still paying into or increasing a public service pension scheme?
+payingPublicPensionScheme.message = This includes if you are a member of a non-contributory public pension scheme.
+payingPublicPensionScheme.caption = Annual allowance
+payingPublicPensionScheme.error.required = Select yes if you are still paying into a public service pension scheme
+payingPublicPensionScheme.checkYourAnswersLabel = Are you still paying into a public service pension scheme?
+payingPublicPensionScheme.change.hidden = Change if you are still paying into a public service pension scheme
 
 stopPayingPublicPension.title = When did you stop paying into a public service pension scheme?
 stopPayingPublicPension.heading = When did you stop paying into a public service pension scheme?

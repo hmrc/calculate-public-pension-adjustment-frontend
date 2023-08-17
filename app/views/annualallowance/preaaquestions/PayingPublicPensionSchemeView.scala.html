@@ -26,6 +26,12 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+
+<p class="govuk-body">@messages("payingPublicPensionScheme.message")</p>
+
+}
+
 @layout(pageTitle = title(form, messages("payingPublicPensionScheme.title"))) {
 
     @formHelper(action = routes.PayingPublicPensionSchemeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
@@ -37,8 +43,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("payingPublicPensionScheme.heading")).asPageHeading()
-            ).withHint(HintViewModel(messages("payingPublicPensionScheme.hint")))
+                legend = HmrcPageHeadingLegend(
+                    content = messages("payingPublicPensionScheme.heading"),
+                    caption = HmrcSectionCaption(messages("payingPublicPensionScheme.caption")))
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

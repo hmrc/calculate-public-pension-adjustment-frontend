@@ -43,10 +43,10 @@ POST        /annual-allowance/paying-into-public-pension-scheme              con
 GET         /annual-allowance/change-paying-into-public-pension-scheme       controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
 POST        /annual-allowance/change-paying-into-public-pension-scheme       controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = CheckMode)
 
-GET         /when-stop-paying-public-pension                                 controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = NormalMode)
-POST        /when-stop-paying-public-pension                                 controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = NormalMode)
-GET         /change-stop-paying-public-pension                               controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-stop-paying-public-pension                               controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/stopped-paying-into-public-service-pension          controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/stopped-paying-into-public-service-pension          controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-stopped-paying-into-public-service-pension   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-stopped-paying-into-public-service-pension   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = CheckMode)
 
 GET         /ineligible                                                      controllers.setupquestions.IneligibleController.onPageLoad
 
