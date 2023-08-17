@@ -38,7 +38,9 @@
             CheckboxesViewModel(
                 form   = form,
                 name   = "value",
-                legend = LegendViewModel(messages("whichYearsScottishTaxpayer.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("whichYearsScottishTaxpayer.heading"),
+                    caption = HmrcSectionCaption(messages("annualAllowance.caption"))),
                 items  = WhichYearsScottishTaxpayer.checkboxItems
             ).withHint(HintViewModel(messages("whichYearsScottishTaxpayer.hint")))
         )

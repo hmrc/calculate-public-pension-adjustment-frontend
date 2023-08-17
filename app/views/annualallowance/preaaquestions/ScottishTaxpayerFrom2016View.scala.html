@@ -43,7 +43,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("scottishTaxpayerFrom2016.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("scottishTaxpayerFrom2016.heading"),
+                    caption = HmrcSectionCaption(messages("annualAllowance.caption"))
+                )
             ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
