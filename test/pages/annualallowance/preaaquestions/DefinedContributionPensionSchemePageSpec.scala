@@ -39,7 +39,7 @@ class DefinedContributionPensionSchemePageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/have-flexibly-accessed-pension")
+        check(nextPageUrl, "/annual-allowance/flexibly-accessed")
       }
 
       "next page should be PayTaxCharge1516Page when user does not have a DC pension" in {
@@ -58,7 +58,7 @@ class DefinedContributionPensionSchemePageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(CheckMode, userAnswers)
 
-        check(nextPageUrl, "/change-have-flexibly-accessed-pension")
+        check(nextPageUrl, "/annual-allowance/change-flexibly-accessed")
       }
 
       "next page should be PayTaxCharge1516Page when user does not have a DC pension" in {

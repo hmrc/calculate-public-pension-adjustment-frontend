@@ -177,15 +177,15 @@ definedContributionPensionScheme.bullet2 = cy: private pensions arranged by you
 definedContributionPensionScheme.error.required = cy: Select yes if you have a defined contribution pension scheme
 definedContributionPensionScheme.change.hidden = cy: Change if you have a defined contribution pension scheme
 
-flexiblyAccessedPension.title = cy: Have you flexibly accessed your defined contribution pension savings?
-flexiblyAccessedPension.heading = cy: Have you flexibly accessed your defined contribution pension savings?
-flexiblyAccessedPension.checkYourAnswersLabel = cy: Have you flexibly accessed your defined contribution pension savings?
-flexiblyAccessedPension.hint = cy: Pension drawdown is when you take money out a pension after the age of 55.
-flexiblyAccessedPension.detailsContent = cy: You can flexibly access your pension, only if your scheme lets you. For example, this could be:
-flexiblyAccessedPension.detailsPoint1 = cy: when you take money out of your scheme
-flexiblyAccessedPension.detailsPoint2 = cy: if you convert pension savings that you had before April 2015 into a drawdown fund
-flexiblyAccessedPension.error.required = cy: Select yes if you have flexibly accessed your defined contribution pension savings
-flexiblyAccessedPension.change.hidden = cy: Have you flexibly accessed your defined contribution pension savings?
+flexiblyAccessedPension.title = cy: Have you flexibly accessed your defined contribution pension?
+flexiblyAccessedPension.heading = cy: Have you flexibly accessed your defined contribution pension?
+flexiblyAccessedPension.checkYourAnswersLabel = cy: Have you flexibly accessed your defined contribution pension?
+flexiblyAccessedPension.message1 = cy: Flexible access is when you take money out of a pension scheme, after the age of 55.
+flexiblyAccessedPension.message2 = cy: You can only flexibly access your pension if your scheme allows you. For example, this could be:
+flexiblyAccessedPension.bullet1 = cy: when you take money out of your scheme
+flexiblyAccessedPension.bullet2 = cy: if you convert pension savings that you had before April 2015 into a drawdown fund
+flexiblyAccessedPension.error.required = cy: Select yes if you have flexibly accessed your defined contribution pension
+flexiblyAccessedPension.change.hidden = cy: Change if you have flexibly accessed your defined contribution pension
 
 flexibleAccessStartDate.title = cy: When did you start flexibly accessing defined contribution pension savings?
 flexibleAccessStartDate.heading = cy: When did you start flexibly accessing defined contribution pension savings?
