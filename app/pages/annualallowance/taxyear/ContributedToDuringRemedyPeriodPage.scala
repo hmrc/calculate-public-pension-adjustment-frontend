@@ -55,7 +55,7 @@ case class ContributedToDuringRemedyPeriodPage(period: Period)
       case Some(contributions)
           if contributions.contains(Definedcontribution) && contributions.contains(Definedbenefit) =>
         bothSelected(answers)
-      case None =>
+      case _ =>
         routes.JourneyRecoveryController.onPageLoad(None)
     }
 
