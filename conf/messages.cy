@@ -95,11 +95,11 @@ savingsStatement.error.required = cy: Select yes if you have been told about the
 savingsStatement.checkYourAnswersLabel = cy: Have you been informed about using the calculate your public service pension adjustment?
 savingsStatement.change.hidden = cy: Change if you have been informed about Calculate your public service pension adjustment
 
-resubmittingAdjustment.title = cy: Are you resubmitting a public pension adjustment?
-resubmittingAdjustment.heading = cy: Are you resubmitting a public pension adjustment?
-resubmittingAdjustment.checkYourAnswersLabel = cy: Are you resubmitting a public pension adjustment?
-resubmittingAdjustment.error.required = cy: You must select one of the options
-resubmittingAdjustment.change.hidden = cy: Are you resubmitting a public pension adjustment?
+resubmittingAdjustment.title = cy: Do you want to resubmit an adjustment?
+resubmittingAdjustment.heading = cy: Do you want to resubmit an adjustment?
+resubmittingAdjustment.checkYourAnswersLabel = cy: Do you want to resubmit an adjustment?
+resubmittingAdjustment.error.required = cy: Select yes if you want to resubmit an adjustment
+resubmittingAdjustment.change.hidden = cy: Change if you want to resubmit an adjustment
 resubmittingAdjustment.hint = cy: We are asking whether you are seeking an adjustment on your public service pension - either compensation or a tax charge.
 
 reasonForResubmission.title = cy: What is your reason for a resubmission?
