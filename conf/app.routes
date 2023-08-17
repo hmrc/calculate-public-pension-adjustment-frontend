@@ -28,10 +28,10 @@ POST        /pension-saving-statement                                        con
 GET         /change-pension-saving-statement                                 controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-pension-saving-statement                                 controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = CheckMode)
 
-GET         /resubmitting-adjustment                                         controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = NormalMode)
-POST        /resubmitting-adjustment                                         controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = NormalMode)
-GET         /change-resubmitting-adjustment                                  controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-resubmitting-adjustment                                  controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = CheckMode)
+GET         /change-previous-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = NormalMode)
+POST        /change-previous-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = NormalMode)
+GET         /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = CheckMode)
 
 GET         /reason-for-resubmission                                         controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = NormalMode)
 POST        /reason-for-resubmission                                         controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = NormalMode)
