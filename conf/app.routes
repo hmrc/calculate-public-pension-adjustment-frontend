@@ -60,10 +60,10 @@ POST        /scottish-taxpayer                                               con
 GET         /change-scottish-taxpayer                                        controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = CheckMode)
 POST        /change-scottish-taxpayer                                        controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = CheckMode)
 
-GET         /which-years-scottish-taxpayer                                   controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = NormalMode)
-POST        /which-years-scottish-taxpayer                                   controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = NormalMode)
-GET         /change-which-years-scottish-taxpayer                            controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-which-years-scottish-taxpayer                            controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = CheckMode)
+GET         /scottish-taxpayer-years                                        controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = NormalMode)
+POST        /scottish-taxpayer-years                                        controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = NormalMode)
+GET         /change-scottish-taxpayer-years                                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-scottish-taxpayer-years                                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = CheckMode)
 
 GET         /have-defined-contribution-pension                               controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
 POST        /have-defined-contribution-pension                               controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = NormalMode)
