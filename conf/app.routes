@@ -23,20 +23,20 @@ GET         /account/signed-out                                                 
 
 GET         /unauthorised                                                        controllers.UnauthorisedController.onPageLoad()
 
-GET         /savings-statement                                                   controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
-POST        /savings-statement                                                   controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
-GET         /change-savings-statement                                            controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-savings-statement                                            controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = CheckMode)
+GET         /pension-saving-statement                                        controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
+POST        /pension-saving-statement                                        controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
+GET         /change-pension-saving-statement                                 controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-pension-saving-statement                                 controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = CheckMode)
 
-GET         /resubmitting-adjustment                                             controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = NormalMode)
-POST        /resubmitting-adjustment                                             controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = NormalMode)
-GET         /change-resubmitting-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-resubmitting-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = CheckMode)
+GET         /change-previous-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = NormalMode)
+POST        /change-previous-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = NormalMode)
+GET         /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = CheckMode)
 
-GET         /reason-for-resubmission                                             controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = NormalMode)
-POST        /reason-for-resubmission                                             controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = NormalMode)
-GET         /change-reason-for-resubmission                                      controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-reason-for-resubmission                                      controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = CheckMode)
+GET         /change-reason                                                   controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = NormalMode)
+POST        /change-reason                                                   controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = NormalMode)
+GET         /change-change-reason                                            controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-change-reason                                            controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = CheckMode)
 
 GET         /paying-into-public-pension-scheme                                   controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
 POST        /paying-into-public-pension-scheme                                   controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = NormalMode)
@@ -48,12 +48,12 @@ POST        /when-stop-paying-public-pension                                    
 GET         /change-stop-paying-public-pension                                   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-stop-paying-public-pension                                   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = CheckMode)
 
-GET         /ineligible                                                          controllers.setupquestions.IneligibleController.onPageLoad
+GET         /cannot-use-service                                              controllers.setupquestions.IneligibleController.onPageLoad
 
-GET         /reporting-change                                                    controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = NormalMode)
-POST        /reporting-change                                                    controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = NormalMode)
-GET         /change-reporting-change                                             controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-reporting-change                                             controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = CheckMode)
+GET         /charges                                                         controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = NormalMode)
+POST        /charges                                                         controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = NormalMode)
+GET         /change-charges                                                  controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-charges                                                  controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = CheckMode)
 
 GET         /scottish-taxpayer-from-2016                                         controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = NormalMode)
 POST        /scottish-taxpayer-from-2016                                         controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = NormalMode)

@@ -26,6 +26,18 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+
+    <p class="govuk-body">@messages("savingsStatement.paragraph")</p>
+
+    <ul class="govuk-body">
+        <li>@messages("savingsStatement.bullet.1")</li>
+        <li>@messages("savingsStatement.bullet.2")</li>
+        <li>@messages("savingsStatement.bullet.3")</li>
+    </ul>
+
+}
+
 @layout(pageTitle = title(form, messages("savingsStatement.title"))) {
 
     @formHelper(action = routes.SavingsStatementController.onSubmit(mode), Symbol("autoComplete") -> "off") {
@@ -37,9 +49,11 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("savingsStatement.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("savingsStatement.heading")
             )
-        )
+        ).withHint(HintViewModel(HtmlContent(contentHint)))
+    )
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))
