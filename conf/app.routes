@@ -38,10 +38,10 @@ POST        /reason-for-resubmission                                         con
 GET         /change-reason-for-resubmission                                  controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-reason-for-resubmission                                  controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = CheckMode)
 
-GET         /paying-into-public-pension-scheme                               controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
-POST        /paying-into-public-pension-scheme                               controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = NormalMode)
-GET         /change-paying-into-public-pension-scheme                        controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-paying-into-public-pension-scheme                        controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/paying-into-public-service-pension             controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/paying-into-public-pension-scheme              controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-paying-into-public-pension-scheme       controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-paying-into-public-pension-scheme       controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = CheckMode)
 
 GET         /when-stop-paying-public-pension                                 controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = NormalMode)
 POST        /when-stop-paying-public-pension                                 controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = NormalMode)
@@ -55,15 +55,15 @@ POST        /reporting-change                                                con
 GET         /change-reporting-change                                         controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-reporting-change                                         controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = CheckMode)
 
-GET         /scottish-taxpayer                                               controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = NormalMode)
-POST        /scottish-taxpayer                                               controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = NormalMode)
-GET         /change-scottish-taxpayer                                        controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = CheckMode)
-POST        /change-scottish-taxpayer                                        controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/scottish-taxpayer                              controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/scottish-taxpayer                              controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-scottish-taxpayer                       controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-scottish-taxpayer                       controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = CheckMode)
 
-GET         /scottish-taxpayer-years                                        controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = NormalMode)
-POST        /scottish-taxpayer-years                                        controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = NormalMode)
-GET         /change-scottish-taxpayer-years                                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-scottish-taxpayer-years                                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/scottish-taxpayer-years                        controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/scottish-taxpayer-years                        controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-scottish-taxpayer-years                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-scottish-taxpayer-years                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = CheckMode)
 
 GET         /have-defined-contribution-pension                               controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
 POST        /have-defined-contribution-pension                               controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = NormalMode)
