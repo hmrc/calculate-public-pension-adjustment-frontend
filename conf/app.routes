@@ -12,16 +12,16 @@ GET         /refresh-session                                                    
 
 GET         /there-is-a-problem                                                  controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
-GET         /check-your-answers-setup                                            controllers.setupquestions.CheckYourSetupAnswersController.onPageLoad()
-GET         /check-your-answers-annual-allowance-setup                           controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad()
-GET         /check-your-lta-answers                                              controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad()
-GET         /check-your-answers-period/:period                                   controllers.annualallowance.taxyear.CheckYourAAPeriodAnswersController.onPageLoad(period:Period)
+GET         /check-your-answers-setup                                        controllers.setupquestions.CheckYourSetupAnswersController.onPageLoad()
+GET         /annual-allowance/setup-check-answers                            controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad()
+GET         /check-your-lta-answers                                          controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad()
+GET         /check-your-answers-period/:period                               controllers.annualallowance.taxyear.CheckYourAAPeriodAnswersController.onPageLoad(period:Period)
 
-GET         /account/sign-out-survey                                             controllers.auth.AuthController.signOut()
-GET         /account/sign-out                                                    controllers.auth.AuthController.signOutNoSurvey()
-GET         /account/signed-out                                                  controllers.auth.SignedOutController.onPageLoad()
+GET         /account/sign-out-survey                                         controllers.auth.AuthController.signOut()
+GET         /account/sign-out                                                controllers.auth.AuthController.signOutNoSurvey()
+GET         /account/signed-out                                              controllers.auth.SignedOutController.onPageLoad()
 
-GET         /unauthorised                                                        controllers.UnauthorisedController.onPageLoad()
+GET         /unauthorised                                                    controllers.UnauthorisedController.onPageLoad()
 
 GET         /pension-saving-statement                                        controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
 POST        /pension-saving-statement                                        controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
@@ -38,15 +38,15 @@ POST        /change-reason                                                   con
 GET         /change-change-reason                                            controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-change-reason                                            controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = CheckMode)
 
-GET         /paying-into-public-pension-scheme                                   controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
-POST        /paying-into-public-pension-scheme                                   controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = NormalMode)
-GET         /change-paying-into-public-pension-scheme                            controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-paying-into-public-pension-scheme                            controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/paying-into-public-service-pension             controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/paying-into-public-service-pension             controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-paying-into-public-service-pension      controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-paying-into-public-service-pension      controllers.annualallowance.preaaquestions.PayingPublicPensionSchemeController.onSubmit(mode: Mode = CheckMode)
 
-GET         /when-stop-paying-public-pension                                     controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = NormalMode)
-POST        /when-stop-paying-public-pension                                     controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = NormalMode)
-GET         /change-stop-paying-public-pension                                   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-stop-paying-public-pension                                   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/stopped-paying-into-public-service-pension          controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/stopped-paying-into-public-service-pension          controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-stopped-paying-into-public-service-pension   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-stopped-paying-into-public-service-pension   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = CheckMode)
 
 GET         /cannot-use-service                                              controllers.setupquestions.IneligibleController.onPageLoad
 
@@ -55,35 +55,35 @@ POST        /charges                                                         con
 GET         /change-charges                                                  controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-charges                                                  controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = CheckMode)
 
-GET         /scottish-taxpayer-from-2016                                         controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = NormalMode)
-POST        /scottish-taxpayer-from-2016                                         controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = NormalMode)
-GET         /change-scottish-taxpayer-from-2016                                  controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = CheckMode)
-POST        /change-scottish-taxpayer-from-2016                                  controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/scottish-taxpayer                              controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/scottish-taxpayer                              controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-scottish-taxpayer                       controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-scottish-taxpayer                       controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = CheckMode)
 
-GET         /which-years-scottish-taxpayer                                       controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = NormalMode)
-POST        /which-years-scottish-taxpayer                                       controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = NormalMode)
-GET         /change-which-years-scottish-taxpayer                                controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-which-years-scottish-taxpayer                                controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/scottish-taxpayer-years                        controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/scottish-taxpayer-years                        controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-scottish-taxpayer-years                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-scottish-taxpayer-years                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = CheckMode)
 
-GET         /have-defined-contribution-pension                                   controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
-POST        /have-defined-contribution-pension                                   controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = NormalMode)
-GET         /change-have-defined-contribution-pension                            controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-have-defined-contribution-pension                            controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/defined-contributions-scheme                   controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/defined-contributions-scheme                   controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-defined-contributions-scheme            controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-defined-contributions-scheme            controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = CheckMode)
 
-GET         /when-flexibly-access-pension                                        controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onPageLoad(mode: Mode = NormalMode)
-POST        /when-flexibly-access-pension                                        controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onSubmit(mode: Mode = NormalMode)
-GET         /change-when-flexibly-access-pension                                 controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-when-flexibly-access-pension                                 controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/flexibly-accessed-date                         controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/flexibly-accessed-date                         controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-flexibly-accessed-date                  controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-flexibly-accessed-date                  controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onSubmit(mode: Mode = CheckMode)
 
-GET         /have-flexibly-accessed-pension                                      controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = NormalMode)
-POST        /have-flexibly-accessed-pension                                      controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = NormalMode)
-GET         /change-have-flexibly-accessed-pension                               controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-have-flexibly-accessed-pension                               controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/flexibly-accessed                              controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/flexibly-accessed                              controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-flexibly-accessed                       controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-flexibly-accessed                       controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = CheckMode)
 
-GET         /pay-tax-charge-from2015-2016                                        controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onPageLoad(mode: Mode = NormalMode)
-POST        /pay-tax-charge-from2015-2016                                        controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onSubmit(mode: Mode = NormalMode)
-GET         /change-pay-tax-charge-from2015-2016                                 controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onPageLoad(mode: Mode = CheckMode)
-POST        /change-pay-tax-charge-from2015-2016                                 controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/tax-charge-between-2015-2016                   controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/tax-charge-between-2015-2016                   controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-tax-charge-between-2015-2016            controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-tax-charge-between-2015-2016            controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onSubmit(mode: Mode = CheckMode)
 
 GET         /what-you-will-need-lta                                              controllers.lifetimeallowance.WhatYouWillNeedLtaController.onPageLoad()
 
@@ -109,10 +109,10 @@ POST        /percentage-caused-change-in-charge                                 
 GET         /change-percentage-caused-change-in-charge                           controllers.lifetimeallowance.ChangeInTaxChargeController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-percentage-caused-change-in-charge                           controllers.lifetimeallowance.ChangeInTaxChargeController.onSubmit(mode: Mode = CheckMode)
 
-GET         /pia-pre-remedy/:period                                              controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = NormalMode, period: Period)
-POST        /pia-pre-remedy/:period                                              controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = NormalMode, period: Period)
-GET         /change-pia-pre-remedy/:period                                       controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = CheckMode, period: Period)
-POST        /change-pia-pre-remedy/:period                                       controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = CheckMode, period: Period)
+GET         /annual-allowance/pension-input-amount/:period                   controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = NormalMode, period: Period)
+POST        /annual-allowance/pension-input-amount/:period                   controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = NormalMode, period: Period)
+GET         /annual-allowance/change-pension-input-amount/:period            controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = CheckMode, period: Period)
+POST        /annual-allowance/change-pension-input-amount/:period            controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = CheckMode, period: Period)
 
 GET         /lta-protection-or-enhancements                                      controllers.lifetimeallowance.LtaProtectionOrEnhancementsController.onPageLoad(mode: Mode = NormalMode)
 POST        /lta-protection-or-enhancements                                      controllers.lifetimeallowance.LtaProtectionOrEnhancementsController.onSubmit(mode: Mode = NormalMode)

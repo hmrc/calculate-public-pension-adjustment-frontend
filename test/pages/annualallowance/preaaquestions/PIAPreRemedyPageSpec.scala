@@ -37,7 +37,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2013).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/pia-pre-remedy/2014")
+        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2014")
       }
 
       "next page should be PIAPreRemedy capture for 2014-2015 when this page is for 2013-2014" in {
@@ -45,7 +45,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2014).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/pia-pre-remedy/2015")
+        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2015")
       }
 
       "next page should be CheckYourAnswers when this page is for 2014-2015" in {
@@ -53,7 +53,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2015).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/check-your-answers-annual-allowance-setup")
+        checkNavigation(nextPageUrl, "/annual-allowance/setup-check-answers")
       }
 
       "next page should be journey recovery if tax year is before pre remedy window" in {
@@ -84,7 +84,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2013).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/check-your-answers-annual-allowance-setup")
+        checkNavigation(nextPageUrl, "/annual-allowance/setup-check-answers")
       }
 
       "next page should be JourneyRecovery if the user answers does not contain data for the relevant year" in {

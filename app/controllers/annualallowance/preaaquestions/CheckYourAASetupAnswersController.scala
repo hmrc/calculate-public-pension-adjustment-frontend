@@ -18,13 +18,15 @@ package controllers.annualallowance.preaaquestions
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import models.UserAnswers
+import pages.annualallowance.preaaquestions.PayTaxCharge1516Page
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers.annualallowance.preaaquestions._
 import viewmodels.govuk.summarylist._
-import views.html.CheckYourAnswersView
+import views.html.CheckYourAASetupAnswersView
 
 class CheckYourAASetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -32,7 +34,7 @@ class CheckYourAASetupAnswersController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: CheckYourAnswersView
+  view: CheckYourAASetupAnswersView
 ) extends FrontendBaseController
     with I18nSupport {
 
@@ -46,13 +48,26 @@ class CheckYourAASetupAnswersController @Inject() (
       FlexiblyAccessedPensionSummary.row(request.userAnswers),
       FlexibleAccessStartDateSummary.row(request.userAnswers),
       PayTaxCharge1516Summary.row(request.userAnswers)
-    ) ++ PIAPreRemedySummary.rows(request.userAnswers)
+    )
+
+    val pIARows: Seq[Option[SummaryListRow]] =
+      PIAPreRemedySummary.rows(request.userAnswers)
+
+    def maybePensionInputAmounts(userAnswers: UserAnswers): Boolean =
+      userAnswers.get(PayTaxCharge1516Page) match {
+        case Some(true)  => false
+        case Some(false) => true
+        case None        => false
+      }
 
     Ok(
       view(
+        maybePensionInputAmounts(request.userAnswers),
         "checkYourAnswers.aa.subHeading",
         controllers.routes.TaskListController.onPageLoad(),
-        SummaryListViewModel(rows.flatten)
+        SummaryListViewModel(rows.flatten),
+        "checkYourAnswers.aa.pIASubHeading",
+        SummaryListViewModel(pIARows.flatten)
       )
     )
   }

@@ -18,10 +18,15 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import controllers.routes
+import org.scalatestplus.mockito.MockitoSugar.mock
+import pages.annualallowance.preaaquestions.PayTaxCharge1516Page
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import repositories.SessionRepository
+import viewmodels.checkAnswers.annualallowance.preaaquestions.PayTaxCharge1516Summary
 import viewmodels.govuk.SummaryListFluency
-import views.html.CheckYourAnswersView
+import views.html.CheckYourAASetupAnswersView
+import play.api.inject.bind
 
 class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
@@ -39,14 +44,103 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[CheckYourAnswersView]
+        val view = application.injector.instanceOf[CheckYourAASetupAnswersView]
         val list = SummaryListViewModel(Seq.empty)
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
+          false,
           "checkYourAnswers.aa.subHeading",
           controllers.routes.TaskListController.onPageLoad(),
+          list,
+          "checkYourAnswers.aa.pIASubHeading",
           list
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must return maybePensionInputAmounts false when user answers true to PayTaxCharge1516 Page" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      val ua = emptyUserAnswers.set(PayTaxCharge1516Page, true).success.value
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(
+          GET,
+          controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad().url
+        )
+
+        val result = route(application, request).value
+        val view   = application.injector.instanceOf[CheckYourAASetupAnswersView]
+
+        val expectedSeq = Seq(PayTaxCharge1516Summary.row(ua)(messages(application))).flatten
+
+        val list = SummaryListViewModel(expectedSeq)
+
+        val pIAList = SummaryListViewModel(Seq.empty)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          maybePensionInputAmounts = false,
+          "checkYourAnswers.aa.subHeading",
+          controllers.routes.TaskListController.onPageLoad(),
+          list,
+          "checkYourAnswers.aa.pIASubHeading",
+          pIAList
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must return maybePensionInputAmounts true when user answers false to PayTaxCharge1516 Page" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      val ua = emptyUserAnswers.set(PayTaxCharge1516Page, false).success.value
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(
+          GET,
+          controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad().url
+        )
+
+        val result = route(application, request).value
+        val view   = application.injector.instanceOf[CheckYourAASetupAnswersView]
+
+        val expectedSeq = Seq(PayTaxCharge1516Summary.row(ua)(messages(application))).flatten
+
+        val list = SummaryListViewModel(expectedSeq)
+
+        val pIAList = SummaryListViewModel(Seq.empty)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          maybePensionInputAmounts = true,
+          "checkYourAnswers.aa.subHeading",
+          controllers.routes.TaskListController.onPageLoad(),
+          list,
+          "checkYourAnswers.aa.pIASubHeading",
+          pIAList
         )(
           request,
           messages(application)
