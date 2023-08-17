@@ -1,4 +1,4 @@
-service.name = cy: Calculate Public Pension Adjustment service
+service.name = cy: Calculate your public service pension adjustment
 
 site.back = cy: Back
 site.remove = cy: Remove
@@ -83,13 +83,17 @@ annualAllowance.period.caption.2021 = cy: Annual allowance between 2020 to 2021
 annualAllowance.period.caption.2022 = cy: Annual allowance between 2021 to 2022
 annualAllowance.period.caption.2023 = cy: Annual allowance between 2022 to 2023
 
-savingsStatement.title = cy: Have you received a remedial service statement from your public service pension scheme?
-savingsStatement.heading = cy: Have you received a remedial service statement from your public service pension scheme?
-savingsStatement.yes = cy: Yes
-savingsStatement.no = cy: No
-savingsStatement.error.required = cy: You must select one of the options
-savingsStatement.checkYourAnswersLabel = cy: Have you received a remedial service statement from your public service pension scheme?
-savingsStatement.change.hidden = cy: Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.title = cy :Have you been informed about using the calculate your public service pension adjustment?
+savingsStatement.heading = cy :Have you been informed about using the calculate your public service pension adjustment?
+savingsStatement.paragraph = cy :Your public service pension administrator may have informed you by using a:
+savingsStatement.bullet.1 = cy :pension saving statement
+savingsStatement.bullet.2 = cy :remedial service statement
+savingsStatement.bullet.3 = cy :revised retirement statement
+savingsStatement.yes = cy :Yes
+savingsStatement.no = cy :No
+savingsStatement.error.required = cy :Select yes if you have been told about the calculate your public service pension adjustment
+savingsStatement.checkYourAnswersLabel = cy :Have you been informed about using the calculate your public service pension adjustment?
+savingsStatement.change.hidden = cy :Change if you have been informed about Calculate your public service pension adjustment
 
 resubmittingAdjustment.title = cy: Are you resubmitting a public pension adjustment?
 resubmittingAdjustment.heading = cy: Are you resubmitting a public pension adjustment?

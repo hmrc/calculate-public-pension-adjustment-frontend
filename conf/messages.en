@@ -1,4 +1,4 @@
-service.name = Calculate Public Pension Adjustment service
+service.name = Calculate your public service pension adjustment
 
 site.back = Back
 site.remove = Remove
@@ -83,13 +83,17 @@ annualAllowance.period.caption.2021 = Annual allowance between 2020 to 2021
 annualAllowance.period.caption.2022 = Annual allowance between 2021 to 2022
 annualAllowance.period.caption.2023 = Annual allowance between 2022 to 2023
 
-savingsStatement.title = Have you received a remedial service statement from your public service pension scheme?
-savingsStatement.heading = Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.title = Have you been informed about using the calculate your public service pension adjustment?
+savingsStatement.heading = Have you been informed about using the calculate your public service pension adjustment?
+savingsStatement.paragraph = Your public service pension administrator may have informed you by using a:
+savingsStatement.bullet.1 = pension saving statement
+savingsStatement.bullet.2 = remedial service statement
+savingsStatement.bullet.3 = revised retirement statement
 savingsStatement.yes = Yes
 savingsStatement.no = No
-savingsStatement.error.required = You must select one of the options
-savingsStatement.checkYourAnswersLabel = Have you received a remedial service statement from your public service pension scheme?
-savingsStatement.change.hidden = Have you received a remedial service statement from your public service pension scheme?
+savingsStatement.error.required = Select yes if you have been told about the calculate your public service pension adjustment
+savingsStatement.checkYourAnswersLabel = Have you been informed about using the calculate your public service pension adjustment?
+savingsStatement.change.hidden = Change if you have been informed about Calculate your public service pension adjustment
 
 resubmittingAdjustment.title = Are you resubmitting a public pension adjustment?
 resubmittingAdjustment.heading = Are you resubmitting a public pension adjustment?

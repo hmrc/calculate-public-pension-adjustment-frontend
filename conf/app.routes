@@ -23,10 +23,10 @@ GET         /account/signed-out                                              con
 
 GET         /unauthorised                                                    controllers.UnauthorisedController.onPageLoad()
 
-GET         /savings-statement                                               controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
-POST        /savings-statement                                               controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
-GET         /change-savings-statement                                        controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-savings-statement                                        controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = CheckMode)
+GET         /pension-saving-statement                                        controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
+POST        /pension-saving-statement                                        controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
+GET         /change-pension-saving-statement                                 controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-pension-saving-statement                                 controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = CheckMode)
 
 GET         /resubmitting-adjustment                                         controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = NormalMode)
 POST        /resubmitting-adjustment                                         controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = NormalMode)
