@@ -17,7 +17,7 @@
 package pages.setupquestions
 
 import controllers.routes
-import models.tasklist.PreAASection
+import models.tasklist.sections.PreAASection
 import models.{ReportingChange, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath

@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package models.tasklist
+package models.tasklist.sections
 
+import models.tasklist.{Section, SectionStatus}
 import models.{Period, UserAnswers}
 import pages.Page
 import pages.annualallowance.preaaquestions._
@@ -35,7 +36,7 @@ case object PreAASection extends Section {
     PIAPreRemedyPage(Period._2015)
   )
 
-  override def status(answers: UserAnswers): SectionStatus =
+  def status(answers: UserAnswers): SectionStatus =
     if (answers.get(ScottishTaxpayerFrom2016Page).isDefined) {
       answers.get(PayTaxCharge1516Page) match {
         case Some(true)                                                           => SectionStatus.Completed
@@ -45,6 +46,11 @@ case object PreAASection extends Section {
       }
     } else SectionStatus.NotStarted
 
-  override def checkYourAnswersPage: Page = CheckYourAASetupAnswersPage
+  def navigateTo(answers: UserAnswers): Page =
+    if (status(answers) == SectionStatus.Completed) {
+      CheckYourAASetupAnswersPage
+    } else {
+      pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
+    }
 
 }

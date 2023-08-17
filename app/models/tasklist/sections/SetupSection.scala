@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package models.tasklist
+package models.tasklist.sections
 
 import models.UserAnswers
+import models.tasklist.{Section, SectionStatus}
 import pages.Page
-import pages.setupquestions.{CheckYourSetupAnswersPage, ReasonForResubmissionPage, ReportingChangePage, ResubmittingAdjustmentPage, SavingsStatementPage}
+import pages.setupquestions._
 
 case object SetupSection extends Section {
   override def pages(): Seq[Page] =
     Seq(SavingsStatementPage, ResubmittingAdjustmentPage, ReasonForResubmissionPage, ReportingChangePage)
 
-  override def status(answers: UserAnswers): SectionStatus =
+  def status(answers: UserAnswers): SectionStatus =
     if (answers.get(SavingsStatementPage).isDefined) {
       if (answers.get(ReportingChangePage).isDefined) SectionStatus.Completed else SectionStatus.InProgress
     } else SectionStatus.NotStarted
 
-  override def checkYourAnswersPage: Page = CheckYourSetupAnswersPage
+  def navigateTo(answers: UserAnswers): Page =
+    if (status(answers) == SectionStatus.Completed) {
+      CheckYourSetupAnswersPage
+    } else {
+      pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
+    }
 }

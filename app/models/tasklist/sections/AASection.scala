@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package models.tasklist
+package models.tasklist.sections
 
 import models.ContributedToDuringRemedyPeriod.Definedbenefit
+import models.WhoPaidAACharge.{Both, Scheme, You}
+import models.tasklist.{Section, SectionStatus}
 import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex, UserAnswers}
 import pages.Page
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.annualallowance.taxyear._
-import models.WhoPaidAACharge.{Both, Scheme, You}
 
 case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
 
@@ -47,7 +48,7 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
       TotalIncomePage(period)
     )
 
-  override def status(answers: UserAnswers): SectionStatus =
+  def status(answers: UserAnswers): SectionStatus =
     if (firstPageIsAnswered(answers)) {
       if (isFirstPeriod) {
         statusInFirstPeriod(answers)
@@ -141,5 +142,10 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
   private def firstPageIsAnswered(answers: UserAnswers) =
     answers.get(MemberMoreThanOnePensionPage(period)).isDefined
 
-  override def checkYourAnswersPage: Page = CheckYourAAPeriodAnswersPage(period)
+  def navigateTo(answers: UserAnswers): Page =
+    if (status(answers) == SectionStatus.Completed) {
+      CheckYourAAPeriodAnswersPage(period)
+    } else {
+      pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
+    }
 }
