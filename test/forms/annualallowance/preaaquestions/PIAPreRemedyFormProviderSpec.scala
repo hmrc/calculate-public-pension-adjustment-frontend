@@ -31,7 +31,8 @@ class PIAPreRemedyFormProviderSpec extends IntFieldBehaviours {
     val fieldName = "value"
 
     val minimum = 0
-    val maximum = 500
+    val maximum = 999999999
+
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
@@ -45,7 +46,7 @@ class PIAPreRemedyFormProviderSpec extends IntFieldBehaviours {
       form,
       fieldName,
       nonNumericError = FormError(fieldName, "pIAPreRemedy.error.nonNumeric.2013"),
-      wholeNumberError = FormError(fieldName, "pIAPreRemedy.error.wholeNumber.2013")
+      wholeNumberError = FormError(fieldName, "pIAPreRemedy.error.nonNumeric.2013")
     )
 
     behave like mandatoryField(
@@ -58,8 +59,14 @@ class PIAPreRemedyFormProviderSpec extends IntFieldBehaviours {
       form,
       fieldName,
       maximum,
-      expectedError = FormError(fieldName, "pIAPreRemedy.error.required.2013")
+      expectedError = FormError(fieldName, "pIAPreRemedy.error.maximum.2013", Seq(maximum))
+    )
 
+    behave like intFieldWithMinimum(
+      form,
+      fieldName,
+      minimum,
+      expectedError = FormError(fieldName, "pIAPreRemedy.error.minimum.2013", Seq(minimum))
     )
   }
 }

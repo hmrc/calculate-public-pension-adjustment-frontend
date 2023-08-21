@@ -13,7 +13,7 @@ GET         /refresh-session                                                 con
 GET         /there-is-a-problem                                              controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
 GET         /check-your-answers-setup                                        controllers.setupquestions.CheckYourSetupAnswersController.onPageLoad()
-GET         /check-your-answers-annual-allowance-setup                       controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad()
+GET         /annual-allowance/setup-check-answers                            controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad()
 GET         /check-your-lta-answers                                          controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad()
 GET         /check-your-answers-period/:period                               controllers.annualallowance.taxyear.CheckYourAAPeriodAnswersController.onPageLoad(period:Period)
 

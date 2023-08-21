@@ -66,7 +66,7 @@ class FlexiblyAccessedPensionPageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(CheckMode, userAnswers)
 
-        check(nextPageUrl, "/check-your-answers-annual-allowance-setup")
+        check(nextPageUrl, "/annual-allowance/setup-check-answers")
       }
     }
 
