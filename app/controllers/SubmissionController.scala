@@ -16,33 +16,45 @@
 
 package controllers
 
+import config.FrontendAppConfig
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.tasklist.TaskListViewModel
+import models.submission.{Failure, SubmissionResponse, Success}
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.TaskListService
+import services.CalculationResultService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.TaskListView
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
-class TaskListController @Inject() (
+class SubmissionController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: TaskListView,
-  taskListService: TaskListService
+  calculationResultService: CalculationResultService,
+  config: FrontendAppConfig
+)(implicit
+  ec: ExecutionContext
 ) extends FrontendBaseController
     with I18nSupport {
 
   val form = Form("_" -> ignored(()))
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
-    Ok(view(form, taskListViewModel))
+  def storeAndRedirect(): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+    implicit request =>
+      calculationResultService.submitUserAnswersWithNoCalculation(request.userAnswers).map {
+        submissionResponse: SubmissionResponse =>
+          submissionResponse match {
+            case Success(uniqueId) => Redirect(submitFrontendLandingPageUrl(uniqueId))
+            case Failure(_)        => Redirect(routes.JourneyRecoveryController.onPageLoad())
+          }
+      }
   }
+
+  private def submitFrontendLandingPageUrl(uniqueId: String) =
+    s"${config.submitFrontend}/landing-page?submissionUniqueId=$uniqueId"
 }

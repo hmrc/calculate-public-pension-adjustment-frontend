@@ -22,10 +22,9 @@ import queries.Settable
 
 trait Section {
 
-  def pages(): Seq[Page]
-  def status(answers: UserAnswers): SectionStatus
+  def pages(): Seq[Page] = Seq.empty[Page]
+
   def removeAllUserAnswers(answers: UserAnswers): UserAnswers = remove(answers, pages())
-  def checkYourAnswersPage: Page
 
   def remove(answers: UserAnswers, forPages: Seq[Page]): UserAnswers =
     if (forPages.nonEmpty) {
@@ -38,12 +37,5 @@ trait Section {
         }
 
       remove(updatedAnswers, forPages.tail)
-    } else answers
-
-  def returnTo(answers: UserAnswers): Page =
-    if (status(answers) == SectionStatus.Completed) {
-      checkYourAnswersPage
-    } else {
-      pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
-    }
+    } else { answers }
 }

@@ -25,4 +25,6 @@ object SectionStatus {
   case object InProgress extends SectionStatus
 
   case object Completed extends SectionStatus
+
+  case object CannotStartYet extends SectionStatus
 }

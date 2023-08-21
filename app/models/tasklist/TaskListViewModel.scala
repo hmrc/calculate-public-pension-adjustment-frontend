@@ -20,10 +20,10 @@ final case class TaskListViewModel(
   setupGroup: SectionGroupViewModel,
   aaGroup: Option[SectionGroupViewModel],
   ltaGroup: Option[SectionGroupViewModel],
-  calculationResult: Option[String] = None
+  nextStepsGroup: SectionGroupViewModel
 ) {
 
-  def allGroups: Seq[Option[SectionGroupViewModel]] = Seq(Some(setupGroup), aaGroup, ltaGroup)
+  def allGroups: Seq[Option[SectionGroupViewModel]] = Seq(Some(setupGroup), aaGroup, ltaGroup, Some(nextStepsGroup))
 
   def completedGroupCount: Int =
     allGroups.filter(groupOption => groupOption.isDefined).count(group => group.get.isComplete)

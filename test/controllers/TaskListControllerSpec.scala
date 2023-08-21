@@ -38,7 +38,7 @@ class TaskListControllerSpec extends SpecBase with MockitoSugar {
 
   "TaskList Controller" - {
 
-    "submission must succeed when all sections are complete" in {
+    "must render a task list with sections containing correct names links and statuses" in {
 
       val mockSessionRepository = mock[SessionRepository]
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -54,37 +54,15 @@ class TaskListControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val request = FakeRequest(POST, normalRoute).withFormUrlEncodedBody()
+        val request = FakeRequest(GET, normalRoute).withFormUrlEncodedBody()
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual "/public-pension-adjustment/calculation-result"
-      }
-    }
+        status(result) mustEqual OK
+        val content = contentAsString(result)
 
-    "submission must fail if sections are incomplete" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val mockTaskListService: TaskListService = whenAllSectionsAre(SectionStatus.InProgress)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository),
-            bind[TaskListService].toInstance(mockTaskListService)
-          )
-          .build()
-
-      running(application) {
-        val request = FakeRequest(POST, normalRoute).withFormUrlEncodedBody()
-
-        val result = route(application, request).value
-
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result).contains("You have tasks that you need to complete") mustBe true
+        content.contains("<a href=\"url\" class=\"govuk-link\" aria-describedby=\"id\">Change name</a>") mustBe true
+        content.contains("<span class=\"hmrc-status-tag\" id=\"id\">Completed</span>") mustBe true
       }
     }
   }
@@ -102,7 +80,7 @@ class TaskListControllerSpec extends SpecBase with MockitoSugar {
   private def constructTaskListViewModel(sectionStatus: SectionStatus) = {
     val sections: Seq[SectionViewModel]      = Seq(SectionViewModel("name", Call("method", "url"), sectionStatus, "id"))
     val sectionGroup: SectionGroupViewModel  = SectionGroupViewModel(1, "heading", sections)
-    val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, None)
+    val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
     taskListViewModel
   }
 }

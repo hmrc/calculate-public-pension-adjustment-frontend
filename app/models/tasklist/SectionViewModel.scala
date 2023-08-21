@@ -16,6 +16,19 @@
 
 package models.tasklist
 
+import play.api.i18n.Messages
 import play.api.mvc.Call
 
-final case class SectionViewModel(name: String, call: Call, status: SectionStatus, id: String)
+final case class SectionViewModel(
+  name: String,
+  call: Call,
+  status: SectionStatus,
+  id: String,
+  nameOverride: Option[String] = None
+) {
+  def label(messages: Messages) =
+    nameOverride match {
+      case Some(name) => messages(name)
+      case None       => messages(s"taskList.${status.toString}") + " " + messages(name)
+    }
+}

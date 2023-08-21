@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package models.tasklist
+package models.tasklist.sections
 
 import models.UserAnswers
+import models.tasklist.{Section, SectionStatus}
 import pages.Page
-import pages.lifetimeallowance.{ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, CheckYourLTAAnswersPage, DateOfBenefitCrystallisationEventPage, HadBenefitCrystallisationEventPage}
+import pages.lifetimeallowance._
 
 case object LTASection extends Section {
   override def pages(): Seq[Page] =
@@ -29,7 +30,7 @@ case object LTASection extends Section {
       ChangeInTaxChargePage
     )
 
-  override def status(answers: UserAnswers): SectionStatus =
+  def status(answers: UserAnswers): SectionStatus =
     if (answers.get(HadBenefitCrystallisationEventPage).isDefined) {
       answers.get(ChangeInTaxChargePage) match {
         case Some(_) => SectionStatus.Completed
@@ -37,5 +38,10 @@ case object LTASection extends Section {
       }
     } else SectionStatus.NotStarted
 
-  override def checkYourAnswersPage: Page = CheckYourLTAAnswersPage
+  def navigateTo(answers: UserAnswers): Page =
+    if (status(answers) == SectionStatus.Completed) {
+      CheckYourLTAAnswersPage
+    } else {
+      pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
+    }
 }

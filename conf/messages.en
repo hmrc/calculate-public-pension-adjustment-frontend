@@ -278,9 +278,8 @@ taskList.complete = Application complete
 taskList.status.notStarted = Not started
 taskList.status.inProgress = In progress
 taskList.status.completed = Completed
+taskList.status.cannotStartYet = Cannot start yet
 taskList.completedSections = You’ve completed {0} of {1} sections.
-taskList.calculateAnswers = Calculate your answers
-taskList.compensationOrTaxCharge = Your results could be compensation or new tax charges that you will have to pay.
 taskList.calculate = Calculate
 taskList.instructions = To complete your calculation, you will need to have details for what you are reporting.
 taskList.setup.groupHeading = Setup questions
@@ -305,6 +304,11 @@ taskList.lta.sectionName = details of your events
 taskList.admin.sectionName = details of any fees for help with your pension
 tasklist.calculationSuccess = Your calculation will be available soon.
 tasklist.error.tasksToComplete = You have tasks that you need to complete
+
+taskList.nextSteps.groupHeading = Next steps
+taskList.nextSteps.calculate = Calculate
+taskList.nextSteps.continueToSignIn = Continue to sign in
+taskList.nextSteps.setupRequired = You must first complete the setup questions
 
 ltaProtectionOrEnhancements.title = Do you have lifetime allowance protection or enhancements?
 ltaProtectionOrEnhancements.heading = Do you have lifetime allowance protection or enhancements?

@@ -58,6 +58,14 @@ class CalculationResultService @Inject() (
     } yield submissionResponse
   }
 
+  def submitUserAnswersWithNoCalculation(answers: UserAnswers): Future[SubmissionResponse] = {
+    val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
+    for {
+      submissionResponse <-
+        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, None))
+    } yield submissionResponse
+  }
+
   def buildCalculationInputs(userAnswers: UserAnswers): CalculationInputs = {
 
     val resubmission: Resubmission = userAnswers

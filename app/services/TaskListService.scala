@@ -17,6 +17,7 @@
 package services
 
 import models.tasklist._
+import models.tasklist.sections.{AASection, LTASection, NextStepsSection, PreAASection, SetupSection}
 import models.{NormalMode, Period, ReportingChange, SchemeIndex, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 
@@ -36,14 +37,17 @@ class TaskListService @Inject() (
         val aaPeriods: Seq[Period]                  = PeriodService.relevantPeriods(answers)
         val aaPeriodSections: Seq[SectionViewModel] = aaPeriodSectionsSeq(answers, aaPeriods)
         Some(aaGroupSeq(answers, aaPeriodSections, counter))
-      } else None
+      } else { None }
 
     if (aaGroup.isDefined) counter += 1
     val ltaGroup: Option[SectionGroupViewModel] = ltaGroupSeq(answers, counter)
 
     if (ltaGroup.isDefined) counter += 1
 
-    TaskListViewModel(setupGroup, aaGroup, ltaGroup)
+    val nextStepsGroup = nextStepsGroupSeq(answers, counter, List(Some(setupGroup), aaGroup, ltaGroup))
+    counter += 1
+
+    TaskListViewModel(setupGroup, aaGroup, ltaGroup, nextStepsGroup)
   }
 
   def isRequired(answers: UserAnswers, reportingChange: ReportingChange): Boolean =
@@ -59,7 +63,7 @@ class TaskListService @Inject() (
       Seq(
         SectionViewModel(
           "taskList.setup.sectionName",
-          SetupSection.returnTo(answers).navigate(NormalMode, answers),
+          SetupSection.navigateTo(answers).navigate(NormalMode, answers),
           SetupSection.status(answers),
           "setup-questions"
         )
@@ -70,7 +74,7 @@ class TaskListService @Inject() (
     relevantAAPeriods.map(period =>
       SectionViewModel(
         s"taskList.aa.sectionNameFor${period.toString}",
-        AASection(period, SchemeIndex(0)).returnTo(answers).navigate(NormalMode, answers),
+        AASection(period, SchemeIndex(0)).navigateTo(answers).navigate(NormalMode, answers),
         AASection(period, SchemeIndex(0)).status(answers),
         s"annual-allowance-details-${period.toString}"
       )
@@ -86,8 +90,8 @@ class TaskListService @Inject() (
       "taskList.aa.groupHeading",
       Seq(
         SectionViewModel(
-          s"taskList.aa.setup.sectionName",
-          PreAASection.returnTo(answers).navigate(NormalMode, answers),
+          "taskList.aa.setup.sectionName",
+          PreAASection.navigateTo(answers).navigate(NormalMode, answers),
           PreAASection.status(answers),
           "annual-allowance-setup-questions"
         )
@@ -103,12 +107,35 @@ class TaskListService @Inject() (
           Seq(
             SectionViewModel(
               "taskList.lta.sectionName",
-              LTASection.returnTo(answers).navigate(NormalMode, answers),
+              LTASection.navigateTo(answers).navigate(NormalMode, answers),
               LTASection.status(answers),
               "lifetime-allowance-questions"
             )
           )
         )
       )
-    } else None
+    } else { None }
+
+  def nextStepsGroupSeq(
+    answers: UserAnswers,
+    counter: Int,
+    dataCaptureSections: List[Option[SectionGroupViewModel]]
+  ) = {
+
+    val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+
+    SectionGroupViewModel(
+      counter,
+      "taskList.nextSteps.groupHeading",
+      Seq(
+        SectionViewModel(
+          sectionNameOverride,
+          NextStepsSection.navigateTo(answers),
+          NextStepsSection.sectionStatus(dataCaptureSections),
+          "next-steps-action",
+          Some(sectionNameOverride)
+        )
+      )
+    )
+  }
 }
