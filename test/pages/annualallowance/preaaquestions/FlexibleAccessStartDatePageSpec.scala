@@ -46,7 +46,7 @@ class FlexibleAccessStartDatePageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = FlexibleAccessStartDatePage.navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/pay-tax-charge-from2015-2016")
+        check(nextPageUrl, "/annual-allowance/tax-charge-between-2015-2016")
       }
     }
 

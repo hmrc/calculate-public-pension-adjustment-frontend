@@ -218,12 +218,11 @@ changeInTaxCharge.option2 = cy: Increased charge
 changeInTaxCharge.option3 = cy: Decreased charge
 changeInTaxCharge.option4 = cy: None
 
-payTaxCharge1516.title = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
-payTaxCharge1516.heading = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
-payTaxCharge1516.hint = cy: You can find this on a bank statement.
-payTaxCharge1516.checkYourAnswersLabel = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
-payTaxCharge1516.error.required = cy: Select yes if you paid a tax charge between 6 April 2015 and 5 April 2016
-payTaxCharge1516.change.hidden = cy: Did you pay a tax charge between 6 April 2015 and 5 April 2016?
+payTaxCharge1516.title = cy: Did you pay a tax charge between 6 April 2015 to 5 April 2016?
+payTaxCharge1516.heading = cy: Did you pay a tax charge between 6 April 2015 to 5 April 2016?
+payTaxCharge1516.checkYourAnswersLabel = cy: Did you pay a tax charge between 6 April 2015 to 5 April 2016?
+payTaxCharge1516.error.required = cy: Select yes if you paid a tax charge between 6 April 2015 to 5 April 2016
+payTaxCharge1516.change.hidden = cy: Change if you paid a tax charge between 6 April 2015 to 5 April 2016
 
 pIAPreRemedy.title = cy: What was your pension input amount between 6 April {0} and 5 April {1}?
 pIAPreRemedy.heading = cy: What was your pension input amount between 6 April {0} and 5 April {1}?
