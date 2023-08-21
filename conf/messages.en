@@ -224,17 +224,28 @@ payTaxCharge1516.checkYourAnswersLabel = Did you pay a tax charge between 6 Apri
 payTaxCharge1516.error.required = Select yes if you paid a tax charge between 6 April 2015 to 5 April 2016
 payTaxCharge1516.change.hidden = Change if you paid a tax charge between 6 April 2015 to 5 April 2016
 
-pIAPreRemedy.title = What was your pension input amount between 6 April {0} and 5 April {1}?
-pIAPreRemedy.heading = What was your pension input amount between 6 April {0} and 5 April {1}?
-pIAPreRemedy.hint1 = This is the total pension contributions during a period, such as 6 April 2020 to 5 April 2021.
-pIAPreRemedy.hint2 = Amounts must be rounded down to the nearest pound, for example 2300.
+pIAPreRemedy.title = What was your pension input amount from 6 April {0} and 5 April {1}?
+pIAPreRemedy.heading = What was your pension input amount from 6 April {0} and 5 April {1}?
+pIAPreRemedy.message1 = This is the total amount paid into or any increase in a defined contribution pension scheme in a tax year.
+pIAPreRemedy.message2 = This can be done by you or anyone else, such as your employer.
+pIAPreRemedy.hint = Amounts must be rounded down to the nearest pound, for example 2300
+
 pIAPreRemedy.checkYourAnswersLabel.2013 = What was your pension input amount between 6 April 2012 and 5 April 2013?
 pIAPreRemedy.checkYourAnswersLabel.2014 = What was your pension input amount between 6 April 2013 and 5 April 2014?
 pIAPreRemedy.checkYourAnswersLabel.2015 = What was your pension input amount between 6 April 2014 and 5 April 2015?
-pIAPreRemedy.error.nonNumeric = You have entered non-numerical characters for your pension input amount. You must enter numerical characters
-pIAPreRemedy.error.required = Enter an amount for pension input amount in the space provided
+pIAPreRemedy.error.required.2013 = Enter your pension input amount from 6 April 2012 to 5 April 2013
+pIAPreRemedy.error.required.2014 = Enter your pension input amount from 6 April 2013 to 5 April 2014
+pIAPreRemedy.error.required.2015 = Enter your pension input amount from 6 April 2014 to 5 April 2015
+pIAPreRemedy.error.nonNumeric.2013 = Your pension input amount from 6 April 2012 to 5 April 2013 must only include numbers 0 to 9
+pIAPreRemedy.error.nonNumeric.2014 = Your pension input amount from 6 April 2013 to 5 April 2014 must only include numbers 0 to 9
+pIAPreRemedy.error.nonNumeric.2015 = Your pension input amount from 6 April 2014 to 5 April 2015 must only include numbers 0 to 9
+pIAPreRemedy.error.minimum.2013 = Your pension input amount from 6 April 2012 to 5 April 2013 must be £1 or more
+pIAPreRemedy.error.minimum.2014 = Your pension input amount from 6 April 2013 to 5 April 2014 must be £1 or more
+pIAPreRemedy.error.minimum.2015 = Your pension input amount from 6 April 2014 to 5 April 2015 must be £1 or more
+pIAPreRemedy.error.maximum.2013 = Your pension input amount from 6 April 2012 to 5 April 2013 must be £999999999 or less
+pIAPreRemedy.error.maximum.2014 = Your pension input amount from 6 April 2013 to 5 April 2014 must be £999999999 or less
+pIAPreRemedy.error.maximum.2015 = Your pension input amount from 6 April 2014 to 5 April 2015 must be £999999999 or less
 pIAPreRemedy.error.wholeNumber = You have not entered a whole number for your pension input amount. You cannot use decimals.
-pIAPreRemedy.error.outOfRange = You have entered too many characters for your pension input amount. The maximum number of characters you can enter is 9
 pIAPreRemedy.change.hidden = What was your pension input amount between 6 April {0} and 5 April {1}?
 
 whatYouWillNeedLta.title = Lifetime allowance

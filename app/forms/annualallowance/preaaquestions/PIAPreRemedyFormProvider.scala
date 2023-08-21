@@ -17,18 +17,21 @@
 package forms.annualallowance.preaaquestions
 
 import forms.mappings.Mappings
+import models.Period
+
 import javax.inject.Inject
 import play.api.data.Form
 
 class PIAPreRemedyFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(period: Period): Form[BigInt] =
     Form(
       "value" -> bigInt(
-        "pIAPreRemedy.error.required",
-        "pIAPreRemedy.error.wholeNumber",
-        "pIAPreRemedy.error.nonNumeric"
+        "pIAPreRemedy.error.required." + period,
+        "pIAPreRemedy.error.wholeNumber." + period,
+        "pIAPreRemedy.error.nonNumeric." + period,
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "pIAPreRemedy.error.outOfRange"))
+//        .verifying(minimumValue[BigInt](0, "pIAPreRemedy.error.minimum." + period))
+        .verifying(maximumValue[BigInt](999999999, "pIAPreRemedy.error.maximum." + period))
     )
 }

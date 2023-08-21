@@ -17,18 +17,21 @@
 package forms.annualallowance.preaaquestions
 
 import forms.behaviours.IntFieldBehaviours
+import models.Period
 import play.api.data.FormError
 
 class PIAPreRemedyFormProviderSpec extends IntFieldBehaviours {
 
-  val form = new PIAPreRemedyFormProvider()()
+  val formProvider = new PIAPreRemedyFormProvider()
+  val form = formProvider(Period._2013)
+
 
   ".value" - {
 
     val fieldName = "value"
 
     val minimum = 0
-    val maximum = 999999999
+    val maximum = 500
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
@@ -41,22 +44,22 @@ class PIAPreRemedyFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError = FormError(fieldName, "pIAPreRemedy.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "pIAPreRemedy.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "pIAPreRemedy.error.nonNumeric.2013"),
+      wholeNumberError = FormError(fieldName, "pIAPreRemedy.error.wholeNumber.2013")
     )
-
-//    behave like intFieldWithRange(
-//      form,
-//      fieldName,
-//      minimum = minimum,
-//      maximum = maximum,
-//      expectedError = FormError(fieldName, "pIAPreRemedy.error.outOfRange", Seq(minimum, maximum))
-//    )
 
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, "pIAPreRemedy.error.required")
+      requiredError = FormError(fieldName, "pIAPreRemedy.error.required.2013")
+    )
+
+    behave like intFieldWithMaximum(
+      form,
+      fieldName,
+      maximum,
+      expectedError = FormError(fieldName, "pIAPreRemedy.error.required.2013")
+
     )
   }
 }
