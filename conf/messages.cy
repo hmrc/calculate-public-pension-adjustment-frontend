@@ -187,19 +187,19 @@ flexiblyAccessedPension.bullet2 = cy: if you convert pension savings that you ha
 flexiblyAccessedPension.error.required = cy: Select yes if you have flexibly accessed your defined contribution pension
 flexiblyAccessedPension.change.hidden = cy: Change if you have flexibly accessed your defined contribution pension
 
-flexibleAccessStartDate.title = cy: When did you start flexibly accessing defined contribution pension savings?
-flexibleAccessStartDate.heading = cy: When did you start flexibly accessing defined contribution pension savings?
-flexibleAccessStartDate.checkYourAnswersLabel = cy: When did you start flexibly accessing defined contribution pension savings?
+flexibleAccessStartDate.title = cy: When did you first flexibly access your defined contribution pension?
+flexibleAccessStartDate.heading = cy: When did you first flexibly access your defined contribution pension?
+flexibleAccessStartDate.checkYourAnswersLabel = cy: Date you first flexibly accessed your defined contribution pension
 flexibleAccessStartDate.hint1 = cy: You can find this on your flexible access statement.
-flexibleAccessStartDate.hint2 = cy: For example 25 2 2015
-flexibleAccessStartDate.change.hidden = cy: When did you start flexibly accessing defined contribution pension savings?
-flexibleAccessStartDate.error.required.all = cy: Enter the date that you flexibly accessed your defined contribution pension savings as day, month, year
+flexibleAccessStartDate.hint2 = cy: For example, 25 2 2015.
+flexibleAccessStartDate.change.hidden = cy: Change date you first flexibly accessed your defined contribution pension
+flexibleAccessStartDate.error.required.all = cy: Enter a date when you first flexibly accessed your defined contribution pension in the right format, with a date, month and year
 
-flexibleAccessStartDate.error.invalid = cy: Enter a real date for the date that you flexibly accessed your defined contribution pension savings as day, month, year
-flexibleAccessStartDate.error.required = cy:  The date must include {0}
+flexibleAccessStartDate.error.invalid = cy: Enter the date when you stopped paying into a public service pension scheme in the right format, with a date, month and year
+flexibleAccessStartDate.error.required = cy: The date must include {0}
 flexibleAccessStartDate.error.required.two = cy: The date must include {0} and {1}
-flexibleAccessStartDate.error.min = cy: You have entered a date for the date that you flexibly accessed your defined contribution pension savings before the remedy period, enter a date after 5 April 2015
-flexibleAccessStartDate.error.max = cy: You have entered a future date for the date that you flexibly accessed your defined contribution pension savings, it must be within the remedy period
+flexibleAccessStartDate.error.min = cy: The date when you first flexibly accessed your defined contribution pension must be after 5 April 2015
+flexibleAccessStartDate.error.max = cy: The date when you first flexibly accessed your defined contribution pension must be today or in the past
 
 changeInLifetimeAllowance.title = cy: Have you been told about a change in the lifetime allowance percentage?
 changeInLifetimeAllowance.heading = cy: Have you been told about a change in the lifetime allowance percentage?

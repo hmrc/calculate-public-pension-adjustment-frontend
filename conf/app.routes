@@ -70,15 +70,15 @@ POST        /annual-allowance/defined-contributions-scheme                   con
 GET         /annual-allowance/change-defined-contributions-scheme            controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
 POST        /annual-allowance/change-defined-contributions-scheme            controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = CheckMode)
 
-GET         /when-flexibly-access-pension                                    controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onPageLoad(mode: Mode = NormalMode)
-POST        /when-flexibly-access-pension                                    controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onSubmit(mode: Mode = NormalMode)
-GET         /change-when-flexibly-access-pension                             controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-when-flexibly-access-pension                             controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/flexibly-accessed-date                         controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/flexibly-accessed-date                         controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-flexibly-accessed-date                  controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-flexibly-accessed-date                  controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onSubmit(mode: Mode = CheckMode)
 
-GET         /annual-allowance/flexibly-accessed                                 controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = NormalMode)
-POST        /annual-allowance/flexibly-accessed                                  controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = NormalMode)
-GET         /annual-allowance/change-flexibly-accessed                          controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = CheckMode)
-POST        /annual-allowance/change-flexibly-accessed                          controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/flexibly-accessed                              controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/flexibly-accessed                              controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-flexibly-accessed                       controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-flexibly-accessed                       controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = CheckMode)
 
 GET         /pay-tax-charge-from2015-2016                                    controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onPageLoad(mode: Mode = NormalMode)
 POST        /pay-tax-charge-from2015-2016                                    controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onSubmit(mode: Mode = NormalMode)
