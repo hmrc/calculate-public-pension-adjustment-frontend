@@ -64,6 +64,7 @@ class CheckYourAAPeriodAnswersController @Inject() (
       )
 
       val rowsOne: Seq[Option[SummaryListRow]] = Seq(
+        MemberOfPublicPensionSchemeSummary.row(request.userAnswers, period),
         MemberMoreThanOnePensionSummary.row(request.userAnswers, period)
       ) ++ rowsTwo ++ rowsThree
 

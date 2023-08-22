@@ -276,3 +276,7 @@ GET         /calculation-result                                                 
 POST        /calculation-result                                                  controllers.CalculationResultController.onSubmit()
 
 GET         /lta-submission                                                      controllers.SubmissionController.storeAndRedirect()
+GET         /member-of-public-pension-scheme/:period                             controllers.annualallowance.taxyear.MemberOfPublicPensionSchemeController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST        /member-of-public-pension-scheme/:period                             controllers.annualallowance.taxyear.MemberOfPublicPensionSchemeController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET         /change-member-of-public-pension-scheme/:period                      controllers.annualallowance.taxyear.MemberOfPublicPensionSchemeController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST        /change-member-of-public-pension-scheme/:period                      controllers.annualallowance.taxyear.MemberOfPublicPensionSchemeController.onSubmit(mode: Mode = CheckMode, period:Period)

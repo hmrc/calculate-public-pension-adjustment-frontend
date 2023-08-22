@@ -775,3 +775,27 @@ calculationResults.whatHappensNext.hint.compensation = cy: You are due compensat
 calculationResults.whatHappensNext.hint.compensation.list1 = cy: directly pay any compensation for tax charges you paid from 6 April 2015 to 5 April 2019
 calculationResults.whatHappensNext.hint.compensation.list2 = cy: increase your pension benefits to cover compensation for tax charges your scheme paid on your behalf from 6 April 2015 to 5 April 2019
 calculationResults.whatHappensNext.hint5 = cy: If you do not sign in to your Government Gateway, your results will not be saved and you will need to complete the calculator again.
+
+memberOfPublicPensionScheme.title.2016-pre = cy: Were you a member of a public service pension scheme between 6 April to 8 July 2015?
+memberOfPublicPensionScheme.title.2016-post = cy: Were you a member of a public service pension scheme between 9 July to 5 April 2016?
+memberOfPublicPensionScheme.title.2017 = cy: Were you a member of a public service pension scheme from 6 April 2016 to 5 April 2017?
+memberOfPublicPensionScheme.title.2018 = cy: Were you a member of a public service pension scheme from 6 April 2017 to 5 April 2018?
+memberOfPublicPensionScheme.title.2019 = cy: Were you a member of a public service pension scheme from 6 April 2018 to 5 April 2019?
+memberOfPublicPensionScheme.title.2020 = cy: Were you a member of a public service pension scheme from 6 April 2019 to 5 April 2020?
+memberOfPublicPensionScheme.title.2021 = cy: Were you a member of a public service pension scheme from 6 April 2020 to 5 April 2021?
+memberOfPublicPensionScheme.title.2022 = cy: Were you a member of a public service pension scheme from 6 April 2021 to 5 April 2022?
+memberOfPublicPensionScheme.title.2023 = cy: Were you a member of a public service pension scheme from 6 April 2022 to 5 April 2023?
+
+memberOfPublicPensionScheme.heading.2016-pre = cy: Were you a member of a public service pension scheme between 6 April to 8 July 2015?
+memberOfPublicPensionScheme.heading.2016-post = cy: Were you a member of a public service pension scheme between 9 July to 5 April 2016?
+memberOfPublicPensionScheme.heading.2017 = cy: Were you a member of a public service pension scheme from 6 April 2016 to 5 April 2017?
+memberOfPublicPensionScheme.heading.2018 = cy: Were you a member of a public service pension scheme from 6 April 2017 to 5 April 2018?
+memberOfPublicPensionScheme.heading.2019 = cy: Were you a member of a public service pension scheme from 6 April 2018 to 5 April 2019?
+memberOfPublicPensionScheme.heading.2020 = cy: Were you a member of a public service pension scheme from 6 April 2019 to 5 April 2020?
+memberOfPublicPensionScheme.heading.2021 = cy: Were you a member of a public service pension scheme from 6 April 2020 to 5 April 2021?
+memberOfPublicPensionScheme.heading.2022 = cy: Were you a member of a public service pension scheme from 6 April 2021 to 5 April 2022?
+memberOfPublicPensionScheme.heading.2023 = cy: Were you a member of a public service pension scheme from 6 April 2022 to 5 April 2023?
+
+memberOfPublicPensionScheme.checkYourAnswersLabel = cy: Were you a member of a public service pension scheme?
+memberOfPublicPensionScheme.error.required = cy: Select yes if you a member of a public service pension scheme in this period
+memberOfPublicPensionScheme.change.hidden = cy: Were you a member of a public service pension scheme in this period

@@ -24,6 +24,9 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryMemberOfPublicPensionSchemePage: Arbitrary[MemberOfPublicPensionSchemePage.type] =
+    Arbitrary(MemberOfPublicPensionSchemePage)
+
   implicit lazy val arbitraryFlexiAccessDefinedContributionAmountPage
     : Arbitrary[FlexiAccessDefinedContributionAmountPage.type] =
     Arbitrary(FlexiAccessDefinedContributionAmountPage)
