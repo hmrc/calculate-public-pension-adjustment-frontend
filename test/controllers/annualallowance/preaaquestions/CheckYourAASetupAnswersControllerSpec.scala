@@ -64,17 +64,16 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
 
     "must return maybePensionInputAmounts false when user answers true to PayTaxCharge1516 Page" in {
 
-      val mockSessionRepository    = mock[SessionRepository]
+      val mockSessionRepository = mock[SessionRepository]
 
       val ua = emptyUserAnswers.set(PayTaxCharge1516Page, true).success.value
 
       val application =
         applicationBuilder(userAnswers = Some(ua))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
-
 
       running(application) {
         val request = FakeRequest(
@@ -83,10 +82,9 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         )
 
         val result = route(application, request).value
-        val view = application.injector.instanceOf[CheckYourAASetupAnswersView]
+        val view   = application.injector.instanceOf[CheckYourAASetupAnswersView]
 
-        val expectedSeq = Seq(
-          PayTaxCharge1516Summary.row(ua)(messages(application))).flatten
+        val expectedSeq = Seq(PayTaxCharge1516Summary.row(ua)(messages(application))).flatten
 
         val list = SummaryListViewModel(expectedSeq)
 
@@ -116,10 +114,9 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
       val application =
         applicationBuilder(userAnswers = Some(ua))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
-
 
       running(application) {
         val request = FakeRequest(
@@ -128,10 +125,9 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         )
 
         val result = route(application, request).value
-        val view = application.injector.instanceOf[CheckYourAASetupAnswersView]
+        val view   = application.injector.instanceOf[CheckYourAASetupAnswersView]
 
-        val expectedSeq = Seq(
-          PayTaxCharge1516Summary.row(ua)(messages(application))).flatten
+        val expectedSeq = Seq(PayTaxCharge1516Summary.row(ua)(messages(application))).flatten
 
         val list = SummaryListViewModel(expectedSeq)
 

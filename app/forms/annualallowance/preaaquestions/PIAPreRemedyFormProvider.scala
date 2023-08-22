@@ -29,10 +29,11 @@ class PIAPreRemedyFormProvider @Inject() extends Mappings {
       "value" -> bigInt(
         "pIAPreRemedy.error.required." + period,
         "pIAPreRemedy.error.nonNumeric." + period,
-        "pIAPreRemedy.error.nonNumeric." + period,
+        "pIAPreRemedy.error.nonNumeric." + period
       )
-    .verifying(
-      minimumValue[BigInt](0, "pIAPreRemedy.error.minimum." + period),
-      maximumValue[BigInt](BigInt("999999999"), "pIAPreRemedy.error.maximum." + period))
-  )
+        .verifying(
+          minimumValue[BigInt](0, "pIAPreRemedy.error.minimum." + period),
+          maximumValue[BigInt](BigInt("999999999"), "pIAPreRemedy.error.maximum." + period)
+        )
+    )
 }

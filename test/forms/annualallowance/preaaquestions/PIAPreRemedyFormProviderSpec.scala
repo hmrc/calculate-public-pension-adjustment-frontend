@@ -23,8 +23,7 @@ import play.api.data.FormError
 class PIAPreRemedyFormProviderSpec extends IntFieldBehaviours {
 
   val formProvider = new PIAPreRemedyFormProvider()
-  val form = formProvider(Period._2013)
-
+  val form         = formProvider(Period._2013)
 
   ".value" - {
 
@@ -32,7 +31,6 @@ class PIAPreRemedyFormProviderSpec extends IntFieldBehaviours {
 
     val minimum = 0
     val maximum = 999999999
-
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 

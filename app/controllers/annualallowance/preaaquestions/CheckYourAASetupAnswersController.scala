@@ -55,9 +55,9 @@ class CheckYourAASetupAnswersController @Inject() (
 
     def maybePensionInputAmounts(userAnswers: UserAnswers): Boolean =
       userAnswers.get(PayTaxCharge1516Page) match {
-        case Some(true) => false
+        case Some(true)  => false
         case Some(false) => true
-        case None => false
+        case None        => false
       }
 
     Ok(
