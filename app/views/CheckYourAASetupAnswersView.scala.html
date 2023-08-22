@@ -20,7 +20,7 @@
         govukButton: GovukButton
 )
 
-@(subHeadingMessageKey: String, continueURL:Call, list: SummaryList, pIAInputSubHeading: String, pIAList: SummaryList)(implicit request: Request[_], messages: Messages)
+@(maybePensionInputAmounts: Boolean, subHeadingMessageKey: String, continueURL:Call, list: SummaryList, pIAInputSubHeading: String, pIAList: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
@@ -30,7 +30,8 @@
 
     @govukSummaryList(list)
 
-    <h2 class="govuk-heading-m">@messages(pIAInputSubHeading)</h2>
+    @if(maybePensionInputAmounts) {
+    <h2 class="govuk-heading-m">@messages(pIAInputSubHeading)</h2>}
 
         @govukSummaryList(pIAList)
 

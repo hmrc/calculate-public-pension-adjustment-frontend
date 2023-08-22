@@ -53,9 +53,16 @@ class CheckYourAASetupAnswersController @Inject() (
     val pIARows: Seq[Option[SummaryListRow]] =
       PIAPreRemedySummary.rows(request.userAnswers)
 
+    def maybePensionInputAmounts(userAnswers: UserAnswers): Boolean =
+      userAnswers.get(PayTaxCharge1516Page) match {
+        case Some(true) => false
+        case Some(false) => true
+        case None => false
+      }
+
     Ok(
       view(
-//        maybePensionInputAmounts(request.userAnswers),
+        maybePensionInputAmounts(request.userAnswers),
         "checkYourAnswers.aa.subHeading",
         controllers.routes.TaskListController.onPageLoad(),
         SummaryListViewModel(rows.flatten),
@@ -63,15 +70,5 @@ class CheckYourAASetupAnswersController @Inject() (
         SummaryListViewModel(pIARows.flatten)
       )
     )
-
-
-    //TODO MAKE DYNAMIC
-//    def maybePensionInputAmounts(userAnswers: UserAnswers): Boolean =
-//      userAnswers.get(PayTaxCharge1516Page) match {
-//        case Some(true) => true
-//        case _ => false
-//      }
-
-
   }
 }
