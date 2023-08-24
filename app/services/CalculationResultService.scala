@@ -21,9 +21,10 @@ import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, Income, PensionSchemeDetails, PensionSchemeInputAmounts, Period, SchemeIndex, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
+import pages.lifetimeallowance._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
@@ -106,7 +107,11 @@ class CalculationResultService @Inject() (
 
     val tYears: List[TaxYear] = _2013To2015TaxYears ++ _2016To2023TaxYears
 
-    CalculationResults.CalculationInputs(resubmission, Some(AnnualAllowance(scottishTaxYears, tYears)), None)
+    CalculationResults.CalculationInputs(
+      resubmission,
+      Some(AnnualAllowance(scottishTaxYears, tYears)),
+      buildLifeTimeAllowance(userAnswers)
+    )
   }
 
   def toTaxYear2013To2015(userAnswers: UserAnswers, period: Period): Option[TaxYear2013To2015] =
@@ -238,6 +243,86 @@ class CalculationResultService @Inject() (
       }
     } else
       None
+  }
+
+  def buildLifeTimeAllowance(userAnswers: UserAnswers): Option[LifeTimeAllowance] = {
+
+    val benefitCrystallisationEventFlag: Option[Boolean] = userAnswers.get(HadBenefitCrystallisationEventPage)
+
+    val changeInLifetimeAllowancePercentageInformedFlag: Option[Boolean] =
+      userAnswers.get(ChangeInLifetimeAllowancePage)
+
+    val changeInTaxCharge: Option[ChangeInTaxCharge] = userAnswers.get(ChangeInTaxChargePage)
+
+    (benefitCrystallisationEventFlag, changeInLifetimeAllowancePercentageInformedFlag, changeInTaxCharge) match {
+      case (Some(true), Some(true), Some(changeInTaxChargeType)) if changeInTaxChargeType != ChangeInTaxCharge.None =>
+        val benefitCrystallisationEventDate: LocalDate =
+          userAnswers.get(DateOfBenefitCrystallisationEventPage).getOrElse(LocalDate.now)
+
+        val lifetimeAllowanceProtectionOrEnhancements: LtaProtectionOrEnhancements =
+          userAnswers.get(LtaProtectionOrEnhancementsPage).getOrElse(LtaProtectionOrEnhancements.Protection)
+
+        val protectionType: ProtectionType =
+          userAnswers.get(ProtectionTypePage).getOrElse(ProtectionType.EnhancedProtection)
+
+        val protectionReference: String = userAnswers.get(ProtectionReferencePage).getOrElse("")
+
+        val protectionTypeOrEnhancementChangedFlag: Boolean =
+          userAnswers.get(ProtectionTypeEnhancementChangedPage).getOrElse(false)
+
+        val newProtectionTypeOrEnhancement: Option[WhatNewProtectionTypeEnhancement] =
+          userAnswers.get(WhatNewProtectionTypeEnhancementPage)
+
+        val newProtectionTypeOrEnhancementReference: Option[String] =
+          userAnswers.get(ReferenceNewProtectionTypeEnhancementPage)
+
+        val previousLifetimeAllowanceChargeFlag: Boolean = userAnswers.get(LifetimeAllowanceChargePage).getOrElse(false)
+
+        val previousLifetimeAllowanceChargePaymentMethod: Option[ExcessLifetimeAllowancePaid] =
+          userAnswers.get(ExcessLifetimeAllowancePaidPage)
+
+        val previousLifetimeAllowanceChargeAmount: Option[Int] =
+          userAnswers.get(LifetimeAllowanceChargeAmountPage).map(_.toInt)
+
+        val previousLifetimeAllowanceChargePaidBy: Option[WhoPaidLTACharge] = userAnswers.get(WhoPaidLTAChargePage)
+
+        val previousLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[SchemeNameAndTaxRef] =
+          userAnswers.get(SchemeNameAndTaxRefPage)
+
+        val newLifetimeAllowanceChargeAmount: Int = userAnswers.get(ValueNewLtaChargePage).getOrElse(BigInt(0)).toInt
+
+        val newLifetimeAllowanceChargeWillBePaidBy: Option[WhoPayingExtraLtaCharge] =
+          userAnswers.get(WhoPayingExtraLtaChargePage)
+
+        val newLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[LtaPensionSchemeDetails] =
+          userAnswers.get(LtaPensionSchemeDetailsPage)
+
+        Some(
+          LifeTimeAllowance(
+            true,
+            benefitCrystallisationEventDate,
+            true,
+            changeInTaxChargeType,
+            lifetimeAllowanceProtectionOrEnhancements,
+            protectionType,
+            protectionReference,
+            protectionTypeOrEnhancementChangedFlag,
+            newProtectionTypeOrEnhancement,
+            newProtectionTypeOrEnhancementReference,
+            previousLifetimeAllowanceChargeFlag,
+            previousLifetimeAllowanceChargePaymentMethod,
+            previousLifetimeAllowanceChargeAmount,
+            previousLifetimeAllowanceChargePaidBy,
+            previousLifetimeAllowanceChargeSchemeNameAndTaxRef,
+            newLifetimeAllowanceChargeAmount,
+            newLifetimeAllowanceChargeWillBePaidBy,
+            newLifetimeAllowanceChargeSchemeNameAndTaxRef
+          )
+        )
+
+      case _ =>
+        None
+    }
 
   }
 
