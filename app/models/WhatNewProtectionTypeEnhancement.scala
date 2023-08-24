@@ -24,15 +24,21 @@ sealed trait WhatNewProtectionTypeEnhancement
 
 object WhatNewProtectionTypeEnhancement extends Enumerable.Implicits {
 
-  case object EnhancedProtection extends WithName(s"option1") with WhatNewProtectionTypeEnhancement
-  case object PrimaryProtection extends WithName(s"option2") with WhatNewProtectionTypeEnhancement
-  case object FixedProtection extends WithName(s"option3") with WhatNewProtectionTypeEnhancement
-  case object FixedProtection2014 extends WithName(s"option4") with WhatNewProtectionTypeEnhancement
-  case object FixedProtection2016 extends WithName(s"option5") with WhatNewProtectionTypeEnhancement
-  case object IndividualProtection2014 extends WithName(s"option6") with WhatNewProtectionTypeEnhancement
-  case object IndividualProtection2016 extends WithName(s"option7") with WhatNewProtectionTypeEnhancement
-  case object InternationalEnhancement extends WithName(s"option8") with WhatNewProtectionTypeEnhancement
-  case object PensionCredit extends WithName(s"option9") with WhatNewProtectionTypeEnhancement
+  case object EnhancedProtection extends WithName(s"enhancedProtection") with WhatNewProtectionTypeEnhancement
+  case object PrimaryProtection extends WithName(s"primaryProtection") with WhatNewProtectionTypeEnhancement
+  case object FixedProtection extends WithName(s"fixedProtection") with WhatNewProtectionTypeEnhancement
+  case object FixedProtection2014 extends WithName(s"fixedProtection2014") with WhatNewProtectionTypeEnhancement
+  case object FixedProtection2016 extends WithName(s"fixedProtection2016") with WhatNewProtectionTypeEnhancement
+  case object IndividualProtection2014
+      extends WithName(s"individualProtection2014")
+      with WhatNewProtectionTypeEnhancement
+  case object IndividualProtection2016
+      extends WithName(s"individualProtection2016")
+      with WhatNewProtectionTypeEnhancement
+  case object InternationalEnhancement
+      extends WithName(s"internationalEnhancement")
+      with WhatNewProtectionTypeEnhancement
+  case object PensionCredit extends WithName(s"pensionCredit") with WhatNewProtectionTypeEnhancement
 
   val values: Seq[WhatNewProtectionTypeEnhancement] = Seq(
     EnhancedProtection,

@@ -24,10 +24,10 @@ sealed trait ChangeInTaxCharge
 
 object ChangeInTaxCharge extends Enumerable.Implicits {
 
-  case object NewCharge extends WithName(s"changeInTaxCharge.option1") with ChangeInTaxCharge
-  case object IncreasedCharge extends WithName(s"changeInTaxCharge.option2") with ChangeInTaxCharge
-  case object DecreasedCharge extends WithName(s"changeInTaxCharge.option3") with ChangeInTaxCharge
-  case object None extends WithName(s"changeInTaxCharge.option4") with ChangeInTaxCharge
+  case object NewCharge extends WithName(s"newCharge") with ChangeInTaxCharge
+  case object IncreasedCharge extends WithName(s"increasedCharge") with ChangeInTaxCharge
+  case object DecreasedCharge extends WithName(s"decreasedCharge") with ChangeInTaxCharge
+  case object None extends WithName(s"none") with ChangeInTaxCharge
 
   val values: Seq[ChangeInTaxCharge] = Seq(
     NewCharge,
@@ -39,7 +39,7 @@ object ChangeInTaxCharge extends Enumerable.Implicits {
   def options(implicit messages: Messages): Seq[RadioItem] = {
     val normalOptions = values.zipWithIndex.map { case (value, index) =>
       RadioItem(
-        content = Text(messages(s"${value.toString}")),
+        content = Text(messages(s"changeInTaxCharge.${value.toString}")),
         value = Some(value.toString),
         id = Some(s"value_$index")
       )

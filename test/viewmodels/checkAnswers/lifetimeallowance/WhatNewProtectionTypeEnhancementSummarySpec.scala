@@ -43,7 +43,7 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
       WhatNewProtectionTypeEnhancementSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.option2")),
+          value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.primaryProtection")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
