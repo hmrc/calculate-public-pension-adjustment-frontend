@@ -58,31 +58,28 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
       }
     } else SectionStatus.NotStarted
 
-  private def statusInFirstPeriod(answers: UserAnswers) = {
+  private def statusInFirstPeriod(answers: UserAnswers) =
     answers.get(MemberOfPublicPensionSchemePage(period)) match {
       case Some(false) =>
         statusInDefinedBenefitOrContributionWhenMember(answers)
-      case Some(true) =>
+      case Some(true)  =>
         statusInDefinedBenefitOrContributionWhenNotMember(answers)
-      case None => SectionStatus.NotStarted
+      case None        => SectionStatus.NotStarted
     }
-  }
 
-  private def statusInDefinedBenefitOrContributionWhenNotMember(answers: UserAnswers) = {
+  private def statusInDefinedBenefitOrContributionWhenNotMember(answers: UserAnswers) =
     answers.get(DefinedContributionPensionSchemePage) match {
-      case Some(true) => statusInDefinedBenefitOrContributionSection(answers)
+      case Some(true)  => statusInDefinedBenefitOrContributionSection(answers)
       case Some(false) => statusOfPayACharge(answers)
-      case None => SectionStatus.InProgress
+      case None        => SectionStatus.InProgress
     }
-  }
 
-  private def statusInDefinedBenefitOrContributionWhenMember(answers: UserAnswers) = {
+  private def statusInDefinedBenefitOrContributionWhenMember(answers: UserAnswers) =
     answers.get(DefinedContributionPensionSchemePage) match {
-      case Some(true) => statusInDefinedBenefitOrContributionSection(answers)
+      case Some(true)  => statusInDefinedBenefitOrContributionSection(answers)
       case Some(false) => SectionStatus.Completed
-      case None => SectionStatus.InProgress
+      case None        => SectionStatus.InProgress
     }
-  }
 
   private def statusInDefinedBenefitOrContributionSection(answers: UserAnswers) =
     answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
@@ -95,12 +92,11 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
       case None        => SectionStatus.InProgress
     }
 
-  private def statusInSubsequentPeriod(answers: UserAnswers) = {
+  private def statusInSubsequentPeriod(answers: UserAnswers) =
     answers.get(TotalIncomePage(period)) match {
       case Some(_) => SectionStatus.Completed
       case None    => SectionStatus.InProgress
     }
-  }
 
   private def statusWhenNoContributionsInPeriod(answers: UserAnswers) =
     answers.get(OtherDefinedBenefitOrContributionPage(period)) match {

@@ -58,7 +58,7 @@ class AASectionSpec extends SpecBase {
         .get
         .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.Both)
         .get
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+      val status      = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
 
       status mustBe (SectionStatus.InProgress)
     }
@@ -337,7 +337,6 @@ class AASectionSpec extends SpecBase {
       status mustBe (SectionStatus.NotStarted)
     }
 
-
     "when user answers no to member of public pension scheme and has DC and has answered defined contribution amounts" in {
 
       val userAnswers = emptyUserAnswers
@@ -395,16 +394,16 @@ class AASectionSpec extends SpecBase {
 
     "when user has no defined benefit and not a member of a public pension scheme and not answered total income" in {
 
-    val userAnswers = emptyUserAnswers
-      .set(DefinedContributionPensionSchemePage, false)
-      .get
-      .set(MemberOfPublicPensionSchemePage(Period._2017), false)
-      .get
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberOfPublicPensionSchemePage(Period._2017), false)
+        .get
 
-    val status = AASection(Period._2017, SchemeIndex(0)).status(userAnswers)
+      val status = AASection(Period._2017, SchemeIndex(0)).status(userAnswers)
 
-    status mustBe (SectionStatus.InProgress)
-  }
+      status mustBe (SectionStatus.InProgress)
+    }
 
     "when user has not answered member of public pension scheme" in {
       val userAnswers = emptyUserAnswers

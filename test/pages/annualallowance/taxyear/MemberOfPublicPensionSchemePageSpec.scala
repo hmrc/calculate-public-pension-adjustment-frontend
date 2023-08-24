@@ -190,9 +190,7 @@ class MemberOfPublicPensionSchemePageSpec extends PageBehaviours {
         )
         .success
         .value
-        .set(AddAnotherSchemePage(period, SchemeIndex(0)),
-          true
-        )
+        .set(AddAnotherSchemePage(period, SchemeIndex(0)), true)
         .success
         .value
         .set(
@@ -214,9 +212,7 @@ class MemberOfPublicPensionSchemePageSpec extends PageBehaviours {
         .success
         .value
 
-      val cleanedUserAnswers = MemberOfPublicPensionSchemePage(period).cleanup(Some(false), ua)
-        .success
-        .value
+      val cleanedUserAnswers = MemberOfPublicPensionSchemePage(period).cleanup(Some(false), ua).success.value
 
       cleanedUserAnswers.get(MemberMoreThanOnePensionPage(period)) mustBe None
       cleanedUserAnswers.get(WhichSchemePage(period, SchemeIndex(0))) mustBe None

@@ -69,14 +69,13 @@ case class MemberOfPublicPensionSchemePage(period: Period) extends QuestionPage[
       case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
     val indeciesToClean = SchemeService.allSchemeIndices
     value
       .map {
         case false =>
           Try(schemeIndexCleanup(userAnswers, indeciesToClean, period))
-        case true =>
+        case true  =>
           super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
@@ -97,8 +96,9 @@ case class MemberOfPublicPensionSchemePage(period: Period) extends QuestionPage[
             .flatMap(_.remove(HowMuchAAChargeSchemePaidPage(period, schemeIndex)))
             .flatMap(_.remove(AddAnotherSchemePage(period, schemeIndex)))
             .get,
-          schemeIndecies.tail, period
+          schemeIndecies.tail,
+          period
         )
-      case None => answers
+      case None                           => answers
     }
 }
