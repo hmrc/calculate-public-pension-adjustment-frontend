@@ -16,9 +16,10 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, PSTR, PensionSchemeDetails, PensionSchemeInputAmounts, Period, SchemeIndex, WhoPaidAACharge}
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.behaviours.PageBehaviours
+
 import services.PeriodService
 
 class MemberOfPublicPensionSchemePageSpec extends PageBehaviours {
@@ -131,6 +132,105 @@ class MemberOfPublicPensionSchemePageSpec extends PageBehaviours {
           checkNavigation(nextPageUrl, "/threshold-income/2017")
         }
       }
+    }
+  }
+
+  "cleanup" - {
+
+    "must cleanup correctly when answered no" in {
+
+      val period = Period._2020
+
+      val ua = emptyUserAnswers
+        .set(
+          MemberMoreThanOnePensionPage(period),
+          true
+        )
+        .success
+        .value
+        .set(
+          WhichSchemePage(period, SchemeIndex(0)),
+          PSTR.New
+        )
+        .success
+        .value
+        .set(
+          PensionSchemeDetailsPage(period, SchemeIndex(0)),
+          PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")
+        )
+        .success
+        .value
+        .set(
+          PensionSchemeInputAmountsPage(period, SchemeIndex(0)),
+          PensionSchemeInputAmounts(1, 2)
+        )
+        .success
+        .value
+        .set(
+          PayAChargePage(period, SchemeIndex(0)),
+          true
+        )
+        .success
+        .value
+        .set(
+          WhoPaidAAChargePage(period, SchemeIndex(0)),
+          WhoPaidAACharge.Both
+        )
+        .success
+        .value
+        .set(
+          HowMuchAAChargeYouPaidPage(period, SchemeIndex(0)),
+          BigInt(50)
+        )
+        .success
+        .value
+        .set(
+          HowMuchAAChargeSchemePaidPage(period, SchemeIndex(0)),
+          BigInt(50)
+        )
+        .success
+        .value
+        .set(AddAnotherSchemePage(period, SchemeIndex(0)),
+          true
+        )
+        .success
+        .value
+        .set(
+          WhichSchemePage(period, SchemeIndex(1)),
+          "SchemeRef"
+        )
+        .success
+        .value
+        .set(
+          PensionSchemeInputAmountsPage(period, SchemeIndex(1)),
+          PensionSchemeInputAmounts(1, 2)
+        )
+        .success
+        .value
+        .set(
+          PayAChargePage(period, SchemeIndex(1)),
+          false
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers = MemberOfPublicPensionSchemePage(period).cleanup(Some(false), ua)
+        .success
+        .value
+
+      cleanedUserAnswers.get(MemberMoreThanOnePensionPage(period)) mustBe None
+      cleanedUserAnswers.get(WhichSchemePage(period, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(period, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(PensionSchemeInputAmountsPage(period, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(PayAChargePage(period, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(WhoPaidAAChargePage(period, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(HowMuchAAChargeYouPaidPage(period, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(HowMuchAAChargeSchemePaidPage(period, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(AddAnotherSchemePage(period, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(WhichSchemePage(period, SchemeIndex(1))) mustBe None
+      cleanedUserAnswers.get(PensionSchemeInputAmountsPage(period, SchemeIndex(1))) mustBe None
+      cleanedUserAnswers.get(PayAChargePage(period, SchemeIndex(1))) mustBe None
+
     }
   }
 }

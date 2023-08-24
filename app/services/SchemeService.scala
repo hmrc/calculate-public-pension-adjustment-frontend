@@ -62,5 +62,5 @@ object SchemeService {
     allSchemeDetails
   }
 
-  private def allSchemeIndices: Seq[SchemeIndex] = 0.to(4).map(i => SchemeIndex(i))
+   def allSchemeIndices: Seq[SchemeIndex] = 0.to(4).map(i => SchemeIndex(i))
 }

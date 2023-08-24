@@ -29,6 +29,7 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
   override def pages(): Seq[Page] =
     Seq(
       WhatYouWillNeedPage(period),
+      MemberOfPublicPensionSchemePage(period),
       MemberMoreThanOnePensionPage(period),
       WhichSchemePage(period, schemeIndex),
       PensionSchemeDetailsPage(period, schemeIndex),
@@ -57,12 +58,31 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
       }
     } else SectionStatus.NotStarted
 
-  private def statusInFirstPeriod(answers: UserAnswers) =
-    answers.get(DefinedContributionPensionSchemePage) match {
-      case Some(true)  => statusInDefinedBenefitOrContributionSection(answers)
-      case Some(false) => statusOfPayACharge(answers)
-      case None        => SectionStatus.InProgress
+  private def statusInFirstPeriod(answers: UserAnswers) = {
+    answers.get(MemberOfPublicPensionSchemePage(period)) match {
+      case Some(false) =>
+        statusInDefinedBenefitOrContributionWhenMember(answers)
+      case Some(true) =>
+        statusInDefinedBenefitOrContributionWhenNotMember(answers)
+      case None => SectionStatus.NotStarted
     }
+  }
+
+  private def statusInDefinedBenefitOrContributionWhenNotMember(answers: UserAnswers) = {
+    answers.get(DefinedContributionPensionSchemePage) match {
+      case Some(true) => statusInDefinedBenefitOrContributionSection(answers)
+      case Some(false) => statusOfPayACharge(answers)
+      case None => SectionStatus.InProgress
+    }
+  }
+
+  private def statusInDefinedBenefitOrContributionWhenMember(answers: UserAnswers) = {
+    answers.get(DefinedContributionPensionSchemePage) match {
+      case Some(true) => statusInDefinedBenefitOrContributionSection(answers)
+      case Some(false) => SectionStatus.Completed
+      case None => SectionStatus.InProgress
+    }
+  }
 
   private def statusInDefinedBenefitOrContributionSection(answers: UserAnswers) =
     answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
@@ -75,11 +95,12 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
       case None        => SectionStatus.InProgress
     }
 
-  private def statusInSubsequentPeriod(answers: UserAnswers) =
+  private def statusInSubsequentPeriod(answers: UserAnswers) = {
     answers.get(TotalIncomePage(period)) match {
       case Some(_) => SectionStatus.Completed
       case None    => SectionStatus.InProgress
     }
+  }
 
   private def statusWhenNoContributionsInPeriod(answers: UserAnswers) =
     answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
@@ -140,7 +161,7 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
     period == Period._2016PreAlignment
 
   private def firstPageIsAnswered(answers: UserAnswers) =
-    answers.get(MemberMoreThanOnePensionPage(period)).isDefined
+    answers.get(MemberOfPublicPensionSchemePage(period)).isDefined
 
   def navigateTo(answers: UserAnswers): Page =
     if (status(answers) == SectionStatus.Completed) {

@@ -16,11 +16,14 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period, UserAnswers}
+import models.{NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import services.SchemeService
+
+import scala.util.Try
 
 case class MemberOfPublicPensionSchemePage(period: Period) extends QuestionPage[Boolean] {
 
@@ -64,5 +67,38 @@ case class MemberOfPublicPensionSchemePage(period: Period) extends QuestionPage[
       case Some(false) =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    val indeciesToClean = SchemeService.allSchemeIndices
+    value
+      .map {
+        case false =>
+          Try(schemeIndexCleanup(userAnswers, indeciesToClean, period))
+        case true =>
+          super.cleanup(value, userAnswers)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
+  }
+
+  private def schemeIndexCleanup(answers: UserAnswers, schemeIndecies: Seq[SchemeIndex], period: Period): UserAnswers =
+    schemeIndecies.headOption match {
+      case Some(schemeIndex: SchemeIndex) =>
+        schemeIndexCleanup(
+          answers
+            .remove(MemberMoreThanOnePensionPage(period))
+            .flatMap(_.remove(WhichSchemePage(period, schemeIndex)))
+            .flatMap(_.remove(PensionSchemeDetailsPage(period, schemeIndex)))
+            .flatMap(_.remove(PensionSchemeInputAmountsPage(period, schemeIndex)))
+            .flatMap(_.remove(PayAChargePage(period, schemeIndex)))
+            .flatMap(_.remove(WhoPaidAAChargePage(period, schemeIndex)))
+            .flatMap(_.remove(HowMuchAAChargeYouPaidPage(period, schemeIndex)))
+            .flatMap(_.remove(HowMuchAAChargeSchemePaidPage(period, schemeIndex)))
+            .flatMap(_.remove(AddAnotherSchemePage(period, schemeIndex)))
+            .get,
+          schemeIndecies.tail, period
+        )
+      case None => answers
     }
 }
