@@ -324,8 +324,8 @@ ltaProtectionOrEnhancements.change.hidden = cy: LtaProtectionOrEnhancements
 
 protectionType.title = cy: What is your protection type?
 protectionType.heading = cy: What is your protection type?
-protectionType.enhancedProtection = cy: Enhanced Protection
-protectionType.primaryProtection = cy: Primary Protection
+protectionType.enhancedProtection = cy: Enhanced protection
+protectionType.primaryProtection = cy: Primary protection
 protectionType.fixedProtection = cy: Fixed protection
 protectionType.fixedProtection2014 = cy: Fixed protection 2014
 protectionType.fixedProtection2016 = cy: Fixed protection 2016
