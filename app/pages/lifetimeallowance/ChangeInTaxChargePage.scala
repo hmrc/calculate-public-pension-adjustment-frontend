@@ -29,7 +29,15 @@ case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
   override def toString: String = "changeInTaxCharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
-  override protected def navigateInCheckMode(answers: UserAnswers): Call  =
+    answers.get(ChangeInTaxChargePage) match {
+      case Some(ChangeInTaxCharge.NewCharge) | Some(ChangeInTaxCharge.DecreasedCharge) | Some(
+            ChangeInTaxCharge.IncreasedCharge
+          ) =>
+        ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
+      case _ =>
+        ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+    }
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
 }
