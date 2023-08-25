@@ -32,7 +32,7 @@ object ChangeInTaxChargeSummary {
     answers.get(ChangeInTaxChargePage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
-          HtmlFormat.escape(messages(s"$answer"))
+          HtmlFormat.escape(messages(s"changeInTaxCharge.$answer"))
         )
       )
 
