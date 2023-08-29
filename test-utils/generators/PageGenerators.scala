@@ -24,6 +24,8 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  // scala fmt ignore
+
   implicit lazy val arbitraryFlexiAccessDefinedContributionAmountPage
     : Arbitrary[FlexiAccessDefinedContributionAmountPage.type] =
     Arbitrary(FlexiAccessDefinedContributionAmountPage)

@@ -27,6 +27,8 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  // scala fmt ignore
+
   implicit lazy val arbitraryFlexiAccessDefinedContributionAmountUserAnswersEntry
     : Arbitrary[(FlexiAccessDefinedContributionAmountPage.type, JsValue)] =
     Arbitrary {
