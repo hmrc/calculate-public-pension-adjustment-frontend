@@ -22,7 +22,7 @@ import models.CalculationResults.{CalculationResponse, CalculationResultsViewMod
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
-import models.{AnnualAllowance, CalculationResults, Period, TaxYear2013To2015, TaxYearScheme, UserAnswers}
+import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, Period, ProtectionType, SchemeNameAndTaxRef, TaxYear2013To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
@@ -640,6 +640,90 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |""".stripMargin)
       .as[JsObject]
 
+    val data4 = Json
+      .parse("""
+        |{
+        |    "savingsStatement": true,
+        |    "resubmittingAdjustment": false,
+        |    "reportingChange": [
+        |      "lifetimeAllowance"
+        |    ],
+        |    "lta": {
+        |      "hadBenefitCrystallisationEvent": true,
+        |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
+        |      "changeInLifetimeAllowance": true,
+        |      "changeInTaxCharge": "increasedCharge",
+        |      "ltaProtectionOrEnhancements": "protection",
+        |      "protectionType": "fixedProtection2014",
+        |      "protectionReference": "R41AB678TR23355",
+        |      "protectionTypeEnhancementChanged": true,
+        |      "whatNewProtectionTypeEnhancement": "individualProtection2016",
+        |      "referenceNewProtectionTypeEnhancement": "2134567801",
+        |      "lifetimeAllowanceCharge": true,
+        |      "excessLifetimeAllowancePaid": "annualPayment",
+        |      "lifetimeAllowanceChargeAmount": 20000,
+        |      "whoPaidLTACharge": "pensionScheme",
+        |      "schemeNameAndTaxRef": {
+        |        "name": "Scheme 1",
+        |        "taxRef": "00348916RT"
+        |      },
+        |      "valueNewLtaCharge": 30000,
+        |      "whoPayingExtraLtaCharge": "you"
+        |    }
+        |  }
+        |""".stripMargin)
+      .as[JsObject]
+
+    val data5 = Json
+      .parse("""
+               {
+               |    "savingsStatement": true,
+               |    "resubmittingAdjustment": false,
+               |    "reportingChange": [
+               |      "lifetimeAllowance"
+               |    ],
+               |    "lta": {
+               |      "hadBenefitCrystallisationEvent": true,
+               |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
+               |      "changeInLifetimeAllowance": true,
+               |      "changeInTaxCharge": "none"
+               |    }
+               |  }
+               |""".stripMargin)
+      .as[JsObject]
+
+    val data6 = Json
+      .parse("""
+               {
+               |    "savingsStatement": true,
+               |    "resubmittingAdjustment": false,
+               |    "reportingChange": [
+               |      "lifetimeAllowance"
+               |    ],
+               |    "lta": {
+               |      "hadBenefitCrystallisationEvent": true,
+               |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
+               |      "changeInLifetimeAllowance": false
+               |    }
+               |  }
+               |""".stripMargin)
+      .as[JsObject]
+
+    val data7 = Json
+      .parse("""
+               {
+               |    "savingsStatement": true,
+               |    "resubmittingAdjustment": false,
+               |    "reportingChange": [
+               |      "lifetimeAllowance"
+               |    ],
+               |    "lta": {
+               |      "hadBenefitCrystallisationEvent": false
+               |    }
+               |  }
+               |""".stripMargin)
+      .as[JsObject]
+
     val userAnswers1 = UserAnswers(
       id = "session-5a356f3a-c83e-4e8c-a957-226163ba285f",
       data = data1
@@ -982,6 +1066,58 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           ),
           None
         )
+      }
+
+    }
+
+    "buildLifeTimeAllowance" - {
+
+      "should return Some LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user inputs" in {
+        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data4))
+
+        result mustBe Some(
+          LifeTimeAllowance(
+            true,
+            LocalDate.parse("2018-11-28"),
+            true,
+            ChangeInTaxCharge.IncreasedCharge,
+            LtaProtectionOrEnhancements.Protection,
+            ProtectionType.FixedProtection2014,
+            "R41AB678TR23355",
+            true,
+            Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
+            Some("2134567801"),
+            true,
+            Some(ExcessLifetimeAllowancePaid.Annualpayment),
+            Some(20000),
+            Some(WhoPaidLTACharge.PensionScheme),
+            Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
+            30000,
+            Some(WhoPayingExtraLtaCharge.You),
+            None
+          )
+        )
+      }
+
+      "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input changeInTaxCharge as none" in {
+
+        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data5))
+
+        result mustBe None
+      }
+
+      "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input changeInLifetimeAllowance as false" in {
+
+        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data6))
+
+        result mustBe None
+      }
+
+      "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input hadBenefitCrystallisationEvent as false" in {
+
+        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data7))
+
+        result mustBe None
       }
 
     }
