@@ -24,6 +24,7 @@ import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.DefinedContributionAmountPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -32,19 +33,24 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.annualallowance.taxyear.DefinedContributionAmountView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new DefinedContributionAmountFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(Seq("6 April 2022 to 5 April 2023"))
+  val flexiForm    = formProvider(Seq("6 April 2022 to 12 December 2022"))
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt("0")
 
   lazy val definedContributionAmountRoute =
-    DefinedContributionAmountController.onPageLoad(NormalMode, Period._2013).url
+    DefinedContributionAmountController.onPageLoad(NormalMode, Period._2023).url
+
+  lazy val definedContributionAmountRouteFlexiYear =
+    DefinedContributionAmountController.onPageLoad(NormalMode, Period._2023).url
 
   "DefinedContributionAmount Controller" - {
 
@@ -63,8 +69,8 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
         contentAsString(result) mustEqual view(
           form,
           NormalMode,
-          Period._2013,
-          "6 April 2012 to 5 April 2013"
+          Period._2023,
+          "6 April 2022 to 5 April 2023"
         )(
           request,
           messages(application)
@@ -72,10 +78,42 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
+    "must return OK and the correct view when user indicated flexi year for a GET" in {
+
+      val validDate = LocalDate.of(2022, 12, 12)
+
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(FlexibleAccessStartDatePage, validDate)
+        .success
+        .value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, definedContributionAmountRouteFlexiYear)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[DefinedContributionAmountView]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          flexiForm,
+          NormalMode,
+          Period._2023,
+          "6 April 2022 to 12 December 2022"
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+
+    }
+
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(DefinedContributionAmountPage(Period._2013), validAnswer)
+        .set(DefinedContributionAmountPage(Period._2023), validAnswer)
         .success
         .value
 
@@ -92,8 +130,8 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
         contentAsString(result) mustEqual view(
           form.fill(validAnswer),
           NormalMode,
-          Period._2013,
-          "6 April 2012 to 5 April 2013"
+          Period._2023,
+          "6 April 2022 to 5 April 2023"
         )(
           request,
           messages(application)
@@ -144,8 +182,43 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          Period._2013,
-          "6 April 2012 to 5 April 2013"
+          Period._2023,
+          "6 April 2022 to 5 April 2023"
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must return a Bad Request and errors when invalid data is submitted and user indicates flexi year" in {
+
+      val validDate = LocalDate.of(2022, 12, 12)
+
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(FlexibleAccessStartDatePage, validDate)
+        .success
+        .value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, definedContributionAmountRouteFlexiYear)
+            .withFormUrlEncodedBody(("value", "invalid value"))
+
+        val boundForm = flexiForm.bind(Map("value" -> "invalid value"))
+
+        val view = application.injector.instanceOf[DefinedContributionAmountView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(
+          boundForm,
+          NormalMode,
+          Period._2023,
+          "6 April 2022 to 12 December 2022"
         )(
           request,
           messages(application)

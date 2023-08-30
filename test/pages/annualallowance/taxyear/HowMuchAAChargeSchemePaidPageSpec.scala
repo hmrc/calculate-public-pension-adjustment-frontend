@@ -56,7 +56,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
       .value
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2018")
+    checkNavigation(nextPageUrl, "/annual-allowance/2018/contributed-to-any-other-dc-or-db-scheme")
   }
 
   "must redirect to threshold income page when does not have dc scheme and not member more than one scheme in standard period" in {
@@ -71,7 +71,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
       .value
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/threshold-income/2018")
+    checkNavigation(nextPageUrl, "/annual-allowance/2018/threshold-income")
   }
 
   "must redirect to other db/dc page when does have dc scheme and not member more than one scheme in 2016-pre period" in {
@@ -86,7 +86,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
       .value
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-pre")
+    checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/contributed-to-any-other-dc-or-db-scheme")
   }
 
   "must redirect to check your answers page when does not have dc scheme and not member more than one scheme in 2016-pre period" in {
@@ -101,7 +101,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
       .value
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers-period/2016-pre")
+    checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/check-answers")
   }
 
   "must redirect to other db/dc page when does have dc scheme and not member more than one scheme in 2016-post period" in {
@@ -116,7 +116,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
       .value
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-post")
+    checkNavigation(nextPageUrl, "/annual-allowance/2016-post/contributed-to-any-other-dc-or-db-scheme")
   }
 
   "must redirect to total income page when does not have dc scheme and not member more than one scheme in 2016-post period" in {
@@ -131,7 +131,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
       .value
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/total-income/2016-post")
+    checkNavigation(nextPageUrl, "/annual-allowance/2016-post/total-income")
   }
 
   "must redirect to check your answers controller when user submits in check mode" in {
@@ -140,6 +140,6 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(CheckMode, emptyUserAnswers).url
 
-    checkNavigation(nextPageUrl, "/check-your-answers-period/2018")
+    checkNavigation(nextPageUrl, "/annual-allowance/2018/check-answers")
   }
 }

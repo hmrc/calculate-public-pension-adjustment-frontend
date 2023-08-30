@@ -24,7 +24,7 @@ class PayAChargeFormProviderSpec extends BooleanFieldBehaviours {
   val requiredKey = "payACharge.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new PayAChargeFormProvider()()
+  val form = new PayAChargeFormProvider()("")
 
   ".value" - {
 

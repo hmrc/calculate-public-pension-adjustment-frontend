@@ -42,7 +42,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
           .value
         val result = ThresholdIncomePage(_2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/adjusted-income/2013")
+        checkNavigation(result, "/annual-allowance/2013/adjusted-income")
       }
 
       "to TotalIncomePage when answered false" in {
@@ -55,7 +55,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
           .value
         val result = ThresholdIncomePage(_2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/total-income/2013")
+        checkNavigation(result, "/annual-allowance/2013/total-income")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -76,7 +76,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
         .value
       val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/check-your-answers-period/2013")
+      checkNavigation(result, "/annual-allowance/2013/check-answers")
     }
 
     "must Navigate correctly to CYA in check mode when answered yes" in {
@@ -89,7 +89,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
         .value
       val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/change-adjusted-income/2013")
+      checkNavigation(result, "/annual-allowance/2013/change-adjusted-income")
     }
 
     "must cleanup correctly when answered no" in {

@@ -24,6 +24,7 @@ import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -32,25 +33,33 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.annualallowance.taxyear.FlexiAccessDefinedContributionAmountView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new FlexiAccessDefinedContributionAmountFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(Seq("13 December 2022 to 5 April 2023"))
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt("0")
 
   lazy val flexiAccessDefinedContributionAmountRoute =
-    FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2013).url
+    FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2023).url
+
+  val validDate = LocalDate.of(2022, 12, 12)
 
   "FlexiAccessDefinedContributionAmount Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(FlexibleAccessStartDatePage, validDate)
+        .success
+        .value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, flexiAccessDefinedContributionAmountRoute)
@@ -63,8 +72,8 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
         contentAsString(result) mustEqual view(
           form,
           NormalMode,
-          Period._2013,
-          "6 April 2012 to 5 April 2013"
+          Period._2023,
+          "13 December 2022 to 5 April 2023"
         )(
           request,
           messages(application)
@@ -75,7 +84,10 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(FlexiAccessDefinedContributionAmountPage(Period._2013), validAnswer)
+        .set(FlexibleAccessStartDatePage, validDate)
+        .success
+        .value
+        .set(FlexiAccessDefinedContributionAmountPage(Period._2023), validAnswer)
         .success
         .value
 
@@ -92,8 +104,8 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
         contentAsString(result) mustEqual view(
           form.fill(validAnswer),
           NormalMode,
-          Period._2013,
-          "6 April 2012 to 5 April 2013"
+          Period._2023,
+          "13 December 2022 to 5 April 2023"
         )(
           request,
           messages(application)
@@ -127,7 +139,12 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(FlexibleAccessStartDatePage, validDate)
+        .success
+        .value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request =
@@ -144,8 +161,8 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          Period._2013,
-          "6 April 2012 to 5 April 2013"
+          Period._2023,
+          "13 December 2022 to 5 April 2023"
         )(
           request,
           messages(application)

@@ -28,13 +28,17 @@
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
 
 @contentHintForOriginalPIA = {
+
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.originalPIA.message1")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.originalPIA.message2")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.originalPIA.message3")</p>
+
     @messages("pensionSchemeInputAmounts.originalPIA.hint1")
-    <br/>
-    <br/>
-    @messages("pensionSchemeInputAmounts.originalPIA.hint2")
 }
 
 @contentHintForRevisedPIA = {
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message1")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message2")</p>
     @messages("pensionSchemeInputAmounts.revisedPIA.hint1")
 }
 
@@ -48,7 +52,6 @@
 
         <span class="govuk-caption-l">@messages("annualAllowance.period.caption."+{period.toString})</span>
         <h1 class="govuk-heading-l">@messages("pensionSchemeInputAmounts.heading", schemeName)</h1>
-        <p class="govuk-body">@messages("pensionSchemeInputAmounts.hint")</p>
 
         @govukInput(
             InputViewModel(

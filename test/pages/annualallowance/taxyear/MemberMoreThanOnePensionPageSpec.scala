@@ -37,7 +37,7 @@ class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
         val nextPageUrl: String =
           MemberMoreThanOnePensionPage(Period._2016PreAlignment).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/pension-scheme-details/2016-pre/0")
+        checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/scheme-name-reference/0")
       }
 
       "when current period is not first relevant period then select which scheme for current period, scheme index 0" in {

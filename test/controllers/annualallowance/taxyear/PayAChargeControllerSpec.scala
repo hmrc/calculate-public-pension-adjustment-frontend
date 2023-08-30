@@ -38,7 +38,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new PayAChargeFormProvider()
-  val form         = formProvider()
+  val form         = formProvider("")
 
   lazy val payAChargeRoute =
     controllers.annualallowance.taxyear.routes.PayAChargeController
@@ -64,7 +64,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[PayAChargeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0), "")(
           request,
           messages(application)
         ).toString
@@ -85,7 +85,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, SchemeIndex(0), "")(
           request,
           messages(application)
         ).toString
@@ -204,7 +204,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "")(
           request,
           messages(application)
         ).toString

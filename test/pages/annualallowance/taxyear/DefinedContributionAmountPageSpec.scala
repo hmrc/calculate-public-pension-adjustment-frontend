@@ -52,7 +52,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         .value
       val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-      checkNavigation(result, s"/pia-for-dc-pension-flexible/$period")
+      checkNavigation(result, s"/annual-allowance/$period/flexible-pension-input-amount-defined-contribution")
     }
 
     "to DefinedBenefitAmountPage when flexi date answered but for a different period and DB selected" in {
@@ -80,7 +80,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         .value
       val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-      checkNavigation(result, s"/pia-for-db-pension/$period")
+      checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
     }
 
     "for pre 15-16" - {
@@ -103,7 +103,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/pia-for-dc-pension-flexible/$period")
+        checkNavigation(result, s"/annual-allowance/$period/flexible-pension-input-amount-defined-contribution")
       }
 
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {
@@ -122,7 +122,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/pia-for-db-pension/$period")
+        checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
       }
 
       "to CheckYourAnswersPage when answered and no flexi access selected and no DB selected" in {
@@ -141,7 +141,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/check-your-answers-period/$period")
+        checkNavigation(result, s"/annual-allowance/$period/check-answers")
       }
 
       "to CheckYourAnswersPage when flexi date answered but for a different period and no DB selected" in {
@@ -168,7 +168,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/check-your-answers-period/$period")
+        checkNavigation(result, s"/annual-allowance/$period/check-answers")
       }
     }
 
@@ -192,7 +192,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/pia-for-dc-pension-flexible/$period")
+        checkNavigation(result, s"/annual-allowance/$period/flexible-pension-input-amount-defined-contribution")
       }
 
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {
@@ -211,7 +211,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/pia-for-db-pension/$period")
+        checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
       }
 
       "to TotalIncomePage when answered and no flexi access selected and no DB selected" in {
@@ -230,7 +230,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/total-income/$period")
+        checkNavigation(result, s"/annual-allowance/$period/total-income")
       }
 
       "to TotalIncomePage when flexi date answered but for a different period and no DB selected" in {
@@ -257,7 +257,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/total-income/$period")
+        checkNavigation(result, s"/annual-allowance/$period/total-income")
       }
     }
 
@@ -281,7 +281,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/pia-for-dc-pension-flexible/$period")
+        checkNavigation(result, s"/annual-allowance/$period/flexible-pension-input-amount-defined-contribution")
       }
 
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {
@@ -300,7 +300,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/pia-for-db-pension/$period")
+        checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
       }
 
       "to ThresholdIncome when answered and no flexi access selected and no DB selected" in {
@@ -319,7 +319,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/threshold-income/$period")
+        checkNavigation(result, s"/annual-allowance/$period/threshold-income")
       }
 
       "to ThresholdIncome when flexi date answered but for a different period and no DB selected" in {
@@ -346,7 +346,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/threshold-income/$period")
+        checkNavigation(result, s"/annual-allowance/$period/threshold-income")
       }
     }
 
@@ -368,6 +368,6 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       .value
     val result = DefinedContributionAmountPage(Period._2013).navigate(CheckMode, ua).url
 
-    checkNavigation(result, "/check-your-answers-period/2013")
+    checkNavigation(result, "/annual-allowance/2013/check-answers")
   }
 }

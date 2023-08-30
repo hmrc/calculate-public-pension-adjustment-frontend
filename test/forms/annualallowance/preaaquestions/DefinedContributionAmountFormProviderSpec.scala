@@ -22,7 +22,8 @@ import play.api.data.FormError
 
 class DefinedContributionAmountFormProviderSpec extends IntFieldBehaviours {
 
-  val form = new DefinedContributionAmountFormProvider()()
+  val formProvider = new DefinedContributionAmountFormProvider()
+  val form         = formProvider(Seq(""))
 
   ".value" - {
 
@@ -42,22 +43,28 @@ class DefinedContributionAmountFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError = FormError(fieldName, "definedContributionAmount.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "definedContributionAmount.error.wholeNumber")
-    )
-
-    behave like intFieldWithRange(
-      form,
-      fieldName,
-      minimum = minimum,
-      maximum = maximum,
-      expectedError = FormError(fieldName, "definedContributionAmount.error.outOfRange", Seq(minimum, maximum))
+      nonNumericError = FormError(fieldName, "definedContributionAmount.error.nonNumeric", Seq("")),
+      wholeNumberError = FormError(fieldName, "definedContributionAmount.error.nonNumeric", Seq(""))
     )
 
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, "definedContributionAmount.error.required")
+      requiredError = FormError(fieldName, "definedContributionAmount.error.required", Seq(""))
+    )
+
+    behave like intFieldWithMaximum(
+      form,
+      fieldName,
+      maximum,
+      expectedError = FormError(fieldName, "definedContributionAmount.error.maximum", Seq(maximum, ""))
+    )
+
+    behave like intFieldWithMinimum(
+      form,
+      fieldName,
+      minimum,
+      expectedError = FormError(fieldName, "definedContributionAmount.error.minimum", Seq(minimum, ""))
     )
   }
 }

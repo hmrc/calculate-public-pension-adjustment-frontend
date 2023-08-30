@@ -48,7 +48,7 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
       .url
 
   val formProvider = new WhoPaidAAChargeFormProvider()
-  val form         = formProvider(Period._2018)
+  val form         = formProvider()
 
   "WhoPaidAACharge Controller" - {
 
@@ -64,7 +64,7 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[WhoPaidAAChargeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0), "")(
           request,
           messages(application)
         ).toString
@@ -92,7 +92,8 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
           form.fill(WhoPaidAACharge.values.head),
           NormalMode,
           Period._2018,
-          SchemeIndex(0)
+          SchemeIndex(0),
+          ""
         )(
           request,
           messages(application)
@@ -145,7 +146,7 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "")(
           request,
           messages(application)
         ).toString

@@ -40,7 +40,7 @@ object ThresholdIncomeSummary {
             controllers.annualallowance.taxyear.routes.ThresholdIncomeController
               .onPageLoad(CheckMode, period)
               .url
-          ).withVisuallyHiddenText(messages("thresholdIncome.change.hidden"))
+          ).withVisuallyHiddenText(messages("thresholdIncome.change.hidden." + period))
         )
       )
     }

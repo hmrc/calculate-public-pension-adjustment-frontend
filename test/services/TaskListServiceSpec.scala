@@ -109,7 +109,9 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
             include("/had-benefit-crystallisation-event") or
             include("/calculation-result") or
             include("/annual-allowance/scottish-taxpayer") or
-            include("/what-you-will-need-aa")
+            include("/what-you-will-need-aa") or
+            include("/scottish-taxpayer-from-2016") or
+            include("/information")
         )
       }
     }

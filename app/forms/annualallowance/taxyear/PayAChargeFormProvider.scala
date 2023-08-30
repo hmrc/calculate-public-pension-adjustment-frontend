@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 class PayAChargeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(schemeName: String): Form[Boolean] =
     Form(
-      "value" -> boolean("payACharge.error.required")
+      "value" -> boolean("payACharge.error.required" + schemeName)
     )
 }

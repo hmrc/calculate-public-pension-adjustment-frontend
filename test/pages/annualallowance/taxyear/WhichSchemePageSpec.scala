@@ -38,7 +38,7 @@ class WhichSchemeSpec extends PageBehaviours {
       val nextPageUrl: String =
         WhichSchemePage(Period._2018, SchemeIndex(0)).navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/pension-scheme-input-amounts/2018/0")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/pension-input-amount")
     }
 
     "when a new scheme is indicated capture scheme details" in {
@@ -47,7 +47,7 @@ class WhichSchemeSpec extends PageBehaviours {
       val nextPageUrl: String =
         WhichSchemePage(Period._2018, SchemeIndex(0)).navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/pension-scheme-details/2018/0")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/scheme-name-reference/0")
     }
   }
 }

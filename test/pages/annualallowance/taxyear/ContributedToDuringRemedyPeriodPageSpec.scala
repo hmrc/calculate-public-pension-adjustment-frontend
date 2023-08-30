@@ -43,7 +43,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .value
         val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/pia-for-dc-pension/2013")
+        checkNavigation(result, "/annual-allowance/2013/pension-input-amount-defined-contribution")
       }
 
       "to page DefinedBenefitAmountPage when DB selected" in {
@@ -56,7 +56,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .value
         val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/pia-for-db-pension/2013")
+        checkNavigation(result, "/annual-allowance/2013/pension-input-amount-defined-benefit")
       }
 
       "to page DefinedContributionAmountPage when DB and DC selected" in {
@@ -72,7 +72,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .value
         val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/pia-for-dc-pension/2013")
+        checkNavigation(result, "/annual-allowance/2013/pension-input-amount-defined-contribution")
       }
 
       "to JourneyRecoveryPage when not answered" in {
@@ -93,7 +93,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
         .value
       val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/change-pia-for-dc-pension/2013")
+      checkNavigation(result, "/annual-allowance/2013/change-pension-input-amount-defined-contribution")
     }
 
     "must Navigate to DefinedBenefitAmountPage in check mode when DB selected" in {
@@ -106,7 +106,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
         .value
       val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/change-pia-for-db-pension/2013")
+      checkNavigation(result, "/annual-allowance/2013/change-pension-input-amount-defined-benefit")
     }
 
     "must Navigate to DefinedBenefitAmountPage in check mode when DB and DC selected and contribution amount answered" in {
@@ -125,7 +125,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
         .value
       val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/change-pia-for-db-pension/2013")
+      checkNavigation(result, "/annual-allowance/2013/change-pension-input-amount-defined-benefit")
     }
 
     "must Navigate to DefinedBenefitAmountPage in check mode when DB and DC selected and benefit amount answered" in {
@@ -144,7 +144,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
         .value
       val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/change-pia-for-dc-pension/2013")
+      checkNavigation(result, "/annual-allowance/2013/change-pension-input-amount-defined-contribution")
     }
 
     "must Navigate to CYA in check mode when DB and DC selected and benefit and contribution amount answered" in {
@@ -169,7 +169,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
         .value
       val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/check-your-answers-period/2013")
+      checkNavigation(result, "/annual-allowance/2013/check-answers")
     }
 
     "must Navigate to CYA in check mode when DC selected and contribution amount answered" in {
@@ -188,7 +188,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
         .value
       val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/check-your-answers-period/2013")
+      checkNavigation(result, "/annual-allowance/2013/check-answers")
     }
 
     "must Navigate to CYA in check mode when DB selected and benefit amount answered" in {
@@ -207,7 +207,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
         .value
       val result = ContributedToDuringRemedyPeriodPage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/check-your-answers-period/2013")
+      checkNavigation(result, "/annual-allowance/2013/check-answers")
     }
 
     "to JourneyRecoveryPage when not answered in Check Mode" in {

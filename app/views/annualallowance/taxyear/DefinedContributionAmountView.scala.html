@@ -27,8 +27,9 @@
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
+    <p class="govuk-body">@messages("definedContributionAmount.message1")</p>
+    <p class="govuk-body">@messages("definedContributionAmount.message2")</p>
     <p>@messages("definedContributionAmount.hint1")</p>
-    <p>@messages("definedContributionAmount.hint2")</p>
 }
 
 @layout(pageTitle = title(form, messages("definedContributionAmount.title", startEndDate))) {
@@ -47,7 +48,7 @@
                 field = form("value"),
                 label = HmrcPageHeadingLabel(
                 content = messages("definedContributionAmount.heading", startEndDate),
-                caption = messages("annualAllowance.period.caption." + period)
+                caption = messages("definedContributionAmount.caption", startEndDate)
             )
         )
         .withWidth(Fixed10)

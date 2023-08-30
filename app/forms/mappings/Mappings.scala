@@ -27,9 +27,10 @@ trait Mappings extends Formatters with Constraints {
   protected def bigInt(
     requiredKey: String = "error.required",
     wholeNumberKey: String = "error.wholeNumber",
-    nonNumericKey: String = "error.nonNumeric"
+    nonNumericKey: String = "error.nonNumeric",
+    args: Seq[String] = Seq()
   ): FieldMapping[BigInt] =
-    of(bigIntFormatter(requiredKey, wholeNumberKey, nonNumericKey))
+    of(bigIntFormatter(requiredKey, wholeNumberKey, nonNumericKey, args))
 
   protected def text(errorKey: String = "error.required", args: Seq[String] = Seq.empty): FieldMapping[String] =
     of(stringFormatter(errorKey, args))

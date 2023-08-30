@@ -41,25 +41,37 @@
         }
 
         <div>
+
             <span class="govuk-caption-l">@messages("adjustedIncome.caption", period.start.getYear.toString, period.end.getYear.toString)</span>
-            <h1 class="govuk-heading-l">@messages("adjustedIncome.heading1")</h1>
-            <p class="govuk-body">@messages("adjustedIncome.hint1")</p>
-            <p class="govuk-body govuk-!-font-weight-bold">@messages("adjustedIncome.hint2")</p>
+
+            <h1 class="govuk-heading-xl">@messages("adjustedIncome.heading1")</h1>
+
+            <p class="govuk-body">@messages("adjustedIncome.message1")</p>
+
+            <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance" rel="noreferrer noopener" target="_blank">
+                @messages("adjustedIncome.message2")
+            </a>
+
+            <br>
+            <br>
+
+            <h1 class="govuk-heading-l">@messages("adjustedIncome.heading2")</h1>
+
             <ul>
-                <li class="govuk-body">@messages("adjustedIncome.hint3")</li>
-                <li class="govuk-body">@messages("adjustedIncome.hint4")</li>
-                <li class="govuk-body">@messages("adjustedIncome.hint5")</li>
-                <li class="govuk-body">@messages("adjustedIncome.hint6")</li>
-                <li class="govuk-body">@messages("adjustedIncome.hint7")</li>
-                <li class="govuk-body">@messages("adjustedIncome.hint8")</li>
+                <li class="govuk-body">@messages("adjustedIncome.bullet1")</li>
+                <li class="govuk-body">@messages("adjustedIncome.bullet2")</li>
+                <li class="govuk-body">@messages("adjustedIncome.bullet3")</li>
+                <li class="govuk-body">@messages("adjustedIncome.bullet4")</li>
+                <li class="govuk-body">@messages("adjustedIncome.bullet5")</li>
+                <li class="govuk-body">@messages("adjustedIncome.bullet6")</li>
             </ul>
         </div>
 
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                LabelViewModel(messages("adjustedIncome.heading2",period.start.getYear.toString, period.end.getYear.toString)).asPageHeading(LabelSize.Medium)
-            ).withHint(HintViewModel(messages("adjustedIncome.hint9")))
+                LabelViewModel(messages("adjustedIncome.heading3",period.start.getYear.toString, period.end.getYear.toString)).asPageHeading(LabelSize.Medium)
+            ).withHint(HintViewModel(messages("adjustedIncome.hint1")))
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)

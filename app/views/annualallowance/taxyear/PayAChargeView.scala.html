@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("payACharge.title", period, schemeIndex))) {
 
@@ -36,7 +36,7 @@
             RadiosViewModel.yesNo(
                 field = form("value"),
                 legend = HmrcPageHeadingLegend(
-                content = messages("payACharge.heading", period, schemeIndex),
+                content = messages("payACharge.heading", period, schemeIndex, schemeName),
                 caption = HmrcSectionCaption(messages("annualAllowance.period.caption."+{period.toString})))
             )
         )

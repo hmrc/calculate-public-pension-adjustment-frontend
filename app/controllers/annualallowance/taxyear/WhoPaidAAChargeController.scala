@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.WhoPaidAAChargeFormProvider
 import models.{Mode, Period, SchemeIndex}
-import pages.annualallowance.taxyear.WhoPaidAAChargePage
+import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, WhoPaidAAChargePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -42,24 +42,32 @@ class WhoPaidAAChargeController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
+  val form = formProvider()
+
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val form         = formProvider(period)
+      val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
+        answer.schemeName
+      }
+
       val preparedForm = request.userAnswers.get(WhoPaidAAChargePage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period, schemeIndex))
+      Ok(view(preparedForm, mode, period, schemeIndex, schemeName.getOrElse("")))
     }
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
-      val form = formProvider(period)
+      val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
+        answer.schemeName
+      }
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse("")))),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhoPaidAAChargePage(period, schemeIndex), value))

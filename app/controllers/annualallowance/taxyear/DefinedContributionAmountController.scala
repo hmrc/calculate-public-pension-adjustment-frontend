@@ -46,16 +46,15 @@ class DefinedContributionAmountController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
-
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(DefinedContributionAmountPage(period)) match {
+      val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
+      val startEndDate      = getStartEndDate(period, flexibleStartDate)
+      val form              = formProvider(Seq(startEndDate))
+      val preparedForm      = request.userAnswers.get(DefinedContributionAmountPage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
-
-      val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
 
       Ok(view(preparedForm, mode, period, getStartEndDate(period, flexibleStartDate)))
     }
@@ -63,7 +62,8 @@ class DefinedContributionAmountController @Inject() (
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
       val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
-
+      val startEndDate      = getStartEndDate(period, flexibleStartDate)
+      val form              = formProvider(Seq(startEndDate))
       form
         .bindFromRequest()
         .fold(
