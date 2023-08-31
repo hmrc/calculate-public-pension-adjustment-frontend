@@ -273,6 +273,28 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "totalIncome" : 60000
            |        }
            |      }
+           |    },
+           |    "lta": {
+           |      "hadBenefitCrystallisationEvent": true,
+           |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
+           |      "changeInLifetimeAllowance": true,
+           |      "changeInTaxCharge": "increasedCharge",
+           |      "ltaProtectionOrEnhancements": "protection",
+           |      "protectionType": "fixedProtection2014",
+           |      "protectionReference": "R41AB678TR23355",
+           |      "protectionTypeEnhancementChanged": true,
+           |      "whatNewProtectionTypeEnhancement": "individualProtection2016",
+           |      "referenceNewProtectionTypeEnhancement": "2134567801",
+           |      "lifetimeAllowanceCharge": true,
+           |      "excessLifetimeAllowancePaid": "annualPayment",
+           |      "lifetimeAllowanceChargeAmount": 20000,
+           |      "whoPaidLTACharge": "pensionScheme",
+           |      "schemeNameAndTaxRef": {
+           |        "name": "Scheme 1",
+           |        "taxRef": "00348916RT"
+           |      },
+           |      "valueNewLtaCharge": 30000,
+           |      "whoPayingExtraLtaCharge": "you"
            |    }
            |  }
            |""".stripMargin)
@@ -635,6 +657,12 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "totalIncome" : 60000
            |        }
            |      }
+           |    },
+           |    "lta": {
+           |      "hadBenefitCrystallisationEvent": true,
+           |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
+           |      "changeInLifetimeAllowance": true,
+           |      "changeInTaxCharge": "none"
            |    }
            |  }
            |""".stripMargin)
@@ -1000,7 +1028,28 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               )
             )
           ),
-          None
+          Some(
+            LifeTimeAllowance(
+              true,
+              LocalDate.parse("2018-11-28"),
+              true,
+              ChangeInTaxCharge.IncreasedCharge,
+              LtaProtectionOrEnhancements.Protection,
+              ProtectionType.FixedProtection2014,
+              "R41AB678TR23355",
+              true,
+              Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
+              Some("2134567801"),
+              true,
+              Some(ExcessLifetimeAllowancePaid.Annualpayment),
+              Some(20000),
+              Some(WhoPaidLTACharge.PensionScheme),
+              Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
+              30000,
+              Some(WhoPayingExtraLtaCharge.You),
+              None
+            )
+          )
         )
       }
 
