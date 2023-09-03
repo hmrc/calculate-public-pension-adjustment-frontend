@@ -33,7 +33,7 @@ case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
       case Some(ChangeInTaxCharge.NewCharge) | Some(ChangeInTaxCharge.DecreasedCharge) | Some(
             ChangeInTaxCharge.IncreasedCharge
           ) =>
-        ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
+        ltaRoutes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode)
       case _ =>
         ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
     }

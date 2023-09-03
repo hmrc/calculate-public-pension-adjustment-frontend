@@ -273,4 +273,11 @@ POST        /annual-allowance/:period/change-flexible-pension-input-amount-defin
 GET         /calculation-result                                                                                         controllers.CalculationResultController.onPageLoad()
 POST        /calculation-result                                                                                         controllers.CalculationResultController.onSubmit()
 
+GET         /lta-submission                                                      controllers.SubmissionController.storeAndRedirect()
+
+GET         /more-than-one-benefit-crystallisation-event                         controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
+POST        /more-than-one-benefit-crystallisation-event                         controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
+GET         /change-more-than-one-benefit-crystallisation-event                  controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-more-than-one-benefit-crystallisation-event                  controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
+
 GET         /lta-submission                                                                                             controllers.SubmissionController.storeAndRedirect()

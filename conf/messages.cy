@@ -828,3 +828,10 @@ calculationResults.whatHappensNext.hint.compensation = cy: You are due compensat
 calculationResults.whatHappensNext.hint.compensation.list1 = cy: directly pay any compensation for tax charges you paid from 6 April 2015 to 5 April 2019
 calculationResults.whatHappensNext.hint.compensation.list2 = cy: increase your pension benefits to cover compensation for tax charges your scheme paid on your behalf from 6 April 2015 to 5 April 2019
 calculationResults.whatHappensNext.hint5 = cy: If you do not sign in to your Government Gateway, your results will not be saved and you will need to complete the calculator again.
+
+multipleBenefitCrystallisationEvent.title = cy: Have you had more than one benefit crystallisation event in your pensions?
+multipleBenefitCrystallisationEvent.heading = cy: Have you had more than one benefit crystallisation event in your pensions?
+multipleBenefitCrystallisationEvent.hint = cy: You can only have one benefit crystallisation event in each public scheme.
+multipleBenefitCrystallisationEvent.checkYourAnswersLabel = cy: Have you had more than one benefit crystallisation event in your pensions?
+multipleBenefitCrystallisationEvent.error.required = cy: Select yes if you have had more than one benefit crystallisation event in your pensions
+multipleBenefitCrystallisationEvent.change.hidden = cy: Have you had more than one benefit crystallisation event in your pensions?
