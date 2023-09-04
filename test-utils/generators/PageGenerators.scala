@@ -46,6 +46,12 @@ trait PageGenerators {
   implicit lazy val arbitraryQuarterChargePaidPage: Arbitrary[QuarterChargePaidPage.type] =
     Arbitrary(QuarterChargePaidPage)
 
+  implicit lazy val arbitraryLumpSumValuePage: Arbitrary[LumpSumValuePage.type] =
+    Arbitrary(LumpSumValuePage)
+
+  implicit lazy val arbitraryAnnualPaymentValuePage: Arbitrary[AnnualPaymentValuePage.type] =
+    Arbitrary(AnnualPaymentValuePage)
+
   // scala fmt ignore
 
   implicit lazy val arbitraryPensionCreditReferencePage: Arbitrary[PensionCreditReferencePage.type] =

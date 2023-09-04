@@ -324,3 +324,15 @@ GET        /lifetime-allowance/scheme-name-reference                            
 POST       /lifetime-allowance/scheme-name-reference                             controllers.lifetimeallowance.UserSchemeDetailsController.onSubmit(mode: Mode = NormalMode)
 GET        /lifetime-allowance/change-scheme-name-reference                      controllers.lifetimeallowance.UserSchemeDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /lifetime-allowance/change-scheme-name-reference                      controllers.lifetimeallowance.UserSchemeDetailsController.onSubmit(mode: Mode = CheckMode)
+
+GET         /lta-submission                                                                                             controllers.SubmissionController.storeAndRedirect()
+
+GET        /value-of-annual-payment                                              controllers.lifetimeallowance.AnnualPaymentValueController.onPageLoad(mode: Mode = NormalMode)
+POST       /value-of-annual-payment                                              controllers.lifetimeallowance.AnnualPaymentValueController.onSubmit(mode: Mode = NormalMode)
+GET        /change-value-of-annual-payment                                       controllers.lifetimeallowance.AnnualPaymentValueController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-value-of-annual-payment                                       controllers.lifetimeallowance.AnnualPaymentValueController.onSubmit(mode: Mode = CheckMode)
+
+GET        /value-of-lump-sum                                                    controllers.lifetimeallowance.LumpSumValueController.onPageLoad(mode: Mode = NormalMode)
+POST       /value-of-lump-sum                                                    controllers.lifetimeallowance.LumpSumValueController.onSubmit(mode: Mode = NormalMode)
+GET        /change-value-of-lump-sum                                             controllers.lifetimeallowance.LumpSumValueController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-value-of-lump-sum                                             controllers.lifetimeallowance.LumpSumValueController.onSubmit(mode: Mode = CheckMode)

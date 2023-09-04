@@ -16,10 +16,13 @@
 
 package pages.lifetimeallowance
 
-import models.{ExcessLifetimeAllowancePaid, NormalMode, UserAnswers}
+import models.ExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
+import models.{CheckMode, ExcessLifetimeAllowancePaid, Mode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object ExcessLifetimeAllowancePaidPage extends QuestionPage[ExcessLifetimeAllowancePaid] {
 
@@ -27,8 +30,25 @@ case object ExcessLifetimeAllowancePaidPage extends QuestionPage[ExcessLifetimeA
 
   override def toString: String = "excessLifetimeAllowancePaid"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController.onPageLoad(NormalMode)
-  override protected def navigateInCheckMode(answers: UserAnswers): Call  =
-    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = navigateInEitherMode(answers, NormalMode)
+
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = navigateInEitherMode(answers, CheckMode)
+
+  private def navigateInEitherMode(answers: UserAnswers, mode: Mode): Call =
+    answers.get(ExcessLifetimeAllowancePaidPage) match {
+      case Some(Lumpsum) => controllers.lifetimeallowance.routes.LumpSumValueController.onPageLoad(mode)
+      case Some(Both) => controllers.lifetimeallowance.routes.LumpSumValueController.onPageLoad(mode)
+      case Some(Annualpayment) => controllers.lifetimeallowance.routes.AnnualPaymentValueController.onPageLoad(mode)
+      case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def cleanup(value: Option[ExcessLifetimeAllowancePaid], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { case _ =>
+        for {
+          updated1 <- userAnswers.remove(LumpSumValuePage)
+          updated2 <- updated1.remove(AnnualPaymentValuePage)
+        } yield updated2
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }
