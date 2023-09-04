@@ -22,7 +22,7 @@ import play.api.data.FormError
 class MultipleBenefitCrystallisationEventFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "multipleBenefitCrystallisationEvent.error.required"
-  val invalidKey = "error.boolean"
+  val invalidKey  = "error.boolean"
 
   val form = new MultipleBenefitCrystallisationEventFormProvider()()
 

@@ -38,9 +38,10 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new MultipleBenefitCrystallisationEventFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val multipleBenefitCrystallisationEventRoute = controllers.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode).url
+  lazy val multipleBenefitCrystallisationEventRoute =
+    controllers.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode).url
 
   "MultipleBenefitCrystallisationEvent Controller" - {
 
@@ -97,7 +98,11 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 

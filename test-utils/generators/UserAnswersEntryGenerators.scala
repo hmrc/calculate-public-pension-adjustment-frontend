@@ -27,7 +27,8 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
-  implicit lazy val arbitraryMultipleBenefitCrystallisationEventUserAnswersEntry: Arbitrary[(MultipleBenefitCrystallisationEventPage.type, JsValue)] =
+  implicit lazy val arbitraryMultipleBenefitCrystallisationEventUserAnswersEntry
+    : Arbitrary[(MultipleBenefitCrystallisationEventPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[MultipleBenefitCrystallisationEventPage.type]

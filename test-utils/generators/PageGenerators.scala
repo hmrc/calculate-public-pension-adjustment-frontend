@@ -24,7 +24,8 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
-  implicit lazy val arbitraryMultipleBenefitCrystallisationEventPage: Arbitrary[MultipleBenefitCrystallisationEventPage.type] =
+  implicit lazy val arbitraryMultipleBenefitCrystallisationEventPage
+    : Arbitrary[MultipleBenefitCrystallisationEventPage.type] =
     Arbitrary(MultipleBenefitCrystallisationEventPage)
 
   // scala fmt ignore

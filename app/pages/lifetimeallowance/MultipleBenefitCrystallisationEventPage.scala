@@ -27,17 +27,15 @@ case object MultipleBenefitCrystallisationEventPage extends QuestionPage[Boolean
 
   override def toString: String = "multipleBenefitCrystallisationEvent"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(MultipleBenefitCrystallisationEventPage) match {
       case Some(_) => controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(MultipleBenefitCrystallisationEventPage) match {
       case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

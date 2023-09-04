@@ -23,21 +23,22 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object MultipleBenefitCrystallisationEventSummary  {
+object MultipleBenefitCrystallisationEventSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(MultipleBenefitCrystallisationEventPage).map {
-      answer =>
+    answers.get(MultipleBenefitCrystallisationEventPage).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key     = "multipleBenefitCrystallisationEvent.checkYourAnswersLabel",
-          value   = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("multipleBenefitCrystallisationEvent.change.hidden"))
+      SummaryListRowViewModel(
+        key = "multipleBenefitCrystallisationEvent.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("multipleBenefitCrystallisationEvent.change.hidden"))
         )
+      )
     }
 }
