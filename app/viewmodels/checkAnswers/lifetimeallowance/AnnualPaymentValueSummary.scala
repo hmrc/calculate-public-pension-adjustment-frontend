@@ -20,23 +20,23 @@ import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.AnnualPaymentValuePage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object AnnualPaymentValueSummary  {
+object AnnualPaymentValueSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(AnnualPaymentValuePage).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "annualPaymentValue.checkYourAnswersLabel",
-          value   = ValueViewModel(answer.toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.AnnualPaymentValueController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("annualPaymentValue.change.hidden"))
-          )
+    answers.get(AnnualPaymentValuePage).map { answer =>
+      SummaryListRowViewModel(
+        key = "annualPaymentValue.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.AnnualPaymentValueController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("annualPaymentValue.change.hidden"))
         )
+      )
     }
 }

@@ -41,10 +41,9 @@ class LumpSumValueFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "lumpSumValue.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "lumpSumValue.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "lumpSumValue.error.wholeNumber")
     )
-
 
     behave like mandatoryField(
       form,

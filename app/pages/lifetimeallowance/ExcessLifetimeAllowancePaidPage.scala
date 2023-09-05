@@ -36,10 +36,10 @@ case object ExcessLifetimeAllowancePaidPage extends QuestionPage[ExcessLifetimeA
 
   private def navigateInEitherMode(answers: UserAnswers, mode: Mode): Call =
     answers.get(ExcessLifetimeAllowancePaidPage) match {
-      case Some(Lumpsum) => controllers.lifetimeallowance.routes.LumpSumValueController.onPageLoad(mode)
-      case Some(Both) => controllers.lifetimeallowance.routes.LumpSumValueController.onPageLoad(mode)
+      case Some(Lumpsum)       => controllers.lifetimeallowance.routes.LumpSumValueController.onPageLoad(mode)
+      case Some(Both)          => controllers.lifetimeallowance.routes.LumpSumValueController.onPageLoad(mode)
       case Some(Annualpayment) => controllers.lifetimeallowance.routes.AnnualPaymentValueController.onPageLoad(mode)
-      case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case None                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[ExcessLifetimeAllowancePaid], userAnswers: UserAnswers): Try[UserAnswers] =

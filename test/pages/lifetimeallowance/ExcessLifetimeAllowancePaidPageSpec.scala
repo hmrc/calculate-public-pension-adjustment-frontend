@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.ExcessLifetimeAllowancePaid
+import models.{ExcessLifetimeAllowancePaid, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class ExcessLifetimeAllowancePaidSpec extends PageBehaviours {
@@ -28,5 +28,47 @@ class ExcessLifetimeAllowancePaidSpec extends PageBehaviours {
     beSettable[ExcessLifetimeAllowancePaid](ExcessLifetimeAllowancePaidPage)
 
     beRemovable[ExcessLifetimeAllowancePaid](ExcessLifetimeAllowancePaidPage)
+  }
+
+  "normal mode navigation" - {
+
+    "when user has selected Lump Sum for how excess was paid " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(ExcessLifetimeAllowancePaidPage, models.ExcessLifetimeAllowancePaid.Lumpsum).get
+
+      val nextPageUrl: String = ExcessLifetimeAllowancePaidPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/value-of-lump-sum")
+    }
+
+    "when user has selected Both for how excess was paid " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(ExcessLifetimeAllowancePaidPage, models.ExcessLifetimeAllowancePaid.Both).get
+
+      val nextPageUrl: String = ExcessLifetimeAllowancePaidPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/value-of-lump-sum")
+    }
+
+    "when user has selected Annual Payment for how excess was paid " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(ExcessLifetimeAllowancePaidPage, models.ExcessLifetimeAllowancePaid.Annualpayment).get
+
+      val nextPageUrl: String = ExcessLifetimeAllowancePaidPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/value-of-annual-payment")
+    }
+
+    "when user has entered correct value " in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = ExcessLifetimeAllowancePaidPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 }

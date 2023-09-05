@@ -27,17 +27,15 @@ case object AnnualPaymentValuePage extends QuestionPage[BigInt] {
 
   override def toString: String = "annualPaymentValue"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(AnnualPaymentValuePage) match {
       case Some(_) => controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AnnualPaymentValuePage) match {
       case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

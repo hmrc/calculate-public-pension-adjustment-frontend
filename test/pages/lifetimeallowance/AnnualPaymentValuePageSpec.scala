@@ -16,6 +16,7 @@
 
 package pages.lifetimeallowance
 
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class AnnualPaymentValuePageSpec extends PageBehaviours {
@@ -27,5 +28,47 @@ class AnnualPaymentValuePageSpec extends PageBehaviours {
     beSettable[BigInt](AnnualPaymentValuePage)
 
     beRemovable[BigInt](AnnualPaymentValuePage)
+  }
+
+  "normal mode navigation" - {
+
+    "when user has entered for Annual Payment Value page" in {
+
+      val userAnswers = emptyUserAnswers.set(AnnualPaymentValuePage, BigInt("100")).get
+
+      val nextPageUrl: String = AnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/who-paid-lta-charge")
+    }
+
+    "when user hasn't entered Annual payment value page" in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = AnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "check mode navigation" - {
+
+    "when user has entered for Annual payment value page in Check mode " in {
+
+      val userAnswers = emptyUserAnswers.set(AnnualPaymentValuePage, BigInt("200")).get
+
+      val nextPageUrl: String = AnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+    }
+
+    "when user hasn't entered Annual payment value page in Check mode " in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = AnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 }

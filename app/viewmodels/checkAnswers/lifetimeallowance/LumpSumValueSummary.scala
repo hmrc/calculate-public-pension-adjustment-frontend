@@ -20,23 +20,23 @@ import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.LumpSumValuePage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object LumpSumValueSummary  {
+object LumpSumValueSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(LumpSumValuePage).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "lumpSumValue.checkYourAnswersLabel",
-          value   = ValueViewModel(answer.toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.LumpSumValueController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("lumpSumValue.change.hidden"))
-          )
+    answers.get(LumpSumValuePage).map { answer =>
+      SummaryListRowViewModel(
+        key = "lumpSumValue.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.LumpSumValueController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("lumpSumValue.change.hidden"))
         )
+      )
     }
 }

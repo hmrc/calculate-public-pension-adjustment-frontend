@@ -89,37 +89,37 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
       }
     }
 
-//    "must redirect to the next page when valid data is submitted" in {
-//
-//      val mockSessionRepository = mock[SessionRepository]
-//
-//      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-//
-//      val application =
-//        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-//          .overrides(
-//            bind[SessionRepository].toInstance(mockSessionRepository)
-//          )
-//          .build()
-//
-//      running(application) {
-//        val request =
-//          FakeRequest(POST, excessLifetimeAllowancePaidRoute)
-//            .withFormUrlEncodedBody(("value", ExcessLifetimeAllowancePaid.values.head.toString))
-//
-//        val result = route(application, request).value
-//
-//        val expectedAnswers = emptyUserAnswers
-//          .set(ExcessLifetimeAllowancePaidPage, models.ExcessLifetimeAllowancePaid.Lumpsum)
-//          .success
-//          .value
-//
-//        status(result) mustEqual SEE_OTHER
-//        redirectLocation(result).value mustEqual WhoPaidLTAChargePage
-//          .navigate(NormalMode, expectedAnswers)
-//          .url
-//      }
-//    }
+    "must redirect to the next page when valid data is submitted" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, excessLifetimeAllowancePaidRoute)
+            .withFormUrlEncodedBody(("value", ExcessLifetimeAllowancePaid.values.head.toString))
+
+        val result = route(application, request).value
+
+        val expectedAnswers = emptyUserAnswers
+          .set(ExcessLifetimeAllowancePaidPage, ExcessLifetimeAllowancePaid.values.head)
+          .success
+          .value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual ExcessLifetimeAllowancePaidPage
+          .navigate(NormalMode, expectedAnswers)
+          .url
+      }
+    }
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
