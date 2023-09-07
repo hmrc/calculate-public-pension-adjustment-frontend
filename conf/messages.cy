@@ -942,7 +942,7 @@ annualPaymentValue.checkYourAnswersLabel = cy: What was the value of the annual 
 annualPaymentValue.error.nonNumeric = cy: Enter the value of the annual payment using numbers
 annualPaymentValue.error.required = cy: Enter the value of the annual payment
 annualPaymentValue.error.wholeNumber = cy: Your annual payment value must only include numbers 0 to 9
-annualPaymentValue.error.outOfRange = cy: Your annual payment value must be £xxx or less
+annualPaymentValue.error.outOfRange = cy: Your annual payment value must be £999999999 or less
 annualPaymentValue.change.hidden = cy: What was the value of the annual payment?
 
 lumpSumValue.title = cy: What was the value of the lump sum?
@@ -952,5 +952,5 @@ lumpSumValue.checkYourAnswersLabel = cy: What was the value of the lump sum?
 lumpSumValue.error.nonNumeric = cy: Enter the value of the lump sum using numbers
 lumpSumValue.error.required = cy: Enter the value of the lump sum
 lumpSumValue.error.wholeNumber = cy: Your lump sum value must only include numbers 0 to 9
-lumpSumValue.error.outOfRange = cy: Your lump sum value must be £xxx or less
+lumpSumValue.error.outOfRange = cy: Your lump sum value must be £999999999 or less
 lumpSumValue.change.hidden = cy: What was the value of the lump sum?
