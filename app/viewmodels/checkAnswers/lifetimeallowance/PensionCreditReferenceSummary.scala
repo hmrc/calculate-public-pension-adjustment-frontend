@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.PensionCreditReferencePage
 import play.api.i18n.Messages
@@ -25,19 +24,20 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object PensionCreditReferenceSummary  {
+object PensionCreditReferenceSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(PensionCreditReferencePage).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "pensionCreditReference.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.PensionCreditReferenceController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("pensionCreditReference.change.hidden"))
+    answers.get(PensionCreditReferencePage).map { answer =>
+      SummaryListRowViewModel(
+        key = "pensionCreditReference.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.PensionCreditReferenceController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("pensionCreditReference.change.hidden"))
         )
+      )
     }
 }

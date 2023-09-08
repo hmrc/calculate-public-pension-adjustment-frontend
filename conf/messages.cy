@@ -900,3 +900,36 @@ userSchemeDetails.taxRef.error.required = cy: Enter the Pension Scheme Tax Refer
 userSchemeDetails.name.error.length = cy: The name of your pension scheme must be 100 characters or less
 userSchemeDetails.taxRef.invalid = cy: The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
 userSchemeDetails.change.hidden = cy: What is the name and tax reference of the pension scheme?
+
+enhancementType.title = cy: Which type of lifetime allowance enhancement did you have?
+enhancementType.heading = cy: Which type of lifetime allowance enhancement did you have?
+enhancementType.internationalEnhancement = cy: International enhancement
+enhancementType.pensionCredit = cy: Pension credit
+enhancementType.both = cy: Both
+enhancementType.hint1 = cy: Check your lifetime allowance enhancement online (opens in a new tab)
+enhancementType.hint2 = cy: The reference has a maximum character limit of 15. It is a mixture of letters and numbers.
+enhancementType.checkYourAnswersLabel = cy: Which type of lifetime allowance enhancement did you have?
+enhancementType.error.required = cy: Select your lifetime allowance enhancement type
+enhancementType.change.hidden = cy: Which type of lifetime allowance enhancement did you have?
+
+internationalEnhancementReference.title = cy: What is your lifetime allowance international enhancement reference?
+internationalEnhancementReference.heading = cy: What is your lifetime allowance international enhancement reference?
+internationalEnhancementReference.checkYourAnswersLabel = cy: What is your lifetime allowance international enhancement reference?
+internationalEnhancementReference.message1 = cy: Your reference is on an enhancement certificate or your personal tax account. You can also sign into Government Gateway to check.
+internationalEnhancementReference.message2 = cy: Check your lifetime allowance enhancement online (opens in a new tab)
+internationalEnhancementReference.hint1 = cy: The reference has a maximum character limit of 15. It is a mixture of letters and numbers.
+internationalEnhancementReference.error.required = cy: Enter your lifetime allowance international enhancement reference
+internationalEnhancementReference.error.length = cy: Your lifetime allowance international enhancement reference must be 15 characters or fewer
+internationalEnhancementReference.error.invalid = cy: Your lifetime allowance international enhancement reference must only include letters a to z and numbers 0 to 9
+internationalEnhancementReference.change.hidden = cy: What is your lifetime allowance international enhancement reference?
+
+pensionCreditReference.title = cy: What is your lifetime allowance pension credit reference?
+pensionCreditReference.heading = cy: What is your lifetime allowance pension credit reference?
+pensionCreditReference.checkYourAnswersLabel = cy: What is your lifetime allowance pension credit reference?
+pensionCreditReference.message1 = cy: Your reference is on an enhancement certificate or your personal tax account. You can also sign into Government Gateway to check.
+pensionCreditReference.message2 = cy: Check your lifetime allowance enhancement online (opens in a new tab)
+pensionCreditReference.hint1 = cy: The reference has a maximum character limit of 15. It is a mixture of letters and numbers.
+pensionCreditReference.error.required = cy: Enter your lifetime allowance pension credit reference
+pensionCreditReference.error.length = cy: Your lifetime allowance pension credit reference must be 15 characters or fewer
+pensionCreditReference.error.invalid = cy: Your lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
+pensionCreditReference.change.hidden = cy: What is your lifetime allowance pension credit reference?

@@ -27,38 +27,38 @@ import play.api.mvc.Call
 import scala.util.Try
 
 case object EnhancementTypePage extends QuestionPage[EnhancementType] {
-  //Enhancement type - should the radio be "Both" instead of "None"
+  // Enhancement type - should the radio be "Both" instead of "None"
   override def path: JsPath = JsPath \ "lta" \ toString
 
   override def toString: String = "enhancementType"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
-      case Some(Pensioncredit) => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
-      case Some(Internationalenhancement) | Some(Both) => ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(NormalMode)
-      case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Pensioncredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
+      case Some(Internationalenhancement) | Some(Both) =>
+        ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(NormalMode)
+      case None                                        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
-      case Some(Pensioncredit) => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
-      case Some(Internationalenhancement) | Some(Both) => ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(CheckMode)
-      case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Pensioncredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
+      case Some(Internationalenhancement) | Some(Both) =>
+        ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(CheckMode)
+      case None                                        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[EnhancementType], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case Internationalenhancement => userAnswers
-          .remove(PensionCreditReferencePage)
-        case Pensioncredit =>
+        case Internationalenhancement =>
+          userAnswers
+            .remove(PensionCreditReferencePage)
+        case Pensioncredit            =>
           userAnswers
             .remove(InternationalEnhancementReferencePage)
-        case Both => super.cleanup(value, userAnswers)
+        case Both                     => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 
-
 }
-
-

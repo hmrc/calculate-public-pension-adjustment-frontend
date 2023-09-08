@@ -16,21 +16,30 @@
 
 package forms.lifetimeallowance
 
-import forms.mappings.Mappings
-import play.api.data.Form
+import forms.behaviours.OptionFieldBehaviours
+import models.EnhancementType
+import play.api.data.FormError
 
-import javax.inject.Inject
+class EnhancementTypeFormProviderSpec extends OptionFieldBehaviours {
 
-class PensionCreditReferenceFormProvider @Inject() extends Mappings {
+  val form = new EnhancementTypeFormProvider()()
 
-  def apply(): Form[String] =
-    Form(
-      "value" -> text("pensionCreditReference.error.required")
-        .verifying(
-          firstError(
-            maxLength(15, "pensionCreditReference.error.length"),
-            regexp("""^[a-z0-9A-Z]*$""", "pensionCreditReference.error.invalid")
-          )
-        )
+  ".value" - {
+
+    val fieldName   = "value"
+    val requiredKey = "enhancementType.error.required"
+
+    behave like optionsField[EnhancementType](
+      form,
+      fieldName,
+      validValues = EnhancementType.values,
+      invalidError = FormError(fieldName, "error.invalid")
     )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
 }

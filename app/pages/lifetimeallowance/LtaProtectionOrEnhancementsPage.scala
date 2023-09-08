@@ -34,26 +34,28 @@ case object LtaProtectionOrEnhancementsPage extends QuestionPage[LtaProtectionOr
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(LtaProtectionOrEnhancementsPage) match {
-      case Some(Enhancements) => ltaRoutes.EnhancementTypeController.onPageLoad(NormalMode)
+      case Some(Enhancements)            => ltaRoutes.EnhancementTypeController.onPageLoad(NormalMode)
       case Some(Protection) | Some(Both) => ltaRoutes.ProtectionTypeController.onPageLoad(NormalMode)
-      case _    => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case _                             => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(LtaProtectionOrEnhancementsPage) match {
-      case Some(Enhancements) => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
+      case Some(Enhancements)            => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
       case Some(Protection) | Some(Both) => ltaRoutes.ProtectionTypeController.onPageLoad(CheckMode)
-      case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case None                          => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[LtaProtectionOrEnhancements], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case Protection | Both => userAnswers
-          .remove(EnhancementTypePage)
-        case Enhancements =>
+        case Protection | Both =>
           userAnswers
-            .remove(ProtectionTypePage).flatMap(_.remove(ProtectionReferencePage))
+            .remove(EnhancementTypePage)
+        case Enhancements      =>
+          userAnswers
+            .remove(ProtectionTypePage)
+            .flatMap(_.remove(ProtectionReferencePage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -88,7 +88,8 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
   // scala fmt ignore
 
-  implicit lazy val arbitraryPensionCreditReferenceUserAnswersEntry: Arbitrary[(PensionCreditReferencePage.type, JsValue)] =
+  implicit lazy val arbitraryPensionCreditReferenceUserAnswersEntry
+    : Arbitrary[(PensionCreditReferencePage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[PensionCreditReferencePage.type]
@@ -96,7 +97,8 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryInternationalEnhancementReferenceUserAnswersEntry: Arbitrary[(InternationalEnhancementReferencePage.type, JsValue)] =
+  implicit lazy val arbitraryInternationalEnhancementReferenceUserAnswersEntry
+    : Arbitrary[(InternationalEnhancementReferencePage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[InternationalEnhancementReferencePage.type]

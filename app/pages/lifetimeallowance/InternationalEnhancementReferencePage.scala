@@ -16,15 +16,13 @@
 
 package pages.lifetimeallowance
 
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.EnhancementType.{Both, Internationalenhancement, Pensioncredit}
-import models.{CheckMode, EnhancementType, NormalMode, UserAnswers}
+import controllers.{routes => generalRoutes}
+import models.EnhancementType.{Both, Internationalenhancement}
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-
-import scala.util.Try
 
 case object InternationalEnhancementReferencePage extends QuestionPage[String] {
 
@@ -35,14 +33,15 @@ case object InternationalEnhancementReferencePage extends QuestionPage[String] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
       case Some(Internationalenhancement) => ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
-      case Some(Both) => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
-      case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
+      case None                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
-      case Some(Internationalenhancement) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both) => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
-      case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Internationalenhancement) =>
+        controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
+      case None                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 }

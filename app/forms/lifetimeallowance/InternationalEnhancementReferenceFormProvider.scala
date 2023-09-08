@@ -26,6 +26,11 @@ class InternationalEnhancementReferenceFormProvider @Inject() extends Mappings {
   def apply(): Form[String] =
     Form(
       "value" -> text("internationalEnhancementReference.error.required")
-        .verifying(firstError(maxLength(15, "internationalEnhancementReference.error.length"), regexp("""^[a-z0-9]*$""", "internationalEnhancementReference.error.invalid")))
+        .verifying(
+          firstError(
+            maxLength(15, "internationalEnhancementReference.error.length"),
+            regexp("""^[a-z0-9A-Z]*$""", "internationalEnhancementReference.error.invalid")
+          )
+        )
     )
 }

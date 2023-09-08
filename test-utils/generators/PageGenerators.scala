@@ -51,7 +51,8 @@ trait PageGenerators {
   implicit lazy val arbitraryPensionCreditReferencePage: Arbitrary[PensionCreditReferencePage.type] =
     Arbitrary(PensionCreditReferencePage)
 
-  implicit lazy val arbitraryInternationalEnhancementReferencePage: Arbitrary[InternationalEnhancementReferencePage.type] =
+  implicit lazy val arbitraryInternationalEnhancementReferencePage
+    : Arbitrary[InternationalEnhancementReferencePage.type] =
     Arbitrary(InternationalEnhancementReferencePage)
 
   implicit lazy val arbitraryEnhancementTypePage: Arbitrary[EnhancementTypePage.type] =

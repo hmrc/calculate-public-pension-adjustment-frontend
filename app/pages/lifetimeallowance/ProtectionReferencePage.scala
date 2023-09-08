@@ -16,15 +16,13 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, LtaProtectionOrEnhancements, NormalMode, SchemeIndex, UserAnswers}
+import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.{routes => generalRoutes}
+import models.LtaProtectionOrEnhancements.{Both, Protection}
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.LtaProtectionOrEnhancements.{Both, Enhancements, Protection}
-import controllers.{routes => generalRoutes}
-
-import scala.util.Try
 
 case object ProtectionReferencePage extends QuestionPage[String] {
 
@@ -35,15 +33,15 @@ case object ProtectionReferencePage extends QuestionPage[String] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(LtaProtectionOrEnhancementsPage) match {
       case Some(Protection) => ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
-      case Some(Both) => ltaRoutes.EnhancementTypeController.onPageLoad(NormalMode)
-      case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Both)       => ltaRoutes.EnhancementTypeController.onPageLoad(NormalMode)
+      case None             => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(LtaProtectionOrEnhancementsPage) match {
       case Some(Protection) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both) => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
-      case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Both)       => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
+      case None             => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
 }

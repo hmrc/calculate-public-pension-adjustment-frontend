@@ -29,20 +29,19 @@ object EnhancementType extends Enumerable.Implicits {
   case object Both extends WithName("both") with EnhancementType
 
   val values: Seq[EnhancementType] = Seq(
-    Internationalenhancement, Pensioncredit, Both
+    Internationalenhancement,
+    Pensioncredit,
+    Both
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"enhancementType.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
+  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
+    RadioItem(
+      content = Text(messages(s"enhancementType.${value.toString}")),
+      value = Some(value.toString),
+      id = Some(s"value_$index")
+    )
   }
 
   implicit val enumerable: Enumerable[EnhancementType] =
     Enumerable(values.map(v => v.toString -> v): _*)
 }
-
-

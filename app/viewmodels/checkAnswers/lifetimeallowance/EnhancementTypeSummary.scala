@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.EnhancementTypePage
 import play.api.i18n.Messages
@@ -26,25 +25,26 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object EnhancementTypeSummary  {
+object EnhancementTypeSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(EnhancementTypePage).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"enhancementType.$answer"))
-          )
+    answers.get(EnhancementTypePage).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"enhancementType.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key     = "enhancementType.checkYourAnswersLabel",
-          value   = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.EnhancementTypeController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("enhancementType.change.hidden"))
+      SummaryListRowViewModel(
+        key = "enhancementType.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.EnhancementTypeController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("enhancementType.change.hidden"))
         )
+      )
     }
 }

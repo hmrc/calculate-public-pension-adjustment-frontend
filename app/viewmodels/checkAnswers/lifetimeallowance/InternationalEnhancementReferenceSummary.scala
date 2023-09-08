@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.InternationalEnhancementReferencePage
 import play.api.i18n.Messages
@@ -25,19 +24,20 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object InternationalEnhancementReferenceSummary  {
+object InternationalEnhancementReferenceSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(InternationalEnhancementReferencePage).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "internationalEnhancementReference.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.InternationalEnhancementReferenceController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("internationalEnhancementReference.change.hidden"))
+    answers.get(InternationalEnhancementReferencePage).map { answer =>
+      SummaryListRowViewModel(
+        key = "internationalEnhancementReference.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.InternationalEnhancementReferenceController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("internationalEnhancementReference.change.hidden"))
         )
+      )
     }
 }
