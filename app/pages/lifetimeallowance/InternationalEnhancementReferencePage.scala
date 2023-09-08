@@ -16,34 +16,33 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, LtaProtectionOrEnhancements, NormalMode, SchemeIndex, UserAnswers}
+import controllers.{routes => generalRoutes}
+import controllers.lifetimeallowance.{routes => ltaRoutes}
+import models.EnhancementType.{Both, Internationalenhancement, Pensioncredit}
+import models.{CheckMode, EnhancementType, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.LtaProtectionOrEnhancements.{Both, Enhancements, Protection}
-import controllers.{routes => generalRoutes}
 
 import scala.util.Try
 
-case object ProtectionReferencePage extends QuestionPage[String] {
+case object InternationalEnhancementReferencePage extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ "lta" \ toString
 
-  override def toString: String = "protectionReference"
+  override def toString: String = "internationalEnhancementReference"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(LtaProtectionOrEnhancementsPage) match {
-      case Some(Protection) => ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
-      case Some(Both) => ltaRoutes.EnhancementTypeController.onPageLoad(NormalMode)
+    answers.get(EnhancementTypePage) match {
+      case Some(Internationalenhancement) => ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
+      case Some(Both) => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
       case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(LtaProtectionOrEnhancementsPage) match {
-      case Some(Protection) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both) => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
+    answers.get(EnhancementTypePage) match {
+      case Some(Internationalenhancement) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(Both) => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
       case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
-
 }
