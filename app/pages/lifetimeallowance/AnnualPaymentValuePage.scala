@@ -35,7 +35,7 @@ case object AnnualPaymentValuePage extends QuestionPage[BigInt] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AnnualPaymentValuePage) match {
-      case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+      case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
