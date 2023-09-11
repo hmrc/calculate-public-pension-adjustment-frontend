@@ -275,9 +275,9 @@ POST        /calculation-result                                                 
 
 GET         /lta-submission                                                      controllers.SubmissionController.storeAndRedirect()
 
-GET         /more-than-one-benefit-crystallisation-event                         controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
-POST        /more-than-one-benefit-crystallisation-event                         controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
-GET         /change-more-than-one-benefit-crystallisation-event                  controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-more-than-one-benefit-crystallisation-event                  controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
+GET         /lifetime-allowance/more-than-one-benefit-crystallisation-event                         controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
+POST        /lifetime-allowance/more-than-one-benefit-crystallisation-event                         controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
+GET         /lifetime-allowance/change-more-than-one-benefit-crystallisation-event                  controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
+POST        /lifetime-allowance/change-more-than-one-benefit-crystallisation-event                  controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
 GET         /lta-submission                                                                                             controllers.SubmissionController.storeAndRedirect()
