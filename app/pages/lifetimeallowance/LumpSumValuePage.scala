@@ -38,7 +38,7 @@ case object LumpSumValuePage extends QuestionPage[BigInt] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ExcessLifetimeAllowancePaidPage) match {
       case Some(Lumpsum) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both) => controllers.lifetimeallowance.routes.AnnualPaymentValueController.onPageLoad(CheckMode)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Both)    => controllers.lifetimeallowance.routes.AnnualPaymentValueController.onPageLoad(CheckMode)
+      case _             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
