@@ -22,6 +22,21 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryNewExcessLifetimeAllowancePaid: Arbitrary[NewExcessLifetimeAllowancePaid] =
+    Arbitrary {
+      Gen.oneOf(NewExcessLifetimeAllowancePaid.values.toSeq)
+    }
+
+  implicit lazy val arbitraryYearChargePaid: Arbitrary[YearChargePaid] =
+    Arbitrary {
+      Gen.oneOf(YearChargePaid.values.toSeq)
+    }
+
+  implicit lazy val arbitraryQuarterChargePaid: Arbitrary[QuarterChargePaid] =
+    Arbitrary {
+      Gen.oneOf(QuarterChargePaid.values.toSeq)
+    }
+
   // scala fmt ignore
 
   implicit lazy val arbitraryPeriod: Arbitrary[Period] =

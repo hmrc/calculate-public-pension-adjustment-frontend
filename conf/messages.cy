@@ -829,9 +829,64 @@ calculationResults.whatHappensNext.hint.compensation.list1 = cy: directly pay an
 calculationResults.whatHappensNext.hint.compensation.list2 = cy: increase your pension benefits to cover compensation for tax charges your scheme paid on your behalf from 6 April 2015 to 5 April 2019
 calculationResults.whatHappensNext.hint5 = cy: If you do not sign in to your Government Gateway, your results will not be saved and you will need to complete the calculator again.
 
+
 multipleBenefitCrystallisationEvent.title = cy: Have you had more than one benefit crystallisation event in your pensions?
 multipleBenefitCrystallisationEvent.heading = cy: Have you had more than one benefit crystallisation event in your pensions?
 multipleBenefitCrystallisationEvent.hint = cy: You can only have one benefit crystallisation event in each public scheme.
 multipleBenefitCrystallisationEvent.checkYourAnswersLabel = cy: Have you had more than one benefit crystallisation event in your pensions?
 multipleBenefitCrystallisationEvent.error.required = cy: Select yes if you have had more than one benefit crystallisation event in your pensions
 multipleBenefitCrystallisationEvent.change.hidden = cy: if you have had more than one benefit crystallisation event in your pensions
+
+quarterChargePaid.title = cy: In which quarter was your lifetime allowance charge paid?
+quarterChargePaid.heading = cy: In which quarter was your lifetime allowance charge paid?
+quarterChargePaid.hint = cy: Select the quarter of the year your lifetime allowance charge was paid
+quarterChargePaid.aprToJul = cy: 6 April to 5 July
+quarterChargePaid.julToOct = cy: 6 July to 5 October
+quarterChargePaid.octToJan = cy: 6 October to 5 January
+quarterChargePaid.janToApr = cy: 6 January to 5 April
+quarterChargePaid.checkYourAnswersLabel = cy: In which quarter was your lifetime allowance charge paid?
+quarterChargePaid.error.required = cy: Select the quarter of the year your lifetime allowance charge was paid
+quarterChargePaid.change.hidden =  cy: In which quarter was your lifetime allowance charge paid?
+
+yearChargePaid.title = cy: In which year was your lifetime allowance charge paid?
+yearChargePaid.heading = cy: In which year was your lifetime allowance charge paid?
+yearChargePaid.hint = cy: Select the year your lifetime allowance charge was paid.
+yearChargePaid.2021To2022 = cy: 6 April 2021 to 5 April 2022
+yearChargePaid.2020To2021 = cy: 6 April 2020 to 5 April 2021
+yearChargePaid.2019To2020 = cy: 6 April 2019 to 5 April 2020
+yearChargePaid.2018To2019 = cy: 6 April 2018 to 5 April 2019
+yearChargePaid.2017To2018 = cy: 6 April 2017 to 5 April 2018
+yearChargePaid.2016To2017 = cy: 6 April 2016 to 5 April 2017
+yearChargePaid.2015To2016 = cy: 6 April 2015 to 5 April 2016
+yearChargePaid.checkYourAnswersLabel = cy: In which year was your lifetime allowance charge paid?
+yearChargePaid.error.required = cy: Select the year your lifetime allowance charge was paid
+yearChargePaid.change.hidden = cy: In which year was your lifetime allowance charge paid?
+
+newAnnualPaymentValue.title = cy: What is the new value of the annual payment?
+newAnnualPaymentValue.heading = cy: What is the new value of the annual payment?
+newAnnualPaymentValue.hint = cy: Amount must be rounded down to the nearest pound, for example 2300.
+newAnnualPaymentValue.checkYourAnswersLabel = cy: What is the new value of the annual payment?
+newAnnualPaymentValue.error.nonNumeric = cy: Your new annual payment value must only include numbers 0 to 9
+newAnnualPaymentValue.error.required = cy: Enter the new value of the annual payment
+newAnnualPaymentValue.error.wholeNumber = cy: Your new annual payment value must only include numbers 0 to 9
+newAnnualPaymentValue.error.outOfRange = cy: Your new annual payment value must be £999999999 or less
+newAnnualPaymentValue.change.hidden = cy: What is the new value of the annual payment?
+
+newLumpSumValue.title = cy: What is the new value of the lump sum?
+newLumpSumValue.heading = cy: What is the new value of the lump sum?
+newLumpSumValue.hint = cy: Amount must be rounded down to the nearest pound, for example 2300.
+newLumpSumValue.checkYourAnswersLabel = cy: What is the new value of the lump sum?
+newLumpSumValue.error.nonNumeric = cy: Your new lump sum value must only include numbers 0 to 9
+newLumpSumValue.error.required = cy: Enter the new value of the lump sum
+newLumpSumValue.error.wholeNumber = cy: Your new lump sum value must only include numbers 0 to 9
+newLumpSumValue.error.outOfRange = cy: Your new lump sum value must be £999999999 or less
+newLumpSumValue.change.hidden = cy: What is the new value of the lump sum?
+
+newExcessLifetimeAllowancePaid.title = cy: How will the new excess above your lifetime allowance be paid to you?
+newExcessLifetimeAllowancePaid.heading = cy: How will the new excess above your lifetime allowance be paid to you?
+newExcessLifetimeAllowancePaid.annualPayment = cy: Annual Payment
+newExcessLifetimeAllowancePaid.lumpSum = cy: Lump Sum
+newExcessLifetimeAllowancePaid.both = cy: Both
+newExcessLifetimeAllowancePaid.checkYourAnswersLabel = cy: How will the new excess above your lifetime allowance be paid to you?
+newExcessLifetimeAllowancePaid.error.required = cy: Select how the new excess above your lifetime allowance will be paid to you
+newExcessLifetimeAllowancePaid.change.hidden = cy: How will the new excess above your lifetime allowance be paid to you?
