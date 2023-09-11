@@ -17,7 +17,6 @@
 package forms.lifetimeallowance
 
 import forms.behaviours.StringFieldBehaviours
-import org.scalacheck.Gen
 import play.api.data.FormError
 
 class InternationalEnhancementReferenceFormProviderSpec extends StringFieldBehaviours {

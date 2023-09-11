@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.NormalMode
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class PensionCreditReferencePageSpec extends PageBehaviours {
@@ -40,6 +40,20 @@ class PensionCreditReferencePageSpec extends PageBehaviours {
       val nextPageUrl: String = PensionCreditReferencePage.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/protection-changed")
+    }
+
+  }
+
+  "check mode navigation" - {
+
+    "when user submits a reference" in {
+
+      val userAnswers =
+        emptyUserAnswers.set(PensionCreditReferencePage, "validRef").get
+
+      val nextPageUrl: String = PensionCreditReferencePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/check-your-lta-answers")
     }
 
   }

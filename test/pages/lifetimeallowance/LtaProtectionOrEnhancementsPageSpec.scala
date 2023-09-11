@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.LtaProtectionOrEnhancements
+import models.{CheckMode, LtaProtectionOrEnhancements, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
@@ -28,5 +28,89 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
     beSettable[LtaProtectionOrEnhancements](LtaProtectionOrEnhancementsPage)
 
     beRemovable[LtaProtectionOrEnhancements](LtaProtectionOrEnhancementsPage)
+  }
+
+  "normal mode navigation" - {
+
+    "when user has selected Protection " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, models.LtaProtectionOrEnhancements.Protection).get
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/protection-type")
+    }
+
+    "when user has selected Both" in {
+
+      val userAnswers =
+        emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, models.LtaProtectionOrEnhancements.Both).get
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/protection-type")
+    }
+
+    "when user has selected Enhancement " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, models.LtaProtectionOrEnhancements.Enhancements).get
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/enhancement-type")
+    }
+
+    "when user has entered incorrect value " in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "check mode navigation" - {
+
+    "when user has selected Protection " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, models.LtaProtectionOrEnhancements.Protection).get
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-protection-type")
+    }
+
+    "when user has selected Both" in {
+
+      val userAnswers =
+        emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, models.LtaProtectionOrEnhancements.Both).get
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-protection-type")
+    }
+
+    "when user has selected Enhancement " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, models.LtaProtectionOrEnhancements.Enhancements).get
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-enhancement-type")
+    }
+
+    "when user has entered incorrect value " in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 }

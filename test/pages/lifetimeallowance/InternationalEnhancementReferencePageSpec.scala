@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.NormalMode
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class InternationalEnhancementReferencePageSpec extends PageBehaviours {
@@ -32,7 +32,7 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
   "normal mode navigation" - {
 
-    "when user has selected Internationalenhancement on EnhancementTypePage and submits a reference" in {
+    "when user has selected International enhancement on EnhancementTypePage and submits a reference" in {
 
       val userAnswers =
         emptyUserAnswers
@@ -69,4 +69,45 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
   }
+
+  "check mode navigation" - {
+
+    "when user has selected International enhancement on EnhancementTypePage and submits a reference" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(EnhancementTypePage, models.EnhancementType.Internationalenhancement)
+          .get
+          .set(InternationalEnhancementReferencePage, "validRef")
+          .get
+
+      val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+    }
+
+    "when user has selected Both on EnhancementTypePage and submits a reference" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(EnhancementTypePage, models.EnhancementType.Both)
+          .get
+          .set(InternationalEnhancementReferencePage, "validRef")
+          .get
+
+      val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-pension-credit-reference")
+    }
+
+    "when user has entered incorrect value " in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
 }

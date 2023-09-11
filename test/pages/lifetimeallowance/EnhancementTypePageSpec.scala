@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{EnhancementType, NormalMode}
+import models.{CheckMode, EnhancementType, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class EnhancementTypeSpec extends PageBehaviours {
@@ -67,6 +67,48 @@ class EnhancementTypeSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
 
       val nextPageUrl: String = EnhancementTypePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "check mode navigation" - {
+
+    "when user has selected Internationalenhancement " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.Internationalenhancement).get
+
+      val nextPageUrl: String = EnhancementTypePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-international-enhancement-reference")
+    }
+
+    "when user has selected Both" in {
+
+      val userAnswers =
+        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.Both).get
+
+      val nextPageUrl: String = EnhancementTypePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-international-enhancement-reference")
+    }
+
+    "when user has selected Pensioncredit " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.Pensioncredit).get
+
+      val nextPageUrl: String = EnhancementTypePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-pension-credit-reference")
+    }
+
+    "when user has entered incorrect value " in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = EnhancementTypePage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
