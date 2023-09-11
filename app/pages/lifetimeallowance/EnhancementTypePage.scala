@@ -36,7 +36,7 @@ case object EnhancementTypePage extends QuestionPage[EnhancementType] {
       case Some(Pensioncredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
       case Some(Internationalenhancement) | Some(Both) =>
         ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(NormalMode)
-      case _                                        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case _                                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
@@ -44,7 +44,7 @@ case object EnhancementTypePage extends QuestionPage[EnhancementType] {
       case Some(Pensioncredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
       case Some(Internationalenhancement) | Some(Both) =>
         ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(CheckMode)
-      case _                                        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case _                                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[EnhancementType], userAnswers: UserAnswers): Try[UserAnswers] =

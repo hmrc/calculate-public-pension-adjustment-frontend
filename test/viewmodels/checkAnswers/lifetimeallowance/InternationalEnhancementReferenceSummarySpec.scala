@@ -43,7 +43,10 @@ class InternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with Matc
           key = "internationalEnhancementReference.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.InternationalEnhancementReferenceController.onPageLoad(CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.InternationalEnhancementReferenceController.onPageLoad(CheckMode).url
+            )
               .withVisuallyHiddenText("internationalEnhancementReference.change.hidden")
           )
         )

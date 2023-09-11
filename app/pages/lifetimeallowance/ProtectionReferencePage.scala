@@ -34,14 +34,14 @@ case object ProtectionReferencePage extends QuestionPage[String] {
     answers.get(LtaProtectionOrEnhancementsPage) match {
       case Some(Protection) => ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
       case Some(Both)       => ltaRoutes.EnhancementTypeController.onPageLoad(NormalMode)
-      case _             => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case _                => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(LtaProtectionOrEnhancementsPage) match {
       case Some(Protection) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both)      => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
-      case _             => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Both)       => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
+      case _                => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
 }
