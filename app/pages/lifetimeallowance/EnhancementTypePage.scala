@@ -18,7 +18,7 @@ package pages.lifetimeallowance
 
 import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.EnhancementType.{Both, Internationalenhancement, Pensioncredit}
+import models.EnhancementType.{Both, InternationalEnhancement, PensionCredit}
 import models.{CheckMode, EnhancementType, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -33,16 +33,16 @@ case object EnhancementTypePage extends QuestionPage[EnhancementType] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
-      case Some(Pensioncredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
-      case Some(Internationalenhancement) | Some(Both) =>
+      case Some(PensionCredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
+      case Some(InternationalEnhancement) | Some(Both) =>
         ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(NormalMode)
       case _                                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
-      case Some(Pensioncredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
-      case Some(Internationalenhancement) | Some(Both) =>
+      case Some(PensionCredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
+      case Some(InternationalEnhancement) | Some(Both) =>
         ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(CheckMode)
       case _                                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
@@ -50,10 +50,10 @@ case object EnhancementTypePage extends QuestionPage[EnhancementType] {
   override def cleanup(value: Option[EnhancementType], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case Internationalenhancement =>
+        case InternationalEnhancement =>
           userAnswers
             .remove(PensionCreditReferencePage)
-        case Pensioncredit            =>
+        case PensionCredit            =>
           userAnswers
             .remove(InternationalEnhancementReferencePage)
         case Both                     => super.cleanup(value, userAnswers)

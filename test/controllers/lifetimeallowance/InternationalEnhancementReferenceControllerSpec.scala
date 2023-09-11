@@ -19,7 +19,7 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import controllers.routes
 import forms.lifetimeallowance.InternationalEnhancementReferenceFormProvider
-import models.EnhancementType.Internationalenhancement
+import models.EnhancementType.InternationalEnhancement
 import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -88,7 +88,7 @@ class InternationalEnhancementReferenceControllerSpec extends SpecBase with Mock
 
       val userAnswers: UserAnswers =
         emptyUserAnswers
-          .set(EnhancementTypePage, Internationalenhancement)
+          .set(EnhancementTypePage, InternationalEnhancement)
           .get
 
       val application =

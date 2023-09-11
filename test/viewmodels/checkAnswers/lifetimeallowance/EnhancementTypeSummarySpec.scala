@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.EnhancementType.Pensioncredit
+import models.EnhancementType.PensionCredit
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -37,7 +37,7 @@ class EnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           EnhancementTypePage,
-          Pensioncredit
+          PensionCredit
         )
         .get
       EnhancementTypeSummary.row(userAnswers) shouldBe Some(

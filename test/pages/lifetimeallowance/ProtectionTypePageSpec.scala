@@ -16,7 +16,6 @@
 
 package pages.lifetimeallowance
 
-import models.LtaProtectionOrEnhancements.{Both, Enhancements, Protection}
 import models.{CheckMode, NormalMode, ProtectionType}
 import pages.behaviours.PageBehaviours
 

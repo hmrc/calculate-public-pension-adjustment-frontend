@@ -35,7 +35,7 @@ class EnhancementTypeSpec extends PageBehaviours {
     "when user has selected Internationalenhancement " in {
 
       val userAnswers =
-        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.Internationalenhancement).get
+        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.InternationalEnhancement).get
 
       val nextPageUrl: String = EnhancementTypePage.navigate(NormalMode, userAnswers).url
 
@@ -55,7 +55,7 @@ class EnhancementTypeSpec extends PageBehaviours {
     "when user has selected Pensioncredit " in {
 
       val userAnswers =
-        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.Pensioncredit).get
+        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.PensionCredit).get
 
       val nextPageUrl: String = EnhancementTypePage.navigate(NormalMode, userAnswers).url
 
@@ -77,7 +77,7 @@ class EnhancementTypeSpec extends PageBehaviours {
     "when user has selected Internationalenhancement " in {
 
       val userAnswers =
-        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.Internationalenhancement).get
+        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.InternationalEnhancement).get
 
       val nextPageUrl: String = EnhancementTypePage.navigate(CheckMode, userAnswers).url
 
@@ -97,7 +97,7 @@ class EnhancementTypeSpec extends PageBehaviours {
     "when user has selected Pensioncredit " in {
 
       val userAnswers =
-        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.Pensioncredit).get
+        emptyUserAnswers.set(EnhancementTypePage, models.EnhancementType.PensionCredit).get
 
       val nextPageUrl: String = EnhancementTypePage.navigate(CheckMode, userAnswers).url
 

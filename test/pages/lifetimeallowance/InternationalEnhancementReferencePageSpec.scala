@@ -36,7 +36,7 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val userAnswers =
         emptyUserAnswers
-          .set(EnhancementTypePage, models.EnhancementType.Internationalenhancement)
+          .set(EnhancementTypePage, models.EnhancementType.InternationalEnhancement)
           .get
           .set(InternationalEnhancementReferencePage, "validRef")
           .get
@@ -76,7 +76,7 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val userAnswers =
         emptyUserAnswers
-          .set(EnhancementTypePage, models.EnhancementType.Internationalenhancement)
+          .set(EnhancementTypePage, models.EnhancementType.InternationalEnhancement)
           .get
           .set(InternationalEnhancementReferencePage, "validRef")
           .get

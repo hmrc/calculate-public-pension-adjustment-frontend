@@ -18,7 +18,7 @@ package pages.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
-import models.EnhancementType.{Both, Internationalenhancement}
+import models.EnhancementType.{Both, InternationalEnhancement}
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -32,14 +32,14 @@ case object InternationalEnhancementReferencePage extends QuestionPage[String] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
-      case Some(Internationalenhancement) => ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
+      case Some(InternationalEnhancement) => ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
       case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
       case _                              => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
-      case Some(Internationalenhancement) =>
+      case Some(InternationalEnhancement) =>
         controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
       case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
       case _                              => generalRoutes.JourneyRecoveryController.onPageLoad(None)

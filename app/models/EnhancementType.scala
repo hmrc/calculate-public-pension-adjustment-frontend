@@ -24,13 +24,13 @@ sealed trait EnhancementType
 
 object EnhancementType extends Enumerable.Implicits {
 
-  case object Internationalenhancement extends WithName("internationalEnhancement") with EnhancementType
-  case object Pensioncredit extends WithName("pensionCredit") with EnhancementType
+  case object InternationalEnhancement extends WithName("internationalEnhancement") with EnhancementType
+  case object PensionCredit extends WithName("pensionCredit") with EnhancementType
   case object Both extends WithName("both") with EnhancementType
 
   val values: Seq[EnhancementType] = Seq(
-    Internationalenhancement,
-    Pensioncredit,
+    InternationalEnhancement,
+    PensionCredit,
     Both
   )
 
