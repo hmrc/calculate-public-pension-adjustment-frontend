@@ -26,13 +26,13 @@ class YearChargePaidFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "yearChargePaid.error.required"
 
     behave like optionsField[YearChargePaid](
       form,
       fieldName,
-      validValues  = YearChargePaid.values,
+      validValues = YearChargePaid.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

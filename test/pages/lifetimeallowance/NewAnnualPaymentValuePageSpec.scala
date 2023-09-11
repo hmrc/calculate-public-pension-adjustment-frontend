@@ -30,7 +30,7 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
     beRemovable[BigInt](NewAnnualPaymentValuePage)
   }
 
-    "normal mode navigation" - {
+  "normal mode navigation" - {
 
     "when user has entered for Annual Payment Value page" in {
 
@@ -51,24 +51,24 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
     }
   }
 
-    "check mode navigation" - {
+  "check mode navigation" - {
 
-      "when user has entered for Annual payment value page in Check mode " in {
+    "when user has entered for Annual payment value page in Check mode " in {
 
-        val userAnswers = emptyUserAnswers.set(NewAnnualPaymentValuePage, BigInt("200")).get
+      val userAnswers = emptyUserAnswers.set(NewAnnualPaymentValuePage, BigInt("200")).get
 
-        val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/check-your-lta-answers")
-      }
-
-      "when user hasn't entered Annual payment value page in Check mode " in {
-
-        val userAnswers = emptyUserAnswers
-
-        val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
-
-        checkNavigation(nextPageUrl, "/there-is-a-problem")
-      }
+      checkNavigation(nextPageUrl, "/check-your-lta-answers")
     }
+
+    "when user hasn't entered Annual payment value page in Check mode " in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
 }

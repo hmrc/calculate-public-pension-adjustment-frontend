@@ -26,13 +26,13 @@ class QuarterChargePaidFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "quarterChargePaid.error.required"
 
     behave like optionsField[QuarterChargePaid](
       form,
       fieldName,
-      validValues  = QuarterChargePaid.values,
+      validValues = QuarterChargePaid.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

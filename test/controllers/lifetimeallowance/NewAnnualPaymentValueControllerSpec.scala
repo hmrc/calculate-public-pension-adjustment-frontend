@@ -35,13 +35,14 @@ import scala.concurrent.Future
 class NewAnnualPaymentValueControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new NewAnnualPaymentValueFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt("0")
 
-  lazy val newAnnualPaymentValueRoute = controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(NormalMode).url
+  lazy val newAnnualPaymentValueRoute =
+    controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(NormalMode).url
 
   "NewAnnualPaymentValue Controller" - {
 
@@ -75,7 +76,10 @@ class NewAnnualPaymentValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -98,7 +102,9 @@ class NewAnnualPaymentValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 

@@ -24,7 +24,11 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.libs.json.{JsError, JsString, Json}
 
-class NewExcessLifetimeAllowancePaidSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues {
+class NewExcessLifetimeAllowancePaidSpec
+    extends AnyFreeSpec
+    with Matchers
+    with ScalaCheckPropertyChecks
+    with OptionValues {
 
   "NewExcessLifetimeAllowancePaid" - {
 
@@ -32,10 +36,11 @@ class NewExcessLifetimeAllowancePaidSpec extends AnyFreeSpec with Matchers with 
 
       val gen = Gen.oneOf(NewExcessLifetimeAllowancePaid.values.toSeq)
 
-      forAll(gen) {
-        newExcessLifetimeAllowancePaid =>
-
-          JsString(newExcessLifetimeAllowancePaid.toString).validate[NewExcessLifetimeAllowancePaid].asOpt.value mustEqual newExcessLifetimeAllowancePaid
+      forAll(gen) { newExcessLifetimeAllowancePaid =>
+        JsString(newExcessLifetimeAllowancePaid.toString)
+          .validate[NewExcessLifetimeAllowancePaid]
+          .asOpt
+          .value mustEqual newExcessLifetimeAllowancePaid
       }
     }
 
@@ -43,10 +48,8 @@ class NewExcessLifetimeAllowancePaidSpec extends AnyFreeSpec with Matchers with 
 
       val gen = arbitrary[String] suchThat (!NewExcessLifetimeAllowancePaid.values.map(_.toString).contains(_))
 
-      forAll(gen) {
-        invalidValue =>
-
-          JsString(invalidValue).validate[NewExcessLifetimeAllowancePaid] mustEqual JsError("error.invalid")
+      forAll(gen) { invalidValue =>
+        JsString(invalidValue).validate[NewExcessLifetimeAllowancePaid] mustEqual JsError("error.invalid")
       }
     }
 
@@ -54,10 +57,8 @@ class NewExcessLifetimeAllowancePaidSpec extends AnyFreeSpec with Matchers with 
 
       val gen = Gen.oneOf(NewExcessLifetimeAllowancePaid.values.toSeq)
 
-      forAll(gen) {
-        newExcessLifetimeAllowancePaid =>
-
-          Json.toJson(newExcessLifetimeAllowancePaid) mustEqual JsString(newExcessLifetimeAllowancePaid.toString)
+      forAll(gen) { newExcessLifetimeAllowancePaid =>
+        Json.toJson(newExcessLifetimeAllowancePaid) mustEqual JsString(newExcessLifetimeAllowancePaid.toString)
       }
     }
   }

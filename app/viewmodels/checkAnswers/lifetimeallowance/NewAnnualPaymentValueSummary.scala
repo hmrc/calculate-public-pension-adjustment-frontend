@@ -25,19 +25,20 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object NewAnnualPaymentValueSummary  {
+object NewAnnualPaymentValueSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(NewAnnualPaymentValuePage).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "newAnnualPaymentValue.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(currencyFormat(answer))),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("newAnnualPaymentValue.change.hidden"))
+    answers.get(NewAnnualPaymentValuePage).map { answer =>
+      SummaryListRowViewModel(
+        key = "newAnnualPaymentValue.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("newAnnualPaymentValue.change.hidden"))
         )
+      )
     }
 }

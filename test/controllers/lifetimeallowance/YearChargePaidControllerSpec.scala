@@ -36,10 +36,11 @@ class YearChargePaidControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val yearChargePaidRoute = controllers.lifetimeallowance.routes.YearChargePaidController.onPageLoad(NormalMode).url
+  lazy val yearChargePaidRoute =
+    controllers.lifetimeallowance.routes.YearChargePaidController.onPageLoad(NormalMode).url
 
   val formProvider = new YearChargePaidFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "YearChargePaid Controller" - {
 
@@ -73,7 +74,10 @@ class YearChargePaidControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(YearChargePaid.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(YearChargePaid.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -96,7 +100,11 @@ class YearChargePaidControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(NormalMode).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 

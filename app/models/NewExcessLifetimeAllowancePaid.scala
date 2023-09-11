@@ -29,7 +29,9 @@ object NewExcessLifetimeAllowancePaid extends Enumerable.Implicits {
   case object Both extends WithName("both") with NewExcessLifetimeAllowancePaid
 
   val values: Seq[NewExcessLifetimeAllowancePaid] = Seq(
-    Annualpayment, Lumpsum, Both
+    Annualpayment,
+    Lumpsum,
+    Both
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = {
@@ -40,7 +42,7 @@ object NewExcessLifetimeAllowancePaid extends Enumerable.Implicits {
         id = Some(s"value_$index")
       )
     }
-    val orOption = RadioItem(
+    val orOption      = RadioItem(
       id = Some(messages("divider")),
       disabled = true,
       divider = Some(messages("divider"))

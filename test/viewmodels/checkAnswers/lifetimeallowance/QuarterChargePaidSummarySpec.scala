@@ -53,7 +53,6 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
-
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       QuarterChargePaidSummary.row(userAnswers) shouldBe None

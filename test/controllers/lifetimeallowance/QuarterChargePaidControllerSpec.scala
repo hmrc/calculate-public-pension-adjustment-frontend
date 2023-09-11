@@ -36,10 +36,11 @@ class QuarterChargePaidControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val quarterChargePaidRoute = controllers.lifetimeallowance.routes.QuarterChargePaidController.onPageLoad(NormalMode).url
+  lazy val quarterChargePaidRoute =
+    controllers.lifetimeallowance.routes.QuarterChargePaidController.onPageLoad(NormalMode).url
 
   val formProvider = new QuarterChargePaidFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "QuarterChargePaid Controller" - {
 
@@ -61,7 +62,8 @@ class QuarterChargePaidControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(QuarterChargePaidPage, QuarterChargePaid.values.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(QuarterChargePaidPage, QuarterChargePaid.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -73,7 +75,10 @@ class QuarterChargePaidControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(QuarterChargePaid.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(QuarterChargePaid.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -96,7 +101,9 @@ class QuarterChargePaidControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.YearChargePaidController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.YearChargePaidController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 

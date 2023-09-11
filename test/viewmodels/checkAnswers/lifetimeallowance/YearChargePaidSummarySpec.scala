@@ -53,7 +53,6 @@ class YearChargePaidSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
-
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       YearChargePaidSummary.row(userAnswers) shouldBe None

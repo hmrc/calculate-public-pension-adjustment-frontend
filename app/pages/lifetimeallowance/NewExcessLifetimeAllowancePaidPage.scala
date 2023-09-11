@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NewExcessLifetimeAllowancePaid, NormalMode, UserAnswers, Mode}
+import models.{CheckMode, Mode, NewExcessLifetimeAllowancePaid, NormalMode, UserAnswers}
 import models.NewExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -36,10 +36,10 @@ case object NewExcessLifetimeAllowancePaidPage extends QuestionPage[NewExcessLif
 
   private def navigateInEitherMode(answers: UserAnswers, mode: Mode): Call =
     answers.get(NewExcessLifetimeAllowancePaidPage) match {
-      case Some(Lumpsum) => controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(mode)
-      case Some(Both) => controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(mode)
+      case Some(Lumpsum)       => controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(mode)
+      case Some(Both)          => controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(mode)
       case Some(Annualpayment) => controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(mode)
-      case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case None                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[NewExcessLifetimeAllowancePaid], userAnswers: UserAnswers): Try[UserAnswers] =

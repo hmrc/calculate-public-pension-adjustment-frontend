@@ -28,7 +28,8 @@ class NewAnnualPaymentValueFormProvider @Inject() extends Mappings {
       "value" -> bigInt(
         "newAnnualPaymentValue.error.required",
         "newAnnualPaymentValue.error.wholeNumber",
-        "newAnnualPaymentValue.error.nonNumeric")
-          .verifying(inRange[BigInt](0, BigInt("999999999"), "newAnnualPaymentValue.error.outOfRange"))
+        "newAnnualPaymentValue.error.nonNumeric"
+      )
+        .verifying(inRange[BigInt](0, BigInt("999999999"), "newAnnualPaymentValue.error.outOfRange"))
     )
 }

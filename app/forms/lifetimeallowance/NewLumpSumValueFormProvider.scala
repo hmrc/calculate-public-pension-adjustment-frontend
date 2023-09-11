@@ -28,7 +28,8 @@ class NewLumpSumValueFormProvider @Inject() extends Mappings {
       "value" -> bigInt(
         "newLumpSumValue.error.required",
         "newLumpSumValue.error.wholeNumber",
-        "newLumpSumValue.error.nonNumeric")
-          .verifying(inRange[BigInt](0, BigInt("999999999"), "newLumpSumValue.error.outOfRange"))
+        "newLumpSumValue.error.nonNumeric"
+      )
+        .verifying(inRange[BigInt](0, BigInt("999999999"), "newLumpSumValue.error.outOfRange"))
     )
 }

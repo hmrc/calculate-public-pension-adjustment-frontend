@@ -25,25 +25,26 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object NewExcessLifetimeAllowancePaidSummary  {
+object NewExcessLifetimeAllowancePaidSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(NewExcessLifetimeAllowancePaidPage).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"newExcessLifetimeAllowancePaid.$answer"))
-          )
+    answers.get(NewExcessLifetimeAllowancePaidPage).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"newExcessLifetimeAllowancePaid.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key     = "newExcessLifetimeAllowancePaid.checkYourAnswersLabel",
-          value   = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("newExcessLifetimeAllowancePaid.change.hidden"))
+      SummaryListRowViewModel(
+        key = "newExcessLifetimeAllowancePaid.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("newExcessLifetimeAllowancePaid.change.hidden"))
         )
+      )
     }
 }

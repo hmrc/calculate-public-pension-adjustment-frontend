@@ -35,13 +35,14 @@ import scala.concurrent.Future
 class NewLumpSumValueControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new NewLumpSumValueFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt("0")
 
-  lazy val newLumpSumValueRoute = controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(NormalMode).url
+  lazy val newLumpSumValueRoute =
+    controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(NormalMode).url
 
   "NewLumpSumValue Controller" - {
 
@@ -75,7 +76,10 @@ class NewLumpSumValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

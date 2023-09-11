@@ -28,19 +28,18 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
 
   override def toString: String = "newLumpSumValue"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(NewExcessLifetimeAllowancePaidPage) match {
-      case Some(Lumpsum) => controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
-      case Some(Both) => controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Lumpsum) =>
+        controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode)
+      case Some(Both)    => controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(NormalMode)
+      case _             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(NewExcessLifetimeAllowancePaidPage) match {
       case Some(Lumpsum) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both) => controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(CheckMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Both)    => controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(CheckMode)
+      case _             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

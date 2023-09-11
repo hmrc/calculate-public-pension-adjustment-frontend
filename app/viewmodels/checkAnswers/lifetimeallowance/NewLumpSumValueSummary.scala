@@ -25,19 +25,20 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object NewLumpSumValueSummary  {
+object NewLumpSumValueSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(NewLumpSumValuePage).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "newLumpSumValue.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(currencyFormat(answer))),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("newLumpSumValue.change.hidden"))
+    answers.get(NewLumpSumValuePage).map { answer =>
+      SummaryListRowViewModel(
+        key = "newLumpSumValue.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("newLumpSumValue.change.hidden"))
         )
+      )
     }
 }

@@ -38,7 +38,7 @@ class QuarterChargePaidSpec extends PageBehaviours {
 
       val nextPageUrl: String = QuarterChargePaidPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/year-charge-was-paid")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/year-charge-was-paid")
     }
 
     "when user hasn't entered value for Quarter Charge Paid page" in {

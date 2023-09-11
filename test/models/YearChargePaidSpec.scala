@@ -32,10 +32,8 @@ class YearChargePaidSpec extends AnyFreeSpec with Matchers with ScalaCheckProper
 
       val gen = Gen.oneOf(YearChargePaid.values.toSeq)
 
-      forAll(gen) {
-        YearChargePaid =>
-
-          JsString(YearChargePaid.toString).validate[YearChargePaid].asOpt.value mustEqual YearChargePaid
+      forAll(gen) { YearChargePaid =>
+        JsString(YearChargePaid.toString).validate[YearChargePaid].asOpt.value mustEqual YearChargePaid
       }
     }
 
@@ -43,10 +41,8 @@ class YearChargePaidSpec extends AnyFreeSpec with Matchers with ScalaCheckProper
 
       val gen = arbitrary[String] suchThat (!YearChargePaid.values.map(_.toString).contains(_))
 
-      forAll(gen) {
-        invalidValue =>
-
-          JsString(invalidValue).validate[YearChargePaid] mustEqual JsError("error.invalid")
+      forAll(gen) { invalidValue =>
+        JsString(invalidValue).validate[YearChargePaid] mustEqual JsError("error.invalid")
       }
     }
 
@@ -54,10 +50,8 @@ class YearChargePaidSpec extends AnyFreeSpec with Matchers with ScalaCheckProper
 
       val gen = Gen.oneOf(YearChargePaid.values.toSeq)
 
-      forAll(gen) {
-        earChargePaid =>
-
-          Json.toJson(earChargePaid) mustEqual JsString(earChargePaid.toString)
+      forAll(gen) { earChargePaid =>
+        Json.toJson(earChargePaid) mustEqual JsString(earChargePaid.toString)
       }
     }
   }

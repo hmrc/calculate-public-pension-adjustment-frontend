@@ -41,7 +41,7 @@ class NewAnnualPaymentValueFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "newAnnualPaymentValue.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "newAnnualPaymentValue.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "newAnnualPaymentValue.error.wholeNumber")
     )
 
