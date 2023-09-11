@@ -59,7 +59,7 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
 
       val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/enhancement-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/enhancement-type")
     }
 
     "when user has entered incorrect value " in {
@@ -101,7 +101,7 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
 
       val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-enhancement-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-enhancement-type")
     }
 
     "when user has entered incorrect value " in {

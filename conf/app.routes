@@ -275,20 +275,20 @@ POST        /calculation-result                                                 
 
 GET         /lta-submission                                                      controllers.SubmissionController.storeAndRedirect()
 
-GET        /enhancement-type                        controllers.lifetimeallowance.EnhancementTypeController.onPageLoad(mode: Mode = NormalMode)
-POST       /enhancement-type                        controllers.lifetimeallowance.EnhancementTypeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-enhancement-type                  controllers.lifetimeallowance.EnhancementTypeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-enhancement-type                  controllers.lifetimeallowance.EnhancementTypeController.onSubmit(mode: Mode = CheckMode)
+GET         /lifetime-allowance/enhancement-type                        controllers.lifetimeallowance.EnhancementTypeController.onPageLoad(mode: Mode = NormalMode)
+POST        /lifetime-allowance/enhancement-type                        controllers.lifetimeallowance.EnhancementTypeController.onSubmit(mode: Mode = NormalMode)
+GET         /lifetime-allowance/change-enhancement-type                  controllers.lifetimeallowance.EnhancementTypeController.onPageLoad(mode: Mode = CheckMode)
+POST        /lifetime-allowance/change-enhancement-type                  controllers.lifetimeallowance.EnhancementTypeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /international-enhancement-reference                        controllers.lifetimeallowance.InternationalEnhancementReferenceController.onPageLoad(mode: Mode = NormalMode)
-POST       /international-enhancement-reference                        controllers.lifetimeallowance.InternationalEnhancementReferenceController.onSubmit(mode: Mode = NormalMode)
-GET        /change-international-enhancement-reference                  controllers.lifetimeallowance.InternationalEnhancementReferenceController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-international-enhancement-reference                  controllers.lifetimeallowance.InternationalEnhancementReferenceController.onSubmit(mode: Mode = CheckMode)
+GET         /lifetime-allowance/international-enhancement-reference                        controllers.lifetimeallowance.InternationalEnhancementReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST        /lifetime-allowance/international-enhancement-reference                        controllers.lifetimeallowance.InternationalEnhancementReferenceController.onSubmit(mode: Mode = NormalMode)
+GET         /lifetime-allowance/change-international-enhancement-reference                  controllers.lifetimeallowance.InternationalEnhancementReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST        /lifetime-allowance/change-international-enhancement-reference                  controllers.lifetimeallowance.InternationalEnhancementReferenceController.onSubmit(mode: Mode = CheckMode)
 
-GET        /pension-credit-reference                        controllers.lifetimeallowance.PensionCreditReferenceController.onPageLoad(mode: Mode = NormalMode)
-POST       /pension-credit-reference                        controllers.lifetimeallowance.PensionCreditReferenceController.onSubmit(mode: Mode = NormalMode)
-GET        /change-pension-credit-reference                  controllers.lifetimeallowance.PensionCreditReferenceController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-pension-credit-reference                  controllers.lifetimeallowance.PensionCreditReferenceController.onSubmit(mode: Mode = CheckMode)
+GET         /lifetime-allowance/pension-credit-reference                        controllers.lifetimeallowance.PensionCreditReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST        /lifetime-allowance/pension-credit-reference                        controllers.lifetimeallowance.PensionCreditReferenceController.onSubmit(mode: Mode = NormalMode)
+GET         /lifetime-allowance/change-pension-credit-reference                  controllers.lifetimeallowance.PensionCreditReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST        /lifetime-allowance/change-pension-credit-reference                  controllers.lifetimeallowance.PensionCreditReferenceController.onSubmit(mode: Mode = CheckMode)
 
 GET         /lifetime-allowance/more-than-one-benefit-crystallisation-event                         controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/more-than-one-benefit-crystallisation-event                         controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)

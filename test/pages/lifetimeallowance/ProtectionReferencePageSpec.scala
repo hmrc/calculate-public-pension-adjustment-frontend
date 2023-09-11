@@ -57,7 +57,7 @@ class ProtectionReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ProtectionReferencePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/enhancement-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/enhancement-type")
     }
 
     "when user has entered incorrect value " in {
@@ -97,7 +97,7 @@ class ProtectionReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ProtectionReferencePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-enhancement-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-enhancement-type")
     }
 
     "when user has entered incorrect value " in {

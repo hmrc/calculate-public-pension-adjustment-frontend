@@ -57,7 +57,7 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/pension-credit-reference")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/pension-credit-reference")
     }
 
     "when user has entered incorrect value " in {
@@ -97,7 +97,7 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-pension-credit-reference")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-pension-credit-reference")
     }
 
     "when user has entered incorrect value " in {

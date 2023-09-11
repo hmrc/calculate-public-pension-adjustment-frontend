@@ -16,7 +16,8 @@
 
 package pages.lifetimeallowance
 
-import models.ProtectionType
+import models.LtaProtectionOrEnhancements.{Both, Enhancements, Protection}
+import models.{CheckMode, NormalMode, ProtectionType}
 import pages.behaviours.PageBehaviours
 
 class ProtectionTypeSpec extends PageBehaviours {
@@ -28,5 +29,53 @@ class ProtectionTypeSpec extends PageBehaviours {
     beSettable[ProtectionType](ProtectionTypePage)
 
     beRemovable[ProtectionType](ProtectionTypePage)
+  }
+
+  "normal mode navigation" - {
+
+    "when user submits any protection type" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(ProtectionTypePage, models.ProtectionType.FixedProtection)
+          .get
+
+      val nextPageUrl: String = ProtectionTypePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/protection-reference")
+    }
+
+    "when user has entered incorrect value " in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = ProtectionTypePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "check mode navigation" - {
+
+    "when user submits any protection type" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(ProtectionTypePage, models.ProtectionType.FixedProtection)
+          .get
+
+      val nextPageUrl: String = ProtectionTypePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-protection-reference")
+    }
+
+    "when user has entered incorrect value " in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = ProtectionTypePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 }

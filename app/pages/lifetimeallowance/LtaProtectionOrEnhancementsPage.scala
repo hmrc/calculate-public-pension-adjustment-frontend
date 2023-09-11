@@ -49,13 +49,16 @@ case object LtaProtectionOrEnhancementsPage extends QuestionPage[LtaProtectionOr
   override def cleanup(value: Option[LtaProtectionOrEnhancements], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case Protection | Both =>
+        case Protection   =>
           userAnswers
             .remove(EnhancementTypePage)
-        case Enhancements      =>
+            .flatMap(_.remove(InternationalEnhancementReferencePage))
+            .flatMap(_.remove(PensionCreditReferencePage))
+        case Enhancements =>
           userAnswers
             .remove(ProtectionTypePage)
             .flatMap(_.remove(ProtectionReferencePage))
+        case Both         => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }
