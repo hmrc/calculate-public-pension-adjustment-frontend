@@ -45,8 +45,15 @@ class BackendConnector @Inject() (config: FrontendAppConfig, httpClient: HttpCli
           case ACCEPTED =>
             Future.successful(response.json.as[Success])
           case _        =>
-            logger.error(s"Unexpected response from backend with status ${response.status}")
-            Future.failed(UpstreamErrorResponse("Unexpected response from backend", response.status))
+            logger.error(
+              s"Unexpected response from call to /calculate-public-pension-adjustment/submission with status : ${response.status}"
+            )
+            Future.failed(
+              UpstreamErrorResponse(
+                "Unexpected response from /calculate-public-pension-adjustment/submission",
+                response.status
+              )
+            )
         }
       }
   }
