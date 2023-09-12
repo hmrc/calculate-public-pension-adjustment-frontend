@@ -96,6 +96,14 @@ trait ModelGenerators {
       } yield SchemeNameAndTaxRef(name, taxRef)
     }
 
+  implicit lazy val arbitraryUserSchemeDetailsType: Arbitrary[UserSchemeDetails] =
+    Arbitrary {
+      for {
+        name   <- arbitrary[String]
+        taxRef <- taxRef
+      } yield UserSchemeDetails(name, taxRef)
+    }
+
   implicit lazy val arbitraryProtectionType: Arbitrary[ProtectionType] =
     Arbitrary {
       Gen.oneOf(ProtectionType.values.toSeq)

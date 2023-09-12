@@ -28,6 +28,9 @@ trait PageGenerators {
     : Arbitrary[MultipleBenefitCrystallisationEventPage.type] =
     Arbitrary(MultipleBenefitCrystallisationEventPage)
 
+  implicit lazy val arbitraryUserSchemeDetailsPage: Arbitrary[UserSchemeDetailsPage.type] =
+    Arbitrary(UserSchemeDetailsPage)
+
   implicit lazy val arbitraryNewExcessLifetimeAllowancePaidPage: Arbitrary[NewExcessLifetimeAllowancePaidPage.type] =
     Arbitrary(NewExcessLifetimeAllowancePaidPage)
 
@@ -37,7 +40,7 @@ trait PageGenerators {
   implicit lazy val arbitraryNewAnnualPaymentValuePage: Arbitrary[NewAnnualPaymentValuePage.type] =
     Arbitrary(NewAnnualPaymentValuePage)
 
-  implicit lazy val arbitraryearChargePaidPage: Arbitrary[YearChargePaidPage.type] =
+  implicit lazy val arbitraryYearChargePaidPage: Arbitrary[YearChargePaidPage.type] =
     Arbitrary(YearChargePaidPage)
 
   implicit lazy val arbitraryQuarterChargePaidPage: Arbitrary[QuarterChargePaidPage.type] =

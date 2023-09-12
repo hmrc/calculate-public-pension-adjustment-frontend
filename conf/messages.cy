@@ -890,3 +890,15 @@ newExcessLifetimeAllowancePaid.both = cy: Both
 newExcessLifetimeAllowancePaid.checkYourAnswersLabel = cy: How will the new excess above your lifetime allowance be paid to you?
 newExcessLifetimeAllowancePaid.error.required = cy: Select how the new excess above your lifetime allowance will be paid to you
 newExcessLifetimeAllowancePaid.change.hidden = cy: How will the new excess above your lifetime allowance be paid to you?
+
+userSchemeDetails.title = cy: What is the name and tax reference of the pension scheme?
+userSchemeDetails.heading = cy: What is the name and tax reference of the pension scheme?
+userSchemeDetails.name.heading = cy: Name of the pension scheme
+userSchemeDetails.taxRef.heading = cy: Pension scheme tax reference
+userSchemeDetails.taxRef.hint = cy: You may find this on your pension scheme’s annual statement or you may need to contact your pension scheme. For example, 00348916RT.
+userSchemeDetails.checkYourAnswersLabel = cy: What is the name and tax reference of the pension scheme?
+userSchemeDetails.name.error.required = cy: Enter the name of the pension scheme
+userSchemeDetails.taxRef.error.required = cy: Enter the Pension Scheme Tax Reference
+userSchemeDetails.name.error.length = cy: The name of your pension scheme must be 100 characters or less
+userSchemeDetails.taxRef.invalid = cy: Enter your pension tax reference in the format 00348916RT
+userSchemeDetails.change.hidden = cy: What is the name and tax reference of the pension scheme?
