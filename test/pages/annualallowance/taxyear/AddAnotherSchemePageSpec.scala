@@ -50,7 +50,7 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/which-scheme-details/2018/2")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/select-scheme-2")
     }
 
     "must redirect to other db/dc page when answer no and have dc scheme in standard period" in {

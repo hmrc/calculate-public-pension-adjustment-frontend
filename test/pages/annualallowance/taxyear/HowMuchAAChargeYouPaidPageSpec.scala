@@ -56,7 +56,7 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
 
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/add-another-scheme/2018/0")
+    checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/pension-scheme-summary")
   }
 
   "must redirect to other db/dc page when does have dc scheme and not member more than one scheme in standard period" in {
