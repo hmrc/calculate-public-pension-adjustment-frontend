@@ -29,42 +29,41 @@ import views.html.lifetimeallowance.UserSchemeDetailsView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class UserSchemeDetailsController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: UserSchemeDetailsFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: UserSchemeDetailsView
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class UserSchemeDetailsController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: UserSchemeDetailsFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: UserSchemeDetailsView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val preparedForm = request.userAnswers.get(UserSchemeDetailsPage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(UserSchemeDetailsPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+    Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(UserSchemeDetailsPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(UserSchemeDetailsPage.navigate(mode, updatedAnswers))
-      )
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(UserSchemeDetailsPage, value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(UserSchemeDetailsPage.navigate(mode, updatedAnswers))
+        )
   }
 }

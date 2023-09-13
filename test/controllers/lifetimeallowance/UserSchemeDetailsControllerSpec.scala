@@ -38,9 +38,10 @@ class UserSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new UserSchemeDetailsFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val userSchemeDetailsRoute = controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(NormalMode).url
+  lazy val userSchemeDetailsRoute =
+    controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(NormalMode).url
 
   "UserSchemeDetails Controller" - {
 
@@ -62,7 +63,10 @@ class UserSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(UserSchemeDetailsPage, UserSchemeDetails("someSchemeName", "someSchemeTaxRef")).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(UserSchemeDetailsPage, UserSchemeDetails("someSchemeName", "someSchemeTaxRef"))
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +78,10 @@ class UserSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(UserSchemeDetails("someSchemeName", "someSchemeTaxRef")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(
+          form.fill(UserSchemeDetails("someSchemeName", "someSchemeTaxRef")),
+          NormalMode
+        )(request, messages(application)).toString
       }
     }
 
@@ -97,7 +104,11 @@ class UserSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(NormalMode).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 

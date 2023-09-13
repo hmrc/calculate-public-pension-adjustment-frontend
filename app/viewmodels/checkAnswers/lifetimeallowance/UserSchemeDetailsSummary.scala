@@ -26,20 +26,23 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object UserSchemeDetailsSummary  {
+object UserSchemeDetailsSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(UserSchemeDetailsPage).map { answer =>
-        val value =
-          HtmlFormat.escape(answer.name).toString + " / " + HtmlFormat.escape(answer.taxRef).toString
+      val value =
+        HtmlFormat.escape(answer.name).toString + " / " + HtmlFormat.escape(answer.taxRef).toString
 
-        SummaryListRowViewModel(
-          key     = "userSchemeDetails.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("userSchemeDetails.change.hidden"))
+      SummaryListRowViewModel(
+        key = "userSchemeDetails.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(value)),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("userSchemeDetails.change.hidden"))
         )
+      )
     }
 }

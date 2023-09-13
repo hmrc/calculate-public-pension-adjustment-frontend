@@ -26,10 +26,10 @@ import javax.inject.Inject
 class UserSchemeDetailsFormProvider @Inject() extends Mappings {
 
   def apply(): Form[UserSchemeDetails] = Form(
-      mapping(
-        "name" -> text("userSchemeDetails.name.error.required")
-          .verifying(maxLength(100, "userSchemeDetails.name.error.length")),
-        "taxRef" -> pstr("userSchemeDetails.taxRef.error.required", "userSchemeDetails.taxRef.invalid")
-      )(UserSchemeDetails.apply)(UserSchemeDetails.unapply)
-    )
+    mapping(
+      "name"   -> text("userSchemeDetails.name.error.required")
+        .verifying(maxLength(100, "userSchemeDetails.name.error.length")),
+      "taxRef" -> pstr("userSchemeDetails.taxRef.error.required", "userSchemeDetails.taxRef.invalid")
+    )(UserSchemeDetails.apply)(UserSchemeDetails.unapply)
+  )
 }

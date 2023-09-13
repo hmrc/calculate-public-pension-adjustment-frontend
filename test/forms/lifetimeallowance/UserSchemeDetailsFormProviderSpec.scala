@@ -25,10 +25,10 @@ class UserSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".name" - {
 
-    val fieldName = "name"
+    val fieldName   = "name"
     val requiredKey = "userSchemeDetails.name.error.required"
-    val lengthKey = "userSchemeDetails.name.error.length"
-    val maxLength = 100
+    val lengthKey   = "userSchemeDetails.name.error.length"
+    val maxLength   = 100
 
     behave like fieldThatBindsValidData(
       form,
@@ -52,7 +52,7 @@ class UserSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".taxRef" - {
 
-    val fieldName = "taxRef"
+    val fieldName   = "taxRef"
     val requiredKey = "userSchemeDetails.taxRef.error.required"
 
     behave like fieldThatBindsValidData(

@@ -19,7 +19,6 @@ package pages.lifetimeallowance
 import models.{CheckMode, NormalMode, UserSchemeDetails}
 import pages.behaviours.PageBehaviours
 
-
 class UserSchemeDetailsPageSpec extends PageBehaviours {
 
   "UserSchemeDetailsPage" - {
@@ -35,7 +34,8 @@ class UserSchemeDetailsPageSpec extends PageBehaviours {
 
     "when user has entered Scheme details page" in {
 
-      val userAnswers = emptyUserAnswers.set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme","01234567RT")).get
+      val userAnswers =
+        emptyUserAnswers.set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme", "01234567RT")).get
 
       val nextPageUrl: String = UserSchemeDetailsPage.navigate(NormalMode, userAnswers).url
 
@@ -56,7 +56,8 @@ class UserSchemeDetailsPageSpec extends PageBehaviours {
 
     "when user has entered Scheme details in Check mode " in {
 
-      val userAnswers = emptyUserAnswers.set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme","01234567RT")).get
+      val userAnswers =
+        emptyUserAnswers.set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme", "01234567RT")).get
 
       val nextPageUrl: String = UserSchemeDetailsPage.navigate(CheckMode, userAnswers).url
 
