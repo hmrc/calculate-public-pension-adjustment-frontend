@@ -10,7 +10,7 @@ You can:
  - submit your information to HMRC for review
  - submit information on behalf of someone else to HMRC for review. You can only do this if you have power of attorney or deputyship
 
-## Backends
+## Backend
 [Calculate Public Pension Adjustment](https://github.com/hmrc/calculate-public-pension-adjustment)
 
 ## Persistence
