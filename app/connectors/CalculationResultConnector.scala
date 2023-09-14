@@ -46,8 +46,15 @@ class CalculationResultConnector @Inject() (
           case OK =>
             Future.successful(response.json.as[CalculationResponse])
           case _  =>
-            logger.error(s"Unexpected response from Cppa with status ${response.status}")
-            Future.failed(UpstreamErrorResponse("Unexpected response from Cppa", response.status))
+            logger.error(
+              s"Unexpected response from call to /calculate-public-pension-adjustment/show-calculation with status : ${response.status}"
+            )
+            Future.failed(
+              UpstreamErrorResponse(
+                "Unexpected response from /calculate-public-pension-adjustment/show-calculation",
+                response.status
+              )
+            )
         }
       }
 

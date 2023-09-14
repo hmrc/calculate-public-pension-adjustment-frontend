@@ -54,8 +54,6 @@ final case class UserAnswers(
 
   def remove[A](page: Settable[A]): Try[UserAnswers] = {
 
-    logger.info(s"removing data for path : ${page.path}")
-
     val updatedData = data.removeObject(page.path) match {
       case JsSuccess(jsValue, _) =>
         Success(jsValue)
