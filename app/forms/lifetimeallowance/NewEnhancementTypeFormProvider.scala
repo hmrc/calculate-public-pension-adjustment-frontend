@@ -17,7 +17,7 @@
 package forms.lifetimeallowance
 
 import forms.mappings.Mappings
-import models.{EnhancementType, NewEnhancementType}
+import models.{NewEnhancementType}
 import play.api.data.Form
 
 import javax.inject.Inject

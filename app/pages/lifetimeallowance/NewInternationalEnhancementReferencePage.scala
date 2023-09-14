@@ -32,8 +32,8 @@ case object NewInternationalEnhancementReferencePage extends QuestionPage[String
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(NewEnhancementTypePage) match {
-      case Some(InternationalEnhancement) => ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
-      case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
+      case Some(InternationalEnhancement) => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode) //
+      case Some(Both)                     => ltaRoutes.NewPensionCreditReferenceController.onPageLoad(NormalMode)
       case _                              => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -41,7 +41,7 @@ case object NewInternationalEnhancementReferencePage extends QuestionPage[String
     answers.get(NewEnhancementTypePage) match {
       case Some(InternationalEnhancement) =>
         controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
+      case Some(Both)                     => ltaRoutes.NewPensionCreditReferenceController.onPageLoad(CheckMode)
       case _                              => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 }

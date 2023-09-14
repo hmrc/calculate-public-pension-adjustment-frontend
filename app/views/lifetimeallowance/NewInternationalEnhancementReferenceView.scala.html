@@ -38,7 +38,7 @@
 
 @layout(pageTitle = title(form, messages("internationalEnhancementReference.title"))) {
 
-    @formHelper(action = controllers.lifetimeallowance.routes.InternationalEnhancementReferenceController.onSubmit(mode)) {
+    @formHelper(action = controllers.lifetimeallowance.routes.NewInternationalEnhancementReferenceController.onSubmit(mode)) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

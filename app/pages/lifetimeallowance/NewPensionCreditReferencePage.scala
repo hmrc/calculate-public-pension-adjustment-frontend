@@ -29,7 +29,7 @@ case object NewPensionCreditReferencePage extends QuestionPage[String] {
   override def toString: String = "newPensionCreditReference"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
+    ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()

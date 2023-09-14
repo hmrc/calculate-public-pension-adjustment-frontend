@@ -38,7 +38,7 @@
 
 @layout(pageTitle = title(form, messages("pensionCreditReference.title"))) {
 
-    @formHelper(action = controllers.lifetimeallowance.routes.PensionCreditReferenceController.onSubmit(mode)) {
+    @formHelper(action = controllers.lifetimeallowance.routes.NewPensionCreditReferenceController.onSubmit(mode)) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

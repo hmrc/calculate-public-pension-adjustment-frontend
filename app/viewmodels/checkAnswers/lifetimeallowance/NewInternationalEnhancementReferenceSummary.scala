@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.lifetimeallowance
 
 import models.{CheckMode, UserAnswers}
-import pages.lifetimeallowance.InternationalEnhancementReferencePage
+import pages.lifetimeallowance.NewInternationalEnhancementReferencePage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -27,14 +27,14 @@ import viewmodels.implicits._
 object NewInternationalEnhancementReferenceSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(InternationalEnhancementReferencePage).map { answer =>
+    answers.get(NewInternationalEnhancementReferencePage).map { answer =>
       SummaryListRowViewModel(
         key = "internationalEnhancementReference.checkYourAnswersLabel",
         value = ValueViewModel(HtmlFormat.escape(answer).toString),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            controllers.lifetimeallowance.routes.InternationalEnhancementReferenceController.onPageLoad(CheckMode).url
+            controllers.lifetimeallowance.routes.NewInternationalEnhancementReferenceController.onPageLoad(CheckMode).url
           )
             .withVisuallyHiddenText(messages("internationalEnhancementReference.change.hidden"))
         )

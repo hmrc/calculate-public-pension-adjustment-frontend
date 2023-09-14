@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.lifetimeallowance
 
 import models.{CheckMode, UserAnswers}
-import pages.lifetimeallowance.EnhancementTypePage
+import pages.lifetimeallowance.NewEnhancementTypePage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -28,7 +28,7 @@ import viewmodels.implicits._
 object NewEnhancementTypeSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(EnhancementTypePage).map { answer =>
+    answers.get(NewEnhancementTypePage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
           HtmlFormat.escape(messages(s"enhancementType.$answer"))
@@ -41,7 +41,7 @@ object NewEnhancementTypeSummary {
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            controllers.lifetimeallowance.routes.EnhancementTypeController.onPageLoad(CheckMode).url
+            controllers.lifetimeallowance.routes.NewEnhancementTypeController.onPageLoad(CheckMode).url
           )
             .withVisuallyHiddenText(messages("enhancementType.change.hidden"))
         )

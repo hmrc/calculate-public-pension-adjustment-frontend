@@ -33,17 +33,17 @@ case object NewEnhancementTypePage extends QuestionPage[NewEnhancementType] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(NewEnhancementTypePage) match {
-      case Some(PensionCredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
+      case Some(PensionCredit)                         => ltaRoutes.NewPensionCreditReferenceController.onPageLoad(NormalMode)
       case Some(InternationalEnhancement) | Some(Both) =>
-        ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(NormalMode)
+        ltaRoutes.NewInternationalEnhancementReferenceController.onPageLoad(NormalMode)
       case _                                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(NewEnhancementTypePage) match {
-      case Some(PensionCredit)                         => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
+      case Some(PensionCredit)                         => ltaRoutes.NewPensionCreditReferenceController.onPageLoad(CheckMode)
       case Some(InternationalEnhancement) | Some(Both) =>
-        ltaRoutes.InternationalEnhancementReferenceController.onPageLoad(CheckMode)
+        ltaRoutes.NewInternationalEnhancementReferenceController.onPageLoad(CheckMode)
       case _                                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -52,10 +52,10 @@ case object NewEnhancementTypePage extends QuestionPage[NewEnhancementType] {
       .map {
         case InternationalEnhancement =>
           userAnswers
-            .remove(PensionCreditReferencePage)
+            .remove(NewPensionCreditReferencePage)
         case PensionCredit            =>
           userAnswers
-            .remove(InternationalEnhancementReferencePage)
+            .remove(NewInternationalEnhancementReferencePage)
         case Both                     => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))

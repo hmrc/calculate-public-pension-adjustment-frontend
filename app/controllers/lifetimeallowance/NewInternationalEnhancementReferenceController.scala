@@ -17,14 +17,14 @@
 package controllers.lifetimeallowance
 
 import controllers.actions._
-import forms.lifetimeallowance.{InternationalEnhancementReferenceFormProvider, NewInternationalEnhancementReferenceFormProvider}
+import forms.lifetimeallowance.{NewInternationalEnhancementReferenceFormProvider}
 import models.Mode
-import pages.lifetimeallowance.{InternationalEnhancementReferencePage, NewInternationalEnhancementReferencePage}
+import pages.lifetimeallowance.{NewInternationalEnhancementReferencePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.lifetimeallowance.{InternationalEnhancementReferenceView, NewInternationalEnhancementReferenceView}
+import views.html.lifetimeallowance.{NewInternationalEnhancementReferenceView}
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}

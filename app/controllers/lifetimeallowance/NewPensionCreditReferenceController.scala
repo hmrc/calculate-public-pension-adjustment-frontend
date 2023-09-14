@@ -17,14 +17,14 @@
 package controllers.lifetimeallowance
 
 import controllers.actions._
-import forms.lifetimeallowance.{NewPensionCreditReferenceFormProvider, PensionCreditReferenceFormProvider}
+import forms.lifetimeallowance.NewPensionCreditReferenceFormProvider
 import models.Mode
-import pages.lifetimeallowance.{NewPensionCreditReferencePage, PensionCreditReferencePage}
+import pages.lifetimeallowance.NewPensionCreditReferencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.lifetimeallowance.PensionCreditReferenceView
+import views.html.lifetimeallowance.NewPensionCreditReferenceView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -37,7 +37,7 @@ class NewPensionCreditReferenceController @Inject()(
   requireData: DataRequiredAction,
   formProvider: NewPensionCreditReferenceFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: PensionCreditReferenceView
+  view: NewPensionCreditReferenceView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
