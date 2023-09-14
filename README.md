@@ -49,6 +49,5 @@ To prevent formatting failures in a GitHub pull request,
 run the command ``sbt scalafmtAll`` before pushing to the remote repository.
 
 
-### License
-
-This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
+## License
+This code is open source software licensed under the [Apache 2.0 License]("https://www.apache.org/licenses/LICENSE-2.0.html").
