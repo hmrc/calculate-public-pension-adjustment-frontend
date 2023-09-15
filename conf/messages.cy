@@ -501,7 +501,7 @@ pensionSchemeDetails.change.hidden = cy: pension scheme name or pension scheme t
 pensionSchemeInputAmounts.title = cy: Pension input amounts for the pension scheme
 pensionSchemeInputAmounts.heading = cy: Pension input amounts for {0}
 pensionSchemeInputAmounts.hint = cy: If more than one pension scheme paid or agreed to pay the tax, you can add them later.
-pensionSchemeInputAmounts.originalPIA = cy: What is your pension input amount?
+pensionSchemeInputAmounts.originalPIA = cy: What is the pension input amount?
 pensionSchemeInputAmounts.originalPIA.hint1 = cy: Amounts must be rounded down to the nearest pound, for example 2300.
 pensionSchemeInputAmounts.originalPIA.message1 = cy: This is the total amount paid into or any increase in a defined contribution pension scheme in a tax year.
 pensionSchemeInputAmounts.originalPIA.message2 = cy: This can be done by you or anyone else, such as your employer.
@@ -547,7 +547,7 @@ howMuchAAChargeSchemePaid.error.required = cy: Enter the amount of annual allowa
 howMuchAAChargeSchemePaid.error.wholeNumber = cy: The amount of annual allowance tax charge your pension scheme paid must only include numbers 0 to 9
 howMuchAAChargeSchemePaid.error.outOfRange = cy: The amount of annual allowance tax charge your pension scheme paid must be £999,999,999 or less
 howMuchAAChargeSchemePaid.change.hidden = cy: How much tax charge your pension scheme paid
-howMuchAAChargeSchemePaid.hint = cy: Change how much tax charge your pension scheme paid
+howMuchAAChargeSchemePaid.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300.
 
 howMuchAAChargeYouPaid.title = cy: How much annual allowance tax charge did you pay?
 howMuchAAChargeYouPaid.heading = cy: How much annual allowance tax charge did you pay?

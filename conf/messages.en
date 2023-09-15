@@ -501,7 +501,7 @@ pensionSchemeDetails.change.hidden = pension scheme name or pension scheme tax r
 pensionSchemeInputAmounts.title = Pension input amounts for the pension scheme
 pensionSchemeInputAmounts.heading = Pension input amounts for {0}
 pensionSchemeInputAmounts.hint = If more than one pension scheme paid or agreed to pay the tax, you can add them later.
-pensionSchemeInputAmounts.originalPIA = What is your pension input amount?
+pensionSchemeInputAmounts.originalPIA = What is the pension input amount?
 pensionSchemeInputAmounts.originalPIA.hint1 = Amounts must be rounded down to the nearest pound, for example 2300.
 pensionSchemeInputAmounts.originalPIA.message1 = This is the total amount paid into or any increase in a defined contribution pension scheme in a tax year.
 pensionSchemeInputAmounts.originalPIA.message2 = This can be done by you or anyone else, such as your employer.
@@ -531,7 +531,6 @@ whichScheme.change.hidden = Which scheme are you entering details for?
 
 whoPaidAACharge.title = Who paid the annual allowance tax charge for {0}?
 whoPaidAACharge.heading = Who paid the annual allowance tax charge for {0}?
-whoPaidAACharge.hint = You can find this out on a bank or pension statement.
 whoPaidAACharge.you = You
 whoPaidAACharge.scheme = Pension Scheme
 whoPaidAACharge.both = Both
@@ -547,7 +546,7 @@ howMuchAAChargeSchemePaid.error.required = Enter the amount of annual allowance 
 howMuchAAChargeSchemePaid.error.wholeNumber = The amount of annual allowance tax charge your pension scheme paid must only include numbers 0 to 9
 howMuchAAChargeSchemePaid.error.outOfRange = The amount of annual allowance tax charge your pension scheme paid must be £999,999,999 or less
 howMuchAAChargeSchemePaid.change.hidden = How much tax charge your pension scheme paid
-howMuchAAChargeSchemePaid.hint = Change how much tax charge your pension scheme paid
+howMuchAAChargeSchemePaid.hint = Amounts must be rounded down to the nearest pound, for example 2300.
 
 howMuchAAChargeYouPaid.title = How much annual allowance tax charge did you pay?
 howMuchAAChargeYouPaid.heading = How much annual allowance tax charge did you pay?
