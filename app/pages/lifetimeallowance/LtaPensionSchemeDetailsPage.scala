@@ -16,13 +16,13 @@
 
 package pages.lifetimeallowance
 
-import models.{LtaPensionSchemeDetails, UserAnswers}
+import models.UserAnswers
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import play.api.mvc.Call
 
-case object LtaPensionSchemeDetailsPage extends QuestionPage[LtaPensionSchemeDetails] {
+case object LtaPensionSchemeDetailsPage extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ "lta" \ toString
 

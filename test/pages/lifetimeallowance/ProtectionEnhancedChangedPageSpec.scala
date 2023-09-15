@@ -39,7 +39,7 @@ class ProtectionEnhancedChangedSpec extends PageBehaviours {
 
       val nextPageUrl: String = ProtectionEnhancedChangedPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/protection-changed-new-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-protection")
     }
 
     "when user has selected Both" in {
@@ -49,7 +49,7 @@ class ProtectionEnhancedChangedSpec extends PageBehaviours {
 
       val nextPageUrl: String = ProtectionEnhancedChangedPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/protection-changed-new-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-protection")
     }
 
     "when user has selected Enhancement " in {
@@ -69,7 +69,7 @@ class ProtectionEnhancedChangedSpec extends PageBehaviours {
 
       val nextPageUrl: String = ProtectionEnhancedChangedPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lta-charge-2015-2023")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/charge-2015-2023")
     }
 
     "when user has entered incorrect value " in {
@@ -91,7 +91,7 @@ class ProtectionEnhancedChangedSpec extends PageBehaviours {
 
       val nextPageUrl: String = ProtectionEnhancedChangedPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-protection-changed-new-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-new-protection")
     }
 
     "when user has selected Both" in {
@@ -101,7 +101,7 @@ class ProtectionEnhancedChangedSpec extends PageBehaviours {
 
       val nextPageUrl: String = ProtectionEnhancedChangedPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-protection-changed-new-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-new-protection")
     }
 
     "when user has selected Enhancement " in {
@@ -121,7 +121,7 @@ class ProtectionEnhancedChangedSpec extends PageBehaviours {
 
       val nextPageUrl: String = ProtectionEnhancedChangedPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user has entered incorrect value " in {

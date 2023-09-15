@@ -38,7 +38,7 @@ class AnnualPaymentValuePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = AnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/who-paid-lta-charge")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-charge")
     }
 
     "when user hasn't entered Annual payment value page" in {
@@ -59,7 +59,7 @@ class AnnualPaymentValuePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = AnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user hasn't entered Annual payment value page in Check mode " in {

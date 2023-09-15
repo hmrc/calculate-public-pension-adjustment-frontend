@@ -24,10 +24,23 @@ import pages.lifetimeallowance._
 case object LTASection extends Section {
   override def pages(): Seq[Page] =
     Seq(
+      WhatYouWillNeedLtaPage,
       HadBenefitCrystallisationEventPage,
       DateOfBenefitCrystallisationEventPage,
       ChangeInLifetimeAllowancePage,
-      ChangeInTaxChargePage
+      ChangeInTaxChargePage,
+      LtaProtectionOrEnhancementsPage,
+      ProtectionTypePage,
+      ProtectionReferencePage,
+      ReferenceNewProtectionTypeEnhancementPage,
+      WhatNewProtectionTypeEnhancementPage,
+      ProtectionEnhancedChangedPage,
+      LifetimeAllowanceChargePage,
+      ExcessLifetimeAllowancePaidPage,
+      WhoPaidLTAChargePage,
+      SchemeNameAndTaxRefPage,
+      WhoPayingExtraLtaChargePage,
+      LtaPensionSchemeDetailsPage
     )
 
   def status(answers: UserAnswers): SectionStatus =

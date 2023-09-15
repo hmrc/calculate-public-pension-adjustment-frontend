@@ -39,7 +39,7 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
 
       val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/protection-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-type")
     }
 
     "when user has selected Both" in {
@@ -49,7 +49,7 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
 
       val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/protection-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-type")
     }
 
     "when user has selected Enhancement " in {
@@ -60,6 +60,16 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
       val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/enhancement-type")
+    }
+
+    "when user has selected No " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, models.LtaProtectionOrEnhancements.No).get
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-enhancement-changed")
     }
 
     "when user has entered incorrect value " in {
@@ -81,7 +91,7 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
 
       val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-protection-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-protection-type")
     }
 
     "when user has selected Both" in {
@@ -91,7 +101,7 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
 
       val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-protection-type")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-protection-type")
     }
 
     "when user has selected Enhancement " in {
@@ -102,6 +112,16 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
       val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/change-enhancement-type")
+    }
+
+    "when user has selected No " in {
+
+      val userAnswers =
+        emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, models.LtaProtectionOrEnhancements.No).get
+
+      val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user has entered incorrect value " in {

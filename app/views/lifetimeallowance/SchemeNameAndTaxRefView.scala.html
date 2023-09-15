@@ -42,15 +42,15 @@
         @govukInput(
             InputViewModel(
                 field = form("name"),
-                label = LabelViewModel(messages("schemeNameAndTaxRef.name.heading")).asPageHeading(LabelSize.Medium)
-                ).withHint(HintViewModel(messages("schemeNameAndTaxRef.schemeName.hint")))
+                label = LabelViewModel(messages("schemeNameAndTaxRef.name.heading")).withCssClass("govuk-label--m")
+                )
             .withWidth(Fixed10)
         )
 
         @govukInput(
             InputViewModel(
                 field = form("taxRef"),
-                label = LabelViewModel(messages("schemeNameAndTaxRef.taxRef.heading")).asPageHeading(LabelSize.Medium)
+                label = LabelViewModel(messages("schemeNameAndTaxRef.taxRef.heading")).withCssClass("govuk-label--m")
                 ).withHint(HintViewModel(messages("schemeNameAndTaxRef.taxRef.hint")))
             .withWidth(Fixed10)
         )

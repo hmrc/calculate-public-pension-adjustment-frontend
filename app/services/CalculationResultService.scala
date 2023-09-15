@@ -21,7 +21,7 @@ import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaProtectionOrEnhancements, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -300,7 +300,7 @@ class CalculationResultService @Inject() (
         val newLifetimeAllowanceChargeWillBePaidBy: Option[WhoPayingExtraLtaCharge] =
           userAnswers.get(WhoPayingExtraLtaChargePage)
 
-        val newLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[LtaPensionSchemeDetails] =
+        val newLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[String] =
           userAnswers.get(LtaPensionSchemeDetailsPage)
 
         Some(

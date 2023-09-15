@@ -23,36 +23,9 @@ class LtaPensionSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
 
   val form = new LtaPensionSchemeDetailsFormProvider()()
 
-  ".name" - {
+  ".value" - {
 
-    val fieldName   = "name"
-    val requiredKey = "ltaPensionSchemeDetails.error.name.required"
-    val lengthKey   = "ltaPensionSchemeDetails.error.name.length"
-    val maxLength   = 100
-
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
-
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
-  }
-
-  ".taxRef" - {
-
-    val fieldName   = "taxRef"
+    val fieldName   = "value"
     val requiredKey = "ltaPensionSchemeDetails.error.taxRef.required"
 
     behave like fieldThatBindsValidData(

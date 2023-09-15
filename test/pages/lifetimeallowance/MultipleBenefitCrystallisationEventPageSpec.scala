@@ -39,7 +39,7 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lta-protection-or-enhancements")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-enhancements")
     }
 
     "when user hasn't answered multiple public sector BCE " in {
@@ -62,7 +62,7 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user hasn't answered multiple public sector BCE in check mode " in {

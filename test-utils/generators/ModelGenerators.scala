@@ -78,14 +78,6 @@ trait ModelGenerators {
       Gen.oneOf(ContributedToDuringRemedyPeriod.values)
     }
 
-  implicit lazy val arbitraryLtaPensionSchemeDetails: Arbitrary[LtaPensionSchemeDetails] =
-    Arbitrary {
-      for {
-        name   <- arbitrary[String]
-        taxRef <- taxRef
-      } yield LtaPensionSchemeDetails(name, taxRef)
-    }
-
   implicit lazy val arbitraryWhoPayingExtraLtaCharge: Arbitrary[WhoPayingExtraLtaCharge] =
     Arbitrary {
       Gen.oneOf(WhoPayingExtraLtaCharge.values.toSeq)

@@ -59,7 +59,7 @@ class YearChargePaidSpec extends PageBehaviours {
 
       val nextPageUrl: String = YearChargePaidPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user hasn't entered value for Year Charge Paid in Check mode " in {

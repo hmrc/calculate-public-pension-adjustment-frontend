@@ -83,7 +83,7 @@ class ProtectionReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ProtectionReferencePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user has selected Both on LtaProtectionOrEnhancementsPage and submits a reference" in {

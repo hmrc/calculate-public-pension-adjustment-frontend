@@ -35,7 +35,7 @@
 
 @layout(pageTitle = title(form, messages("newEnhancementType.title"))) {
 
-    @formHelper(action = controllers.lifetimeallowance.routes.NewEnhancementTypeController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = controllers.lifetimeallowance.routes.NewEnhancementTypeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))

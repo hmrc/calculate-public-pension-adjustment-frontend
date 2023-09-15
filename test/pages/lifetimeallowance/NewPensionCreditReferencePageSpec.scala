@@ -39,7 +39,7 @@ class NewPensionCreditReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewPensionCreditReferencePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lta-charge-2015-2023")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/charge-2015-2023")
     }
 
   }
@@ -53,7 +53,7 @@ class NewPensionCreditReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewPensionCreditReferencePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
   }

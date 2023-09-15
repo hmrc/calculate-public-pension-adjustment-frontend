@@ -17,19 +17,13 @@
 package forms.lifetimeallowance
 
 import forms.mappings.Mappings
-import models.LtaPensionSchemeDetails
 import play.api.data.Form
-import play.api.data.Forms._
 
 import javax.inject.Inject
 
 class LtaPensionSchemeDetailsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[LtaPensionSchemeDetails] = Form(
-    mapping(
-      "name"   -> text("ltaPensionSchemeDetails.error.name.required")
-        .verifying(maxLength(100, "ltaPensionSchemeDetails.error.name.length")),
-      "taxRef" -> pstr("ltaPensionSchemeDetails.error.taxRef.required", "ltaPensionSchemeDetails.taxRef.invalid")
-    )(LtaPensionSchemeDetails.apply)(LtaPensionSchemeDetails.unapply)
+  def apply(): Form[String] = Form(
+    "value" -> pstr("ltaPensionSchemeDetails.error.taxRef.required", "ltaPensionSchemeDetails.taxRef.invalid")
   )
 }

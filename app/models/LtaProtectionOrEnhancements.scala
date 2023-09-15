@@ -28,28 +28,23 @@ object LtaProtectionOrEnhancements extends Enumerable.Implicits {
   case object Enhancements extends WithName("enhancements") with LtaProtectionOrEnhancements
   case object Both extends WithName("both") with LtaProtectionOrEnhancements
 
+  case object No extends WithName("no") with LtaProtectionOrEnhancements
+
   val values: Seq[LtaProtectionOrEnhancements] = Seq(
     Protection,
     Enhancements,
-    Both
+    Both,
+    No
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = {
-    val normalOptions = values.zipWithIndex.map { case (value, index) =>
+  def options(implicit messages: Messages): Seq[RadioItem] =
+    values.zipWithIndex.map { case (value, index) =>
       RadioItem(
         content = Text(messages(s"ltaProtectionOrEnhancements.$value")),
         value = Some(value.toString),
         id = Some(s"value_$index")
       )
     }
-    val orOption      = RadioItem(
-      value = None,
-      id = Some("divider"),
-      disabled = true,
-      divider = Some(messages("divider"))
-    )
-    normalOptions.slice(0, 2) ++ Seq(orOption) ++ normalOptions.slice(2, normalOptions.length)
-  }
 
   implicit val enumerable: Enumerable[LtaProtectionOrEnhancements] =
     Enumerable(values.map(v => v.toString -> v): _*)

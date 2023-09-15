@@ -105,7 +105,8 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
         sectionViewModel.status                       must (be(SectionStatus.NotStarted) or be(SectionStatus.CannotStartYet))
         sectionViewModel.name.startsWith("taskList.") must be(true)
         sectionViewModel.call.url                     must (
-          include("/check-your-answers-setup") or
+          include("/lifetime-allowance") or
+            include("/check-your-answers-setup") or
             include("/had-benefit-crystallisation-event") or
             include("/calculation-result") or
             include("/annual-allowance/scottish-taxpayer") or
