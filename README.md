@@ -7,8 +7,6 @@ You can:
 
  - calculate any compensation for previously paid lifetime and/or annual allowance charges
  - calculate new, reduced or extra lifetime and/or annual allowance charges that you will have to pay
- - submit your information to HMRC for review
- - submit information on behalf of someone else to HMRC for review. You can only do this if you have power of attorney or deputyship
 
 ## Backend
 [Calculate Public Pension Adjustment](https://github.com/hmrc/calculate-public-pension-adjustment)
@@ -51,5 +49,5 @@ To prevent formatting failures in a GitHub pull request,
 run the command ``sbt scalafmtAll`` before pushing to the remote repository.
 
 
-## License
+### License
 This code is open source software licensed under the [Apache 2.0 License]("https://www.apache.org/licenses/LICENSE-2.0.html").
