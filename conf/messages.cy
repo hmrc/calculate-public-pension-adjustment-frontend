@@ -834,4 +834,4 @@ multipleBenefitCrystallisationEvent.heading = cy: Have you had more than one ben
 multipleBenefitCrystallisationEvent.hint = cy: You can only have one benefit crystallisation event in each public scheme.
 multipleBenefitCrystallisationEvent.checkYourAnswersLabel = cy: Have you had more than one benefit crystallisation event in your pensions?
 multipleBenefitCrystallisationEvent.error.required = cy: Select yes if you have had more than one benefit crystallisation event in your pensions
-multipleBenefitCrystallisationEvent.change.hidden = cy: Have you had more than one benefit crystallisation event in your pensions?
+multipleBenefitCrystallisationEvent.change.hidden = cy: if you have had more than one benefit crystallisation event in your pensions
