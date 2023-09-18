@@ -835,16 +835,16 @@ multipleBenefitCrystallisationEvent.checkYourAnswersLabel = Have you had more th
 multipleBenefitCrystallisationEvent.error.required = Select yes if you have had more than one benefit crystallisation event in your pensions
 multipleBenefitCrystallisationEvent.change.hidden = if you have had more than one benefit crystallisation event in your pensions
 
-quarterChargePaid.title = In which quarter was your lifetime allowance charge paid?
-quarterChargePaid.heading = In which quarter was your lifetime allowance charge paid?
+quarterChargePaid.title = In which quarter of that year was your lifetime allowance charge paid?
+quarterChargePaid.heading = In which quarter of that year was your lifetime allowance charge paid?
 quarterChargePaid.hint = Select the quarter of the year your lifetime allowance charge was paid
 quarterChargePaid.aprToJul = 6 April to 5 July
 quarterChargePaid.julToOct = 6 July to 5 October
 quarterChargePaid.octToJan = 6 October to 5 January
 quarterChargePaid.janToApr = 6 January to 5 April
-quarterChargePaid.checkYourAnswersLabel = In which quarter was your lifetime allowance charge paid?
+quarterChargePaid.checkYourAnswersLabel = In which quarter of that year was your lifetime allowance charge paid?
 quarterChargePaid.error.required = Select the quarter of the year your lifetime allowance charge was paid
-quarterChargePaid.change.hidden =  which quarter was your lifetime allowance charge paid?
+quarterChargePaid.change.hidden =  quarter of that year your lifetime allowance charge paid
 
 yearChargePaid.title = In which year was your lifetime allowance charge paid?
 yearChargePaid.heading = In which year was your lifetime allowance charge paid?
@@ -858,27 +858,27 @@ yearChargePaid.2016To2017 = 6 April 2016 to 5 April 2017
 yearChargePaid.2015To2016 = 6 April 2015 to 5 April 2016
 yearChargePaid.checkYourAnswersLabel = In which year was your lifetime allowance charge paid?
 yearChargePaid.error.required = Select the year your lifetime allowance charge was paid
-yearChargePaid.change.hidden = In which year was your lifetime allowance charge paid?
+yearChargePaid.change.hidden = year your lifetime allowance charge paid
 
 newAnnualPaymentValue.title = What is the new value of the annual payment?
 newAnnualPaymentValue.heading = What is the new value of the annual payment?
 newAnnualPaymentValue.hint = Amount must be rounded down to the nearest pound, for example 2300.
-newAnnualPaymentValue.checkYourAnswersLabel = What is the new value of the annual payment?
+newAnnualPaymentValue.checkYourAnswersLabel = Lifetime allowance new annual payment
 newAnnualPaymentValue.error.nonNumeric = Your new annual payment value must only include numbers 0 to 9
 newAnnualPaymentValue.error.required = Enter the new value of the annual payment
 newAnnualPaymentValue.error.wholeNumber = Your new annual payment value must only include numbers 0 to 9
-newAnnualPaymentValue.error.outOfRange = Your new annual payment value must be £xxx or less
-newAnnualPaymentValue.change.hidden = What is the new value of the annual payment?
+newAnnualPaymentValue.error.outOfRange = Your new annual payment value must be £999999999 or less
+newAnnualPaymentValue.change.hidden = lifetime allowance new annual payment
 
 newLumpSumValue.title = What is the new value of the lump sum?
 newLumpSumValue.heading = What is the new value of the lump sum?
 newLumpSumValue.hint = Amount must be rounded down to the nearest pound, for example 2300.
-newLumpSumValue.checkYourAnswersLabel = What is the new value of the lump sum?
+newLumpSumValue.checkYourAnswersLabel = Lifetime allowance new lump sum
 newLumpSumValue.error.nonNumeric = Your new lump sum value must only include numbers 0 to 9
 newLumpSumValue.error.required = Enter the new value of the lump sum
 newLumpSumValue.error.wholeNumber = Your new lump sum value must only include numbers 0 to 9
-newLumpSumValue.error.outOfRange = Your new lump sum value must be £xxx or less
-newLumpSumValue.change.hidden = What is the new value of the lump sum?
+newLumpSumValue.error.outOfRange = Your new lump sum value must be £999999999 or less
+newLumpSumValue.change.hidden = lifetime allowance new lump sum
 
 newExcessLifetimeAllowancePaid.title = How will the new excess above your lifetime allowance be paid to you?
 newExcessLifetimeAllowancePaid.heading = How will the new excess above your lifetime allowance be paid to you?
@@ -887,7 +887,7 @@ newExcessLifetimeAllowancePaid.lumpSum = Lump Sum
 newExcessLifetimeAllowancePaid.both = Both
 newExcessLifetimeAllowancePaid.checkYourAnswersLabel = How will the new excess above your lifetime allowance be paid to you?
 newExcessLifetimeAllowancePaid.error.required = Select how the new excess above your lifetime allowance will be paid to you
-newExcessLifetimeAllowancePaid.change.hidden = How will the new excess above your lifetime allowance be paid to you?
+newExcessLifetimeAllowancePaid.change.hidden = how will the new excess above your lifetime allowance be paid to you?
 
 userSchemeDetails.title = What is the name and tax reference of the pension scheme?
 userSchemeDetails.heading = What is the name and tax reference of the pension scheme?
