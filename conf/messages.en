@@ -408,7 +408,7 @@ excessLifetimeAllowancePaid.lumpSum = Lump sum
 excessLifetimeAllowancePaid.both = Both
 excessLifetimeAllowancePaid.checkYourAnswersLabel = How was the excess above your lifetime allowance paid to you?
 excessLifetimeAllowancePaid.error.required = Select how the excess above your lifetime allowance paid to you
-excessLifetimeAllowancePaid.change.hidden = How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.change.hidden = how the excess above your lifetime allowance was paid to you
 excessLifetimeAllowancePaid.hint = You can find this on your pension or bank statement.
 
 lifetimeAllowanceChargeAmount.title = What was the value of your lifetime allowance charge?
@@ -943,7 +943,7 @@ annualPaymentValue.error.nonNumeric = Your annual payment value must only includ
 annualPaymentValue.error.required = Enter the value of the annual payment
 annualPaymentValue.error.wholeNumber = Your annual payment value must only include numbers 0 to 9
 annualPaymentValue.error.outOfRange = Your annual payment value must be £999999999 or less
-annualPaymentValue.change.hidden = What was the value of the annual payment?
+annualPaymentValue.change.hidden = lifetime allowance annual payment
 
 lumpSumValue.title = What was the value of the lump sum?
 lumpSumValue.heading = What was the value of the lump sum?
@@ -953,4 +953,4 @@ lumpSumValue.error.nonNumeric = Your lump sum value must only include numbers 0 
 lumpSumValue.error.required = Enter the value of the lump sum
 lumpSumValue.error.wholeNumber = Your lump sum value must only include numbers 0 to 9
 lumpSumValue.error.outOfRange = Your lump sum value must be £999999999 or less
-lumpSumValue.change.hidden = What was the value of the lump sum?
+lumpSumValue.change.hidden = lifetime allowance lump sum
