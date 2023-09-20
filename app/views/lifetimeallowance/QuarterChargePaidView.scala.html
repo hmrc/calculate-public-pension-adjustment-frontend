@@ -37,9 +37,12 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("quarterChargePaid.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("quarterChargePaid.heading"),
+                    caption = HmrcSectionCaption(messages("lifetimeAllowance.caption"))
+                ),
                 items  = QuarterChargePaid.options
-            )
+            ).withHint(HintViewModel(messages("quarterChargePaid.hint")))
         )
 
         @govukButton(

@@ -26,7 +26,7 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("YearChargePaid.title"))) {
+@layout(pageTitle = title(form, messages("yearChargePaid.title"))) {
 
     @formHelper(action = routes.YearChargePaidController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
@@ -37,9 +37,12 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("yearChargePaid.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("yearChargePaid.heading"),
+                    caption = HmrcSectionCaption(messages("lifetimeAllowance.caption"))
+                ),
                 items  = YearChargePaid.options
-            )
+            ).withHint(HintViewModel(messages("yearChargePaid.hint")))
         )
 
         @govukButton(
