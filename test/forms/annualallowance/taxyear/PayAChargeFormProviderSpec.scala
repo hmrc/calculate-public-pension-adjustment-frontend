@@ -17,14 +17,20 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
+import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchersSugar.eqTo
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.data.FormError
+import play.api.i18n.Messages
 
 class PayAChargeFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "payACharge.error.required"
-  val invalidKey  = "error.boolean"
+  val invalidKey = "error.boolean"
+  val messages   = mock[Messages]
+  when(messages.apply(eqTo("payACharge.error.required"), any())).thenReturn("error message")
 
-  val form = new PayAChargeFormProvider()("")
+  val form = new PayAChargeFormProvider()("")(messages)
 
   ".value" - {
 
@@ -39,7 +45,7 @@ class PayAChargeFormProviderSpec extends BooleanFieldBehaviours {
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, "error message ")
     )
   }
 }

@@ -21,9 +21,11 @@ import controllers.routes
 import forms.annualallowance.taxyear.PayAChargeFormProvider
 import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchersSugar.eqTo
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.taxyear.{MemberMoreThanOnePensionPage, PayAChargePage}
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -37,8 +39,12 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
+  val messages             = mock[Messages]
+  val expectedErrorMessage = "Select yes if you paid an annual allowance tax charge for pension scheme"
+  when(messages.apply(eqTo("payACharge.error.required"), any())).thenReturn(expectedErrorMessage)
+
   val formProvider = new PayAChargeFormProvider()
-  val form         = formProvider("")
+  val form         = formProvider("")(messages)
 
   lazy val payAChargeRoute =
     controllers.annualallowance.taxyear.routes.PayAChargeController
