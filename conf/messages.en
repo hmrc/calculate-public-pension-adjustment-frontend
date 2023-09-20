@@ -479,7 +479,7 @@ addAnotherScheme.hint = The pension scheme will be added to this summary.
 addAnotherScheme.error.required = Select yes if you need to add another pension scheme
 addAnotherScheme.change.hidden = Do you need to add another pension scheme?
 
-payACharge.title = Did you pay an annual allowance tax charge for pension scheme {2}?
+payACharge.title = Did you pay an annual allowance tax charge for pension scheme {1}?
 payACharge.heading = Did you pay an annual allowance tax charge for {2}?
 payACharge.checkYourAnswersLabel = Did you pay a charge?
 payACharge.error.required = Select yes if you paid an annual allowance tax charge for pension scheme
@@ -701,7 +701,7 @@ contributedToDuringRemedyPeriod.checkYourAnswersLabel = Annual allowance contrib
 contributedToDuringRemedyPeriod.error.required = Select if you contributed to during a defined contribution or defined benefit pension scheme during the remedy period
 contributedToDuringRemedyPeriod.change.hidden = annual allowance defined contribution or defined benefit pension scheme during the remedy period
 
-definedContributionAmount.title = What was your pension input amount for defined contribution pension schemes from {1}?
+definedContributionAmount.title = What was your pension input amount for defined contribution pension schemes from {0}?
 definedContributionAmount.caption =  Annual allowance between {0}
 definedContributionAmount.heading = What was your pension input amount for defined contribution pension schemes from {0}?
 definedContributionAmount.checkYourAnswersLabel = Pension input amount for defined contribution pension schemes from {0}?
@@ -710,8 +710,8 @@ definedContributionAmount.message2 = This can be done by you or anyone else, suc
 definedContributionAmount.hint1 = Amounts must be rounded down to the nearest pound, for example 2300.
 definedContributionAmount.error.required = Enter your pension input amount for defined contribution pension schemes from {0}
 definedContributionAmount.error.nonNumeric = Your pension input amount for defined contribution pension schemes from {0} must only include numbers 0 to 9
-definedContributionAmount.error.maximum = Your pension input amount for defined contribution pension schemes from {1} must be £999,999,999 or less
-definedContributionAmount.error.minimum = Your pension input amount for defined contribution pension schemes from {1} must be £0 or more
+definedContributionAmount.error.maximum = Your pension input amount for defined contribution pension schemes from {0} must be £999,999,999 or less
+definedContributionAmount.error.minimum = Your pension input amount for defined contribution pension schemes from {0} must be £0 or more
 definedContributionAmount.change.hidden = your pension input amount for defined contribution pension schemes from {0}
 
 definedBenefitAmount.title = What was your pension input amount for defined benefit pension schemes for {0}?
@@ -780,8 +780,8 @@ flexiAccessDefinedContributionAmount.hint1 = Amounts must be rounded down to the
 flexiAccessDefinedContributionAmount.checkYourAnswersLabel = What was your pension input amount for defined contribution pension schemes for {0}?
 flexiAccessDefinedContributionAmount.error.nonNumeric = Your pension input amount for defined contribution pension schemes from {0} must only include numbers 0 to 9
 flexiAccessDefinedContributionAmount.error.required = Enter your pension input amount for defined contribution pension schemes from {0}
-flexiAccessDefinedContributionAmount.error.maximum = Your pension input amount for defined contribution pension schemes from {1} must be £999,999,999 or less
-flexiAccessDefinedContributionAmount.error.minimum = Your pension input amount for defined contribution pension schemes from {1} must be £0 or more
+flexiAccessDefinedContributionAmount.error.maximum = Your pension input amount for defined contribution pension schemes from {0} must be £999,999,999 or less
+flexiAccessDefinedContributionAmount.error.minimum = Your pension input amount for defined contribution pension schemes from {0} must be £0 or more
 flexiAccessDefinedContributionAmount.change.hidden = your pension input amount for defined contribution pension schemes from {0}
 
 calculationResults.title = Calculation results
