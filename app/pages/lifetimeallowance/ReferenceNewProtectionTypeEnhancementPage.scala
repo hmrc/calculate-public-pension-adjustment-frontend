@@ -17,6 +17,7 @@
 package pages.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+import models.ProtectionEnhancedChanged.{Both, Protection}
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -29,8 +30,16 @@ case object ReferenceNewProtectionTypeEnhancementPage extends QuestionPage[Strin
   override def toString: String = "referenceNewProtectionTypeEnhancement"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
+    answers.get(ProtectionEnhancedChangedPage) match {
+      case Some(Protection) => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
+      case Some(Both)       => ltaRoutes.NewEnhancementTypeController.onPageLoad(NormalMode)
+      case _                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(CheckMode)
+    answers.get(ProtectionEnhancedChangedPage) match {
+      case Some(Protection) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(Both)       => ltaRoutes.NewEnhancementTypeController.onPageLoad(CheckMode)
+      case _                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

@@ -31,19 +31,19 @@ object NewEnhancementTypeSummary {
     answers.get(NewEnhancementTypePage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
-          HtmlFormat.escape(messages(s"enhancementType.$answer"))
+          HtmlFormat.escape(messages(s"newEnhancementType.$answer"))
         )
       )
 
       SummaryListRowViewModel(
-        key = "enhancementType.checkYourAnswersLabel",
+        key = "newEnhancementType.checkYourAnswersLabel",
         value = value,
         actions = Seq(
           ActionItemViewModel(
             "site.change",
             controllers.lifetimeallowance.routes.NewEnhancementTypeController.onPageLoad(CheckMode).url
           )
-            .withVisuallyHiddenText(messages("enhancementType.change.hidden"))
+            .withVisuallyHiddenText(messages("newEnhancementType.change.hidden"))
         )
       )
     }

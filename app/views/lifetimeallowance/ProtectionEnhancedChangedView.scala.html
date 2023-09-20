@@ -23,28 +23,23 @@
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
-@import controllers.lifetimeallowance.routes
 
-@contentHint = {
-@messages("protectionTypeEnhancementChanged.hint")
-}
+@layout(pageTitle = title(form, messages("protectionEnhancedChanged.title"))) {
 
-@layout(pageTitle = title(form, messages("protectionTypeEnhancementChanged.title"))) {
-
-    @formHelper(action = routes.ProtectionTypeEnhancementChangedController.onSubmit(mode), Symbol("autoComplete") -> "off") {
+    @formHelper(action = controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onSubmit(mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
+            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
         @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
+            RadiosViewModel(
+                field  = form("value"),
+                items  = ProtectionEnhancedChanged.options,
                 legend = HmrcPageHeadingLegend(
-                content = messages("protectionTypeEnhancementChanged.heading"),
-                caption = HmrcSectionCaption(messages("lifetimeAllowance.caption"))
+                content = messages("protectionEnhancedChanged.heading"),
+                caption = HmrcSectionCaption(messages("lifetimeAllowance.caption")))
             )
-            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

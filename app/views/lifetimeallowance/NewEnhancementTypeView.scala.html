@@ -29,11 +29,11 @@
 }
 
 @contentHint = {
-<p class="govuk-inset-text"><a target="_blank" rel="noopener" href=@protectionUrl> @messages("enhancementType.hint1") </a> </p>
-<p class = "govuk-body">@messages("enhancementType.hint2")</p>
+<p class="govuk-inset-text"><a target="_blank" rel="noopener" href=@protectionUrl> @messages("newEnhancementType.hint1") </a> </p>
+<p class = "govuk-body">@messages("newEnhancementType.hint2")</p>
 }
 
-@layout(pageTitle = title(form, messages("enhancementType.title"))) {
+@layout(pageTitle = title(form, messages("newEnhancementType.title"))) {
 
     @formHelper(action = controllers.lifetimeallowance.routes.NewEnhancementTypeController.onSubmit(mode), 'autoComplete -> "off") {
 
@@ -45,7 +45,7 @@
             RadiosViewModel(
                 field  = form("value"),
                 legend = HmrcPageHeadingLegend(
-                content = messages("enhancementType.heading"),
+                content = messages("newEnhancementType.heading"),
                 caption = HmrcSectionCaption(messages("lifetimeAllowance.caption"))),
                 items  = NewEnhancementType.options
             ).withHint(HintViewModel(HtmlContent(contentHint)))

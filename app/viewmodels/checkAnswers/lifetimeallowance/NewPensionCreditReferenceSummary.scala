@@ -29,14 +29,14 @@ object NewPensionCreditReferenceSummary {
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(NewPensionCreditReferencePage).map { answer =>
       SummaryListRowViewModel(
-        key = "pensionCreditReference.checkYourAnswersLabel",
+        key = "newPensionCreditReference.checkYourAnswersLabel",
         value = ValueViewModel(HtmlFormat.escape(answer).toString),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
             controllers.lifetimeallowance.routes.NewPensionCreditReferenceController.onPageLoad(CheckMode).url
           )
-            .withVisuallyHiddenText(messages("pensionCreditReference.change.hidden"))
+            .withVisuallyHiddenText(messages("newPensionCreditReference.change.hidden"))
         )
       )
     }

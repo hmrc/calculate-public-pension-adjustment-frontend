@@ -129,10 +129,10 @@ POST        /protection-reference                                               
 GET         /change-protection-reference                                                                                controllers.lifetimeallowance.ProtectionReferenceController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-protection-reference                                                                                controllers.lifetimeallowance.ProtectionReferenceController.onSubmit(mode: Mode = CheckMode)
 
-GET         /protection-changed                                                                                         controllers.lifetimeallowance.ProtectionTypeEnhancementChangedController.onPageLoad(mode: Mode = NormalMode)
-POST        /protection-changed                                                                                         controllers.lifetimeallowance.ProtectionTypeEnhancementChangedController.onSubmit(mode: Mode = NormalMode)
-GET         /change-/protection-changed                                                                                 controllers.lifetimeallowance.ProtectionTypeEnhancementChangedController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-/protection-changed                                                                                 controllers.lifetimeallowance.ProtectionTypeEnhancementChangedController.onSubmit(mode: Mode = CheckMode)
+GET        /lifetime-allowance/protection-enhancement-changed                        controllers.lifetimeallowance.ProtectionEnhancedChangedController.onPageLoad(mode: Mode = NormalMode)
+POST       /lifetime-allowance/protection-enhancement-changed                        controllers.lifetimeallowance.ProtectionEnhancedChangedController.onSubmit(mode: Mode = NormalMode)
+GET        /lifetime-allowance/change-protection-enhancement-changed                  controllers.lifetimeallowance.ProtectionEnhancedChangedController.onPageLoad(mode: Mode = CheckMode)
+POST       /lifetime-allowance/change-protection-enhancement-changed                  controllers.lifetimeallowance.ProtectionEnhancedChangedController.onSubmit(mode: Mode = CheckMode)
 
 GET         /protection-changed-new-reference                                                                           controllers.lifetimeallowance.ReferenceNewProtectionTypeEnhancementController.onPageLoad(mode: Mode = NormalMode)
 POST        /protection-changed-new-reference                                                                           controllers.lifetimeallowance.ReferenceNewProtectionTypeEnhancementController.onSubmit(mode: Mode = NormalMode)

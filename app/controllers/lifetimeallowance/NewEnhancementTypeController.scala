@@ -17,19 +17,19 @@
 package controllers.lifetimeallowance
 
 import controllers.actions._
-import forms.lifetimeallowance.{NewEnhancementTypeFormProvider}
+import forms.lifetimeallowance.NewEnhancementTypeFormProvider
 import models.Mode
-import pages.lifetimeallowance.{NewEnhancementTypePage}
+import pages.lifetimeallowance.NewEnhancementTypePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.lifetimeallowance.{NewEnhancementTypeView}
+import views.html.lifetimeallowance.NewEnhancementTypeView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class NewEnhancementTypeController @Inject()(
+class NewEnhancementTypeController @Inject() (
   override val messagesApi: MessagesApi,
   sessionRepository: SessionRepository,
   identify: IdentifierAction,

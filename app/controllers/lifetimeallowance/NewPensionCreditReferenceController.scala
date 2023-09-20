@@ -29,7 +29,7 @@ import views.html.lifetimeallowance.NewPensionCreditReferenceView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class NewPensionCreditReferenceController @Inject()(
+class NewPensionCreditReferenceController @Inject() (
   override val messagesApi: MessagesApi,
   sessionRepository: SessionRepository,
   identify: IdentifierAction,

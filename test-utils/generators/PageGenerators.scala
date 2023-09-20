@@ -64,6 +64,16 @@ trait PageGenerators {
   implicit lazy val arbitraryEnhancementTypePage: Arbitrary[EnhancementTypePage.type] =
     Arbitrary(EnhancementTypePage)
 
+  implicit lazy val arbitraryNewPensionCreditReferencePage: Arbitrary[NewPensionCreditReferencePage.type] =
+    Arbitrary(NewPensionCreditReferencePage)
+
+  implicit lazy val arbitraryNewInternationalEnhancementReferencePage
+    : Arbitrary[NewInternationalEnhancementReferencePage.type] =
+    Arbitrary(NewInternationalEnhancementReferencePage)
+
+  implicit lazy val arbitraryNewEnhancementTypePage: Arbitrary[NewEnhancementTypePage.type] =
+    Arbitrary(NewEnhancementTypePage)
+
   implicit lazy val arbitraryFlexiAccessDefinedContributionAmountPage
     : Arbitrary[FlexiAccessDefinedContributionAmountPage.type] =
     Arbitrary(FlexiAccessDefinedContributionAmountPage)
@@ -131,9 +141,8 @@ trait PageGenerators {
     : Arbitrary[ReferenceNewProtectionTypeEnhancementPage.type] =
     Arbitrary(ReferenceNewProtectionTypeEnhancementPage)
 
-  implicit lazy val arbitraryProtectionTypeEnhancementChangedPage
-    : Arbitrary[ProtectionTypeEnhancementChangedPage.type] =
-    Arbitrary(ProtectionTypeEnhancementChangedPage)
+  implicit lazy val arbitraryProtectionEnhancedChangedPage: Arbitrary[ProtectionEnhancedChangedPage.type] =
+    Arbitrary(ProtectionEnhancedChangedPage)
 
   implicit lazy val arbitraryLifetimeAllowanceChargeAmountPage: Arbitrary[LifetimeAllowanceChargeAmountPage.type] =
     Arbitrary(LifetimeAllowanceChargeAmountPage)

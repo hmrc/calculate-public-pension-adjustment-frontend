@@ -42,6 +42,9 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(WhoPayingExtraLtaChargePage.type, JsValue)] ::
       arbitrary[(LumpSumValuePage.type, JsValue)] ::
       arbitrary[(AnnualPaymentValuePage.type, JsValue)] ::
+      arbitrary[(NewPensionCreditReferencePage.type, JsValue)] ::
+      arbitrary[(NewInternationalEnhancementReferencePage.type, JsValue)] ::
+      arbitrary[(NewEnhancementTypePage.type, JsValue)] ::
       arbitrary[(WhoPayingExtraLtaChargePage.type, JsValue)] ::
       arbitrary[(ValueNewLtaChargePage.type, JsValue)] ::
       arbitrary[(ProtectionReferencePage.type, JsValue)] ::
@@ -49,7 +52,7 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(LtaProtectionOrEnhancementsPage.type, JsValue)] ::
       arbitrary[(WhatNewProtectionTypeEnhancementPage.type, JsValue)] ::
       arbitrary[(ReferenceNewProtectionTypeEnhancementPage.type, JsValue)] ::
-      arbitrary[(ProtectionTypeEnhancementChangedPage.type, JsValue)] ::
+      arbitrary[(ProtectionEnhancedChangedPage.type, JsValue)] ::
       arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] ::
       arbitrary[(DateOfBenefitCrystallisationEventPage.type, JsValue)] ::
       arbitrary[(HadBenefitCrystallisationEventPage.type, JsValue)] ::

@@ -28,7 +28,7 @@ case class LifeTimeAllowance(
   lifetimeAllowanceProtectionOrEnhancements: LtaProtectionOrEnhancements,
   protectionType: ProtectionType,
   protectionReference: String,
-  protectionTypeOrEnhancementChangedFlag: Boolean,
+  protectionTypeOrEnhancementChangedFlag: ProtectionEnhancedChanged,
   newProtectionTypeOrEnhancement: Option[WhatNewProtectionTypeEnhancement],
   newProtectionTypeOrEnhancementReference: Option[String],
   previousLifetimeAllowanceChargeFlag: Boolean,

@@ -16,16 +16,30 @@
 
 package forms.lifetimeallowance
 
-import forms.mappings.Mappings
+import forms.behaviours.OptionFieldBehaviours
 import models.NewEnhancementType
-import play.api.data.Form
+import play.api.data.FormError
 
-import javax.inject.Inject
+class NewEnhancementTypeFormProviderSpec extends OptionFieldBehaviours {
 
-class NewEnhancementTypeFormProvider @Inject() extends Mappings {
+  val form = new NewEnhancementTypeFormProvider()()
 
-  def apply(): Form[NewEnhancementType] =
-    Form(
-      "value" -> enumerable[NewEnhancementType]("newEnhancementType.error.required")
+  ".value" - {
+
+    val fieldName   = "value"
+    val requiredKey = "newEnhancementType.error.required"
+
+    behave like optionsField[NewEnhancementType](
+      form,
+      fieldName,
+      validValues = NewEnhancementType.values,
+      invalidError = FormError(fieldName, "error.invalid")
     )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
 }
