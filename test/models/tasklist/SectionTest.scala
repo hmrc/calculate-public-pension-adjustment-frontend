@@ -103,7 +103,7 @@ class SectionTest extends SpecBase with PageBehaviours {
     "Must route to setup page when reporting change details have not been captured" in {
       val nextStepsTaskUrl = NextStepsSection.navigateTo(emptyUserAnswers).url
 
-      checkNavigation(nextStepsTaskUrl, "/resubmitting-adjustment")
+      checkNavigation(nextStepsTaskUrl, "/change-previous-adjustment")
     }
   }
 

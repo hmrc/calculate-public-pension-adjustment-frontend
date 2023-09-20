@@ -26,6 +26,13 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+
+<p class="govuk-body">@messages("reportingChange.paragraph")</p>
+<p class="govuk-hint">@messages("reportingChange.hint")</p>
+
+}
+
 @layout(pageTitle = title(form, messages("reportingChange.title"))) {
 
     @formHelper(action = routes.ReportingChangeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
@@ -40,7 +47,7 @@
                 name   = "value",
                 legend = LegendViewModel(messages("reportingChange.heading")).asPageHeading(),
                 items  = ReportingChange.checkboxItems
-            ).withHint(HintViewModel(messages("reportingChange.hint")))
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

@@ -41,7 +41,7 @@ object ReportingChange extends Enumerable.Implicits {
         fieldId = "value",
         index = index,
         value = value.toString
-      ).withHint(Hint(content = Text(messages(s"reportingChange.${value.toString}.hint"))))
+      )
     }
 
   implicit val enumerable: Enumerable[ReportingChange] =
