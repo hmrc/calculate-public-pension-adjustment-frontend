@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
-import pages.annualallowance.taxyear.WhoPaidAAChargePage
+import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, WhoPaidAAChargePage}
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -37,8 +37,12 @@ object WhoPaidAAChargeSummary {
         )
       )
 
+      val schemeName = answers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
+        answer.schemeName
+      }
+
       SummaryListRowViewModel(
-        key = s"whoPaidAACharge.heading.$period",
+        key = messages("whoPaidAACharge.checkYourAnswersLabel", schemeName.getOrElse("")),
         value = value,
         actions = Seq(
           ActionItemViewModel(
@@ -47,7 +51,7 @@ object WhoPaidAAChargeSummary {
               .onPageLoad(CheckMode, period, schemeIndex)
               .url
           )
-            .withVisuallyHiddenText(messages("whoPaidAACharge.change.hidden"))
+            .withVisuallyHiddenText(messages("whoPaidAACharge.change.hidden", schemeName.getOrElse("")))
         )
       )
     }

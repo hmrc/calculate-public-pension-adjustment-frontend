@@ -17,17 +17,17 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.OptionFieldBehaviours
-import models.{Period, WhoPaidAACharge}
+import models.WhoPaidAACharge
 import play.api.data.FormError
 
 class WhoPaidAAChargeFormProviderSpec extends OptionFieldBehaviours {
 
-  val form = new WhoPaidAAChargeFormProvider()(Period._2018)
+  val form = new WhoPaidAAChargeFormProvider()()
 
   ".value" - {
 
     val fieldName   = "value"
-    val requiredKey = "whoPaidAACharge.error.required.2018"
+    val requiredKey = "whoPaidAACharge.error.required"
 
     behave like optionsField[WhoPaidAACharge](
       form,

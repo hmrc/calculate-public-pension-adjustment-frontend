@@ -41,7 +41,7 @@ class AdjustedIncomePageSpec extends PageBehaviours {
           .value
         val result = AdjustedIncomePage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/total-income/2018")
+        checkNavigation(result, "/annual-allowance/2018/total-income")
       }
     }
 
@@ -55,7 +55,7 @@ class AdjustedIncomePageSpec extends PageBehaviours {
         .value
       val result = AdjustedIncomePage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/check-your-answers-period/2018")
+      checkNavigation(result, "/annual-allowance/2018/check-answers")
     }
   }
 }

@@ -25,8 +25,17 @@
 @(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-        <p class="govuk-body">@messages("thresholdIncome.heading.hint1")</p>
-        <p class="govuk-heading-s">@messages("thresholdIncome.heading.hint2")</p>
+        <p class="govuk-body">@messages("thresholdIncome.message1")</p>
+
+        <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance" rel="noreferrer noopener" target="_blank">
+            @messages("thresholdIncome.message2")
+        </a>
+
+        <br>
+        <br>
+
+        <p class="govuk-heading-l">@messages("thresholdIncome.subHeading1")</p>
+
         <ul>
             <li class="govuk-body">
                 @messages("thresholdIncome.heading.list1")
@@ -43,10 +52,21 @@
             <li class="govuk-body">
                 @messages("thresholdIncome.heading.list5")
             </li>
+            <li class="govuk-body">
+                @messages("thresholdIncome.heading.list6")
+            </li>
+            <li class="govuk-body">
+                @messages("thresholdIncome.heading.list7")
+            </li>
+            <li class="govuk-body">
+                @messages("thresholdIncome.heading.list8")
+            </li>
         </ul>
+
+        <p class="govuk-heading-l">@messages("thresholdIncome.subHeading2." + period)</p>
 }
 
-@layout(pageTitle = title(form, messages("thresholdIncome.title." + period))) {
+@layout(pageTitle = title(form, messages("thresholdIncome.title"))) {
 
     @formHelper(
         action = controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onSubmit(
@@ -62,7 +82,7 @@
             RadiosViewModel.yesNo(
                 field = form("value"),
                 legend = HmrcPageHeadingLegend(
-                content = messages("thresholdIncome.heading." + period),
+                content = messages("thresholdIncome.heading"),
                 caption = HmrcSectionCaption((messages("annualAllowance.period.caption." + period)))
                 )
             ).withHint(HintViewModel(HtmlContent(contentHint)))

@@ -23,13 +23,17 @@ import javax.inject.Inject
 
 class DefinedContributionAmountFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(args: Seq[String]): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "definedContributionAmount.error.required",
-        "definedContributionAmount.error.wholeNumber",
-        "definedContributionAmount.error.nonNumeric"
+        "definedContributionAmount.error.nonNumeric",
+        "definedContributionAmount.error.nonNumeric",
+        args
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "definedContributionAmount.error.outOfRange"))
+        .verifying(
+          minimumValue[BigInt](0, "definedContributionAmount.error.minimum", args(0)),
+          maximumValue[BigInt](BigInt("999999999"), "definedContributionAmount.error.maximum", args(0))
+        )
     )
 }

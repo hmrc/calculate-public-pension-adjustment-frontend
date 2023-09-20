@@ -48,7 +48,7 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
               "site.change",
               routes.ThresholdIncomeController.onPageLoad(CheckMode, period).url
             )
-              .withVisuallyHiddenText("thresholdIncome.change.hidden")
+              .withVisuallyHiddenText("thresholdIncome.change.hidden.2018")
           )
         )
       )
@@ -71,7 +71,7 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
               "site.change",
               routes.ThresholdIncomeController.onPageLoad(CheckMode, period).url
             )
-              .withVisuallyHiddenText("thresholdIncome.change.hidden")
+              .withVisuallyHiddenText("thresholdIncome.change.hidden.2018")
           )
         )
       )

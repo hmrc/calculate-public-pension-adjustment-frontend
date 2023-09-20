@@ -33,6 +33,7 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
   "row" - {
     "when You is selected, return the summary row" in {
+      val schemeName  = ""
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
@@ -43,20 +44,21 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
         .get
       WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
-          key = s"whoPaidAACharge.heading.$period",
+          key = messages("whoPaidAACharge.checkYourAnswersLabel", schemeName),
           value = ValueViewModel(HtmlContent("whoPaidAACharge.you")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
               routes.WhoPaidAAChargeController.onPageLoad(CheckMode, period, schemeIndex).url
             )
-              .withVisuallyHiddenText("whoPaidAACharge.change.hidden")
+              .withVisuallyHiddenText(messages("whoPaidAACharge.change.hidden", schemeName))
           )
         )
       )
     }
 
     "when Scheme is selected, return the summary row" in {
+      val schemeName  = ""
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
@@ -67,20 +69,21 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
         .get
       WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
-          key = s"whoPaidAACharge.heading.$period",
+          key = messages("whoPaidAACharge.checkYourAnswersLabel", schemeName),
           value = ValueViewModel(HtmlContent("whoPaidAACharge.scheme")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
               routes.WhoPaidAAChargeController.onPageLoad(CheckMode, period, schemeIndex).url
             )
-              .withVisuallyHiddenText("whoPaidAACharge.change.hidden")
+              .withVisuallyHiddenText(messages("whoPaidAACharge.change.hidden", schemeName))
           )
         )
       )
     }
 
     "when Both is selected, return the summary row" in {
+      val schemeName  = ""
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
@@ -91,14 +94,14 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
         .get
       WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
-          key = s"whoPaidAACharge.heading.$period",
+          key = messages("whoPaidAACharge.checkYourAnswersLabel", schemeName),
           value = ValueViewModel(HtmlContent("whoPaidAACharge.both")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
               routes.WhoPaidAAChargeController.onPageLoad(CheckMode, period, schemeIndex).url
             )
-              .withVisuallyHiddenText("whoPaidAACharge.change.hidden")
+              .withVisuallyHiddenText(messages("whoPaidAACharge.change.hidden", schemeName))
           )
         )
       )

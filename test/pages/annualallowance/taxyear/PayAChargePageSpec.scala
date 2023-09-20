@@ -40,7 +40,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/add-another-scheme/2018/0")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/pension-scheme-summary")
     }
 
     "when did not pay charge in standard period and not member of more than one scheme and does have DC scheme then check onward navigation" in {
@@ -56,7 +56,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2018")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/contributed-to-any-other-dc-or-db-scheme")
     }
 
     "when did not pay charge in standard period and not member of more than one scheme and does not have DC scheme then check onward navigation" in {
@@ -72,7 +72,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/threshold-income/2018")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/threshold-income")
     }
 
     "when did not pay charge in 2016-pre period and not member of more than one scheme and does have DC scheme then check onward navigation" in {
@@ -88,7 +88,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-pre")
+      checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/contributed-to-any-other-dc-or-db-scheme")
     }
 
     "when did not pay charge in 2016-pre period and not member of more than one scheme and does not have DC scheme then check onward navigation" in {
@@ -104,7 +104,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-period/2016-pre")
+      checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/check-answers")
     }
 
     "when did not pay charge in 2016-post period and not member of more than one scheme and does have DC scheme then check onward navigation" in {
@@ -120,7 +120,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contributed-other-db-dc-scheme/2016-post")
+      checkNavigation(nextPageUrl, "/annual-allowance/2016-post/contributed-to-any-other-dc-or-db-scheme")
     }
 
     "when did not pay charge in 2016-post period and not member of more than one scheme and does not have DC scheme then check onward navigation" in {
@@ -136,7 +136,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/total-income/2016-post")
+      checkNavigation(nextPageUrl, "/annual-allowance/2016-post/total-income")
     }
 
     "when did pay charge then check onward navigation" in {
@@ -146,7 +146,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/who-paid-annual-allowance-charge/2018/0")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/who-paid-charge")
     }
   }
 }

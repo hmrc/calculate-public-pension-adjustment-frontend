@@ -23,13 +23,17 @@ import javax.inject.Inject
 
 class FlexiAccessDefinedContributionAmountFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(args: Seq[String]): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "flexiAccessDefinedContributionAmount.error.required",
-        "flexiAccessDefinedContributionAmount.error.wholeNumber",
-        "flexiAccessDefinedContributionAmount.error.nonNumeric"
+        "flexiAccessDefinedContributionAmount.error.nonNumeric",
+        "flexiAccessDefinedContributionAmount.error.nonNumeric",
+        args
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "flexiAccessDefinedContributionAmount.error.outOfRange"))
+        .verifying(
+          minimumValue[BigInt](0, "flexiAccessDefinedContributionAmount.error.minimum", args(0)),
+          maximumValue[BigInt](BigInt("999999999"), "flexiAccessDefinedContributionAmount.error.maximum", args(0))
+        )
     )
 }

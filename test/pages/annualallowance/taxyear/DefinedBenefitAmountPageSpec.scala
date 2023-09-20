@@ -44,7 +44,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
             .value
           val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/check-your-answers-period/$period")
+          checkNavigation(result, s"/annual-allowance/$period/check-answers")
         }
       }
 
@@ -61,7 +61,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
             .value
           val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/total-income/$period")
+          checkNavigation(result, s"/annual-allowance/$period/total-income")
         }
       }
 
@@ -78,7 +78,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
             .value
           val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/threshold-income/$period")
+          checkNavigation(result, s"/annual-allowance/$period/threshold-income")
         }
       }
 
@@ -100,7 +100,7 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
         .value
       val result = DefinedBenefitAmountPage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/check-your-answers-period/2013")
+      checkNavigation(result, "/annual-allowance/2013/check-answers")
     }
   }
 }

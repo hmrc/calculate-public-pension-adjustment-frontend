@@ -39,7 +39,7 @@ class WhoPaidAAChargeSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/how-much-you-pay-charge/2018/0")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/charge-amount-you-paid")
     }
 
     "must redirect to how much charge scheme paid page when user selects scheme" in {
@@ -52,7 +52,7 @@ class WhoPaidAAChargeSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/how-much-pension-pay-charge/2018/0")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/charge-amount-pension-scheme-paid")
     }
 
     "must redirect to how much charge you paid page when user selects both" in {
@@ -65,7 +65,7 @@ class WhoPaidAAChargeSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/how-much-you-pay-charge/2018/0")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/charge-amount-you-paid")
     }
 
     "must redirect user to adjust charge when user resubmits answers in check mode" in {
@@ -78,7 +78,7 @@ class WhoPaidAAChargeSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-how-much-you-pay-charge/2018/0")
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/change-charge-amount-you-paid")
     }
   }
 }

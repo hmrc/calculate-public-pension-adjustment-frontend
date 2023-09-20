@@ -18,13 +18,14 @@ package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
 import play.api.data.Form
+import play.api.i18n.Messages
 
 import javax.inject.Inject
 
 class PayAChargeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(schemeName: String)(implicit messages: Messages): Form[Boolean] =
     Form(
-      "value" -> boolean("payACharge.error.required")
+      "value" -> boolean(messages("payACharge.error.required") + " " + schemeName)
     )
 }

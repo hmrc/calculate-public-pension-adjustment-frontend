@@ -27,15 +27,15 @@
 @(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-    <p class="govuk-body">@messages("totalIncome.hint1")</p>
+    <p class="govuk-body">@messages("totalIncome.message1")</p>
     <ul class="govuk-body">
-        <li>@messages("totalIncome.hint2")</li>
-        <li>@messages("totalIncome.hint3")</li>
-        <li>@messages("totalIncome.hint4")</li>
-        <li>@messages("totalIncome.hint5")</li>
-        <li>@messages("totalIncome.hint6")</li>
+        <li>@messages("totalIncome.bullet1")</li>
+        <li>@messages("totalIncome.bullet2")</li>
+        <li>@messages("totalIncome.bullet3")</li>
+        <li>@messages("totalIncome.bullet4")</li>
+        <li>@messages("totalIncome.bullet5")</li>
     </ul>
-    <p class="govuk-hint">@messages("totalIncome.hint7")</p>
+    <p class="govuk-hint">@messages("totalIncome.hint1")</p>
 }
 
 @layout(pageTitle = title(form, messages("totalIncome.title",period.start.getYear.toString, period.end.getYear.toString))) {

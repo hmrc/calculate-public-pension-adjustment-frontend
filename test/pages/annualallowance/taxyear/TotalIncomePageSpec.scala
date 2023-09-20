@@ -41,7 +41,7 @@ class TotalIncomePageSpec extends PageBehaviours {
           .value
         val result = TotalIncomePage(Period._2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/check-your-answers-period/2013")
+        checkNavigation(result, "/annual-allowance/2013/check-answers")
       }
     }
 
@@ -55,7 +55,7 @@ class TotalIncomePageSpec extends PageBehaviours {
         .value
       val result = TotalIncomePage(Period._2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/check-your-answers-period/2013")
+      checkNavigation(result, "/annual-allowance/2013/check-answers")
     }
   }
 }

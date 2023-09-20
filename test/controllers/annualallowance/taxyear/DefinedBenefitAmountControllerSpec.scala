@@ -36,7 +36,7 @@ import scala.concurrent.Future
 class DefinedBenefitAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new DefinedBenefitAmountFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(Period._2013)
 
   def onwardRoute = Call("GET", "/foo")
 

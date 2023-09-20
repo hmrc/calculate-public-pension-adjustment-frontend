@@ -17,19 +17,23 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
+import models.Period
 import play.api.data.Form
 
 import javax.inject.Inject
 
 class DefinedBenefitAmountFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(period: Period): Form[BigInt] =
     Form(
       "value" -> bigInt(
-        "definedBenefitAmount.error.required",
-        "definedBenefitAmount.error.wholeNumber",
-        "definedBenefitAmount.error.nonNumeric"
+        "definedBenefitAmount.error.required." + period,
+        "definedBenefitAmount.error.nonNumeric." + period,
+        "definedBenefitAmount.error.nonNumeric." + period
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "definedBenefitAmount.error.outOfRange"))
+        .verifying(
+          minimumValue[BigInt](0, "definedBenefitAmount.error.minimum." + period),
+          maximumValue[BigInt](BigInt("999999999"), "definedBenefitAmount.error.maximum." + period)
+        )
     )
 }

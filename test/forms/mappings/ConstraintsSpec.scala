@@ -64,7 +64,7 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Invalid for a number below the threshold" in {
       val result = minimumValue(1, "error.min").apply(0)
-      result mustEqual Invalid("error.min", 1)
+      result mustEqual Invalid("error.min", 1, "")
     }
   }
 
@@ -82,7 +82,7 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Invalid for a number above the threshold" in {
       val result = maximumValue(1, "error.max").apply(2)
-      result mustEqual Invalid("error.max", 1)
+      result mustEqual Invalid("error.max", 1, "")
     }
   }
 

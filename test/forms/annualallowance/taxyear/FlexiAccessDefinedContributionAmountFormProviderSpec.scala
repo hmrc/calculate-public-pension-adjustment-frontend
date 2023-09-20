@@ -21,7 +21,8 @@ import play.api.data.FormError
 
 class FlexiAccessDefinedContributionAmountFormProviderSpec extends IntFieldBehaviours {
 
-  val form = new FlexiAccessDefinedContributionAmountFormProvider()()
+  val formProvider = new FlexiAccessDefinedContributionAmountFormProvider()
+  val form         = formProvider(Seq(""))
 
   ".value" - {
 
@@ -41,23 +42,28 @@ class FlexiAccessDefinedContributionAmountFormProviderSpec extends IntFieldBehav
     behave like intField(
       form,
       fieldName,
-      nonNumericError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.nonNumeric", Seq("")),
+      wholeNumberError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.nonNumeric", Seq(""))
     )
 
-    behave like intFieldWithRange(
+    behave like intFieldWithMaximum(
       form,
       fieldName,
-      minimum = minimum,
-      maximum = maximum,
-      expectedError =
-        FormError(fieldName, "flexiAccessDefinedContributionAmount.error.outOfRange", Seq(minimum, maximum))
+      maximum,
+      expectedError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.maximum", Seq(maximum, ""))
+    )
+
+    behave like intFieldWithMinimum(
+      form,
+      fieldName,
+      minimum,
+      expectedError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.minimum", Seq(minimum, ""))
     )
 
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.required")
+      requiredError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.required", Seq(""))
     )
   }
 }

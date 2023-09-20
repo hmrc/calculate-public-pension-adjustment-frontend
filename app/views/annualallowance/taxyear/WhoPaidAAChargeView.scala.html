@@ -22,13 +22,9 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
-    <p> @messages("whoPaidAACharge.hint")</p>
-}
-
-@layout(pageTitle = title(form, messages("whoPaidAACharge.title." + period))) {
+@layout(pageTitle = title(form, messages("whoPaidAACharge.title", schemeIndex))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController.onSubmit(mode,period, schemeIndex), Symbol("autoComplete") -> "off") {
 
@@ -40,10 +36,10 @@
             RadiosViewModel(
                 field  = form("value"),
                 legend = HmrcPageHeadingLegend(
-                    content = messages("whoPaidAACharge.heading." + period),
+                    content = messages("whoPaidAACharge.heading", schemeName),
                     caption = HmrcSectionCaption(messages("annualAllowance.period.caption." + period) )),
                 items  = WhoPaidAACharge.options
-            ).withHint(HintViewModel(HtmlContent(contentHint)))
+            )
         )
 
         @govukButton(

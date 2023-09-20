@@ -25,13 +25,25 @@
 
 @(period: Period)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("periodDateRangeAA." + period, period) + " " + messages("whatYouWillNeedAA.title"))) {
+@layout(pageTitle = titleNoForm(messages("whatYouWillNeedAA.heading"))) {
 
-    <span class="govuk-caption-xl">@messages("whatYouWillNeedAA.caption")</span>
+    <span class="govuk-caption-xl">@messages("periodDateRangeAA.caption") @messages("periodDateRangeAA." + period)</span>
 
-    <h1 class="govuk-heading-xl">@messages("periodDateRangeAA." + period, period) @messages("whatYouWillNeedAA.heading")</h1>
+    <h1 class="govuk-heading-xl">@messages("whatYouWillNeedAA.heading")</h1>
 
     <p class="govuk-body">@messages("whatYouWillNeedAA.message1")</p>
+
+    <ul class="govuk-body">
+        <li>
+            @messages("whatYouWillNeedAA.bullet1")
+        </li>
+        <li>
+            @messages("whatYouWillNeedAA.bullet2")
+        </li>
+        <li>
+            @messages("whatYouWillNeedAA.bullet3")
+        </li>
+    </ul>
 
     <p class="govuk-body">@messages("whatYouWillNeedAA.message2")</p>
 
@@ -39,44 +51,26 @@
 
     <ul class="govuk-body">
         <li>
-            @messages("whatYouWillNeedAA.list1")
+            @messages("whatYouWillNeedAA.bullet4")
         </li>
 
         <li>
-            @messages("whatYouWillNeedAA.list.your.start")
             <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#threshold" rel="noreferrer noopener" target="_blank">
-                @messages("whatYouWillNeedAA.list2.link.text") <span class="govuk-visually-hidden">(opens in new tab)</span>
+                @messages("whatYouWillNeedAA.bullet5." + period) <span class="govuk-visually-hidden">(opens in new tab)</span>
             </a>
-            @messages("whatYouWillNeedAA.list2.end")
         </li>
 
         <li>
-            @messages("whatYouWillNeedAA.list.your.start")
-            <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#adjusted" rel="noreferrer noopener" target="_blank">
-                @messages("whatYouWillNeedAA.list3.link.text") <span class="govuk-visually-hidden">(opens in new tab)</span>
-            </a>
-            @messages("whatYouWillNeedAA.list3.end")
-        </li>
-
-        <li>
-            @messages("whatYouWillNeedAA.list.your.start")
             <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#threshold" rel="noreferrer noopener" target="_blank">
-                @messages("whatYouWillNeedAA.list4.link.text") <span class="govuk-visually-hidden">(opens in new tab)</span>
+                @messages("whatYouWillNeedAA.bullet6." + period) <span class="govuk-visually-hidden">(opens in new tab)</span>
             </a>
-            @messages("whatYouWillNeedAA.list4.end")
         </li>
 
         <li>
-            @messages("whatYouWillNeedAA.list.your.start")
-            <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#adjusted" rel="noreferrer noopener" target="_blank">
-                @messages("whatYouWillNeedAA.list5.link.text") <span class="govuk-visually-hidden">(opens in new tab)</span>
-            </a>
-            @messages("whatYouWillNeedAA.list5.end")
+            @messages("whatYouWillNeedAA.bullet7")
         </li>
 
     </ul>
-
-    <p class="govuk-body">@messages("whatYouWillNeedAA.message4") </p>
 
     @govukButton(
         ButtonViewModel(messages("site.continue")).asLink(controllers.annualallowance.taxyear.routes.MemberMoreThanOnePensionController.onPageLoad(NormalMode, period).url)
