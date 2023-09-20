@@ -28,8 +28,9 @@
 @(form: Form[_], mode: Mode, period : Period)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-    <p>@messages("pIAPreRemedy.hint1")</p>
-    <p>@messages("pIAPreRemedy.hint2")</p>
+    <p class="govuk-body">@messages("pIAPreRemedy.message1")</p>
+    <p class="govuk-body">@messages("pIAPreRemedy.message2")</p>
+    <p>@messages("pIAPreRemedy.hint")</p>
 }
 
 @layout(pageTitle = title(form, messages("pIAPreRemedy.title", period.start.getYear.toString, period.end.getYear.toString))) {

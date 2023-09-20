@@ -27,14 +27,15 @@
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-    @messages("flexiblyAccessedPension.hint")
-    <p>
-        @messages("flexiblyAccessedPension.detailsContent")
-        <ul>
-            <li>@messages("flexiblyAccessedPension.detailsPoint1")</li>
-            <li>@messages("flexiblyAccessedPension.detailsPoint2")</li>
-        </ul>
-    </p>
+
+    <p class="govuk-body">@messages("flexiblyAccessedPension.message1")</p>
+    <p class="govuk-body">@messages("flexiblyAccessedPension.message2")</p>
+
+    <ul>
+        <li class="govuk-body govuk-!-margin-bottom-2">@messages("flexiblyAccessedPension.bullet1")</li>
+        <li class="govuk-body">@messages("flexiblyAccessedPension.bullet2")</li>
+    </ul>
+
 }
 
 @layout(pageTitle = title(form, messages("flexiblyAccessedPension.title"))) {

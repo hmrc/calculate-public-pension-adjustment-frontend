@@ -37,10 +37,14 @@
         @govukDateInput(
             DateViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("stopPayingPublicPension.heading")).asPageHeading()
+                legend = HmrcPageHeadingLegend(
+                    content = messages("stopPayingPublicPension.heading"),
+                    caption = HmrcSectionCaption(messages("annualAllowance.caption")))
             )
             .withHint(HintViewModel(messages("stopPayingPublicPension.hint")))
         )
+
+
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

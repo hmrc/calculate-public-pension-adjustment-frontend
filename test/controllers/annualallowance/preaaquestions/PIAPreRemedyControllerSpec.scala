@@ -37,7 +37,7 @@ import scala.concurrent.Future
 class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new PIAPreRemedyFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(Period._2013)
 
   def onwardRoute = Call("GET", "/foo")
 

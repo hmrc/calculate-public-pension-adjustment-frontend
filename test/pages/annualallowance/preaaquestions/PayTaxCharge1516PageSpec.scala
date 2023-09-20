@@ -37,7 +37,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl = PayTaxCharge1516Page.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/check-your-answers-annual-allowance-setup")
+        checkNavigation(nextPageUrl, "/annual-allowance/setup-check-answers")
       }
 
       "next page should be PIAPreRemedy for 2012 when user did not pay a tax charge in 2015/2016" in {
@@ -45,7 +45,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl = PayTaxCharge1516Page.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/pia-pre-remedy/2013")
+        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2013")
       }
     }
 
@@ -56,7 +56,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl = PayTaxCharge1516Page.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/check-your-answers-annual-allowance-setup")
+        checkNavigation(nextPageUrl, "/annual-allowance/setup-check-answers")
       }
 
       "next page should be PIAPreRemedy for 2012 when user did not pay a tax charge in 2015/2016" in {
@@ -64,7 +64,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl = PayTaxCharge1516Page.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/pia-pre-remedy/2013")
+        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2013")
       }
     }
 
