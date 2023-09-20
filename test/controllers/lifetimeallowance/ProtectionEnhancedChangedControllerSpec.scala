@@ -41,7 +41,7 @@ class ProtectionEnhancedChangedControllerSpec extends SpecBase with MockitoSugar
   lazy val protectionEnhancedChangedRoute = ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(NormalMode).url
 
   val formProvider = new ProtectionEnhancedChangedFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "ProtectionEnhancedChanged Controller" - {
 
@@ -63,7 +63,10 @@ class ProtectionEnhancedChangedControllerSpec extends SpecBase with MockitoSugar
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ProtectionEnhancedChangedPage, ProtectionEnhancedChanged.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(ProtectionEnhancedChangedPage, ProtectionEnhancedChanged.values.head)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -75,7 +78,10 @@ class ProtectionEnhancedChangedControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ProtectionEnhancedChanged.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ProtectionEnhancedChanged.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -98,7 +104,9 @@ class ProtectionEnhancedChangedControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual ltaRoutes.WhatNewProtectionTypeEnhancementController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 

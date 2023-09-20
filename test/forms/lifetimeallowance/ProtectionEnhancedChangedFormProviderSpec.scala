@@ -27,13 +27,13 @@ class ProtectionEnhancedChangedFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "protectionEnhancedChanged.error.required"
 
     behave like optionsField[ProtectionEnhancedChanged](
       form,
       fieldName,
-      validValues  = ProtectionEnhancedChanged.values,
+      validValues = ProtectionEnhancedChanged.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

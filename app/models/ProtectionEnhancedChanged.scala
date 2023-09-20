@@ -30,16 +30,18 @@ object ProtectionEnhancedChanged extends Enumerable.Implicits {
   case object No extends WithName("no") with ProtectionEnhancedChanged
 
   val values: Seq[ProtectionEnhancedChanged] = Seq(
-    Protection, Enhancement, Both, No
+    Protection,
+    Enhancement,
+    Both,
+    No
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"protectionEnhancedChanged.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
+  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
+    RadioItem(
+      content = Text(messages(s"protectionEnhancedChanged.${value.toString}")),
+      value = Some(value.toString),
+      id = Some(s"value_$index")
+    )
   }
 
   implicit val enumerable: Enumerable[ProtectionEnhancedChanged] =

@@ -26,25 +26,26 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ProtectionEnhancedChangedSummary  {
+object ProtectionEnhancedChangedSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ProtectionEnhancedChangedPage).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"protectionEnhancedChanged.$answer"))
-          )
+    answers.get(ProtectionEnhancedChangedPage).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"protectionEnhancedChanged.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key     = "protectionEnhancedChanged.checkYourAnswersLabel",
-          value   = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("protectionEnhancedChanged.change.hidden"))
+      SummaryListRowViewModel(
+        key = "protectionEnhancedChanged.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onPageLoad(CheckMode).url
           )
+            .withVisuallyHiddenText(messages("protectionEnhancedChanged.change.hidden"))
         )
+      )
     }
 }

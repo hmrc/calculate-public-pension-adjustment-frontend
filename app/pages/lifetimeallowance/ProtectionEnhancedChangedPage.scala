@@ -33,24 +33,24 @@ case object ProtectionEnhancedChangedPage extends QuestionPage[ProtectionEnhance
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ProtectionEnhancedChangedPage) match {
-      case Some(Enhancement) => ltaRoutes.NewEnhancementTypeController.onPageLoad(NormalMode)
+      case Some(Enhancement)             => ltaRoutes.NewEnhancementTypeController.onPageLoad(NormalMode)
       case Some(Protection) | Some(Both) => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
-      case Some(No) => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(No)                      => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
+      case _                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ProtectionEnhancedChangedPage) match {
-      case Some(Enhancement) => ltaRoutes.NewEnhancementTypeController.onPageLoad(CheckMode)
+      case Some(Enhancement)             => ltaRoutes.NewEnhancementTypeController.onPageLoad(CheckMode)
       case Some(Protection) | Some(Both) => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode)
-      case Some(No) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-      case None => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(No)                      => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+      case None                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[ProtectionEnhancedChanged], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case Protection =>
+        case Protection  =>
           userAnswers
             .remove(NewEnhancementTypePage)
             .flatMap(_.remove(NewInternationalEnhancementReferencePage))
@@ -59,12 +59,14 @@ case object ProtectionEnhancedChangedPage extends QuestionPage[ProtectionEnhance
           userAnswers
             .remove(WhatNewProtectionTypeEnhancementPage)
             .flatMap(_.remove(ReferenceNewProtectionTypeEnhancementPage))
-        case No =>userAnswers.remove(NewEnhancementTypePage)
-          .flatMap(_.remove(NewInternationalEnhancementReferencePage))
-          .flatMap(_.remove(NewPensionCreditReferencePage))
-          .flatMap(_.remove(WhatNewProtectionTypeEnhancementPage))
-          .flatMap(_.remove(ReferenceNewProtectionTypeEnhancementPage))
-        case Both => super.cleanup(value, userAnswers)
+        case No          =>
+          userAnswers
+            .remove(NewEnhancementTypePage)
+            .flatMap(_.remove(NewInternationalEnhancementReferencePage))
+            .flatMap(_.remove(NewPensionCreditReferencePage))
+            .flatMap(_.remove(WhatNewProtectionTypeEnhancementPage))
+            .flatMap(_.remove(ReferenceNewProtectionTypeEnhancementPage))
+        case Both        => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }
