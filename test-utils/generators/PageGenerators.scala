@@ -48,6 +48,16 @@ trait PageGenerators {
 
   // scala fmt ignore
 
+  implicit lazy val arbitraryPensionCreditReferencePage: Arbitrary[PensionCreditReferencePage.type] =
+    Arbitrary(PensionCreditReferencePage)
+
+  implicit lazy val arbitraryInternationalEnhancementReferencePage
+    : Arbitrary[InternationalEnhancementReferencePage.type] =
+    Arbitrary(InternationalEnhancementReferencePage)
+
+  implicit lazy val arbitraryEnhancementTypePage: Arbitrary[EnhancementTypePage.type] =
+    Arbitrary(EnhancementTypePage)
+
   implicit lazy val arbitraryFlexiAccessDefinedContributionAmountPage
     : Arbitrary[FlexiAccessDefinedContributionAmountPage.type] =
     Arbitrary(FlexiAccessDefinedContributionAmountPage)

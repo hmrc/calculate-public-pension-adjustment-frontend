@@ -16,29 +16,22 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import controllers.{routes => generalRoutes}
-import models.LtaProtectionOrEnhancements.{Both, Enhancements, Protection}
-import models.{CheckMode, NormalMode, ProtectionType, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import controllers.lifetimeallowance.{routes => ltaRoutes}
 
-case object ProtectionTypePage extends QuestionPage[ProtectionType] {
+case object PensionCreditReferencePage extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ "lta" \ toString
 
-  override def toString: String = "protectionType"
+  override def toString: String = "pensionCreditReference"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(ProtectionTypePage) match {
-      case Some(_) => ltaRoutes.ProtectionReferenceController.onPageLoad(NormalMode)
-      case None    => generalRoutes.JourneyRecoveryController.onPageLoad(None)
-    }
+    ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(ProtectionTypePage) match {
-      case Some(_) => ltaRoutes.ProtectionReferenceController.onPageLoad(CheckMode)
-      case None    => generalRoutes.JourneyRecoveryController.onPageLoad(None)
-    }
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+
 }

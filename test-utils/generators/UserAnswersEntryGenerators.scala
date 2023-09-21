@@ -88,6 +88,32 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
   // scala fmt ignore
 
+  implicit lazy val arbitraryPensionCreditReferenceUserAnswersEntry
+    : Arbitrary[(PensionCreditReferencePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PensionCreditReferencePage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryInternationalEnhancementReferenceUserAnswersEntry
+    : Arbitrary[(InternationalEnhancementReferencePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[InternationalEnhancementReferencePage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryEnhancementTypeUserAnswersEntry: Arbitrary[(EnhancementTypePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[EnhancementTypePage.type]
+        value <- arbitrary[EnhancementType].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryFlexiAccessDefinedContributionAmountUserAnswersEntry
     : Arbitrary[(FlexiAccessDefinedContributionAmountPage.type, JsValue)] =
     Arbitrary {

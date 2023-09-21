@@ -27,6 +27,18 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
 
   implicit val dontShrink: Shrink[String] = Shrink.shrinkAny
 
+  def stringsOfLength(length: Int, charGen: Gen[Char] = arbitrary[Char]): Gen[String] = for {
+    chars <- listOfN(length, charGen)
+  } yield chars.mkString
+
+  def alphanumericStringWithMaxLength(maxLength: Int): Gen[String] = {
+    val allowedChars = Gen.oneOf(('A' to 'Z') ++ ('0' to '9'))
+    for {
+      length <- choose(1, maxLength)
+      chars  <- listOfN(length, allowedChars)
+    } yield chars.mkString
+  }
+
   def genPeriodNot2016: Gen[Period] =
     Gen.oneOf(
       Set(

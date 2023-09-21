@@ -39,6 +39,11 @@ trait ModelGenerators {
 
   // scala fmt ignore
 
+  implicit lazy val arbitraryEnhancementType: Arbitrary[EnhancementType] =
+    Arbitrary {
+      Gen.oneOf(EnhancementType.values.toSeq)
+    }
+
   implicit lazy val arbitraryPeriod: Arbitrary[Period] =
     Arbitrary {
       Gen.oneOf(
