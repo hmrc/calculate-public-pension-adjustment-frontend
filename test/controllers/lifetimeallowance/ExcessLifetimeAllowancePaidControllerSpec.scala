@@ -109,7 +109,7 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         val expectedAnswers = emptyUserAnswers
-          .set(ExcessLifetimeAllowancePaidPage, models.ExcessLifetimeAllowancePaid.Lumpsum)
+          .set(ExcessLifetimeAllowancePaidPage, ExcessLifetimeAllowancePaid.values.head)
           .success
           .value
 
@@ -193,7 +193,7 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController
+        ).value mustEqual controllers.lifetimeallowance.routes.AnnualPaymentValueController
           .onPageLoad(NormalMode)
           .url
       }
@@ -221,7 +221,7 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeAmountController
+        ).value mustEqual controllers.lifetimeallowance.routes.LumpSumValueController
           .onPageLoad(NormalMode)
           .url
       }
@@ -249,7 +249,7 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url
+        ).value mustEqual controllers.lifetimeallowance.routes.AnnualPaymentValueController.onPageLoad(CheckMode).url
       }
     }
 
@@ -275,7 +275,7 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url
+        ).value mustEqual controllers.lifetimeallowance.routes.LumpSumValueController.onPageLoad(CheckMode).url
       }
     }
   }

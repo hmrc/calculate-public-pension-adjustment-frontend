@@ -86,6 +86,22 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryLumpSumValueUserAnswersEntry: Arbitrary[(LumpSumValuePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[LumpSumValuePage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAnnualPaymentValueUserAnswersEntry: Arbitrary[(AnnualPaymentValuePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AnnualPaymentValuePage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   // scala fmt ignore
 
   implicit lazy val arbitraryPensionCreditReferenceUserAnswersEntry

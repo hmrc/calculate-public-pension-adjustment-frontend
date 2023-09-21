@@ -405,9 +405,10 @@ excessLifetimeAllowancePaid.title = cy: How was the excess above your lifetime a
 excessLifetimeAllowancePaid.heading = cy: How was the excess above your lifetime allowance paid to you?
 excessLifetimeAllowancePaid.annualPayment = cy: Annual payment
 excessLifetimeAllowancePaid.lumpSum = cy: Lump sum
+excessLifetimeAllowancePaid.both = cy: Both
 excessLifetimeAllowancePaid.checkYourAnswersLabel = cy: How was the excess above your lifetime allowance paid to you?
 excessLifetimeAllowancePaid.error.required = cy: Select how the excess above your lifetime allowance paid to you
-excessLifetimeAllowancePaid.change.hidden = cy: How was the excess above your lifetime allowance paid to you?
+excessLifetimeAllowancePaid.change.hidden = cy: how the excess above your lifetime allowance was paid to you
 excessLifetimeAllowancePaid.hint = cy: You can find this on your pension or bank statement.
 
 lifetimeAllowanceChargeAmount.title = cy: What was the value of your lifetime allowance charge?
@@ -933,3 +934,23 @@ pensionCreditReference.error.required = cy: Enter your lifetime allowance pensio
 pensionCreditReference.error.length = cy: Your lifetime allowance pension credit reference must be 15 characters or fewer
 pensionCreditReference.error.invalid = cy: Your lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
 pensionCreditReference.change.hidden = cy: What is your lifetime allowance pension credit reference?
+
+annualPaymentValue.title = cy: What was the value of the annual payment?
+annualPaymentValue.heading = cy: What was the value of the annual payment?
+annualPaymentValue.hint = cy: Amount must be rounded down to the nearest pound, for example 2300.
+annualPaymentValue.checkYourAnswersLabel = cy: What was the value of the annual payment?
+annualPaymentValue.error.nonNumeric = cy: Your annual payment value must only include numbers 0 to 9
+annualPaymentValue.error.required = cy: Enter the value of the annual payment
+annualPaymentValue.error.wholeNumber = cy: Your annual payment value must only include numbers 0 to 9
+annualPaymentValue.error.outOfRange = cy: Your annual payment value must be £999999999 or less
+annualPaymentValue.change.hidden = cy: lifetime allowance annual payment
+
+lumpSumValue.title = cy: What was the value of the lump sum?
+lumpSumValue.heading = cy: What was the value of the lump sum?
+lumpSumValue.hint = cy: Amount must be rounded down to the nearest pound, for example 2300.
+lumpSumValue.checkYourAnswersLabel = cy: What was the value of the lump sum?
+lumpSumValue.error.nonNumeric = cy: Your lump sum value must only include numbers 0 to 9
+lumpSumValue.error.required = cy: Enter the value of the lump sum
+lumpSumValue.error.wholeNumber = cy: Your lump sum value must only include numbers 0 to 9
+lumpSumValue.error.outOfRange = cy: Your lump sum value must be £999999999 or less
+lumpSumValue.change.hidden = cy: lifetime allowance lump sum

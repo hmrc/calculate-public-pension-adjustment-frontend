@@ -40,6 +40,9 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(InternationalEnhancementReferencePage.type, JsValue)] ::
       arbitrary[(EnhancementTypePage.type, JsValue)] ::
       arbitrary[(WhoPayingExtraLtaChargePage.type, JsValue)] ::
+      arbitrary[(LumpSumValuePage.type, JsValue)] ::
+      arbitrary[(AnnualPaymentValuePage.type, JsValue)] ::
+      arbitrary[(WhoPayingExtraLtaChargePage.type, JsValue)] ::
       arbitrary[(ValueNewLtaChargePage.type, JsValue)] ::
       arbitrary[(ProtectionReferencePage.type, JsValue)] ::
       arbitrary[(ProtectionTypePage.type, JsValue)] ::
