@@ -28,6 +28,24 @@ trait PageGenerators {
     : Arbitrary[MultipleBenefitCrystallisationEventPage.type] =
     Arbitrary(MultipleBenefitCrystallisationEventPage)
 
+  implicit lazy val arbitraryUserSchemeDetailsPage: Arbitrary[UserSchemeDetailsPage.type] =
+    Arbitrary(UserSchemeDetailsPage)
+
+  implicit lazy val arbitraryNewExcessLifetimeAllowancePaidPage: Arbitrary[NewExcessLifetimeAllowancePaidPage.type] =
+    Arbitrary(NewExcessLifetimeAllowancePaidPage)
+
+  implicit lazy val arbitraryNewLumpSumValuePage: Arbitrary[NewLumpSumValuePage.type] =
+    Arbitrary(NewLumpSumValuePage)
+
+  implicit lazy val arbitraryNewAnnualPaymentValuePage: Arbitrary[NewAnnualPaymentValuePage.type] =
+    Arbitrary(NewAnnualPaymentValuePage)
+
+  implicit lazy val arbitraryYearChargePaidPage: Arbitrary[YearChargePaidPage.type] =
+    Arbitrary(YearChargePaidPage)
+
+  implicit lazy val arbitraryQuarterChargePaidPage: Arbitrary[QuarterChargePaidPage.type] =
+    Arbitrary(QuarterChargePaidPage)
+
   // scala fmt ignore
 
   implicit lazy val arbitraryFlexiAccessDefinedContributionAmountPage

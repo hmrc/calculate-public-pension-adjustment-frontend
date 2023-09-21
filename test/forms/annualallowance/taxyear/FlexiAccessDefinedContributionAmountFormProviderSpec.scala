@@ -17,12 +17,9 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class FlexiAccessDefinedContributionAmountFormProviderSpec extends IntFieldBehaviours {
-
-  val formProvider = new FlexiAccessDefinedContributionAmountFormProvider()
-  val form         = formProvider(Seq(""))
 
   ".value" - {
 
@@ -34,36 +31,41 @@ class FlexiAccessDefinedContributionAmountFormProviderSpec extends IntFieldBehav
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      form,
+      newForm(),
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      newForm(),
       fieldName,
       nonNumericError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.nonNumeric", Seq("")),
       wholeNumberError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.nonNumeric", Seq(""))
     )
 
     behave like intFieldWithMaximum(
-      form,
+      newForm(),
       fieldName,
       maximum,
       expectedError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.maximum", Seq(maximum, ""))
     )
 
     behave like intFieldWithMinimum(
-      form,
+      newForm(),
       fieldName,
       minimum,
       expectedError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.minimum", Seq(minimum, ""))
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
       requiredError = FormError(fieldName, "flexiAccessDefinedContributionAmount.error.required", Seq(""))
     )
+  }
+
+  private def newForm(): Form[BigInt] = {
+    val formProvider = new FlexiAccessDefinedContributionAmountFormProvider()
+    formProvider(Seq(""))
   }
 }

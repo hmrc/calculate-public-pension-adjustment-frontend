@@ -27,12 +27,62 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryUserSchemeDetailsUserAnswersEntry: Arbitrary[(UserSchemeDetailsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[UserSchemeDetailsPage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryMultipleBenefitCrystallisationEventUserAnswersEntry
     : Arbitrary[(MultipleBenefitCrystallisationEventPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[MultipleBenefitCrystallisationEventPage.type]
         value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNewExcessLifetimeAllowancePaidUserAnswersEntry
+    : Arbitrary[(NewExcessLifetimeAllowancePaidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NewExcessLifetimeAllowancePaidPage.type]
+        value <- arbitrary[NewExcessLifetimeAllowancePaid].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNewLumpSumValueUserAnswersEntry: Arbitrary[(NewLumpSumValuePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NewLumpSumValuePage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNewAnnualPaymentValueUserAnswersEntry
+    : Arbitrary[(NewAnnualPaymentValuePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NewAnnualPaymentValuePage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryYearChargePaidUserAnswersEntry: Arbitrary[(YearChargePaidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[YearChargePaidPage.type]
+        value <- arbitrary[YearChargePaid].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryQuarterChargePaidUserAnswersEntry: Arbitrary[(QuarterChargePaidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[QuarterChargePaidPage.type]
+        value <- arbitrary[QuarterChargePaid].map(Json.toJson(_))
       } yield (page, value)
     }
 
