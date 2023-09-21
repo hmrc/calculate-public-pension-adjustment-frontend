@@ -18,12 +18,9 @@ package forms.annualallowance.preaaquestions
 
 import forms.annualallowance.taxyear.DefinedContributionAmountFormProvider
 import forms.behaviours.IntFieldBehaviours
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class DefinedContributionAmountFormProviderSpec extends IntFieldBehaviours {
-
-  val formProvider = new DefinedContributionAmountFormProvider()
-  val form         = formProvider(Seq(""))
 
   ".value" - {
 
@@ -35,36 +32,41 @@ class DefinedContributionAmountFormProviderSpec extends IntFieldBehaviours {
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      form,
+      newForm(),
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      newForm(),
       fieldName,
       nonNumericError = FormError(fieldName, "definedContributionAmount.error.nonNumeric", Seq("")),
       wholeNumberError = FormError(fieldName, "definedContributionAmount.error.nonNumeric", Seq(""))
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
       requiredError = FormError(fieldName, "definedContributionAmount.error.required", Seq(""))
     )
 
     behave like intFieldWithMaximum(
-      form,
+      newForm(),
       fieldName,
       maximum,
       expectedError = FormError(fieldName, "definedContributionAmount.error.maximum", Seq(maximum, ""))
     )
 
     behave like intFieldWithMinimum(
-      form,
+      newForm(),
       fieldName,
       minimum,
       expectedError = FormError(fieldName, "definedContributionAmount.error.minimum", Seq(minimum, ""))
     )
+  }
+
+  private def newForm(): Form[BigInt] = {
+    val formProvider = new DefinedContributionAmountFormProvider()
+    formProvider(Seq(""))
   }
 }

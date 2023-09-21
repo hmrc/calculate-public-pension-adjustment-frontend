@@ -27,25 +27,28 @@ import play.api.i18n.Messages
 class PayAChargeFormProviderSpec extends BooleanFieldBehaviours {
 
   val invalidKey = "error.boolean"
-  val messages   = mock[Messages]
-  when(messages.apply(eqTo("payACharge.error.required"), any())).thenReturn("error message")
-
-  val form = new PayAChargeFormProvider()("")(messages)
 
   ".value" - {
 
     val fieldName = "value"
 
     behave like booleanField(
-      form,
+      formWithMockMessages,
       fieldName,
       invalidError = FormError(fieldName, invalidKey)
     )
 
     behave like mandatoryField(
-      form,
+      formWithMockMessages,
       fieldName,
       requiredError = FormError(fieldName, "error message ")
     )
+
+    def formWithMockMessages = {
+      val messages = mock[Messages]
+      when(messages.apply(eqTo("payACharge.error.required"), any())).thenReturn("error message")
+
+      new PayAChargeFormProvider()("")(messages)
+    }
   }
 }
