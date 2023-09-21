@@ -37,22 +37,6 @@ trait IntFieldBehaviours extends FieldBehaviours {
         result.errors must contain only wholeNumberError
       }
     }
-
-//    "not bind integers larger than Int.MaxValue" in {
-//
-//      forAll(intsLargerThanMaxValue -> "massiveInt") { num: BigInt =>
-//        val result = form.bind(Map(fieldName -> num.toString)).apply(fieldName)
-//        result.errors must contain only nonNumericError
-//      }
-//    }
-
-//    "not bind integers smaller than Int.MinValue" in {
-//
-//      forAll(intsSmallerThanMinValue -> "massivelySmallInt") { num: BigInt =>
-//        val result = form.bind(Map(fieldName -> num.toString)).apply(fieldName)
-//        result.errors must contain only nonNumericError
-//      }
-//    }
   }
 
   def intFieldWithMinimum(form: Form[_], fieldName: String, minimum: Int, expectedError: FormError): Unit =
@@ -60,7 +44,8 @@ trait IntFieldBehaviours extends FieldBehaviours {
 
       forAll(intsBelowValue(minimum) -> "intBelowMin") { number: Int =>
         val result = form.bind(Map(fieldName -> number.toString)).apply(fieldName)
-        result.errors must contain only expectedError
+
+        checkErrorsAsExpected(result.errors, expectedError)
       }
     }
 
@@ -69,8 +54,15 @@ trait IntFieldBehaviours extends FieldBehaviours {
 
       forAll(intsAboveValue(maximum) -> "intAboveMax") { number: Int =>
         val result = form.bind(Map(fieldName -> number.toString)).apply(fieldName)
-        result.errors must contain only expectedError
+
+        checkErrorsAsExpected(result.errors, expectedError)
       }
+    }
+
+  private def checkErrorsAsExpected(errors: Seq[FormError], expectedError: FormError): Unit =
+    errors.foreach { error =>
+      error.messages  must be(expectedError.messages)
+      error.args.head must be(expectedError.args.head)
     }
 
   def intFieldWithRange(form: Form[_], fieldName: String, minimum: Int, maximum: Int, expectedError: FormError): Unit =

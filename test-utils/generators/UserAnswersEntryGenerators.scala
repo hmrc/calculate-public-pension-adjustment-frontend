@@ -27,6 +27,15 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryMultipleBenefitCrystallisationEventUserAnswersEntry
+    : Arbitrary[(MultipleBenefitCrystallisationEventPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MultipleBenefitCrystallisationEventPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   // scala fmt ignore
 
   implicit lazy val arbitraryFlexiAccessDefinedContributionAmountUserAnswersEntry

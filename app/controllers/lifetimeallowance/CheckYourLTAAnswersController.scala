@@ -42,6 +42,7 @@ class CheckYourLTAAnswersController @Inject() (
       DateOfBenefitCrystallisationEventSummary.row(request.userAnswers),
       ChangeInLifetimeAllowanceSummary.row(request.userAnswers),
       ChangeInTaxChargeSummary.row(request.userAnswers),
+      MultipleBenefitCrystallisationEventSummary.row(request.userAnswers),
       LtaProtectionOrEnhancementsSummary.row(request.userAnswers),
       ProtectionTypeSummary.row(request.userAnswers),
       ProtectionReferenceSummary.row(request.userAnswers),

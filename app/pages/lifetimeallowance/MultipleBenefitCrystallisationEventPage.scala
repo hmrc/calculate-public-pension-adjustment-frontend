@@ -16,28 +16,26 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.{ChangeInTaxCharge, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
+case object MultipleBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ "lta" \ toString
+  override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "changeInTaxCharge"
+  override def toString: String = "multipleBenefitCrystallisationEvent"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(ChangeInTaxChargePage) match {
-      case Some(ChangeInTaxCharge.NewCharge) | Some(ChangeInTaxCharge.DecreasedCharge) | Some(
-            ChangeInTaxCharge.IncreasedCharge
-          ) =>
-        ltaRoutes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode)
-      case _ =>
-        ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+    answers.get(MultipleBenefitCrystallisationEventPage) match {
+      case Some(_) => controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+    answers.get(MultipleBenefitCrystallisationEventPage) match {
+      case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

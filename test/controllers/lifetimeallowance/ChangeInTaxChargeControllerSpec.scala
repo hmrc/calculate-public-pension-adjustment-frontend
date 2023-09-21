@@ -107,7 +107,7 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode).url
+        ).value mustEqual ltaRoutes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode).url
       }
     }
 

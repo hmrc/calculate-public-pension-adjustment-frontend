@@ -14,41 +14,32 @@
  * limitations under the License.
  */
 
-package forms.annualallowance.taxyear
+package forms.lifetimeallowance
 
 import forms.behaviours.BooleanFieldBehaviours
-import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchersSugar.eqTo
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.data.FormError
-import play.api.i18n.Messages
 
-class PayAChargeFormProviderSpec extends BooleanFieldBehaviours {
+class MultipleBenefitCrystallisationEventFormProviderSpec extends BooleanFieldBehaviours {
 
-  val invalidKey = "error.boolean"
+  val requiredKey = "multipleBenefitCrystallisationEvent.error.required"
+  val invalidKey  = "error.boolean"
+
+  val form = new MultipleBenefitCrystallisationEventFormProvider()()
 
   ".value" - {
 
     val fieldName = "value"
 
     behave like booleanField(
-      formWithMockMessages,
+      form,
       fieldName,
       invalidError = FormError(fieldName, invalidKey)
     )
 
     behave like mandatoryField(
-      formWithMockMessages,
+      form,
       fieldName,
-      requiredError = FormError(fieldName, "error message ")
+      requiredError = FormError(fieldName, requiredKey)
     )
-
-    def formWithMockMessages = {
-      val messages = mock[Messages]
-      when(messages.apply(eqTo("payACharge.error.required"), any())).thenReturn("error message")
-
-      new PayAChargeFormProvider()("")(messages)
-    }
   }
 }
