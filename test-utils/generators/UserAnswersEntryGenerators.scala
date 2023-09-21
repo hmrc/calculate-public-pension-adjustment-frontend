@@ -35,7 +35,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-
   implicit lazy val arbitraryMultipleBenefitCrystallisationEventUserAnswersEntry
     : Arbitrary[(MultipleBenefitCrystallisationEventPage.type, JsValue)] =
     Arbitrary {
