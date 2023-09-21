@@ -531,7 +531,6 @@ whichScheme.change.hidden = cy: Which scheme are you entering details for?
 
 whoPaidAACharge.title = cy: Who paid the annual allowance tax charge for {0}?
 whoPaidAACharge.heading = cy: Who paid the annual allowance tax charge for {0}?
-whoPaidAACharge.hint = cy: You can find this out on a bank or pension statement.
 whoPaidAACharge.you = cy: You
 whoPaidAACharge.scheme = cy: Pension Scheme
 whoPaidAACharge.both = cy: Both

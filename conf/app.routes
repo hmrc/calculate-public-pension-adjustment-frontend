@@ -280,10 +280,10 @@ POST        /lifetime-allowance/more-than-one-benefit-crystallisation-event     
 GET         /lifetime-allowance/change-more-than-one-benefit-crystallisation-event                  controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-more-than-one-benefit-crystallisation-event                  controllers.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
-GET        /quarter-charge-was-paid                                              controllers.lifetimeallowance.QuarterChargePaidController.onPageLoad(mode: Mode = NormalMode)
-POST       /quarter-charge-was-paid                                              controllers.lifetimeallowance.QuarterChargePaidController.onSubmit(mode: Mode = NormalMode)
-GET        /change-quarter-charge-was-paid                                       controllers.lifetimeallowance.QuarterChargePaidController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-quarter-charge-was-paid                                       controllers.lifetimeallowance.QuarterChargePaidController.onSubmit(mode: Mode = CheckMode)
+GET        /lifetime-allowance/quarter-charge-was-paid                                              controllers.lifetimeallowance.QuarterChargePaidController.onPageLoad(mode: Mode = NormalMode)
+POST       /lifetime-allowance/quarter-charge-was-paid                                              controllers.lifetimeallowance.QuarterChargePaidController.onSubmit(mode: Mode = NormalMode)
+GET        /lifetime-allowance/change-quarter-charge-was-paid                                       controllers.lifetimeallowance.QuarterChargePaidController.onPageLoad(mode: Mode = CheckMode)
+POST       /lifetime-allowance/change-quarter-charge-was-paid                                       controllers.lifetimeallowance.QuarterChargePaidController.onSubmit(mode: Mode = CheckMode)
 
 GET        /lifetime-allowance/year-charge-was-paid                              controllers.lifetimeallowance.YearChargePaidController.onPageLoad(mode: Mode = NormalMode)
 POST       /lifetime-allowance/year-charge-was-paid                              controllers.lifetimeallowance.YearChargePaidController.onSubmit(mode: Mode = NormalMode)
