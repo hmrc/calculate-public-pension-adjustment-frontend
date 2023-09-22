@@ -19,15 +19,15 @@ package pages.lifetimeallowance
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
-class PensionCreditReferencePageSpec extends PageBehaviours {
+class NewPensionCreditReferencePageSpec extends PageBehaviours {
 
-  "PensionCreditReferencePage" - {
+  "NewPensionCreditReferencePage" - {
 
-    beRetrievable[String](PensionCreditReferencePage)
+    beRetrievable[String](NewPensionCreditReferencePage)
 
-    beSettable[String](PensionCreditReferencePage)
+    beSettable[String](NewPensionCreditReferencePage)
 
-    beRemovable[String](PensionCreditReferencePage)
+    beRemovable[String](NewPensionCreditReferencePage)
   }
 
   "normal mode navigation" - {
@@ -35,11 +35,11 @@ class PensionCreditReferencePageSpec extends PageBehaviours {
     "when user submits a reference" in {
 
       val userAnswers =
-        emptyUserAnswers.set(PensionCreditReferencePage, "validRef").get
+        emptyUserAnswers.set(NewPensionCreditReferencePage, "validRef").get
 
-      val nextPageUrl: String = PensionCreditReferencePage.navigate(NormalMode, userAnswers).url
+      val nextPageUrl: String = NewPensionCreditReferencePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-enhancement-changed")
+      checkNavigation(nextPageUrl, "/lta-charge-2015-2023")
     }
 
   }
@@ -49,9 +49,9 @@ class PensionCreditReferencePageSpec extends PageBehaviours {
     "when user submits a reference" in {
 
       val userAnswers =
-        emptyUserAnswers.set(PensionCreditReferencePage, "validRef").get
+        emptyUserAnswers.set(NewPensionCreditReferencePage, "validRef").get
 
-      val nextPageUrl: String = PensionCreditReferencePage.navigate(CheckMode, userAnswers).url
+      val nextPageUrl: String = NewPensionCreditReferencePage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/check-your-lta-answers")
     }

@@ -21,7 +21,7 @@ import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -267,8 +267,14 @@ class CalculationResultService @Inject() (
 
         val protectionReference: String = userAnswers.get(ProtectionReferencePage).getOrElse("")
 
-        val protectionTypeOrEnhancementChangedFlag: Boolean =
-          userAnswers.get(ProtectionTypeEnhancementChangedPage).getOrElse(false)
+        val protectionTypeOrEnhancementChanged: ProtectionEnhancedChanged =
+          userAnswers.get(ProtectionEnhancedChangedPage).getOrElse(ProtectionEnhancedChanged.Protection)
+
+        // TODO Should the data model pass the protectionTypeOrEnhancementChanged type through?
+        val protectionTypeOrEnhancementChangedFlag: Boolean = protectionTypeOrEnhancementChanged match {
+          case ProtectionEnhancedChanged.No => false
+          case _                            => true
+        }
 
         val newProtectionTypeOrEnhancement: Option[WhatNewProtectionTypeEnhancement] =
           userAnswers.get(WhatNewProtectionTypeEnhancementPage)

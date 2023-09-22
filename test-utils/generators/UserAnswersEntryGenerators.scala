@@ -103,12 +103,20 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     }
 
   // scala fmt ignore
-
   implicit lazy val arbitraryPensionCreditReferenceUserAnswersEntry
     : Arbitrary[(PensionCreditReferencePage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[PensionCreditReferencePage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNewPensionCreditReferenceUserAnswersEntry
+    : Arbitrary[(NewPensionCreditReferencePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NewPensionCreditReferencePage.type]
         value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
       } yield (page, value)
     }
@@ -122,11 +130,29 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryNewInternationalEnhancementReferenceUserAnswersEntry
+    : Arbitrary[(NewInternationalEnhancementReferencePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page <- arbitrary[NewInternationalEnhancementReferencePage.type]
+
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryEnhancementTypeUserAnswersEntry: Arbitrary[(EnhancementTypePage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[EnhancementTypePage.type]
         value <- arbitrary[EnhancementType].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNewEnhancementTypeUserAnswersEntry: Arbitrary[(NewEnhancementTypePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NewEnhancementTypePage.type]
+        value <- arbitrary[NewEnhancementType].map(Json.toJson(_))
       } yield (page, value)
     }
 
@@ -284,12 +310,12 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryProtectionTypeEnhancementChangedUserAnswersEntry
-    : Arbitrary[(ProtectionTypeEnhancementChangedPage.type, JsValue)] =
+  implicit lazy val arbitraryProtectionEnhancedChangedUserAnswersEntry
+    : Arbitrary[(ProtectionEnhancedChangedPage.type, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[ProtectionTypeEnhancementChangedPage.type]
-        value <- arbitrary[Boolean].map(Json.toJson(_))
+        page  <- arbitrary[ProtectionEnhancedChangedPage.type]
+        value <- arbitrary[ProtectionEnhancedChanged].map(Json.toJson(_))
       } yield (page, value)
     }
 

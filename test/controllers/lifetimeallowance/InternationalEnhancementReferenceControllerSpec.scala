@@ -108,7 +108,7 @@ class InternationalEnhancementReferenceControllerSpec extends SpecBase with Mock
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.lifetimeallowance.routes.ProtectionTypeEnhancementChangedController
+        ).value mustEqual controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController
           .onPageLoad(NormalMode)
           .url
       }

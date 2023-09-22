@@ -19,15 +19,15 @@ package pages.lifetimeallowance
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
-class InternationalEnhancementReferencePageSpec extends PageBehaviours {
+class NewInternationalEnhancementReferencePageSpec extends PageBehaviours {
 
-  "InternationalEnhancementReferencePage" - {
+  "NewInternationalEnhancementReferencePage" - {
 
-    beRetrievable[String](InternationalEnhancementReferencePage)
+    beRetrievable[String](NewInternationalEnhancementReferencePage)
 
-    beSettable[String](InternationalEnhancementReferencePage)
+    beSettable[String](NewInternationalEnhancementReferencePage)
 
-    beRemovable[String](InternationalEnhancementReferencePage)
+    beRemovable[String](NewInternationalEnhancementReferencePage)
   }
 
   "normal mode navigation" - {
@@ -36,35 +36,35 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val userAnswers =
         emptyUserAnswers
-          .set(EnhancementTypePage, models.EnhancementType.InternationalEnhancement)
+          .set(NewEnhancementTypePage, models.NewEnhancementType.InternationalEnhancement)
           .get
-          .set(InternationalEnhancementReferencePage, "validRef")
+          .set(NewInternationalEnhancementReferencePage, "validRef")
           .get
 
-      val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(NormalMode, userAnswers).url
+      val nextPageUrl: String = NewInternationalEnhancementReferencePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-enhancement-changed")
+      checkNavigation(nextPageUrl, "/lta-charge-2015-2023")
     }
 
     "when user has selected Both on EnhancementTypePage and submits a reference" in {
 
       val userAnswers =
         emptyUserAnswers
-          .set(EnhancementTypePage, models.EnhancementType.Both)
+          .set(NewEnhancementTypePage, models.NewEnhancementType.Both)
           .get
-          .set(InternationalEnhancementReferencePage, "validRef")
+          .set(NewInternationalEnhancementReferencePage, "validRef")
           .get
 
-      val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(NormalMode, userAnswers).url
+      val nextPageUrl: String = NewInternationalEnhancementReferencePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/pension-credit-reference")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-pension-credit-reference")
     }
 
     "when user has entered incorrect value " in {
 
       val userAnswers = emptyUserAnswers
 
-      val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(NormalMode, userAnswers).url
+      val nextPageUrl: String = NewInternationalEnhancementReferencePage.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
@@ -76,12 +76,12 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val userAnswers =
         emptyUserAnswers
-          .set(EnhancementTypePage, models.EnhancementType.InternationalEnhancement)
+          .set(NewEnhancementTypePage, models.NewEnhancementType.InternationalEnhancement)
           .get
-          .set(InternationalEnhancementReferencePage, "validRef")
+          .set(NewInternationalEnhancementReferencePage, "validRef")
           .get
 
-      val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
+      val nextPageUrl: String = NewInternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/check-your-lta-answers")
     }
@@ -90,21 +90,21 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val userAnswers =
         emptyUserAnswers
-          .set(EnhancementTypePage, models.EnhancementType.Both)
+          .set(NewEnhancementTypePage, models.NewEnhancementType.Both)
           .get
-          .set(InternationalEnhancementReferencePage, "validRef")
+          .set(NewInternationalEnhancementReferencePage, "validRef")
           .get
 
-      val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
+      val nextPageUrl: String = NewInternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/change-pension-credit-reference")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-new-pension-credit-reference")
     }
 
     "when user has entered incorrect value " in {
 
       val userAnswers = emptyUserAnswers
 
-      val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
+      val nextPageUrl: String = NewInternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }

@@ -113,7 +113,7 @@ class WhatNewProtectionTypeEnhancementControllerSpec extends SpecBase with Mocki
       }
     }
 
-    "must redirect to the CheckYourLTAAnswers page when valid data is submitted" in {
+    "must redirect to the ReferenceNewProtectionTypeEnhancement page when valid data is submitted in check mode" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -134,7 +134,9 @@ class WhatNewProtectionTypeEnhancementControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
+        redirectLocation(result).value mustEqual ltaRoutes.ReferenceNewProtectionTypeEnhancementController
+          .onPageLoad(CheckMode)
+          .url
       }
     }
 

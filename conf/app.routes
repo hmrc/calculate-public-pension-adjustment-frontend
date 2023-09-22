@@ -129,10 +129,10 @@ POST        /protection-reference                                               
 GET         /change-protection-reference                                                                                controllers.lifetimeallowance.ProtectionReferenceController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-protection-reference                                                                                controllers.lifetimeallowance.ProtectionReferenceController.onSubmit(mode: Mode = CheckMode)
 
-GET         /protection-changed                                                                                         controllers.lifetimeallowance.ProtectionTypeEnhancementChangedController.onPageLoad(mode: Mode = NormalMode)
-POST        /protection-changed                                                                                         controllers.lifetimeallowance.ProtectionTypeEnhancementChangedController.onSubmit(mode: Mode = NormalMode)
-GET         /change-/protection-changed                                                                                 controllers.lifetimeallowance.ProtectionTypeEnhancementChangedController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-/protection-changed                                                                                 controllers.lifetimeallowance.ProtectionTypeEnhancementChangedController.onSubmit(mode: Mode = CheckMode)
+GET        /lifetime-allowance/protection-enhancement-changed                        controllers.lifetimeallowance.ProtectionEnhancedChangedController.onPageLoad(mode: Mode = NormalMode)
+POST       /lifetime-allowance/protection-enhancement-changed                        controllers.lifetimeallowance.ProtectionEnhancedChangedController.onSubmit(mode: Mode = NormalMode)
+GET        /lifetime-allowance/change-protection-enhancement-changed                  controllers.lifetimeallowance.ProtectionEnhancedChangedController.onPageLoad(mode: Mode = CheckMode)
+POST       /lifetime-allowance/change-protection-enhancement-changed                  controllers.lifetimeallowance.ProtectionEnhancedChangedController.onSubmit(mode: Mode = CheckMode)
 
 GET         /protection-changed-new-reference                                                                           controllers.lifetimeallowance.ReferenceNewProtectionTypeEnhancementController.onPageLoad(mode: Mode = NormalMode)
 POST        /protection-changed-new-reference                                                                           controllers.lifetimeallowance.ReferenceNewProtectionTypeEnhancementController.onSubmit(mode: Mode = NormalMode)
@@ -279,6 +279,24 @@ GET         /lifetime-allowance/enhancement-type                        controll
 POST        /lifetime-allowance/enhancement-type                        controllers.lifetimeallowance.EnhancementTypeController.onSubmit(mode: Mode = NormalMode)
 GET         /lifetime-allowance/change-enhancement-type                  controllers.lifetimeallowance.EnhancementTypeController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-enhancement-type                  controllers.lifetimeallowance.EnhancementTypeController.onSubmit(mode: Mode = CheckMode)
+
+GET         /lifetime-allowance/new-enhancement-type                        controllers.lifetimeallowance.NewEnhancementTypeController.onPageLoad(mode: Mode = NormalMode)
+POST        /lifetime-allowance/new-enhancement-type                        controllers.lifetimeallowance.NewEnhancementTypeController.onSubmit(mode: Mode = NormalMode)
+GET         /lifetime-allowance/change-new-enhancement-type                  controllers.lifetimeallowance.NewEnhancementTypeController.onPageLoad(mode: Mode = CheckMode)
+POST        /lifetime-allowance/change-new-enhancement-type                  controllers.lifetimeallowance.NewEnhancementTypeController.onSubmit(mode: Mode = CheckMode)
+
+GET         /lifetime-allowance/new-international-enhancement-reference                        controllers.lifetimeallowance.NewInternationalEnhancementReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST        /lifetime-allowance/new-international-enhancement-reference                        controllers.lifetimeallowance.NewInternationalEnhancementReferenceController.onSubmit(mode: Mode = NormalMode)
+GET         /lifetime-allowance/change-new-international-enhancement-reference                  controllers.lifetimeallowance.NewInternationalEnhancementReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST        /lifetime-allowance/change-new-international-enhancement-reference                  controllers.lifetimeallowance.NewInternationalEnhancementReferenceController.onSubmit(mode: Mode = CheckMode)
+
+GET         /lifetime-allowance/new-pension-credit-reference                        controllers.lifetimeallowance.NewPensionCreditReferenceController.onPageLoad(mode: Mode = NormalMode)
+POST        /lifetime-allowance/new-pension-credit-reference                        controllers.lifetimeallowance.NewPensionCreditReferenceController.onSubmit(mode: Mode = NormalMode)
+GET         /lifetime-allowance/change-new-pension-credit-reference                  controllers.lifetimeallowance.NewPensionCreditReferenceController.onPageLoad(mode: Mode = CheckMode)
+POST        /lifetime-allowance/change-new-pension-credit-reference                  controllers.lifetimeallowance.NewPensionCreditReferenceController.onSubmit(mode: Mode = CheckMode)
+
+GET         /calculation-result                                                  controllers.CalculationResultController.onPageLoad()
+POST        /calculation-result                                                  controllers.CalculationResultController.onSubmit()
 
 GET         /lifetime-allowance/international-enhancement-reference                        controllers.lifetimeallowance.InternationalEnhancementReferenceController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/international-enhancement-reference                        controllers.lifetimeallowance.InternationalEnhancementReferenceController.onSubmit(mode: Mode = NormalMode)

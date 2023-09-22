@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package pages.lifetimeallowance
+package forms
 
-import pages.behaviours.PageBehaviours
+import javax.inject.Inject
 
-class ProtectionTypeEnhancementChangedPageSpec extends PageBehaviours {
+import forms.mappings.Mappings
+import play.api.data.Form
+import models.ProtectionEnhancedChanged
 
-  "ProtectionTypeEnhancementChangedPage" - {
+class ProtectionEnhancedChangedFormProvider @Inject() extends Mappings {
 
-    beRetrievable[Boolean](ProtectionTypeEnhancementChangedPage)
-
-    beSettable[Boolean](ProtectionTypeEnhancementChangedPage)
-
-    beRemovable[Boolean](ProtectionTypeEnhancementChangedPage)
-  }
+  def apply(): Form[ProtectionEnhancedChanged] =
+    Form(
+      "value" -> enumerable[ProtectionEnhancedChanged]("protectionEnhancedChanged.error.required")
+    )
 }

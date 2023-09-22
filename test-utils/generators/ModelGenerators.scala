@@ -37,6 +37,16 @@ trait ModelGenerators {
       Gen.oneOf(QuarterChargePaid.values.toSeq)
     }
 
+  implicit lazy val arbitraryNewEnhancementType: Arbitrary[NewEnhancementType] =
+    Arbitrary {
+      Gen.oneOf(NewEnhancementType.values.toSeq)
+    }
+
+  implicit lazy val arbitraryProtectionEnhancedChanged: Arbitrary[ProtectionEnhancedChanged] =
+    Arbitrary {
+      Gen.oneOf(ProtectionEnhancedChanged.values.toSeq)
+    }
+
   // scala fmt ignore
 
   implicit lazy val arbitraryEnhancementType: Arbitrary[EnhancementType] =

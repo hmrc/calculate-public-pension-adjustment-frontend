@@ -18,30 +18,30 @@ package pages.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
-import models.EnhancementType.{Both, InternationalEnhancement}
+import models.NewEnhancementType.{Both, InternationalEnhancement}
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object InternationalEnhancementReferencePage extends QuestionPage[String] {
+case object NewInternationalEnhancementReferencePage extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ "lta" \ toString
 
-  override def toString: String = "internationalEnhancementReference"
+  override def toString: String = "newInternationalEnhancementReference"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(EnhancementTypePage) match {
-      case Some(InternationalEnhancement) => ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
-      case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
+    answers.get(NewEnhancementTypePage) match {
+      case Some(InternationalEnhancement) => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode) //
+      case Some(Both)                     => ltaRoutes.NewPensionCreditReferenceController.onPageLoad(NormalMode)
       case _                              => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(EnhancementTypePage) match {
+    answers.get(NewEnhancementTypePage) match {
       case Some(InternationalEnhancement) =>
         controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
+      case Some(Both)                     => ltaRoutes.NewPensionCreditReferenceController.onPageLoad(CheckMode)
       case _                              => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 }

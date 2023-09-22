@@ -17,45 +17,44 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import forms.lifetimeallowance.ReferenceNewProtectionTypeEnhancementFormProvider
-import models.{CheckMode, NormalMode, ProtectionEnhancedChanged, UserAnswers}
 import controllers.routes
-import controllers.lifetimeallowance.{routes => ltaRoutes}
+import forms.lifetimeallowance.NewPensionCreditReferenceFormProvider
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.{ProtectionEnhancedChangedPage, ReferenceNewProtectionTypeEnhancementPage}
+import pages.lifetimeallowance.NewPensionCreditReferencePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.lifetimeallowance.ReferenceNewProtectionTypeEnhancementView
+import views.html.lifetimeallowance.NewPensionCreditReferenceView
 
 import scala.concurrent.Future
 
-class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with MockitoSugar {
+class NewPensionCreditReferenceControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new ReferenceNewProtectionTypeEnhancementFormProvider()
+  val formProvider = new NewPensionCreditReferenceFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = ltaRoutes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
+  lazy val newPensionCreditReferenceRoute =
+    controllers.lifetimeallowance.routes.NewPensionCreditReferenceController.onPageLoad(NormalMode).url
 
-  "ReferenceNewProtectionTypeEnhancement Controller" - {
+  "NewPensionCreditReference Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, normalRoute)
+        val request = FakeRequest(GET, newPensionCreditReferenceRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[ReferenceNewProtectionTypeEnhancementView]
+        val view = application.injector.instanceOf[NewPensionCreditReferenceView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -64,15 +63,14 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers =
-        UserAnswers(userAnswersId).set(ReferenceNewProtectionTypeEnhancementPage, "answer").success.value
+      val userAnswers = UserAnswers(userAnswersId).set(NewPensionCreditReferencePage, "answer").success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, normalRoute)
+        val request = FakeRequest(GET, newPensionCreditReferenceRoute)
 
-        val view = application.injector.instanceOf[ReferenceNewProtectionTypeEnhancementView]
+        val view = application.injector.instanceOf[NewPensionCreditReferenceView]
 
         val result = route(application, request).value
 
@@ -81,17 +79,14 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
       }
     }
 
-    "must redirect to the LifetimeAllowanceCharge page when user previously answers Protection on ProtectionEnhancedChangedPage" in {
+    "must redirect to the next page when valid data is submitted" in {
+
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
-      val userAnswers = emptyUserAnswers
-        .set(ProtectionEnhancedChangedPage, ProtectionEnhancedChanged.Protection)
-        .get
-
       val application =
-        applicationBuilder(userAnswers = Some(userAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
@@ -99,7 +94,7 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
 
       running(application) {
         val request =
-          FakeRequest(POST, normalRoute)
+          FakeRequest(POST, newPensionCreditReferenceRoute)
             .withFormUrlEncodedBody(("value", "answer"))
 
         val result = route(application, request).value
@@ -107,7 +102,9 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode).url
+        ).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 
@@ -117,12 +114,12 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
 
       running(application) {
         val request =
-          FakeRequest(POST, normalRoute)
+          FakeRequest(POST, newPensionCreditReferenceRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[ReferenceNewProtectionTypeEnhancementView]
+        val view = application.injector.instanceOf[NewPensionCreditReferenceView]
 
         val result = route(application, request).value
 
@@ -136,7 +133,7 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, normalRoute)
+        val request = FakeRequest(GET, newPensionCreditReferenceRoute)
 
         val result = route(application, request).value
 
@@ -151,7 +148,7 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
 
       running(application) {
         val request =
-          FakeRequest(POST, normalRoute)
+          FakeRequest(POST, newPensionCreditReferenceRoute)
             .withFormUrlEncodedBody(("value", "answer"))
 
         val result = route(application, request).value
