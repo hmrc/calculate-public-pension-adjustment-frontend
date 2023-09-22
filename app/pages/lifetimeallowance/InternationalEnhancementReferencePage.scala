@@ -32,7 +32,7 @@ case object InternationalEnhancementReferencePage extends QuestionPage[String] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
-      case Some(InternationalEnhancement) => ltaRoutes.ProtectionTypeEnhancementChangedController.onPageLoad(NormalMode)
+      case Some(InternationalEnhancement) => ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
       case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
       case _                              => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }

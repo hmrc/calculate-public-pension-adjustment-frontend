@@ -28,7 +28,7 @@ import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class EnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
+class NewEnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 

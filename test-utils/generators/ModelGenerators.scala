@@ -35,6 +35,7 @@ trait ModelGenerators {
   implicit lazy val arbitraryQuarterChargePaid: Arbitrary[QuarterChargePaid] =
     Arbitrary {
       Gen.oneOf(QuarterChargePaid.values.toSeq)
+    }
 
   implicit lazy val arbitraryNewEnhancementType: Arbitrary[NewEnhancementType] =
     Arbitrary {
