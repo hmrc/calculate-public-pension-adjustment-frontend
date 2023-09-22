@@ -43,7 +43,7 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/protection-changed")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-enhancement-changed")
     }
 
     "when user has selected Both on EnhancementTypePage and submits a reference" in {

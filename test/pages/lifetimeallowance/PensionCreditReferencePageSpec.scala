@@ -39,7 +39,7 @@ class PensionCreditReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PensionCreditReferencePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/protection-changed")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-enhancement-changed")
     }
 
   }

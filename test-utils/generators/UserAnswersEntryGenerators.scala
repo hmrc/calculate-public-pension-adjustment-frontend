@@ -121,7 +121,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-
   implicit lazy val arbitraryInternationalEnhancementReferenceUserAnswersEntry
     : Arbitrary[(InternationalEnhancementReferencePage.type, JsValue)] =
     Arbitrary {
@@ -135,7 +134,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     : Arbitrary[(NewInternationalEnhancementReferencePage.type, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[NewInternationalEnhancementReferencePage.type]
+        page <- arbitrary[NewInternationalEnhancementReferencePage.type]
 
         value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
       } yield (page, value)

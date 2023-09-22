@@ -31,7 +31,6 @@ case object ProtectionReferencePage extends QuestionPage[String] {
   override def toString: String = "protectionReference"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-
     answers.get(LtaProtectionOrEnhancementsPage) match {
       case Some(Protection) => ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
       case Some(Both)       => ltaRoutes.EnhancementTypeController.onPageLoad(NormalMode)
