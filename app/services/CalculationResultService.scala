@@ -270,10 +270,10 @@ class CalculationResultService @Inject() (
         val protectionTypeOrEnhancementChanged: ProtectionEnhancedChanged =
           userAnswers.get(ProtectionEnhancedChangedPage).getOrElse(ProtectionEnhancedChanged.Protection)
 
-        //TODO Should the data model pass the protectionTypeOrEnhancementChanged type through?
+        // TODO Should the data model pass the protectionTypeOrEnhancementChanged type through?
         val protectionTypeOrEnhancementChangedFlag: Boolean = protectionTypeOrEnhancementChanged match {
           case ProtectionEnhancedChanged.No => false
-          case _ => true
+          case _                            => true
         }
 
         val newProtectionTypeOrEnhancement: Option[WhatNewProtectionTypeEnhancement] =
