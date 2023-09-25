@@ -154,11 +154,6 @@ POST        /lifetime-allowance/excess-paid                                     
 GET         /lifetime-allowance/change-excess-paid                                          controllers.lifetimeallowance.ExcessLifetimeAllowancePaidController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-excess-paid                                          controllers.lifetimeallowance.ExcessLifetimeAllowancePaidController.onSubmit(mode: Mode = CheckMode)
 
-GET         /how-much-lta-charge                                                                                        controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onPageLoad(mode: Mode = NormalMode)
-POST        /how-much-lta-charge                                                                                        controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onSubmit(mode: Mode = NormalMode)
-GET         /change-how-much-lta-charge                                                                                 controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-how-much-lta-charge                                                                                 controllers.lifetimeallowance.LifetimeAllowanceChargeAmountController.onSubmit(mode: Mode = CheckMode)
-
 GET         /lifetime-allowance/who-paid-charge                                                 controllers.lifetimeallowance.WhoPaidLTAChargeController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/who-paid-charge                                                 controllers.lifetimeallowance.WhoPaidLTAChargeController.onSubmit(mode: Mode = NormalMode)
 GET         /lifetime-allowance/change-who-paid-charge                                          controllers.lifetimeallowance.WhoPaidLTAChargeController.onPageLoad(mode: Mode = CheckMode)
@@ -224,11 +219,6 @@ GET         /annual-allowance/:period/threshold-income                          
 POST        /annual-allowance/:period/threshold-income                                                                  controllers.annualallowance.taxyear.ThresholdIncomeController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET         /annual-allowance/:period/change-threshold-income                                                           controllers.annualallowance.taxyear.ThresholdIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST        /annual-allowance/:period/change-threshold-income                                                           controllers.annualallowance.taxyear.ThresholdIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)
-
-GET         /value-new-lta-charge                                                                                       controllers.lifetimeallowance.ValueNewLtaChargeController.onPageLoad(mode: Mode = NormalMode)
-POST        /value-new-lta-charge                                                                                       controllers.lifetimeallowance.ValueNewLtaChargeController.onSubmit(mode: Mode = NormalMode)
-GET         /change-value-new-lta-charge                                                                                controllers.lifetimeallowance.ValueNewLtaChargeController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-value-new-lta-charge                                                                                controllers.lifetimeallowance.ValueNewLtaChargeController.onSubmit(mode: Mode = CheckMode)
 
 GET         /lifetime-allowance/who-paid-extra-charge                                         controllers.lifetimeallowance.WhoPayingExtraLtaChargeController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/who-paid-extra-charge                                         controllers.lifetimeallowance.WhoPayingExtraLtaChargeController.onSubmit(mode: Mode = NormalMode)

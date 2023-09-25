@@ -35,22 +35,22 @@ case object WhoPaidLTAChargePage extends QuestionPage[WhoPaidLTACharge] {
     case Some(WhoPaidLTACharge.PensionScheme) =>
       controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(NormalMode)
     case Some(WhoPaidLTACharge.You)           =>
-      controllers.lifetimeallowance.routes.ValueNewLtaChargeController.onPageLoad(NormalMode)
+      controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(NormalMode)
     case _                                    => controllers.routes.JourneyRecoveryController.onPageLoad()
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(WhoPaidLTAChargePage) match {
     case Some(WhoPaidLTACharge.PensionScheme) =>
       controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode)
-    case Some(WhoPaidLTACharge.You)           => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+    case Some(WhoPaidLTACharge.You)           => controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode)
     case _                                    => controllers.routes.JourneyRecoveryController.onPageLoad()
   }
 
   override def cleanup(value: Option[WhoPaidLTACharge], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case PensionScheme => super.cleanup(value, userAnswers)
-        case You           => userAnswers.remove(SchemeNameAndTaxRefPage)
+        case PensionScheme => userAnswers.remove(UserSchemeDetailsPage)
+        case You           => userAnswers.remove(SchemeNameAndTaxRefPage).flatMap(_.remove(QuarterChargePaidPage)).flatMap(_.remove(YearChargePaidPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 
