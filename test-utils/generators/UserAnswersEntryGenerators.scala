@@ -233,14 +233,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryValueNewLtaChargeUserAnswersEntry: Arbitrary[(ValueNewLtaChargePage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[ValueNewLtaChargePage.type]
-        value <- arbitrary[Int].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
   implicit lazy val arbitraryWhoPaidAAChargeUserAnswersEntry: Arbitrary[(WhoPaidAAChargePage.type, JsValue)] =
     Arbitrary {
       for {
@@ -332,15 +324,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       for {
         page  <- arbitrary[WhoPaidLTAChargePage.type]
         value <- arbitrary[WhoPaidLTACharge].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryLifetimeAllowanceChargeAmountUserAnswersEntry
-    : Arbitrary[(LifetimeAllowanceChargeAmountPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[LifetimeAllowanceChargeAmountPage.type]
-        value <- arbitrary[Int].map(Json.toJson(_))
       } yield (page, value)
     }
 

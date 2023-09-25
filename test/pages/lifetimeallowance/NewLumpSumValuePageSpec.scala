@@ -32,7 +32,7 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
 
   "normal mode navigation" - {
 
-    "when user has selected Lump Sum for how excess was paid " in {
+    "when user has selected Lump Sum for how excess was paid and there is no old lump sum value" in {
 
       val userAnswers = emptyUserAnswers
         .set(NewLumpSumValuePage, BigInt("100"))
@@ -42,7 +42,7 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewLumpSumValuePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-extra-charge")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user has selected Both for how excess was paid " in {

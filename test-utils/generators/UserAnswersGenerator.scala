@@ -46,7 +46,6 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(NewInternationalEnhancementReferencePage.type, JsValue)] ::
       arbitrary[(NewEnhancementTypePage.type, JsValue)] ::
       arbitrary[(WhoPayingExtraLtaChargePage.type, JsValue)] ::
-      arbitrary[(ValueNewLtaChargePage.type, JsValue)] ::
       arbitrary[(ProtectionReferencePage.type, JsValue)] ::
       arbitrary[(ProtectionTypePage.type, JsValue)] ::
       arbitrary[(LtaProtectionOrEnhancementsPage.type, JsValue)] ::
@@ -59,7 +58,6 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(WhichYearsScottishTaxpayerPage.type, JsValue)] ::
       arbitrary[(ScottishTaxpayerFrom2016Page.type, JsValue)] ::
       arbitrary[(ChangeInTaxChargePage.type, JsValue)] ::
-      arbitrary[(LifetimeAllowanceChargeAmountPage.type, JsValue)] ::
       arbitrary[(ExcessLifetimeAllowancePaidPage.type, JsValue)] ::
       arbitrary[(LifetimeAllowanceChargePage.type, JsValue)] ::
       arbitrary[(SchemeNameAndTaxRefPage.type, JsValue)] ::

@@ -36,7 +36,8 @@ case object YearChargePaidPage extends QuestionPage[YearChargePaid] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(YearChargePaidPage) match {
-      case Some(_) => controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
+      case Some(_) =>
+        controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

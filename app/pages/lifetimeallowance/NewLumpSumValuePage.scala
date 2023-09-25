@@ -32,10 +32,10 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
   override def toString: String = "newLumpSumValue"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    (answers.get(NewExcessLifetimeAllowancePaidPage)) match {
+    answers.get(NewExcessLifetimeAllowancePaidPage) match {
       case Some(Lumpsum) =>
         navigateValueIncrease(answers, NormalMode)
-      case Some(Both) => controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(NormalMode)
+      case Some(Both)    => controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(NormalMode)
       case _             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -47,15 +47,27 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
     }
 
   private def navigateValueIncrease(answers: UserAnswers, mode: Mode): Call = {
-    val newLumpSumValue = answers.get(NewLumpSumValuePage)
-    val oldLumpSumValue = answers.get(LumpSumValuePage)
-    val newAnnualPaymentValue = answers.get(NewAnnualPaymentValuePage)
-    val oldAnnualPaymentValue = answers.get(AnnualPaymentValuePage)
+    val newLumpSumValue         = answers.get(NewLumpSumValuePage)
+    val oldLumpSumValue         = answers.get(LumpSumValuePage)
+    val newAnnualPaymentValue   = answers.get(NewAnnualPaymentValuePage)
+    val oldAnnualPaymentValue   = answers.get(AnnualPaymentValuePage)
     val WhoPayingExtraLtaCharge = answers.get(WhoPayingExtraLtaChargePage)
 
-    if (combinedIsValueIncreased(newLumpSumValue,oldLumpSumValue,newAnnualPaymentValue,oldAnnualPaymentValue) && WhoPayingExtraLtaCharge == None) {
+    if (
+      combinedIsValueIncreased(
+        newLumpSumValue,
+        oldLumpSumValue,
+        newAnnualPaymentValue,
+        oldAnnualPaymentValue
+      ) && WhoPayingExtraLtaCharge == None
+    ) {
       ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
-    } else if (isValueIncreased(newLumpSumValue, oldLumpSumValue) || isValueIncreased(newAnnualPaymentValue, oldAnnualPaymentValue) && WhoPayingExtraLtaCharge == None) {
+    } else if (
+      (isValueIncreased(newLumpSumValue, oldLumpSumValue) || isValueIncreased(
+        newAnnualPaymentValue,
+        oldAnnualPaymentValue
+      )) && WhoPayingExtraLtaCharge == None
+    ) {
       ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
     } else {
       ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
@@ -63,20 +75,31 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
   }
 
   private def isValueIncreased(newValue: Option[BigInt], oldValue: Option[BigInt]): Boolean =
-    (newValue.getOrElse(BigInt(0)) > oldValue.getOrElse(BigInt(0)))
+    newValue.getOrElse(BigInt(0)) > oldValue.getOrElse(BigInt(0))
 
-  private def combinedIsValueIncreased(newLumpSumValue: Option[BigInt], oldLumpSumValue: Option[BigInt], newAnnualPaymentValue: Option[BigInt], oldAnnualPaymentValue: Option[BigInt]): Boolean =
+  private def combinedIsValueIncreased(
+    newLumpSumValue: Option[BigInt],
+    oldLumpSumValue: Option[BigInt],
+    newAnnualPaymentValue: Option[BigInt],
+    oldAnnualPaymentValue: Option[BigInt]
+  ): Boolean =
     (newLumpSumValue.getOrElse(BigInt(0)) + newAnnualPaymentValue.getOrElse(BigInt(0))) >
       (oldLumpSumValue.getOrElse(BigInt(0)) + oldAnnualPaymentValue.getOrElse(BigInt(0)))
 
-//  override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
-//    (value, userAnswers.get(LifetimeAllowanceChargeAmountPage)) match {
-//      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge <= oldLtaCharge =>
-//        userAnswers.remove(WhoPayingExtraLtaChargePage).flatMap(_.remove(LtaPensionSchemeDetailsPage))
-//      case (Some(newLtaCharge), Some(oldLtaCharge)) if newLtaCharge > oldLtaCharge =>
-//        super.cleanup(value, userAnswers)
-//      case (Some(_), None) =>
-//        super.cleanup(value, userAnswers)
-//      case _ => super.cleanup(value, userAnswers)
-//    }
+  override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] = {
+    val oldLumpSumValue       = userAnswers.get(LumpSumValuePage)
+    val newAnnualPaymentValue = userAnswers.get(NewAnnualPaymentValuePage)
+    val oldAnnualPaymentValue = userAnswers.get(AnnualPaymentValuePage)
+
+    if (combinedIsValueIncreased(value, oldLumpSumValue, newAnnualPaymentValue, oldAnnualPaymentValue)) {
+      super.cleanup(value, userAnswers)
+    } else if (
+      isValueIncreased(value, oldLumpSumValue) || isValueIncreased(newAnnualPaymentValue, oldAnnualPaymentValue)
+    ) {
+      super.cleanup(value, userAnswers)
+    } else {
+      userAnswers.remove(WhoPayingExtraLtaChargePage).flatMap(_.remove(LtaPensionSchemeDetailsPage))
+    }
+  }
+
 }

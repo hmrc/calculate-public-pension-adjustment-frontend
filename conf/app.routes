@@ -323,7 +323,7 @@ POST       /lifetime-allowance/change-new-value-of-lump-sum                     
 
 GET        /lifetime-allowance/new-excess-paid                                   controllers.lifetimeallowance.NewExcessLifetimeAllowancePaidController.onPageLoad(mode: Mode = NormalMode)
 POST       /lifetime-allowance/new-excess-paid                                   controllers.lifetimeallowance.NewExcessLifetimeAllowancePaidController.onSubmit(mode: Mode = NormalMode)
-GET        /lifetime-allowance/change-new-excess-paidd                           controllers.lifetimeallowance.NewExcessLifetimeAllowancePaidController.onPageLoad(mode: Mode = CheckMode)
+GET        /lifetime-allowance/change-new-excess-paid                           controllers.lifetimeallowance.NewExcessLifetimeAllowancePaidController.onPageLoad(mode: Mode = CheckMode)
 POST       /lifetime-allowance/change-new-excess-paid                            controllers.lifetimeallowance.NewExcessLifetimeAllowancePaidController.onSubmit(mode: Mode = CheckMode)
 
 GET        /lifetime-allowance/scheme-name-reference                             controllers.lifetimeallowance.UserSchemeDetailsController.onPageLoad(mode: Mode = NormalMode)

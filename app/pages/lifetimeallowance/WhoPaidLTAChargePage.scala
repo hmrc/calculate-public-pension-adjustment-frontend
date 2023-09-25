@@ -42,7 +42,8 @@ case object WhoPaidLTAChargePage extends QuestionPage[WhoPaidLTACharge] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(WhoPaidLTAChargePage) match {
     case Some(WhoPaidLTACharge.PensionScheme) =>
       controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode)
-    case Some(WhoPaidLTACharge.You)           => controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode)
+    case Some(WhoPaidLTACharge.You)           =>
+      controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode)
     case _                                    => controllers.routes.JourneyRecoveryController.onPageLoad()
   }
 
@@ -50,7 +51,11 @@ case object WhoPaidLTAChargePage extends QuestionPage[WhoPaidLTACharge] {
     value
       .map {
         case PensionScheme => userAnswers.remove(UserSchemeDetailsPage)
-        case You           => userAnswers.remove(SchemeNameAndTaxRefPage).flatMap(_.remove(QuarterChargePaidPage)).flatMap(_.remove(YearChargePaidPage))
+        case You           =>
+          userAnswers
+            .remove(SchemeNameAndTaxRefPage)
+            .flatMap(_.remove(QuarterChargePaidPage))
+            .flatMap(_.remove(YearChargePaidPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 
