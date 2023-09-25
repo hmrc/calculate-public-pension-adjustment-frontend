@@ -18,7 +18,7 @@ package pages.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
-import models.LtaProtectionOrEnhancements.{Both, Enhancements, Protection}
+import models.LtaProtectionOrEnhancements.{Both, Enhancements, No, Protection}
 import models.{CheckMode, LtaProtectionOrEnhancements, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -36,13 +36,15 @@ case object LtaProtectionOrEnhancementsPage extends QuestionPage[LtaProtectionOr
     answers.get(LtaProtectionOrEnhancementsPage) match {
       case Some(Enhancements)            => ltaRoutes.EnhancementTypeController.onPageLoad(NormalMode)
       case Some(Protection) | Some(Both) => ltaRoutes.ProtectionTypeController.onPageLoad(NormalMode)
-      case _                             => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(No)                      => ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
+      case None                          => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(LtaProtectionOrEnhancementsPage) match {
       case Some(Enhancements)            => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
       case Some(Protection) | Some(Both) => ltaRoutes.ProtectionTypeController.onPageLoad(CheckMode)
+      case Some(No)                      => ltaRoutes.CheckYourLTAAnswersController.onPageLoad
       case None                          => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -59,6 +61,7 @@ case object LtaProtectionOrEnhancementsPage extends QuestionPage[LtaProtectionOr
             .remove(ProtectionTypePage)
             .flatMap(_.remove(ProtectionReferencePage))
         case Both         => super.cleanup(value, userAnswers)
+        case No           => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

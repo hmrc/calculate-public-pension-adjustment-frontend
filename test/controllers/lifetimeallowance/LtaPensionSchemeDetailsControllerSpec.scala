@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.lifetimeallowance.LtaPensionSchemeDetailsFormProvider
 import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.{CheckMode, LtaPensionSchemeDetails, NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -80,7 +80,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       val userAnswers = UserAnswers(userAnswersId)
         .set(
           LtaPensionSchemeDetailsPage,
-          LtaPensionSchemeDetails("someSchemeName", "00348916RT")
+          "00348916RT"
         )
         .success
         .value
@@ -96,7 +96,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(LtaPensionSchemeDetails("someSchemeName", "00348916RT")),
+          form.fill("00348916RT"),
           NormalMode
         )(request, messages(application)).toString
       }
@@ -118,7 +118,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
+            .withFormUrlEncodedBody(("value", "00348916RT"))
 
         val result = route(application, request).value
 
@@ -145,7 +145,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
+            .withFormUrlEncodedBody(("value", "00348916RT"))
 
         val result = route(application, request).value
 

@@ -16,17 +16,16 @@
 
 package pages.lifetimeallowance
 
-import models.LtaPensionSchemeDetails
 import pages.behaviours.PageBehaviours
 
 class LtaPensionSchemeDetailsPageSpec extends PageBehaviours {
 
   "LtaPensionSchemeDetailsPage" - {
 
-    beRetrievable[LtaPensionSchemeDetails](LtaPensionSchemeDetailsPage)
+    beRetrievable[String](LtaPensionSchemeDetailsPage)
 
-    beSettable[LtaPensionSchemeDetails](LtaPensionSchemeDetailsPage)
+    beSettable[String](LtaPensionSchemeDetailsPage)
 
-    beRemovable[LtaPensionSchemeDetails](LtaPensionSchemeDetailsPage)
+    beRemovable[String](LtaPensionSchemeDetailsPage)
   }
 }

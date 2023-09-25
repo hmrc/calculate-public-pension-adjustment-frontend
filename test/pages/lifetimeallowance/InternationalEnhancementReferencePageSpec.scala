@@ -83,7 +83,7 @@ class InternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = InternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user has selected Both on EnhancementTypePage and submits a reference" in {

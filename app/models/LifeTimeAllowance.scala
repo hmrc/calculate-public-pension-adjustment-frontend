@@ -38,7 +38,7 @@ case class LifeTimeAllowance(
   previousLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[SchemeNameAndTaxRef],
   newLifetimeAllowanceChargeAmount: Int,
   newLifetimeAllowanceChargeWillBePaidBy: Option[WhoPayingExtraLtaCharge],
-  newLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[LtaPensionSchemeDetails]
+  newLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[String]
 )
 
 object LifeTimeAllowance {

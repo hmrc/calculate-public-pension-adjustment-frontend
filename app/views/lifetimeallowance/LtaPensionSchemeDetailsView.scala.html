@@ -41,18 +41,10 @@
 
         @govukInput(
             InputViewModel(
-                field = form("name"),
-                label = LabelViewModel(messages("ltaPensionSchemeDetails.name")).asPageHeading(LabelSize.Medium)
+                field = form("value"),
+                label = LabelViewModel(messages("ltaPensionSchemeDetails.taxRef")).withCssClass("govuk-label--m")
             )
-            .withWidth(Fixed10).withHint(HintViewModel(messages("ltaPensionSchemeDetails.hint1")))
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("taxRef"),
-                label = LabelViewModel(messages("ltaPensionSchemeDetails.taxRef")).asPageHeading(LabelSize.Medium)
-            )
-            .withWidth(Fixed10).withHint(HintViewModel(messages("ltaPensionSchemeDetails.hint2")))
+            .withWidth(Fixed10).withHint(HintViewModel(messages("ltaPensionSchemeDetails.hint")))
         )
 
         @govukButton(

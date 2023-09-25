@@ -36,20 +36,12 @@ object ChangeInTaxCharge extends Enumerable.Implicits {
     None
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = {
-    val normalOptions = values.zipWithIndex.map { case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"changeInTaxCharge.${value.toString}")),
-        value = Some(value.toString),
-        id = Some(s"value_$index")
-      )
-    }
-    val orOption      = RadioItem(
-      id = Some(messages("divider")),
-      disabled = true,
-      divider = Some(messages("divider"))
+  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
+    RadioItem(
+      content = Text(messages(s"changeInTaxCharge.${value.toString}")),
+      value = Some(value.toString),
+      id = Some(s"value_$index")
     )
-    normalOptions.slice(0, 3) ++ Seq(orOption) ++ normalOptions.slice(3, normalOptions.length)
   }
 
   implicit val enumerable: Enumerable[ChangeInTaxCharge] =

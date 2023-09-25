@@ -43,7 +43,7 @@ class NewInternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewInternationalEnhancementReferencePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lta-charge-2015-2023")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/charge-2015-2023")
     }
 
     "when user has selected Both on EnhancementTypePage and submits a reference" in {
@@ -83,7 +83,7 @@ class NewInternationalEnhancementReferencePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewInternationalEnhancementReferencePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user has selected Both on EnhancementTypePage and submits a reference" in {

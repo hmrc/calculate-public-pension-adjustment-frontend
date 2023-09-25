@@ -42,7 +42,7 @@ class ReferenceNewProtectionTypeEnhancementPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ReferenceNewProtectionTypeEnhancementPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lta-charge-2015-2023")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/charge-2015-2023")
     }
 
     "when user has selected Both on ProtectionEnhancedChanged and submits a reference" in {
@@ -82,7 +82,7 @@ class ReferenceNewProtectionTypeEnhancementPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ReferenceNewProtectionTypeEnhancementPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user has selected Both on ProtectionEnhancedChanged and submits a reference" in {

@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package models
+package pages.lifetimeallowance
 
-import play.api.libs.json._
+import models.UserAnswers
+import pages.Page
+import play.api.mvc.Call
 
-case class LtaPensionSchemeDetails(name: String, taxRef: String)
+case object WhatYouWillNeedLtaPage extends Page {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    controllers.lifetimeallowance.routes.WhatYouWillNeedLtaController.onPageLoad
 
-object LtaPensionSchemeDetails {
-  implicit val format = Json.format[LtaPensionSchemeDetails]
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
 }

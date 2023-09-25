@@ -30,7 +30,7 @@ object LtaPensionSchemeDetailsSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(LtaPensionSchemeDetailsPage).map { answer =>
-      val value = HtmlFormat.escape(answer.name).toString + " / " + HtmlFormat.escape(answer.taxRef).toString
+      val value = HtmlFormat.escape(answer).toString
 
       SummaryListRowViewModel(
         key = "ltaPensionSchemeDetails.checkYourAnswersLabel",

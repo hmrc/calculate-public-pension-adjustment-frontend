@@ -61,7 +61,7 @@ class UserSchemeDetailsPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = UserSchemeDetailsPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-lta-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user hasn't entered Scheme details in Check mode " in {
