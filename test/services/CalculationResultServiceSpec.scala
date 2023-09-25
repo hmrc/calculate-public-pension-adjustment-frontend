@@ -1042,10 +1042,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some("2134567801"),
               true,
               Some(ExcessLifetimeAllowancePaid.Annualpayment),
-              Some(0),
               Some(WhoPaidLTACharge.PensionScheme),
               Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
-              0,
               Some(WhoPayingExtraLtaCharge.You),
               None
             )
@@ -1138,10 +1136,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             Some("2134567801"),
             true,
             Some(ExcessLifetimeAllowancePaid.Annualpayment),
-            Some(0),
             Some(WhoPaidLTACharge.PensionScheme),
             Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
-            0,
             Some(WhoPayingExtraLtaCharge.You),
             None
           )
