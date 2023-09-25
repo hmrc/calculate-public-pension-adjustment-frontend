@@ -53,7 +53,7 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
         case false =>
           userAnswers
             .remove(ExcessLifetimeAllowancePaidPage)
-            .flatMap(_.remove(NewLumpSumValuePage))
+            .flatMap(_.remove(LumpSumValuePage))
             .flatMap(_.remove(AnnualPaymentValuePage))
             .flatMap(_.remove(UserSchemeDetailsPage))
             .flatMap(_.remove(WhoPaidLTAChargePage))

@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -35,7 +35,7 @@ case object AnnualPaymentValuePage extends QuestionPage[BigInt] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AnnualPaymentValuePage) match {
-      case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(_) => controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(CheckMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
