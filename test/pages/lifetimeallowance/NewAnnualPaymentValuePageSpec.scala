@@ -32,7 +32,7 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
 
   "normal mode navigation" - {
 
-    "when user has entered for Annual Payment Value page" in {
+    "when user has entered for Annual Payment Value page and there is no old Annual Payment value" in {
 
       val userAnswers = emptyUserAnswers.set(NewAnnualPaymentValuePage, BigInt("100")).get
 
@@ -53,13 +53,13 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
 
   "check mode navigation" - {
 
-    "when user has entered for Annual payment value page in Check mode " in {
+    "when user has entered for Annual payment value page in Check mode and there is no old Annual Payment value" in {
 
       val userAnswers = emptyUserAnswers.set(NewAnnualPaymentValuePage, BigInt("200")).get
 
       val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-extra-charge")
     }
 
     "when user hasn't entered Annual payment value page in Check mode " in {

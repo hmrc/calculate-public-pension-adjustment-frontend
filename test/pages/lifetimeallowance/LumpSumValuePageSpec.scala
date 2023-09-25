@@ -80,7 +80,7 @@ class LumpSumValuePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = LumpSumValuePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-charge")
     }
 
     "when user has selected Both for how excess was paid in check mode " in {

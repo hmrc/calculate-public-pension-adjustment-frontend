@@ -209,7 +209,7 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.lifetimeallowance.routes.ValueNewLtaChargeController
+        ).value mustEqual controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController
           .onPageLoad(NormalMode)
           .url
       }

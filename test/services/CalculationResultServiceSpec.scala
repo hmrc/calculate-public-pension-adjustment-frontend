@@ -22,7 +22,7 @@ import models.CalculationResults.{CalculationResponse, CalculationResultsViewMod
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
-import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, Period, ProtectionEnhancedChanged, ProtectionType, SchemeNameAndTaxRef, TaxYear2013To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, Period, ProtectionType, SchemeNameAndTaxRef, TaxYear2013To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
@@ -1042,10 +1042,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some("2134567801"),
               true,
               Some(ExcessLifetimeAllowancePaid.Annualpayment),
-              Some(20000),
+              Some(0),
               Some(WhoPaidLTACharge.PensionScheme),
               Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
-              30000,
+              0,
               Some(WhoPayingExtraLtaCharge.You),
               None
             )
@@ -1138,10 +1138,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             Some("2134567801"),
             true,
             Some(ExcessLifetimeAllowancePaid.Annualpayment),
-            Some(20000),
+            Some(0),
             Some(WhoPaidLTACharge.PensionScheme),
             Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
-            30000,
+            0,
             Some(WhoPayingExtraLtaCharge.You),
             None
           )

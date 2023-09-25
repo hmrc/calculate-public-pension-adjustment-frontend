@@ -288,14 +288,14 @@ class CalculationResultService @Inject() (
           userAnswers.get(ExcessLifetimeAllowancePaidPage)
 
         val previousLifetimeAllowanceChargeAmount: Option[Int] =
-          userAnswers.get(LifetimeAllowanceChargeAmountPage).map(_.toInt)
+          Some(0)
 
         val previousLifetimeAllowanceChargePaidBy: Option[WhoPaidLTACharge] = userAnswers.get(WhoPaidLTAChargePage)
 
         val previousLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[SchemeNameAndTaxRef] =
           userAnswers.get(SchemeNameAndTaxRefPage)
 
-        val newLifetimeAllowanceChargeAmount: Int = userAnswers.get(ValueNewLtaChargePage).getOrElse(BigInt(0)).toInt
+        val newLifetimeAllowanceChargeAmount: Int = 0
 
         val newLifetimeAllowanceChargeWillBePaidBy: Option[WhoPayingExtraLtaCharge] =
           userAnswers.get(WhoPayingExtraLtaChargePage)
