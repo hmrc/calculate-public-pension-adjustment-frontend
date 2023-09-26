@@ -61,7 +61,13 @@ case object LtaProtectionOrEnhancementsPage extends QuestionPage[LtaProtectionOr
             .remove(ProtectionTypePage)
             .flatMap(_.remove(ProtectionReferencePage))
         case Both         => super.cleanup(value, userAnswers)
-        case No           => super.cleanup(value, userAnswers)
+        case No           =>
+          userAnswers
+            .remove(EnhancementTypePage)
+            .flatMap(_.remove(InternationalEnhancementReferencePage))
+            .flatMap(_.remove(PensionCreditReferencePage))
+            .flatMap(_.remove(ProtectionTypePage))
+            .flatMap(_.remove(ProtectionReferencePage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

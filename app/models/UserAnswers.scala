@@ -40,7 +40,7 @@ final case class UserAnswers(
   def containsAnswerFor(page: Page) =
     data.keys.contains(page.toString)
 
-  def set[A](page: Settable[A], value: A)(implicit writes: Writes[A]): Try[UserAnswers] = {
+  def set[A](page: Settable[A], value: A, cleanUp: Boolean = true)(implicit writes: Writes[A]): Try[UserAnswers] = {
 
     val updatedData = data.setObject(page.path, Json.toJson(value)) match {
       case JsSuccess(jsValue, _) =>
@@ -51,7 +51,23 @@ final case class UserAnswers(
 
     updatedData.flatMap { d =>
       val updatedAnswers = copy(data = d)
-      page.cleanup(Some(value), updatedAnswers)
+      if (cleanUp) { page.cleanup(Some(value), updatedAnswers) }
+      else {
+        Try(updatedAnswers)
+      }
+    }
+  }
+
+  def removePath(jsPath: JsPath): Try[UserAnswers] = {
+    val updatedData: Success[JsObject] = data.removeObject(jsPath) match {
+      case JsSuccess(jsValue, _) =>
+        Success(jsValue)
+      case JsError(_)            =>
+        Success(data)
+    }
+
+    updatedData.flatMap { (d: JsObject) =>
+      Try(copy(data = d))
     }
   }
 

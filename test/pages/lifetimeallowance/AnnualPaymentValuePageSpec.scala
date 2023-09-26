@@ -59,7 +59,7 @@ class AnnualPaymentValuePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = AnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-charge")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-excess-paid")
     }
 
     "when user hasn't entered Annual payment value page in Check mode " in {
@@ -69,6 +69,22 @@ class AnnualPaymentValuePageSpec extends PageBehaviours {
       val nextPageUrl: String = AnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "must cleanup correctly when user answers changes" in {
+
+      val ua = testCalulationServiceData
+
+      val cleanedUserAnswers = AnnualPaymentValuePage.cleanup(Some(BigInt("100")), ua).success.value
+
+      cleanedUserAnswers.get(NewExcessLifetimeAllowancePaidPage) mustBe None
+      cleanedUserAnswers.get(NewLumpSumValuePage) mustBe None
+      cleanedUserAnswers.get(NewAnnualPaymentValuePage) mustBe None
+      cleanedUserAnswers.get(WhoPayingExtraLtaChargePage) mustBe None
+      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
     }
   }
 }

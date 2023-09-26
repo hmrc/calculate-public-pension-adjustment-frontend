@@ -113,4 +113,59 @@ class EnhancementTypeSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
   }
+
+  "cleanup" - {
+
+    "must cleanup correctly when user answers both" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(EnhancementTypePage, EnhancementType.Both)
+        .get
+        .set(InternationalEnhancementReferencePage, "123")
+        .get
+        .set(PensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers = EnhancementTypePage.cleanup(Some(EnhancementType.Both), userAnswers).success.value
+
+      cleanedUserAnswers.get(InternationalEnhancementReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(PensionCreditReferencePage) mustBe Some("123")
+
+    }
+
+    "must cleanup correctly when user answers international enhancement only" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(EnhancementTypePage, EnhancementType.Both)
+        .get
+        .set(InternationalEnhancementReferencePage, "123")
+        .get
+        .set(PensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        EnhancementTypePage.cleanup(Some(EnhancementType.InternationalEnhancement), userAnswers).success.value
+
+      cleanedUserAnswers.get(InternationalEnhancementReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(PensionCreditReferencePage) mustBe None
+
+    }
+
+    "must cleanup correctly when user answers pension credit" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(EnhancementTypePage, EnhancementType.Both)
+        .get
+        .set(InternationalEnhancementReferencePage, "123")
+        .get
+        .set(PensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        EnhancementTypePage.cleanup(Some(EnhancementType.PensionCredit), userAnswers).success.value
+
+      cleanedUserAnswers.get(InternationalEnhancementReferencePage) mustBe None
+      cleanedUserAnswers.get(PensionCreditReferencePage) mustBe Some("123")
+    }
+  }
 }

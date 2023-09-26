@@ -45,16 +45,19 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+  override def cleanup(value: Option[Boolean], answers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true  => super.cleanup(value, userAnswers)
         case false =>
-          userAnswers
-            .remove(ChangeInTaxChargePage)
-            .flatMap(_.remove(LtaProtectionOrEnhancementsPage))
-            .flatMap(_.remove(ProtectionReferencePage))
-            .flatMap(_.remove(ProtectionTypePage))
+          val cleanedUserAnswers = Try(cleanUp(answers, models.LTAPageGroups.changeInLifetimeAllowancePageGroup()))
+          cleanedUserAnswers.get.set(ChangeInLifetimeAllowancePage, value = false, cleanUp = false)
+        case true  => super.cleanup(value, answers)
       }
-      .getOrElse(super.cleanup(value, userAnswers))
+      .getOrElse(super.cleanup(value, answers))
+
+  def cleanUp(answers: UserAnswers, pages: Seq[String]): UserAnswers =
+    pages.headOption match {
+      case Some(page) => cleanUp(answers.remove(models.UserAnswerLTAPageGroup(page)).get, pages.tail)
+      case None       => answers
+    }
 }

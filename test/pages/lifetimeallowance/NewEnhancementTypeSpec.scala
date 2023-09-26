@@ -113,4 +113,59 @@ class NewEnhancementTypeSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
   }
+
+  "cleanup" - {
+
+    "must cleanup correctly when user answers both" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(NewEnhancementTypePage, NewEnhancementType.Both)
+        .get
+        .set(NewInternationalEnhancementReferencePage, "123")
+        .get
+        .set(NewPensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers = NewEnhancementTypePage.cleanup(Some(NewEnhancementType.Both), userAnswers).success.value
+
+      cleanedUserAnswers.get(NewInternationalEnhancementReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(NewPensionCreditReferencePage) mustBe Some("123")
+
+    }
+
+    "must cleanup correctly when user answers international enhancement only" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(NewEnhancementTypePage, NewEnhancementType.Both)
+        .get
+        .set(NewInternationalEnhancementReferencePage, "123")
+        .get
+        .set(NewPensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        NewEnhancementTypePage.cleanup(Some(NewEnhancementType.InternationalEnhancement), userAnswers).success.value
+
+      cleanedUserAnswers.get(NewInternationalEnhancementReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(NewPensionCreditReferencePage) mustBe None
+
+    }
+
+    "must cleanup correctly when user answers pension credit" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(NewEnhancementTypePage, NewEnhancementType.Both)
+        .get
+        .set(NewInternationalEnhancementReferencePage, "123")
+        .get
+        .set(NewPensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        NewEnhancementTypePage.cleanup(Some(NewEnhancementType.PensionCredit), userAnswers).success.value
+
+      cleanedUserAnswers.get(NewInternationalEnhancementReferencePage) mustBe None
+      cleanedUserAnswers.get(NewPensionCreditReferencePage) mustBe Some("123")
+    }
+  }
 }

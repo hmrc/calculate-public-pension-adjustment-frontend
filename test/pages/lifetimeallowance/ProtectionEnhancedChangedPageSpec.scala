@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode, ProtectionEnhancedChanged}
+import models.{CheckMode, NewEnhancementType, NormalMode, ProtectionEnhancedChanged, WhatNewProtectionTypeEnhancement}
 import pages.behaviours.PageBehaviours
 
 class ProtectionEnhancedChangedSpec extends PageBehaviours {
@@ -131,6 +131,119 @@ class ProtectionEnhancedChangedSpec extends PageBehaviours {
       val nextPageUrl: String = ProtectionEnhancedChangedPage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "must cleanup correctly when user answers both" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(ProtectionEnhancedChangedPage, ProtectionEnhancedChanged.Both)
+        .get
+        .set(WhatNewProtectionTypeEnhancementPage, WhatNewProtectionTypeEnhancement.EnhancedProtection)
+        .get
+        .set(ReferenceNewProtectionTypeEnhancementPage, "123")
+        .get
+        .set(NewEnhancementTypePage, NewEnhancementType.Both)
+        .get
+        .set(NewInternationalEnhancementReferencePage, "123")
+        .get
+        .set(NewPensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        ProtectionEnhancedChangedPage.cleanup(Some(ProtectionEnhancedChanged.Both), userAnswers).success.value
+
+      cleanedUserAnswers.get(WhatNewProtectionTypeEnhancementPage) mustBe Some(
+        WhatNewProtectionTypeEnhancement.EnhancedProtection
+      )
+      cleanedUserAnswers.get(ReferenceNewProtectionTypeEnhancementPage) mustBe Some("123")
+      cleanedUserAnswers.get(NewEnhancementTypePage) mustBe Some(NewEnhancementType.Both)
+      cleanedUserAnswers.get(NewInternationalEnhancementReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(NewPensionCreditReferencePage) mustBe Some("123")
+
+    }
+
+    "must cleanup correctly when user answers protection" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(ProtectionEnhancedChangedPage, ProtectionEnhancedChanged.Both)
+        .get
+        .set(WhatNewProtectionTypeEnhancementPage, WhatNewProtectionTypeEnhancement.EnhancedProtection)
+        .get
+        .set(ReferenceNewProtectionTypeEnhancementPage, "123")
+        .get
+        .set(NewEnhancementTypePage, NewEnhancementType.Both)
+        .get
+        .set(NewInternationalEnhancementReferencePage, "123")
+        .get
+        .set(NewPensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        ProtectionEnhancedChangedPage.cleanup(Some(ProtectionEnhancedChanged.Protection), userAnswers).success.value
+
+      cleanedUserAnswers.get(WhatNewProtectionTypeEnhancementPage) mustBe Some(
+        WhatNewProtectionTypeEnhancement.EnhancedProtection
+      )
+      cleanedUserAnswers.get(ReferenceNewProtectionTypeEnhancementPage) mustBe Some("123")
+      cleanedUserAnswers.get(NewEnhancementTypePage) mustBe None
+      cleanedUserAnswers.get(NewInternationalEnhancementReferencePage) mustBe None
+      cleanedUserAnswers.get(NewPensionCreditReferencePage) mustBe None
+
+    }
+
+    "must cleanup correctly when user answers enhancement" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(ProtectionEnhancedChangedPage, ProtectionEnhancedChanged.Both)
+        .get
+        .set(WhatNewProtectionTypeEnhancementPage, WhatNewProtectionTypeEnhancement.EnhancedProtection)
+        .get
+        .set(ReferenceNewProtectionTypeEnhancementPage, "123")
+        .get
+        .set(NewEnhancementTypePage, NewEnhancementType.Both)
+        .get
+        .set(NewInternationalEnhancementReferencePage, "123")
+        .get
+        .set(NewPensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        ProtectionEnhancedChangedPage.cleanup(Some(ProtectionEnhancedChanged.Enhancement), userAnswers).success.value
+
+      cleanedUserAnswers.get(WhatNewProtectionTypeEnhancementPage) mustBe None
+      cleanedUserAnswers.get(ReferenceNewProtectionTypeEnhancementPage) mustBe None
+      cleanedUserAnswers.get(NewEnhancementTypePage) mustBe Some(NewEnhancementType.Both)
+      cleanedUserAnswers.get(NewInternationalEnhancementReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(NewPensionCreditReferencePage) mustBe Some("123")
+    }
+
+    "must cleanup correctly when user answers none" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(ProtectionEnhancedChangedPage, ProtectionEnhancedChanged.Both)
+        .get
+        .set(WhatNewProtectionTypeEnhancementPage, WhatNewProtectionTypeEnhancement.EnhancedProtection)
+        .get
+        .set(ReferenceNewProtectionTypeEnhancementPage, "123")
+        .get
+        .set(NewEnhancementTypePage, NewEnhancementType.Both)
+        .get
+        .set(NewInternationalEnhancementReferencePage, "123")
+        .get
+        .set(NewPensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        ProtectionEnhancedChangedPage.cleanup(Some(ProtectionEnhancedChanged.No), userAnswers).success.value
+
+      cleanedUserAnswers.get(WhatNewProtectionTypeEnhancementPage) mustBe None
+      cleanedUserAnswers.get(ReferenceNewProtectionTypeEnhancementPage) mustBe None
+      cleanedUserAnswers.get(NewEnhancementTypePage) mustBe None
+      cleanedUserAnswers.get(NewInternationalEnhancementReferencePage) mustBe None
+      cleanedUserAnswers.get(NewPensionCreditReferencePage) mustBe None
     }
   }
 }
