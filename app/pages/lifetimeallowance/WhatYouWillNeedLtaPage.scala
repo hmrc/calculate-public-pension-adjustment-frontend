@@ -22,8 +22,8 @@ import play.api.mvc.Call
 
 case object WhatYouWillNeedLtaPage extends Page {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.lifetimeallowance.routes.WhatYouWillNeedLtaController.onPageLoad
+    controllers.lifetimeallowance.routes.WhatYouWillNeedLtaController.onPageLoad()
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
 }

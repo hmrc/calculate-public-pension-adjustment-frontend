@@ -41,7 +41,7 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(NewExcessLifetimeAllowancePaidPage) match {
-      case Some(Lumpsum) => navigateValueIncrease(answers, NormalMode)
+      case Some(Lumpsum) => navigateValueIncrease(answers, CheckMode)
       case Some(Both)    => controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(CheckMode)
       case _             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
@@ -59,23 +59,13 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
         oldLumpSumValue,
         newAnnualPaymentValue,
         oldAnnualPaymentValue
-      ) && WhoPayingExtraLtaCharge == None
-    ) {
-      ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
-    } else if (
-      (isValueIncreased(newLumpSumValue, oldLumpSumValue) || isValueIncreased(
-        newAnnualPaymentValue,
-        oldAnnualPaymentValue
-      )) && WhoPayingExtraLtaCharge == None
+      ) && WhoPayingExtraLtaCharge.isEmpty
     ) {
       ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
     } else {
       ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
     }
   }
-
-  private def isValueIncreased(newValue: Option[BigInt], oldValue: Option[BigInt]): Boolean =
-    newValue.getOrElse(BigInt(0)) > oldValue.getOrElse(BigInt(0))
 
   private def combinedIsValueIncreased(
     newLumpSumValue: Option[BigInt],
@@ -92,10 +82,6 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
     val oldAnnualPaymentValue = userAnswers.get(AnnualPaymentValuePage)
 
     if (combinedIsValueIncreased(value, oldLumpSumValue, newAnnualPaymentValue, oldAnnualPaymentValue)) {
-      super.cleanup(value, userAnswers)
-    } else if (
-      isValueIncreased(value, oldLumpSumValue) || isValueIncreased(newAnnualPaymentValue, oldAnnualPaymentValue)
-    ) {
       super.cleanup(value, userAnswers)
     } else {
       userAnswers.remove(WhoPayingExtraLtaChargePage).flatMap(_.remove(LtaPensionSchemeDetailsPage))

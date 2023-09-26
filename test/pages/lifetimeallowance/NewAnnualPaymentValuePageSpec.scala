@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode}
+import models.{CheckMode, NormalMode, WhoPayingExtraLtaCharge}
 import pages.behaviours.PageBehaviours
 
 class NewAnnualPaymentValuePageSpec extends PageBehaviours {
@@ -32,13 +32,96 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
 
   "normal mode navigation" - {
 
-    "when user has entered for Annual Payment Value page and there is no old Annual Payment value" in {
+    "when user has entered a new Annual Payment Value and there is an decrease" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(NewAnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("9000"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user has entered a new Annual Payment Value page and there is an increase" in {
+
+      val userAnswers =
+        emptyUserAnswers.set(NewAnnualPaymentValuePage, BigInt("100")).get.set(AnnualPaymentValuePage, BigInt("1")).get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-extra-charge")
+    }
+
+    "when user has entered a new Annual Payment Value page and there is no old Annual Payment value" in {
 
       val userAnswers = emptyUserAnswers.set(NewAnnualPaymentValuePage, BigInt("100")).get
 
       val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-extra-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and an increase" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("300"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-extra-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and an increase" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(NewLumpSumValuePage, BigInt("300"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("300"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-extra-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and an decrease" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("50"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and an decrease" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(NewLumpSumValuePage, BigInt("10"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("20"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user hasn't entered Annual payment value page" in {
@@ -53,6 +136,19 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
 
   "check mode navigation" - {
 
+    "when user has entered a new Annual Payment Value and there is an decrease" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(NewAnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("9000"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
     "when user has entered for Annual payment value page in Check mode and there is no old Annual Payment value" in {
 
       val userAnswers = emptyUserAnswers.set(NewAnnualPaymentValuePage, BigInt("200")).get
@@ -62,6 +158,83 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-extra-charge")
     }
 
+    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and an increase" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("300"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-extra-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and an increase" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(NewLumpSumValuePage, BigInt("300"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("300"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-extra-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and an decrease" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("50"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and an decrease" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(NewLumpSumValuePage, BigInt("10"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("20"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user has selected Lump Sum for how excess was paid and there is an increase but WhoPayingExtraLtaCharge already exists" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LumpSumValuePage, BigInt("1"))
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.You)
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
     "when user hasn't entered Annual payment value page in Check mode " in {
 
       val userAnswers = emptyUserAnswers
@@ -69,6 +242,87 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "must cleanup correctly when there is an increase" in {
+      val ua = emptyUserAnswers
+        .set(
+          AnnualPaymentValuePage,
+          BigInt(1)
+        )
+        .success
+        .value
+        .set(
+          NewExcessLifetimeAllowancePaidPage,
+          models.NewExcessLifetimeAllowancePaid.Both
+        )
+        .success
+        .value
+        .set(
+          NewLumpSumValuePage,
+          BigInt(20)
+        )
+        .success
+        .value
+        .set(
+          WhoPayingExtraLtaChargePage,
+          models.WhoPayingExtraLtaCharge.PensionScheme
+        )
+        .success
+        .value
+        .set(
+          LtaPensionSchemeDetailsPage,
+          "details"
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers = NewAnnualPaymentValuePage.cleanup(Some(BigInt(100)), ua).success.value
+
+      cleanedUserAnswers.get(WhoPayingExtraLtaChargePage) mustBe Some(models.WhoPayingExtraLtaCharge.PensionScheme)
+      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe Some("details")
+    }
+
+    "must cleanup correctly when there is an decrease" in {
+      val ua = emptyUserAnswers
+        .set(
+          LumpSumValuePage,
+          BigInt(100)
+        )
+        .success
+        .value
+        .set(
+          NewExcessLifetimeAllowancePaidPage,
+          models.NewExcessLifetimeAllowancePaid.Lumpsum
+        )
+        .success
+        .value
+        .set(
+          NewLumpSumValuePage,
+          BigInt(20)
+        )
+        .success
+        .value
+        .set(
+          WhoPayingExtraLtaChargePage,
+          models.WhoPayingExtraLtaCharge.PensionScheme
+        )
+        .success
+        .value
+        .set(
+          LtaPensionSchemeDetailsPage,
+          "details"
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers = NewAnnualPaymentValuePage.cleanup(Some(BigInt(1)), ua).success.value
+
+      cleanedUserAnswers.get(WhoPayingExtraLtaChargePage) mustBe None
+      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
     }
   }
 }
