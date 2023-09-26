@@ -23,7 +23,7 @@ import play.api.mvc.Call
 
 case object MultipleBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "lta" \ toString
 
   override def toString: String = "multipleBenefitCrystallisationEvent"
 

@@ -26,7 +26,7 @@ import scala.util.Try
 
 case object NewAnnualPaymentValuePage extends QuestionPage[BigInt] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "lta" \ toString
 
   override def toString: String = "newAnnualPaymentValue"
 

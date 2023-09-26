@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package pages.lifetimeallowance
+package models
 
-import models.LtaPensionSchemeDetails
-import pages.behaviours.PageBehaviours
+import play.api.libs.json._
 
-class LtaPensionSchemeDetailsPageSpec extends PageBehaviours {
+case class LtaPensionSchemeDetails(name: String, taxRef: String)
 
-  "LtaPensionSchemeDetailsPage" - {
+object LtaPensionSchemeDetails {
+  implicit val format = Json.format[LtaPensionSchemeDetails]
 
-    beRetrievable[LtaPensionSchemeDetails](LtaPensionSchemeDetailsPage)
-
-    beSettable[LtaPensionSchemeDetails](LtaPensionSchemeDetailsPage)
-
-    beRemovable[LtaPensionSchemeDetails](LtaPensionSchemeDetailsPage)
-  }
 }
