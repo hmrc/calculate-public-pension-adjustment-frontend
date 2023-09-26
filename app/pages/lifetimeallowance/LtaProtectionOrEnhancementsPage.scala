@@ -44,7 +44,7 @@ case object LtaProtectionOrEnhancementsPage extends QuestionPage[LtaProtectionOr
     answers.get(LtaProtectionOrEnhancementsPage) match {
       case Some(Enhancements)            => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
       case Some(Protection) | Some(Both) => ltaRoutes.ProtectionTypeController.onPageLoad(CheckMode)
-      case Some(No)                      => ltaRoutes.CheckYourLTAAnswersController.onPageLoad
+      case Some(No)                      => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
       case None                          => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 

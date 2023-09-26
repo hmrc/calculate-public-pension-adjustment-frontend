@@ -35,7 +35,7 @@ case object MultipleBenefitCrystallisationEventPage extends QuestionPage[Boolean
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(MultipleBenefitCrystallisationEventPage) match {
-      case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad
+      case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
