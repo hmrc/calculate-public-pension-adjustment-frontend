@@ -45,8 +45,10 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val cppaBaseUrl: String =
     configuration.get[Service]("microservice.services.calculate-public-pension-adjustment").baseUrl
 
-  val languageTranslationEnabled: Boolean =
-    configuration.get[Boolean]("features.welsh-translation")
+//  val languageTranslationEnabled: Boolean =
+//    configuration.get[Boolean]("features.welsh-translation")
+
+  val languageTranslationEnabled: Boolean = false
 
   def languageMap: Map[String, Lang] = Map(
     "en" -> Lang("en"),

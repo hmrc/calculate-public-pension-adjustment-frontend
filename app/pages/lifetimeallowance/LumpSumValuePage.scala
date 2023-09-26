@@ -24,7 +24,7 @@ import play.api.mvc.Call
 
 case object LumpSumValuePage extends QuestionPage[BigInt] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "lta" \ toString
 
   override def toString: String = "lumpSumValue"
 

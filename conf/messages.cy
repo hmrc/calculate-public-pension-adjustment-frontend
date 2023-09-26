@@ -643,6 +643,9 @@ whoPayingExtraLtaCharge.change.hidden = cy: who is paying the extra lifetime all
 
 ltaPensionSchemeDetails.title = cy: What is the tax reference of the scheme that is paying the extra charge?
 ltaPensionSchemeDetails.heading = cy: What is the tax reference of the scheme that is paying the extra charge?
+ltaPensionSchemeDetails.name = cy: Name of the pension scheme
+ltaPensionSchemeDetails.error.name.required = cy: Enter the name of the pension scheme that paid the lifetime allowance charge
+ltaPensionSchemeDetails.error.name.length = cy: The name of your pension scheme must be 100 characters or less
 ltaPensionSchemeDetails.taxRef = cy: Pension Scheme Tax Reference
 ltaPensionSchemeDetails.hint = cy: For example, 00348916RT.
 ltaPensionSchemeDetails.checkYourAnswersLabel = cy: What is the tax reference of the scheme that is paying the extra charge?

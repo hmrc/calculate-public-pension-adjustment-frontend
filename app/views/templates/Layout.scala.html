@@ -69,6 +69,10 @@
         ))
     }
 
+    @if(!appConfig.languageTranslationEnabled) {
+        <div class="govuk-!-margin-top-8"></div>
+    }
+
     @if(showBackLink) {
         @govukBackLink(BackLinkViewModel(href = "#").withCssClass("js-visible"))
     }

@@ -36,13 +36,13 @@ class LtaPensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           LtaPensionSchemeDetailsPage,
-          "Some Tax Ref"
+          models.LtaPensionSchemeDetails("Some scheme", "Some Tax Ref")
         )
         .get
       LtaPensionSchemeDetailsSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "ltaPensionSchemeDetails.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("Some Tax Ref")),
+          value = ValueViewModel(HtmlContent("Some scheme / Some Tax Ref")),
           actions = Seq(
             ActionItemViewModel("site.change", routes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText("ltaPensionSchemeDetails.change.hidden")

@@ -23,7 +23,7 @@ import play.api.mvc.Call
 
 case object YearChargePaidPage extends QuestionPage[YearChargePaid] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "lta" \ toString
 
   override def toString: String = "yearChargePaid"
 
