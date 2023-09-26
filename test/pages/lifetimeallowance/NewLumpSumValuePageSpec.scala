@@ -343,7 +343,7 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
         .value
         .set(
           LtaPensionSchemeDetailsPage,
-          "details"
+          models.LtaPensionSchemeDetails("details3", "ref3")
         )
         .success
         .value
@@ -351,7 +351,9 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
       val cleanedUserAnswers = NewLumpSumValuePage.cleanup(Some(BigInt(100)), ua).success.value
 
       cleanedUserAnswers.get(WhoPayingExtraLtaChargePage) mustBe Some(models.WhoPayingExtraLtaCharge.PensionScheme)
-      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe Some("details")
+      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe Some(
+        models.LtaPensionSchemeDetails("details3", "ref3")
+      )
     }
 
     "must cleanup correctly when there is an decrease" in {
@@ -376,7 +378,7 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
         .value
         .set(
           LtaPensionSchemeDetailsPage,
-          "details"
+          models.LtaPensionSchemeDetails("details3", "ref3")
         )
         .success
         .value
