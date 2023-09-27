@@ -18,6 +18,7 @@ package config
 
 import com.google.inject.AbstractModule
 import controllers.actions._
+import uk.gov.hmrc.crypto.{Decrypter, Encrypter}
 
 import java.time.{Clock, ZoneOffset}
 
@@ -27,10 +28,9 @@ class Module extends AbstractModule {
 
     bind(classOf[DataRetrievalAction]).to(classOf[DataRetrievalActionImpl]).asEagerSingleton()
     bind(classOf[DataRequiredAction]).to(classOf[DataRequiredActionImpl]).asEagerSingleton()
-
-    // For session based storage instead of cred based, change to SessionIdentifierAction
     bind(classOf[IdentifierAction]).to(classOf[SessionIdentifierAction]).asEagerSingleton()
-
     bind(classOf[Clock]).toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
+    bind(classOf[Encrypter]).toProvider(classOf[CryptoProvider])
+    bind(classOf[Decrypter]).toProvider(classOf[CryptoProvider])
   }
 }
