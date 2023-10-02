@@ -262,10 +262,9 @@ class CalculationResultService @Inject() (
         val lifetimeAllowanceProtectionOrEnhancements: LtaProtectionOrEnhancements =
           userAnswers.get(LtaProtectionOrEnhancementsPage).getOrElse(LtaProtectionOrEnhancements.Protection)
 
-        val protectionType: ProtectionType =
-          userAnswers.get(ProtectionTypePage).getOrElse(ProtectionType.EnhancedProtection)
+        val protectionType: Option[ProtectionType] = userAnswers.get(ProtectionTypePage)
 
-        val protectionReference: String = userAnswers.get(ProtectionReferencePage).getOrElse("")
+        val protectionReference: Option[String] = userAnswers.get(ProtectionReferencePage)
 
         val protectionTypeEnhancementChanged: ProtectionEnhancedChanged =
           userAnswers.get(ProtectionEnhancedChangedPage).getOrElse(ProtectionEnhancedChanged.Protection)
