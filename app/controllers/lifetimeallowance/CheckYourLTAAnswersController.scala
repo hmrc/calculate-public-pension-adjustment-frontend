@@ -61,6 +61,7 @@ class CheckYourLTAAnswersController @Inject() (
       AnnualPaymentValueSummary.row(request.userAnswers),
       WhoPaidLTAChargeSummary.row(request.userAnswers),
       SchemeNameAndTaxRefSummary.row(request.userAnswers),
+      UserSchemeDetailsSummary.row(request.userAnswers),
       QuarterChargePaidSummary.row(request.userAnswers),
       YearChargePaidSummary.row(request.userAnswers),
       NewExcessLifetimeAllowancePaidSummary.row(request.userAnswers),
