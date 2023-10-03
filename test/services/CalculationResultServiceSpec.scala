@@ -22,7 +22,7 @@ import models.CalculationResults.{CalculationResponse, CalculationResultsViewMod
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
-import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, Period, ProtectionType, SchemeNameAndTaxRef, TaxYear2013To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, Period, ProtectionEnhancedChanged, ProtectionType, SchemeNameAndTaxRef, TaxYear2013To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
@@ -1035,9 +1035,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               true,
               ChangeInTaxCharge.IncreasedCharge,
               LtaProtectionOrEnhancements.Protection,
-              ProtectionType.FixedProtection2014,
-              "R41AB678TR23355",
-              true,
+              Some(ProtectionType.FixedProtection2014),
+              Some("R41AB678TR23355"),
+              ProtectionEnhancedChanged.Protection,
               Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
               Some("2134567801"),
               true,
@@ -1045,7 +1045,24 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(WhoPaidLTACharge.PensionScheme),
               Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
               Some(WhoPayingExtraLtaCharge.You),
-              None
+              None,
+              NewLifeTimeAllowanceAdditions(
+                false,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None
+              )
             )
           )
         )
@@ -1129,9 +1146,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             true,
             ChangeInTaxCharge.IncreasedCharge,
             LtaProtectionOrEnhancements.Protection,
-            ProtectionType.FixedProtection2014,
-            "R41AB678TR23355",
-            true,
+            Some(ProtectionType.FixedProtection2014),
+            Some("R41AB678TR23355"),
+            ProtectionEnhancedChanged.Protection,
             Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
             Some("2134567801"),
             true,
@@ -1139,7 +1156,24 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             Some(WhoPaidLTACharge.PensionScheme),
             Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
             Some(WhoPayingExtraLtaCharge.You),
-            None
+            None,
+            NewLifeTimeAllowanceAdditions(
+              false,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None
+            )
           )
         )
       }

@@ -27,7 +27,6 @@ object LtaProtectionOrEnhancements extends Enumerable.Implicits {
   case object Protection extends WithName("protection") with LtaProtectionOrEnhancements
   case object Enhancements extends WithName("enhancements") with LtaProtectionOrEnhancements
   case object Both extends WithName("both") with LtaProtectionOrEnhancements
-
   case object No extends WithName("no") with LtaProtectionOrEnhancements
 
   val values: Seq[LtaProtectionOrEnhancements] = Seq(

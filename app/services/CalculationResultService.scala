@@ -21,7 +21,7 @@ import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -262,19 +262,12 @@ class CalculationResultService @Inject() (
         val lifetimeAllowanceProtectionOrEnhancements: LtaProtectionOrEnhancements =
           userAnswers.get(LtaProtectionOrEnhancementsPage).getOrElse(LtaProtectionOrEnhancements.Protection)
 
-        val protectionType: ProtectionType =
-          userAnswers.get(ProtectionTypePage).getOrElse(ProtectionType.EnhancedProtection)
+        val protectionType: Option[ProtectionType] = userAnswers.get(ProtectionTypePage)
 
-        val protectionReference: String = userAnswers.get(ProtectionReferencePage).getOrElse("")
+        val protectionReference: Option[String] = userAnswers.get(ProtectionReferencePage)
 
-        val protectionTypeOrEnhancementChanged: ProtectionEnhancedChanged =
+        val protectionTypeEnhancementChanged: ProtectionEnhancedChanged =
           userAnswers.get(ProtectionEnhancedChangedPage).getOrElse(ProtectionEnhancedChanged.Protection)
-
-        // TODO Should the data model pass the protectionTypeOrEnhancementChanged type through?
-        val protectionTypeOrEnhancementChangedFlag: Boolean = protectionTypeOrEnhancementChanged match {
-          case ProtectionEnhancedChanged.No => false
-          case _                            => true
-        }
 
         val newProtectionTypeOrEnhancement: Option[WhatNewProtectionTypeEnhancement] =
           userAnswers.get(WhatNewProtectionTypeEnhancementPage)
@@ -298,6 +291,58 @@ class CalculationResultService @Inject() (
         val newLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[LtaPensionSchemeDetails] =
           userAnswers.get(LtaPensionSchemeDetailsPage)
 
+        val multipleBenefitCrystallisationEventFlag: Boolean =
+          userAnswers.get(MultipleBenefitCrystallisationEventPage).getOrElse(false)
+
+        val enhancementType: Option[EnhancementType] = userAnswers.get(EnhancementTypePage)
+
+        val internationalEnhancementReference: Option[String] = userAnswers.get(InternationalEnhancementReferencePage)
+
+        val pensionCreditReference: Option[String] = userAnswers.get(PensionCreditReferencePage)
+
+        val newEnhancementType: Option[NewEnhancementType] = userAnswers.get(NewEnhancementTypePage)
+
+        val newInternationalEnhancementReference: Option[String] =
+          userAnswers.get(NewInternationalEnhancementReferencePage)
+
+        val newPensionCreditReference: Option[String] = userAnswers.get(NewPensionCreditReferencePage)
+
+        val lumpSumValue: Option[Int] = userAnswers.get(LumpSumValuePage).map(_.toInt)
+
+        val annualPaymentValue: Option[Int] = userAnswers.get(AnnualPaymentValuePage).map(_.toInt)
+
+        val userSchemeDetails: Option[UserSchemeDetails] = userAnswers.get(UserSchemeDetailsPage)
+
+        val quarterChargePaid: Option[QuarterChargePaid] = userAnswers.get(QuarterChargePaidPage)
+
+        val yearChargePaid: Option[YearChargePaid] = userAnswers.get(YearChargePaidPage)
+
+        val newExcessLifetimeAllowancePaid: Option[NewExcessLifetimeAllowancePaid] =
+          userAnswers.get(NewExcessLifetimeAllowancePaidPage)
+
+        val newLumpSumValue: Option[Int] = userAnswers.get(NewLumpSumValuePage).map(_.toInt)
+
+        val newAnnualPaymentValue = userAnswers.get(NewAnnualPaymentValuePage).map(_.toInt)
+
+        val newLifeTimeAllowanceAdditions: NewLifeTimeAllowanceAdditions =
+          NewLifeTimeAllowanceAdditions(
+            multipleBenefitCrystallisationEventFlag,
+            enhancementType,
+            internationalEnhancementReference,
+            pensionCreditReference,
+            newEnhancementType,
+            newInternationalEnhancementReference,
+            newPensionCreditReference,
+            lumpSumValue,
+            annualPaymentValue,
+            userSchemeDetails,
+            quarterChargePaid,
+            yearChargePaid,
+            newExcessLifetimeAllowancePaid,
+            newLumpSumValue,
+            newAnnualPaymentValue
+          )
+
         Some(
           LifeTimeAllowance(
             true,
@@ -307,7 +352,7 @@ class CalculationResultService @Inject() (
             lifetimeAllowanceProtectionOrEnhancements,
             protectionType,
             protectionReference,
-            protectionTypeOrEnhancementChangedFlag,
+            protectionTypeEnhancementChanged,
             newProtectionTypeOrEnhancement,
             newProtectionTypeOrEnhancementReference,
             previousLifetimeAllowanceChargeFlag,
@@ -315,7 +360,8 @@ class CalculationResultService @Inject() (
             previousLifetimeAllowanceChargePaidBy,
             previousLifetimeAllowanceChargeSchemeNameAndTaxRef,
             newLifetimeAllowanceChargeWillBePaidBy,
-            newLifetimeAllowanceChargeSchemeNameAndTaxRef
+            newLifetimeAllowanceChargeSchemeNameAndTaxRef,
+            newLifeTimeAllowanceAdditions
           )
         )
 
