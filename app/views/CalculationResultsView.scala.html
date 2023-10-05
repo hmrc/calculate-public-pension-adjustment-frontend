@@ -15,6 +15,7 @@
  *@
 
 @import models.CalculationResults.CalculationResultsViewModel
+@import views.html.helper.CSPNonce
 
 @this(
         layout: templates.Layout,
@@ -93,8 +94,11 @@
     }
     <br>
     <h2 class="govuk-heading-m">@messages("calculationResults.printYourResults.heading")</h2>
-    <p class="govuk-body">@printLink("calculationResults.printYourResults.heading") @messages("calculationResults.printYourResults.hint")</p>
-    <h2 class="govuk-heading-m">@messages("calculationResults.whatHappensNext.heading")</h2>
+    <p class="govuk-body"> <a class="govuk-link" id="print-result" href="#print" onclick="window.print();return false;">@messages("calculationResults.printYourResults.heading")</a>
+        @messages("calculationResults.printYourResults.hint")</p>
+    <script @{CSPNonce.attr}>document.getElementById("print-result").addEventListener("click", () => window.print());</script>
+
+<h2 class="govuk-heading-m">@messages("calculationResults.whatHappensNext.heading")</h2>
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint1")</p>
     <ul class="govuk-body">
         <li>@messages("calculationResults.whatHappensNext.hint1.list1")</li>
