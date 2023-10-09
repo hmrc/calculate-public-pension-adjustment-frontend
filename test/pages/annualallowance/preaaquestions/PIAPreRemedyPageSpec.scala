@@ -61,7 +61,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
           UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period.Year(2012)), BigInt(1)).get
 
         val nextPageUrl =
-          preaaquestions.PIAPreRemedyPage(Period.Year(2012)).navigate(NormalMode, userAnswers).url
+          preaaquestions.PIAPreRemedyPage(Period.Year(2010)).navigate(NormalMode, userAnswers).url
 
         checkNavigation(nextPageUrl, "/there-is-a-problem")
       }

@@ -30,6 +30,8 @@ object PIAPreRemedySummary {
 
   def rows(answers: UserAnswers)(implicit messages: Messages): Seq[Option[SummaryListRow]] =
     Seq(
+      row(answers, Period._2011),
+      row(answers, Period._2012),
       row(answers, Period._2013),
       row(answers, Period._2014),
       row(answers, Period._2015)

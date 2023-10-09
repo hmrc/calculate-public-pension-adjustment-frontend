@@ -45,7 +45,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl = PayTaxCharge1516Page.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2013")
+        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2011")
       }
     }
 
@@ -64,7 +64,7 @@ class PayTaxCharge1516PageSpec extends PageBehaviours {
 
         val nextPageUrl = PayTaxCharge1516Page.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2013")
+        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2011")
       }
     }
 

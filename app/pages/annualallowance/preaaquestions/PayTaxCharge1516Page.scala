@@ -34,7 +34,8 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
-      case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2013)
+      case Some(false) =>
+        preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2011)
       case Some(true)  =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
@@ -42,7 +43,7 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
-      case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2013)
+      case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2011)
       case Some(true)  =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
@@ -54,7 +55,9 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
         case false => super.cleanup(value, userAnswers)
         case true  =>
           userAnswers
-            .remove(PIAPreRemedyPage(Period._2013))
+            .remove(PIAPreRemedyPage(Period._2011))
+            .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(Period._2012)))
+            .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(Period._2013)))
             .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(Period._2014)))
             .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(Period._2015)))
       }

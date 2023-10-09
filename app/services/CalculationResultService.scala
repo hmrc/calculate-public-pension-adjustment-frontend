@@ -21,7 +21,7 @@ import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2013To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -87,8 +87,10 @@ class CalculationResultService @Inject() (
         }
       }
 
-    val _2013To2015TaxYears: List[TaxYear2013To2015] =
-      List(Period._2013, Period._2014, Period._2015).flatMap(toTaxYear2013To2015(userAnswers, _))
+    val _2011To2015TaxYears: List[TaxYear2011To2015] =
+      List(Period._2011, Period._2012, Period._2013, Period._2014, Period._2015).flatMap(
+        toTaxYear2011To2015(userAnswers, _)
+      )
 
     val _2016To2023TaxYears: List[TaxYear2016To2023] =
       List(
@@ -105,7 +107,7 @@ class CalculationResultService @Inject() (
         toTaxYear2016To2023(userAnswers, _)
       )
 
-    val tYears: List[TaxYear] = _2013To2015TaxYears ++ _2016To2023TaxYears
+    val tYears: List[TaxYear] = _2011To2015TaxYears ++ _2016To2023TaxYears
 
     CalculationResults.CalculationInputs(
       resubmission,
@@ -114,8 +116,8 @@ class CalculationResultService @Inject() (
     )
   }
 
-  def toTaxYear2013To2015(userAnswers: UserAnswers, period: Period): Option[TaxYear2013To2015] =
-    userAnswers.get(PIAPreRemedyPage(period)).map(v => TaxYear2013To2015(v.toInt, period))
+  def toTaxYear2011To2015(userAnswers: UserAnswers, period: Period): Option[TaxYear2011To2015] =
+    userAnswers.get(PIAPreRemedyPage(period)).map(v => TaxYear2011To2015(v.toInt, period))
 
   def toTaxYear2016To2023(
     userAnswers: UserAnswers,

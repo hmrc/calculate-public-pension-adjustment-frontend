@@ -21,7 +21,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, Period, TaxYear2013To2015, TaxYearScheme}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, Period, TaxYear2011To2015, TaxYearScheme}
 import org.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -64,9 +64,9 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
             AnnualAllowance(
               List(Period._2021, Period._2019, Period._2017),
               List(
-                TaxYear2013To2015(40000, Period._2013),
-                TaxYear2013To2015(40000, Period._2014),
-                TaxYear2013To2015(40000, Period._2015),
+                TaxYear2011To2015(40000, Period._2013),
+                TaxYear2011To2015(40000, Period._2014),
+                TaxYear2011To2015(40000, Period._2015),
                 PostFlexiblyAccessedTaxYear(
                   33000,
                   0,
