@@ -26,6 +26,10 @@
 
 @(form: Form[_], mode: Mode, period : Period)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+<p>@messages("registeredYear.hint")</p>
+}
+
 @layout(pageTitle = title(form, messages("registeredYear.title", period.start.getYear.toString, period.end.getYear.toString))) {
 
     @formHelper(action = routes.RegisteredYearController.onSubmit(mode, period), 'autoComplete -> "off") {
@@ -34,11 +38,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <span class="govuk-caption-xl">@messages("annualAllowance.caption")</span>
+
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
                 legend = LegendViewModel(messages("registeredYear.heading", period.start.getYear.toString, period.end.getYear.toString)).asPageHeading()
-            )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

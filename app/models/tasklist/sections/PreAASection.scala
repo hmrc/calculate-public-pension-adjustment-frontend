@@ -31,20 +31,38 @@ case object PreAASection extends Section {
     FlexiblyAccessedPensionPage,
     FlexibleAccessStartDatePage,
     PayTaxCharge1516Page,
+    RegisteredYearPage(Period._2011),
+    PIAPreRemedyPage(Period._2011),
+    RegisteredYearPage(Period._2012),
+    PIAPreRemedyPage(Period._2012),
+    RegisteredYearPage(Period._2013),
     PIAPreRemedyPage(Period._2013),
+    RegisteredYearPage(Period._2014),
     PIAPreRemedyPage(Period._2014),
+    RegisteredYearPage(Period._2015),
     PIAPreRemedyPage(Period._2015)
   )
 
   def status(answers: UserAnswers): SectionStatus =
     if (answers.get(ScottishTaxpayerFrom2016Page).isDefined) {
       answers.get(PayTaxCharge1516Page) match {
-        case Some(true)                                                           => SectionStatus.Completed
-        case Some(false) if answers.get(PIAPreRemedyPage(Period._2015)).isDefined =>
-          SectionStatus.Completed
-        case _                                                                    => SectionStatus.InProgress
+        case Some(true)  => SectionStatus.Completed
+        case Some(false) => lastRegisteredYearPageStatus(answers)
+        case _           => SectionStatus.InProgress
       }
     } else SectionStatus.NotStarted
+
+  private def lastRegisteredYearPageStatus(answers: UserAnswers): SectionStatus =
+    answers.get(RegisteredYearPage(Period._2015)) match {
+      case Some(false) => SectionStatus.Completed
+      case Some(true)  => lastPIAPageStatus(answers)
+      case _           => SectionStatus.InProgress
+    }
+
+  private def lastPIAPageStatus(answers: UserAnswers): SectionStatus =
+    if (answers.get(PIAPreRemedyPage(Period._2015)).isDefined) {
+      SectionStatus.Completed
+    } else SectionStatus.InProgress
 
   def navigateTo(answers: UserAnswers): Page =
     if (status(answers) == SectionStatus.Completed) {

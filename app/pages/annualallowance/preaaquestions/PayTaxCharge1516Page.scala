@@ -60,6 +60,11 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
             .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(Period._2013)))
             .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(Period._2014)))
             .flatMap(_.remove(preaaquestions.PIAPreRemedyPage(Period._2015)))
+            .flatMap(_.remove(preaaquestions.RegisteredYearPage(Period._2011)))
+            .flatMap(_.remove(preaaquestions.RegisteredYearPage(Period._2012)))
+            .flatMap(_.remove(preaaquestions.RegisteredYearPage(Period._2013)))
+            .flatMap(_.remove(preaaquestions.RegisteredYearPage(Period._2014)))
+            .flatMap(_.remove(preaaquestions.RegisteredYearPage(Period._2015)))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

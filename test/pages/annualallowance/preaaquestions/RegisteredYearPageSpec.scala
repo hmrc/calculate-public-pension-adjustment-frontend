@@ -16,7 +16,7 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.Period
+import models.{NormalMode, Period}
 import pages.behaviours.PageBehaviours
 
 class RegisteredYearPageSpec extends PageBehaviours {
@@ -28,5 +28,54 @@ class RegisteredYearPageSpec extends PageBehaviours {
     beSettable[Boolean](RegisteredYearPage(Period._2011))
 
     beRemovable[Boolean](RegisteredYearPage(Period._2011))
+  }
+
+  "Normal Mode" - {
+
+    "must return PIA page for associated period when user a registered scheme member" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(RegisteredYearPage(Period._2011), true)
+        .success
+        .value
+
+      val nextPageUrl = RegisteredYearPage(Period._2011).navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2011")
+    }
+
+    "must return registered year page for next period when user not a registered scheme member" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(RegisteredYearPage(Period._2011), false)
+        .success
+        .value
+
+      val nextPageUrl = RegisteredYearPage(Period._2011).navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/registered/2012")
+    }
+
+    "for 14/15 must return AA setup CYA when user not a registered scheme member" in {
+      val userAnswers = emptyUserAnswers
+        .set(RegisteredYearPage(Period._2015), false)
+        .success
+        .value
+
+      val nextPageUrl = RegisteredYearPage(Period._2015).navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/setup-check-answers")
+    }
+
+    "for 14/15 must return PIA page for associated year when user a registered scheme member" in {
+      val userAnswers = emptyUserAnswers
+        .set(RegisteredYearPage(Period._2015), true)
+        .success
+        .value
+
+      val nextPageUrl = RegisteredYearPage(Period._2015).navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2015")
+    }
   }
 }
