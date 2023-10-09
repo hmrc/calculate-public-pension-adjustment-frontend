@@ -74,32 +74,61 @@ class PayTaxCharge1415PageSpec extends PageBehaviours {
 
         val userAnswers =
           UserAnswers("1")
-            .set(PIAPreRemedyPage(Period._2013), BigInt(1))
+            .set(preaaquestions.RegisteredYearPage(Period._2011), true)
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2011), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.RegisteredYearPage(Period._2012), true))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2012), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.RegisteredYearPage(Period._2013), true))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.RegisteredYearPage(Period._2014), true))
             .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2014), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.RegisteredYearPage(Period._2015), true))
             .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2015), BigInt(1)))
             .get
 
         val cleanedAnswers: UserAnswers = PayTaxCharge1415Page.cleanup(Some(true), userAnswers).get
 
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2011)) must be(None)
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2012)) must be(None)
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2013)) must be(None)
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2014)) must be(None)
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2015)) must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2011)) must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2012)) must be(None)
         cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2013)) must be(None)
         cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2014)) must be(None)
         cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2015)) must be(None)
+
       }
 
       "should not remove answers related to PIAs when user did not pay a tax charge in 2014/2015" in {
 
         val userAnswers =
           UserAnswers("1")
-            .set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1))
+            .set(preaaquestions.RegisteredYearPage(Period._2011), true)
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2011), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.RegisteredYearPage(Period._2012), true))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2012), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.RegisteredYearPage(Period._2013), true))
+            .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.RegisteredYearPage(Period._2014), true))
             .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2014), BigInt(1)))
+            .flatMap(a => a.set(preaaquestions.RegisteredYearPage(Period._2015), true))
             .flatMap(a => a.set(preaaquestions.PIAPreRemedyPage(Period._2015), BigInt(1)))
             .get
 
         val cleanedAnswers: UserAnswers = PayTaxCharge1415Page.cleanup(Some(false), userAnswers).get
 
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2013)) must be(Some(1))
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2014)) must be(Some(1))
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2015)) must be(Some(1))
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2011)) mustBe Some(true)
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2012)) mustBe Some(true)
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2013)) mustBe Some(true)
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2014)) mustBe Some(true)
+        cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2015)) mustBe Some(true)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2011)) mustBe Some(BigInt(1))
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2012)) mustBe Some(BigInt(1))
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2013)) mustBe Some(BigInt(1))
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2014)) mustBe Some(BigInt(1))
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2015)) mustBe Some(BigInt(1))
       }
     }
   }

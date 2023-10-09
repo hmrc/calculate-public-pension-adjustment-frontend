@@ -16,7 +16,7 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.{NormalMode, Period}
+import models.{CheckMode, NormalMode, Period}
 import pages.behaviours.PageBehaviours
 
 class RegisteredYearPageSpec extends PageBehaviours {
@@ -76,6 +76,92 @@ class RegisteredYearPageSpec extends PageBehaviours {
       val nextPageUrl = RegisteredYearPage(Period._2015).navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2015")
+    }
+  }
+
+  "CheckMode" - {
+
+    "must return PIA page for associated period when user a registered scheme member" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(RegisteredYearPage(Period._2011), true)
+        .success
+        .value
+
+      val nextPageUrl = RegisteredYearPage(Period._2011).navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/change-pension-input-amount/2011")
+    }
+
+    "must return CYA page when user not a registered scheme member" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(RegisteredYearPage(Period._2011), false)
+        .success
+        .value
+
+      val nextPageUrl = RegisteredYearPage(Period._2011).navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/setup-check-answers")
+    }
+
+    "for 14/15 must return AA setup CYA when user not a registered scheme member" in {
+      val userAnswers = emptyUserAnswers
+        .set(RegisteredYearPage(Period._2015), false)
+        .success
+        .value
+
+      val nextPageUrl = RegisteredYearPage(Period._2015).navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/setup-check-answers")
+    }
+
+    "for 14/15 must return PIA page for associated year when user a registered scheme member" in {
+      val userAnswers = emptyUserAnswers
+        .set(RegisteredYearPage(Period._2015), true)
+        .success
+        .value
+
+      val nextPageUrl = RegisteredYearPage(Period._2015).navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/change-pension-input-amount/2015")
+    }
+  }
+
+  "cleanup" - {
+
+    "must cleanup specific period answers only when user answers false" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(PIAPreRemedyPage(Period._2011), BigInt(100))
+        .success
+        .value
+        .set(PIAPreRemedyPage(Period._2012), BigInt(100))
+        .success
+        .value
+
+      val cleanedUserAnswers = RegisteredYearPage(Period._2011).cleanup(Some(false), userAnswers).success.value
+
+      cleanedUserAnswers.get(PIAPreRemedyPage(Period._2011)) mustBe None
+      cleanedUserAnswers.get(PIAPreRemedyPage(Period._2012)) mustBe Some(BigInt(100))
+
+    }
+
+    "must cleanup specific period answers only when user answers true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(PIAPreRemedyPage(Period._2011), BigInt(100))
+        .success
+        .value
+        .set(PIAPreRemedyPage(Period._2012), BigInt(100))
+        .success
+        .value
+
+      val cleanedUserAnswers = RegisteredYearPage(Period._2011).cleanup(Some(true), userAnswers).success.value
+
+      cleanedUserAnswers.get(PIAPreRemedyPage(Period._2011)) mustBe Some(BigInt(100))
+      cleanedUserAnswers.get(PIAPreRemedyPage(Period._2012)) mustBe Some(BigInt(100))
+
     }
   }
 }
