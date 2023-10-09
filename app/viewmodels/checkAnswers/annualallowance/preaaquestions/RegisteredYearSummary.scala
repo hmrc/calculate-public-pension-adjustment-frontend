@@ -24,21 +24,19 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object RegisteredYearSummary  {
+object RegisteredYearSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(RegisteredYearPage(period)).map {
-      answer =>
+    answers.get(RegisteredYearPage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key     = "registeredYear.checkYourAnswersLabel",
-          value   = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", RegisteredYearController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("registeredYear.change.hidden"))
-          )
+      SummaryListRowViewModel(
+        key = "registeredYear.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel("site.change", RegisteredYearController.onPageLoad(CheckMode, period).url)
+            .withVisuallyHiddenText(messages("registeredYear.change.hidden"))
         )
+      )
     }
 }

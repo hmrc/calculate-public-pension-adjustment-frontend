@@ -35,7 +35,7 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
       case Some(false) =>
-        preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2011)
+        preAARoutes.RegisteredYearController.onPageLoad(NormalMode, Period._2011)
       case Some(true)  =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
@@ -43,7 +43,7 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1516Page) match {
-      case Some(false) => preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, Period._2011)
+      case Some(false) => preAARoutes.RegisteredYearController.onPageLoad(NormalMode, Period._2011)
       case Some(true)  =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _           => routes.JourneyRecoveryController.onPageLoad(None)

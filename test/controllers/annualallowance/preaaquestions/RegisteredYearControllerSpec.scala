@@ -1,3 +1,19 @@
+/*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
@@ -23,12 +39,12 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new RegisteredYearFormProvider()
-  val form = formProvider(Period._2011)
+  val form         = formProvider(Period._2011)
 
   val validRegisteredYear: Period = Period._2011
 
   lazy val normalRoute = preAARoutes.RegisteredYearController.onPageLoad(NormalMode, validRegisteredYear).url
-  lazy val checkRoute = preAARoutes.RegisteredYearController.onPageLoad(CheckMode, validRegisteredYear).url
+  lazy val checkRoute  = preAARoutes.RegisteredYearController.onPageLoad(CheckMode, validRegisteredYear).url
 
   "RegisteredYear Controller" - {
 
@@ -44,7 +60,10 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[RegisteredYearView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, validRegisteredYear)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, validRegisteredYear)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -62,7 +81,10 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, validRegisteredYear)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, validRegisteredYear)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -105,7 +127,10 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, validRegisteredYear)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, validRegisteredYear)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

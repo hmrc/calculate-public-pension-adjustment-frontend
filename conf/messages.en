@@ -986,8 +986,9 @@ newPensionCreditReference.error.required = Enter your new lifetime allowance pen
 newPensionCreditReference.error.length = Your new lifetime allowance pension credit reference must be 15 characters or fewer
 newPensionCreditReference.error.invalid = Your new lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
 newPensionCreditReference.change.hidden = What is your new lifetime allowance pension credit reference?
-registeredYear.title = registeredYear
-registeredYear.heading = registeredYear
-registeredYear.checkYourAnswersLabel = registeredYear
-registeredYear.error.required = Select yes if registeredYear
-registeredYear.change.hidden = RegisteredYear
+
+registeredYear.title = registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.heading = registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.checkYourAnswersLabel = registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.error.required = Select yes if registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.change.hidden = RegisteredYear from 6 April {0} and 5 April {1}?

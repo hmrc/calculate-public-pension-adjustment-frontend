@@ -29,24 +29,24 @@ import views.html.annualallowance.preaaquestions.RegisteredYearView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class RegisteredYearController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: RegisteredYearFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: RegisteredYearView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
-
-
+class RegisteredYearController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: RegisteredYearFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: RegisteredYearView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val form = formProvider(period)
+      val form         = formProvider(period)
       val preparedForm = request.userAnswers.get(preaaquestions.RegisteredYearPage(period)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -59,13 +59,13 @@ class RegisteredYearController @Inject()(
       form
         .bindFromRequest()
         .fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(
-              preaaquestions.RegisteredYearPage(period), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(preaaquestions.RegisteredYearPage(period).navigate(mode, updatedAnswers))
-      )
-  }
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
+          value =>
+            for {
+              updatedAnswers <-
+                Future.fromTry(request.userAnswers.set(preaaquestions.RegisteredYearPage(period), value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(preaaquestions.RegisteredYearPage(period).navigate(mode, updatedAnswers))
+        )
+    }
 }

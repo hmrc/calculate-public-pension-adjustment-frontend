@@ -986,3 +986,9 @@ newPensionCreditReference.error.required = cy: Enter your new lifetime allowance
 newPensionCreditReference.error.length = cy: Your new lifetime allowance pension credit reference must be 15 characters or fewer
 newPensionCreditReference.error.invalid = cy: Your new lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
 newPensionCreditReference.change.hidden = cy: What is your new lifetime allowance pension credit reference?
+
+registeredYear.title = cy: registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.heading = cy: registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.checkYourAnswersLabel = cy: registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.error.required = cy: Select yes if registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.change.hidden = cy: RegisteredYear from 6 April {0} and 5 April {1}?
