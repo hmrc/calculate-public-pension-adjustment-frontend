@@ -53,6 +53,18 @@ class CheckYourAASetupAnswersController @Inject() (
     val pIARows: Seq[Option[SummaryListRow]] =
       PIAPreRemedySummary.rows(request.userAnswers)
 
+    val registeredYearRows: Seq[Option[SummaryListRow]] =
+      RegisteredYearSummary.rows(request.userAnswers)
+
+    val combinedPIA: Seq[Option[SummaryListRow]] =
+      Seq(registeredYearRows, pIARows).transpose.flatten
+
+    def combinedPIASummaryRows: Seq[Option[SummaryListRow]] = {
+      Seq(RegisteredYearSummary.rows(request.userAnswers), PIAPreRemedySummary.rows(request.userAnswers)).transpose.flatten
+    }
+
+
+
     def maybePensionInputAmounts(userAnswers: UserAnswers): Boolean =
       userAnswers.get(PayTaxCharge1516Page) match {
         case Some(true)  => false
@@ -67,7 +79,7 @@ class CheckYourAASetupAnswersController @Inject() (
         controllers.routes.TaskListController.onPageLoad(),
         SummaryListViewModel(rows.flatten),
         "checkYourAnswers.aa.pIASubHeading",
-        SummaryListViewModel(pIARows.flatten)
+        SummaryListViewModel(combinedPIASummaryRows.flatten)
       )
     )
   }

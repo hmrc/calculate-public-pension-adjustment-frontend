@@ -26,6 +26,6 @@ class RegisteredYearFormProvider @Inject() extends Mappings {
 
   def apply(period: Period): Form[Boolean] =
     Form(
-      "value" -> boolean(period.toString)
+      "value" -> boolean("registeredYear.error.required." + period)
     )
 }

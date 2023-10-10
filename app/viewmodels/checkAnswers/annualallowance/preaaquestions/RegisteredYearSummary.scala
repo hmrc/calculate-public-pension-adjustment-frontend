@@ -26,12 +26,21 @@ import viewmodels.implicits._
 
 object RegisteredYearSummary {
 
-  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+  def rows(answers: UserAnswers)(implicit messages: Messages): Seq[Option[SummaryListRow]] =
+    Seq(
+      row(answers, Period._2011),
+      row(answers, Period._2012),
+      row(answers, Period._2013),
+      row(answers, Period._2014),
+      row(answers, Period._2015)
+    )
+
+  private def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(RegisteredYearPage(period)).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "registeredYear.checkYourAnswersLabel",
+        key = s"registeredYear.checkYourAnswersLabel.$period",
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel("site.change", RegisteredYearController.onPageLoad(CheckMode, period).url)
