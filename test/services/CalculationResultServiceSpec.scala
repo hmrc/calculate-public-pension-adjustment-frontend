@@ -22,7 +22,7 @@ import models.CalculationResults.{CalculationResponse, CalculationResultsViewMod
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
-import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, Period, ProtectionEnhancedChanged, ProtectionType, SchemeNameAndTaxRef, TaxYear2013To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, Period, ProtectionEnhancedChanged, ProtectionType, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
@@ -760,25 +760,25 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     "toTaxYear2013To2015" - {
 
       "should return valid TaxYear2013To2015 for a Period 2013" in {
-        val result = service.toTaxYear2013To2015(userAnswers1, Period._2013)
+        val result = service.toTaxYear2011To2015(userAnswers1, Period._2013)
 
-        result mustBe Some(TaxYear2013To2015(40000, Period._2013))
+        result mustBe Some(TaxYear2011To2015(40000, Period._2013))
       }
 
       "should return valid TaxYear2013To2015 for a Period 2014" in {
-        val result = service.toTaxYear2013To2015(userAnswers1, Period._2014)
+        val result = service.toTaxYear2011To2015(userAnswers1, Period._2014)
 
-        result mustBe Some(TaxYear2013To2015(20000, Period._2014))
+        result mustBe Some(TaxYear2011To2015(20000, Period._2014))
       }
 
       "should return valid TaxYear2013To2015 for a Period 2015" in {
-        val result = service.toTaxYear2013To2015(userAnswers1, Period._2015)
+        val result = service.toTaxYear2011To2015(userAnswers1, Period._2015)
 
-        result mustBe Some(TaxYear2013To2015(60000, Period._2015))
+        result mustBe Some(TaxYear2011To2015(60000, Period._2015))
       }
 
       "should return None for a missing Period 2015" in {
-        val result = service.toTaxYear2013To2015(userAnswers1.copy(data = data2), Period._2015)
+        val result = service.toTaxYear2011To2015(userAnswers1.copy(data = data2), Period._2015)
 
         result mustBe None
       }
@@ -943,9 +943,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             AnnualAllowance(
               List.empty,
               List(
-                TaxYear2013To2015(40000, Period._2013),
-                TaxYear2013To2015(20000, Period._2014),
-                TaxYear2013To2015(60000, Period._2015),
+                TaxYear2011To2015(40000, Period._2013),
+                TaxYear2011To2015(20000, Period._2014),
+                TaxYear2011To2015(60000, Period._2015),
                 InitialFlexiblyAccessedTaxYear(
                   30000,
                   LocalDate.parse("2015-05-25"),
@@ -1078,9 +1078,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             AnnualAllowance(
               List.empty,
               List(
-                TaxYear2013To2015(40000, Period._2013),
-                TaxYear2013To2015(20000, Period._2014),
-                TaxYear2013To2015(60000, Period._2015),
+                TaxYear2011To2015(40000, Period._2013),
+                TaxYear2011To2015(20000, Period._2014),
+                TaxYear2011To2015(60000, Period._2015),
                 InitialFlexiblyAccessedTaxYear(
                   30000,
                   LocalDate.parse("2015-05-25"),

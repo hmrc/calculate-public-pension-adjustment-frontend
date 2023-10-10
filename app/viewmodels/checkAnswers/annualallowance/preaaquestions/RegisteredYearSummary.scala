@@ -16,17 +16,15 @@
 
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
-import controllers.annualallowance.preaaquestions.routes
+import controllers.annualallowance.preaaquestions.routes.RegisteredYearController
 import models.{CheckMode, Period, UserAnswers}
-import pages.annualallowance.preaaquestions
+import pages.annualallowance.preaaquestions.RegisteredYearPage
 import play.api.i18n.Messages
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object PIAPreRemedySummary {
+object RegisteredYearSummary {
 
   def rows(answers: UserAnswers)(implicit messages: Messages): Seq[Option[SummaryListRow]] =
     Seq(
@@ -37,16 +35,16 @@ object PIAPreRemedySummary {
       row(answers, Period._2015)
     )
 
-  private def row(answers: UserAnswers, period: Period)(implicit
-    messages: Messages
-  ): Option[SummaryListRow] =
-    answers.get(preaaquestions.PIAPreRemedyPage(period)).map { answer =>
+  private def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(RegisteredYearPage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
+
       SummaryListRowViewModel(
-        key = s"pIAPreRemedy.checkYourAnswersLabel.$period",
-        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        key = s"registeredYear.checkYourAnswersLabel.$period",
+        value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.PIAPreRemedyController.onPageLoad(CheckMode, period).url)
-            .withVisuallyHiddenText(messages("pIAPreRemedy.change.hidden"))
+          ActionItemViewModel("site.change", RegisteredYearController.onPageLoad(CheckMode, period).url)
+            .withVisuallyHiddenText(messages("registeredYear.change.hidden"))
         )
       )
     }

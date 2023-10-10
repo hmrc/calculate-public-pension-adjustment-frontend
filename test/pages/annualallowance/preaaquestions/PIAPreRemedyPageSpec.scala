@@ -32,20 +32,20 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
     "normal mode navigation" - {
 
-      "next page should be PIAPreRemedy capture for 2013-2014 when this page is for 2012-2013" in {
+      "next page should be member of registered scheme capture for 2013-2014 when this page is for 2012-2013" in {
         val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2013), BigInt(1)).get
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2013).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2014")
+        checkNavigation(nextPageUrl, "/annual-allowance/registered/2014")
       }
 
-      "next page should be PIAPreRemedy capture for 2014-2015 when this page is for 2013-2014" in {
+      "next page should be member of registered scheme capture for 2014-2015 when this page is for 2013-2014" in {
         val userAnswers = UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2014), BigInt(1)).get
 
         val nextPageUrl = preaaquestions.PIAPreRemedyPage(Period._2014).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2015")
+        checkNavigation(nextPageUrl, "/annual-allowance/registered/2015")
       }
 
       "next page should be CheckYourAnswers when this page is for 2014-2015" in {
@@ -61,7 +61,7 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
           UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period.Year(2012)), BigInt(1)).get
 
         val nextPageUrl =
-          preaaquestions.PIAPreRemedyPage(Period.Year(2012)).navigate(NormalMode, userAnswers).url
+          preaaquestions.PIAPreRemedyPage(Period.Year(2010)).navigate(NormalMode, userAnswers).url
 
         checkNavigation(nextPageUrl, "/there-is-a-problem")
       }

@@ -233,6 +233,8 @@ pIAPreRemedy.message1 = This is the total amount paid into or any increase in a 
 pIAPreRemedy.message2 = This can be done by you or anyone else, such as your employer.
 pIAPreRemedy.hint = Amounts must be rounded down to the nearest pound, for example 2300
 
+pIAPreRemedy.checkYourAnswersLabel.2011 = Pension input amount from 6 April 2010 and 5 April 2011
+pIAPreRemedy.checkYourAnswersLabel.2012 = Pension input amount from 6 April 2011 and 5 April 2012
 pIAPreRemedy.checkYourAnswersLabel.2013 = Pension input amount from 6 April 2012 and 5 April 2013
 pIAPreRemedy.checkYourAnswersLabel.2014 = Pension input amount from 6 April 2013 and 5 April 2014
 pIAPreRemedy.checkYourAnswersLabel.2015 = Pension input amount from 6 April 2014 and 5 April 2015
@@ -984,3 +986,18 @@ newPensionCreditReference.error.required = Enter your new lifetime allowance pen
 newPensionCreditReference.error.length = Your new lifetime allowance pension credit reference must be 15 characters or fewer
 newPensionCreditReference.error.invalid = Your new lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
 newPensionCreditReference.change.hidden = What is your new lifetime allowance pension credit reference?
+
+registeredYear.title = Were you a member of a registered pension scheme scheme between 6 April {0} and 5 April {1}?
+registeredYear.heading = Were you a member of a registered pension scheme scheme between 6 April {0} and 5 April {1}?
+registeredYear.checkYourAnswersLabel = Member of a registered pension scheme between 6 April {0} and 5 April {1}?
+registeredYear.checkYourAnswersLabel.2011 = Member of a registered pension scheme between 6 April 2010 and 5 April 2011
+registeredYear.checkYourAnswersLabel.2012 = Member of a registered pension scheme between 6 April 2011 and 5 April 2012
+registeredYear.checkYourAnswersLabel.2013 = Member of a registered pension scheme between 6 April 2012 and 5 April 2013
+registeredYear.checkYourAnswersLabel.2014 = Member of a registered pension scheme between 6 April 2013 and 5 April 2014
+registeredYear.checkYourAnswersLabel.2015 = Member of a registered pension scheme between 6 April 2014 and 5 April 2015
+registeredYear.error.required.2011 = Select yes if you were a member of a registered pension scheme between 6 April 2010 and 5 April 2011
+registeredYear.error.required.2012 = Select yes if you were a member of a registered pension scheme between 6 April 2011 and 5 April 2012
+registeredYear.error.required.2013 = Select yes if you were a member of a registered pension scheme between 6 April 2012 and 5 April 2013
+registeredYear.error.required.2014 = Select yes if you were a member of a registered pension scheme between 6 April 2013 and 5 April 2014
+registeredYear.error.required.2015 = Select yes if you were a member of a registered pension scheme between 6 April 2014 and 5 April 2015
+registeredYear.change.hidden = Were you a member of a registered pension scheme scheme between from 6 April {0} and 5 April {1}?

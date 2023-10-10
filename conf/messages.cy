@@ -233,6 +233,8 @@ pIAPreRemedy.message1 = cy: This is the total amount paid into or any increase i
 pIAPreRemedy.message2 = cy: This can be done by you or anyone else, such as your employer.
 pIAPreRemedy.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300
 
+pIAPreRemedy.checkYourAnswersLabel.2011 = cy: Pension input amount from 6 April 2010 and 5 April 2011
+pIAPreRemedy.checkYourAnswersLabel.2012 = cy: Pension input amount from 6 April 2011 and 5 April 2012
 pIAPreRemedy.checkYourAnswersLabel.2013 = cy: Pension input amount from 6 April 2012 and 5 April 2013
 pIAPreRemedy.checkYourAnswersLabel.2014 = cy: Pension input amount from 6 April 2013 and 5 April 2014
 pIAPreRemedy.checkYourAnswersLabel.2015 = cy: Pension input amount from 6 April 2014 and 5 April 2015
@@ -984,3 +986,9 @@ newPensionCreditReference.error.required = cy: Enter your new lifetime allowance
 newPensionCreditReference.error.length = cy: Your new lifetime allowance pension credit reference must be 15 characters or fewer
 newPensionCreditReference.error.invalid = cy: Your new lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
 newPensionCreditReference.change.hidden = cy: What is your new lifetime allowance pension credit reference?
+
+registeredYear.title = cy: registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.heading = cy: registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.checkYourAnswersLabel = cy: registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.error.required = cy: Select yes if registeredYear from 6 April {0} and 5 April {1}?
+registeredYear.change.hidden = cy: RegisteredYear from 6 April {0} and 5 April {1}?
