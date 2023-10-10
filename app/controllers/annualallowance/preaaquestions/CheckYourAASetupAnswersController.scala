@@ -19,7 +19,7 @@ package controllers.annualallowance.preaaquestions
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.UserAnswers
-import pages.annualallowance.preaaquestions.PayTaxCharge1516Page
+import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -47,7 +47,7 @@ class CheckYourAASetupAnswersController @Inject() (
       DefinedContributionPensionSchemeSummary.row(request.userAnswers),
       FlexiblyAccessedPensionSummary.row(request.userAnswers),
       FlexibleAccessStartDateSummary.row(request.userAnswers),
-      PayTaxCharge1516Summary.row(request.userAnswers)
+      PayTaxCharge1415Summary.row(request.userAnswers)
     )
 
     def combinedPIASummaryRows: Seq[Option[SummaryListRow]] =
@@ -57,7 +57,7 @@ class CheckYourAASetupAnswersController @Inject() (
       ).transpose.flatten
 
     def maybePensionInputAmounts(userAnswers: UserAnswers): Boolean =
-      userAnswers.get(PayTaxCharge1516Page) match {
+      userAnswers.get(PayTaxCharge1415Page) match {
         case Some(true)  => false
         case Some(false) => true
         case None        => false

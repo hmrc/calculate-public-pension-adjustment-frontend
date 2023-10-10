@@ -33,7 +33,7 @@ case object FlexibleAccessStartDatePage extends QuestionPage[LocalDate] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(FlexibleAccessStartDatePage) match {
-      case Some(_) => preAARoutes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
+      case Some(_) => preAARoutes.PayTaxCharge1415Controller.onPageLoad(NormalMode)
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

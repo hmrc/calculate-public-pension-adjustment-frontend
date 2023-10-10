@@ -30,7 +30,7 @@ case object PreAASection extends Section {
     DefinedContributionPensionSchemePage,
     FlexiblyAccessedPensionPage,
     FlexibleAccessStartDatePage,
-    PayTaxCharge1516Page,
+    PayTaxCharge1415Page,
     RegisteredYearPage(Period._2011),
     PIAPreRemedyPage(Period._2011),
     RegisteredYearPage(Period._2012),
@@ -45,7 +45,7 @@ case object PreAASection extends Section {
 
   def status(answers: UserAnswers): SectionStatus =
     if (answers.get(ScottishTaxpayerFrom2016Page).isDefined) {
-      answers.get(PayTaxCharge1516Page) match {
+      answers.get(PayTaxCharge1415Page) match {
         case Some(true)  => SectionStatus.Completed
         case Some(false) => lastRegisteredYearPageStatus(answers)
         case _           => SectionStatus.InProgress

@@ -42,12 +42,12 @@ class DefinedContributionPensionSchemePageSpec extends PageBehaviours {
         check(nextPageUrl, "/annual-allowance/flexibly-accessed")
       }
 
-      "next page should be PayTaxCharge1516Page when user does not have a DC pension" in {
+      "next page should be PayTaxCharge1415Page when user does not have a DC pension" in {
         val userAnswers = UserAnswers("1").set(DefinedContributionPensionSchemePage, false).get
 
         val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/annual-allowance/tax-charge-between-2015-2016")
+        check(nextPageUrl, "/annual-allowance/tax-charge-between-2014-2015")
       }
     }
 
@@ -61,7 +61,7 @@ class DefinedContributionPensionSchemePageSpec extends PageBehaviours {
         check(nextPageUrl, "/annual-allowance/change-flexibly-accessed")
       }
 
-      "next page should be PayTaxCharge1516Page when user does not have a DC pension" in {
+      "next page should be PayTaxCharge1415Page when user does not have a DC pension" in {
         val userAnswers = UserAnswers("1").set(DefinedContributionPensionSchemePage, false).get
 
         val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(CheckMode, userAnswers)

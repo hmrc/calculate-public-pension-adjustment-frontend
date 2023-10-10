@@ -19,12 +19,12 @@ package forms.annualallowance.preaaquestions
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class PayTaxCharge1516FormProviderSpec extends BooleanFieldBehaviours {
+class PayTaxCharge1415FormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "payTaxCharge1516.error.required"
+  val requiredKey = "payTaxCharge1415.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new PayTaxCharge1516FormProvider()()
+  val form = new PayTaxCharge1415FormProvider()()
 
   ".value" - {
 

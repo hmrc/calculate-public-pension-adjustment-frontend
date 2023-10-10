@@ -35,7 +35,7 @@ case object DefinedContributionPensionSchemePage extends QuestionPage[Boolean] {
     answers.get(DefinedContributionPensionSchemePage) match {
       case Some(true)  => preAARoutes.FlexiblyAccessedPensionController.onPageLoad(NormalMode)
       case Some(false) =>
-        preAARoutes.PayTaxCharge1516Controller.onPageLoad(NormalMode)
+        preAARoutes.PayTaxCharge1415Controller.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

@@ -61,7 +61,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "definedContributionPensionScheme" : true,
            |    "flexiblyAccessedPension" : true,
            |    "flexibleAccessStartDate" : "2015-05-25",
-           |    "payTaxCharge1516" : false,
+           |    "payTaxCharge1415" : false,
            |    "2013" : {
            |      "pIAPreRemedy" : 40000
            |    },
@@ -312,7 +312,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "definedContributionPensionScheme" : true,
            |    "flexiblyAccessedPension" : true,
            |    "flexibleAccessStartDate" : "2015-05-25",
-           |    "payTaxCharge1516" : false,
+           |    "payTaxCharge1415" : false,
            |    "aa" : {
            |      "years" : {
            |        "2016-pre" : {
@@ -533,7 +533,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "definedContributionPensionScheme" : true,
            |    "flexiblyAccessedPension" : true,
            |    "flexibleAccessStartDate" : "2015-05-25",
-           |    "payTaxCharge1516" : false,
+           |    "payTaxCharge1415" : false,
            |    "2013" : {
            |      "pIAPreRemedy" : 40000
            |    },

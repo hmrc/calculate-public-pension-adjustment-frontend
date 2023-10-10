@@ -80,10 +80,10 @@ POST        /annual-allowance/flexibly-accessed                              con
 GET         /annual-allowance/change-flexibly-accessed                       controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = CheckMode)
 POST        /annual-allowance/change-flexibly-accessed                       controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = CheckMode)
 
-GET         /annual-allowance/tax-charge-between-2015-2016                   controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onPageLoad(mode: Mode = NormalMode)
-POST        /annual-allowance/tax-charge-between-2015-2016                   controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onSubmit(mode: Mode = NormalMode)
-GET         /annual-allowance/change-tax-charge-between-2015-2016            controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onPageLoad(mode: Mode = CheckMode)
-POST        /annual-allowance/change-tax-charge-between-2015-2016            controllers.annualallowance.preaaquestions.PayTaxCharge1516Controller.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/tax-charge-between-2014-2015                   controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/tax-charge-between-2014-2015                   controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-tax-charge-between-2014-2015            controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-tax-charge-between-2014-2015            controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onSubmit(mode: Mode = CheckMode)
 
 GET         /lifetime-allowance                                                  controllers.lifetimeallowance.WhatYouWillNeedLtaController.onPageLoad()
 

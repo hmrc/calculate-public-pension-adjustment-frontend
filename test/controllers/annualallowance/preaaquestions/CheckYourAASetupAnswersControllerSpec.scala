@@ -19,11 +19,11 @@ package controllers.annualallowance.preaaquestions
 import base.SpecBase
 import controllers.routes
 import org.scalatestplus.mockito.MockitoSugar.mock
-import pages.annualallowance.preaaquestions.PayTaxCharge1516Page
+import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import viewmodels.checkAnswers.annualallowance.preaaquestions.PayTaxCharge1516Summary
+import viewmodels.checkAnswers.annualallowance.preaaquestions.PayTaxCharge1415Summary
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAASetupAnswersView
 import play.api.inject.bind
@@ -62,11 +62,11 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
       }
     }
 
-    "must return maybePensionInputAmounts false when user answers true to PayTaxCharge1516 Page" in {
+    "must return maybePensionInputAmounts false when user answers true to PayTaxCharge1415 Page" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
-      val ua = emptyUserAnswers.set(PayTaxCharge1516Page, true).success.value
+      val ua = emptyUserAnswers.set(PayTaxCharge1415Page, true).success.value
 
       val application =
         applicationBuilder(userAnswers = Some(ua))
@@ -84,7 +84,7 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         val result = route(application, request).value
         val view   = application.injector.instanceOf[CheckYourAASetupAnswersView]
 
-        val expectedSeq = Seq(PayTaxCharge1516Summary.row(ua)(messages(application))).flatten
+        val expectedSeq = Seq(PayTaxCharge1415Summary.row(ua)(messages(application))).flatten
 
         val list = SummaryListViewModel(expectedSeq)
 
@@ -105,11 +105,11 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
       }
     }
 
-    "must return maybePensionInputAmounts true when user answers false to PayTaxCharge1516 Page" in {
+    "must return maybePensionInputAmounts true when user answers false to PayTaxCharge1415 Page" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
-      val ua = emptyUserAnswers.set(PayTaxCharge1516Page, false).success.value
+      val ua = emptyUserAnswers.set(PayTaxCharge1415Page, false).success.value
 
       val application =
         applicationBuilder(userAnswers = Some(ua))
@@ -127,7 +127,7 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         val result = route(application, request).value
         val view   = application.injector.instanceOf[CheckYourAASetupAnswersView]
 
-        val expectedSeq = Seq(PayTaxCharge1516Summary.row(ua)(messages(application))).flatten
+        val expectedSeq = Seq(PayTaxCharge1415Summary.row(ua)(messages(application))).flatten
 
         val list = SummaryListViewModel(expectedSeq)
 
