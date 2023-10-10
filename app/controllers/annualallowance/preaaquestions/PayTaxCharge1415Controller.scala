@@ -29,15 +29,15 @@ import views.html.annualallowance.preaaquestions.PayTaxCharge1415View
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class PayTaxCharge1415Controller @Inject()(
-                                            override val messagesApi: MessagesApi,
-                                            sessionRepository: SessionRepository,
-                                            identify: IdentifierAction,
-                                            getData: DataRetrievalAction,
-                                            requireData: DataRequiredAction,
-                                            formProvider: PayTaxCharge1415FormProvider,
-                                            val controllerComponents: MessagesControllerComponents,
-                                            view: PayTaxCharge1415View
+class PayTaxCharge1415Controller @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: PayTaxCharge1415FormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: PayTaxCharge1415View
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
