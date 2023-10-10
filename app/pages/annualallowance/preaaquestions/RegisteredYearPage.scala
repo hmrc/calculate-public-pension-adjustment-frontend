@@ -30,13 +30,13 @@ case class RegisteredYearPage(period: Period) extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     (answers.get(RegisteredYearPage(period)), period) match {
-      case (Some(true), Period._2011 | Period._2012 | Period._2013 | Period._2014)  =>
+      case (Some(true), Period._2011 | Period._2012 | Period._2013 | Period._2014 | Period._2015) =>
         preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, period)
-      case (Some(false), Period._2011 | Period._2012 | Period._2013 | Period._2014) =>
+      case (Some(false), Period._2011 | Period._2012 | Period._2013 | Period._2014)               =>
         preAARoutes.RegisteredYearController.onPageLoad(NormalMode, Period.Year(period.end.getYear + 1))
-      case (Some(false), Period._2015)                                              =>
+      case (Some(false), Period._2015)                                                            =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
-      case _                                                                        =>
+      case _                                                                                      =>
         controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
