@@ -107,7 +107,9 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad(None).url
+        redirectLocation(result).value mustEqual preAARoutes.PIAPreRemedyController
+          .onPageLoad(NormalMode, Period._2011)
+          .url
       }
     }
 

@@ -22,7 +22,7 @@ import play.api.data.FormError
 
 class RegisteredYearFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "registeredYear.error.required"
+  val requiredKey = "registeredYear.error.required.2011"
   val invalidKey  = "error.boolean"
 
   val formProvider = new RegisteredYearFormProvider()

@@ -50,20 +50,11 @@ class CheckYourAASetupAnswersController @Inject() (
       PayTaxCharge1516Summary.row(request.userAnswers)
     )
 
-    val pIARows: Seq[Option[SummaryListRow]] =
-      PIAPreRemedySummary.rows(request.userAnswers)
-
-    val registeredYearRows: Seq[Option[SummaryListRow]] =
-      RegisteredYearSummary.rows(request.userAnswers)
-
-    val combinedPIA: Seq[Option[SummaryListRow]] =
-      Seq(registeredYearRows, pIARows).transpose.flatten
-
-    def combinedPIASummaryRows: Seq[Option[SummaryListRow]] = {
-      Seq(RegisteredYearSummary.rows(request.userAnswers), PIAPreRemedySummary.rows(request.userAnswers)).transpose.flatten
-    }
-
-
+    def combinedPIASummaryRows: Seq[Option[SummaryListRow]] =
+      Seq(
+        RegisteredYearSummary.rows(request.userAnswers),
+        PIAPreRemedySummary.rows(request.userAnswers)
+      ).transpose.flatten
 
     def maybePensionInputAmounts(userAnswers: UserAnswers): Boolean =
       userAnswers.get(PayTaxCharge1516Page) match {
