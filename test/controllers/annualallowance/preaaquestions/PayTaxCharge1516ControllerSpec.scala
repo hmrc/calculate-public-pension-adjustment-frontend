@@ -19,32 +19,32 @@ package controllers.annualallowance.preaaquestions
 import base.SpecBase
 import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
-import forms.annualallowance.preaaquestions.PayTaxCharge1516FormProvider
+import forms.annualallowance.preaaquestions.PayTaxCharge1415FormProvider
 import models.{CheckMode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.preaaquestions.PayTaxCharge1516Page
+import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.annualallowance.preaaquestions.PayTaxCharge1516View
+import views.html.annualallowance.preaaquestions.PayTaxCharge1415View
 
 import scala.concurrent.Future
 
-class PayTaxCharge1516ControllerSpec extends SpecBase with MockitoSugar {
+class PayTaxCharge1415ControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new PayTaxCharge1516FormProvider()
+  val formProvider = new PayTaxCharge1415FormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = preAARoutes.PayTaxCharge1516Controller.onPageLoad(NormalMode).url
-  lazy val checkRoute  = preAARoutes.PayTaxCharge1516Controller.onPageLoad(CheckMode).url
+  lazy val normalRoute = preAARoutes.PayTaxCharge1415Controller.onPageLoad(NormalMode).url
+  lazy val checkRoute  = preAARoutes.PayTaxCharge1415Controller.onPageLoad(CheckMode).url
 
-  "PayTaxCharge1516 Controller" - {
+  "PayTaxCharge1415 Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
@@ -55,7 +55,7 @@ class PayTaxCharge1516ControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[PayTaxCharge1516View]
+        val view = application.injector.instanceOf[PayTaxCharge1415View]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -64,14 +64,14 @@ class PayTaxCharge1516ControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(PayTaxCharge1516Page, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(PayTaxCharge1415Page, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, normalRoute)
 
-        val view = application.injector.instanceOf[PayTaxCharge1516View]
+        val view = application.injector.instanceOf[PayTaxCharge1415View]
 
         val result = route(application, request).value
 
@@ -100,10 +100,10 @@ class PayTaxCharge1516ControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(PayTaxCharge1516Page, true).success.value
+        val expectedAnswers = emptyUserAnswers.set(PayTaxCharge1415Page, true).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual PayTaxCharge1516Page
+        redirectLocation(result).value mustEqual PayTaxCharge1415Page
           .navigate(NormalMode, expectedAnswers)
           .url
       }
@@ -129,10 +129,10 @@ class PayTaxCharge1516ControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(PayTaxCharge1516Page, true).success.value
+        val expectedAnswers = emptyUserAnswers.set(PayTaxCharge1415Page, true).success.value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual PayTaxCharge1516Page
+        redirectLocation(result).value mustEqual PayTaxCharge1415Page
           .navigate(CheckMode, expectedAnswers)
           .url
       }
@@ -149,7 +149,7 @@ class PayTaxCharge1516ControllerSpec extends SpecBase with MockitoSugar {
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[PayTaxCharge1516View]
+        val view = application.injector.instanceOf[PayTaxCharge1415View]
 
         val result = route(application, request).value
 

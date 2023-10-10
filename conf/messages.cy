@@ -221,11 +221,11 @@ changeInTaxCharge.decreasedCharge = cy: Decreased charge
 changeInTaxCharge.none = cy: No charge
 changeInTaxCharge.change.hidden = cy: if the change in lifetime allowance has led to a change in the tax charge
 
-payTaxCharge1516.title = cy: Did you pay a tax charge between 6 April 2015 to 5 April 2016?
-payTaxCharge1516.heading = cy: Did you pay a tax charge between 6 April 2015 to 5 April 2016?
-payTaxCharge1516.checkYourAnswersLabel = cy: Did you pay a tax charge between 6 April 2015 to 5 April 2016?
-payTaxCharge1516.error.required = cy: Select yes if you paid a tax charge between 6 April 2015 to 5 April 2016
-payTaxCharge1516.change.hidden = cy: if you paid a tax charge between 6 April 2015 to 5 April 2016
+payTaxCharge1415.title = cy: Did you pay a tax charge between 6 April 2014 to 5 April 2015?
+payTaxCharge1415.heading = cy: Did you pay a tax charge between 6 April 2014 to 5 April 2015?
+payTaxCharge1415.checkYourAnswersLabel = cy: Did you pay a tax charge between 6 April 2014 to 5 April 2015?
+payTaxCharge1415.error.required = cy: Select yes if you paid a tax charge between 6 April 2014 to 5 April 2015
+payTaxCharge1415.change.hidden = cy: if you paid a tax charge between 6 April 2014 to 5 April 2015
 
 pIAPreRemedy.title = cy: What was your pension input amount from 6 April {0} and 5 April {1}?
 pIAPreRemedy.heading = cy: What was your pension input amount from 6 April {0} and 5 April {1}?

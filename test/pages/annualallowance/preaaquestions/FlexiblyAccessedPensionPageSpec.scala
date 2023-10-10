@@ -47,7 +47,7 @@ class FlexiblyAccessedPensionPageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/annual-allowance/tax-charge-between-2015-2016")
+        check(nextPageUrl, "/annual-allowance/tax-charge-between-2014-2015")
       }
     }
 
@@ -61,7 +61,7 @@ class FlexiblyAccessedPensionPageSpec extends PageBehaviours {
         check(nextPageUrl, "/annual-allowance/change-flexibly-accessed-date")
       }
 
-      "next page should be PayTaxCharge1516Page when user does not have a DC pension" in {
+      "next page should be PayTaxCharge1415Page when user does not have a DC pension" in {
         val userAnswers = UserAnswers("1").set(FlexiblyAccessedPensionPage, false).get
 
         val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(CheckMode, userAnswers)

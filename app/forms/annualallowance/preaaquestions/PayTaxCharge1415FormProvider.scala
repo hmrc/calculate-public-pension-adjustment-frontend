@@ -20,10 +20,10 @@ import forms.mappings.Mappings
 import javax.inject.Inject
 import play.api.data.Form
 
-class PayTaxCharge1516FormProvider @Inject() extends Mappings {
+class PayTaxCharge1415FormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
     Form(
-      "value" -> boolean("payTaxCharge1516.error.required")
+      "value" -> boolean("payTaxCharge1415.error.required")
     )
 }

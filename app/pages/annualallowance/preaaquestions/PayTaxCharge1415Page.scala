@@ -26,14 +26,14 @@ import play.api.mvc.Call
 
 import scala.util.Try
 
-case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
+case object PayTaxCharge1415Page extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "payTaxCharge1516"
+  override def toString: String = "payTaxCharge1415"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(PayTaxCharge1516Page) match {
+    answers.get(PayTaxCharge1415Page) match {
       case Some(false) =>
         preAARoutes.RegisteredYearController.onPageLoad(NormalMode, Period._2011)
       case Some(true)  =>
@@ -42,7 +42,7 @@ case object PayTaxCharge1516Page extends QuestionPage[Boolean] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PayTaxCharge1516Page) match {
+    answers.get(PayTaxCharge1415Page) match {
       case Some(false) => preAARoutes.RegisteredYearController.onPageLoad(NormalMode, Period._2011)
       case Some(true)  =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()

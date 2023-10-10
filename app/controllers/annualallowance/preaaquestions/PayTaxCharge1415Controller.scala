@@ -17,27 +17,27 @@
 package controllers.annualallowance.preaaquestions
 
 import controllers.actions._
-import forms.annualallowance.preaaquestions.PayTaxCharge1516FormProvider
+import forms.annualallowance.preaaquestions.PayTaxCharge1415FormProvider
 import javax.inject.Inject
 import models.Mode
-import pages.annualallowance.preaaquestions.PayTaxCharge1516Page
+import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.annualallowance.preaaquestions.PayTaxCharge1516View
+import views.html.annualallowance.preaaquestions.PayTaxCharge1415View
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class PayTaxCharge1516Controller @Inject() (
+class PayTaxCharge1415Controller @Inject() (
   override val messagesApi: MessagesApi,
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: PayTaxCharge1516FormProvider,
+  formProvider: PayTaxCharge1415FormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: PayTaxCharge1516View
+  view: PayTaxCharge1415View
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -45,7 +45,7 @@ class PayTaxCharge1516Controller @Inject() (
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(PayTaxCharge1516Page) match {
+    val preparedForm = request.userAnswers.get(PayTaxCharge1415Page) match {
       case None        => form
       case Some(value) => form.fill(value)
     }
@@ -61,9 +61,9 @@ class PayTaxCharge1516Controller @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(PayTaxCharge1516Page, value))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(PayTaxCharge1415Page, value))
               _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(PayTaxCharge1516Page.navigate(mode, updatedAnswers))
+            } yield Redirect(PayTaxCharge1415Page.navigate(mode, updatedAnswers))
         )
   }
 }

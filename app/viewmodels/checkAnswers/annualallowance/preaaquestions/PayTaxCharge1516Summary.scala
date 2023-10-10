@@ -17,25 +17,25 @@
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
 import models.{CheckMode, UserAnswers}
-import pages.annualallowance.preaaquestions.PayTaxCharge1516Page
+import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import controllers.annualallowance.preaaquestions.routes
 
-object PayTaxCharge1516Summary {
+object PayTaxCharge1415Summary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(PayTaxCharge1516Page).map { answer =>
+    answers.get(PayTaxCharge1415Page).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "payTaxCharge1516.checkYourAnswersLabel",
+        key = "payTaxCharge1415.checkYourAnswersLabel",
         value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.PayTaxCharge1516Controller.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("payTaxCharge1516.change.hidden"))
+          ActionItemViewModel("site.change", routes.PayTaxCharge1415Controller.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("payTaxCharge1415.change.hidden"))
         )
       )
     }
