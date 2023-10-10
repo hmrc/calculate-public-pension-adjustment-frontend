@@ -93,11 +93,11 @@ class PayTaxCharge1415PageSpec extends PageBehaviours {
         cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2013)) must be(None)
         cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2014)) must be(None)
         cleanedAnswers.get(preaaquestions.RegisteredYearPage(Period._2015)) must be(None)
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2011)) must be(None)
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2012)) must be(None)
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2013)) must be(None)
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2014)) must be(None)
-        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2015)) must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2011))   must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2012))   must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2013))   must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2014))   must be(None)
+        cleanedAnswers.get(preaaquestions.PIAPreRemedyPage(Period._2015))   must be(None)
 
       }
 
