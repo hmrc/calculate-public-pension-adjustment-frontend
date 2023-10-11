@@ -839,11 +839,12 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2018)
 
         result mustBe Some(
-          NormalTaxYear(
-            40000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000)),
+          PostFlexiblyAccessedTaxYear(
+            0,
+            0,
             60000,
             1000,
+            List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000)),
             Period._2018,
             Some(BelowThreshold)
           )
@@ -885,16 +886,18 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       "should return valid TaxYear2016To2023.NormalTaxYear for a Period 2021" in {
         val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2021)
 
-        result mustBe Some(
-          NormalTaxYear(
-            36000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0)),
-            60000,
-            0,
-            Period._2021,
-            Some(AboveThreshold(160000))
+        result mustBe
+          Some(
+            PostFlexiblyAccessedTaxYear(
+              0,
+              0,
+              60000,
+              0,
+              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0)),
+              Period._2021,
+              Some(AboveThreshold(160000))
+            )
           )
-        )
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2022" in {
@@ -973,11 +976,12 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Period._2017,
                   Some(BelowThreshold)
                 ),
-                NormalTaxYear(
-                  40000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000)),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
                   60000,
                   1000,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000)),
                   Period._2018,
                   Some(BelowThreshold)
                 ),
@@ -999,11 +1003,12 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Period._2020,
                   Some(BelowThreshold)
                 ),
-                NormalTaxYear(
-                  36000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0)),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
                   60000,
                   0,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0)),
                   Period._2021,
                   Some(BelowThreshold)
                 ),
@@ -1108,11 +1113,12 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Period._2017,
                   Some(BelowThreshold)
                 ),
-                NormalTaxYear(
-                  40000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000)),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
                   60000,
                   1000,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000)),
                   Period._2018,
                   Some(BelowThreshold)
                 ),

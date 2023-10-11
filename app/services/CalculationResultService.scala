@@ -175,25 +175,33 @@ class CalculationResultService @Inject() (
         .toList
 
     if (taxYearSchemes.nonEmpty) {
-      (
-        userAnswers.get(OtherDefinedBenefitOrContributionPage(period)),
-        userAnswers.get(FlexiAccessDefinedContributionAmountPage(period))
-      ) match {
-        case (Some(true), Some(postAccessDefinedContributionInputAmount)) =>
-          val definedBenefitInputAmount      =
+      val oFlexiAccessDate: Option[LocalDate] =
+        userAnswers.get(FlexibleAccessStartDatePage)
+
+      val isFlexiAccessDateInThisPeriod: Option[Boolean] = oFlexiAccessDate.map { flexiAccessDate =>
+        (flexiAccessDate.isAfter(period.start) && flexiAccessDate.isBefore(period.end)) ||
+        flexiAccessDate.isEqual(period.start) || flexiAccessDate.isEqual(period.end)
+      }
+
+      val isFlexiAccessDateBeforeThisPeriod: Option[Boolean] = oFlexiAccessDate.map(_.isBefore(period.start))
+
+      (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {
+        case (Some(true), Some(false)) =>
+          val definedBenefitInputAmount =
             userAnswers.get(DefinedBenefitAmountPage(period)).map(_.toInt).getOrElse(0)
+
           val definedContributionInputAmount =
             userAnswers.get(DefinedContributionAmountPage(period)).map(_.toInt).getOrElse(0)
 
-          val flexiAccessDate: LocalDate =
-            userAnswers.get(FlexibleAccessStartDatePage).getOrElse(LocalDate.parse("2010-01-01"))
+          val postAccessDefinedContributionInputAmount =
+            userAnswers.get(FlexiAccessDefinedContributionAmountPage(period)).map(_.toInt).getOrElse(0)
 
           Some(
             InitialFlexiblyAccessedTaxYear(
               definedBenefitInputAmount,
-              flexiAccessDate,
+              oFlexiAccessDate.getOrElse(LocalDate.parse("2010-01-01")),
               definedContributionInputAmount,
-              postAccessDefinedContributionInputAmount.toInt,
+              postAccessDefinedContributionInputAmount,
               taxYearSchemes,
               totalIncome,
               chargePaidByMember,
@@ -202,7 +210,7 @@ class CalculationResultService @Inject() (
             )
           )
 
-        case (Some(true), None) =>
+        case (Some(false), Some(true)) =>
           val definedBenefitInputAmount      =
             userAnswers.get(DefinedBenefitAmountPage(period)).map(_.toInt).getOrElse(0)
           val definedContributionInputAmount =
@@ -214,18 +222,6 @@ class CalculationResultService @Inject() (
               totalIncome,
               chargePaidByMember,
               taxYearSchemes,
-              period,
-              income
-            )
-          )
-
-        case (Some(false), _) =>
-          Some(
-            NormalTaxYear(
-              taxYearSchemes.map(_.revisedPensionInputAmount).sum,
-              taxYearSchemes,
-              totalIncome,
-              chargePaidByMember,
               period,
               income
             )
