@@ -35,7 +35,7 @@ object RegisteredYearSummary {
       row(answers, Period._2015)
     )
 
-  private def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(RegisteredYearPage(period)).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
