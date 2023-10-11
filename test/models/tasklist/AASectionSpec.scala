@@ -290,6 +290,23 @@ class AASectionSpec extends SpecBase {
 
   "Status is not first period" - {
 
+    "when user has answered defined contribution as No in AA setup questions and not answered how much scheme paid in case both paid" in {
+      val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), true)
+        .get
+        .set(PayAChargePage(Period._2016PostAlignment, SchemeIndex(0)), true)
+        .get
+        .set(WhoPaidAAChargePage(Period._2016PostAlignment, SchemeIndex(0)), WhoPaidAACharge.Both)
+        .get
+        .set(HowMuchAAChargeSchemePaidPage(Period._2016PostAlignment, SchemeIndex(0)), BigInt(999))
+        .get
+      val status      = AASection(Period._2016PostAlignment, SchemeIndex(0)).status(userAnswers)
+
+      status mustBe (SectionStatus.Completed)
+    }
+
     "when user has defined benefit then status is complete when defined benefit amount page is answered" in {
       val userAnswers = emptyUserAnswers
         .set(DefinedContributionPensionSchemePage, false)
