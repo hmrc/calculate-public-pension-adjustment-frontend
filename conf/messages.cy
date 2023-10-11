@@ -227,8 +227,8 @@ payTaxCharge1415.checkYourAnswersLabel = cy: Did you pay a tax charge between 6 
 payTaxCharge1415.error.required = cy: Select yes if you paid a tax charge between 6 April 2014 to 5 April 2015
 payTaxCharge1415.change.hidden = cy: if you paid a tax charge between 6 April 2014 to 5 April 2015
 
-pIAPreRemedy.title = cy: What was your pension input amount from 6 April {0} and 5 April {1}?
-pIAPreRemedy.heading = cy: What was your pension input amount from 6 April {0} and 5 April {1}?
+pIAPreRemedy.title = cy: What was your pension input amount from 6 April {0} to 5 April {1}?
+pIAPreRemedy.heading = cy: What was your pension input amount from 6 April {0} to 5 April {1}?
 pIAPreRemedy.message1 = cy: This is the total amount paid into or any increase in a defined contribution pension scheme in a tax year.
 pIAPreRemedy.message2 = cy: This can be done by you or anyone else, such as your employer.
 pIAPreRemedy.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300
@@ -995,8 +995,8 @@ newPensionCreditReference.error.length = cy: Your new lifetime allowance pension
 newPensionCreditReference.error.invalid = cy: Your new lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
 newPensionCreditReference.change.hidden = cy: What is your new lifetime allowance pension credit reference?
 
-registeredYear.title = cy: Were you a member of a registered pension scheme scheme between 6 April {0} and 5 April {1}?
-registeredYear.heading = cy: Were you a member of a registered pension scheme scheme between 6 April {0} and 5 April {1}?
+registeredYear.title = cy: Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
+registeredYear.heading = cy: Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
 registeredYear.hint = cy: This includes qualifying overseas pension schemes
 registeredYear.checkYourAnswersLabel = cy: Member of a registered pension scheme between 6 April {0} and 5 April {1}?
 registeredYear.checkYourAnswersLabel.2011 = cy: Member of a registered pension scheme between 6 April 2010 and 5 April 2011

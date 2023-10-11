@@ -227,8 +227,8 @@ payTaxCharge1415.checkYourAnswersLabel = Did you pay a tax charge between 6 Apri
 payTaxCharge1415.error.required = Select yes if you paid a tax charge between 6 April 2014 to 5 April 2015
 payTaxCharge1415.change.hidden = if you paid a tax charge between 6 April 2014 to 5 April 2015
 
-pIAPreRemedy.title = What was your pension input amount from 6 April {0} and 5 April {1}?
-pIAPreRemedy.heading = What was your pension input amount from 6 April {0} and 5 April {1}?
+pIAPreRemedy.title = What was your pension input amount from 6 April {0} to 5 April {1}?
+pIAPreRemedy.heading = What was your pension input amount from 6 April {0} to 5 April {1}?
 pIAPreRemedy.message1 = This is the total amount paid into or any increase in a defined contribution pension scheme in a tax year.
 pIAPreRemedy.message2 = This can be done by you or anyone else, such as your employer.
 pIAPreRemedy.hint = Amounts must be rounded down to the nearest pound, for example 2300
@@ -995,8 +995,8 @@ newPensionCreditReference.error.length = Your new lifetime allowance pension cre
 newPensionCreditReference.error.invalid = Your new lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
 newPensionCreditReference.change.hidden = What is your new lifetime allowance pension credit reference?
 
-registeredYear.title = Were you a member of a registered pension scheme scheme between 6 April {0} and 5 April {1}?
-registeredYear.heading = Were you a member of a registered pension scheme scheme between 6 April {0} and 5 April {1}?
+registeredYear.title = Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
+registeredYear.heading = Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
 registeredYear.hint = This includes qualifying overseas pension schemes
 registeredYear.checkYourAnswersLabel = Member of a registered pension scheme between 6 April {0} and 5 April {1}?
 registeredYear.checkYourAnswersLabel.2011 = Member of a registered pension scheme between 6 April 2010 and 5 April 2011
