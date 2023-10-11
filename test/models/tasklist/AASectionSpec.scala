@@ -38,6 +38,8 @@ class AASectionSpec extends SpecBase {
         .get
         .set(HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0)), BigInt(999))
         .get
+        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
+        .get
 
       val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
 
@@ -70,6 +72,8 @@ class AASectionSpec extends SpecBase {
         .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.You)
         .get
         .set(HowMuchAAChargeYouPaidPage(Period._2016PreAlignment, SchemeIndex(0)), BigInt(999))
+        .get
+        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
         .get
 
       val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
@@ -105,6 +109,8 @@ class AASectionSpec extends SpecBase {
         .get
         .set(HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0)), BigInt(999))
         .get
+        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
+        .get
 
       val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
 
@@ -134,6 +140,8 @@ class AASectionSpec extends SpecBase {
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
         .get
         .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), false)
+        .get
+        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
         .get
 
       val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
@@ -167,6 +175,8 @@ class AASectionSpec extends SpecBase {
         )
         .get
         .set(DefinedBenefitAmountPage(Period._2016PreAlignment), BigInt(999))
+        .get
+        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
         .get
 
       val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
@@ -222,6 +232,8 @@ class AASectionSpec extends SpecBase {
         .get
         .set(DefinedContributionAmountPage(Period._2016PreAlignment), BigInt(999))
         .get
+        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
+        .get
 
       val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
 
@@ -254,6 +266,8 @@ class AASectionSpec extends SpecBase {
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
         .get
         .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), false)
+        .get
+        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
         .get
 
       val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)

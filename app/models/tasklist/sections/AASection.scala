@@ -137,7 +137,7 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
     }
 
   private def isFirstPeriod =
-    period == Period._2016PreAlignment
+    period == Period._2016PostAlignment
 
   private def firstPageIsAnswered(answers: UserAnswers) =
     answers.get(MemberMoreThanOnePensionPage(period)).isDefined
