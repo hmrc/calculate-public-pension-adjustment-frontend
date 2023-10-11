@@ -15,13 +15,13 @@
  */
 
 package pages.annualallowance.taxyear
-
-import controllers.annualallowance.taxyear.routes.{DefinedBenefitAmountController, FlexiAccessDefinedContributionAmountController}
 import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import java.time.LocalDate
 
 case class DefinedContributionAmountPage(period: Period) extends QuestionPage[BigInt] {
 
@@ -31,6 +31,7 @@ case class DefinedContributionAmountPage(period: Period) extends QuestionPage[Bi
 
   // noinspection ScalaStyle
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+
     val flexiAccessExistsForPeriod = answers.get(FlexibleAccessStartDatePage) match {
       case Some(date) => period.start.minusDays(1).isBefore(date) && period.end.plusDays(1).isAfter(date)
       case None       => false
@@ -41,11 +42,50 @@ case class DefinedContributionAmountPage(period: Period) extends QuestionPage[Bi
       case _                                                                                             => false
     }
 
+    def flexiAccessDateEqualsPeriodEndDatePre2016(answers: UserAnswers) = {
+      val endDate = LocalDate.of(2015, 7, 8)
+      answers.get(FlexibleAccessStartDatePage) match {
+        case Some(date) if date == endDate =>
+          if (definedBenefitExists) {
+            controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
+          } else {
+            controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
+          }
+        case Some(_)                       =>
+          controllers.annualallowance.taxyear.routes.FlexiAccessDefinedContributionAmountController
+            .onPageLoad(NormalMode, period)
+        case None                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    }
+
+    def flexiAccessDateEqualsPeriodEndDateNotPre2016(answers: UserAnswers) = {
+      val endDate = LocalDate.of(period.end.getYear, 4, 5)
+      answers.get(FlexibleAccessStartDatePage) match {
+        case Some(date) if date == endDate =>
+          if (definedBenefitExists)
+            controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
+          else if (period == Period._2016PostAlignment)
+            controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+          else
+            controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
+        case Some(_)                       =>
+          controllers.annualallowance.taxyear.routes.FlexiAccessDefinedContributionAmountController
+            .onPageLoad(NormalMode, period)
+        case None                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    }
+
+    def isPre2016Period =
+      if (period == Period._2016PreAlignment)
+        flexiAccessDateEqualsPeriodEndDatePre2016(answers)
+      else
+        flexiAccessDateEqualsPeriodEndDateNotPre2016(answers)
+
     answers.get(DefinedContributionAmountPage(period)) match {
       case Some(_) if flexiAccessExistsForPeriod          =>
-        FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, period)
+        isPre2016Period
       case Some(_) if definedBenefitExists                =>
-        DefinedBenefitAmountController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
       case Some(_) if period == Period._2016PostAlignment =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(_) if period == Period._2016PreAlignment  =>

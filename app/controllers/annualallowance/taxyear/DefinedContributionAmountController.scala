@@ -18,9 +18,10 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.DefinedContributionAmountFormProvider
+import models.requests.DataRequest
 import models.{Mode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
-import pages.annualallowance.taxyear.DefinedContributionAmountPage
+import pages.annualallowance.taxyear.{DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -59,11 +60,19 @@ class DefinedContributionAmountController @Inject() (
       Ok(view(preparedForm, mode, period, getStartEndDate(period, flexibleStartDate)))
     }
 
+  // noinspection ScalaStyle
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
       val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
-      val startEndDate      = getStartEndDate(period, flexibleStartDate)
-      val form              = formProvider(Seq(startEndDate))
+
+      val flexiAccessExistsForPeriod = request.userAnswers.get(FlexibleAccessStartDatePage) match {
+        case Some(date) => period.start.minusDays(1).isBefore(date) && period.end.plusDays(1).isAfter(date)
+        case None       => false
+      }
+
+      val startEndDate = getStartEndDate(period, flexibleStartDate)
+      val form         = formProvider(Seq(startEndDate))
+
       form
         .bindFromRequest()
         .fold(
@@ -72,22 +81,69 @@ class DefinedContributionAmountController @Inject() (
               BadRequest(view(formWithErrors, mode, period, getStartEndDate(period, flexibleStartDate)))
             ),
           value =>
-            for {
-              updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(DefinedContributionAmountPage(period), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(DefinedContributionAmountPage(period).navigate(mode, updatedAnswers))
+            if (flexiAccessExistsForPeriod) {
+              if (period == Period._2016PreAlignment) {
+                if (flexibleStartDate == Some(LocalDate.of(2015, 7, 8))) {
+                  updateAnswersForEndOfPeriodDate(mode, period, request, value)
+                } else {
+                  updateAnswersForNormalDate(mode, period, request, value)
+                }
+              } else if (flexibleStartDate == Some(LocalDate.of(period.end.getYear, 4, 5))) {
+                updateAnswersForEndOfPeriodDate(mode, period, request, value)
+              } else {
+                updateAnswersForNormalDate(mode, period, request, value)
+              }
+            } else {
+              updateAnswersForNormalDate(mode, period, request, value)
+            }
         )
     }
 
-  def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate]): String = {
+  def updateAnswersForEndOfPeriodDate(
+    mode: Mode,
+    period: Period,
+    request: DataRequest[AnyContent],
+    value: BigInt
+  ) =
+    for {
+      updatedAnswers <-
+        Future.fromTry(
+          request.userAnswers
+            .set(DefinedContributionAmountPage(period), value)
+            .flatMap(_.set(FlexiAccessDefinedContributionAmountPage(period), BigInt(0)))
+        )
+      _              <- sessionRepository.set(updatedAnswers)
+    } yield Redirect(DefinedContributionAmountPage(period).navigate(mode, updatedAnswers))
+
+  private def updateAnswersForNormalDate(mode: Mode, period: Period, request: DataRequest[AnyContent], value: BigInt) =
+    for {
+      updatedAnswers <-
+        Future.fromTry(request.userAnswers.set(DefinedContributionAmountPage(period), value))
+      _              <- sessionRepository.set(updatedAnswers)
+    } yield Redirect(DefinedContributionAmountPage(period).navigate(mode, updatedAnswers))
+
+  private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate]): String = {
     val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
 
-    flexibleStartDate match {
-      case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
-        period.start.format(formatter) + " to " + date.format(formatter)
-      case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
+    def normalDateFormatter =
+      flexibleStartDate match {
+        case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
+          period.start.format(formatter) + " to " + date.format(formatter)
+        case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
+      }
+
+    if (period == Period._2016PostAlignment) {
+      if (flexibleStartDate == Some(LocalDate.of(2015, 7, 9))) {
+        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
+      } else {
+        normalDateFormatter
+      }
+    } else {
+      if (flexibleStartDate == Some(LocalDate.of(period.start.getYear, 4, 6))) {
+        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
+      } else {
+        normalDateFormatter
+      }
     }
   }
-
 }
