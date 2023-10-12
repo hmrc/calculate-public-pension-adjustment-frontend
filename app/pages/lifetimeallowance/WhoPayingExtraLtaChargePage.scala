@@ -33,18 +33,25 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
   override def toString: String = "whoPayingExtraLtaCharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(WhoPayingExtraLtaChargePage) match {
-      case Some(PensionScheme) => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
-      case Some(You)           => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-      case None                => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+    {
+      val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
+      answers.get(WhoPayingExtraLtaChargePage) match {
+        case Some(PensionScheme) => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
+        case Some(You) if hasPreviousCharge => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+        case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(NormalMode)
+        case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      }
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+    val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
     answers.get(WhoPayingExtraLtaChargePage) match {
       case Some(PensionScheme) => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
-      case Some(You)           => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-      case None                => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(You) if hasPreviousCharge => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(NormalMode)
+      case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
+  }
 
   override def cleanup(value: Option[WhoPayingExtraLtaCharge], userAnswers: UserAnswers): Try[UserAnswers] =
     value

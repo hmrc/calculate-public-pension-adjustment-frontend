@@ -27,12 +27,16 @@ case object UserSchemeDetailsPage extends QuestionPage[UserSchemeDetails] {
 
   override def toString: String = "userSchemeDetails"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+    val whoPayingExtraExists: Boolean = !answers.get(WhoPayingExtraLtaChargePage).isEmpty
     answers.get(UserSchemeDetailsPage) match {
-      case Some(_) =>
+      case Some(_) if whoPayingExtraExists =>
+        controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(_) if !whoPayingExtraExists =>
         controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(UserSchemeDetailsPage) match {

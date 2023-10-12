@@ -48,6 +48,7 @@ case object NewAnnualPaymentValuePage extends QuestionPage[BigInt] {
     val newAnnualPaymentValue   = answers.get(NewAnnualPaymentValuePage)
     val oldAnnualPaymentValue   = answers.get(AnnualPaymentValuePage)
     val WhoPayingExtraLtaCharge = answers.get(WhoPayingExtraLtaChargePage)
+    val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
 
     if (
       combinedIsValueIncreased(
@@ -58,8 +59,11 @@ case object NewAnnualPaymentValuePage extends QuestionPage[BigInt] {
       ) && WhoPayingExtraLtaCharge.isEmpty
     ) {
       ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
-    } else {
+    } else if (hasPreviousCharge) {
       ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+    }
+    else {
+      ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
     }
   }
 
