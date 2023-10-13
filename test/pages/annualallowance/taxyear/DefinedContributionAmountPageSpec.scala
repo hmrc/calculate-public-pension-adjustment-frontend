@@ -125,7 +125,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
       }
 
-      "to CheckYourAnswersPage when answered and no flexi access selected and no DB selected" in {
+      "to TotalIncomePage when answered and no flexi access selected and no DB selected" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period),
@@ -141,10 +141,10 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/annual-allowance/$period/check-answers")
+        checkNavigation(result, s"/annual-allowance/$period/total-income")
       }
 
-      "to CheckYourAnswersPage when flexi date answered but for a different period and no DB selected" in {
+      "to TotalIncomePage when flexi date answered but for a different period and no DB selected" in {
         val flexiDate = period.end.plusMonths(1)
 
         val ua     = emptyUserAnswers
@@ -168,7 +168,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/annual-allowance/$period/check-answers")
+        checkNavigation(result, s"/annual-allowance/$period/total-income")
       }
     }
 
@@ -214,7 +214,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
       }
 
-      "to TotalIncomePage when answered and no flexi access selected and no DB selected" in {
+      "to CheckYourAnswersPage when answered and no flexi access selected and no DB selected" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period),
@@ -230,10 +230,10 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/annual-allowance/$period/total-income")
+        checkNavigation(result, s"/annual-allowance/$period/check-answers")
       }
 
-      "to TotalIncomePage when flexi date answered but for a different period and no DB selected" in {
+      "to CheckYourAnswersPage when flexi date answered but for a different period and no DB selected" in {
         val flexiDate = period.end.plusMonths(1)
 
         val ua     = emptyUserAnswers
@@ -257,7 +257,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/annual-allowance/$period/total-income")
+        checkNavigation(result, s"/annual-allowance/$period/check-answers")
       }
     }
 

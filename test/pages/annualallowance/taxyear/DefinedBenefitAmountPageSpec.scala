@@ -34,23 +34,6 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
       "for pre 15-16" - {
         val period: Period = Period._2016PreAlignment
 
-        "to CheckYourAnswersPage when answered" in {
-          val ua     = emptyUserAnswers
-            .set(
-              DefinedBenefitAmountPage(period),
-              BigInt("100")
-            )
-            .success
-            .value
-          val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/check-answers")
-        }
-      }
-
-      "for post 15-16" - {
-        val period: Period = Period._2016PostAlignment
-
         "to TotalIncomePage when answered" in {
           val ua     = emptyUserAnswers
             .set(
@@ -62,6 +45,23 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
           val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
 
           checkNavigation(result, s"/annual-allowance/$period/total-income")
+        }
+      }
+
+      "for post 15-16" - {
+        val period: Period = Period._2016PostAlignment
+
+        "to CheckYourAnswersPage when answered" in {
+          val ua     = emptyUserAnswers
+            .set(
+              DefinedBenefitAmountPage(period),
+              BigInt("100")
+            )
+            .success
+            .value
+          val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
+
+          checkNavigation(result, s"/annual-allowance/$period/check-answers")
         }
       }
 
