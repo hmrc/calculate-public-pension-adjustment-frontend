@@ -1011,5 +1011,11 @@ registeredYear.error.required.2014 = Select yes if you were a member of a regist
 registeredYear.error.required.2015 = Select yes if you were a member of a registered pension scheme between 6 April 2014 and 5 April 2015
 registeredYear.change.hidden = Were you a member of a registered pension scheme scheme between from 6 April {0} and 5 April {1}?
 
-cannotUseLtaServiceNoCharge.title = cannotUseLtaServiceNoCharge
-cannotUseLtaServiceNoCharge.heading = cannotUseLtaServiceNoCharge
+cannotUseLtaServiceNoCharge.title = You cannot make a lifetime allowance adjustment
+cannotUseLtaServiceNoCharge.heading = You cannot make a lifetime allowance adjustment
+cannotUseLtaServiceNoCharge.message1 = You are not able to use this service for your lifetime allowance.
+cannotUseLtaServiceNoCharge.message2 = You have not paid a lifetime allowance charge and you will not need to pay any new charges.
+cannotUseLtaServiceNoCharge.message3 = You are still able to use this service to calculate your annual allowance charges.
+cannotUseLtaServiceNoCharge.list = You can:
+cannotUseLtaServiceNoCharge.listItem1 = contact your PSA for more information about your pension scheme
+cannotUseLtaServiceNoCharge.listItem2 = contact the pension schemes helpline for more information about pension schemes (opens in a new tab)
