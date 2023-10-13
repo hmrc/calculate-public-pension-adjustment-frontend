@@ -1010,3 +1010,6 @@ registeredYear.error.required.2013 = Select yes if you were a member of a regist
 registeredYear.error.required.2014 = Select yes if you were a member of a registered pension scheme between 6 April 2013 and 5 April 2014
 registeredYear.error.required.2015 = Select yes if you were a member of a registered pension scheme between 6 April 2014 and 5 April 2015
 registeredYear.change.hidden = Were you a member of a registered pension scheme scheme between from 6 April {0} and 5 April {1}?
+
+cannotUseLtaServiceNoCharge.title = cannotUseLtaServiceNoCharge
+cannotUseLtaServiceNoCharge.heading = cannotUseLtaServiceNoCharge

@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{NormalMode, UserAnswers, UserSchemeDetails}
+import models.{CheckMode, NormalMode, UserAnswers, UserSchemeDetails}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -28,19 +28,24 @@ case object UserSchemeDetailsPage extends QuestionPage[UserSchemeDetails] {
   override def toString: String = "userSchemeDetails"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    val whoPayingExtraExists: Boolean = !answers.get(WhoPayingExtraLtaChargePage).isEmpty
+    val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
     answers.get(UserSchemeDetailsPage) match {
-      case Some(_) if whoPayingExtraExists =>
+      case Some(_) if !hasPreviousCharge =>
         controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(_) if !whoPayingExtraExists =>
+      case Some(_) if hasPreviousCharge =>
         controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
       case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+    val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
     answers.get(UserSchemeDetailsPage) match {
-      case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_) if !hasPreviousCharge =>
+        controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(_) if hasPreviousCharge =>
+        controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
+      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+  }
 }

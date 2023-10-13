@@ -51,7 +51,6 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
     val oldLumpSumValue         = answers.get(LumpSumValuePage)
     val newAnnualPaymentValue   = answers.get(NewAnnualPaymentValuePage)
     val oldAnnualPaymentValue   = answers.get(AnnualPaymentValuePage)
-    val whoPayingExtraLtaCharge = answers.get(WhoPayingExtraLtaChargePage)
     val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
 
     if (
@@ -60,14 +59,17 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
         oldLumpSumValue,
         newAnnualPaymentValue,
         oldAnnualPaymentValue
-      ) && whoPayingExtraLtaCharge.isEmpty
+      )
     ) {
-      ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
-    } else if (hasPreviousCharge){
-      ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+        ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
     }
     else{
-      ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
+      if (hasPreviousCharge) {
+        ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+      }
+      else {
+        ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
+      }
     }
   }
 

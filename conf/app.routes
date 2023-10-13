@@ -347,3 +347,5 @@ GET        /annual-allowance/registered/:period                        controlle
 POST       /annual-allowance/registered/:period                        controllers.annualallowance.preaaquestions.RegisteredYearController.onSubmit(mode: Mode = NormalMode, period: Period)
 GET        /annual-allowance/change-registered/:period                 controllers.annualallowance.preaaquestions.RegisteredYearController.onPageLoad(mode: Mode = CheckMode, period: Period)
 POST       /annual-allowance/change-registered/:period                 controllers.annualallowance.preaaquestions.RegisteredYearController.onSubmit(mode: Mode = CheckMode, period: Period)
+
+GET        /lifetime-allowance/cannotUseLtaServiceNoCharge                       controllers.lifetimeallowance.CannotUseLtaServiceNoChargeController.onPageLoad()

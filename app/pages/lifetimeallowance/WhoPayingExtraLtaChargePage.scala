@@ -19,7 +19,7 @@ package pages.lifetimeallowance
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
 import models.WhoPayingExtraLtaCharge.{PensionScheme, You}
-import models.{NormalMode, UserAnswers, WhoPayingExtraLtaCharge}
+import models.{CheckMode, NormalMode, UserAnswers, WhoPayingExtraLtaCharge}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -46,20 +46,24 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
   override protected def navigateInCheckMode(answers: UserAnswers): Call = {
     val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
     answers.get(WhoPayingExtraLtaChargePage) match {
-      case Some(PensionScheme) => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
+      case Some(PensionScheme) => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode)
       case Some(You) if hasPreviousCharge => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(NormalMode)
+      case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(CheckMode)
       case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
-  override def cleanup(value: Option[WhoPayingExtraLtaCharge], userAnswers: UserAnswers): Try[UserAnswers] =
+  override def cleanup(value: Option[WhoPayingExtraLtaCharge], userAnswers: UserAnswers): Try[UserAnswers] = {
+    val hasPreviousCharge = userAnswers.get(LifetimeAllowanceChargePage).getOrElse(false)
     value
       .map {
-        case PensionScheme => super.cleanup(value, userAnswers)
-        case You           =>
+        case PensionScheme if !hasPreviousCharge => userAnswers
+          .remove(UserSchemeDetailsPage)
+        case PensionScheme if hasPreviousCharge => super.cleanup(value, userAnswers)
+        case You =>
           userAnswers
             .remove(LtaPensionSchemeDetailsPage)
       }
       .getOrElse(super.cleanup(value, userAnswers))
+  }
 }
