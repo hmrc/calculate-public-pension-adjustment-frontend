@@ -22,7 +22,7 @@ import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.NewLumpSumValuePage
+import pages.lifetimeallowance.{NewExcessLifetimeAllowancePaidPage, NewLumpSumValuePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -39,7 +39,7 @@ class NewLumpSumValueControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = BigInt("0")
+  val validAnswer = BigInt("10")
 
   lazy val newLumpSumValueRoute =
     controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(NormalMode).url
@@ -83,14 +83,19 @@ class NewLumpSumValueControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when a non-zero valid data is submitted and excess is lumpsum there is no old lumpsum value" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
+      val userAnswers: UserAnswers =
+        emptyUserAnswers
+          .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+          .get
+
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
           .build()
 
@@ -102,7 +107,9 @@ class NewLumpSumValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad(None).url
+        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController
+          .onPageLoad(NormalMode)
+          .url
       }
     }
 

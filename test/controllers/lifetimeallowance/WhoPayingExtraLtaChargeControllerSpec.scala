@@ -17,14 +17,14 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.{routes => generalRoutes}
 import forms.lifetimeallowance.WhoPayingExtraLtaChargeFormProvider
 import models.{CheckMode, NormalMode, UserAnswers, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.WhoPayingExtraLtaChargePage
+import pages.lifetimeallowance.{LifetimeAllowanceChargePage, WhoPayingExtraLtaChargePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -142,13 +142,18 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "redirect to CheckYourLTAAnswersController page when user answers you in Normal Mode" in {
+    "redirect to CheckYourLTAAnswersController page when user answers you & Previous charge is true in Normal Mode" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
+      val userAnswers: UserAnswers =
+        emptyUserAnswers
+          .set(LifetimeAllowanceChargePage, true)
+          .get
+
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
@@ -191,18 +196,23 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
         redirectLocation(
           result
         ).value mustEqual ltaRoutes.LtaPensionSchemeDetailsController
-          .onPageLoad(NormalMode)
+          .onPageLoad(CheckMode)
           .url
       }
     }
 
-    "redirect to CheckYourLTAAnswersController page when user answers you in Check Mode" in {
+    "redirect to CheckYourLTAAnswersController page when user answers you & Previous charge is true in Check Mode" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
+      val userAnswers: UserAnswers =
+        emptyUserAnswers
+          .set(LifetimeAllowanceChargePage, true)
+          .get
+
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
             bind[SessionRepository].toInstance(mockSessionRepository)
           )

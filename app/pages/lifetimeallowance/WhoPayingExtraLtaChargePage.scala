@@ -32,24 +32,23 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
 
   override def toString: String = "whoPayingExtraLtaCharge"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    {
-      val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
-      answers.get(WhoPayingExtraLtaChargePage) match {
-        case Some(PensionScheme) => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
-        case Some(You) if hasPreviousCharge => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-        case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(NormalMode)
-        case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
-      }
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+    val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
+    answers.get(WhoPayingExtraLtaChargePage) match {
+      case Some(PensionScheme)             => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
+      case Some(You) if hasPreviousCharge  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(NormalMode)
+      case None                            => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = {
     val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
     answers.get(WhoPayingExtraLtaChargePage) match {
-      case Some(PensionScheme) => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode)
-      case Some(You) if hasPreviousCharge => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(PensionScheme)             => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode)
+      case Some(You) if hasPreviousCharge  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
       case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(CheckMode)
-      case None => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case None                            => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
@@ -57,10 +56,11 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
     val hasPreviousCharge = userAnswers.get(LifetimeAllowanceChargePage).getOrElse(false)
     value
       .map {
-        case PensionScheme if !hasPreviousCharge => userAnswers
-          .remove(UserSchemeDetailsPage)
-        case PensionScheme if hasPreviousCharge => super.cleanup(value, userAnswers)
-        case You =>
+        case PensionScheme if !hasPreviousCharge =>
+          userAnswers
+            .remove(UserSchemeDetailsPage)
+        case PensionScheme if hasPreviousCharge  => super.cleanup(value, userAnswers)
+        case You                                 =>
           userAnswers
             .remove(LtaPensionSchemeDetailsPage)
       }

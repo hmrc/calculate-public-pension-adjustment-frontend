@@ -26,19 +26,20 @@ import views.html.lifetimeallowance.CannotUseLtaServiceNoChargeView
 
 import javax.inject.Inject
 
-class CannotUseLtaServiceNoChargeController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: CannotUseLtaServiceNoChargeView
-                                     ) extends FrontendBaseController with I18nSupport {
+class CannotUseLtaServiceNoChargeController @Inject() (
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: CannotUseLtaServiceNoChargeView
+) extends FrontendBaseController
+    with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-      val annualAllowanceIncluded: Boolean = request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val annualAllowanceIncluded: Boolean =
+      request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
 
-      Ok(view(annualAllowanceIncluded))
+    Ok(view(annualAllowanceIncluded))
   }
 }

@@ -43,11 +43,11 @@ case object NewAnnualPaymentValuePage extends QuestionPage[BigInt] {
     }
 
   private def navigateValueIncrease(answers: UserAnswers, mode: Mode): Call = {
-    val newLumpSumValue         = answers.get(NewLumpSumValuePage)
-    val oldLumpSumValue         = answers.get(LumpSumValuePage)
-    val newAnnualPaymentValue   = answers.get(NewAnnualPaymentValuePage)
-    val oldAnnualPaymentValue   = answers.get(AnnualPaymentValuePage)
-    val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
+    val newLumpSumValue       = answers.get(NewLumpSumValuePage)
+    val oldLumpSumValue       = answers.get(LumpSumValuePage)
+    val newAnnualPaymentValue = answers.get(NewAnnualPaymentValuePage)
+    val oldAnnualPaymentValue = answers.get(AnnualPaymentValuePage)
+    val hasPreviousCharge     = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
 
     if (
       combinedIsValueIncreased(
@@ -58,11 +58,12 @@ case object NewAnnualPaymentValuePage extends QuestionPage[BigInt] {
       )
     ) {
       ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
-    } else if (hasPreviousCharge) {
-      ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-    }
-    else {
-      ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
+    } else {
+      if (hasPreviousCharge) {
+        ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+      } else {
+        ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
+      }
     }
   }
 

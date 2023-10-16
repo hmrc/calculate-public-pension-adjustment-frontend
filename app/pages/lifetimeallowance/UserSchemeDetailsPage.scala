@@ -32,9 +32,9 @@ case object UserSchemeDetailsPage extends QuestionPage[UserSchemeDetails] {
     answers.get(UserSchemeDetailsPage) match {
       case Some(_) if !hasPreviousCharge =>
         controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(_) if hasPreviousCharge =>
+      case Some(_) if hasPreviousCharge  =>
         controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
@@ -43,9 +43,9 @@ case object UserSchemeDetailsPage extends QuestionPage[UserSchemeDetails] {
     answers.get(UserSchemeDetailsPage) match {
       case Some(_) if !hasPreviousCharge =>
         controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(_) if hasPreviousCharge =>
+      case Some(_) if hasPreviousCharge  =>
         controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 }
