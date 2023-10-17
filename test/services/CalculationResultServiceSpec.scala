@@ -62,13 +62,23 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "flexiblyAccessedPension" : true,
            |    "flexibleAccessStartDate" : "2015-05-25",
            |    "payTaxCharge1415" : false,
+           |     "2011" : {
+           |      "registeredYear" : true,
+           |      "pIAPreRemedy" : 10000
+           |    },
+           |    "2012" : {
+           |      "registeredYear" : false
+           |    },
            |    "2013" : {
+           |      "registeredYear" : true,
            |      "pIAPreRemedy" : 40000
            |    },
            |    "2014" : {
+           |      "registeredYear" : true,
            |      "pIAPreRemedy" : 20000
            |    },
            |    "2015" : {
+           |      "registeredYear" : true,
            |      "pIAPreRemedy" : 60000
            |    },
            |    "aa" : {
@@ -534,14 +544,22 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "flexiblyAccessedPension" : true,
            |    "flexibleAccessStartDate" : "2015-05-25",
            |    "payTaxCharge1415" : false,
+           |    "2011" : {
+           |      "registeredYear" : false
+           |    },
+           |    "2012" : {
+           |      "registeredYear" : true,
+           |      "pIAPreRemedy" : 10000
+           |    },
            |    "2013" : {
+           |      "registeredYear" : true,
            |      "pIAPreRemedy" : 40000
            |    },
            |    "2014" : {
-           |      "pIAPreRemedy" : 20000
+           |      "registeredYear" : false
            |    },
            |    "2015" : {
-           |      "pIAPreRemedy" : 60000
+           |      "registeredYear" : false
            |    },
            |    "aa" : {
            |      "years" : {
@@ -757,21 +775,33 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       data = data1
     )
 
-    "toTaxYear2013To2015" - {
+    "toTaxYear2011To2015" - {
 
-      "should return valid TaxYear2013To2015 for a Period 2013" in {
+      "should return valid TaxYear2011To2015 for a Period 2011" in {
+        val result = service.toTaxYear2011To2015(userAnswers1, Period._2011)
+
+        result mustBe Some(TaxYear2011To2015(10000, Period._2011))
+      }
+
+      "should return None for a Period 2012" in {
+        val result = service.toTaxYear2011To2015(userAnswers1, Period._2012)
+
+        result mustBe None
+      }
+
+      "should return valid TaxYear2011To2015 for a Period 2013" in {
         val result = service.toTaxYear2011To2015(userAnswers1, Period._2013)
 
         result mustBe Some(TaxYear2011To2015(40000, Period._2013))
       }
 
-      "should return valid TaxYear2013To2015 for a Period 2014" in {
+      "should return valid TaxYear2011To2015 for a Period 2014" in {
         val result = service.toTaxYear2011To2015(userAnswers1, Period._2014)
 
         result mustBe Some(TaxYear2011To2015(20000, Period._2014))
       }
 
-      "should return valid TaxYear2013To2015 for a Period 2015" in {
+      "should return valid TaxYear2011To2015 for a Period 2015" in {
         val result = service.toTaxYear2011To2015(userAnswers1, Period._2015)
 
         result mustBe Some(TaxYear2011To2015(60000, Period._2015))
@@ -946,6 +976,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             AnnualAllowance(
               List.empty,
               List(
+                TaxYear2011To2015(10000, Period._2011),
                 TaxYear2011To2015(40000, Period._2013),
                 TaxYear2011To2015(20000, Period._2014),
                 TaxYear2011To2015(60000, Period._2015),
@@ -1083,9 +1114,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             AnnualAllowance(
               List.empty,
               List(
+                TaxYear2011To2015(10000, Period._2012),
                 TaxYear2011To2015(40000, Period._2013),
-                TaxYear2011To2015(20000, Period._2014),
-                TaxYear2011To2015(60000, Period._2015),
                 InitialFlexiblyAccessedTaxYear(
                   30000,
                   LocalDate.parse("2015-05-25"),
