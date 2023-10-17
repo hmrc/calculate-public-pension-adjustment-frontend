@@ -54,7 +54,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
           checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
         }
 
-        "to CheckYourAnswersPage when no DB selected" in {
+        "to TotalIncomePage when no DB selected" in {
           val ua     = emptyUserAnswers
             .set(
               FlexiAccessDefinedContributionAmountPage(period),
@@ -70,7 +70,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             .value
           val result = FlexiAccessDefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/annual-allowance/$period/check-answers")
+          checkNavigation(result, s"/annual-allowance/$period/total-income")
         }
       }
 
@@ -97,7 +97,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
           checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
         }
 
-        "to TotalIncome when no DB selected" in {
+        "to CheckYourAnswersPage when no DB selected" in {
           val ua     = emptyUserAnswers
             .set(
               FlexiAccessDefinedContributionAmountPage(period),
@@ -113,7 +113,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             .value
           val result = FlexiAccessDefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/annual-allowance/$period/total-income")
+          checkNavigation(result, s"/annual-allowance/$period/check-answers")
         }
       }
 

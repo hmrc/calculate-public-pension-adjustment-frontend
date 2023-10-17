@@ -39,9 +39,9 @@ case class FlexiAccessDefinedContributionAmountPage(period: Period) extends Ques
       DefinedBenefitAmountController.onPageLoad(NormalMode, period)
     } else {
       answers.get(FlexiAccessDefinedContributionAmountPage(period)) match {
-        case Some(_) if period == Period._2016PreAlignment  =>
-          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
         case Some(_) if period == Period._2016PostAlignment =>
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+        case Some(_) if period == Period._2016PreAlignment  =>
           controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
         case Some(_)                                        =>
           controllers.annualallowance.taxyear.routes.ThresholdIncomeController

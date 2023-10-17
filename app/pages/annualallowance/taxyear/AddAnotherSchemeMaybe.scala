@@ -43,9 +43,9 @@ object AddAnotherSchemeMaybe {
   private def noDCNavigation(period: Period): Call =
     period match {
       case Period._2016PreAlignment  =>
-        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case Period._2016PostAlignment =>
         controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
+      case Period._2016PostAlignment =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Period.Year(_)            =>
         controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
     }

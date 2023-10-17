@@ -50,14 +50,14 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
 
   def status(answers: UserAnswers): SectionStatus =
     if (firstPageIsAnswered(answers)) {
-      if (isFirstPeriod) {
-        statusInFirstPeriod(answers)
+      if (isPostFirstPeriod) {
+        statusInPostFirstPeriod(answers)
       } else {
         statusInSubsequentPeriod(answers)
       }
     } else SectionStatus.NotStarted
 
-  private def statusInFirstPeriod(answers: UserAnswers) =
+  private def statusInPostFirstPeriod(answers: UserAnswers) =
     answers.get(DefinedContributionPensionSchemePage) match {
       case Some(true)  => statusInDefinedBenefitOrContributionSection(answers)
       case Some(false) => statusOfPayACharge(answers)
@@ -136,8 +136,8 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
       case None    => SectionStatus.InProgress
     }
 
-  private def isFirstPeriod =
-    period == Period._2016PreAlignment
+  private def isPostFirstPeriod =
+    period == Period._2016PostAlignment
 
   private def firstPageIsAnswered(answers: UserAnswers) =
     answers.get(MemberMoreThanOnePensionPage(period)).isDefined

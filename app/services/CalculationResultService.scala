@@ -124,8 +124,8 @@ class CalculationResultService @Inject() (
     period: Period
   ): Option[TaxYear2016To2023] = {
     val totalIncome: Int =
-      if (period == Period._2016PreAlignment)
-        userAnswers.get(TotalIncomePage(Period._2016PostAlignment)).map(_.toInt).getOrElse(0)
+      if (period == Period._2016PostAlignment)
+        userAnswers.get(TotalIncomePage(Period._2016PreAlignment)).map(_.toInt).getOrElse(0)
       else
         userAnswers.get(TotalIncomePage(period)).map(_.toInt).getOrElse(0)
 

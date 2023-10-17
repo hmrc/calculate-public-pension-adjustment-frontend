@@ -38,6 +38,15 @@
     <p class="govuk-hint">@messages("totalIncome.hint1")</p>
 }
 
+@captionText = {
+    @if(period.start.getYear == 2015) {
+        @messages("totalIncome.caption", period.start.getYear.toString, "2016")
+    } else {
+        @messages("totalIncome.caption", period.start.getYear.toString, period.end.getYear.toString)
+    }
+}
+
+
 @layout(pageTitle = title(form, messages("totalIncome.title",period.start.getYear.toString, period.end.getYear.toString))) {
 
     @formHelper(
@@ -54,7 +63,7 @@
                 field = form("value"),
                 label = HmrcPageHeadingLabel(
                 content = messages("totalIncome.heading", period.start.getYear.toString, period.end.getYear.toString),
-                caption = messages("totalIncome.caption", period.start.getYear.toString, period.end.getYear.toString)
+                caption = HtmlContent(captionText)
                 )
             ).withHint(HintViewModel(HtmlContent(contentHint)))
             .withCssClass("govuk-currency-input__inner__input")

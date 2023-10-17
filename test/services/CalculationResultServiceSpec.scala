@@ -102,7 +102,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
            |          "definedContributionAmount" : 6000,
            |          "flexiAccessDefinedContributionAmount" : 10000,
-           |          "definedBenefitAmount" : 30000
+           |          "definedBenefitAmount" : 30000,
+           |           "totalIncome" : 60000
            |        },
            |        "2016-post" : {
            |          "memberMoreThanOnePension" : false,
@@ -124,8 +125,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          },
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 40000,
-           |          "totalIncome" : 60000
+           |          "definedBenefitAmount" : 40000
            |        },
            |        "2017" : {
            |          "memberMoreThanOnePension" : false,
@@ -344,7 +344,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
            |          "definedContributionAmount" : 6000,
            |          "flexiAccessDefinedContributionAmount" : 10000,
-           |          "definedBenefitAmount" : 30000
+           |          "definedBenefitAmount" : 30000,
+           |           "totalIncome" : 60000
            |        },
            |        "2016-post" : {
            |          "memberMoreThanOnePension" : false,
@@ -366,8 +367,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          },
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 40000,
-           |          "totalIncome" : 60000
+           |          "definedBenefitAmount" : 40000
            |        },
            |        "2017" : {
            |          "memberMoreThanOnePension" : false,
@@ -582,7 +582,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
            |          "definedContributionAmount" : 6000,
            |          "flexiAccessDefinedContributionAmount" : 10000,
-           |          "definedBenefitAmount" : 30000
+           |          "definedBenefitAmount" : 30000,
+           |           "totalIncome" : 60000
            |        },
            |        "2016-post" : {
            |          "memberMoreThanOnePension" : false,
@@ -604,8 +605,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          },
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 40000,
-           |          "totalIncome" : 60000
+           |          "definedBenefitAmount" : 40000
            |        },
            |        "2017" : {
            |          "memberMoreThanOnePension" : false,

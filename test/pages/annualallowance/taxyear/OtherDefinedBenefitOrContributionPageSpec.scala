@@ -59,7 +59,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
             .value
           val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/annual-allowance/2016-pre/check-answers")
+          checkNavigation(result, "/annual-allowance/2016-pre/total-income")
         }
       }
 
@@ -89,7 +89,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
             .value
           val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/annual-allowance/2016-post/total-income")
+          checkNavigation(result, "/annual-allowance/2016-post/check-answers")
         }
       }
 
