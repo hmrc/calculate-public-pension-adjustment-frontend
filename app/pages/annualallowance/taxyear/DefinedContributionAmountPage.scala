@@ -46,7 +46,7 @@ case class DefinedContributionAmountPage(period: Period) extends QuestionPage[Bi
         FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, period)
       case Some(_) if definedBenefitExists                =>
         DefinedBenefitAmountController.onPageLoad(NormalMode, period)
-      case Some(_) if period == Period._2016PostAlignment  =>
+      case Some(_) if period == Period._2016PostAlignment =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(_) if period == Period._2016PreAlignment  =>
         controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
