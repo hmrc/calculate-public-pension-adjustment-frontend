@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.WhoPayingExtraLtaCharge
+import models.{CheckMode, NormalMode, WhoPayingExtraLtaCharge}
 import pages.behaviours.PageBehaviours
 
 class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
@@ -28,5 +28,135 @@ class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
     beSettable[WhoPayingExtraLtaCharge](WhoPayingExtraLtaChargePage)
 
     beRemovable[WhoPayingExtraLtaCharge](WhoPayingExtraLtaChargePage)
+  }
+
+  "normal mode navigation" - {
+    "when user selects pension scheme" in {
+
+      val userAnswers =
+        emptyUserAnswers.set(WhoPayingExtraLtaChargePage, models.WhoPayingExtraLtaCharge.PensionScheme).get
+
+      val nextPageUrl: String = WhoPayingExtraLtaChargePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/scheme-paying-extra-charge")
+    }
+
+    "when user selects you and previous charge is true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
+        .set(WhoPayingExtraLtaChargePage, models.WhoPayingExtraLtaCharge.You)
+        .get
+
+      val nextPageUrl: String = WhoPayingExtraLtaChargePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user selects you and previous charge is false" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(WhoPayingExtraLtaChargePage, models.WhoPayingExtraLtaCharge.You)
+        .get
+
+      val nextPageUrl: String = WhoPayingExtraLtaChargePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/scheme-name-reference")
+    }
+  }
+
+  "check mode navigation" - {
+    "when user selects pension scheme" in {
+
+      val userAnswers =
+        emptyUserAnswers.set(WhoPayingExtraLtaChargePage, models.WhoPayingExtraLtaCharge.PensionScheme).get
+
+      val nextPageUrl: String = WhoPayingExtraLtaChargePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-scheme-paying-extra-charge")
+    }
+
+    "when user selects you and previous charge is true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
+        .set(WhoPayingExtraLtaChargePage, models.WhoPayingExtraLtaCharge.You)
+        .get
+
+      val nextPageUrl: String = WhoPayingExtraLtaChargePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user selects you and previous charge is false" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(WhoPayingExtraLtaChargePage, models.WhoPayingExtraLtaCharge.You)
+        .get
+
+      val nextPageUrl: String = WhoPayingExtraLtaChargePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-scheme-name-reference")
+    }
+  }
+
+  "cleanup" - {
+
+    "must cleanup correctly when pensionscheme is selected and previous charge is false" in {
+      val ua = emptyUserAnswers
+        .set(
+          UserSchemeDetailsPage,
+          models.UserSchemeDetails("details3", "ref3")
+        )
+        .success
+        .value
+        .set(
+          LifetimeAllowanceChargePage,
+          false
+        )
+        .success
+        .value
+        .set(
+          WhoPayingExtraLtaChargePage,
+          models.WhoPayingExtraLtaCharge.PensionScheme
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers =
+        WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.PensionScheme), ua).success.value
+
+      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe None
+
+    }
+
+    "must cleanup correctly when you is selected" in {
+      val ua = emptyUserAnswers
+        .set(
+          LtaPensionSchemeDetailsPage,
+          models.LtaPensionSchemeDetails("details3", "ref3")
+        )
+        .success
+        .value
+        .set(
+          WhoPayingExtraLtaChargePage,
+          models.WhoPayingExtraLtaCharge.You
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers =
+        WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.PensionScheme), ua).success.value
+
+      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
+
+    }
+
   }
 }

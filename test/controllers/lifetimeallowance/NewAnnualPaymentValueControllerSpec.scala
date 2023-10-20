@@ -22,7 +22,7 @@ import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.NewAnnualPaymentValuePage
+import pages.lifetimeallowance.{NewAnnualPaymentValuePage, NewExcessLifetimeAllowancePaidPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -39,7 +39,7 @@ class NewAnnualPaymentValueControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = BigInt("0")
+  val validAnswer = BigInt("100")
 
   lazy val newAnnualPaymentValueRoute =
     controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(NormalMode).url
@@ -83,7 +83,7 @@ class NewAnnualPaymentValueControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted and there is no old annualpayment value" in {
+    "must redirect to the next page when a non-zero valid data is submitted and there is no old annualpayment value" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -102,8 +102,8 @@ class NewAnnualPaymentValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController
-          .onPageLoad()
+        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController
+          .onPageLoad(NormalMode)
           .url
       }
     }

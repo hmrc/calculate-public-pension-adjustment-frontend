@@ -35,14 +35,14 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
     "when user has selected Lump Sum for how excess was paid and there is no old lump sum value" in {
 
       val userAnswers = emptyUserAnswers
-        .set(NewLumpSumValuePage, BigInt("100"))
-        .get
         .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt("100"))
         .get
 
       val nextPageUrl: String = NewLumpSumValuePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-extra-charge")
     }
 
     "when user has selected Lump Sum for how excess was paid and there is an increase" in {
@@ -60,9 +60,28 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-extra-charge")
     }
 
-    "when user has selected Lump Sum for how excess was paid and there is an decrease" in {
+    "when user has selected Lump Sum for how excess was paid and there is a decrease and previous charge is false" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt("1"))
+        .get
+
+      val nextPageUrl: String = NewLumpSumValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has selected Lump Sum for how excess was paid and there is a decrease and previous charge is true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
@@ -109,9 +128,49 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-extra-charge")
     }
 
-    "when user has selected Lump Sum for how excess was paid and there is 2 old values and 1 new value and an decrease" in {
+    "when user has selected Lump Sum for how excess was paid and there is 2 old values and 1 new value and an decrease and previous charge is false" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt("50"))
+        .get
+
+      val nextPageUrl: String = NewLumpSumValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has selected Lump Sum for how excess was paid and there is 2 new values and 1 old value and an decrease and previous charge is false" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt("20"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("20"))
+        .get
+
+      val nextPageUrl: String = NewLumpSumValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has selected Lump Sum for how excess was paid and there is 2 old values and 1 new value and an decrease and previous charge is true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(AnnualPaymentValuePage, BigInt("100"))
@@ -126,9 +185,11 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
-    "when user has selected Lump Sum for how excess was paid and there is 2 new values and 1 old value and an decrease" in {
+    "when user has selected Lump Sum for how excess was paid and there is 2 new values and 1 old value and an decrease and previous charge is true" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
@@ -168,17 +229,17 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
 
   "check mode navigation" - {
 
-    "when user has selected Lump Sum for how excess was paid in check mode " in {
+    "when user has selected Lump Sum for how excess was paid and there is no old lump sum value" in {
 
       val userAnswers = emptyUserAnswers
-        .set(NewLumpSumValuePage, BigInt("200"))
-        .get
         .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt("100"))
         .get
 
       val nextPageUrl: String = NewLumpSumValuePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-extra-charge")
     }
 
     "when user has selected Lump Sum for how excess was paid and there is an increase" in {
@@ -196,26 +257,28 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-extra-charge")
     }
 
-    "when user has selected Lump Sum for how excess was paid and there is an increase but WhoPayingExtraLtaCharge already exists" in {
+    "when user has selected Lump Sum for how excess was paid and there is a decrease and previous charge is false" in {
 
       val userAnswers = emptyUserAnswers
-        .set(LumpSumValuePage, BigInt("1"))
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
         .get
-        .set(NewLumpSumValuePage, BigInt("100"))
-        .get
-        .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.You)
+        .set(NewLumpSumValuePage, BigInt("1"))
         .get
 
       val nextPageUrl: String = NewLumpSumValuePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
     }
 
-    "when user has selected Lump Sum for how excess was paid and there is an decrease" in {
+    "when user has selected Lump Sum for how excess was paid and there is a decrease and previous charge is true" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
@@ -262,9 +325,49 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-extra-charge")
     }
 
-    "when user has selected Lump Sum for how excess was paid and there is 2 old values and 1 new value and an decrease" in {
+    "when user has selected Lump Sum for how excess was paid and there is 2 old values and 1 new value and an decrease and previous charge is false" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt("50"))
+        .get
+
+      val nextPageUrl: String = NewLumpSumValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has selected Lump Sum for how excess was paid and there is 2 new values and 1 old value and an decrease and previous charge is false" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt("20"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("20"))
+        .get
+
+      val nextPageUrl: String = NewLumpSumValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has selected Lump Sum for how excess was paid and there is 2 old values and 1 new value and an decrease and previous charge is true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(AnnualPaymentValuePage, BigInt("100"))
@@ -279,9 +382,11 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
-    "when user has selected Lump Sum for how excess was paid and there is 2 new values and 1 old value and an decrease" in {
+    "when user has selected Lump Sum for how excess was paid and there is 2 new values and 1 old value and an decrease and previous charge is true" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)

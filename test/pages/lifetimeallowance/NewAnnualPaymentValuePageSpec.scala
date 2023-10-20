@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode, WhoPayingExtraLtaCharge}
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class NewAnnualPaymentValuePageSpec extends PageBehaviours {
@@ -32,9 +32,26 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
 
   "normal mode navigation" - {
 
-    "when user has entered a new Annual Payment Value and there is an decrease" in {
+    "when user has entered a new Annual Payment Value and there is a decrease and previous charge is false" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("9000"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is a decrease and previous charge is true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(NewAnnualPaymentValuePage, BigInt("100"))
         .get
         .set(AnnualPaymentValuePage, BigInt("9000"))
@@ -94,9 +111,45 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/who-paid-extra-charge")
     }
 
-    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and an decrease" in {
+    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and a decrease and previous charge is false" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("50"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and a decrease and previous charge is false" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(NewLumpSumValuePage, BigInt("10"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("20"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and a decrease and previous charge is true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(AnnualPaymentValuePage, BigInt("100"))
@@ -109,9 +162,11 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
-    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and an decrease" in {
+    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and a decrease and previous charge is true" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(NewLumpSumValuePage, BigInt("10"))
@@ -136,9 +191,26 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
 
   "check mode navigation" - {
 
-    "when user has entered a new Annual Payment Value and there is an decrease" in {
+    "when user has entered a new Annual Payment Value and there is a decrease and previous charge is false" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("9000"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is a decrease and previous charge is true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(NewAnnualPaymentValuePage, BigInt("100"))
         .get
         .set(AnnualPaymentValuePage, BigInt("9000"))
@@ -188,9 +260,45 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/change-who-paid-extra-charge")
     }
 
-    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and an decrease" in {
+    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and a decrease and previous charge is false" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(AnnualPaymentValuePage, BigInt("100"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("50"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and a decrease and previous charge is false" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(LumpSumValuePage, BigInt("100"))
+        .get
+        .set(NewLumpSumValuePage, BigInt("10"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("20"))
+        .get
+
+      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/cannot-use-lta-service-no-charge")
+    }
+
+    "when user has entered a new Annual Payment Value and there is 2 old values and 1 new value and a decrease and previous charge is true" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(AnnualPaymentValuePage, BigInt("100"))
@@ -203,31 +311,16 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
-    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and an decrease" in {
+    "when user has entered a new Annual Payment Value and there is 2 new values and 1 old value and a decrease and previous charge is true" in {
 
       val userAnswers = emptyUserAnswers
+        .set(LifetimeAllowanceChargePage, true)
+        .get
         .set(LumpSumValuePage, BigInt("100"))
         .get
         .set(NewLumpSumValuePage, BigInt("10"))
         .get
         .set(NewAnnualPaymentValuePage, BigInt("20"))
-        .get
-
-      val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
-
-      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
-    }
-
-    "when user has selected Lump Sum for how excess was paid and there is an increase but WhoPayingExtraLtaCharge already exists" in {
-
-      val userAnswers = emptyUserAnswers
-        .set(LumpSumValuePage, BigInt("1"))
-        .get
-        .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
-        .get
-        .set(NewAnnualPaymentValuePage, BigInt("100"))
-        .get
-        .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.You)
         .get
 
       val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url

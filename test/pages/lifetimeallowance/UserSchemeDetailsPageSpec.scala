@@ -32,10 +32,38 @@ class UserSchemeDetailsPageSpec extends PageBehaviours {
 
   "normal mode navigation" - {
 
-    "when user has entered Scheme details page" in {
+    "when user has entered Scheme details page & hasPreviousCharge doesn't exist" in {
 
       val userAnswers =
         emptyUserAnswers.set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme", "01234567RT")).get
+
+      val nextPageUrl: String = UserSchemeDetailsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user has entered Scheme details page & hasPreviousCharge is false" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(LifetimeAllowanceChargePage, false)
+          .get
+          .set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme", "01234567RT"))
+          .get
+
+      val nextPageUrl: String = UserSchemeDetailsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user has entered Scheme details page & hasPreviousCharge is true" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(LifetimeAllowanceChargePage, true)
+          .get
+          .set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme", "01234567RT"))
+          .get
 
       val nextPageUrl: String = UserSchemeDetailsPage.navigate(NormalMode, userAnswers).url
 
@@ -54,7 +82,7 @@ class UserSchemeDetailsPageSpec extends PageBehaviours {
 
   "check mode navigation" - {
 
-    "when user has entered Scheme details in Check mode " in {
+    "when user has entered Scheme details in Check mode & hasPreviousCharge doesn't exist" in {
 
       val userAnswers =
         emptyUserAnswers.set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme", "01234567RT")).get
@@ -62,6 +90,34 @@ class UserSchemeDetailsPageSpec extends PageBehaviours {
       val nextPageUrl: String = UserSchemeDetailsPage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user has entered Scheme details page & hasPreviousCharge is false" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(LifetimeAllowanceChargePage, false)
+          .get
+          .set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme", "01234567RT"))
+          .get
+
+      val nextPageUrl: String = UserSchemeDetailsPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "when user has entered Scheme details page & hasPreviousCharge is true" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(LifetimeAllowanceChargePage, true)
+          .get
+          .set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme", "01234567RT"))
+          .get
+
+      val nextPageUrl: String = UserSchemeDetailsPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-new-excess-paid")
     }
 
     "when user hasn't entered Scheme details in Check mode " in {
