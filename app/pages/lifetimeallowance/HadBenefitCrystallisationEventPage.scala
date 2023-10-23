@@ -18,10 +18,13 @@ package pages.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
+import models.tasklist.sections.LTASection
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
 
@@ -33,13 +36,21 @@ case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
     answers.get(HadBenefitCrystallisationEventPage) match {
       case Some(true)  => ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode)
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
-      case None        => ltaRoutes.HadBenefitCrystallisationEventController.onPageLoad(NormalMode)
+      case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(HadBenefitCrystallisationEventPage) match {
-      case Some(true)  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(true)  => ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode)
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value match {
+      case Some(false) =>
+        val updatedAnswers = LTASection.deleteAllAnswers(userAnswers)
+        updatedAnswers.get.set(HadBenefitCrystallisationEventPage, value = false, cleanUp = false)
+      case _           => super.cleanup(value, userAnswers)
     }
 }

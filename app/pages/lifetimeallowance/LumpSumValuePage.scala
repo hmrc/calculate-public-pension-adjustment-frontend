@@ -22,6 +22,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object LumpSumValuePage extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ "lta" \ toString
@@ -37,8 +39,22 @@ case object LumpSumValuePage extends QuestionPage[BigInt] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ExcessLifetimeAllowancePaidPage) match {
-      case Some(Lumpsum) => controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(CheckMode)
+      case Some(Lumpsum) =>
+        controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
       case Some(Both)    => controllers.lifetimeallowance.routes.AnnualPaymentValueController.onPageLoad(CheckMode)
       case _             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def cleanup(value: Option[BigInt], answers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { case _ =>
+        Try(cleanUp(answers, models.LTAPageGroups.newExcessLifetimeAllowancePaidPageGroup()))
+      }
+      .getOrElse(super.cleanup(value, answers))
+
+  def cleanUp(answers: UserAnswers, pages: Seq[String]): UserAnswers =
+    pages.headOption match {
+      case Some(page) => cleanUp(answers.remove(models.UserAnswerLTAPageGroup(page)).get, pages.tail)
+      case None       => answers
     }
 }

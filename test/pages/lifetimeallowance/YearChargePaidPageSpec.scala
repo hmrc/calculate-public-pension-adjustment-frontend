@@ -21,7 +21,7 @@ import pages.behaviours.PageBehaviours
 
 class YearChargePaidSpec extends PageBehaviours {
 
-  "earChargePaidPage" - {
+  "YearChargePaidPage" - {
 
     beRetrievable[YearChargePaid](YearChargePaidPage)
 
@@ -59,7 +59,7 @@ class YearChargePaidSpec extends PageBehaviours {
 
       val nextPageUrl: String = YearChargePaidPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/change-new-excess-paid")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
     "when user hasn't entered value for Year Charge Paid in Check mode " in {

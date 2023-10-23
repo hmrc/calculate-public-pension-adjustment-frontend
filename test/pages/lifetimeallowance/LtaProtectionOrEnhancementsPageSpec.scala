@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, LtaProtectionOrEnhancements, NormalMode}
+import models.{CheckMode, EnhancementType, LtaProtectionOrEnhancements, NormalMode, ProtectionType}
 import pages.behaviours.PageBehaviours
 
 class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
@@ -131,6 +131,117 @@ class LtaProtectionOrEnhancementsSpec extends PageBehaviours {
       val nextPageUrl: String = LtaProtectionOrEnhancementsPage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "must cleanup correctly when user answers both" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LtaProtectionOrEnhancementsPage, LtaProtectionOrEnhancements.Both)
+        .get
+        .set(ProtectionTypePage, ProtectionType.EnhancedProtection)
+        .get
+        .set(ProtectionReferencePage, "123")
+        .get
+        .set(EnhancementTypePage, EnhancementType.Both)
+        .get
+        .set(InternationalEnhancementReferencePage, "123")
+        .get
+        .set(PensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        LtaProtectionOrEnhancementsPage.cleanup(Some(LtaProtectionOrEnhancements.Both), userAnswers).success.value
+
+      cleanedUserAnswers.get(ProtectionTypePage) mustBe Some(ProtectionType.EnhancedProtection)
+      cleanedUserAnswers.get(ProtectionReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(EnhancementTypePage) mustBe Some(EnhancementType.Both)
+      cleanedUserAnswers.get(InternationalEnhancementReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(PensionCreditReferencePage) mustBe Some("123")
+
+    }
+
+    "must cleanup correctly when user answers protection" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LtaProtectionOrEnhancementsPage, LtaProtectionOrEnhancements.Both)
+        .get
+        .set(ProtectionTypePage, ProtectionType.EnhancedProtection)
+        .get
+        .set(ProtectionReferencePage, "123")
+        .get
+        .set(EnhancementTypePage, EnhancementType.Both)
+        .get
+        .set(InternationalEnhancementReferencePage, "123")
+        .get
+        .set(PensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        LtaProtectionOrEnhancementsPage.cleanup(Some(LtaProtectionOrEnhancements.Protection), userAnswers).success.value
+
+      cleanedUserAnswers.get(ProtectionTypePage) mustBe Some(ProtectionType.EnhancedProtection)
+      cleanedUserAnswers.get(ProtectionReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(EnhancementTypePage) mustBe None
+      cleanedUserAnswers.get(InternationalEnhancementReferencePage) mustBe None
+      cleanedUserAnswers.get(PensionCreditReferencePage) mustBe None
+
+    }
+
+    "must cleanup correctly when user answers enhancement" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LtaProtectionOrEnhancementsPage, LtaProtectionOrEnhancements.Both)
+        .get
+        .set(ProtectionTypePage, ProtectionType.EnhancedProtection)
+        .get
+        .set(ProtectionReferencePage, "123")
+        .get
+        .set(EnhancementTypePage, EnhancementType.Both)
+        .get
+        .set(InternationalEnhancementReferencePage, "123")
+        .get
+        .set(PensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers = LtaProtectionOrEnhancementsPage
+        .cleanup(Some(LtaProtectionOrEnhancements.Enhancements), userAnswers)
+        .success
+        .value
+
+      cleanedUserAnswers.get(ProtectionTypePage) mustBe None
+      cleanedUserAnswers.get(ProtectionReferencePage) mustBe None
+      cleanedUserAnswers.get(EnhancementTypePage) mustBe Some(EnhancementType.Both)
+      cleanedUserAnswers.get(InternationalEnhancementReferencePage) mustBe Some("123")
+      cleanedUserAnswers.get(PensionCreditReferencePage) mustBe Some("123")
+    }
+
+    "must cleanup correctly when user answers none" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(LtaProtectionOrEnhancementsPage, LtaProtectionOrEnhancements.Both)
+        .get
+        .set(ProtectionTypePage, ProtectionType.EnhancedProtection)
+        .get
+        .set(ProtectionReferencePage, "123")
+        .get
+        .set(EnhancementTypePage, EnhancementType.Both)
+        .get
+        .set(InternationalEnhancementReferencePage, "123")
+        .get
+        .set(PensionCreditReferencePage, "123")
+        .get
+
+      val cleanedUserAnswers =
+        LtaProtectionOrEnhancementsPage.cleanup(Some(LtaProtectionOrEnhancements.No), userAnswers).success.value
+
+      cleanedUserAnswers.get(ProtectionTypePage) mustBe None
+      cleanedUserAnswers.get(ProtectionReferencePage) mustBe None
+      cleanedUserAnswers.get(EnhancementTypePage) mustBe None
+      cleanedUserAnswers.get(InternationalEnhancementReferencePage) mustBe None
+      cleanedUserAnswers.get(PensionCreditReferencePage) mustBe None
     }
   }
 }

@@ -17,10 +17,14 @@
 package pages.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+import models.ChangeInTaxCharge.{DecreasedCharge, IncreasedCharge, NewCharge}
 import models.{ChangeInTaxCharge, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+import pages.Page
+
+import scala.util.Try
 
 case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
 
@@ -39,5 +43,29 @@ case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+    answers.get(ChangeInTaxChargePage) match {
+      case Some(ChangeInTaxCharge.NewCharge) | Some(ChangeInTaxCharge.DecreasedCharge) | Some(
+            ChangeInTaxCharge.IncreasedCharge
+          ) =>
+        ltaRoutes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode)
+      case _ =>
+        ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+    }
+
+  override def cleanup(value: Option[ChangeInTaxCharge], answers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case ChangeInTaxCharge.None                        =>
+          val cleanedUserAnswers = Try(cleanUp(answers, models.LTAPageGroups.changeInTaxChargePageGroup()))
+          cleanedUserAnswers.get.set(ChangeInTaxChargePage, value = ChangeInTaxCharge.None, cleanUp = false)
+        case NewCharge | DecreasedCharge | IncreasedCharge =>
+          super.cleanup(value, answers)
+      }
+      .getOrElse(super.cleanup(value, answers))
+
+  def cleanUp(answers: UserAnswers, pages: Seq[String]): UserAnswers =
+    pages.headOption match {
+      case Some(page) => cleanUp(answers.remove(models.UserAnswerLTAPageGroup(page)).get, pages.tail)
+      case None       => answers
+    }
 }

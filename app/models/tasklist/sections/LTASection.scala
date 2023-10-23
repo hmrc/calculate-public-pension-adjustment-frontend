@@ -16,12 +16,20 @@
 
 package models.tasklist.sections
 
-import models.UserAnswers
+import models.WhoPayingExtraLtaCharge.{PensionScheme, You}
+import models.{ChangeInTaxCharge, UserAnswers}
 import models.tasklist.{Section, SectionStatus}
 import pages.Page
 import pages.lifetimeallowance._
+import play.api.libs.json.JsPath
+
+import scala.util.Try
 
 case object LTASection extends Section {
+
+  def deleteAllAnswers(userAnswers: UserAnswers): Try[UserAnswers] =
+    userAnswers.removePath(JsPath \ "lta")
+
   override def pages(): Seq[Page] =
     Seq(
       WhatYouWillNeedLtaPage,
@@ -29,27 +37,88 @@ case object LTASection extends Section {
       DateOfBenefitCrystallisationEventPage,
       ChangeInLifetimeAllowancePage,
       ChangeInTaxChargePage,
+      MultipleBenefitCrystallisationEventPage,
       LtaProtectionOrEnhancementsPage,
       ProtectionTypePage,
       ProtectionReferencePage,
-      ReferenceNewProtectionTypeEnhancementPage,
-      WhatNewProtectionTypeEnhancementPage,
+      EnhancementTypePage,
+      InternationalEnhancementReferencePage,
+      PensionCreditReferencePage,
       ProtectionEnhancedChangedPage,
+      WhatNewProtectionTypeEnhancementPage,
+      ReferenceNewProtectionTypeEnhancementPage,
+      NewEnhancementTypePage,
+      NewInternationalEnhancementReferencePage,
+      NewPensionCreditReferencePage,
       LifetimeAllowanceChargePage,
       ExcessLifetimeAllowancePaidPage,
+      LumpSumValuePage,
+      AnnualPaymentValuePage,
       WhoPaidLTAChargePage,
+      UserSchemeDetailsPage,
       SchemeNameAndTaxRefPage,
+      QuarterChargePaidPage,
+      YearChargePaidPage,
+      NewExcessLifetimeAllowancePaidPage,
+      NewLumpSumValuePage,
+      NewAnnualPaymentValuePage,
       WhoPayingExtraLtaChargePage,
       LtaPensionSchemeDetailsPage
     )
 
   def status(answers: UserAnswers): SectionStatus =
-    if (answers.get(HadBenefitCrystallisationEventPage).isDefined) {
-      answers.get(ChangeInTaxChargePage) match {
-        case Some(_) => SectionStatus.Completed
-        case None    => SectionStatus.InProgress
-      }
+    if (firstPageIsAnswered(answers)) {
+      if (isLastPageAnswered(answers)) {
+        SectionStatus.Completed
+      } else isLTAElligble(answers)
     } else SectionStatus.NotStarted
+
+  private def isLTAElligble(answers: UserAnswers): SectionStatus =
+    if (statusOfHadBCE(answers)) {
+      if (statusOfInformedBCEChange(answers)) {
+        if (statusOfChangeInTaxCharge(answers)) {
+          SectionStatus.InProgress
+        } else SectionStatus.Completed
+      } else SectionStatus.Completed
+    } else SectionStatus.Completed
+
+  private def isLastPageAnswered(answers: UserAnswers): Boolean =
+    answers.get(WhoPayingExtraLtaChargePage) match {
+      case Some(You)           => true
+      case Some(PensionScheme) =>
+        answers.get(LtaPensionSchemeDetailsPage) match {
+          case Some(_) => true
+          case None    => false
+        }
+      case None                => false
+    }
+
+  private def statusOfHadBCE(answers: UserAnswers): Boolean =
+    answers.get(HadBenefitCrystallisationEventPage) match {
+      case Some(false) => false
+      case Some(true)  => true
+      case None        => true
+    }
+
+  private def statusOfInformedBCEChange(answers: UserAnswers): Boolean =
+    answers.get(ChangeInLifetimeAllowancePage) match {
+      case Some(false) => false
+      case Some(true)  => true
+      case None        => true
+    }
+
+  private def statusOfChangeInTaxCharge(answers: UserAnswers): Boolean =
+    answers.get(ChangeInTaxChargePage) match {
+      case Some(ChangeInTaxCharge.NewCharge) | Some(ChangeInTaxCharge.DecreasedCharge) | Some(
+            ChangeInTaxCharge.IncreasedCharge
+          ) =>
+        true
+      case Some(ChangeInTaxCharge.None) => false
+      case None                         => true
+    }
+
+  private def firstPageIsAnswered(answers: UserAnswers) =
+    answers.get(HadBenefitCrystallisationEventPage).isDefined
 
   def navigateTo(answers: UserAnswers): Page =
     if (status(answers) == SectionStatus.Completed) {

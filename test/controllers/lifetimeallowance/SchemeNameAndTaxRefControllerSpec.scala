@@ -150,7 +150,7 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.QuarterChargePaidController.onPageLoad(CheckMode).url
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
 
       }
     }

@@ -17,16 +17,23 @@
 package base
 
 import controllers.actions._
-import models.UserAnswers
+import models.Period.{_2013, _2014, _2015, _2021, _2022}
+import models.{ChangeInTaxCharge, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
+import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
+import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
+import pages.lifetimeallowance.{AnnualPaymentValuePage, ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, HadBenefitCrystallisationEventPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, MultipleBenefitCrystallisationEventPage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
+import pages.setupquestions.ReportingChangePage
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
+
+import java.time.LocalDate
 
 trait SpecBase
     extends AnyFreeSpec
@@ -49,4 +56,228 @@ trait SpecBase
         bind[IdentifierAction].to[FakeIdentifierAction],
         bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers))
       )
+
+  def testCalulationServiceData: UserAnswers = {
+    emptyUserAnswers
+      .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head, ReportingChange.values.tail.head))
+      .success
+      .value
+      .set(ScottishTaxpayerFrom2016Page, true)
+      .success
+      .value
+      .set(WhichYearsScottishTaxpayerPage, Set[WhichYearsScottishTaxpayer](WhichYearsScottishTaxpayer._2017))
+      .success
+      .value
+      .set(PayingPublicPensionSchemePage, false)
+      .success
+      .value
+      .set(StopPayingPublicPensionPage, LocalDate.of(2021, 1, 1))
+      .success
+      .value
+      .set(DefinedContributionPensionSchemePage, true)
+      .success
+      .value
+      .set(PayTaxCharge1415Page, false)
+      .success
+      .value
+      .set(PIAPreRemedyPage(_2013), BigInt(123))
+      .success
+      .value
+      .set(PIAPreRemedyPage(_2014), BigInt(123))
+      .success
+      .value
+      .set(PIAPreRemedyPage(_2015), BigInt(123))
+      .success
+      .value
+      .set(HadBenefitCrystallisationEventPage, true)
+      .success
+      .value
+      .set(DateOfBenefitCrystallisationEventPage, LocalDate.of(2021, 1, 1))
+      .success
+      .value
+      .set(ChangeInLifetimeAllowancePage, true)
+      .success
+      .value
+      .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
+      .success
+      .value
+      .set(MultipleBenefitCrystallisationEventPage, false)
+      .success
+      .value
+      .set(LtaProtectionOrEnhancementsPage, LtaProtectionOrEnhancements.Both)
+      .success
+      .value
+      .set(ProtectionTypePage, ProtectionType.EnhancedProtection)
+      .success
+      .value
+      .set(ProtectionReferencePage, "123")
+      .success
+      .value
+      .set(EnhancementTypePage, EnhancementType.InternationalEnhancement)
+      .success
+      .value
+      .set(InternationalEnhancementReferencePage, "123")
+      .success
+      .value
+      .set(PensionCreditReferencePage, "123")
+      .success
+      .value
+      .set(ProtectionEnhancedChangedPage, ProtectionEnhancedChanged.Both)
+      .success
+      .value
+      .set(WhatNewProtectionTypeEnhancementPage, WhatNewProtectionTypeEnhancement.EnhancedProtection)
+      .success
+      .value
+      .set(ReferenceNewProtectionTypeEnhancementPage, "123")
+      .success
+      .value
+      .set(NewEnhancementTypePage, NewEnhancementType.Both)
+      .success
+      .value
+      .set(NewInternationalEnhancementReferencePage, "123")
+      .success
+      .value
+      .set(NewPensionCreditReferencePage, "123")
+      .success
+      .value
+      .set(LifetimeAllowanceChargePage, true)
+      .success
+      .value
+      .set(ExcessLifetimeAllowancePaidPage, ExcessLifetimeAllowancePaid.Both)
+      .success
+      .value
+      .set(LumpSumValuePage, BigInt(123))
+      .success
+      .value
+      .set(AnnualPaymentValuePage, BigInt(123))
+      .success
+      .value
+      .set(WhoPaidLTAChargePage, WhoPaidLTACharge.PensionScheme)
+      .success
+      .value
+      .set(UserSchemeDetailsPage, UserSchemeDetails("schemename", "taxref"))
+      .success
+      .value
+      .set(SchemeNameAndTaxRefPage, SchemeNameAndTaxRef("schemename", "taxref"))
+      .success
+      .value
+      .set(QuarterChargePaidPage, QuarterChargePaid.AprToJul)
+      .success
+      .value
+      .set(YearChargePaidPage, YearChargePaid._2020To2021)
+      .success
+      .value
+      .set(NewExcessLifetimeAllowancePaidPage, NewExcessLifetimeAllowancePaid.Both)
+      .success
+      .value
+      .set(NewLumpSumValuePage, BigInt(123))
+      .success
+      .value
+      .set(NewAnnualPaymentValuePage, BigInt(123))
+      .success
+      .value
+      .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.PensionScheme)
+      .success
+      .value
+      .set(LtaPensionSchemeDetailsPage, LtaPensionSchemeDetails("schemename", "taxref"))
+      .success
+      .value
+      .set(MemberMoreThanOnePensionPage(_2021), true)
+      .success
+      .value
+      .set(PensionSchemeDetailsPage(_2021, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
+      .success
+      .value
+      .set(PensionSchemeInputAmountsPage(_2021, SchemeIndex(0)), PensionSchemeInputAmounts(BigInt(123), BigInt(123)))
+      .success
+      .value
+      .set(PayAChargePage(_2021, SchemeIndex(0)), true)
+      .success
+      .value
+      .set(WhoPaidAAChargePage(_2021, SchemeIndex(0)), WhoPaidAACharge.Both)
+      .success
+      .value
+      .set(HowMuchAAChargeYouPaidPage(_2021, SchemeIndex(0)), BigInt(123))
+      .success
+      .value
+      .set(HowMuchAAChargeSchemePaidPage(_2021, SchemeIndex(0)), BigInt(123))
+      .success
+      .value
+      .set(AddAnotherSchemePage(_2021, SchemeIndex(0)), true)
+      .success
+      .value
+      .set(WhichSchemePage(_2021, SchemeIndex(1)), "schemeName")
+      .success
+      .value
+      .set(PensionSchemeInputAmountsPage(_2021, SchemeIndex(1)), PensionSchemeInputAmounts(BigInt(123), BigInt(123)))
+      .success
+      .value
+      .set(PayAChargePage(_2021, SchemeIndex(1)), true)
+      .success
+      .value
+      .set(WhoPaidAAChargePage(_2021, SchemeIndex(1)), WhoPaidAACharge.Both)
+      .success
+      .value
+      .set(HowMuchAAChargeYouPaidPage(_2021, SchemeIndex(1)), BigInt(123))
+      .success
+      .value
+      .set(HowMuchAAChargeSchemePaidPage(_2021, SchemeIndex(1)), BigInt(123))
+      .success
+      .value
+      .set(OtherDefinedBenefitOrContributionPage(_2021), true)
+      .success
+      .value
+      .set(
+        ContributedToDuringRemedyPeriodPage(_2021),
+        Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+      )
+      .success
+      .value
+      .set(DefinedContributionAmountPage(_2021), BigInt(123))
+      .success
+      .value
+      .set(FlexiAccessDefinedContributionAmountPage(_2021), BigInt(123))
+      .success
+      .value
+      .set(DefinedBenefitAmountPage(_2021), BigInt(123))
+      .success
+      .value
+      .set(ThresholdIncomePage(_2021), true)
+      .success
+      .value
+      .set(AdjustedIncomePage(_2021), BigInt(123))
+      .success
+      .value
+      .set(TotalIncomePage(_2021), BigInt(123))
+      .success
+      .value
+      .set(MemberMoreThanOnePensionPage(_2022), false)
+      .success
+      .value
+      .set(PensionSchemeDetailsPage(_2022, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
+      .success
+      .value
+      .set(PensionSchemeInputAmountsPage(_2022, SchemeIndex(0)), PensionSchemeInputAmounts(BigInt(123), BigInt(123)))
+      .success
+      .value
+      .set(PayAChargePage(_2022, SchemeIndex(0)), true)
+      .success
+      .value
+      .set(WhoPaidAAChargePage(_2022, SchemeIndex(0)), WhoPaidAACharge.Both)
+      .success
+      .value
+      .set(HowMuchAAChargeYouPaidPage(_2022, SchemeIndex(0)), BigInt(123))
+      .success
+      .value
+      .set(HowMuchAAChargeSchemePaidPage(_2022, SchemeIndex(0)), BigInt(123))
+      .success
+      .value
+      .set(ThresholdIncomePage(_2022), false)
+      .success
+      .value
+      .set(TotalIncomePage(_2022), BigInt(123))
+      .success
+      .value
+  }
+
 }
