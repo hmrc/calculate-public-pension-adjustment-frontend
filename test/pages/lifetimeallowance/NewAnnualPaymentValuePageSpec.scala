@@ -37,9 +37,9 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(LifetimeAllowanceChargePage, false)
         .get
-        .set(NewAnnualPaymentValuePage, BigInt("100"))
-        .get
         .set(AnnualPaymentValuePage, BigInt("9000"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("100"))
         .get
 
       val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
@@ -52,9 +52,9 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(LifetimeAllowanceChargePage, true)
         .get
-        .set(NewAnnualPaymentValuePage, BigInt("100"))
-        .get
         .set(AnnualPaymentValuePage, BigInt("9000"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("100"))
         .get
 
       val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(NormalMode, userAnswers).url
@@ -200,9 +200,9 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(LifetimeAllowanceChargePage, false)
         .get
-        .set(NewAnnualPaymentValuePage, BigInt("100"))
-        .get
         .set(AnnualPaymentValuePage, BigInt("9000"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("100"))
         .get
 
       val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
@@ -215,9 +215,9 @@ class NewAnnualPaymentValuePageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(LifetimeAllowanceChargePage, true)
         .get
-        .set(NewAnnualPaymentValuePage, BigInt("100"))
-        .get
         .set(AnnualPaymentValuePage, BigInt("9000"))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt("100"))
         .get
 
       val nextPageUrl: String = NewAnnualPaymentValuePage.navigate(CheckMode, userAnswers).url
