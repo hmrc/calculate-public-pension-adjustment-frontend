@@ -122,7 +122,7 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
         .value
         .set(
           QuarterChargePaidPage,
-          models.QuarterChargePaid.OctToDec
+          models.QuarterChargePaid.JanToApr
         )
         .success
         .value
@@ -135,7 +135,7 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(WhoPaidLTAChargePage) mustBe Some(models.WhoPaidLTACharge.You)
       cleanedUserAnswers.get(SchemeNameAndTaxRefPage) mustBe Some(models.SchemeNameAndTaxRef("string", "ref"))
       cleanedUserAnswers.get(YearChargePaidPage) mustBe Some(models.YearChargePaid._2017To2018)
-      cleanedUserAnswers.get(QuarterChargePaidPage) mustBe Some(models.QuarterChargePaid.OctToDec)
+      cleanedUserAnswers.get(QuarterChargePaidPage) mustBe Some(models.QuarterChargePaid.JanToApr)
     }
 
     "must cleanup correctly when false" in {
@@ -178,7 +178,7 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
         .value
         .set(
           QuarterChargePaidPage,
-          models.QuarterChargePaid.OctToDec
+          models.QuarterChargePaid.JanToApr
         )
         .success
         .value

@@ -98,7 +98,7 @@ class WhoPaidLTAChargeSpec extends PageBehaviours {
         .value
         .set(
           QuarterChargePaidPage,
-          models.QuarterChargePaid.OctToDec
+          models.QuarterChargePaid.JanToApr
         )
         .success
         .value
@@ -133,7 +133,7 @@ class WhoPaidLTAChargeSpec extends PageBehaviours {
         .value
         .set(
           QuarterChargePaidPage,
-          models.QuarterChargePaid.OctToDec
+          models.QuarterChargePaid.JanToApr
         )
         .success
         .value
@@ -149,7 +149,7 @@ class WhoPaidLTAChargeSpec extends PageBehaviours {
       cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe None
       cleanedUserAnswers.get(SchemeNameAndTaxRefPage) mustBe Some(models.SchemeNameAndTaxRef("string2", "ref2"))
       cleanedUserAnswers.get(YearChargePaidPage) mustBe Some(models.YearChargePaid._2017To2018)
-      cleanedUserAnswers.get(QuarterChargePaidPage) mustBe Some(models.QuarterChargePaid.OctToDec)
+      cleanedUserAnswers.get(QuarterChargePaidPage) mustBe Some(models.QuarterChargePaid.JanToApr)
     }
 
   }

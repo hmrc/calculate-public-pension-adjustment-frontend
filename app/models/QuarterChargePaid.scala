@@ -24,19 +24,19 @@ sealed trait QuarterChargePaid
 
 object QuarterChargePaid extends Enumerable.Implicits {
 
-  case object JanToMarch extends WithName("janToMarch") with QuarterChargePaid
+  case object AprToJul extends WithName("aprToJul") with QuarterChargePaid
 
-  case object AprToJun extends WithName("aprToJun") with QuarterChargePaid
+  case object JulToOct extends WithName("julToOct") with QuarterChargePaid
 
-  case object JulyToSep extends WithName("julyToSep") with QuarterChargePaid
+  case object OctToJan extends WithName("octToJan") with QuarterChargePaid
 
-  case object OctToDec extends WithName("octToDec") with QuarterChargePaid
+  case object JanToApr extends WithName("janToApr") with QuarterChargePaid
 
   val values: Seq[QuarterChargePaid] = Seq(
-    JanToMarch,
-    AprToJun,
-    JulyToSep,
-    OctToDec
+    JanToApr,
+    AprToJul,
+    JulToOct,
+    OctToJan
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
