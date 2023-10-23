@@ -34,7 +34,7 @@ class QuarterChargePaidSpec extends PageBehaviours {
 
     "when user has entered value for Quarter Charge Paid page" in {
 
-      val userAnswers = emptyUserAnswers.set(QuarterChargePaidPage, models.QuarterChargePaid.AprToJul).get
+      val userAnswers = emptyUserAnswers.set(QuarterChargePaidPage, models.QuarterChargePaid.JanToMarch).get
 
       val nextPageUrl: String = QuarterChargePaidPage.navigate(NormalMode, userAnswers).url
 
@@ -55,7 +55,7 @@ class QuarterChargePaidSpec extends PageBehaviours {
 
     "when user has entered value for Quarter Charge Paid in Check mode " in {
 
-      val userAnswers = emptyUserAnswers.set(QuarterChargePaidPage, models.QuarterChargePaid.AprToJul).get
+      val userAnswers = emptyUserAnswers.set(QuarterChargePaidPage, models.QuarterChargePaid.JanToMarch).get
 
       val nextPageUrl: String = QuarterChargePaidPage.navigate(CheckMode, userAnswers).url
 

@@ -35,13 +35,13 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           QuarterChargePaidPage,
-          models.QuarterChargePaid.AprToJul
+          models.QuarterChargePaid.JanToMarch
         )
         .get
       QuarterChargePaidSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "quarterChargePaid.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("quarterChargePaid.aprToJul")),
+          value = ValueViewModel(HtmlContent("quarterChargePaid.janToMarch")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
