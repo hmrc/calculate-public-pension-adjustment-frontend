@@ -188,4 +188,13 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
 
     checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/change-charge-amount-pension-scheme-paid")
   }
+
+  "must redirect to journey recovery when no answer in check mode" in {
+
+    val page = HowMuchAAChargeYouPaidPage(Period._2018, SchemeIndex(0))
+
+    val nextPageUrl: String = page.navigate(CheckMode, emptyUserAnswers).url
+
+    checkNavigation(nextPageUrl, "/there-is-a-problem")
+  }
 }

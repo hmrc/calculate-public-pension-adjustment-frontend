@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.LtaPensionSchemeDetails
+import models.{CheckMode, LtaPensionSchemeDetails, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class LtaPensionSchemeDetailsPageSpec extends PageBehaviours {
@@ -28,5 +28,36 @@ class LtaPensionSchemeDetailsPageSpec extends PageBehaviours {
     beSettable[LtaPensionSchemeDetails](LtaPensionSchemeDetailsPage)
 
     beRemovable[LtaPensionSchemeDetails](LtaPensionSchemeDetailsPage)
+  }
+
+  "Normal mode" - {
+
+    "must navigate to change in lifetime allowance page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(LtaPensionSchemeDetailsPage, LtaPensionSchemeDetails("schemeName", "schemeRef"))
+          .get
+
+      val nextPageUrl: String = LtaPensionSchemeDetailsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate to LTA CYA page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(LtaPensionSchemeDetailsPage, LtaPensionSchemeDetails("schemeName", "schemeRef"))
+          .get
+
+      val nextPageUrl: String = LtaPensionSchemeDetailsPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+
+    }
   }
 }

@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, PSTR, Period, SchemeIndex}
+import models.{CheckMode, NormalMode, PSTR, Period, SchemeIndex}
 import pages.behaviours.PageBehaviours
 
 class WhichSchemeSpec extends PageBehaviours {
@@ -48,6 +48,29 @@ class WhichSchemeSpec extends PageBehaviours {
         WhichSchemePage(Period._2018, SchemeIndex(0)).navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/2018/scheme-name-reference/0")
+    }
+
+    "to journey recovery when no answer" in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String =
+        WhichSchemePage(Period._2018, SchemeIndex(0)).navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate to CYA when submitted" in {
+
+      val userAnswers = emptyUserAnswers.set(WhichSchemePage(Period._2018, SchemeIndex(0)), PSTR.New).get
+
+      val nextPageUrl: String =
+        WhichSchemePage(Period._2018, SchemeIndex(0)).navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/check-answers")
     }
   }
 }

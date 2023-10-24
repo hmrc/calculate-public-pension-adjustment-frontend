@@ -77,6 +77,13 @@ class RegisteredYearPageSpec extends PageBehaviours {
 
       checkNavigation(nextPageUrl, "/annual-allowance/pension-input-amount/2015")
     }
+
+    "must redirect to journey recovery when no answer" in {
+
+      val nextPageUrl = RegisteredYearPage(Period._2015).navigate(NormalMode, emptyUserAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 
   "CheckMode" - {
@@ -125,6 +132,13 @@ class RegisteredYearPageSpec extends PageBehaviours {
       val nextPageUrl = RegisteredYearPage(Period._2015).navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/change-pension-input-amount/2015")
+    }
+
+    "must redirect to journey recovery when no answer" in {
+
+      val nextPageUrl = RegisteredYearPage(Period._2015).navigate(CheckMode, emptyUserAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
   }
 

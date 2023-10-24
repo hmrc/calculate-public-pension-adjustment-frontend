@@ -18,10 +18,9 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.ProtectionTypeFormProvider
-import models.{CheckMode, NormalMode, ProtectionType, UserAnswers}
+import models.{NormalMode, ProtectionType, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -40,7 +39,6 @@ class ProtectionTypeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   lazy val normalRoute = ltaRoutes.ProtectionTypeController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.ProtectionTypeController.onPageLoad(CheckMode).url
 
   val formProvider = new ProtectionTypeFormProvider()
   val form         = formProvider()
@@ -84,65 +82,7 @@ class ProtectionTypeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted in NormalMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", ProtectionType.values.head.toString))
-
-        val result = route(application, request).value
-
-        val expectedAnswers = emptyUserAnswers.set(ProtectionTypePage, ProtectionType.values.head).success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ProtectionTypePage
-          .navigate(NormalMode, expectedAnswers)
-          .url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", ProtectionType.values.head.toString))
-
-        val result = route(application, request).value
-
-        val expectedAnswers = emptyUserAnswers.set(ProtectionTypePage, ProtectionType.values.head).success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ProtectionTypePage
-          .navigate(CheckMode, expectedAnswers)
-          .url
-      }
-    }
-
-    "must redirect to the ProtectionReference page when valid data is submitted in NormalMode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -163,36 +103,6 @@ class ProtectionTypeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.ProtectionReferenceController.onPageLoad(NormalMode).url
-      }
-    }
-
-    "must redirect to the CheckYourLTAAnswers page when valid data is submitted in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", ProtectionType.values.head.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.ProtectionReferenceController.onPageLoad(CheckMode).url
       }
     }
 

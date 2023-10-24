@@ -18,10 +18,9 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import forms.annualallowance.preaaquestions.PayingPublicPensionSchemeFormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,7 +42,6 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
   val form         = formProvider()
 
   lazy val NormalRoute = preAARoutes.PayingPublicPensionSchemeController.onPageLoad(NormalMode).url
-  lazy val CheckRoute  = preAARoutes.PayingPublicPensionSchemeController.onPageLoad(CheckMode).url
 
   "PayingPublicPensionScheme Controller" - {
 
@@ -101,120 +99,10 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(PayingPublicPensionSchemePage, true).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual PayingPublicPensionSchemePage.navigate(NormalMode, expectedAnswers).url
       }
     }
 
-    "must redirect to CheckYourAnswers when user answers true in NormalMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, NormalRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        val expectedAnswers = emptyUserAnswers.set(PayingPublicPensionSchemePage, true).success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual PayingPublicPensionSchemePage.navigate(NormalMode, expectedAnswers).url
-      }
-    }
-
-    "must redirect to StopPayingPublicPension when user answers false in NormalMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, NormalRoute)
-            .withFormUrlEncodedBody(("value", "false"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.StopPayingPublicPensionController
-          .onPageLoad(NormalMode)
-          .url
-      }
-    }
-
-    "must redirect to CheckYourAnswers when user answers true in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, CheckRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController
-          .onPageLoad()
-          .url // Change to appropriate page upon implementation
-      }
-    }
-
-    "must redirect to StopPayingPublicPension when user answers false in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, CheckRoute)
-            .withFormUrlEncodedBody(("value", "false"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.StopPayingPublicPensionController.onPageLoad(CheckMode).url
-      }
-    }
     "must return a Bad Request and errors when invalid data is submitted" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()

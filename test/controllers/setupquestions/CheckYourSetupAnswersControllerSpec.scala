@@ -18,11 +18,21 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
+import models.{NormalMode, ReportingChange}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar.mock
+import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
+import pages.setupquestions.ReportingChangePage
+import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import repositories.SessionRepository
+import viewmodels.checkAnswers.setupquestions.ReportingChangeSummary
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
+
+import scala.concurrent.Future
 
 class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
@@ -66,6 +76,85 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+      }
+    }
+
+    "must redirect to ScottishTaxpayerFrom2016Controller if reporting page has indicated AA and Scottsih tax payer page has not been answered" in {
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val userAnswers = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[CheckYourAnswersView]
+        val list = SummaryListViewModel(Seq(ReportingChangeSummary.row(userAnswers)(messages(application))).flatten)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          "checkYourAnswers.setup.subHeading",
+          controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode),
+          list
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must redirect to task list controller if reporting page has indicated AA and Scottsih tax payer page has been answered" in {
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val userAnswers = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
+        .success
+        .value
+        .set(ScottishTaxpayerFrom2016Page, false)
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[CheckYourAnswersView]
+        val list = SummaryListViewModel(Seq(ReportingChangeSummary.row(userAnswers)(messages(application))).flatten)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          "checkYourAnswers.setup.subHeading",
+          controllers.routes.TaskListController.onPageLoad(),
+          list
+        )(
+          request,
+          messages(application)
+        ).toString
       }
     }
   }

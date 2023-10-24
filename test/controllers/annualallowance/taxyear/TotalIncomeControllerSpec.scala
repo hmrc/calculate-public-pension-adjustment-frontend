@@ -19,7 +19,6 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import config.FrontendAppConfig
 import controllers.annualallowance.taxyear.routes.TotalIncomeController
-import controllers.routes
 import forms.annualallowance.taxyear.TotalIncomeFormProvider
 import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any

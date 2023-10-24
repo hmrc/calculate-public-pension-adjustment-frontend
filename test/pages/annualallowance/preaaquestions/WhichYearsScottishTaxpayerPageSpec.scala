@@ -16,7 +16,7 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.WhichYearsScottishTaxpayer
+import models.{CheckMode, NormalMode, WhichYearsScottishTaxpayer}
 import pages.behaviours.PageBehaviours
 
 class WhichYearsScottishTaxpayerPageSpec extends PageBehaviours {
@@ -28,5 +28,49 @@ class WhichYearsScottishTaxpayerPageSpec extends PageBehaviours {
     beSettable[Set[WhichYearsScottishTaxpayer]](WhichYearsScottishTaxpayerPage)
 
     beRemovable[Set[WhichYearsScottishTaxpayer]](WhichYearsScottishTaxpayerPage)
+  }
+
+  "Normal mode" - {
+
+    "must redirect to Paying Public Pension Scheme page when set contains answer" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(WhichYearsScottishTaxpayerPage, WhichYearsScottishTaxpayer.values.toSet)
+        .success
+        .value
+
+      val result = WhichYearsScottishTaxpayerPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(result, "/annual-allowance/paying-into-public-service-pension")
+    }
+
+    "must redirect to journey recovery when set contains no answers" in {
+
+      val result = WhichYearsScottishTaxpayerPage.navigate(NormalMode, emptyUserAnswers).url
+
+      checkNavigation(result, "/there-is-a-problem")
+    }
+  }
+
+  "Check mode" - {
+
+    "must redirect to CYA page when set contains answer" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(WhichYearsScottishTaxpayerPage, WhichYearsScottishTaxpayer.values.toSet)
+        .success
+        .value
+
+      val result = WhichYearsScottishTaxpayerPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(result, "/annual-allowance/setup-check-answers")
+    }
+
+    "must redirect to journey recovery when set contains no answers" in {
+
+      val result = WhichYearsScottishTaxpayerPage.navigate(CheckMode, emptyUserAnswers).url
+
+      checkNavigation(result, "/there-is-a-problem")
+    }
   }
 }

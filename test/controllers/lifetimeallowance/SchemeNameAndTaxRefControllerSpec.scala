@@ -18,10 +18,8 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.SchemeNameAndTaxRefFormProvider
-import models.{CheckMode, NormalMode, SchemeNameAndTaxRef, UserAnswers}
+import models.{NormalMode, SchemeNameAndTaxRef, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -42,16 +40,8 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new SchemeNameAndTaxRefFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
-
   lazy val schemeNameAndTaxRefRoute =
     controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(NormalMode).url
-
-  lazy val schemeNameAndTaxRefCheckRoute =
-    controllers.lifetimeallowance.routes.SchemeNameAndTaxRefController.onPageLoad(CheckMode).url
-
-  private val validAnswer = SchemeNameAndTaxRef("Some scheme", "00348916RT")
 
   "SchemeNameAndTaxRef Controller" - {
 
@@ -98,7 +88,7 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is NormalMode" in {
+    "must redirect to the next page when submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -118,41 +108,7 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(SchemeNameAndTaxRefPage, validAnswer).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual SchemeNameAndTaxRefPage
-          .navigate(NormalMode, expectedAnswers)
-          .url
-
-      }
-    }
-
-    "must redirect to the next page when valid data is CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, schemeNameAndTaxRefCheckRoute)
-            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
-
       }
     }
 

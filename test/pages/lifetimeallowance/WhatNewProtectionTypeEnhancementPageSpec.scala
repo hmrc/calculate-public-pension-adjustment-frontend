@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.WhatNewProtectionTypeEnhancement
+import models.{CheckMode, NormalMode, WhatNewProtectionTypeEnhancement}
 import pages.behaviours.PageBehaviours
 
 class WhatNewProtectionTypeEnhancementSpec extends PageBehaviours {
@@ -28,5 +28,36 @@ class WhatNewProtectionTypeEnhancementSpec extends PageBehaviours {
     beSettable[WhatNewProtectionTypeEnhancement](WhatNewProtectionTypeEnhancementPage)
 
     beRemovable[WhatNewProtectionTypeEnhancement](WhatNewProtectionTypeEnhancementPage)
+  }
+
+  "Normal mode" - {
+
+    "must navigate new enhancement/protection page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(WhatNewProtectionTypeEnhancementPage, WhatNewProtectionTypeEnhancement.EnhancedProtection)
+          .get
+
+      val nextPageUrl: String = WhatNewProtectionTypeEnhancementPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-protection-reference")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate new enhancement/protection page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(WhatNewProtectionTypeEnhancementPage, WhatNewProtectionTypeEnhancement.EnhancedProtection)
+          .get
+
+      val nextPageUrl: String = WhatNewProtectionTypeEnhancementPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-new-protection-reference")
+
+    }
   }
 }

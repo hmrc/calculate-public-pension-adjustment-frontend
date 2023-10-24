@@ -16,6 +16,7 @@
 
 package pages.setupquestions
 
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class ReasonForResubmissionPageSpec extends PageBehaviours {
@@ -27,5 +28,36 @@ class ReasonForResubmissionPageSpec extends PageBehaviours {
     beSettable[String](ReasonForResubmissionPage)
 
     beRemovable[String](ReasonForResubmissionPage)
+  }
+
+  "Normal mode" - {
+
+    "must navigate new enhancement/protection page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(ReasonForResubmissionPage, "Reason")
+          .get
+
+      val nextPageUrl: String = ReasonForResubmissionPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/charges")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate new enhancement/protection page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(ReasonForResubmissionPage, "Reason")
+          .get
+
+      val nextPageUrl: String = ReasonForResubmissionPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+
+    }
   }
 }

@@ -84,7 +84,7 @@ class NewAnnualPaymentValueControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when a non-zero valid data is submitted and there is no old annualpayment value" in {
+    "must redirect to the next page when submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -103,9 +103,6 @@ class NewAnnualPaymentValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController
-          .onPageLoad(NormalMode)
-          .url
       }
     }
 

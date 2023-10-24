@@ -16,7 +16,7 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.WhichYearsScottishTaxpayer
+import models.{CheckMode, NormalMode, WhichYearsScottishTaxpayer}
 import pages.behaviours.PageBehaviours
 
 class ScottishTaxpayerFrom2016PageSpec extends PageBehaviours {
@@ -29,26 +29,97 @@ class ScottishTaxpayerFrom2016PageSpec extends PageBehaviours {
 
     beRemovable[Boolean](ScottishTaxpayerFrom2016Page)
 
-    "must not remove ReasonForResubmissionPage when the answer is yes" in {
+    "Normal Mode" - {
 
-      val answers =
-        emptyUserAnswers.set(WhichYearsScottishTaxpayerPage, WhichYearsScottishTaxpayer.values.toSet).success.value
+      "must redirect to which year scottish tax payer page when true" in {
 
-      val result = answers.set(ScottishTaxpayerFrom2016Page, true).success.value
+        val userAnswers = emptyUserAnswers
+          .set(ScottishTaxpayerFrom2016Page, true)
+          .success
+          .value
 
-      result.get(ScottishTaxpayerFrom2016Page)   must be(defined)
-      result.get(WhichYearsScottishTaxpayerPage) must be(defined)
+        val result = ScottishTaxpayerFrom2016Page.navigate(NormalMode, userAnswers).url
+
+        checkNavigation(result, "/annual-allowance/scottish-taxpayer-years")
+      }
+
+      "must redirect to paying public pension scheme page when false" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(ScottishTaxpayerFrom2016Page, false)
+          .success
+          .value
+
+        val result = ScottishTaxpayerFrom2016Page.navigate(NormalMode, userAnswers).url
+
+        checkNavigation(result, "/annual-allowance/paying-into-public-service-pension")
+      }
+
+      "must redirect to paying scottish tax payer from 2016 page when no answer" in {
+
+        val result = ScottishTaxpayerFrom2016Page.navigate(NormalMode, emptyUserAnswers).url
+
+        checkNavigation(result, "/annual-allowance/scottish-taxpayer")
+      }
     }
 
-    "must remove ReasonForResubmissionPage when the answer is no" in {
+    "Check mode" - {
 
-      val answers =
-        emptyUserAnswers.set(WhichYearsScottishTaxpayerPage, WhichYearsScottishTaxpayer.values.toSet).success.value
+      "must redirect to which year scottish tax payer page when true" in {
 
-      val result = answers.set(ScottishTaxpayerFrom2016Page, false).success.value
+        val userAnswers = emptyUserAnswers
+          .set(ScottishTaxpayerFrom2016Page, true)
+          .success
+          .value
 
-      result.get(ScottishTaxpayerFrom2016Page)   must be(defined)
-      result.get(WhichYearsScottishTaxpayerPage) must not be defined
+        val result = ScottishTaxpayerFrom2016Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(result, "/annual-allowance/change-scottish-taxpayer-years")
+      }
+
+      "must redirect to CYA page when false" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(ScottishTaxpayerFrom2016Page, false)
+          .success
+          .value
+
+        val result = ScottishTaxpayerFrom2016Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(result, "/annual-allowance/setup-check-answers")
+      }
+
+      "must redirect to journey recovery when no answer" in {
+
+        val result = ScottishTaxpayerFrom2016Page.navigate(CheckMode, emptyUserAnswers).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "clean up" - {
+
+      "must not remove ReasonForResubmissionPage when the answer is yes" in {
+
+        val answers =
+          emptyUserAnswers.set(WhichYearsScottishTaxpayerPage, WhichYearsScottishTaxpayer.values.toSet).success.value
+
+        val result = answers.set(ScottishTaxpayerFrom2016Page, true).success.value
+
+        result.get(ScottishTaxpayerFrom2016Page)   must be(defined)
+        result.get(WhichYearsScottishTaxpayerPage) must be(defined)
+      }
+
+      "must remove ReasonForResubmissionPage when the answer is no" in {
+
+        val answers =
+          emptyUserAnswers.set(WhichYearsScottishTaxpayerPage, WhichYearsScottishTaxpayer.values.toSet).success.value
+
+        val result = answers.set(ScottishTaxpayerFrom2016Page, false).success.value
+
+        result.get(ScottishTaxpayerFrom2016Page)   must be(defined)
+        result.get(WhichYearsScottishTaxpayerPage) must not be defined
+      }
     }
   }
 }

@@ -18,9 +18,8 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.WhoPaidAAChargeFormProvider
-import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidAACharge}
+import models.{NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidAACharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -41,11 +40,6 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
   lazy val whoPaidAAChargeRoute =
     controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
-      .url
-
-  lazy val whoPaidAAChargeCheckRoute =
-    controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController
-      .onPageLoad(CheckMode, Period._2018, SchemeIndex(0))
       .url
 
   val formProvider = new WhoPaidAAChargeFormProvider()
@@ -120,14 +114,9 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
           FakeRequest(POST, whoPaidAAChargeRoute)
             .withFormUrlEncodedBody(("value", WhoPaidAACharge.values.head.toString))
 
-        val userAnswers = emptyUserAnswers.set(WhoPaidAAChargePage(Period._2018, SchemeIndex(0)), WhoPaidAACharge.You)
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual WhoPaidAAChargePage(Period._2018, SchemeIndex(0))
-          .navigate(NormalMode, userAnswers.get)
-          .url
       }
     }
 
@@ -184,35 +173,6 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
 
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
-      }
-    }
-
-    "must redirect to how much charge you paid page when user selects you" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, whoPaidAAChargeRoute)
-            .withFormUrlEncodedBody(("value", WhoPaidAACharge.You.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.HowMuchAAChargeYouPaidController
-          .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
-          .url
       }
     }
   }

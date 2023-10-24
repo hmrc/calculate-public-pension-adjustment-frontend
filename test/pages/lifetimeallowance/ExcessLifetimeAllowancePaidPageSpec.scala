@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{ExcessLifetimeAllowancePaid, NormalMode}
+import models.{CheckMode, ExcessLifetimeAllowancePaid, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class ExcessLifetimeAllowancePaidSpec extends PageBehaviours {
@@ -67,6 +67,18 @@ class ExcessLifetimeAllowancePaidSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
 
       val nextPageUrl: String = ExcessLifetimeAllowancePaidPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate to journey recovery when incorrect value" in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = ExcessLifetimeAllowancePaidPage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }

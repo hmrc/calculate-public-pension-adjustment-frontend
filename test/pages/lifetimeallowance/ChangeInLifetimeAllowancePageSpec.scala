@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{ChangeInTaxCharge, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{ChangeInTaxCharge, CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.behaviours.PageBehaviours
 
 import java.time.LocalDate
@@ -31,6 +31,79 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
     beRemovable[Boolean](ChangeInLifetimeAllowancePage)
   }
+
+  "Normal mode" - {
+
+    "must navigate to change in tax charge page when user answers true" in {
+
+      val ua = emptyUserAnswers
+        .set(ChangeInLifetimeAllowancePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-charge-change")
+    }
+
+    "must navigate to kickout when user answers false" in {
+
+      val ua = emptyUserAnswers
+        .set(ChangeInLifetimeAllowancePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-lta-service")
+    }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate to change in tax charge page when user answers true" in {
+
+      val ua = emptyUserAnswers
+        .set(ChangeInLifetimeAllowancePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-charge-change")
+    }
+
+    "must navigate to kickout when user answers false" in {
+
+      val ua = emptyUserAnswers
+        .set(ChangeInLifetimeAllowancePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-lta-service")
+    }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
   "cleanup" - {
 
     "must cleanup correctly when user answers false" in {

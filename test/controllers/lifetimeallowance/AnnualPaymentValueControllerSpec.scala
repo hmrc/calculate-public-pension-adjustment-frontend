@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.lifetimeallowance.AnnualPaymentValueFormProvider
 import pages.lifetimeallowance.AnnualPaymentValuePage
 import models.{NormalMode, UserAnswers}
@@ -104,9 +103,6 @@ class AnnualPaymentValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.WhoPaidLTAChargeController
-          .onPageLoad(NormalMode)
-          .url
       }
     }
 

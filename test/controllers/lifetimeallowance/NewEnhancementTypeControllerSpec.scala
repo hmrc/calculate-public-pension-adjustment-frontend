@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.lifetimeallowance.NewEnhancementTypeFormProvider
 import models.{NewEnhancementType, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -105,11 +104,6 @@ class NewEnhancementTypeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.NewInternationalEnhancementReferenceController
-          .onPageLoad(NormalMode)
-          .url
       }
     }
 

@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period, SchemeIndex}
+import models.{CheckMode, NormalMode, Period, SchemeIndex}
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.behaviours.PageBehaviours
 
@@ -135,6 +135,15 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/2016-post/check-answers")
+    }
+
+    "must redirect to journey recovery when no answer" in {
+      val page = AddAnotherSchemePage(Period._2016PostAlignment, SchemeIndex(0))
+
+      val nextPagUrl = page.navigate(NormalMode, emptyUserAnswers).url
+
+      checkNavigation(nextPagUrl, "/there-is-a-problem")
+
     }
   }
 }

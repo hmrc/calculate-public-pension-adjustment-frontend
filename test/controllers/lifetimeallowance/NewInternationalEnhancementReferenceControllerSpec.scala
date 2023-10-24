@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.lifetimeallowance.NewInternationalEnhancementReferenceFormProvider
 import models.NewEnhancementType.InternationalEnhancement
 import models.{NormalMode, UserAnswers}
@@ -107,11 +106,6 @@ class NewInternationalEnhancementReferenceControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController
-          .onPageLoad(NormalMode)
-          .url
       }
     }
 

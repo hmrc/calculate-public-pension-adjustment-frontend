@@ -18,10 +18,9 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,7 +42,6 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
   val form         = formProvider()
 
   lazy val normalRoute = ltaRoutes.HadBenefitCrystallisationEventController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url
 
   "HadBenefitCrystallisationEvent Controller" - {
 
@@ -101,41 +99,7 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(HadBenefitCrystallisationEventPage, true).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual HadBenefitCrystallisationEventPage
-          .navigate(NormalMode, expectedAnswers)
-          .url
-      }
-    }
-
-    "must redirect to the next page when valid data is in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        val expectedAnswers = emptyUserAnswers.set(HadBenefitCrystallisationEventPage, true).success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual HadBenefitCrystallisationEventPage
-          .navigate(CheckMode, expectedAnswers)
-          .url
       }
     }
 

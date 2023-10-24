@@ -19,10 +19,9 @@ package controllers.annualallowance.preaaquestions
 import java.time.LocalDate
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import forms.annualallowance.preaaquestions.StopPayingPublicPensionFormProvider
-import models.{CheckMode, Mode, NormalMode, UserAnswers}
+import models.{Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -46,7 +45,6 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
   val validAnswer: LocalDate = LocalDate.of(2015, 4, 6)
 
   lazy val NormalRoute = preAARoutes.StopPayingPublicPensionController.onPageLoad(NormalMode).url
-  lazy val CheckRoute  = preAARoutes.StopPayingPublicPensionController.onPageLoad(CheckMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
@@ -96,7 +94,7 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted in normal mode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -112,37 +110,7 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val result = route(application, postRequest(NormalMode)).value
 
-        val expectedAnswers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2015, 4, 6)).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual StopPayingPublicPensionPage
-          .navigate(NormalMode, expectedAnswers)
-          .url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in check mode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val result = route(application, postRequest(CheckMode)).value
-
-        val expectedAnswers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2015, 4, 6)).success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual StopPayingPublicPensionPage
-          .navigate(CheckMode, expectedAnswers)
-          .url
       }
     }
 

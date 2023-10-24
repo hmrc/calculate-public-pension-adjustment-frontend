@@ -18,14 +18,12 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.lifetimeallowance.InternationalEnhancementReferenceFormProvider
-import models.EnhancementType.InternationalEnhancement
 import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.{EnhancementTypePage, InternationalEnhancementReferencePage}
+import pages.lifetimeallowance.InternationalEnhancementReferencePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -89,8 +87,6 @@ class InternationalEnhancementReferenceControllerSpec extends SpecBase with Mock
 
       val userAnswers: UserAnswers =
         emptyUserAnswers
-          .set(EnhancementTypePage, InternationalEnhancement)
-          .get
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -107,11 +103,6 @@ class InternationalEnhancementReferenceControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController
-          .onPageLoad(NormalMode)
-          .url
       }
     }
 

@@ -23,7 +23,7 @@ import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.{NewExcessLifetimeAllowancePaidPage, NewLumpSumValuePage}
+import pages.lifetimeallowance.NewLumpSumValuePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -84,7 +84,7 @@ class NewLumpSumValueControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when a non-zero valid data is submitted and excess is lumpsum there is no old lumpsum value" in {
+    "must redirect to the next page when submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -92,8 +92,6 @@ class NewLumpSumValueControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers: UserAnswers =
         emptyUserAnswers
-          .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
-          .get
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -108,9 +106,6 @@ class NewLumpSumValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController
-          .onPageLoad(NormalMode)
-          .url
       }
     }
 

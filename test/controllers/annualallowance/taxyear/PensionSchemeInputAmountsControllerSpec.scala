@@ -18,9 +18,8 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.PensionSchemeInputAmountsFormProvider
-import models.{CheckMode, NormalMode, PensionSchemeInputAmounts, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, PensionSchemeInputAmounts, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -45,11 +44,6 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
   lazy val pensionSchemeInputAmountsRoute =
     controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
-      .url
-
-  lazy val pensionSchemeInputAmountsCheckRoute =
-    controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
-      .onPageLoad(CheckMode, Period._2018, SchemeIndex(0))
       .url
 
   val userAnswers = UserAnswers(
@@ -119,7 +113,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must redirect to the next page when valid data is submitted in Normal Mode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -137,47 +131,9 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
           FakeRequest(POST, pensionSchemeInputAmountsRoute)
             .withFormUrlEncodedBody(("originalPIA", "1"), ("revisedPIA", "2"))
 
-        val userAnswers =
-          emptyUserAnswers.set(
-            PensionSchemeInputAmountsPage(Period._2018, SchemeIndex(0)),
-            PensionSchemeInputAmounts(1, 2)
-          )
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual PensionSchemeInputAmountsPage(Period._2018, SchemeIndex(0))
-          .navigate(NormalMode, userAnswers.get)
-          .url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in Check Mode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, pensionSchemeInputAmountsCheckRoute)
-            .withFormUrlEncodedBody(("originalPIA", "1"), ("revisedPIA", "2"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-          .onPageLoad(Period._2018)
-          .url
       }
     }
 

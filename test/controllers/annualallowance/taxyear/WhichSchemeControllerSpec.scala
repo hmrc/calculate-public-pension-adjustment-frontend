@@ -18,9 +18,8 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.WhichSchemeFormProvider
-import models.{CheckMode, NormalMode, PSTR, PensionSchemeDetails, Period, SchemeIndex, UserAnswers, WhichScheme}
+import models.{NormalMode, PSTR, PensionSchemeDetails, Period, SchemeIndex, UserAnswers, WhichScheme}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -41,11 +40,6 @@ class WhichSchemeControllerSpec extends SpecBase with MockitoSugar {
   lazy val whichSchemeRoute =
     controllers.annualallowance.taxyear.routes.WhichSchemeController
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
-      .url
-
-  lazy val whichSchemeCheckRoute =
-    controllers.annualallowance.taxyear.routes.WhichSchemeController
-      .onPageLoad(CheckMode, Period._2018, SchemeIndex(0))
       .url
 
   val formProvider = new WhichSchemeFormProvider()
@@ -112,7 +106,7 @@ class WhichSchemeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted in Normal Mode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -120,10 +114,6 @@ class WhichSchemeControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers: UserAnswers =
         emptyUserAnswers
-          .set(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)), PensionSchemeDetails("schemeName", "12345678RL"))
-          .get
-          .set(WhichSchemePage(Period._2018, SchemeIndex(0)), "12345678RL")
-          .get
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -135,50 +125,11 @@ class WhichSchemeControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, whichSchemeRoute)
-            .withFormUrlEncodedBody(("value", whichScheme.values.head.toString))
+            .withFormUrlEncodedBody(("value", whichScheme.values.head))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual WhichSchemePage(Period._2018, SchemeIndex(0))
-          .navigate(NormalMode, userAnswers)
-          .url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in Check Mode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val userAnswers: UserAnswers =
-        emptyUserAnswers
-          .set(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)), PensionSchemeDetails("schemeName", "12345678RL"))
-          .get
-          .set(WhichSchemePage(Period._2018, SchemeIndex(0)), "12345678RL")
-          .get
-
-      val application =
-        applicationBuilder(userAnswers = Some(userAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, whichSchemeCheckRoute)
-            .withFormUrlEncodedBody(("value", whichScheme.values.head.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-          .onPageLoad(Period._2018)
-          .url
       }
     }
 

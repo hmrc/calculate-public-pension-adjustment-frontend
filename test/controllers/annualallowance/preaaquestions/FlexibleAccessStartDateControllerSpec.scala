@@ -19,10 +19,9 @@ package controllers.annualallowance.preaaquestions
 import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import forms.annualallowance.preaaquestions.FlexibleAccessStartDateFormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -46,7 +45,6 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
   lazy val normalRoute = preAARoutes.FlexibleAccessStartDateController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = preAARoutes.FlexibleAccessStartDateController.onPageLoad(CheckMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
@@ -96,7 +94,7 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted in NormalMode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -112,33 +110,7 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val result = route(application, postRequest()).value
 
-        val expectedAnswers = emptyUserAnswers.set(FlexibleAccessStartDatePage, LocalDate.now()).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual FlexibleAccessStartDatePage.navigate(NormalMode, expectedAnswers).url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val result = route(application, postRequest(checkRoute)).value
-
-        val expectedAnswers = emptyUserAnswers.set(FlexibleAccessStartDatePage, LocalDate.now()).success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual FlexibleAccessStartDatePage.navigate(CheckMode, expectedAnswers).url
       }
     }
 

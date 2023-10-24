@@ -18,9 +18,8 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.preaaquestions.RegisteredYearFormProvider
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -45,7 +44,6 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
   val validRegisteredYear: Period = Period._2011
 
   lazy val normalRoute = preAARoutes.RegisteredYearController.onPageLoad(NormalMode, validRegisteredYear).url
-  lazy val checkRoute  = preAARoutes.RegisteredYearController.onPageLoad(CheckMode, validRegisteredYear).url
 
   "RegisteredYear Controller" - {
 
@@ -108,9 +106,6 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.PIAPreRemedyController
-          .onPageLoad(NormalMode, Period._2011)
-          .url
       }
     }
 

@@ -18,7 +18,6 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.AddAnotherSchemeFormProvider
 import models.{NormalMode, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -105,14 +104,9 @@ class AddAnotherSchemeControllerSpec extends SpecBase with MockitoSugar {
           FakeRequest(POST, addAnotherSchemeRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
-        val userAnswers = emptyUserAnswers.set(AddAnotherSchemePage(Period._2018, SchemeIndex(0)), true)
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual AddAnotherSchemePage(Period._2018, SchemeIndex(0))
-          .navigate(NormalMode, userAnswers.get)
-          .url
       }
     }
 

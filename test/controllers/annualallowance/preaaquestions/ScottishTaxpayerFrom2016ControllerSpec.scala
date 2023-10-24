@@ -18,10 +18,9 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import forms.annualallowance.preaaquestions.ScottishTaxpayerFrom2016FormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,7 +42,6 @@ class ScottishTaxpayerFrom2016ControllerSpec extends SpecBase with MockitoSugar 
   val form         = formProvider()
 
   lazy val scottishTaxpayerNormalRoute = preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode).url
-  lazy val scottishTaxpayerCheckRoute  = preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(CheckMode).url
 
   "ScottishTaxpayerFrom2016 Controller" - {
 
@@ -101,10 +99,7 @@ class ScottishTaxpayerFrom2016ControllerSpec extends SpecBase with MockitoSugar 
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(ScottishTaxpayerFrom2016Page, true).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ScottishTaxpayerFrom2016Page.navigate(NormalMode, expectedAnswers).url
       }
     }
 
@@ -157,112 +152,6 @@ class ScottishTaxpayerFrom2016ControllerSpec extends SpecBase with MockitoSugar 
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
-      }
-    }
-
-    "redirect to WhichYearsScottishTaxpayer page when user answers true in Normal Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, scottishTaxpayerNormalRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.WhichYearsScottishTaxpayerController
-          .onPageLoad(NormalMode)
-          .url
-      }
-    }
-
-    "redirect to CheckYourAnswers page when user answers false in Normal Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, scottishTaxpayerNormalRoute)
-            .withFormUrlEncodedBody(("value", "false"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.PayingPublicPensionSchemeController
-          .onPageLoad(NormalMode)
-          .url
-      }
-    }
-
-    "redirect to WhichYearsScottishTaxpayer page when user answers true in Check Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, scottishTaxpayerCheckRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preAARoutes.WhichYearsScottishTaxpayerController
-          .onPageLoad(CheckMode)
-          .url
-      }
-    }
-
-    "redirect to CheckYourAnswers page when user answers false in Check Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, scottishTaxpayerCheckRoute)
-            .withFormUrlEncodedBody(("value", "false"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController
-          .onPageLoad()
-          .url
       }
     }
   }

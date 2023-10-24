@@ -17,7 +17,7 @@
 package pages.lifetimeallowance
 
 import pages.behaviours.PageBehaviours
-import models.SchemeNameAndTaxRef
+import models.{CheckMode, NormalMode, SchemeNameAndTaxRef}
 
 class SchemeNameAndTaxRefPageSpec extends PageBehaviours {
 
@@ -28,5 +28,36 @@ class SchemeNameAndTaxRefPageSpec extends PageBehaviours {
     beSettable[SchemeNameAndTaxRef](SchemeNameAndTaxRefPage)
 
     beRemovable[SchemeNameAndTaxRef](SchemeNameAndTaxRefPage)
+  }
+
+  "Normal mode" - {
+
+    "must navigate to quarter change page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(SchemeNameAndTaxRefPage, SchemeNameAndTaxRef("schemeName", "schemeRef"))
+          .get
+
+      val nextPageUrl: String = SchemeNameAndTaxRefPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/quarter-charge-was-paid")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate to LTA CYA page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(SchemeNameAndTaxRefPage, SchemeNameAndTaxRef("schemeName", "schemeRef"))
+          .get
+
+      val nextPageUrl: String = SchemeNameAndTaxRefPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+
+    }
   }
 }
