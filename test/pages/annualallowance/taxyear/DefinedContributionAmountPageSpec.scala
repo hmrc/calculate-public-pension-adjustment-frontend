@@ -20,6 +20,8 @@ import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.behaviours.PageBehaviours
 
+import java.time.LocalDate
+
 class DefinedContributionAmountPageSpec extends PageBehaviours {
 
   "DefinedContributionAmountPage" - {
@@ -87,7 +89,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
       val period = Period._2016PreAlignment
 
-      "to FlexiAccessDefinedContributionAmountPage when answered and flexi access selected" in {
+      "to FlexiAccessDefinedContributionAmountPage when answered and flexi access selected and not period end date" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period),
@@ -104,6 +106,26 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
         checkNavigation(result, s"/annual-allowance/$period/flexible-pension-input-amount-defined-contribution")
+      }
+
+      "to total income page when answered and flexi access selected and is period end date" in {
+        val ua = emptyUserAnswers
+          .set(
+            FlexibleAccessStartDatePage,
+            LocalDate.of(2015, 7, 8)
+          )
+          .success
+          .value
+          .set(
+            DefinedContributionAmountPage(period),
+            BigInt("100")
+          )
+          .success
+          .value
+
+        val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
+
+        checkNavigation(result, s"/annual-allowance/$period/total-income")
       }
 
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {
@@ -176,23 +198,43 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
       val period = Period._2016PostAlignment
 
-      "to FlexiAccessDefinedContributionAmountPage when answered and flexi access selected" in {
+      "to FlexiAccessDefinedContributionAmountPage when answered and flexi access selected and not period end date" in {
         val ua     = emptyUserAnswers
+          .set(
+            FlexibleAccessStartDatePage,
+            LocalDate.of(2016, 1, 1)
+          )
+          .success
+          .value
           .set(
             DefinedContributionAmountPage(period),
             BigInt("100")
           )
           .success
           .value
+        val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
+
+        checkNavigation(result, s"/annual-allowance/$period/flexible-pension-input-amount-defined-contribution")
+      }
+
+      "to CYA page when answered and flexi access date selected and not is period end date" in {
+        val ua     = emptyUserAnswers
           .set(
             FlexibleAccessStartDatePage,
-            period.end
+            LocalDate.of(2016, 4, 5)
+          )
+          .success
+          .value
+          .set(
+            DefinedContributionAmountPage(period),
+            BigInt("100")
           )
           .success
           .value
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/annual-allowance/$period/flexible-pension-input-amount-defined-contribution")
+        checkNavigation(result, s"/annual-allowance/$period/check-answers")
+
       }
 
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {
@@ -265,7 +307,7 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
       val period = genPeriodNot2016.sample.value
 
-      "to FlexiAccessDefinedContributionAmountPage when answered and flexi access selected" in {
+      "to FlexiAccessDefinedContributionAmountPage when answered and flexi access selected and not period end date" in {
         val ua     = emptyUserAnswers
           .set(
             DefinedContributionAmountPage(period),
@@ -282,6 +324,26 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
         checkNavigation(result, s"/annual-allowance/$period/flexible-pension-input-amount-defined-contribution")
+      }
+
+      "to threshold income apge when answered and flexi access selected and is period end date" in {
+        val ua = emptyUserAnswers
+          .set(
+            FlexibleAccessStartDatePage,
+            period.end
+          )
+          .success
+          .value
+          .set(
+            DefinedContributionAmountPage(period),
+            BigInt("100")
+          )
+          .success
+          .value
+
+        val result = DefinedContributionAmountPage(period).navigate(NormalMode, ua).url
+
+        checkNavigation(result, s"/annual-allowance/$period/threshold-income")
       }
 
       "to DefinedBenefitAmountPage when answered and no flexi access selected and DB selected" in {

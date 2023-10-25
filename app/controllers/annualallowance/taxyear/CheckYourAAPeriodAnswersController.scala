@@ -19,13 +19,16 @@ package controllers.annualallowance.taxyear
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.{Period, SchemeIndex}
+import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers.annualallowance.taxyear._
 import viewmodels.govuk.summarylist._
-import views.html.CheckYourAnswersView
+import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView
+
+import java.time.LocalDate
 
 class CheckYourAAPeriodAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -33,24 +36,18 @@ class CheckYourAAPeriodAnswersController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: CheckYourAnswersView
+  view: CheckYourAAPeriodAnswersView
 ) extends FrontendBaseController
     with I18nSupport {
 
+  // noinspection ScalaStyle
   def onPageLoad(period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val schemeIndices = 0.to(4).map(i => SchemeIndex(i))
-
-      val rowsThree: Seq[Option[SummaryListRow]] = Seq(
-        OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
-        ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
-        DefinedContributionAmountSummary.row(request.userAnswers, period),
-        FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period),
-        DefinedBenefitAmountSummary.row(request.userAnswers, period),
-        ThresholdIncomeSummary.row(request.userAnswers, period),
-        AdjustedIncomeSummary.row(request.userAnswers, period),
-        TotalIncomeSummary.row(request.userAnswers, period)
+      val rowsOne: Seq[Option[SummaryListRow]] = Seq(
+        MemberMoreThanOnePensionSummary.row(request.userAnswers, period)
       )
+
+      val schemeIndices = 0.to(4).map(i => SchemeIndex(i))
 
       val rowsTwo: Seq[Option[SummaryListRow]] = schemeIndices.flatMap(index =>
         Seq(
@@ -63,16 +60,70 @@ class CheckYourAAPeriodAnswersController @Inject() (
         )
       )
 
-      val rowsOne: Seq[Option[SummaryListRow]] = Seq(
-        MemberMoreThanOnePensionSummary.row(request.userAnswers, period)
-      ) ++ rowsTwo ++ rowsThree
+      val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
+
+      val flexiAccessExistsForPeriod = request.userAnswers.get(FlexibleAccessStartDatePage) match {
+        case Some(date) => period.start.minusDays(1).isBefore(date) && period.end.plusDays(1).isAfter(date)
+        case None       => false
+      }
+
+      val flexiPeriodEndateRows: Seq[Option[SummaryListRow]] =
+        Seq(
+          OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
+          ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
+          DefinedContributionAmountSummary.row(request.userAnswers, period),
+          DefinedBenefitAmountSummary.row(request.userAnswers, period),
+          ThresholdIncomeSummary.row(request.userAnswers, period),
+          AdjustedIncomeSummary.row(request.userAnswers, period),
+          TotalIncomeSummary.row(request.userAnswers, period)
+        )
+
+      val regularRows: Seq[Option[SummaryListRow]] =
+        Seq(
+          OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
+          ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
+          DefinedContributionAmountSummary.row(request.userAnswers, period),
+          FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period),
+          DefinedBenefitAmountSummary.row(request.userAnswers, period),
+          ThresholdIncomeSummary.row(request.userAnswers, period),
+          AdjustedIncomeSummary.row(request.userAnswers, period),
+          TotalIncomeSummary.row(request.userAnswers, period)
+        )
+
+      def maybeFlexiPeriodEndDateRowsStatus: Boolean = {
+        val pre2016EndDate  = LocalDate.of(2015, 7, 8)
+        val post2016EndDate = LocalDate.of(period.end.getYear, 4, 5)
+
+        if (flexiAccessExistsForPeriod) {
+          if (period == Period._2016PreAlignment) {
+            flexibleStartDate match {
+              case Some(date) if date == pre2016EndDate =>
+                true
+              case _                                    =>
+                false
+            }
+          } else
+            flexibleStartDate match {
+              case Some(date) if date == post2016EndDate =>
+                true
+              case _                                     =>
+                false
+            }
+        } else false
+      }
+
+      val combinedRows: Seq[Option[SummaryListRow]] = Seq(rowsOne ++ rowsTwo).flatten
 
       Ok(
         view(
+          maybeFlexiPeriodEndDateRowsStatus,
           s"checkYourAnswers.aa.period.subHeading.$period",
           controllers.routes.TaskListController.onPageLoad(),
-          SummaryListViewModel(rowsOne.flatten)
+          SummaryListViewModel(combinedRows.flatten),
+          SummaryListViewModel(regularRows.flatten),
+          SummaryListViewModel(flexiPeriodEndateRows.flatten)
         )
       )
   }
+
 }

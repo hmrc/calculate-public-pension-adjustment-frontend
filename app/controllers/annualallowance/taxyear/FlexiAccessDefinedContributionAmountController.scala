@@ -83,13 +83,28 @@ class FlexiAccessDefinedContributionAmountController @Inject() (
         )
     }
 
-  def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate]): String = {
+  private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate]): String = {
     val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
 
-    flexibleStartDate match {
-      case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
-        date.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
-      case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
+    def normalDateFormatter =
+      flexibleStartDate match {
+        case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
+          date.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
+        case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
+      }
+
+    if (period == Period._2016PostAlignment) {
+      if (flexibleStartDate == Some(LocalDate.of(2015, 7, 9))) {
+        flexibleStartDate.get.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
+      } else {
+        normalDateFormatter
+      }
+    } else {
+      if (flexibleStartDate == Some(LocalDate.of(period.start.getYear, 4, 6))) {
+        flexibleStartDate.get.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
+      } else {
+        normalDateFormatter
+      }
     }
   }
 }

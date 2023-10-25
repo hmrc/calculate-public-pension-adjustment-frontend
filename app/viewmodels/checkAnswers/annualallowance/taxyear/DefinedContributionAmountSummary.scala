@@ -27,6 +27,7 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -36,14 +37,9 @@ object DefinedContributionAmountSummary {
     messages: Messages
   ): Option[SummaryListRow] =
     answers.get(DefinedContributionAmountPage(period)).map { answer =>
-      val formatter         = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
       val flexibleStartDate = answers.get(FlexibleAccessStartDatePage)
 
-      val startEndDate: String = flexibleStartDate match {
-        case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
-          period.start.format(formatter) + " to " + date.format(formatter)
-        case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
-      }
+      val startEndDate: String = getStartEndDate(period, flexibleStartDate)
 
       SummaryListRowViewModel(
         key = messages("definedContributionAmount.checkYourAnswersLabel", startEndDate),
@@ -57,4 +53,29 @@ object DefinedContributionAmountSummary {
         )
       )
     }
+
+  private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate]): String = {
+    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+
+    def normalDateFormatter =
+      flexibleStartDate match {
+        case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
+          period.start.format(formatter) + " to " + date.format(formatter)
+        case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
+      }
+
+    if (period == Period._2016PostAlignment) {
+      if (flexibleStartDate == Some(LocalDate.of(2015, 7, 9))) {
+        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
+      } else {
+        normalDateFormatter
+      }
+    } else {
+      if (flexibleStartDate == Some(LocalDate.of(period.start.getYear, 4, 6))) {
+        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
+      } else {
+        normalDateFormatter
+      }
+    }
+  }
 }
