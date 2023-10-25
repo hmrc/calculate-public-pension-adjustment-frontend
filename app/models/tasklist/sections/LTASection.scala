@@ -17,10 +17,11 @@
 package models.tasklist.sections
 
 import models.WhoPayingExtraLtaCharge.{PensionScheme, You}
-import models.{ChangeInTaxCharge, UserAnswers}
+import models.{ChangeInTaxCharge, ReportingChange, UserAnswers}
 import models.tasklist.{Section, SectionStatus}
 import pages.Page
 import pages.lifetimeallowance._
+import pages.setupquestions.ReportingChangePage
 import play.api.libs.json.JsPath
 
 import scala.util.Try
@@ -73,14 +74,15 @@ case object LTASection extends Section {
       } else isLTAElligble(answers)
     } else SectionStatus.NotStarted
 
-  private def isLTAElligble(answers: UserAnswers): SectionStatus =
-    if (statusOfHadBCE(answers)) {
-      if (statusOfInformedBCEChange(answers)) {
-        if (statusOfChangeInTaxCharge(answers)) {
-          SectionStatus.InProgress
-        } else SectionStatus.Completed
-      } else SectionStatus.Completed
-    } else SectionStatus.Completed
+  private def isLTAElligble(answers: UserAnswers): SectionStatus = {
+    if (
+      statusOfHadBCE(answers) &&
+        statusOfInformedBCEChange(answers) &&
+        statusOfChangeInTaxCharge(answers) &&
+        !noPreviousChargeKickoutReached(answers)
+    ) SectionStatus.InProgress
+    else SectionStatus.Completed
+  }
 
   private def isLastPageAnswered(answers: UserAnswers): Boolean =
     answers.get(WhoPayingExtraLtaChargePage) match {
@@ -116,6 +118,13 @@ case object LTASection extends Section {
       case Some(ChangeInTaxCharge.None) => false
       case None                         => true
     }
+
+  private def hasAnnualAllowance(answers: UserAnswers): Boolean =
+    answers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
+
+  private def noPreviousChargeKickoutReached(answers: UserAnswers): Boolean =
+    !answers.get(LifetimeAllowanceChargePage).getOrElse(false) &&
+      (answers.get(NewLumpSumValuePage).contains(0) || answers.get(NewAnnualPaymentValuePage).contains(0))
 
   private def firstPageIsAnswered(answers: UserAnswers) =
     answers.get(HadBenefitCrystallisationEventPage).isDefined
