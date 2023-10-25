@@ -17,6 +17,7 @@
 package controllers.setupquestions
 
 import base.SpecBase
+import config.FrontendAppConfig
 import controllers.routes
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -52,18 +53,19 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to start of the service for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request =
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   =
           FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }

@@ -17,6 +17,7 @@
 package controllers.annualallowance.taxyear
 
 import base.SpecBase
+import config.FrontendAppConfig
 import controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPeriodController
 import controllers.routes
 import forms.annualallowance.taxyear.ContributedToDuringRemedyPeriodFormProvider
@@ -139,33 +140,35 @@ class ContributedToDuringRemedyPeriodControllerSpec extends SpecBase with Mockit
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to start of the service for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, contributedToDuringRemedyPeriodRoute)
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(GET, contributedToDuringRemedyPeriodRoute)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
 
-    "must redirect to Journey Recovery for a POST if no existing data is found" in {
+    "must redirect to start of the service for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request =
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   =
           FakeRequest(POST, contributedToDuringRemedyPeriodRoute)
             .withFormUrlEncodedBody(("value[0]", ContributedToDuringRemedyPeriod.values.head.toString))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }
