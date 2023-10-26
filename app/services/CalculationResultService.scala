@@ -273,7 +273,7 @@ class CalculationResultService @Inject() (
       changeInTaxCharge,
       noPreviousChargeKickoutReached
     ) match {
-      case (Some(true), Some(true), Some(changeInTaxChargeType), true)
+      case (Some(true), Some(true), Some(changeInTaxChargeType), false)
           if changeInTaxChargeType != ChangeInTaxCharge.None =>
         val benefitCrystallisationEventDate: LocalDate =
           userAnswers.get(DateOfBenefitCrystallisationEventPage).getOrElse(LocalDate.now)
