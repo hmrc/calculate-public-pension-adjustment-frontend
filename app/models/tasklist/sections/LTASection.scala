@@ -16,12 +16,12 @@
 
 package models.tasklist.sections
 
+import models.NewExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
 import models.WhoPayingExtraLtaCharge.{PensionScheme, You}
-import models.{ChangeInTaxCharge, ReportingChange, UserAnswers}
 import models.tasklist.{Section, SectionStatus}
+import models.{ChangeInTaxCharge, UserAnswers}
 import pages.Page
 import pages.lifetimeallowance._
-import pages.setupquestions.ReportingChangePage
 import play.api.libs.json.JsPath
 
 import scala.util.Try
@@ -74,15 +74,14 @@ case object LTASection extends Section {
       } else isLTAElligble(answers)
     } else SectionStatus.NotStarted
 
-  private def isLTAElligble(answers: UserAnswers): SectionStatus = {
+  private def isLTAElligble(answers: UserAnswers): SectionStatus =
     if (
       statusOfHadBCE(answers) &&
-        statusOfInformedBCEChange(answers) &&
-        statusOfChangeInTaxCharge(answers) &&
-        !noPreviousChargeKickoutReached(answers)
+      statusOfInformedBCEChange(answers) &&
+      statusOfChangeInTaxCharge(answers) &&
+      !noPreviousChargeKickoutReached(answers)
     ) SectionStatus.InProgress
     else SectionStatus.Completed
-  }
 
   private def isLastPageAnswered(answers: UserAnswers): Boolean =
     answers.get(WhoPayingExtraLtaChargePage) match {
@@ -92,8 +91,32 @@ case object LTASection extends Section {
           case Some(_) => true
           case None    => false
         }
-      case None                => false
+      case None                => noValueIncreaseAndPreviousChargeLastPage(answers)
     }
+
+  private def checkNewPaymentValuesExist(answers: UserAnswers): Boolean =
+    answers.get(NewExcessLifetimeAllowancePaidPage) match {
+      case Some(Both) | Some(Annualpayment) => answers.get(NewAnnualPaymentValuePage).isDefined
+      case Some(Lumpsum)                    => answers.get(NewLumpSumValuePage).isDefined
+      case _                                => false
+    }
+
+  private def combinedIsValueIncreased(
+    newLumpSumValue: Option[BigInt],
+    oldLumpSumValue: Option[BigInt],
+    newAnnualPaymentValue: Option[BigInt],
+    oldAnnualPaymentValue: Option[BigInt]
+  ): Boolean =
+    (newLumpSumValue.getOrElse(BigInt(0)) + newAnnualPaymentValue.getOrElse(BigInt(0))) >
+      (oldLumpSumValue.getOrElse(BigInt(0)) + oldAnnualPaymentValue.getOrElse(BigInt(0)))
+
+  private def noValueIncreaseAndPreviousChargeLastPage(answers: UserAnswers): Boolean =
+    !combinedIsValueIncreased(
+      answers.get(NewLumpSumValuePage),
+      answers.get(LumpSumValuePage),
+      answers.get(NewAnnualPaymentValuePage),
+      answers.get(AnnualPaymentValuePage)
+    ) && answers.get(LifetimeAllowanceChargePage).getOrElse(false) && checkNewPaymentValuesExist(answers)
 
   private def statusOfHadBCE(answers: UserAnswers): Boolean =
     answers.get(HadBenefitCrystallisationEventPage) match {
@@ -120,8 +143,8 @@ case object LTASection extends Section {
     }
 
   private def noPreviousChargeKickoutReached(answers: UserAnswers): Boolean =
-    !answers.get(LifetimeAllowanceChargePage).getOrElse(false) &&
-      (answers.get(NewLumpSumValuePage).contains(0) || answers.get(NewAnnualPaymentValuePage).contains(0))
+    !answers.get(LifetimeAllowanceChargePage).getOrElse(false) && checkNewPaymentValuesExist(answers) &&
+      (answers.get(NewLumpSumValuePage).getOrElse(0) == 0 && answers.get(NewAnnualPaymentValuePage).getOrElse(0) == 0)
 
   private def firstPageIsAnswered(answers: UserAnswers) =
     answers.get(HadBenefitCrystallisationEventPage).isDefined
