@@ -18,7 +18,7 @@ package base
 
 import controllers.actions._
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{ChangeInTaxCharge, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{ChangeInTaxCharge, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers

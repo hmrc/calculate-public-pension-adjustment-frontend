@@ -134,7 +134,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/contributed-to-any-other-dc-or-db-scheme")
   }
 
-  "must redirect to check your answers page when does not have dc scheme and not member more than one scheme in 2016-pre period" in {
+  "must redirect to total income page when does not have dc scheme and not member more than one scheme in 2016-pre period" in {
 
     val page = HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0))
 
@@ -164,7 +164,7 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/annual-allowance/2016-post/contributed-to-any-other-dc-or-db-scheme")
   }
 
-  "must redirect to total income page when does not have dc scheme and not member more than one scheme in 2016-post period" in {
+  "must redirect to check answers page when does not have dc scheme and not member more than one scheme in 2016-post period" in {
 
     val page = HowMuchAAChargeSchemePaidPage(Period._2016PostAlignment, SchemeIndex(0))
 
