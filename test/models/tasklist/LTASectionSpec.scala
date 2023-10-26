@@ -17,9 +17,10 @@
 package models.tasklist
 
 import base.SpecBase
+import models.NewExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
 import models.{ChangeInTaxCharge, WhoPayingExtraLtaCharge}
 import models.tasklist.sections.LTASection
-import pages.lifetimeallowance.{ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, HadBenefitCrystallisationEventPage, LtaPensionSchemeDetailsPage, WhoPayingExtraLtaChargePage}
+import pages.lifetimeallowance.{ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, HadBenefitCrystallisationEventPage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LumpSumValuePage, NewAnnualPaymentValuePage, NewExcessLifetimeAllowancePaidPage, NewLumpSumValuePage, WhoPayingExtraLtaChargePage}
 
 class LTASectionSpec extends SpecBase {
 
@@ -62,6 +63,74 @@ class LTASectionSpec extends SpecBase {
         .set(ChangeInLifetimeAllowancePage, true)
         .get
         .set(ChangeInTaxChargePage, ChangeInTaxCharge.None)
+        .get
+
+      val status = LTASection.status(userAnswers)
+
+      status mustBe (SectionStatus.Completed)
+    }
+
+    "When user has reached noPreviousChargeKickout from NewLumpSumpage" in {
+      val userAnswers = emptyUserAnswers
+        .set(HadBenefitCrystallisationEventPage, true)
+        .get
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt(0))
+        .get
+
+      val status = LTASection.status(userAnswers)
+
+      status mustBe (SectionStatus.Completed)
+    }
+
+    "When user has reached noPreviousChargeKickout from NewAnnualPaymentValuePage" in {
+      val userAnswers = emptyUserAnswers
+        .set(HadBenefitCrystallisationEventPage, true)
+        .get
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, Annualpayment)
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt(0))
+        .get
+
+      val status = LTASection.status(userAnswers)
+
+      status mustBe (SectionStatus.Completed)
+    }
+
+    "When user has reached noPreviousChargeKickout after answering both" in {
+      val userAnswers = emptyUserAnswers
+        .set(HadBenefitCrystallisationEventPage, true)
+        .get
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, Both)
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt(0))
+        .get
+
+      val status = LTASection.status(userAnswers)
+
+      status mustBe (SectionStatus.Completed)
+    }
+
+    "When user has completed the journey with no value increase but has previous charge" in {
+      val userAnswers = emptyUserAnswers
+        .set(HadBenefitCrystallisationEventPage, true)
+        .get
+        .set(LifetimeAllowanceChargePage, true)
+        .get
+        .set(LumpSumValuePage, BigInt(500))
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, Both)
+        .get
+        .set(NewLumpSumValuePage, BigInt(300))
+        .get
+        .set(NewAnnualPaymentValuePage, BigInt(100))
         .get
 
       val status = LTASection.status(userAnswers)

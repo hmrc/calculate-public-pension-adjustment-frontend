@@ -770,6 +770,33 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                |""".stripMargin)
       .as[JsObject]
 
+    val data8 = Json
+      .parse("""
+          |{
+          |    "savingsStatement": true,
+          |    "resubmittingAdjustment": false,
+          |    "reportingChange": [
+          |      "lifetimeAllowance"
+          |    ],
+          |    "lta": {
+          |      "hadBenefitCrystallisationEvent": true,
+          |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
+          |      "changeInLifetimeAllowance": true,
+          |      "changeInTaxCharge": "increasedCharge",
+          |      "ltaProtectionOrEnhancements": "protection",
+          |      "protectionType": "fixedProtection2014",
+          |      "protectionReference": "R41AB678TR23355",
+          |      "protectionTypeEnhancementChanged": true,
+          |      "whatNewProtectionTypeEnhancement": "individualProtection2016",
+          |      "referenceNewProtectionTypeEnhancement": "2134567801",
+          |      "lifetimeAllowanceCharge": false,
+          |      "newExcessLifetimeAllowancePaid": "annualPayment",
+          |      "newAnnualPaymentValue": 0
+          |    }
+          |  }
+          |""".stripMargin)
+      .as[JsObject]
+
     val userAnswers1 = UserAnswers(
       id = "session-5a356f3a-c83e-4e8c-a957-226163ba285f",
       data = data1
@@ -1231,6 +1258,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input hadBenefitCrystallisationEvent as false" in {
 
         val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data7))
+
+        result mustBe None
+      }
+
+      "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input noPreviousChargeKickoutReached as true" in {
+
+        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data8))
 
         result mustBe None
       }
