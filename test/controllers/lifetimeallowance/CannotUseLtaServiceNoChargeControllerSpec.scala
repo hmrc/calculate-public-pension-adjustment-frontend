@@ -18,7 +18,7 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.{ReportingChange, UserAnswers, WhichYearsScottishTaxpayer}
+import models.{ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -44,6 +44,7 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
           status(result) mustEqual OK
+          contentAsString(result) mustEqual view(true)(request, messages(application)).toString
           contentAsString(result) must include("Continue")
         }
       }
@@ -67,6 +68,7 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
           status(result) mustEqual OK
+          contentAsString(result) mustEqual view(false)(request, messages(application)).toString
           contentAsString(result) must not include "Continue"
         }
       }

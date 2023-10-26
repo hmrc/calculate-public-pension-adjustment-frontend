@@ -119,9 +119,6 @@ case object LTASection extends Section {
       case None                         => true
     }
 
-  private def hasAnnualAllowance(answers: UserAnswers): Boolean =
-    answers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
-
   private def noPreviousChargeKickoutReached(answers: UserAnswers): Boolean =
     !answers.get(LifetimeAllowanceChargePage).getOrElse(false) &&
       (answers.get(NewLumpSumValuePage).contains(0) || answers.get(NewAnnualPaymentValuePage).contains(0))
