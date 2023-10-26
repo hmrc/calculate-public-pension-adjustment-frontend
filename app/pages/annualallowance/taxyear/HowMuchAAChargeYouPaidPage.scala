@@ -31,11 +31,8 @@ case class HowMuchAAChargeYouPaidPage(period: Period, schemeIndex: SchemeIndex) 
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(WhoPaidAAChargePage(period, schemeIndex)) match {
-      case Some(You)  => if (schemeIndex == SchemeIndex(4)) {
-        AddAnotherSchemeMaybe.exitSchemeLoopNavigation(answers, period)
-      } else {
+      case Some(You)  =>
         AddAnotherSchemeMaybe.navigate(answers, period, schemeIndex)
-      }
       case Some(Both) =>
         controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
           .onPageLoad(NormalMode, period, schemeIndex)

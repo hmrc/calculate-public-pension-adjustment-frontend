@@ -488,7 +488,7 @@ memberMoreThanOnePension.checkYourAnswersLabel = Were you a member of more than 
 addAnotherScheme.title = Do you need to add another pension scheme?
 addAnotherScheme.heading = Do you need to add another pension scheme?
 addAnotherScheme.checkYourAnswersLabel = Do you need to add another pension scheme?
-addAnotherScheme.hint = The pension scheme will be added to this summary.
+addAnotherScheme.hint = You can add a maximum of five different pension schemes in a single tax year.
 addAnotherScheme.error.required = Select yes if you need to add another pension scheme
 addAnotherScheme.change.hidden = Do you need to add another pension scheme?
 

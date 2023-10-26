@@ -33,7 +33,12 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayAChargePage(period, schemeIndex)) match {
       case Some(true)  => navigateToWhoPaidOrHowMuchSchemePaid(NormalMode)
-      case Some(false) => AddAnotherSchemeMaybe.navigate(answers, period, schemeIndex)
+      case Some(false) =>
+        if (schemeIndex == SchemeIndex(4)) {
+          AddAnotherSchemeMaybe.exitSchemeLoopNavigation(answers, period)
+        } else {
+          AddAnotherSchemeMaybe.navigate(answers, period, schemeIndex)
+        }
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
