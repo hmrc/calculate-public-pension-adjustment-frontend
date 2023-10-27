@@ -51,7 +51,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
     Json.obj(
       LtaPensionSchemeDetailsPage.toString -> Json.obj(
         "name"   -> "value1",
-        "taxRef" -> "00348916RT"
+        "taxRef" -> "00348916RL"
       )
     )
   )
@@ -79,7 +79,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       val userAnswers = UserAnswers(userAnswersId)
         .set(
           LtaPensionSchemeDetailsPage,
-          LtaPensionSchemeDetails("someSchemeName", "00348916RT")
+          LtaPensionSchemeDetails("someSchemeName", "00348916RK")
         )
         .success
         .value
@@ -95,7 +95,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(LtaPensionSchemeDetails("someSchemeName", "00348916RT")),
+          form.fill(LtaPensionSchemeDetails("someSchemeName", "00348916RK")),
           NormalMode
         )(request, messages(application)).toString
       }
@@ -117,11 +117,41 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
+            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RK"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
+      }
+    }
+
+    "must redirect to the CheckYourLTAAnswers page when valid data is submitted in CheckMode" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, checkRoute)
+            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RK"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 
