@@ -33,10 +33,10 @@ object QuarterChargePaid extends Enumerable.Implicits {
   case object JanToApr extends WithName("janToApr") with QuarterChargePaid
 
   val values: Seq[QuarterChargePaid] = Seq(
+    JanToApr,
     AprToJul,
     JulToOct,
-    OctToJan,
-    JanToApr
+    OctToJan
   )
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
