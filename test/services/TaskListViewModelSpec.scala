@@ -17,86 +17,11 @@
 package services
 
 import base.SpecBase
-import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.{SectionGroupViewModel, SectionStatus, SectionViewModel, TaskListViewModel}
-import models.{ReportingChange, UserAnswers}
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.ReportingChangePage
 import play.api.mvc.Call
 
-import scala.util.Try
-
-class TaskListServiceSpec extends SpecBase with PageBehaviours {
-
-  val taskListService: TaskListService = new TaskListService
-
-  "Annual allowance reporting" - {
-
-    " is required when specified in UserAnswers" in {
-
-      val reportingChangeWithAA: Set[ReportingChange] = Set(AnnualAllowance)
-      val answers                                     = emptyUserAnswers.set(ReportingChangePage, reportingChangeWithAA)
-
-      taskListService.isRequired(answers.get, ReportingChange.AnnualAllowance) must be(true)
-    }
-
-    "is not required when not specified in UserAnswers" in {
-
-      val reportingChangeWithoutAA: Set[ReportingChange] = Set(LifetimeAllowance)
-      val answers                                        = emptyUserAnswers.set(ReportingChangePage, reportingChangeWithoutAA)
-
-      taskListService.isRequired(answers.get, ReportingChange.AnnualAllowance) must be(false)
-    }
-  }
-
-  "when the view model is constructed" - {
-
-    "groups should exist per reporting change plus setup" in {
-      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
-      val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
-
-      val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
-
-      taskListViewModel.setupGroup mustNot be(null)
-      taskListViewModel.aaGroup.isDefined  must be(true)
-      taskListViewModel.ltaGroup.isDefined must be(true)
-    }
-
-    "headings must be defined" in {
-      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
-      val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
-
-      val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
-
-      taskListViewModel.setupGroup.heading   must be("taskList.setup.groupHeading")
-      taskListViewModel.aaGroup.get.heading  must be("taskList.aa.groupHeading")
-      taskListViewModel.ltaGroup.get.heading must be("taskList.lta.groupHeading")
-    }
-
-    "sections must be fully populated" in {
-      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
-      val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
-
-      val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
-
-      taskListViewModel.setupGroup.sections.size mustBe 1
-      taskListViewModel.aaGroup.get.sections.size mustBe 10 // one for each of the remedy periods plus one for the setup questions
-      taskListViewModel.ltaGroup.get.sections.size mustBe 1
-    }
-
-    "sections must be well formed" in {
-      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
-      val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
-
-      val taskListViewModel: TaskListViewModel          = taskListService.taskListViewModel(answers.get)
-      val allSectionsInAllGroups: Seq[SectionViewModel] = taskListViewModel.allGroups.flatMap(group => group.sections)
-
-      allSectionsInAllGroups.foreach { sectionViewModel: SectionViewModel =>
-        sectionViewModel.status                       must (be(SectionStatus.NotStarted) or be(SectionStatus.CannotStartYet))
-        sectionViewModel.name.startsWith("taskList.") must be(true)
-      }
-    }
-  }
+class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
   "task list view model" - {
 
