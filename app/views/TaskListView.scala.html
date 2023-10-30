@@ -51,16 +51,14 @@
 
     <p class="govuk-body">@messages("taskList.instructions")</p>
 
-    @taskListViewModel.allGroups.map { group =>
+    @taskListViewModel.allGroups.zipWithIndex.map { groupWithIndex =>
 
-        @if(group.isDefined) {
-
-            <h2 class="govuk-heading-m">@group.get.displayNumber. @messages(group.get.heading)</h2>
+            <h2 class="govuk-heading-m">@groupWithIndex._2. @messages(groupWithIndex._1.heading)</h2>
 
             <ol class="app-task-list">
                 <li>
                     <ul class="app-task-list__items govuk-!-padding-left-0">
-                    @group.get.sections.map { section =>
+                    @groupWithIndex._1.sections.map { section =>
                         <li class="app-task-list__item">
                             <span class="app-task-list__task-name">
                                 @if(section.status == SectionStatus.CannotStartYet) {
@@ -75,7 +73,5 @@
                     </ul>
                 </li>
             </ol>
-
-        }
     }
 }

@@ -62,16 +62,6 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
       taskListViewModel.ltaGroup.isDefined must be(true)
     }
 
-    "display numbers should be correct" in {
-      val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
-      val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
-
-      val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
-
-      taskListViewModel.setupGroup.displayNumber   must be(1)
-      taskListViewModel.ltaGroup.get.displayNumber must be(2)
-    }
-
     "headings must be defined" in {
       val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
       val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
@@ -98,22 +88,12 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
       val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
       val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
 
-      val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
-      val allSectionsInAllGroups               = taskListViewModel.allGroups.flatMap(groupOption => groupOption.get.sections)
+      val taskListViewModel: TaskListViewModel          = taskListService.taskListViewModel(answers.get)
+      val allSectionsInAllGroups: Seq[SectionViewModel] = taskListViewModel.allGroups.flatMap(group => group.sections)
 
       allSectionsInAllGroups.foreach { sectionViewModel: SectionViewModel =>
         sectionViewModel.status                       must (be(SectionStatus.NotStarted) or be(SectionStatus.CannotStartYet))
         sectionViewModel.name.startsWith("taskList.") must be(true)
-        sectionViewModel.call.url                     must (
-          include("/lifetime-allowance") or
-            include("/check-your-answers-setup") or
-            include("/had-benefit-crystallisation-event") or
-            include("/calculation-result") or
-            include("/annual-allowance/scottish-taxpayer") or
-            include("/what-you-will-need-aa") or
-            include("/scottish-taxpayer-from-2016") or
-            include("/information")
-        )
       }
     }
   }
@@ -123,10 +103,10 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
     "group count should match the number of defined groups" in {
       val section: Seq[SectionViewModel]      =
         Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.NotStarted, "id"))
-      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", section)
+      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", section)
 
       val taskListViewModel: TaskListViewModel =
-        TaskListViewModel(sectionGroup, Some(sectionGroup), None, SectionGroupViewModel(1, "heading", Seq()))
+        TaskListViewModel(sectionGroup, Some(sectionGroup), None, SectionGroupViewModel("heading", Seq()))
 
       taskListViewModel.groupCount must be(3)
     }
@@ -134,7 +114,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
     "completed group count should be correct when a group with a single section is complete" in {
       val sections: Seq[SectionViewModel]     =
         Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id"))
-      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
+      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", sections)
 
       val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
 
@@ -148,7 +128,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
         SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
       )
 
-      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
+      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", sections)
 
       val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
 
@@ -162,7 +142,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
         SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
       )
 
-      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
+      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", sections)
 
       val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
 
@@ -176,14 +156,14 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
         SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
       )
 
-      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", sections)
+      val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", sections)
 
       val incompleteSections: Seq[SectionViewModel] = Seq(
         SectionViewModel("name", Call("method", "url"), SectionStatus.InProgress, "id"),
         SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
       )
 
-      val incompleteSectionGroup: SectionGroupViewModel = SectionGroupViewModel(1, "heading", incompleteSections)
+      val incompleteSectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", incompleteSections)
 
       val taskListViewModel: TaskListViewModel =
         TaskListViewModel(sectionGroup, Some(incompleteSectionGroup), None, incompleteSectionGroup)

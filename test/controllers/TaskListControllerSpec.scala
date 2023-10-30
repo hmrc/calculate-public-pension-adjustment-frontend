@@ -79,7 +79,7 @@ class TaskListControllerSpec extends SpecBase with MockitoSugar {
 
   private def constructTaskListViewModel(sectionStatus: SectionStatus) = {
     val sections: Seq[SectionViewModel]      = Seq(SectionViewModel("name", Call("method", "url"), sectionStatus, "id"))
-    val sectionGroup: SectionGroupViewModel  = SectionGroupViewModel(1, "heading", sections)
+    val sectionGroup: SectionGroupViewModel  = SectionGroupViewModel("heading", sections)
     val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
     taskListViewModel
   }
