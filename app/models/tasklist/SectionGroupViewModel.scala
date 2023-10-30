@@ -16,7 +16,7 @@
 
 package models.tasklist
 
-case class SectionGroupViewModel(displayNumber: Int, heading: String, sections: Seq[SectionViewModel]) {
+case class SectionGroupViewModel(heading: String, sections: Seq[SectionViewModel]) {
   def isComplete: Boolean = {
     val sectionCount          = sections.size
     val completedSectionCount = sections.count(section => section.status == SectionStatus.Completed)

@@ -38,7 +38,15 @@ final case class UserAnswers(
     Reads.optionNoError(Reads.at(page.path)).reads(data).getOrElse(None)
 
   def containsAnswerFor(page: Page) =
-    data.keys.contains(page.toString)
+    page match {
+      case settable: Settable[_] =>
+        data.removeObject(settable.path) match {
+          case JsSuccess(_, _) => true
+          case JsError(_)      =>
+            false
+        }
+      case _                     => false
+    }
 
   def set[A](page: Settable[A], value: A, cleanUp: Boolean = true)(implicit writes: Writes[A]): Try[UserAnswers] = {
 
