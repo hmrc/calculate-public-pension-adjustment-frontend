@@ -337,6 +337,7 @@ taskList.nextSteps.groupHeading = Next steps
 taskList.nextSteps.calculate = Calculate
 taskList.nextSteps.continueToSignIn = Continue to sign in
 taskList.nextSteps.setupRequired = You must first complete the setup questions
+taskList.nextSteps.noFurtherAction = No further action required
 
 ltaProtectionOrEnhancements.title = Did you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event?
 ltaProtectionOrEnhancements.heading = Did you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event?
