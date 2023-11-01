@@ -29,12 +29,18 @@ class LTASectionHelperSpec extends SpecBase {
 
       "should return false when all conditions are met to not have entered a kickout" in {
         val userAnswers = emptyUserAnswers
-          .set(HadBenefitCrystallisationEventPage, true).get
-          .set(ChangeInLifetimeAllowancePage, true).get
-          .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge).get
-          .set(LifetimeAllowanceChargePage, false).get
-          .set(NewExcessLifetimeAllowancePaidPage, Annualpayment).get
-          .set(NewAnnualPaymentValuePage, BigInt(1)).get
+          .set(HadBenefitCrystallisationEventPage, true)
+          .get
+          .set(ChangeInLifetimeAllowancePage, true)
+          .get
+          .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
+          .get
+          .set(LifetimeAllowanceChargePage, false)
+          .get
+          .set(NewExcessLifetimeAllowancePaidPage, Annualpayment)
+          .get
+          .set(NewAnnualPaymentValuePage, BigInt(1))
+          .get
 
         val result = LTASectionHelper.anyLtaKickoutReached(userAnswers)
         result mustBe false
@@ -42,7 +48,8 @@ class LTASectionHelperSpec extends SpecBase {
 
       "should return true if statusOfHadBCE is false" in {
         val userAnswers = emptyUserAnswers
-          .set(HadBenefitCrystallisationEventPage, false).get
+          .set(HadBenefitCrystallisationEventPage, false)
+          .get
 
         val result = LTASectionHelper.anyLtaKickoutReached(userAnswers)
         result mustBe true
@@ -50,8 +57,10 @@ class LTASectionHelperSpec extends SpecBase {
 
       "should return true if statusOfInformedBCEChange is false" in {
         val userAnswers = emptyUserAnswers
-          .set(HadBenefitCrystallisationEventPage, true).get
-          .set(ChangeInLifetimeAllowancePage, false).get
+          .set(HadBenefitCrystallisationEventPage, true)
+          .get
+          .set(ChangeInLifetimeAllowancePage, false)
+          .get
 
         val result = LTASectionHelper.anyLtaKickoutReached(userAnswers)
         result mustBe true
@@ -59,9 +68,12 @@ class LTASectionHelperSpec extends SpecBase {
 
       "should return true if statusOfChangeInTaxCharge is false" in {
         val userAnswers = emptyUserAnswers
-          .set(HadBenefitCrystallisationEventPage, true).get
-          .set(ChangeInLifetimeAllowancePage, true).get
-          .set(ChangeInTaxChargePage, ChangeInTaxCharge.None).get
+          .set(HadBenefitCrystallisationEventPage, true)
+          .get
+          .set(ChangeInLifetimeAllowancePage, true)
+          .get
+          .set(ChangeInTaxChargePage, ChangeInTaxCharge.None)
+          .get
 
         val result = LTASectionHelper.anyLtaKickoutReached(userAnswers)
         result mustBe true
@@ -69,12 +81,18 @@ class LTASectionHelperSpec extends SpecBase {
 
       "should return true if noPreviousChargeKickoutReached is true" in {
         val userAnswers = emptyUserAnswers
-          .set(HadBenefitCrystallisationEventPage, true).get
-          .set(ChangeInLifetimeAllowancePage, true).get
-          .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge).get
-          .set(LifetimeAllowanceChargePage, false).get
-          .set(NewExcessLifetimeAllowancePaidPage, Annualpayment).get
-          .set(NewAnnualPaymentValuePage, BigInt(0)).get
+          .set(HadBenefitCrystallisationEventPage, true)
+          .get
+          .set(ChangeInLifetimeAllowancePage, true)
+          .get
+          .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
+          .get
+          .set(LifetimeAllowanceChargePage, false)
+          .get
+          .set(NewExcessLifetimeAllowancePaidPage, Annualpayment)
+          .get
+          .set(NewAnnualPaymentValuePage, BigInt(0))
+          .get
 
         val result = LTASectionHelper.anyLtaKickoutReached(userAnswers)
         result mustBe true
@@ -149,13 +167,20 @@ class LTASectionHelperSpec extends SpecBase {
       "when all conditions are true" - {
         "return SectionStatus.InProgress" in {
           val answers = emptyUserAnswers
-            .set(HadBenefitCrystallisationEventPage, true).get
-            .set(ChangeInLifetimeAllowancePage, true).get
-            .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge).get
-            .set(LifetimeAllowanceChargePage, false).get
-            .set(NewExcessLifetimeAllowancePaidPage, Both).get
-            .set(NewAnnualPaymentValuePage, BigInt(10)).get
-            .set(NewLumpSumValuePage, BigInt(10)).get
+            .set(HadBenefitCrystallisationEventPage, true)
+            .get
+            .set(ChangeInLifetimeAllowancePage, true)
+            .get
+            .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
+            .get
+            .set(LifetimeAllowanceChargePage, false)
+            .get
+            .set(NewExcessLifetimeAllowancePaidPage, Both)
+            .get
+            .set(NewAnnualPaymentValuePage, BigInt(10))
+            .get
+            .set(NewLumpSumValuePage, BigInt(10))
+            .get
 
           LTASectionHelper.isLTAEligible(answers) mustBe SectionStatus.InProgress
         }
@@ -164,13 +189,16 @@ class LTASectionHelperSpec extends SpecBase {
       "when any condition is false" - {
         "return SectionStatus.Completed" in {
           val answers = emptyUserAnswers
-            .set(HadBenefitCrystallisationEventPage, false).get
-            .set(ChangeInLifetimeAllowancePage, true).get
-            .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge).get
+            .set(HadBenefitCrystallisationEventPage, false)
+            .get
+            .set(ChangeInLifetimeAllowancePage, true)
+            .get
+            .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
+            .get
 
           LTASectionHelper.isLTAEligible(answers) mustBe SectionStatus.Completed
         }
       }
     }
-    }
+  }
 }
