@@ -17,6 +17,7 @@
 package controllers
 
 import base.SpecBase
+import config.FrontendAppConfig
 import forms.lifetimeallowance.NewExcessLifetimeAllowancePaidFormProvider
 import models.{NewExcessLifetimeAllowancePaid, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -129,26 +130,28 @@ class NewExcessLifetimeAllowancePaidControllerSpec extends SpecBase with Mockito
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to start of the service for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, newExcessLifetimeAllowancePaidRoute)
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(GET, newExcessLifetimeAllowancePaidRoute)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
 
-    "redirect to Journey Recovery for a POST if no existing data is found" in {
+    "redirect to start of the service for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request =
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   =
           FakeRequest(POST, newExcessLifetimeAllowancePaidRoute)
             .withFormUrlEncodedBody(("value", NewExcessLifetimeAllowancePaid.values.head.toString))
 
@@ -156,7 +159,7 @@ class NewExcessLifetimeAllowancePaidControllerSpec extends SpecBase with Mockito
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }

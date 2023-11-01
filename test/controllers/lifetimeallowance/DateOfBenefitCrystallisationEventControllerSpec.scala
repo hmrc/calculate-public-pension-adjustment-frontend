@@ -17,6 +17,7 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
+import config.FrontendAppConfig
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
 import forms.lifetimeallowance.DateOfBenefitCrystallisationEventFormProvider
@@ -167,27 +168,29 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to start of the service for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val result = route(application, getRequest(NormalMode)).value
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val result    = route(application, getRequest(NormalMode)).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
 
-    "must redirect to Journey Recovery for a POST if no existing data is found" in {
+    "must redirect to start of the service for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val result = route(application, postRequest(NormalMode)).value
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val result    = route(application, postRequest(NormalMode)).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual generalRoutes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }

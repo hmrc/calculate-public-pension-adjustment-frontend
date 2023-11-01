@@ -17,7 +17,7 @@
 package controllers.annualallowance.taxyear
 
 import base.SpecBase
-import controllers.routes
+import config.FrontendAppConfig
 import forms.annualallowance.taxyear.PensionSchemeDetailsFormProvider
 import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -199,33 +199,35 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to start of the service for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, pensionSchemeDetailsRoute)
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(GET, pensionSchemeDetailsRoute)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
 
-    "must redirect to Journey Recovery for a POST if no existing data is found" in {
+    "must redirect to start of the service for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request =
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   =
           FakeRequest(POST, pensionSchemeDetailsRoute)
             .withFormUrlEncodedBody(("schemeName", "value 1"), ("schemeTaxRef", "value 2"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }

@@ -17,6 +17,7 @@
 package controllers.annualallowance.taxyear
 
 import base.SpecBase
+import config.FrontendAppConfig
 import models.Period
 import play.api.http.Status.{OK, SEE_OTHER}
 import play.api.test.FakeRequest
@@ -170,12 +171,13 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to start of the service for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(
           GET,
           controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2023).url
         )
@@ -183,7 +185,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }

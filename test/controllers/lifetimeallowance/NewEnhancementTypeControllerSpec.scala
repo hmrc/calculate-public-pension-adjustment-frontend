@@ -17,6 +17,7 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
+import config.FrontendAppConfig
 import controllers.routes
 import forms.lifetimeallowance.NewEnhancementTypeFormProvider
 import models.{NewEnhancementType, NormalMode, UserAnswers}
@@ -132,26 +133,28 @@ class NewEnhancementTypeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to start of the service for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, newEnhancementTypeRoute)
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(GET, newEnhancementTypeRoute)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
 
-    "redirect to Journey Recovery for a POST if no existing data is found" in {
+    "redirect to start of the service for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request =
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   =
           FakeRequest(POST, newEnhancementTypeRoute)
             .withFormUrlEncodedBody(("value", NewEnhancementType.values.head.toString))
 
@@ -159,7 +162,7 @@ class NewEnhancementTypeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }

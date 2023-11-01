@@ -17,6 +17,7 @@
 package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
+import config.FrontendAppConfig
 import controllers.routes
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
@@ -148,12 +149,13 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to start of the service for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(
           GET,
           controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad().url
         )
@@ -161,7 +163,7 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }
