@@ -16,11 +16,9 @@
 
 package models.tasklist.sections
 
-import models.NewExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
-import models.WhoPayingExtraLtaCharge.{PensionScheme, You}
+import models.UserAnswers
 import models.tasklist.helpers.LTASectionHelper
 import models.tasklist.{Section, SectionStatus}
-import models.{ChangeInTaxCharge, UserAnswers}
 import pages.Page
 import pages.lifetimeallowance._
 import play.api.libs.json.JsPath
@@ -72,7 +70,7 @@ case object LTASection extends Section {
     if (LTASectionHelper.firstPageIsAnswered(answers)) {
       if (LTASectionHelper.isLastPageAnswered(answers)) {
         SectionStatus.Completed
-      } else LTASectionHelper.isLTAElligble(answers)
+      } else LTASectionHelper.isLTAEligible(answers)
     } else SectionStatus.NotStarted
 
   def navigateTo(answers: UserAnswers): Page =

@@ -111,7 +111,7 @@ class TaskListService @Inject() (
     dataCaptureSections: List[Option[SectionGroupViewModel]]
   ): SectionGroupViewModel = {
 
-    val sectionNameOverride = NextStepsSection.sectionNameOverride(dataCaptureSections, answers)
+    val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
 
     SectionGroupViewModel(
       "taskList.nextSteps.groupHeading",

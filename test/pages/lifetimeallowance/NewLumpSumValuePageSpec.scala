@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode, WhoPayingExtraLtaCharge}
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class NewLumpSumValuePageSpec extends PageBehaviours {

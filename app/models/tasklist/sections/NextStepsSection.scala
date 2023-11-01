@@ -30,10 +30,12 @@ case object NextStepsSection extends Section {
 
     if (allDataCaptureComplete) {
       answers.get(ReportingChangePage) match {
-        case Some(rcs) if calculationRequired(rcs) => SectionStatus.NotStarted
-        case Some(rcs) if !calculationRequired(rcs) && LTASectionHelper.anyLtaKickoutReached(answers) => SectionStatus.CannotStartYet
-        case Some(rcs) if !calculationRequired(rcs) && !LTASectionHelper.anyLtaKickoutReached(answers) => SectionStatus.NotStarted
-        case _ => SectionStatus.CannotStartYet
+        case Some(rcs) if calculationRequired(rcs)                                                     => SectionStatus.NotStarted
+        case Some(rcs) if !calculationRequired(rcs) && LTASectionHelper.anyLtaKickoutReached(answers)  =>
+          SectionStatus.CannotStartYet
+        case Some(rcs) if !calculationRequired(rcs) && !LTASectionHelper.anyLtaKickoutReached(answers) =>
+          SectionStatus.NotStarted
+        case _                                                                                         => SectionStatus.CannotStartYet
       }
     } else {
       SectionStatus.CannotStartYet
@@ -41,7 +43,6 @@ case object NextStepsSection extends Section {
 
   }
 
-  //TODO where to navigate to
   def navigateTo(answers: UserAnswers): Call =
     answers.get(ReportingChangePage) match {
       case Some(rcs) if calculationRequired(rcs)  => routes.CalculationResultController.onPageLoad()
@@ -49,15 +50,15 @@ case object NextStepsSection extends Section {
       case _                                      => controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
     }
 
-  //TODO do we need default name?
-  def sectionNameOverride(answers: UserAnswers) = {
+  def sectionNameOverride(answers: UserAnswers) =
     answers.get(ReportingChangePage) match {
-      case Some(rcs) if calculationRequired(rcs) => "taskList.nextSteps.calculate"
-      case Some(rcs) if !calculationRequired(rcs) && !LTASectionHelper.anyLtaKickoutReached(answers)=> "taskList.nextSteps.continueToSignIn"
-      case Some(rcs) if !calculationRequired(rcs) && LTASectionHelper.anyLtaKickoutReached(answers)  => "taskList.nextSteps.noFurtherAction"
-      case _ => "taskList.nextSteps.setupRequired"
+      case Some(rcs) if calculationRequired(rcs)                                                     => "taskList.nextSteps.calculate"
+      case Some(rcs) if !calculationRequired(rcs) && !LTASectionHelper.anyLtaKickoutReached(answers) =>
+        "taskList.nextSteps.continueToSignIn"
+      case Some(rcs) if !calculationRequired(rcs) && LTASectionHelper.anyLtaKickoutReached(answers)  =>
+        "taskList.nextSteps.noFurtherAction"
+      case _                                                                                         => "taskList.nextSteps.setupRequired"
     }
-  }
 
   private def calculationRequired(reportingChangeSet: Set[ReportingChange]): Boolean =
     reportingChangeSet.contains(ReportingChange.AnnualAllowance)

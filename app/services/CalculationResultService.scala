@@ -19,7 +19,6 @@ package services
 import connectors.{BackendConnector, CalculationResultConnector}
 import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
-import models.NewExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.helpers.LTASectionHelper

@@ -26,45 +26,45 @@ object LTASectionHelper {
 
   def anyLtaKickoutReached(answers: UserAnswers): Boolean = if (
     statusOfHadBCE(answers) &&
-      statusOfInformedBCEChange(answers) &&
-      statusOfChangeInTaxCharge(answers) &&
-      !noPreviousChargeKickoutReached(answers)
+    statusOfInformedBCEChange(answers) &&
+    statusOfChangeInTaxCharge(answers) &&
+    !noPreviousChargeKickoutReached(answers)
   ) false
   else true
 
-  def isLTAElligble(answers: UserAnswers): SectionStatus =
+  def isLTAEligible(answers: UserAnswers): SectionStatus =
     if (
       statusOfHadBCE(answers) &&
-        statusOfInformedBCEChange(answers) &&
-        statusOfChangeInTaxCharge(answers) &&
-        !noPreviousChargeKickoutReached(answers)
+      statusOfInformedBCEChange(answers) &&
+      statusOfChangeInTaxCharge(answers) &&
+      !noPreviousChargeKickoutReached(answers)
     ) SectionStatus.InProgress
     else SectionStatus.Completed
 
   def isLastPageAnswered(answers: UserAnswers): Boolean =
     answers.get(WhoPayingExtraLtaChargePage) match {
-      case Some(You) => true
+      case Some(You)           => true
       case Some(PensionScheme) =>
         answers.get(LtaPensionSchemeDetailsPage) match {
           case Some(_) => true
-          case None => false
+          case None    => false
         }
-      case None => noValueIncreaseAndPreviousChargeLastPage(answers)
+      case None                => noValueIncreaseAndPreviousChargeLastPage(answers)
     }
 
   def checkNewPaymentValuesExist(answers: UserAnswers): Boolean =
     answers.get(NewExcessLifetimeAllowancePaidPage) match {
       case Some(Both) | Some(Annualpayment) => answers.get(NewAnnualPaymentValuePage).isDefined
-      case Some(Lumpsum) => answers.get(NewLumpSumValuePage).isDefined
-      case _ => false
+      case Some(Lumpsum)                    => answers.get(NewLumpSumValuePage).isDefined
+      case _                                => false
     }
 
   def combinedIsValueIncreased(
-                                        newLumpSumValue: Option[BigInt],
-                                        oldLumpSumValue: Option[BigInt],
-                                        newAnnualPaymentValue: Option[BigInt],
-                                        oldAnnualPaymentValue: Option[BigInt]
-                                      ): Boolean =
+    newLumpSumValue: Option[BigInt],
+    oldLumpSumValue: Option[BigInt],
+    newAnnualPaymentValue: Option[BigInt],
+    oldAnnualPaymentValue: Option[BigInt]
+  ): Boolean =
     (newLumpSumValue.getOrElse(BigInt(0)) + newAnnualPaymentValue.getOrElse(BigInt(0))) >
       (oldLumpSumValue.getOrElse(BigInt(0)) + oldAnnualPaymentValue.getOrElse(BigInt(0)))
 
@@ -79,25 +79,25 @@ object LTASectionHelper {
   def statusOfHadBCE(answers: UserAnswers): Boolean =
     answers.get(HadBenefitCrystallisationEventPage) match {
       case Some(false) => false
-      case Some(true) => true
-      case None => true
+      case Some(true)  => true
+      case None        => true
     }
 
   def statusOfInformedBCEChange(answers: UserAnswers): Boolean =
     answers.get(ChangeInLifetimeAllowancePage) match {
       case Some(false) => false
-      case Some(true) => true
-      case None => true
+      case Some(true)  => true
+      case None        => true
     }
 
   def statusOfChangeInTaxCharge(answers: UserAnswers): Boolean =
     answers.get(ChangeInTaxChargePage) match {
       case Some(ChangeInTaxCharge.NewCharge) | Some(ChangeInTaxCharge.DecreasedCharge) | Some(
-      ChangeInTaxCharge.IncreasedCharge
-      ) =>
+            ChangeInTaxCharge.IncreasedCharge
+          ) =>
         true
       case Some(ChangeInTaxCharge.None) => false
-      case None => true
+      case None                         => true
     }
 
   def noPreviousChargeKickoutReached(answers: UserAnswers): Boolean =
@@ -106,8 +106,5 @@ object LTASectionHelper {
 
   def firstPageIsAnswered(answers: UserAnswers) =
     answers.get(HadBenefitCrystallisationEventPage).isDefined
-
-  def nextStepsLTAStatus(answers: UserAnswers): SectionStatus =
-    if(isLastPageAnswered(answers) || (isLTAElligble(answers) == SectionStatus.Completed)) SectionStatus.NotStarted else SectionStatus.CannotStartYet
 
 }
