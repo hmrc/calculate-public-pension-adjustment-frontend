@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.SavingsStatementPage
@@ -43,7 +43,7 @@ class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
           key = "savingsStatement.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(NormalMode).url)
               .withVisuallyHiddenText("savingsStatement.change.hidden")
           )
         )
@@ -62,7 +62,7 @@ class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
           key = "savingsStatement.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(NormalMode).url)
               .withVisuallyHiddenText("savingsStatement.change.hidden")
           )
         )

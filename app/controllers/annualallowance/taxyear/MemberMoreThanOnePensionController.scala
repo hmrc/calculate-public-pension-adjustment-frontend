@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.MemberMoreThanOnePensionFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -66,9 +67,11 @@ class MemberMoreThanOnePensionController @Inject() (
             value =>
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.set(MemberMoreThanOnePensionPage(period), value))
-                _              <- sessionRepository.set(updatedAnswers)
-              } yield Redirect(MemberMoreThanOnePensionPage(period).navigate(mode, updatedAnswers))
+                redirectUrl     = MemberMoreThanOnePensionPage(period).navigate(mode, updatedAnswers).url
+                answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+                _              <- sessionRepository.set(answersWithNav)
+              } yield Redirect(redirectUrl)
           )
-      } else Future.successful(BadRequest(view(form.withGlobalError("error.invalid_aa_period"), mode, period)))
+      } else { Future.successful(BadRequest(view(form.withGlobalError("error.invalid_aa_period"), mode, period))) }
   }
 }

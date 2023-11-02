@@ -22,6 +22,7 @@ import models.CalculationResults.{CalculationResponse, CalculationResultsViewMod
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
+import models.tasklist.sections.LTASection
 import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, Period, ProtectionEnhancedChanged, ProtectionType, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
@@ -1262,13 +1263,14 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe None
       }
 
-      "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input noPreviousChargeKickoutReached as true" in {
+      "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input when an LTA kick out has been reached" in {
 
-        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data8))
+        val userAnswers    = userAnswers1.copy(data = data8)
+        val answersWithNav = LTASection.saveNavigation(userAnswers, LTASection.notAbleToUseThisServicePage.url)
+        val result         = service.buildLifeTimeAllowance(answersWithNav)
 
         result mustBe None
       }
-
     }
 
     "resubmission details should be well formed" in {

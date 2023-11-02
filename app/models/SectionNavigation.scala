@@ -14,26 +14,11 @@
  * limitations under the License.
  */
 
-package models.tasklist
+package models
 
-import models.UserAnswers
-import pages.Page
-import queries.Settable
+import play.api.libs.json.JsPath
+import queries.{Gettable, Settable}
 
-trait Section {
-
-  def pages(): Seq[Page] = Seq.empty[Page]
-
-  def remove(answers: UserAnswers, forPages: Seq[Page]): UserAnswers =
-    if (forPages.nonEmpty) {
-      val page: Page = forPages.head
-
-      val updatedAnswers =
-        page match {
-          case settablePage: Settable[_] => answers.remove(settablePage).get
-          case _                         => answers
-        }
-
-      remove(updatedAnswers, forPages.tail)
-    } else { answers }
+case class SectionNavigation(sectionIdentifier: String) extends Gettable[String] with Settable[String] {
+  override def path: JsPath = JsPath \ "navigation" \ sectionIdentifier
 }

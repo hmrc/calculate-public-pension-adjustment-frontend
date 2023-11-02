@@ -19,68 +19,13 @@ package models.tasklist
 import base.SpecBase
 import models.NewExcessLifetimeAllowancePaid.Lumpsum
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
-import models.tasklist.sections.{NextStepsSection, PreAASection, SetupSection}
-import models.{Period, ReportingChange, UserAnswers}
-import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page}
+import models.tasklist.sections.{LTASection, NextStepsSection}
+import models.{ReportingChange, UserAnswers}
 import pages.behaviours.PageBehaviours
 import pages.lifetimeallowance.{HadBenefitCrystallisationEventPage, LifetimeAllowanceChargePage, NewExcessLifetimeAllowancePaidPage, NewLumpSumValuePage}
-import pages.setupquestions.{ReportingChangePage, ResubmittingAdjustmentPage, SavingsStatementPage}
-import play.api.libs.json.Json
-import play.api.mvc.Call
+import pages.setupquestions.ReportingChangePage
 
-class SectionTest extends SpecBase with PageBehaviours {
-
-  "Removing user answers from a section" - {
-
-    "should succeed when user answers are incomplete" in {
-
-      val userAnswers = emptyUserAnswers.set(SavingsStatementPage, true).get
-
-      val userAnswersWithRemovals = SetupSection.removeAllUserAnswers(userAnswers)
-      userAnswersWithRemovals.data must equal(Json.obj())
-    }
-
-    "should succeed when there are multiple answers" in {
-
-      val userAnswers = emptyUserAnswers.set(SavingsStatementPage, true).get.set(ResubmittingAdjustmentPage, true).get
-
-      val userAnswersWithRemovals = SetupSection.removeAllUserAnswers(userAnswers)
-      userAnswersWithRemovals.data must equal(Json.obj())
-    }
-
-    "should not remove answers from another section" in {
-
-      val userAnswers =
-        emptyUserAnswers.set(SavingsStatementPage, true).get.set(DefinedContributionPensionSchemePage, true).get
-
-      val userAnswersWithRemovals = SetupSection.removeAllUserAnswers(userAnswers)
-      userAnswersWithRemovals.get(DefinedContributionPensionSchemePage) mustBe (Some(true))
-    }
-
-    "should succeed for a section with dynamically scoped data" in {
-
-      val userAnswers: UserAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, true)
-        .get
-        .set(PIAPreRemedyPage(Period._2013), BigInt(1))
-        .get
-
-      val userAnswersWithRemovals = PreAASection.removeAllUserAnswers(userAnswers)
-      userAnswersWithRemovals.get(PIAPreRemedyPage(Period._2013)) mustBe None
-    }
-  }
-
-  "Identifying a page" - {
-
-    "should locate return to" in {
-
-      val userAnswers: UserAnswers =
-        emptyUserAnswers.set(ScottishTaxpayerFrom2016Page, false).get.set(PayingPublicPensionSchemePage, true).get
-
-      val returnTo = PreAASection.navigateTo(userAnswers)
-      returnTo must be(PayingPublicPensionSchemePage)
-    }
-  }
+class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
   "Next steps navigation" - {
 
@@ -88,24 +33,24 @@ class SectionTest extends SpecBase with PageBehaviours {
       val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
       val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
-      val nextStepsTaskUrl = NextStepsSection.navigateTo(answers).url
+      val nextStepsTaskUrl = NextStepsSection.navigateTo(answers)
 
       checkNavigation(nextStepsTaskUrl, "/calculation-result")
     }
 
-    "Must proceed to LTA submission when reporting a change that does not include Annual Allowance details" in {
+    "Must route to LTA submission when reporting a change for LTA only" in {
       val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
       val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
-      val nextStepsTaskUrl = NextStepsSection.navigateTo(answers).url
+      val nextStepsTaskUrl = NextStepsSection.navigateTo(answers)
 
       checkNavigation(nextStepsTaskUrl, "/lta-submission")
     }
 
-    "Must route to setup page when reporting change details have not been captured" in {
-      val nextStepsTaskUrl = NextStepsSection.navigateTo(emptyUserAnswers).url
+    "Must route to a page in the Setup Section when reporting change details have not been captured" in {
+      val nextStepsTaskUrl = NextStepsSection.navigateTo(emptyUserAnswers)
 
-      checkNavigation(nextStepsTaskUrl, "/change-previous-adjustment")
+      checkNavigation(nextStepsTaskUrl, "/pension-saving-statement")
     }
   }
 
@@ -134,16 +79,10 @@ class SectionTest extends SpecBase with PageBehaviours {
       val answers: UserAnswers                   = emptyUserAnswers
         .set(ReportingChangePage, reportingChanges)
         .get
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(LifetimeAllowanceChargePage, false)
-        .get
-        .set(NewExcessLifetimeAllowancePaidPage, Lumpsum)
-        .get
-        .set(NewLumpSumValuePage, BigInt(0))
-        .get
 
-      val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+      val answersWithNav = LTASection.saveNavigation(answers, LTASection.notAbleToUseThisServicePage.url)
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answersWithNav)
 
       sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
     }
@@ -164,13 +103,13 @@ class SectionTest extends SpecBase with PageBehaviours {
         Some(
           SectionGroupViewModel(
             "heading",
-            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+            Seq(SectionViewModel("name", "url", SectionStatus.Completed, "id"))
           )
         ),
         Some(
           SectionGroupViewModel(
             "heading",
-            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.InProgress, "id"))
+            Seq(SectionViewModel("name", "url", SectionStatus.InProgress, "id"))
           )
         ),
         None
@@ -187,7 +126,7 @@ class SectionTest extends SpecBase with PageBehaviours {
         Some(
           SectionGroupViewModel(
             "heading",
-            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+            Seq(SectionViewModel("name", "url", SectionStatus.Completed, "id"))
           )
         ),
         None
@@ -202,25 +141,20 @@ class SectionTest extends SpecBase with PageBehaviours {
       val answers: UserAnswers                   = emptyUserAnswers
         .set(ReportingChangePage, reportingChanges)
         .get
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(LifetimeAllowanceChargePage, false)
-        .get
-        .set(NewExcessLifetimeAllowancePaidPage, Lumpsum)
-        .get
-        .set(NewLumpSumValuePage, BigInt(0))
-        .get
-      val dataCaptureSections                    = List(
+
+      val answersWithNav = LTASection.saveNavigation(answers, LTASection.notAbleToUseThisServicePage.url)
+
+      val dataCaptureSections = List(
         Some(
           SectionGroupViewModel(
             "heading",
-            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+            Seq(SectionViewModel("name", "url", SectionStatus.Completed, "id"))
           )
         ),
         None
       )
 
-      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answersWithNav)
       sectionStatus mustBe SectionStatus.CannotStartYet
     }
 
@@ -231,13 +165,13 @@ class SectionTest extends SpecBase with PageBehaviours {
         Some(
           SectionGroupViewModel(
             "heading",
-            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+            Seq(SectionViewModel("name", "url", SectionStatus.Completed, "id"))
           )
         ),
         Some(
           SectionGroupViewModel(
             "heading",
-            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+            Seq(SectionViewModel("name", "url", SectionStatus.Completed, "id"))
           )
         ),
         None

@@ -17,9 +17,11 @@
 package controllers.annualallowance.preaaquestions
 
 import controllers.actions._
-import pages.annualallowance.preaaquestions
 import forms.annualallowance.preaaquestions.RegisteredYearFormProvider
+import models.tasklist.sections.PreAASection
 import models.{Mode, Period}
+import pages.annualallowance.preaaquestions
+import pages.annualallowance.preaaquestions.RegisteredYearPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -62,10 +64,11 @@ class RegisteredYearController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
           value =>
             for {
-              updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(preaaquestions.RegisteredYearPage(period), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(preaaquestions.RegisteredYearPage(period).navigate(mode, updatedAnswers))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(RegisteredYearPage(period), value))
+              redirectUrl     = RegisteredYearPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = PreAASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

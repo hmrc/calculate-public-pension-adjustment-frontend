@@ -17,321 +17,69 @@
 package models.tasklist
 
 import base.SpecBase
+import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.sections.AASection
-import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex, WhoPaidAACharge}
-import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
-import pages.annualallowance.taxyear.{ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, TotalIncomePage, WhoPaidAAChargePage}
+import models.{Period, UserAnswers}
+import pages.behaviours.PageBehaviours
 
-class AASectionSpec extends SpecBase {
+class AASectionSpec extends SpecBase with PageBehaviours {
 
-  "Status is first period" - {
+  "AA section navigation" - {
 
-    "when user has answered defined contribution as No in AA setup questions and Both as Who Paid" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
-        .get
-        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.Both)
-        .get
-        .set(HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0)), BigInt(999))
-        .get
-        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
-        .get
+    "Must link to first page url in correct period when no section navigation has been saved" in {
+      val navUrl = AASection(Period._2011).navigateTo(emptyUserAnswers)
 
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
+      checkNavigation(navUrl, "/annual-allowance/2011/information")
     }
 
-    "when user has answered defined contribution as No in AA setup questions and not answered how much scheme paid in case both paid" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
-        .get
-        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.Both)
-        .get
-      val status      = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+    "Must link to check answers url in correct period when check answers url has been saved in " in {
+      val answers: UserAnswers =
+        AASection(Period._2011)
+          .saveNavigation(emptyUserAnswers, AASection(Period._2011).checkYourAAPeriodAnswersPage.url)
 
-      status mustBe (SectionStatus.InProgress)
+      val navUrl = AASection(Period._2011).navigateTo(answers)
+
+      checkNavigation(navUrl, "/annual-allowance/2011/check-answers")
     }
 
-    "when user has answered defined contribution as No in AA setup questions and You as Who Paid" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
-        .get
-        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.You)
-        .get
-        .set(HowMuchAAChargeYouPaidPage(Period._2016PreAlignment, SchemeIndex(0)), BigInt(999))
-        .get
-        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
-        .get
+    "Must link to saved url in correct period when any other url has been saved" in {
+      val answers: UserAnswers = AASection(Period._2011).saveNavigation(emptyUserAnswers, "/some-page-url")
 
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+      val navUrl = AASection(Period._2011).navigateTo(answers)
 
-      status mustBe (SectionStatus.Completed)
+      checkNavigation(navUrl, "/some-page-url")
     }
 
-    "when user has answered defined contribution as No in AA setup questions and not answered how much user paid" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
-        .get
-        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.You)
-        .get
+    "Must link to saved url in correct period when urls have been saved in multiple periods" in {
+      val answers: UserAnswers            = AASection(Period._2011).saveNavigation(emptyUserAnswers, "/some-page-url")
+      val answersWithNavInMultiplePeriods = AASection(Period._2012).saveNavigation(answers, "/some-other-page-url")
 
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
+      val navUrl = AASection(Period._2011).navigateTo(answersWithNavInMultiplePeriods)
 
-      status mustBe (SectionStatus.InProgress)
-    }
-
-    "when user has answered defined contribution as No in AA setup questions and Scheme as Who Paid" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
-        .get
-        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.Scheme)
-        .get
-        .set(HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0)), BigInt(999))
-        .get
-        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "when user has answered defined contribution as No in AA setup questions and not answered how much scheme paid" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), true)
-        .get
-        .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.Scheme)
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
-    }
-
-    "when user has answered defined contribution as No in AA setup questions and No as if you paid a charge" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(PayAChargePage(Period._2016PreAlignment, SchemeIndex(0)), false)
-        .get
-        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "when user has answered defined contribution as yes in AA setup questions but not answered pay a charge page" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
-    }
-
-    "when user has defined benefit then status is complete when defined benefit amount page is answered" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, true)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
-        .get
-        .set(
-          ContributedToDuringRemedyPeriodPage(Period._2016PreAlignment),
-          Set(ContributedToDuringRemedyPeriod.values.tail.head)
-        )
-        .get
-        .set(DefinedBenefitAmountPage(Period._2016PreAlignment), BigInt(999))
-        .get
-        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "when user has defined benefit then status is in progress when defined benefit amount page is not answered" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, true)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
-        .get
-        .set(
-          ContributedToDuringRemedyPeriodPage(Period._2016PreAlignment),
-          Set(ContributedToDuringRemedyPeriod.values.tail.head)
-        )
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
-    }
-
-    "when user has not answered if defined contribution or defined benefit then the status is in progress" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, true)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
-    }
-
-    "when user has defined contribution then status is complete when defined contribution amount page is answered" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, true)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
-        .get
-        .set(
-          ContributedToDuringRemedyPeriodPage(Period._2016PreAlignment),
-          Set(ContributedToDuringRemedyPeriod.values.head)
-        )
-        .get
-        .set(DefinedContributionAmountPage(Period._2016PreAlignment), BigInt(999))
-        .get
-        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "when user has defined contribution then status is in progress when defined contribution amount page is not answered" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, true)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), true)
-        .get
-        .set(
-          ContributedToDuringRemedyPeriodPage(Period._2016PreAlignment),
-          Set(ContributedToDuringRemedyPeriod.values.head)
-        )
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
-    }
-
-    "when user has other defined contribution and benefit is answered as false" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, true)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(OtherDefinedBenefitOrContributionPage(Period._2016PreAlignment), false)
-        .get
-        .set(TotalIncomePage(Period._2016PreAlignment), BigInt(999))
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "when user has other defined contribution and benefit is not answered" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-
-      val status = AASection(Period._2016PreAlignment, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
+      checkNavigation(navUrl, "/some-page-url")
     }
   }
 
-  "Status is not first period" - {
+  "AA section status" - {
 
-    "when user has answered defined contribution as No in AA setup questions and not answered how much scheme paid in case both paid" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), true)
-        .get
-        .set(PayAChargePage(Period._2016PostAlignment, SchemeIndex(0)), true)
-        .get
-        .set(WhoPaidAAChargePage(Period._2016PostAlignment, SchemeIndex(0)), WhoPaidAACharge.Both)
-        .get
-        .set(HowMuchAAChargeSchemePaidPage(Period._2016PostAlignment, SchemeIndex(0)), BigInt(999))
-        .get
-      val status      = AASection(Period._2016PostAlignment, SchemeIndex(0)).status(userAnswers)
+    "Must be NotStarted when no section navigation has been saved" in {
+      val answers: UserAnswers = emptyUserAnswers
 
-      status mustBe (SectionStatus.Completed)
+      AASection(Period._2011).status(answers) mustBe NotStarted
     }
 
-    "when user has defined benefit then status is complete when defined benefit amount page is answered" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2017), true)
-        .get
-        .set(TotalIncomePage(Period._2017), BigInt(999))
-        .get
+    "Must be InProgress when any other url has been saved" in {
+      val answers: UserAnswers = AASection(Period._2011).saveNavigation(emptyUserAnswers, "/some-page-url")
 
-      val status = AASection(Period._2017, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
+      AASection(Period._2011).status(answers) mustBe InProgress
     }
 
-    "when user has defined benefit then status is complete when defined benefit amount page is not answered" in {
-      val userAnswers = emptyUserAnswers
-        .set(DefinedContributionPensionSchemePage, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2017), true)
-        .get
+    "Must be Completed when check answers url for period has been saved" in {
+      val answers: UserAnswers =
+        AASection(Period._2011)
+          .saveNavigation(emptyUserAnswers, AASection(Period._2011).checkYourAAPeriodAnswersPage.url)
 
-      val status = AASection(Period._2017, SchemeIndex(0)).status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
+      AASection(Period._2011).status(answers) mustBe Completed
     }
-
   }
 }

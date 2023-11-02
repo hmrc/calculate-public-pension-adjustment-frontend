@@ -18,7 +18,7 @@ package controllers.setupquestions
 
 import controllers.actions._
 import forms.SavingsStatementFormProvider
-import javax.inject.Inject
+import models.tasklist.sections.SetupSection
 import models.{Mode, UserAnswers}
 import pages.setupquestions.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -27,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.SavingsStatementView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class SavingsStatementController @Inject() (
@@ -63,8 +64,10 @@ class SavingsStatementController @Inject() (
             updatedAnswers <-
               Future
                 .fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(SavingsStatementPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(SavingsStatementPage.navigate(mode, updatedAnswers))
+            redirectUrl     = SavingsStatementPage.navigate(mode, updatedAnswers).url
+            answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
+            _              <- sessionRepository.set(answersWithNav)
+          } yield Redirect(redirectUrl)
       )
   }
 }

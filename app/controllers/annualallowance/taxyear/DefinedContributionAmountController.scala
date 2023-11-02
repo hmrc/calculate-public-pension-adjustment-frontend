@@ -19,6 +19,7 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.DefinedContributionAmountFormProvider
 import models.requests.DataRequest
+import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.{DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
@@ -106,21 +107,23 @@ class DefinedContributionAmountController @Inject() (
     value: BigInt
   ) =
     for {
-      updatedAnswers <-
-        Future.fromTry(
-          request.userAnswers
-            .set(DefinedContributionAmountPage(period), value)
-            .flatMap(_.set(FlexiAccessDefinedContributionAmountPage(period), BigInt(0)))
-        )
-      _              <- sessionRepository.set(updatedAnswers)
-    } yield Redirect(DefinedContributionAmountPage(period).navigate(mode, updatedAnswers))
+      updatedAnswers <- Future.fromTry(
+                          request.userAnswers
+                            .set(DefinedContributionAmountPage(period), value)
+                            .flatMap(_.set(FlexiAccessDefinedContributionAmountPage(period), BigInt(0)))
+                        )
+      redirectUrl     = DefinedContributionAmountPage(period).navigate(mode, updatedAnswers).url
+      answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+      _              <- sessionRepository.set(answersWithNav)
+    } yield Redirect(redirectUrl)
 
   private def updateAnswersForNormalDate(mode: Mode, period: Period, request: DataRequest[AnyContent], value: BigInt) =
     for {
-      updatedAnswers <-
-        Future.fromTry(request.userAnswers.set(DefinedContributionAmountPage(period), value))
-      _              <- sessionRepository.set(updatedAnswers)
-    } yield Redirect(DefinedContributionAmountPage(period).navigate(mode, updatedAnswers))
+      updatedAnswers <- Future.fromTry(request.userAnswers.set(DefinedContributionAmountPage(period), value))
+      redirectUrl     = DefinedContributionAmountPage(period).navigate(mode, updatedAnswers).url
+      answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+      _              <- sessionRepository.set(answersWithNav)
+    } yield Redirect(redirectUrl)
 
   private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate]): String = {
     val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)

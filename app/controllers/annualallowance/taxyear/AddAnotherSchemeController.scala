@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.AddAnotherSchemeFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.AddAnotherSchemePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -64,8 +65,10 @@ class AddAnotherSchemeController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(AddAnotherSchemePage(period, schemeIndex), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(AddAnotherSchemePage(period, schemeIndex).navigate(mode, updatedAnswers))
+              redirectUrl     = AddAnotherSchemePage(period, schemeIndex).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

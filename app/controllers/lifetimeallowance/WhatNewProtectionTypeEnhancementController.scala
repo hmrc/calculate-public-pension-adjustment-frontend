@@ -19,6 +19,7 @@ package controllers.lifetimeallowance
 import controllers.actions._
 import forms.lifetimeallowance.WhatNewProtectionTypeEnhancementFormProvider
 import models.Mode
+import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.WhatNewProtectionTypeEnhancementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -62,8 +63,10 @@ class WhatNewProtectionTypeEnhancementController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhatNewProtectionTypeEnhancementPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(WhatNewProtectionTypeEnhancementPage.navigate(mode, updatedAnswers))
+              redirectUrl     = WhatNewProtectionTypeEnhancementPage.navigate(mode, updatedAnswers).url
+              answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

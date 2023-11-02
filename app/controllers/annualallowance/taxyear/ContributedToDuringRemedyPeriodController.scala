@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.ContributedToDuringRemedyPeriodFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.ContributedToDuringRemedyPeriodPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -64,8 +65,10 @@ class ContributedToDuringRemedyPeriodController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(ContributedToDuringRemedyPeriodPage(period), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(ContributedToDuringRemedyPeriodPage(period).navigate(mode, updatedAnswers))
+              redirectUrl     = ContributedToDuringRemedyPeriodPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

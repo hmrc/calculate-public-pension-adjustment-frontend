@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.PensionSchemeInputAmountsFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInputAmountsPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -72,8 +73,10 @@ class PensionSchemeInputAmountsController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(PensionSchemeInputAmountsPage(period, schemeIndex), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(PensionSchemeInputAmountsPage(period, schemeIndex).navigate(mode, updatedAnswers))
+              redirectUrl     = PensionSchemeInputAmountsPage(period, schemeIndex).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

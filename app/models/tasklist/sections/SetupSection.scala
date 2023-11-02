@@ -16,24 +16,33 @@
 
 package models.tasklist.sections
 
-import models.UserAnswers
+import controllers.setupquestions.{routes => setupRoutes}
+import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
-import pages.Page
-import pages.setupquestions._
+import models.{NormalMode, SectionNavigation, UserAnswers}
+import play.api.mvc.Call
 
 case object SetupSection extends Section {
-  override def pages(): Seq[Page] =
-    Seq(SavingsStatementPage, ResubmittingAdjustmentPage, ReasonForResubmissionPage, ReportingChangePage)
+
+  val initialPage: Call               = setupRoutes.SavingsStatementController.onPageLoad(NormalMode)
+  val checkYourSetupAnswersPage: Call = setupRoutes.CheckYourSetupAnswersController.onPageLoad()
+  val ineligiblePage: Call            = setupRoutes.IneligibleController.onPageLoad
 
   def status(answers: UserAnswers): SectionStatus =
-    if (answers.get(SavingsStatementPage).isDefined) {
-      if (answers.get(ReportingChangePage).isDefined) SectionStatus.Completed else SectionStatus.InProgress
-    } else SectionStatus.NotStarted
-
-  def navigateTo(answers: UserAnswers): Page =
-    if (status(answers) == SectionStatus.Completed) {
-      CheckYourSetupAnswersPage
-    } else {
-      pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
+    navigateTo(answers) match {
+      case initialPage.url               => NotStarted
+      case checkYourSetupAnswersPage.url => Completed
+      case _                             => InProgress
     }
+
+  private val sectionNavigation: SectionNavigation = SectionNavigation("setupSection")
+
+  def navigateTo(answers: UserAnswers): String = {
+    val taskListNavLink = answers.get(sectionNavigation).getOrElse(initialPage.url)
+    if (taskListNavLink == ineligiblePage.url) { checkYourSetupAnswersPage.url }
+    else { taskListNavLink }
+  }
+
+  def saveNavigation(answers: UserAnswers, urlFragment: String): UserAnswers =
+    answers.set(sectionNavigation, urlFragment).get
 }

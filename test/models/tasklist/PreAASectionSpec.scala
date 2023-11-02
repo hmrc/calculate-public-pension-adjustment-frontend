@@ -17,102 +17,58 @@
 package models.tasklist
 
 import base.SpecBase
-import models.Period
+import models.UserAnswers
+import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.sections.PreAASection
-import pages.annualallowance.preaaquestions.{PIAPreRemedyPage, PayTaxCharge1415Page, RegisteredYearPage, ScottishTaxpayerFrom2016Page}
+import pages.behaviours.PageBehaviours
 
-class PreAASetupSectionSpec extends SpecBase {
+class PreAASectionSpec extends SpecBase with PageBehaviours {
 
-  "when user has not answered first page" in {
+  "Pre AA setup section navigation" - {
 
-    val userAnswers = emptyUserAnswers
+    "Must link to first page url when no section navigation has been saved" in {
+      val navUrl = PreAASection.navigateTo(emptyUserAnswers)
 
-    val status = PreAASection.status(userAnswers)
+      checkNavigation(navUrl, "/annual-allowance/scottish-taxpayer")
+    }
 
-    status mustBe (SectionStatus.NotStarted)
+    "Must link to check answers url when check answers url has been saved" in {
+      val answers: UserAnswers =
+        PreAASection.saveNavigation(emptyUserAnswers, PreAASection.checkYourAASetupAnswersPage.url)
+
+      val navUrl = PreAASection.navigateTo(answers)
+
+      checkNavigation(navUrl, "/annual-allowance/setup-check-answers")
+    }
+
+    "Must link to saved url when any other url has been saved" in {
+      val answers: UserAnswers = PreAASection.saveNavigation(emptyUserAnswers, "/some-page-url")
+
+      val navUrl = PreAASection.navigateTo(answers)
+
+      checkNavigation(navUrl, "/some-page-url")
+    }
   }
 
-  "when user has answered ScottishTaxpayerFrom2016 page" in {
+  "Pre AA section status" - {
 
-    val userAnswers = emptyUserAnswers
-      .set(ScottishTaxpayerFrom2016Page, false)
-      .get
+    "Must be NotStarted when no section navigation has been saved" in {
+      val answers: UserAnswers = emptyUserAnswers
 
-    val status = PreAASection.status(userAnswers)
+      PreAASection.status(answers) mustBe NotStarted
+    }
 
-    status mustBe (SectionStatus.InProgress)
-  }
+    "Must be InProgress when any other url has been saved" in {
+      val answers: UserAnswers = PreAASection.saveNavigation(emptyUserAnswers, "/some-page-url")
 
-  "when user answers false PayTaxCharge1415 page" in {
+      PreAASection.status(answers) mustBe InProgress
+    }
 
-    val userAnswers = emptyUserAnswers
-      .set(ScottishTaxpayerFrom2016Page, false)
-      .get
-      .set(PayTaxCharge1415Page, false)
-      .get
+    "Must be Completed when check answers url has been saved" in {
+      val answers: UserAnswers =
+        PreAASection.saveNavigation(emptyUserAnswers, PreAASection.checkYourAASetupAnswersPage.url)
 
-    val status = PreAASection.status(userAnswers)
-
-    status mustBe (SectionStatus.InProgress)
-  }
-
-  "when user answers true PayTaxCharge1415 page" in {
-
-    val userAnswers = emptyUserAnswers
-      .set(ScottishTaxpayerFrom2016Page, false)
-      .get
-      .set(PayTaxCharge1415Page, true)
-      .get
-
-    val status = PreAASection.status(userAnswers)
-
-    status mustBe (SectionStatus.Completed)
-  }
-
-  "when user answers false RegisteredYear page in the 2015 period" in {
-
-    val userAnswers = emptyUserAnswers
-      .set(ScottishTaxpayerFrom2016Page, false)
-      .get
-      .set(PayTaxCharge1415Page, false)
-      .get
-      .set(RegisteredYearPage(Period._2015), false)
-      .get
-
-    val status = PreAASection.status(userAnswers)
-
-    status mustBe (SectionStatus.Completed)
-  }
-
-  "when user answers true RegisteredYear page in the 2015 period and has not entered 2015 PIA" in {
-
-    val userAnswers = emptyUserAnswers
-      .set(ScottishTaxpayerFrom2016Page, false)
-      .get
-      .set(PayTaxCharge1415Page, false)
-      .get
-      .set(RegisteredYearPage(Period._2015), true)
-      .get
-
-    val status = PreAASection.status(userAnswers)
-
-    status mustBe (SectionStatus.InProgress)
-  }
-
-  "when user answers true RegisteredYear page in the 2015 period and has entered 2015 PIA" in {
-
-    val userAnswers = emptyUserAnswers
-      .set(ScottishTaxpayerFrom2016Page, false)
-      .get
-      .set(PayTaxCharge1415Page, false)
-      .get
-      .set(RegisteredYearPage(Period._2015), true)
-      .get
-      .set(PIAPreRemedyPage(Period._2015), BigInt(1))
-      .get
-
-    val status = PreAASection.status(userAnswers)
-
-    status mustBe (SectionStatus.Completed)
+      PreAASection.status(answers) mustBe Completed
+    }
   }
 }

@@ -19,6 +19,7 @@ package controllers.lifetimeallowance
 import controllers.actions._
 import forms.lifetimeallowance.InternationalEnhancementReferenceFormProvider
 import models.Mode
+import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.InternationalEnhancementReferencePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -62,8 +63,10 @@ class InternationalEnhancementReferenceController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(InternationalEnhancementReferencePage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(InternationalEnhancementReferencePage.navigate(mode, updatedAnswers))
+              redirectUrl     = InternationalEnhancementReferencePage.navigate(mode, updatedAnswers).url
+              answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

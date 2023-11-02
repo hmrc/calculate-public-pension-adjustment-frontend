@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.OtherDefinedBenefitOrContributionFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.OtherDefinedBenefitOrContributionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -65,15 +66,11 @@ class OtherDefinedBenefitOrContributionController @Inject() (
           value =>
             for {
               updatedAnswers <-
-                Future.fromTry(
-                  request.userAnswers
-                    .set(OtherDefinedBenefitOrContributionPage(period: Period), value)
-                )
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(
-              OtherDefinedBenefitOrContributionPage(period: Period)
-                .navigate(mode, updatedAnswers)
-            )
+                Future.fromTry(request.userAnswers.set(OtherDefinedBenefitOrContributionPage(period), value))
+              redirectUrl     = OtherDefinedBenefitOrContributionPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }
