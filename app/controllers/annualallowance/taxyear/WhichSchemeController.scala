@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.WhichSchemeFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.WhichSchemePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -67,14 +68,15 @@ class WhichSchemeController @Inject() (
               )
             ),
           value => {
-
             val maybeUpdatedAnswers =
               SchemeService.maybeAddSchemeDetailsToPeriod(request.userAnswers, value, period, schemeIndex)
 
             for {
               updatedAnswers <- Future.fromTry(maybeUpdatedAnswers.set(WhichSchemePage(period, schemeIndex), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(WhichSchemePage(period, schemeIndex).navigate(mode, updatedAnswers))
+              redirectUrl     = WhichSchemePage(period, schemeIndex).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
           }
         )
     }

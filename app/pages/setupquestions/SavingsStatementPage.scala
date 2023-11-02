@@ -16,10 +16,13 @@
 
 package pages.setupquestions
 
+import models.tasklist.sections.{LTASection, PreAASection}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object SavingsStatementPage extends QuestionPage[Boolean] {
 
@@ -38,4 +41,18 @@ case object SavingsStatementPage extends QuestionPage[Boolean] {
     case Some(false) => controllers.setupquestions.routes.IneligibleController.onPageLoad
     case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
   }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case true  => super.cleanup(value, userAnswers)
+        case false =>
+          userAnswers
+            .remove(ReasonForResubmissionPage)
+            .flatMap(_.remove(ReportingChangePage))
+            .flatMap(_.remove(ResubmittingAdjustmentPage))
+            .flatMap(answers => Try(PreAASection.removeNavigation(answers)))
+            .flatMap(answers => Try(LTASection.removeNavigation(answers)))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

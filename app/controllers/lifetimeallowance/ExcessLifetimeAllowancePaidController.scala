@@ -20,6 +20,7 @@ import controllers.actions._
 import forms.lifetimeallowance.ExcessLifetimeAllowancePaidFormProvider
 import javax.inject.Inject
 import models.Mode
+import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.ExcessLifetimeAllowancePaidPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -62,8 +63,10 @@ class ExcessLifetimeAllowancePaidController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(ExcessLifetimeAllowancePaidPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(ExcessLifetimeAllowancePaidPage.navigate(mode, updatedAnswers))
+              redirectUrl     = ExcessLifetimeAllowancePaidPage.navigate(mode, updatedAnswers).url
+              answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

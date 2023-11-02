@@ -17,11 +17,9 @@
 package models.tasklist.sections
 
 import controllers.routes
-import models.tasklist.helpers.LTASectionHelper
 import models.tasklist.{Section, SectionGroupViewModel, SectionStatus}
-import models.{NormalMode, ReportingChange, UserAnswers}
+import models.{ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
-import play.api.mvc.Call
 
 case object NextStepsSection extends Section {
 
@@ -30,12 +28,12 @@ case object NextStepsSection extends Section {
 
     if (allDataCaptureComplete) {
       answers.get(ReportingChangePage) match {
-        case Some(rcs) if calculationRequired(rcs)                                                     => SectionStatus.NotStarted
-        case Some(rcs) if !calculationRequired(rcs) && LTASectionHelper.anyLtaKickoutReached(answers)  =>
+        case Some(rcs) if calculationRequired(rcs)                                                => SectionStatus.NotStarted
+        case Some(rcs) if !calculationRequired(rcs) && LTASection.kickoutHasBeenReached(answers)  =>
           SectionStatus.CannotStartYet
-        case Some(rcs) if !calculationRequired(rcs) && !LTASectionHelper.anyLtaKickoutReached(answers) =>
+        case Some(rcs) if !calculationRequired(rcs) && !LTASection.kickoutHasBeenReached(answers) =>
           SectionStatus.NotStarted
-        case _                                                                                         => SectionStatus.CannotStartYet
+        case _                                                                                    => SectionStatus.CannotStartYet
       }
     } else {
       SectionStatus.CannotStartYet
@@ -43,21 +41,21 @@ case object NextStepsSection extends Section {
 
   }
 
-  def navigateTo(answers: UserAnswers): Call =
+  def navigateTo(answers: UserAnswers): String =
     answers.get(ReportingChangePage) match {
-      case Some(rcs) if calculationRequired(rcs)  => routes.CalculationResultController.onPageLoad()
-      case Some(rcs) if !calculationRequired(rcs) => routes.SubmissionController.storeAndRedirect()
-      case _                                      => controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
+      case Some(rcs) if calculationRequired(rcs)  => routes.CalculationResultController.onPageLoad().url
+      case Some(rcs) if !calculationRequired(rcs) => routes.SubmissionController.storeAndRedirect().url
+      case _                                      => SetupSection.navigateTo(answers)
     }
 
   def sectionNameOverride(answers: UserAnswers) =
     answers.get(ReportingChangePage) match {
-      case Some(rcs) if calculationRequired(rcs)                                                     => "taskList.nextSteps.calculate"
-      case Some(rcs) if !calculationRequired(rcs) && !LTASectionHelper.anyLtaKickoutReached(answers) =>
+      case Some(rcs) if calculationRequired(rcs)                                                => "taskList.nextSteps.calculate"
+      case Some(rcs) if !calculationRequired(rcs) && !LTASection.kickoutHasBeenReached(answers) =>
         "taskList.nextSteps.continueToSignIn"
-      case Some(rcs) if !calculationRequired(rcs) && LTASectionHelper.anyLtaKickoutReached(answers)  =>
+      case Some(rcs) if !calculationRequired(rcs) && LTASection.kickoutHasBeenReached(answers)  =>
         "taskList.nextSteps.noFurtherAction"
-      case _                                                                                         => "taskList.nextSteps.setupRequired"
+      case _                                                                                    => "taskList.nextSteps.setupRequired"
     }
 
   private def calculationRequired(reportingChangeSet: Set[ReportingChange]): Boolean =

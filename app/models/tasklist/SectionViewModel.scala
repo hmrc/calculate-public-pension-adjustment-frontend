@@ -17,11 +17,10 @@
 package models.tasklist
 
 import play.api.i18n.Messages
-import play.api.mvc.Call
 
 final case class SectionViewModel(
   name: String,
-  call: Call,
+  url: String,
   status: SectionStatus,
   id: String,
   nameOverride: Option[String] = None

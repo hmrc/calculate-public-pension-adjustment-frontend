@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
-import models.{CheckMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import pages.setupquestions.SavingsStatementPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -34,7 +34,7 @@ object SavingsStatementSummary {
         key = "savingsStatement.checkYourAnswersLabel",
         value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(CheckMode).url)
+          ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(NormalMode).url)
             .withVisuallyHiddenText(messages("savingsStatement.change.hidden"))
         )
       )

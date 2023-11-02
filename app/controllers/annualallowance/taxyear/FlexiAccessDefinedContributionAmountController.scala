@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.FlexiAccessDefinedContributionAmountFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
@@ -73,13 +74,11 @@ class FlexiAccessDefinedContributionAmountController @Inject() (
           value =>
             for {
               updatedAnswers <-
-                Future.fromTry(
-                  request.userAnswers.set(FlexiAccessDefinedContributionAmountPage(period), value)
-                )
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(
-              FlexiAccessDefinedContributionAmountPage(period).navigate(mode, updatedAnswers)
-            )
+                Future.fromTry(request.userAnswers.set(FlexiAccessDefinedContributionAmountPage(period), value))
+              redirectUrl     = FlexiAccessDefinedContributionAmountPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 

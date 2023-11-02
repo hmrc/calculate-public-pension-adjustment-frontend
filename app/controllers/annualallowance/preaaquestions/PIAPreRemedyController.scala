@@ -18,8 +18,10 @@ package controllers.annualallowance.preaaquestions
 
 import controllers.actions._
 import forms.annualallowance.preaaquestions.PIAPreRemedyFormProvider
+import models.tasklist.sections.PreAASection
 import models.{Mode, Period}
 import pages.annualallowance.preaaquestions
+import pages.annualallowance.preaaquestions.PIAPreRemedyPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -62,9 +64,11 @@ class PIAPreRemedyController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(preaaquestions.PIAPreRemedyPage(period), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(preaaquestions.PIAPreRemedyPage(period).navigate(mode, updatedAnswers))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(PIAPreRemedyPage(period), value))
+              redirectUrl     = PIAPreRemedyPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = PreAASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

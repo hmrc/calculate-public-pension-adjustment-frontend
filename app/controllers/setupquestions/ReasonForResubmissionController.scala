@@ -18,8 +18,8 @@ package controllers.setupquestions
 
 import controllers.actions._
 import forms.ReasonForResubmissionFormProvider
-import javax.inject.Inject
 import models.Mode
+import models.tasklist.sections.SetupSection
 import pages.setupquestions.ReasonForResubmissionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -27,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.ReasonForResubmissionView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ReasonForResubmissionController @Inject() (
@@ -62,8 +63,10 @@ class ReasonForResubmissionController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(ReasonForResubmissionPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(ReasonForResubmissionPage.navigate(mode, updatedAnswers))
+              redirectUrl     = ReasonForResubmissionPage.navigate(mode, updatedAnswers).url
+              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

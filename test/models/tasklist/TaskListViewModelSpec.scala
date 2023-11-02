@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package services
+package models.tasklist
 
 import base.SpecBase
-import models.tasklist.{SectionGroupViewModel, SectionStatus, SectionViewModel, TaskListViewModel}
 import pages.behaviours.PageBehaviours
-import play.api.mvc.Call
 
 class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
@@ -27,7 +25,7 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
     "group count should match the number of defined groups" in {
       val section: Seq[SectionViewModel]      =
-        Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.NotStarted, "id"))
+        Seq(SectionViewModel("name", "url", SectionStatus.NotStarted, "id"))
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", section)
 
       val taskListViewModel: TaskListViewModel =
@@ -38,7 +36,7 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
     "completed group count should be correct when a group with a single section is complete" in {
       val sections: Seq[SectionViewModel]     =
-        Seq(SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id"))
+        Seq(SectionViewModel("name", "url", SectionStatus.Completed, "id"))
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", sections)
 
       val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
@@ -49,8 +47,8 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
     "completed group count should be correct for a group with multiple sections of which only one is complete" in {
       val sections: Seq[SectionViewModel] = Seq(
-        SectionViewModel("name", Call("method", "url"), SectionStatus.InProgress, "id"),
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
+        SectionViewModel("name", "url", SectionStatus.InProgress, "id"),
+        SectionViewModel("name", "url", SectionStatus.Completed, "id")
       )
 
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", sections)
@@ -63,8 +61,8 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
     "completed group count should be correct for a group with multiple sections when all are complete" in {
       val sections: Seq[SectionViewModel] = Seq(
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id"),
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
+        SectionViewModel("name", "url", SectionStatus.Completed, "id"),
+        SectionViewModel("name", "url", SectionStatus.Completed, "id")
       )
 
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", sections)
@@ -77,15 +75,15 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
     "all counts should be correct when some sections are complete and some are incomplete " in {
       val sections: Seq[SectionViewModel] = Seq(
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id"),
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
+        SectionViewModel("name", "url", SectionStatus.Completed, "id"),
+        SectionViewModel("name", "url", SectionStatus.Completed, "id")
       )
 
       val sectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", sections)
 
       val incompleteSections: Seq[SectionViewModel] = Seq(
-        SectionViewModel("name", Call("method", "url"), SectionStatus.InProgress, "id"),
-        SectionViewModel("name", Call("method", "url"), SectionStatus.Completed, "id")
+        SectionViewModel("name", "url", SectionStatus.InProgress, "id"),
+        SectionViewModel("name", "url", SectionStatus.Completed, "id")
       )
 
       val incompleteSectionGroup: SectionGroupViewModel = SectionGroupViewModel("heading", incompleteSections)

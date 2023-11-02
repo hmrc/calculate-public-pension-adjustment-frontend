@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.WhoPaidAAChargeFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, WhoPaidAAChargePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -71,8 +72,10 @@ class WhoPaidAAChargeController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhoPaidAAChargePage(period, schemeIndex), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(WhoPaidAAChargePage(period, schemeIndex).navigate(mode, updatedAnswers))
+              redirectUrl     = WhoPaidAAChargePage(period, schemeIndex).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }
