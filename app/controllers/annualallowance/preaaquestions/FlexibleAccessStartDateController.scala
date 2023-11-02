@@ -18,8 +18,8 @@ package controllers.annualallowance.preaaquestions
 
 import controllers.actions._
 import forms.annualallowance.preaaquestions.FlexibleAccessStartDateFormProvider
-import javax.inject.Inject
 import models.Mode
+import models.tasklist.sections.PreAASection
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -27,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.preaaquestions.FlexibleAccessStartDateView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class FlexibleAccessStartDateController @Inject() (
@@ -62,8 +63,10 @@ class FlexibleAccessStartDateController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(FlexibleAccessStartDatePage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(FlexibleAccessStartDatePage.navigate(mode, updatedAnswers))
+              redirectUrl     = FlexibleAccessStartDatePage.navigate(mode, updatedAnswers).url
+              answersWithNav  = PreAASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

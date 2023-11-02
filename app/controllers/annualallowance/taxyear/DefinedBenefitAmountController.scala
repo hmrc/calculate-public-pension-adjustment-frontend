@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.DefinedBenefitAmountFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.DefinedBenefitAmountPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -64,10 +65,11 @@ class DefinedBenefitAmountController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
             for {
-              updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(DefinedBenefitAmountPage(period), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(DefinedBenefitAmountPage(period).navigate(mode, updatedAnswers))
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(DefinedBenefitAmountPage(period), value))
+              redirectUrl     = DefinedBenefitAmountPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 

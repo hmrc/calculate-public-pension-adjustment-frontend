@@ -18,8 +18,8 @@ package controllers.annualallowance.preaaquestions
 
 import controllers.actions._
 import forms.annualallowance.preaaquestions.PayTaxCharge1415FormProvider
-import javax.inject.Inject
 import models.Mode
+import models.tasklist.sections.PreAASection
 import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -27,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.preaaquestions.PayTaxCharge1415View
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PayTaxCharge1415Controller @Inject() (
@@ -62,8 +63,10 @@ class PayTaxCharge1415Controller @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PayTaxCharge1415Page, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(PayTaxCharge1415Page.navigate(mode, updatedAnswers))
+              redirectUrl     = PayTaxCharge1415Page.navigate(mode, updatedAnswers).url
+              answersWithNav  = PreAASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

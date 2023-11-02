@@ -21,7 +21,7 @@ import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.tasklist.helpers.LTASectionHelper
+import models.tasklist.sections.LTASection
 import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
@@ -245,22 +245,12 @@ class CalculationResultService @Inject() (
   }
 
   def buildLifeTimeAllowance(userAnswers: UserAnswers): Option[LifeTimeAllowance] = {
-
-    val benefitCrystallisationEventFlag: Option[Boolean] = userAnswers.get(HadBenefitCrystallisationEventPage)
-
-    val changeInLifetimeAllowancePercentageInformedFlag: Option[Boolean] =
-      userAnswers.get(ChangeInLifetimeAllowancePage)
-
     val changeInTaxCharge: Option[ChangeInTaxCharge] = userAnswers.get(ChangeInTaxChargePage)
-
     (
-      benefitCrystallisationEventFlag,
-      changeInLifetimeAllowancePercentageInformedFlag,
       changeInTaxCharge,
-      LTASectionHelper.noPreviousChargeKickoutReached(userAnswers)
+      LTASection.kickoutHasBeenReached(userAnswers)
     ) match {
-      case (Some(true), Some(true), Some(changeInTaxChargeType), false)
-          if changeInTaxChargeType != ChangeInTaxCharge.None =>
+      case (Some(changeInTaxChargeType), false) if changeInTaxChargeType != ChangeInTaxCharge.None =>
         val benefitCrystallisationEventDate: LocalDate =
           userAnswers.get(DateOfBenefitCrystallisationEventPage).getOrElse(LocalDate.now)
 

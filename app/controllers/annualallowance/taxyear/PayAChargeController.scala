@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.PayAChargeFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.{PayAChargePage, PensionSchemeDetailsPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -69,8 +70,10 @@ class PayAChargeController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PayAChargePage(period, schemeIndex), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(PayAChargePage(period, schemeIndex).navigate(mode, updatedAnswers))
+              redirectUrl     = PayAChargePage(period, schemeIndex).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

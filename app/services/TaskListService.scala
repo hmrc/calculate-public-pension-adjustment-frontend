@@ -17,8 +17,8 @@
 package services
 
 import models.tasklist._
-import models.tasklist.sections.{AASection, LTASection, NextStepsSection, PreAASection, SetupSection}
-import models.{NormalMode, Period, ReportingChange, SchemeIndex, UserAnswers}
+import models.tasklist.sections._
+import models.{NormalMode, Period, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 
 import javax.inject.Inject
@@ -56,7 +56,7 @@ class TaskListService @Inject() (
       Seq(
         SectionViewModel(
           "taskList.setup.sectionName",
-          SetupSection.navigateTo(answers).navigate(NormalMode, answers),
+          SetupSection.navigateTo(answers),
           SetupSection.status(answers),
           "setup-questions"
         )
@@ -67,8 +67,8 @@ class TaskListService @Inject() (
     relevantAAPeriods.map(period =>
       SectionViewModel(
         s"taskList.aa.sectionNameFor${period.toString}",
-        AASection(period, SchemeIndex(0)).navigateTo(answers).navigate(NormalMode, answers),
-        AASection(period, SchemeIndex(0)).status(answers),
+        AASection(period).navigateTo(answers),
+        AASection(period).status(answers),
         s"annual-allowance-details-${period.toString}"
       )
     )
@@ -76,18 +76,29 @@ class TaskListService @Inject() (
   private def aaGroupSeq(
     answers: UserAnswers,
     aaPeriodSections: Seq[SectionViewModel]
-  ): SectionGroupViewModel =
-    SectionGroupViewModel(
-      "taskList.aa.groupHeading",
+  ): SectionGroupViewModel = {
+
+    val preAASection =
       Seq(
         SectionViewModel(
           "taskList.aa.setup.sectionName",
-          PreAASection.navigateTo(answers).navigate(NormalMode, answers),
+          PreAASection.navigateTo(answers),
           PreAASection.status(answers),
           "annual-allowance-setup-questions"
         )
-      ) ++ aaPeriodSections
+      )
+
+    val aaSections = if (PreAASection.status(answers) == SectionStatus.Completed) {
+      preAASection ++ aaPeriodSections
+    } else {
+      preAASection
+    }
+
+    SectionGroupViewModel(
+      "taskList.aa.groupHeading",
+      aaSections
     )
+  }
 
   private def ltaGroupSeq(answers: UserAnswers): Option[SectionGroupViewModel] =
     if (isRequired(answers, ReportingChange.LifetimeAllowance)) {
@@ -97,7 +108,7 @@ class TaskListService @Inject() (
           Seq(
             SectionViewModel(
               "taskList.lta.sectionName",
-              LTASection.navigateTo(answers).navigate(NormalMode, answers),
+              LTASection.navigateTo(answers),
               LTASection.status(answers),
               "lifetime-allowance-questions"
             )

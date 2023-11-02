@@ -19,6 +19,7 @@ package controllers.lifetimeallowance
 import controllers.actions._
 import forms.lifetimeallowance.WhoPayingExtraLtaChargeFormProvider
 import models.Mode
+import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.WhoPayingExtraLtaChargePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -62,8 +63,10 @@ class WhoPayingExtraLtaChargeController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhoPayingExtraLtaChargePage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(WhoPayingExtraLtaChargePage.navigate(mode, updatedAnswers))
+              redirectUrl     = WhoPayingExtraLtaChargePage.navigate(mode, updatedAnswers).url
+              answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

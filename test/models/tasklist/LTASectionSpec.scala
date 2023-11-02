@@ -17,10 +17,7 @@
 package models.tasklist
 
 import base.SpecBase
-import models.NewExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
-import models.{ChangeInTaxCharge, WhoPayingExtraLtaCharge}
 import models.tasklist.sections.LTASection
-import pages.lifetimeallowance.{ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, HadBenefitCrystallisationEventPage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LumpSumValuePage, NewAnnualPaymentValuePage, NewExcessLifetimeAllowancePaidPage, NewLumpSumValuePage, WhoPayingExtraLtaChargePage}
 
 class LTASectionSpec extends SpecBase {
 
@@ -32,198 +29,35 @@ class LTASectionSpec extends SpecBase {
     status mustBe (SectionStatus.NotStarted)
   }
 
-  "LTA Kickouts" - {
+  "When user has navigated to the not able to use this service kick out" in {
+    val answersWithNav = LTASection.saveNavigation(emptyUserAnswers, LTASection.notAbleToUseThisServicePage.url)
 
-    "When user has not had a BCE" in {
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, false)
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "When user has had their BCE but not been informed of BCE change" in {
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(ChangeInLifetimeAllowancePage, false)
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "When user has had their BCE and informed of BCE change but no change to charge" in {
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(ChangeInLifetimeAllowancePage, true)
-        .get
-        .set(ChangeInTaxChargePage, ChangeInTaxCharge.None)
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "When user has reached noPreviousChargeKickout from NewLumpSumpage" in {
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(LifetimeAllowanceChargePage, false)
-        .get
-        .set(NewExcessLifetimeAllowancePaidPage, Lumpsum)
-        .get
-        .set(NewLumpSumValuePage, BigInt(0))
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "When user has reached noPreviousChargeKickout from NewAnnualPaymentValuePage" in {
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(LifetimeAllowanceChargePage, false)
-        .get
-        .set(NewExcessLifetimeAllowancePaidPage, Annualpayment)
-        .get
-        .set(NewAnnualPaymentValuePage, BigInt(0))
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "When user has reached noPreviousChargeKickout after answering both" in {
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(LifetimeAllowanceChargePage, false)
-        .get
-        .set(NewExcessLifetimeAllowancePaidPage, Both)
-        .get
-        .set(NewAnnualPaymentValuePage, BigInt(0))
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "When user has completed the journey with no value increase but has previous charge" in {
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(LifetimeAllowanceChargePage, true)
-        .get
-        .set(LumpSumValuePage, BigInt(500))
-        .get
-        .set(NewExcessLifetimeAllowancePaidPage, Both)
-        .get
-        .set(NewLumpSumValuePage, BigInt(300))
-        .get
-        .set(NewAnnualPaymentValuePage, BigInt(100))
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.Completed)
-    }
-
-    "When user has had a BCE but not answered all eligibility questions" in {
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
-    }
-
-    "When user has had a BCE and informed of BCE change but not answered all eligibility questions" in {
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(ChangeInLifetimeAllowancePage, true)
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
-    }
-
-    "When user is eligible for LTA service but not completed entire LTA section" in {
-
-      val userAnswers = emptyUserAnswers
-        .set(HadBenefitCrystallisationEventPage, true)
-        .get
-        .set(ChangeInLifetimeAllowancePage, true)
-        .get
-        .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
-        .get
-
-      val status = LTASection.status(userAnswers)
-
-      status mustBe (SectionStatus.InProgress)
-    }
-  }
-
-  "When user answers You to who is paying extra LTA charge" in {
-    val userAnswers = emptyUserAnswers
-      .set(HadBenefitCrystallisationEventPage, true)
-      .get
-      .set(ChangeInLifetimeAllowancePage, true)
-      .get
-      .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
-      .get
-      .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.You)
-      .get
-
-    val status = LTASection.status(userAnswers)
+    val status = LTASection.status(answersWithNav)
 
     status mustBe (SectionStatus.Completed)
   }
 
-  "When user answers Scheme to who is paying extra LTA charge but has not completed pension scheme details" in {
-    val userAnswers = emptyUserAnswers
-      .set(HadBenefitCrystallisationEventPage, true)
-      .get
-      .set(ChangeInLifetimeAllowancePage, true)
-      .get
-      .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
-      .get
-      .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.PensionScheme)
-      .get
+  "When user has navigated to cannot use lta service no charge page" in {
+    val answersWithNav = LTASection.saveNavigation(emptyUserAnswers, LTASection.cannotUseLtaServiceNoChargePage.url)
 
-    val status = LTASection.status(userAnswers)
+    val status = LTASection.status(answersWithNav)
+
+    status mustBe (SectionStatus.Completed)
+  }
+
+  "When user has navigated to another url" in {
+    val answersWithNav = LTASection.saveNavigation(emptyUserAnswers, "some-url")
+
+    val status = LTASection.status(answersWithNav)
 
     status mustBe (SectionStatus.InProgress)
   }
 
-  "When user answers Scheme to who is paying extra LTA charge and has completed pension scheme details" in {
-    val userAnswers = emptyUserAnswers
-      .set(HadBenefitCrystallisationEventPage, true)
-      .get
-      .set(ChangeInLifetimeAllowancePage, true)
-      .get
-      .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
-      .get
-      .set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.PensionScheme)
-      .get
-      .set(LtaPensionSchemeDetailsPage, models.LtaPensionSchemeDetails("Scheme1", "00348916RT"))
-      .get
+  "When user has navigated to check your lta answers page" in {
+    val answersWithNav = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
-    val status = LTASection.status(userAnswers)
+    val status = LTASection.status(answersWithNav)
 
     status mustBe (SectionStatus.Completed)
   }
-
 }
