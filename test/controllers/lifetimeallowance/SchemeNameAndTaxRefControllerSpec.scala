@@ -112,6 +112,26 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    "must return a Bad Request and errors when invalid data 00348916RT is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, schemeNameAndTaxRefRoute)
+            .withFormUrlEncodedBody(("value", "00348916RT"))
+
+        val boundForm = form.bind(Map("value" -> "00348916RT"))
+
+        val view = application.injector.instanceOf[SchemeNameAndTaxRefView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+      }
+    }
+
     "must return a Bad Request and errors when invalid data is submitted" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
