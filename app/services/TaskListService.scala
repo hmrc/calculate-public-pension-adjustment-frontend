@@ -27,25 +27,19 @@ class TaskListService @Inject() (
 ) {
 
   def taskListViewModel(answers: UserAnswers): TaskListViewModel = {
-    var counter = 1
 
-    val setupGroup: SectionGroupViewModel = setupGroupSeq(answers, counter)
-    counter += 1
+    val setupGroup: SectionGroupViewModel = setupGroupSeq(answers)
 
     val aaGroup: Option[SectionGroupViewModel] =
       if (isRequired(answers, ReportingChange.AnnualAllowance)) {
         val aaPeriods: Seq[Period]                  = PeriodService.relevantPeriods(answers)
         val aaPeriodSections: Seq[SectionViewModel] = aaPeriodSectionsSeq(answers, aaPeriods)
-        Some(aaGroupSeq(answers, aaPeriodSections, counter))
+        Some(aaGroupSeq(answers, aaPeriodSections))
       } else { None }
 
-    if (aaGroup.isDefined) counter += 1
-    val ltaGroup: Option[SectionGroupViewModel] = ltaGroupSeq(answers, counter)
+    val ltaGroup: Option[SectionGroupViewModel] = ltaGroupSeq(answers)
 
-    if (ltaGroup.isDefined) counter += 1
-
-    val nextStepsGroup = nextStepsGroupSeq(answers, counter, List(Some(setupGroup), aaGroup, ltaGroup))
-    counter += 1
+    val nextStepsGroup: SectionGroupViewModel = nextStepsGroupSeq(answers, List(Some(setupGroup), aaGroup, ltaGroup))
 
     TaskListViewModel(setupGroup, aaGroup, ltaGroup, nextStepsGroup)
   }
@@ -56,9 +50,8 @@ class TaskListService @Inject() (
       case _                                          => false
     }
 
-  private def setupGroupSeq(answers: UserAnswers, displayNumber: Int): SectionGroupViewModel =
+  private def setupGroupSeq(answers: UserAnswers): SectionGroupViewModel =
     SectionGroupViewModel(
-      displayNumber,
       "taskList.setup.groupHeading",
       Seq(
         SectionViewModel(
@@ -82,11 +75,9 @@ class TaskListService @Inject() (
 
   private def aaGroupSeq(
     answers: UserAnswers,
-    aaPeriodSections: Seq[SectionViewModel],
-    displayNumber: Int
+    aaPeriodSections: Seq[SectionViewModel]
   ): SectionGroupViewModel =
     SectionGroupViewModel(
-      displayNumber,
       "taskList.aa.groupHeading",
       Seq(
         SectionViewModel(
@@ -98,11 +89,10 @@ class TaskListService @Inject() (
       ) ++ aaPeriodSections
     )
 
-  private def ltaGroupSeq(answers: UserAnswers, displayNumber: Int): Option[SectionGroupViewModel] =
+  private def ltaGroupSeq(answers: UserAnswers): Option[SectionGroupViewModel] =
     if (isRequired(answers, ReportingChange.LifetimeAllowance)) {
       Some(
         SectionGroupViewModel(
-          displayNumber,
           "taskList.lta.groupHeading",
           Seq(
             SectionViewModel(
@@ -118,14 +108,12 @@ class TaskListService @Inject() (
 
   def nextStepsGroupSeq(
     answers: UserAnswers,
-    counter: Int,
     dataCaptureSections: List[Option[SectionGroupViewModel]]
-  ) = {
+  ): SectionGroupViewModel = {
 
     val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
 
     SectionGroupViewModel(
-      counter,
       "taskList.nextSteps.groupHeading",
       Seq(
         SectionViewModel(

@@ -23,10 +23,9 @@ final case class TaskListViewModel(
   nextStepsGroup: SectionGroupViewModel
 ) {
 
-  def allGroups: Seq[Option[SectionGroupViewModel]] = Seq(Some(setupGroup), aaGroup, ltaGroup, Some(nextStepsGroup))
+  def allGroups: Seq[SectionGroupViewModel] = Seq(Some(setupGroup), aaGroup, ltaGroup, Some(nextStepsGroup)).flatten
 
-  def completedGroupCount: Int =
-    allGroups.filter(groupOption => groupOption.isDefined).count(group => group.get.isComplete)
+  def completedGroupCount: Int = allGroups.count(group => group.isComplete)
 
-  def groupCount: Int = allGroups.count(groupOption => groupOption.isDefined)
+  def groupCount: Int = allGroups.size
 }

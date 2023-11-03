@@ -140,14 +140,12 @@ class SectionTest extends SpecBase with PageBehaviours {
       val dataCaptureSections = List(
         Some(
           SectionGroupViewModel(
-            1,
             "heading",
             Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
           )
         ),
         Some(
           SectionGroupViewModel(
-            1,
             "heading",
             Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.InProgress, "id"))
           )
@@ -163,14 +161,12 @@ class SectionTest extends SpecBase with PageBehaviours {
       val dataCaptureSections = List(
         Some(
           SectionGroupViewModel(
-            1,
             "heading",
             Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
           )
         ),
         Some(
           SectionGroupViewModel(
-            1,
             "heading",
             Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
           )
