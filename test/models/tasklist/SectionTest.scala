@@ -17,11 +17,13 @@
 package models.tasklist
 
 import base.SpecBase
+import models.NewExcessLifetimeAllowancePaid.Lumpsum
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.sections.{NextStepsSection, PreAASection, SetupSection}
 import models.{Period, ReportingChange, UserAnswers}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page}
 import pages.behaviours.PageBehaviours
+import pages.lifetimeallowance.{HadBenefitCrystallisationEventPage, LifetimeAllowanceChargePage, NewExcessLifetimeAllowancePaidPage, NewLumpSumValuePage}
 import pages.setupquestions.{ReportingChangePage, ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.libs.json.Json
 import play.api.mvc.Call
@@ -118,13 +120,32 @@ class SectionTest extends SpecBase with PageBehaviours {
       sectionNameOverride mustBe "taskList.nextSteps.calculate"
     }
 
-    "Must be 'Continue to sign in' when reporting a change that does not include Annual Allowance details" in {
+    "Must be 'Continue to sign in' when reporting a change that does not include Annual Allowance details & no kickout reached" in {
       val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
       val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
       val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
 
       sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
+    }
+
+    "Must be 'No further action required' when reporting a change that does not include Annual Allowance details & kickout was reached" in {
+      val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(HadBenefitCrystallisationEventPage, true)
+        .get
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt(0))
+        .get
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
     }
 
     "Must be 'Complete setup questions' when reporting change details have not been captured" in {
@@ -137,7 +158,9 @@ class SectionTest extends SpecBase with PageBehaviours {
   "Next steps section status" - {
 
     "Must be 'Cannot start yet' if not all data capture sections are complete" in {
-      val dataCaptureSections = List(
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+      val dataCaptureSections                    = List(
         Some(
           SectionGroupViewModel(
             "heading",
@@ -153,12 +176,58 @@ class SectionTest extends SpecBase with PageBehaviours {
         None
       )
 
-      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections)
+      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
       sectionStatus mustBe SectionStatus.CannotStartYet
     }
 
-    "Must be 'Not started' if all specified data capture sections are complete" in {
-      val dataCaptureSections = List(
+    "Must be 'Not started' if all specified data capture sections are complete and only LTA is selected" in {
+      val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+      val dataCaptureSections                    = List(
+        Some(
+          SectionGroupViewModel(
+            "heading",
+            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+          )
+        ),
+        None
+      )
+
+      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+      sectionStatus mustBe SectionStatus.NotStarted
+    }
+
+    "Must be 'CannotStartYet' if all specified data capture sections are complete, only LTA is selected & a kickout page has been entered" in {
+      val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(HadBenefitCrystallisationEventPage, true)
+        .get
+        .set(LifetimeAllowanceChargePage, false)
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, Lumpsum)
+        .get
+        .set(NewLumpSumValuePage, BigInt(0))
+        .get
+      val dataCaptureSections                    = List(
+        Some(
+          SectionGroupViewModel(
+            "heading",
+            Seq(SectionViewModel("name", Call("GET", "url"), SectionStatus.Completed, "id"))
+          )
+        ),
+        None
+      )
+
+      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+      sectionStatus mustBe SectionStatus.CannotStartYet
+    }
+
+    "Must be 'Not started' if all specified data capture sections are complete and annual allowance is not selected and no kickout has been reached" in {
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+      val dataCaptureSections                    = List(
         Some(
           SectionGroupViewModel(
             "heading",
@@ -174,7 +243,7 @@ class SectionTest extends SpecBase with PageBehaviours {
         None
       )
 
-      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections)
+      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
       sectionStatus mustBe SectionStatus.NotStarted
     }
   }

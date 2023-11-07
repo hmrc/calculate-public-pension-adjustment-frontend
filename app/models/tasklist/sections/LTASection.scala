@@ -16,10 +16,9 @@
 
 package models.tasklist.sections
 
-import models.NewExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
-import models.WhoPayingExtraLtaCharge.{PensionScheme, You}
+import models.UserAnswers
+import models.tasklist.helpers.LTASectionHelper
 import models.tasklist.{Section, SectionStatus}
-import models.{ChangeInTaxCharge, UserAnswers}
 import pages.Page
 import pages.lifetimeallowance._
 import play.api.libs.json.JsPath
@@ -68,86 +67,11 @@ case object LTASection extends Section {
     )
 
   def status(answers: UserAnswers): SectionStatus =
-    if (firstPageIsAnswered(answers)) {
-      if (isLastPageAnswered(answers)) {
+    if (LTASectionHelper.firstPageIsAnswered(answers)) {
+      if (LTASectionHelper.isLastPageAnswered(answers)) {
         SectionStatus.Completed
-      } else isLTAElligble(answers)
+      } else LTASectionHelper.isLTAEligible(answers)
     } else SectionStatus.NotStarted
-
-  private def isLTAElligble(answers: UserAnswers): SectionStatus =
-    if (
-      statusOfHadBCE(answers) &&
-      statusOfInformedBCEChange(answers) &&
-      statusOfChangeInTaxCharge(answers) &&
-      !noPreviousChargeKickoutReached(answers)
-    ) SectionStatus.InProgress
-    else SectionStatus.Completed
-
-  private def isLastPageAnswered(answers: UserAnswers): Boolean =
-    answers.get(WhoPayingExtraLtaChargePage) match {
-      case Some(You)           => true
-      case Some(PensionScheme) =>
-        answers.get(LtaPensionSchemeDetailsPage) match {
-          case Some(_) => true
-          case None    => false
-        }
-      case None                => noValueIncreaseAndPreviousChargeLastPage(answers)
-    }
-
-  private def checkNewPaymentValuesExist(answers: UserAnswers): Boolean =
-    answers.get(NewExcessLifetimeAllowancePaidPage) match {
-      case Some(Both) | Some(Annualpayment) => answers.get(NewAnnualPaymentValuePage).isDefined
-      case Some(Lumpsum)                    => answers.get(NewLumpSumValuePage).isDefined
-      case _                                => false
-    }
-
-  private def combinedIsValueIncreased(
-    newLumpSumValue: Option[BigInt],
-    oldLumpSumValue: Option[BigInt],
-    newAnnualPaymentValue: Option[BigInt],
-    oldAnnualPaymentValue: Option[BigInt]
-  ): Boolean =
-    (newLumpSumValue.getOrElse(BigInt(0)) + newAnnualPaymentValue.getOrElse(BigInt(0))) >
-      (oldLumpSumValue.getOrElse(BigInt(0)) + oldAnnualPaymentValue.getOrElse(BigInt(0)))
-
-  private def noValueIncreaseAndPreviousChargeLastPage(answers: UserAnswers): Boolean =
-    !combinedIsValueIncreased(
-      answers.get(NewLumpSumValuePage),
-      answers.get(LumpSumValuePage),
-      answers.get(NewAnnualPaymentValuePage),
-      answers.get(AnnualPaymentValuePage)
-    ) && answers.get(LifetimeAllowanceChargePage).getOrElse(false) && checkNewPaymentValuesExist(answers)
-
-  private def statusOfHadBCE(answers: UserAnswers): Boolean =
-    answers.get(HadBenefitCrystallisationEventPage) match {
-      case Some(false) => false
-      case Some(true)  => true
-      case None        => true
-    }
-
-  private def statusOfInformedBCEChange(answers: UserAnswers): Boolean =
-    answers.get(ChangeInLifetimeAllowancePage) match {
-      case Some(false) => false
-      case Some(true)  => true
-      case None        => true
-    }
-
-  private def statusOfChangeInTaxCharge(answers: UserAnswers): Boolean =
-    answers.get(ChangeInTaxChargePage) match {
-      case Some(ChangeInTaxCharge.NewCharge) | Some(ChangeInTaxCharge.DecreasedCharge) | Some(
-            ChangeInTaxCharge.IncreasedCharge
-          ) =>
-        true
-      case Some(ChangeInTaxCharge.None) => false
-      case None                         => true
-    }
-
-  private def noPreviousChargeKickoutReached(answers: UserAnswers): Boolean =
-    !answers.get(LifetimeAllowanceChargePage).getOrElse(false) && checkNewPaymentValuesExist(answers) &&
-      (answers.get(NewLumpSumValuePage).getOrElse(0) == 0 && answers.get(NewAnnualPaymentValuePage).getOrElse(0) == 0)
-
-  private def firstPageIsAnswered(answers: UserAnswers) =
-    answers.get(HadBenefitCrystallisationEventPage).isDefined
 
   def navigateTo(answers: UserAnswers): Page =
     if (status(answers) == SectionStatus.Completed) {

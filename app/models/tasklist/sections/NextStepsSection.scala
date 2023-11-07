@@ -17,6 +17,7 @@
 package models.tasklist.sections
 
 import controllers.routes
+import models.tasklist.helpers.LTASectionHelper
 import models.tasklist.{Section, SectionGroupViewModel, SectionStatus}
 import models.{NormalMode, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
@@ -24,14 +25,22 @@ import play.api.mvc.Call
 
 case object NextStepsSection extends Section {
 
-  def sectionStatus(dataCaptureSections: List[Option[SectionGroupViewModel]]): SectionStatus = {
+  def sectionStatus(dataCaptureSections: List[Option[SectionGroupViewModel]], answers: UserAnswers): SectionStatus = {
     val allDataCaptureComplete: Boolean = dataCaptureSections.flatten.forall(_.isComplete)
 
     if (allDataCaptureComplete) {
-      SectionStatus.NotStarted
+      answers.get(ReportingChangePage) match {
+        case Some(rcs) if calculationRequired(rcs)                                                     => SectionStatus.NotStarted
+        case Some(rcs) if !calculationRequired(rcs) && LTASectionHelper.anyLtaKickoutReached(answers)  =>
+          SectionStatus.CannotStartYet
+        case Some(rcs) if !calculationRequired(rcs) && !LTASectionHelper.anyLtaKickoutReached(answers) =>
+          SectionStatus.NotStarted
+        case _                                                                                         => SectionStatus.CannotStartYet
+      }
     } else {
       SectionStatus.CannotStartYet
     }
+
   }
 
   def navigateTo(answers: UserAnswers): Call =
@@ -43,11 +52,15 @@ case object NextStepsSection extends Section {
 
   def sectionNameOverride(answers: UserAnswers) =
     answers.get(ReportingChangePage) match {
-      case Some(rcs) if calculationRequired(rcs)  => "taskList.nextSteps.calculate"
-      case Some(rcs) if !calculationRequired(rcs) => "taskList.nextSteps.continueToSignIn"
-      case _                                      => "taskList.nextSteps.setupRequired"
+      case Some(rcs) if calculationRequired(rcs)                                                     => "taskList.nextSteps.calculate"
+      case Some(rcs) if !calculationRequired(rcs) && !LTASectionHelper.anyLtaKickoutReached(answers) =>
+        "taskList.nextSteps.continueToSignIn"
+      case Some(rcs) if !calculationRequired(rcs) && LTASectionHelper.anyLtaKickoutReached(answers)  =>
+        "taskList.nextSteps.noFurtherAction"
+      case _                                                                                         => "taskList.nextSteps.setupRequired"
     }
 
   private def calculationRequired(reportingChangeSet: Set[ReportingChange]): Boolean =
     reportingChangeSet.contains(ReportingChange.AnnualAllowance)
+
 }

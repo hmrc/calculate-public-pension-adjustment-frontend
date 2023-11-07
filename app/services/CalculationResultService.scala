@@ -19,10 +19,9 @@ package services
 import connectors.{BackendConnector, CalculationResultConnector}
 import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
-import models.NewExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
-import models.tasklist.sections.LTASection.checkNewPaymentValuesExist
+import models.tasklist.helpers.LTASectionHelper
 import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
@@ -254,24 +253,11 @@ class CalculationResultService @Inject() (
 
     val changeInTaxCharge: Option[ChangeInTaxCharge] = userAnswers.get(ChangeInTaxChargePage)
 
-    val checkNewPaymentValuesExist: Boolean =
-      userAnswers.get(NewExcessLifetimeAllowancePaidPage) match {
-        case Some(Both) | Some(Annualpayment) => userAnswers.get(NewAnnualPaymentValuePage).isDefined
-        case Some(Lumpsum)                    => userAnswers.get(NewLumpSumValuePage).isDefined
-        case _                                => false
-      }
-
-    val noPreviousChargeKickoutReached: Boolean =
-      !userAnswers.get(LifetimeAllowanceChargePage).getOrElse(false) && checkNewPaymentValuesExist &&
-        (userAnswers.get(NewLumpSumValuePage).getOrElse(0) == 0 && userAnswers
-          .get(NewAnnualPaymentValuePage)
-          .getOrElse(0) == 0)
-
     (
       benefitCrystallisationEventFlag,
       changeInLifetimeAllowancePercentageInformedFlag,
       changeInTaxCharge,
-      noPreviousChargeKickoutReached
+      LTASectionHelper.noPreviousChargeKickoutReached(userAnswers)
     ) match {
       case (Some(true), Some(true), Some(changeInTaxChargeType), false)
           if changeInTaxChargeType != ChangeInTaxCharge.None =>
