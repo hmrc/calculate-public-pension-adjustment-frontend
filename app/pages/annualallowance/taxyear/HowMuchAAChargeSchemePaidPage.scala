@@ -32,7 +32,11 @@ case class HowMuchAAChargeSchemePaidPage(period: Period, schemeIndex: SchemeInde
 
   def addAnotherMaybe(answers: UserAnswers): Call = answers.get(MemberMoreThanOnePensionPage(period)) match {
     case Some(true)  =>
-      controllers.annualallowance.taxyear.routes.AddAnotherSchemeController.onPageLoad(period, schemeIndex)
+      if (schemeIndex == SchemeIndex(4)) {
+        AddAnotherSchemeMaybe.exitSchemeLoopNavigation(answers, period)
+      } else {
+        controllers.annualallowance.taxyear.routes.AddAnotherSchemeController.onPageLoad(period, schemeIndex)
+      }
     case Some(false) => AddAnotherSchemeMaybe.navigate(answers, period, schemeIndex)
     case None        => routes.JourneyRecoveryController.onPageLoad(None)
   }
