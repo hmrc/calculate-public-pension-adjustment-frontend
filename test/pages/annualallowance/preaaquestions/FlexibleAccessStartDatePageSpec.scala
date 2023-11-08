@@ -48,6 +48,13 @@ class FlexibleAccessStartDatePageSpec extends PageBehaviours {
 
         check(nextPageUrl, "/annual-allowance/tax-charge-between-2014-2015")
       }
+
+      "must redirect to journey recovery when no answer" in {
+
+        val nextPageUrl: Call = FlexibleAccessStartDatePage.navigate(NormalMode, emptyUserAnswers)
+
+        check(nextPageUrl, "/there-is-a-problem")
+      }
     }
 
     "check mode navigation" - {
@@ -58,6 +65,13 @@ class FlexibleAccessStartDatePageSpec extends PageBehaviours {
         val nextPageUrl: Call = FlexibleAccessStartDatePage.navigate(CheckMode, userAnswers)
 
         check(nextPageUrl, "/annual-allowance/setup-check-answers")
+      }
+
+      "must redirect to journey recovery when no answer" in {
+
+        val nextPageUrl: Call = FlexibleAccessStartDatePage.navigate(CheckMode, emptyUserAnswers)
+
+        check(nextPageUrl, "/there-is-a-problem")
       }
     }
 

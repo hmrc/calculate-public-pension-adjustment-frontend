@@ -53,6 +53,15 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/new-excess-paid")
     }
+
+    "must redirect to journey recovery when no answer" in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = LifetimeAllowanceChargePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 
   "check mode navigation" - {
@@ -77,6 +86,15 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
       val nextPageUrl: String = LifetimeAllowanceChargePage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+    }
+
+    "must redirect to journey recovery when no answer" in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = LifetimeAllowanceChargePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
   }
 

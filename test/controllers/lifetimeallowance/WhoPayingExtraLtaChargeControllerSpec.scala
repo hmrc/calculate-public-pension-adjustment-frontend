@@ -19,13 +19,12 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import config.FrontendAppConfig
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import controllers.{routes => generalRoutes}
 import forms.lifetimeallowance.WhoPayingExtraLtaChargeFormProvider
-import models.{CheckMode, NormalMode, UserAnswers, WhoPayingExtraLtaCharge}
+import models.{NormalMode, UserAnswers, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.{LifetimeAllowanceChargePage, WhoPayingExtraLtaChargePage}
+import pages.lifetimeallowance.WhoPayingExtraLtaChargePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -40,7 +39,6 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   lazy val normalRoute = ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(CheckMode).url
 
   val formProvider = new WhoPayingExtraLtaChargeFormProvider()
   val form         = formProvider()
@@ -105,131 +103,7 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers =
-          emptyUserAnswers.set(WhoPayingExtraLtaChargePage, WhoPayingExtraLtaCharge.values.head).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual WhoPayingExtraLtaChargePage
-          .navigate(NormalMode, expectedAnswers)
-          .url
-      }
-    }
-
-    "redirect to LtaPensionSchemeDetails page when user answers PensionScheme in Normal Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.PensionScheme.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.LtaPensionSchemeDetailsController
-          .onPageLoad(NormalMode)
-          .url
-      }
-    }
-
-    "redirect to CheckYourLTAAnswersController page when user answers you & Previous charge is true in Normal Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val userAnswers: UserAnswers =
-        emptyUserAnswers
-          .set(LifetimeAllowanceChargePage, true)
-          .get
-
-      val application =
-        applicationBuilder(userAnswers = Some(userAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.You.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
-      }
-    }
-
-    "redirect to LtaPensionSchemeDetails page when user answers PensionScheme in Check Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.PensionScheme.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.LtaPensionSchemeDetailsController
-          .onPageLoad(CheckMode)
-          .url
-      }
-    }
-
-    "redirect to CheckYourLTAAnswersController page when user answers you & Previous charge is true in Check Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val userAnswers: UserAnswers =
-        emptyUserAnswers
-          .set(LifetimeAllowanceChargePage, true)
-          .get
-
-      val application =
-        applicationBuilder(userAnswers = Some(userAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", WhoPayingExtraLtaCharge.You.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 

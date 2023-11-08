@@ -53,6 +53,15 @@ class WhoPaidLTAChargeSpec extends PageBehaviours {
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/scheme-paid-charge-amount")
     }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = WhoPaidLTAChargePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 
   "check mode navigation" - {
@@ -77,6 +86,15 @@ class WhoPaidLTAChargeSpec extends PageBehaviours {
       val nextPageUrl: String = WhoPaidLTAChargePage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/change-scheme-paid-charge-amount")
+    }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val userAnswers = emptyUserAnswers
+
+      val nextPageUrl: String = WhoPaidLTAChargePage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
   }
 

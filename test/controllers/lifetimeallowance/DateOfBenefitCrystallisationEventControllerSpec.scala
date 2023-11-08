@@ -19,9 +19,8 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import config.FrontendAppConfig
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import controllers.{routes => generalRoutes}
 import forms.lifetimeallowance.DateOfBenefitCrystallisationEventFormProvider
-import models.{CheckMode, Mode, NormalMode, UserAnswers}
+import models.{Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -46,7 +45,6 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
   val validAnswer: LocalDate = LocalDate.of(2016, 4, 6)
 
   lazy val normalRoute = ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(CheckMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
@@ -112,39 +110,7 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
       running(application) {
         val result = route(application, postRequest(NormalMode)).value
 
-        val expectedAnswers =
-          emptyUserAnswers.set(DateOfBenefitCrystallisationEventPage, LocalDate.of(2016, 4, 6)).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual DateOfBenefitCrystallisationEventPage
-          .navigate(NormalMode, expectedAnswers)
-          .url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in check mode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val result = route(application, postRequest(CheckMode)).value
-
-        val expectedAnswers =
-          emptyUserAnswers.set(DateOfBenefitCrystallisationEventPage, LocalDate.of(2016, 4, 6)).success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual DateOfBenefitCrystallisationEventPage
-          .navigate(CheckMode, expectedAnswers)
-          .url
       }
     }
 

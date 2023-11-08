@@ -20,7 +20,7 @@ import base.SpecBase
 import config.FrontendAppConfig
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.ChangeInTaxChargeFormProvider
-import models.{ChangeInTaxCharge, CheckMode, NormalMode, UserAnswers}
+import models.{ChangeInTaxCharge, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -39,7 +39,6 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   lazy val normalRoute = ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.ChangeInTaxChargeController.onPageLoad(CheckMode).url
 
   val formProvider = new ChangeInTaxChargeFormProvider()
   val form         = formProvider()
@@ -84,7 +83,7 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted in NormalMode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -105,36 +104,6 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode).url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", ChangeInTaxCharge.values.head.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode).url
       }
     }
 

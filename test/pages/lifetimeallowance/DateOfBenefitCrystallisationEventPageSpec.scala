@@ -16,6 +16,7 @@
 
 package pages.lifetimeallowance
 
+import models.{CheckMode, NormalMode}
 import org.scalacheck.Arbitrary
 import pages.behaviours.PageBehaviours
 
@@ -34,5 +35,36 @@ class DateOfBenefitCrystallisationEventPageSpec extends PageBehaviours {
     beSettable[LocalDate](DateOfBenefitCrystallisationEventPage)
 
     beRemovable[LocalDate](DateOfBenefitCrystallisationEventPage)
+  }
+
+  "Normal mode" - {
+
+    "must navigate to change in lifetime allowance page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(DateOfBenefitCrystallisationEventPage, LocalDate.of(2020, 1, 1))
+          .get
+
+      val nextPageUrl: String = DateOfBenefitCrystallisationEventPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-percentage-change")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate to LTA CYA page" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(DateOfBenefitCrystallisationEventPage, LocalDate.of(2020, 1, 1))
+          .get
+
+      val nextPageUrl: String = DateOfBenefitCrystallisationEventPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+
+    }
   }
 }

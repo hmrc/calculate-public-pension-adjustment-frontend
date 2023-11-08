@@ -16,6 +16,7 @@
 
 package pages.setupquestions
 
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class ResubmittingAdjustmentPageSpec extends PageBehaviours {
@@ -27,6 +28,78 @@ class ResubmittingAdjustmentPageSpec extends PageBehaviours {
     beSettable[Boolean](ResubmittingAdjustmentPage)
 
     beRemovable[Boolean](ResubmittingAdjustmentPage)
+
+    "Normal mode" - {
+
+      "must redirect to reason for resubmission page when true" in {
+
+        val ua = emptyUserAnswers
+          .set(ResubmittingAdjustmentPage, true)
+          .success
+          .value
+
+        val nextPageUrl: String = ResubmittingAdjustmentPage.navigate(NormalMode, ua).url
+
+        checkNavigation(nextPageUrl, "/change-reason")
+      }
+
+      "must redirect to reporting change page when false" in {
+
+        val ua = emptyUserAnswers
+          .set(ResubmittingAdjustmentPage, false)
+          .success
+          .value
+
+        val nextPageUrl: String = ResubmittingAdjustmentPage.navigate(NormalMode, ua).url
+
+        checkNavigation(nextPageUrl, "/charges")
+      }
+
+      "must redirect to journey recovery when no answer" in {
+
+        val ua = emptyUserAnswers
+
+        val nextPageUrl: String = ResubmittingAdjustmentPage.navigate(NormalMode, ua).url
+
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
+      }
+    }
+
+    "Check mode" - {
+
+      "must redirect to reason for resubmission page when true" in {
+
+        val ua = emptyUserAnswers
+          .set(ResubmittingAdjustmentPage, true)
+          .success
+          .value
+
+        val nextPageUrl: String = ResubmittingAdjustmentPage.navigate(CheckMode, ua).url
+
+        checkNavigation(nextPageUrl, "/change-change-reason")
+      }
+
+      "must redirect to CYA page when false" in {
+
+        val ua = emptyUserAnswers
+          .set(ResubmittingAdjustmentPage, false)
+          .success
+          .value
+
+        val nextPageUrl: String = ResubmittingAdjustmentPage.navigate(CheckMode, ua).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "must redirect to journey recovery when no answer" in {
+
+        val ua = emptyUserAnswers
+
+        val nextPageUrl: String = ResubmittingAdjustmentPage.navigate(CheckMode, ua).url
+
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
+      }
+    }
 
     "must not remove ReasonForResubmissionPage when the answer is yes" in {
 

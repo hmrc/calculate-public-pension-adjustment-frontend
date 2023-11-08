@@ -30,7 +30,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
 
     beRemovable[Boolean](ThresholdIncomePage(Period._2013))
 
-    "must Navigate correctly in normal mode" - {
+    "Normal mode" - {
 
       "to AdjustedIncomePage when answered true" in {
         val ua     = emptyUserAnswers
@@ -66,43 +66,57 @@ class ThresholdIncomePageSpec extends PageBehaviours {
       }
     }
 
-    "must Navigate correctly to CYA in check mode when answered no" in {
-      val ua     = emptyUserAnswers
-        .set(
-          ThresholdIncomePage(Period._2013),
-          false
-        )
-        .success
-        .value
-      val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
+    "Check mode" - {
 
-      checkNavigation(result, "/annual-allowance/2013/check-answers")
+      "must Navigate correctly to CYA in check mode when answered no" in {
+        val ua     = emptyUserAnswers
+          .set(
+            ThresholdIncomePage(Period._2013),
+            false
+          )
+          .success
+          .value
+        val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2013/check-answers")
+      }
+
+      "must Navigate correctly to CYA in check mode when answered yes" in {
+        val ua     = emptyUserAnswers
+          .set(
+            ThresholdIncomePage(Period._2013),
+            true
+          )
+          .success
+          .value
+        val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2013/change-adjusted-income")
+      }
+
+      "must navigate to journey recovery when no answer" in {
+        val ua     = emptyUserAnswers
+        val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+
     }
 
-    "must Navigate correctly to CYA in check mode when answered yes" in {
-      val ua     = emptyUserAnswers
-        .set(
-          ThresholdIncomePage(Period._2013),
-          true
-        )
-        .success
-        .value
-      val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
+    "clean up" - {
 
-      checkNavigation(result, "/annual-allowance/2013/change-adjusted-income")
-    }
+      "must cleanup correctly when answered no" in {
+        val ua = emptyUserAnswers
+          .set(
+            AdjustedIncomePage(Period._2013),
+            BigInt("100")
+          )
+          .success
+          .value
 
-    "must cleanup correctly when answered no" in {
-      val ua = emptyUserAnswers
-        .set(
-          AdjustedIncomePage(Period._2013),
-          BigInt("100")
-        )
-        .success
-        .value
-
-      val cleanedUserAnswers = ThresholdIncomePage(_2013).cleanup(Some(false), ua).success.value
-      cleanedUserAnswers.get(AdjustedIncomePage(Period._2013)) mustBe None
+        val cleanedUserAnswers = ThresholdIncomePage(_2013).cleanup(Some(false), ua).success.value
+        cleanedUserAnswers.get(AdjustedIncomePage(Period._2013)) mustBe None
+      }
     }
   }
 }

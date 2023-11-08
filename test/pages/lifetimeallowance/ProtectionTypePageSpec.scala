@@ -72,7 +72,7 @@ class ProtectionTypeSpec extends PageBehaviours {
 
       val userAnswers = emptyUserAnswers
 
-      val nextPageUrl: String = ProtectionTypePage.navigate(NormalMode, userAnswers).url
+      val nextPageUrl: String = ProtectionTypePage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }

@@ -16,9 +16,51 @@
 
 package pages.annualallowance.taxyear
 
+import models.{CheckMode, NormalMode, PensionSchemeInputAmounts, Period, SchemeIndex}
 import pages.behaviours.PageBehaviours
 
 class PensionSchemeInputAmountsPageSpec extends PageBehaviours {
 
-  "PensionSchemeInputAmountsPage" - {}
+  "PensionSchemeInputAmountsPage" - {
+
+    "Normal mode" - {
+
+      "must navigate to pay a charge page" in {
+
+        val page = PensionSchemeInputAmountsPage(Period._2018, SchemeIndex(0))
+
+        val userAnswers = emptyUserAnswers
+          .set(
+            PensionSchemeInputAmountsPage(Period._2018, SchemeIndex(0)),
+            PensionSchemeInputAmounts(BigInt(1), BigInt(1))
+          )
+          .success
+          .value
+
+        val nextPageUrl = page.navigate(NormalMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/annual-allowance-charge")
+      }
+    }
+
+    "Check mode" - {
+
+      "must navigate to CYA page" in {
+
+        val page = PensionSchemeInputAmountsPage(Period._2018, SchemeIndex(0))
+
+        val userAnswers = emptyUserAnswers
+          .set(
+            PensionSchemeInputAmountsPage(Period._2018, SchemeIndex(0)),
+            PensionSchemeInputAmounts(BigInt(1), BigInt(1))
+          )
+          .success
+          .value
+
+        val nextPageUrl = page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/annual-allowance/2018/check-answers")
+      }
+    }
+  }
 }

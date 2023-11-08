@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{ChangeInTaxCharge, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{ChangeInTaxCharge, CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.behaviours.PageBehaviours
 
 import java.time.LocalDate
@@ -30,6 +30,80 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
     beSettable[Boolean](HadBenefitCrystallisationEventPage)
 
     beRemovable[Boolean](HadBenefitCrystallisationEventPage)
+  }
+
+  "normal mode" - {
+
+    "must navigate to date of benefit of crystallisation event page when user answers true" in {
+
+      val ua = emptyUserAnswers
+        .set(HadBenefitCrystallisationEventPage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event-date")
+    }
+
+    "must navigate to kickout page when user answers false" in {
+
+      val ua = emptyUserAnswers
+        .set(HadBenefitCrystallisationEventPage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-lta-service")
+    }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate to date of benefit of crystallisation event page when user answers true" in {
+
+      val ua = emptyUserAnswers
+        .set(HadBenefitCrystallisationEventPage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event-date")
+    }
+
+    "must navigate to kickout page when user answers false" in {
+
+      val ua = emptyUserAnswers
+        .set(HadBenefitCrystallisationEventPage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-lta-service")
+    }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+
+    }
   }
 
   "cleanup" - {

@@ -18,10 +18,9 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import forms.annualallowance.preaaquestions.DefinedContributionPensionSchemeFormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,7 +42,6 @@ class DefinedContributionPensionSchemeControllerSpec extends SpecBase with Mocki
   val form         = formProvider()
 
   lazy val normalRoute = preAARoutes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = preAARoutes.DefinedContributionPensionSchemeController.onPageLoad(CheckMode).url
 
   "DefinedContributionPensionScheme Controller" - {
 
@@ -81,7 +79,7 @@ class DefinedContributionPensionSchemeControllerSpec extends SpecBase with Mocki
       }
     }
 
-    "must redirect to the next page when valid data is submitted in NormalMode" in {
+    "must redirect to the next page when submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -101,41 +99,7 @@ class DefinedContributionPensionSchemeControllerSpec extends SpecBase with Mocki
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(DefinedContributionPensionSchemePage, true).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual DefinedContributionPensionSchemePage
-          .navigate(NormalMode, expectedAnswers)
-          .url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        val expectedAnswers = emptyUserAnswers.set(DefinedContributionPensionSchemePage, true).success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual DefinedContributionPensionSchemePage
-          .navigate(CheckMode, expectedAnswers)
-          .url
       }
     }
 

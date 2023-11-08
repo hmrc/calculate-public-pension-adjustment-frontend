@@ -19,8 +19,6 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import config.FrontendAppConfig
 import controllers.annualallowance.taxyear.routes.DefinedContributionAmountController
-import controllers.annualallowance.taxyear.routes.{DefinedContributionAmountController, FlexiAccessDefinedContributionAmountController}
-import controllers.routes
 import forms.annualallowance.taxyear.DefinedContributionAmountFormProvider
 import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentCaptor
@@ -369,9 +367,6 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.ThresholdIncomeController
-          .onPageLoad(NormalMode, Period._2023)
-          .url
       }
     }
 

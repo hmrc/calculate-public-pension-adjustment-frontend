@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.ProtectionEnhancedChangedFormProvider
 import models.{NormalMode, ProtectionEnhancedChanged, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -105,9 +104,6 @@ class ProtectionEnhancedChangedControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.WhatNewProtectionTypeEnhancementController
-          .onPageLoad(NormalMode)
-          .url
       }
     }
 

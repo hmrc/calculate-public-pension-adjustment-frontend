@@ -18,16 +18,21 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import controllers.setupquestions.{routes => setupRoutes}
 import forms.setupquestions.ReportingChangeFormProvider
-import models.{CheckMode, NormalMode, ReportingChange, UserAnswers}
+import models.{NormalMode, ReportingChange, UserAnswers}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.setupquestions.ReportingChangePage
+import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import repositories.SessionRepository
 import views.html.setupquestions.ReportingChangeView
+
+import scala.concurrent.Future
 
 class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
@@ -37,7 +42,6 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
   val form         = formProvider()
 
   lazy val reportingNormalRoute = setupRoutes.ReportingChangeController.onPageLoad(NormalMode).url
-  lazy val reportingCheckRoute  = setupRoutes.ReportingChangeController.onPageLoad(CheckMode).url
 
   "ReportingChange Controller" - {
 
@@ -55,6 +59,30 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual OK
 
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+      }
+    }
+
+    "must redirect to next page when submitted" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, reportingNormalRoute)
+            .withFormUrlEncodedBody(("value[0]", ReportingChange.values.head.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
       }
     }
 

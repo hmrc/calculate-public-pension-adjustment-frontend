@@ -20,12 +20,15 @@ import controllers.annualallowance.taxyear.routes
 import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.annualallowance.taxyear.DefinedContributionAmountPage
+import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
+import pages.annualallowance.taxyear.{DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+
+import java.time.LocalDate
 
 class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -59,6 +62,97 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
       DefinedContributionAmountSummary.row(userAnswers, period) shouldBe None
+    }
+  }
+
+  "Flexi access dates at beginning of period" - {
+
+    "Period 2016 post alignment" - {
+
+      "flexi access date is beginning of period" in {
+
+        val period      = Period._2016PostAlignment
+        val userAnswers = UserAnswers("id")
+          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 9))
+          .get
+          .set(
+            DefinedContributionAmountPage(period),
+            BigInt("100")
+          )
+          .get
+
+        DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
+          SummaryListRowViewModel(
+            key = "definedContributionAmount.checkYourAnswersLabel",
+            value = ValueViewModel(HtmlContent("&pound;100")),
+            actions = Seq(
+              ActionItemViewModel(
+                "site.change",
+                routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
+              )
+                .withVisuallyHiddenText("definedContributionAmount.change.hidden.2016-post")
+            )
+          )
+        )
+      }
+
+      "flexi access date is not beginning of period" in {
+
+        val period      = Period._2016PostAlignment
+        val userAnswers = UserAnswers("id")
+          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 10))
+          .get
+          .set(
+            DefinedContributionAmountPage(period),
+            BigInt("100")
+          )
+          .get
+
+        DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
+          SummaryListRowViewModel(
+            key = "definedContributionAmount.checkYourAnswersLabel",
+            value = ValueViewModel(HtmlContent("&pound;100")),
+            actions = Seq(
+              ActionItemViewModel(
+                "site.change",
+                routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
+              )
+                .withVisuallyHiddenText("definedContributionAmount.change.hidden.2016-post")
+            )
+          )
+        )
+      }
+    }
+
+    "Not Period 2016 post alignment" - {
+
+      "flexi access date is beginning of period" in {
+
+        val period      = Period._2018
+        val userAnswers = UserAnswers("id")
+          .set(FlexibleAccessStartDatePage, LocalDate.of(2017, 4, 6))
+          .get
+          .set(
+            DefinedContributionAmountPage(period),
+            BigInt("100")
+          )
+          .get
+
+        DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
+          SummaryListRowViewModel(
+            key = "definedContributionAmount.checkYourAnswersLabel",
+            value = ValueViewModel(HtmlContent("&pound;100")),
+            actions = Seq(
+              ActionItemViewModel(
+                "site.change",
+                routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
+              )
+                .withVisuallyHiddenText("definedContributionAmount.change.hidden.2018")
+            )
+          )
+        )
+      }
+
     }
   }
 

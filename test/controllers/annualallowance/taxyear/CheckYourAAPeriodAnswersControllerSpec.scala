@@ -23,8 +23,6 @@ import play.api.http.Status.{OK, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import viewmodels.govuk.SummaryListFluency
-import views.html.CheckYourAnswersView
-import controllers.routes
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.{DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
@@ -186,6 +184,117 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+      }
+    }
+
+    "pre-2016 period" - {
+
+      "must return maybeFlexiPeriodEndDateRowsStatus false when fleixble access date not end of period and the correct view for a GET" in {
+
+        val mockSessionRepository = mock[SessionRepository]
+
+        val ua = emptyUserAnswers
+          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 1))
+          .success
+          .value
+          .set(DefinedContributionAmountPage(Period._2016PreAlignment), BigInt(100))
+          .success
+          .value
+          .set(FlexiAccessDefinedContributionAmountPage(Period._2016PreAlignment), BigInt(100))
+          .success
+          .value
+
+        val application =
+          applicationBuilder(userAnswers = Some(ua))
+            .overrides(
+              bind[SessionRepository].toInstance(mockSessionRepository)
+            )
+            .build()
+
+        running(application) {
+          val request = FakeRequest(
+            GET,
+            controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
+              .onPageLoad(Period._2016PreAlignment)
+              .url
+          )
+
+          val result = route(application, request).value
+          val view   = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
+
+          val expectedSeq             = Seq(
+            DefinedContributionAmountSummary.row(ua, Period._2016PreAlignment)(messages(application)),
+            FlexiAccessDefinedContributionAmountSummary.row(ua, Period._2016PreAlignment)(messages(application))
+          ).flatten
+          val emptySequence           = SummaryListViewModel(Seq.empty)
+          val sequenceWithFlexiAmount = SummaryListViewModel(expectedSeq)
+
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(
+            maybeFlexiPeriodEndDateRowsStatus = false,
+            "checkYourAnswers.aa.period.subHeading.2016-pre",
+            controllers.routes.TaskListController.onPageLoad(),
+            emptySequence,
+            sequenceWithFlexiAmount,
+            emptySequence
+          )(
+            request,
+            messages(application)
+          ).toString
+        }
+      }
+
+      "must return maybeFlexiPeriodEndDateRowsStatus true when fleixble access date is end of period and the correct view for a GET" in {
+
+        val mockSessionRepository = mock[SessionRepository]
+
+        val ua = emptyUserAnswers
+          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 8))
+          .success
+          .value
+          .set(DefinedContributionAmountPage(Period._2016PreAlignment), BigInt(100))
+          .success
+          .value
+          .set(FlexiAccessDefinedContributionAmountPage(Period._2016PreAlignment), BigInt(0))
+          .success
+          .value
+
+        val application =
+          applicationBuilder(userAnswers = Some(ua))
+            .overrides(
+              bind[SessionRepository].toInstance(mockSessionRepository)
+            )
+            .build()
+
+        running(application) {
+          val request = FakeRequest(
+            GET,
+            controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
+              .onPageLoad(Period._2016PreAlignment)
+              .url
+          )
+
+          val result = route(application, request).value
+          val view   = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
+
+          val expectedSeq                =
+            Seq(DefinedContributionAmountSummary.row(ua, Period._2016PreAlignment)(messages(application))).flatten
+          val emptySequence              = SummaryListViewModel(Seq.empty)
+          val sequenceWithoutFlexiAmount = SummaryListViewModel(expectedSeq)
+
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(
+            maybeFlexiPeriodEndDateRowsStatus = true,
+            "checkYourAnswers.aa.period.subHeading.2016-pre",
+            controllers.routes.TaskListController.onPageLoad(),
+            emptySequence,
+            emptySequence,
+            sequenceWithoutFlexiAmount
+          )(
+            request,
+            messages(application)
+          ).toString
+        }
       }
     }
   }

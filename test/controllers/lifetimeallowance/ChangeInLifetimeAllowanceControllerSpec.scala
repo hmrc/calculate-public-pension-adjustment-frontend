@@ -18,10 +18,9 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.ChangeInLifetimeAllowanceFormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,7 +42,6 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
   val form         = formProvider()
 
   lazy val normalRoute = ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(CheckMode).url
 
   "ChangeInLifetimeAllowance Controller" - {
 
@@ -81,7 +79,7 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must redirect to the ChangeInTaxCharge page when valid data is submitted in normal mode" in {
+    "must redirect to the ChangeInTaxCharge page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -102,82 +100,6 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode).url
-      }
-    }
-
-    "must redirect to the ChangeInTaxCharge in normal mode when valid data is submitted in check mode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode).url
-      }
-    }
-
-    "must redirect to NotAbleToUseThisServicePage when user answer No in normal mode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", "false"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url
-      }
-    }
-
-    "must redirect to NotAbleToUseThisServicePage when user answer No in check mode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", "false"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url
       }
     }
 

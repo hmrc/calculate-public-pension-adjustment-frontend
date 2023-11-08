@@ -18,13 +18,12 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.HowMuchAAChargeSchemePaidFormProvider
 import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.{HowMuchAAChargeSchemePaidPage, MemberMoreThanOnePensionPage}
+import pages.annualallowance.taxyear.HowMuchAAChargeSchemePaidPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -116,15 +115,9 @@ class HowMuchAAChargeSchemePaidControllerSpec extends SpecBase with MockitoSugar
           FakeRequest(POST, howMuchAAChargeSchemePaidRoute)
             .withFormUrlEncodedBody(("value", validAnswer.toString))
 
-        val userAnswers =
-          emptyUserAnswers.set(HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)), BigInt(1000))
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0))
-          .navigate(NormalMode, userAnswers.get)
-          .url
       }
     }
 
@@ -181,38 +174,6 @@ class HowMuchAAChargeSchemePaidControllerSpec extends SpecBase with MockitoSugar
         status(result) mustEqual SEE_OTHER
 
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
-      }
-    }
-
-    "must redirect to add another scheme controller when member than one scheme true" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val answers = emptyUserAnswers
-        .set(MemberMoreThanOnePensionPage(Period._2018), true)
-        .success
-        .value
-
-      val application =
-        applicationBuilder(userAnswers = Some(answers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, howMuchAAChargeSchemePaidRoute)
-            .withFormUrlEncodedBody(("value", validAnswer.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.AddAnotherSchemeController
-          .onPageLoad(Period._2018, SchemeIndex(0))
-          .url
       }
     }
   }

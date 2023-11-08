@@ -104,5 +104,19 @@ class DefinedContributionPensionSchemePageSpec extends PageBehaviours {
       result.get(FlexiblyAccessedPensionPage)          must not be defined
       result.get(FlexibleAccessStartDatePage)          must not be defined
     }
+
+    "must redirect to journey recovery page when no answer in normal mode" in {
+
+      val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(NormalMode, emptyUserAnswers)
+
+      check(nextPageUrl, "/there-is-a-problem")
+    }
+
+    "must redirect to journey recovery page when no answer in check mode" in {
+
+      val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(CheckMode, emptyUserAnswers)
+
+      check(nextPageUrl, "/there-is-a-problem")
+    }
   }
 }

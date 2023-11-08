@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{ChangeInTaxCharge, CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{ChangeInTaxCharge, CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.behaviours.PageBehaviours
 
 import java.time.LocalDate
@@ -30,6 +30,33 @@ class ChangeInTaxChargeSpec extends PageBehaviours {
     beSettable[ChangeInTaxCharge](ChangeInTaxChargePage)
 
     beRemovable[ChangeInTaxCharge](ChangeInTaxChargePage)
+  }
+
+  "normal mode" - {
+
+    "must navigate to multiple benefit crystallisation event page when user indicates a charge" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(ChangeInTaxChargePage, models.ChangeInTaxCharge.IncreasedCharge)
+          .get
+
+      val nextPageUrl: String = ChangeInTaxChargePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/more-than-one-benefit-crystallisation-event")
+    }
+
+    "must navigate to kickout when user answers no charge" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(ChangeInTaxChargePage, models.ChangeInTaxCharge.None)
+          .get
+
+      val nextPageUrl: String = ChangeInTaxChargePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-lta-service")
+    }
   }
 
   "Checkmode" - {

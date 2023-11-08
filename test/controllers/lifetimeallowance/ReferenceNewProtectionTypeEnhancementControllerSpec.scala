@@ -19,13 +19,12 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.lifetimeallowance.ReferenceNewProtectionTypeEnhancementFormProvider
-import models.{CheckMode, NormalMode, ProtectionEnhancedChanged, UserAnswers}
-import controllers.routes
+import models.{NormalMode, UserAnswers}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.{ProtectionEnhancedChangedPage, ReferenceNewProtectionTypeEnhancementPage}
+import pages.lifetimeallowance.ReferenceNewProtectionTypeEnhancementPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -43,7 +42,6 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
   val form         = formProvider()
 
   lazy val normalRoute = ltaRoutes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
 
   "ReferenceNewProtectionTypeEnhancement Controller" - {
 
@@ -82,14 +80,12 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
       }
     }
 
-    "must redirect to the LifetimeAllowanceCharge page when user previously answers Protection on ProtectionEnhancedChangedPage" in {
+    "must redirect to next page when submitted" in {
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val userAnswers = emptyUserAnswers
-        .set(ProtectionEnhancedChangedPage, ProtectionEnhancedChanged.Protection)
-        .get
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -106,9 +102,6 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode).url
       }
     }
 

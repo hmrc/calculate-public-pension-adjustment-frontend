@@ -18,9 +18,8 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.lifetimeallowance.LifetimeAllowanceChargeFormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,9 +42,6 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val lifetimeAllowanceChargeRoute =
     controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(NormalMode).url
-
-  lazy val lifetimeAllowanceChargeCheckRoute =
-    controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(CheckMode).url
 
   "LifetimeAllowanceCharge Controller" - {
 
@@ -103,10 +99,7 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(LifetimeAllowanceChargePage, true).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual LifetimeAllowanceChargePage.navigate(NormalMode, expectedAnswers).url
       }
     }
 
@@ -159,116 +152,6 @@ class LifetimeAllowanceChargeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
-      }
-    }
-
-    "redirect to ExcessLifetimeAllowancePaid page when user answers true in Normal Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, lifetimeAllowanceChargeRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController
-          .onPageLoad(NormalMode)
-          .url
-      }
-    }
-
-    "redirect to LifetimeAllowanceChargeAmount page when user answers false in Normal Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, lifetimeAllowanceChargeRoute)
-            .withFormUrlEncodedBody(("value", "false"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController
-          .onPageLoad(NormalMode)
-          .url
-      }
-    }
-
-    "redirect to ExcessLifetimeAllowancePaid page when user answers true in Check Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, lifetimeAllowanceChargeCheckRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController
-          .onPageLoad(NormalMode)
-          .url
-      }
-    }
-
-    "redirect to CheckYourAnswer page when user answers false in Check Mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, lifetimeAllowanceChargeCheckRoute)
-            .withFormUrlEncodedBody(("value", "false"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
   }

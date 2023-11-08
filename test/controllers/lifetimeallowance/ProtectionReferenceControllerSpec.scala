@@ -18,10 +18,9 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.ProtectionReferenceFormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,7 +42,6 @@ class ProtectionReferenceControllerSpec extends SpecBase with MockitoSugar {
   val form         = formProvider()
 
   lazy val normalRoute = ltaRoutes.ProtectionReferenceController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.ProtectionReferenceController.onPageLoad(CheckMode).url
 
   "ProtectionReference Controller" - {
 
@@ -81,7 +79,7 @@ class ProtectionReferenceControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted in NormalMode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -101,41 +99,7 @@ class ProtectionReferenceControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(ProtectionReferencePage, "answer").success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ProtectionReferencePage
-          .navigate(NormalMode, expectedAnswers)
-          .url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
-
-        val result = route(application, request).value
-
-        val expectedAnswers = emptyUserAnswers.set(ProtectionReferencePage, "answer").success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ProtectionReferencePage
-          .navigate(CheckMode, expectedAnswers)
-          .url
       }
     }
 

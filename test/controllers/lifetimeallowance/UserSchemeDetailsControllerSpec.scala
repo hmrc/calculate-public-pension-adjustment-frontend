@@ -85,7 +85,7 @@ class UserSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted & hasPreviousCharge doesn't exist" in {
+    "must redirect to the next page when submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -104,9 +104,6 @@ class UserSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 

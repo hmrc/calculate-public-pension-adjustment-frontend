@@ -17,7 +17,7 @@
 package pages.setupquestions
 
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{ChangeInTaxCharge, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{ChangeInTaxCharge, CheckMode, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
@@ -35,6 +35,54 @@ class ReportingChangePageSpec extends PageBehaviours {
     beSettable[Set[ReportingChange]](ReportingChangePage)
 
     beRemovable[Set[ReportingChange]](ReportingChangePage)
+  }
+
+  "Normal mode" - {
+
+    "must redirect to CYA page when user submits an answer" in {
+
+      val ua = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head, ReportingChange.values.tail.head))
+        .success
+        .value
+
+      val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must redirect to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "Check mode" - {
+
+    "must redirect to CYA page when user submits an answer" in {
+
+      val ua = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head, ReportingChange.values.tail.head))
+        .success
+        .value
+
+      val nextPageUrl: String = ReportingChangePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must redirect to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = ReportingChangePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 
   "cleanup" - {

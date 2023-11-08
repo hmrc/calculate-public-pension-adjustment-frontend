@@ -104,9 +104,6 @@ class NewExcessLifetimeAllowancePaidControllerSpec extends SpecBase with Mockito
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.lifetimeallowance.routes.NewAnnualPaymentValueController
-          .onPageLoad(NormalMode)
-          .url
       }
     }
 

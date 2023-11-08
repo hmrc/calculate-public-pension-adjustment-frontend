@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.{routes => generalRoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.LtaProtectionOrEnhancementsFormProvider
 import models.{CheckMode, LtaProtectionOrEnhancements, NormalMode, UserAnswers}
@@ -87,7 +86,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
       }
     }
 
-    "must redirect to the next page when valid data is submitted in NormalMode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -107,13 +106,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        val expectedAnswers =
-          emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, LtaProtectionOrEnhancements.values.head).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual LtaProtectionOrEnhancementsPage
-          .navigate(NormalMode, expectedAnswers)
-          .url
       }
     }
 

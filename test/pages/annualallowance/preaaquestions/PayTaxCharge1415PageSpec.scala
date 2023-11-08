@@ -47,6 +47,12 @@ class PayTaxCharge1415PageSpec extends PageBehaviours {
 
         checkNavigation(nextPageUrl, "/annual-allowance/registered/2011")
       }
+
+      "must redirect to journey recovery when no answer" in {
+        val nextPageUrl = PayTaxCharge1415Page.navigate(NormalMode, emptyUserAnswers).url
+
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
+      }
     }
 
     "check mode navigation" - {
@@ -65,6 +71,12 @@ class PayTaxCharge1415PageSpec extends PageBehaviours {
         val nextPageUrl = PayTaxCharge1415Page.navigate(CheckMode, userAnswers).url
 
         checkNavigation(nextPageUrl, "/annual-allowance/registered/2011")
+      }
+
+      "must redirect to journey recovery when no answer" in {
+        val nextPageUrl = PayTaxCharge1415Page.navigate(CheckMode, emptyUserAnswers).url
+
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
       }
     }
 

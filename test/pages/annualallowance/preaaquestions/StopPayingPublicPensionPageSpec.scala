@@ -16,8 +16,9 @@
 
 package pages.annualallowance.preaaquestions
 
-import java.time.LocalDate
+import models.{CheckMode, NormalMode}
 
+import java.time.LocalDate
 import org.scalacheck.Arbitrary
 import pages.behaviours.PageBehaviours
 
@@ -34,5 +35,35 @@ class StopPayingPublicPensionPageSpec extends PageBehaviours {
     beSettable[LocalDate](StopPayingPublicPensionPage)
 
     beRemovable[LocalDate](StopPayingPublicPensionPage)
+  }
+
+  "Normal mode" - {
+
+    "must navigate to defined contribution scheme page on submit" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(StopPayingPublicPensionPage, LocalDate.of(2020, 1, 1))
+        .success
+        .value
+
+      val result = StopPayingPublicPensionPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(result, "/annual-allowance/defined-contributions-scheme")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate to CYA page on submit" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(StopPayingPublicPensionPage, LocalDate.of(2020, 1, 1))
+        .success
+        .value
+
+      val result = StopPayingPublicPensionPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(result, "/annual-allowance/setup-check-answers")
+    }
   }
 }

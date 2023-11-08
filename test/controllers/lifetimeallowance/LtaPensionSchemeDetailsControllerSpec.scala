@@ -20,7 +20,7 @@ import base.SpecBase
 import config.FrontendAppConfig
 import forms.lifetimeallowance.LtaPensionSchemeDetailsFormProvider
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.{CheckMode, LtaPensionSchemeDetails, NormalMode, UserAnswers}
+import models.{LtaPensionSchemeDetails, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -40,7 +40,6 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   lazy val normalRoute = ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode).url
 
   val formProvider = new LtaPensionSchemeDetailsFormProvider()
   val form         = formProvider()
@@ -102,7 +101,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is NormalMode" in {
+    "must redirect to the next page when submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -123,36 +122,6 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
-      }
-    }
-
-    "must redirect to the CheckYourLTAAnswers page when valid data is submitted in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 

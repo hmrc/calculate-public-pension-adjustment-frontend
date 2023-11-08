@@ -18,10 +18,9 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import controllers.setupquestions.{routes => setupRoutes}
 import forms.ReasonForResubmissionFormProvider
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -43,7 +42,6 @@ class ReasonForResubmissionControllerSpec extends SpecBase with MockitoSugar {
   val form         = formProvider()
 
   lazy val reasonNormalRoute = setupRoutes.ReasonForResubmissionController.onPageLoad(NormalMode).url
-  lazy val reasonCheckRoute  = setupRoutes.ReasonForResubmissionController.onPageLoad(CheckMode).url
 
   "ReasonForResubmission Controller" - {
 
@@ -101,10 +99,7 @@ class ReasonForResubmissionControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers = emptyUserAnswers.set(ReasonForResubmissionPage, "test").success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ReasonForResubmissionPage.navigate(NormalMode, expectedAnswers).url
       }
     }
 
@@ -157,58 +152,6 @@ class ReasonForResubmissionControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
-      }
-    }
-
-    "redirect to Reporting Change page when user answers false in normal mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, reasonNormalRoute)
-            .withFormUrlEncodedBody(("value", "testvalue"))
-
-        val result = route(application, request).value
-
-        val expectedAnswers = emptyUserAnswers.set(ReasonForResubmissionPage, "Updated reason").success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ReasonForResubmissionPage.navigate(NormalMode, expectedAnswers).url
-      }
-    }
-
-    "redirect to CheckYourAnswers page when user answers false in check mode" in {
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, reasonCheckRoute)
-            .withFormUrlEncodedBody(("value", "testvalue"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url
       }
     }
   }

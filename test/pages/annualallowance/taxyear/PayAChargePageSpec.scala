@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period, SchemeIndex}
+import models.{CheckMode, NormalMode, Period, SchemeIndex}
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.behaviours.PageBehaviours
 
@@ -211,6 +211,38 @@ class PayAChargePageSpec extends PageBehaviours {
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/who-paid-charge")
+    }
+
+    "must redirect to journey recovery when no  in normal mode" in {
+
+      val page = PayAChargePage(Period._2018, SchemeIndex(0))
+
+      val nextPageUrl = page.navigate(NormalMode, emptyUserAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+
+    "must redirect to journey recovery when no  in check mode" in {
+
+      val page = PayAChargePage(Period._2018, SchemeIndex(0))
+
+      val nextPageUrl = page.navigate(CheckMode, emptyUserAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+
+    "must navigate to how much aa charge scheme paid when user answers true and not first scheme within period" in {
+
+      val page = PayAChargePage(Period._2018, SchemeIndex(1))
+
+      val userAnswers = emptyUserAnswers
+        .set(page, true)
+        .success
+        .value
+
+      val nextPageUrl = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-1/charge-amount-pension-scheme-paid")
     }
   }
 }

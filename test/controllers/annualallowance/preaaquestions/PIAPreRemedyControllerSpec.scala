@@ -19,9 +19,8 @@ package controllers.annualallowance.preaaquestions
 import base.SpecBase
 import config.FrontendAppConfig
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
-import controllers.routes
 import forms.annualallowance.preaaquestions.PIAPreRemedyFormProvider
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -47,7 +46,6 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
   val validPreRemedyTaxYear: Period = Period._2013
 
   lazy val normalRoute = preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, validPreRemedyTaxYear).url
-  lazy val checkRoute  = preAARoutes.PIAPreRemedyController.onPageLoad(CheckMode, validPreRemedyTaxYear).url
 
   "PIAPreRemedy Controller" - {
 
@@ -95,7 +93,7 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted in NormalMode" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -115,45 +113,7 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val expectedAnswers =
-          emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
-
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preaaquestions
-          .PIAPreRemedyPage(validPreRemedyTaxYear)
-          .navigate(NormalMode, expectedAnswers)
-          .url
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted in CheckMode" in {
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, checkRoute)
-            .withFormUrlEncodedBody(("value", validAnswer.toString))
-
-        val result = route(application, request).value
-
-        val expectedAnswers =
-          emptyUserAnswers.set(preaaquestions.PIAPreRemedyPage(validPreRemedyTaxYear), BigInt(1000)).success.value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual preaaquestions
-          .PIAPreRemedyPage(validPreRemedyTaxYear)
-          .navigate(CheckMode, expectedAnswers)
-          .url
       }
     }
 

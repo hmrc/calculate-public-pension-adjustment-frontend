@@ -49,6 +49,12 @@ class FlexiblyAccessedPensionPageSpec extends PageBehaviours {
 
         check(nextPageUrl, "/annual-allowance/tax-charge-between-2014-2015")
       }
+
+      "must redirect to journey recovery when no answer" in {
+        val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(NormalMode, emptyUserAnswers)
+
+        check(nextPageUrl, "/there-is-a-problem")
+      }
     }
 
     "check mode navigation" - {
@@ -103,6 +109,12 @@ class FlexiblyAccessedPensionPageSpec extends PageBehaviours {
       result.get(DefinedContributionPensionSchemePage) must be(defined)
       result.get(FlexiblyAccessedPensionPage)          must be(defined)
       result.get(FlexibleAccessStartDatePage)          must not be defined
+    }
+
+    "must redirect to journey recovery when no answer" in {
+      val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(CheckMode, emptyUserAnswers)
+
+      check(nextPageUrl, "/there-is-a-problem")
     }
   }
 }

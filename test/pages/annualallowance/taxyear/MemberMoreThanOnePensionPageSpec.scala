@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period}
+import models.{CheckMode, NormalMode, Period}
 import pages.behaviours.PageBehaviours
 
 class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
@@ -47,6 +47,18 @@ class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
           MemberMoreThanOnePensionPage(Period._2016PostAlignment).navigate(NormalMode, userAnswers).url
 
         checkNavigation(nextUrl, "/annual-allowance/2016-post/select-scheme-0")
+      }
+    }
+
+    "check mode navigation" - {
+
+      "must navigate to CYA page when submitted" in {
+        val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false).get
+
+        val nextUrl: String =
+          MemberMoreThanOnePensionPage(Period._2016PostAlignment).navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextUrl, "/annual-allowance/2016-post/check-answers")
       }
     }
   }
