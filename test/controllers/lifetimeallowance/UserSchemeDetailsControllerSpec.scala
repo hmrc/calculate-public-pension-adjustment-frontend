@@ -99,11 +99,31 @@ class UserSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, userSchemeDetailsRoute)
-            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
+            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RL"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+      }
+    }
+
+    "must return a Bad Request and errors when invalid data 00348916RT is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, userSchemeDetailsRoute)
+            .withFormUrlEncodedBody(("value", "00348916RT"))
+
+        val boundForm = form.bind(Map("value" -> "00348916RT"))
+
+        val view = application.injector.instanceOf[UserSchemeDetailsView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 

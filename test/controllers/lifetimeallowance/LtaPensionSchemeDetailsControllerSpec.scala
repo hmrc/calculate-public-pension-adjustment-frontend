@@ -51,7 +51,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
     Json.obj(
       LtaPensionSchemeDetailsPage.toString -> Json.obj(
         "name"   -> "value1",
-        "taxRef" -> "00348916RT"
+        "taxRef" -> "00348916RL"
       )
     )
   )
@@ -79,7 +79,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       val userAnswers = UserAnswers(userAnswersId)
         .set(
           LtaPensionSchemeDetailsPage,
-          LtaPensionSchemeDetails("someSchemeName", "00348916RT")
+          LtaPensionSchemeDetails("someSchemeName", "00348916RK")
         )
         .success
         .value
@@ -95,7 +95,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(LtaPensionSchemeDetails("someSchemeName", "00348916RT")),
+          form.fill(LtaPensionSchemeDetails("someSchemeName", "00348916RK")),
           NormalMode
         )(request, messages(application)).toString
       }
@@ -117,11 +117,34 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
+            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RK"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
+      }
+    }
+
+    "must return a Bad Request and errors when invalid data 00348916RT is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", "00348916RT"))
+
+        val boundForm = form.bind(Map("value" -> "00348916RT"))
+
+        val view = application.injector.instanceOf[LtaPensionSchemeDetailsView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
