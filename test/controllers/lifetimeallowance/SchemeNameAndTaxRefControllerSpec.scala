@@ -104,7 +104,7 @@ class SchemeNameAndTaxRefControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, schemeNameAndTaxRefRoute)
-            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RT"))
+            .withFormUrlEncodedBody(("name", "scheme name"), ("taxRef", "00348916RL"))
 
         val result = route(application, request).value
 
