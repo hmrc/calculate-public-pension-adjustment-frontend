@@ -27,8 +27,8 @@ import scala.util.Try
 
 case object LTASection extends Section {
 
-  def deleteAllAnswers(userAnswers: UserAnswers): Try[UserAnswers] =
-    userAnswers.removePath(JsPath \ "lta")
+  override def removeAllUserAnswers(userAnswers: UserAnswers): UserAnswers =
+    userAnswers.removePath(JsPath \ "lta").get
 
   override def pages(): Seq[Page] =
     Seq(

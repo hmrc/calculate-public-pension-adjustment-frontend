@@ -49,11 +49,11 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2018), false)
-      .get
       .set(DefinedContributionPensionSchemePage, true)
       .success
       .value
+      .set(MemberMoreThanOnePensionPage(Period._2018), false)
+      .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/annual-allowance/2018/contributed-to-any-other-dc-or-db-scheme")
@@ -64,11 +64,11 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(4))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2018), true)
-      .get
       .set(DefinedContributionPensionSchemePage, true)
       .success
       .value
+      .set(MemberMoreThanOnePensionPage(Period._2018), true)
+      .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/annual-allowance/2018/contributed-to-any-other-dc-or-db-scheme")
@@ -79,11 +79,11 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(4))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2018), true)
-      .get
       .set(DefinedContributionPensionSchemePage, false)
       .success
       .value
+      .set(MemberMoreThanOnePensionPage(Period._2018), true)
+      .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/annual-allowance/2018/threshold-income")
@@ -94,11 +94,11 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(4))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-      .get
       .set(DefinedContributionPensionSchemePage, false)
       .success
       .value
+      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+      .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/total-income")
@@ -109,11 +109,11 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2018), false)
-      .get
       .set(DefinedContributionPensionSchemePage, false)
       .success
       .value
+      .set(MemberMoreThanOnePensionPage(Period._2018), false)
+      .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/annual-allowance/2018/threshold-income")
@@ -124,11 +124,11 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
-      .get
       .set(DefinedContributionPensionSchemePage, true)
       .success
       .value
+      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
+      .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/contributed-to-any-other-dc-or-db-scheme")
@@ -139,11 +139,11 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
-      .get
       .set(DefinedContributionPensionSchemePage, false)
       .success
       .value
+      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
+      .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/total-income")
@@ -154,11 +154,11 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeSchemePaidPage(Period._2016PostAlignment, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
-      .get
       .set(DefinedContributionPensionSchemePage, true)
       .success
       .value
+      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
+      .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/annual-allowance/2016-post/contributed-to-any-other-dc-or-db-scheme")
@@ -169,11 +169,11 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeSchemePaidPage(Period._2016PostAlignment, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
-      .get
       .set(DefinedContributionPensionSchemePage, false)
       .success
       .value
+      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
+      .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
     checkNavigation(nextPageUrl, "/annual-allowance/2016-post/check-answers")

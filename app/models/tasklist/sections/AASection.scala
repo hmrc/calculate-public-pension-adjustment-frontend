@@ -19,10 +19,11 @@ package models.tasklist.sections
 import models.ContributedToDuringRemedyPeriod.Definedbenefit
 import models.WhoPaidAACharge.{Both, Scheme, You}
 import models.tasklist.{Section, SectionStatus}
-import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex, UserAnswers}
+import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex, UserAnswers, UserAnswersPeriod}
 import pages.Page
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.annualallowance.taxyear._
+import services.PeriodService
 
 case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
 
@@ -147,5 +148,16 @@ case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
       CheckYourAAPeriodAnswersPage(period)
     } else {
       pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
+    }
+}
+
+object AASection {
+  def removeAllAAPeriodAnswers(answers: UserAnswers): UserAnswers =
+    removeAAPeriodAnswers(answers, PeriodService.allRemedyPeriods)
+
+  private def removeAAPeriodAnswers(answers: UserAnswers, periods: Seq[Period]): UserAnswers =
+    periods.headOption match {
+      case Some(period) => removeAAPeriodAnswers(answers.remove(UserAnswersPeriod(period)).get, periods.tail)
+      case None         => answers
     }
 }
