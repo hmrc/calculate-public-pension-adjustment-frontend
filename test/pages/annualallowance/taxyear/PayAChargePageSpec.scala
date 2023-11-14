@@ -47,11 +47,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2018, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2018), false)
-        .get
-        .set(DefinedContributionPensionSchemePage, true)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -63,11 +63,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2018, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2018), false)
-        .get
-        .set(DefinedContributionPensionSchemePage, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -79,11 +79,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2016PreAlignment, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
-        .get
-        .set(DefinedContributionPensionSchemePage, true)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -95,11 +95,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2016PreAlignment, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
-        .get
-        .set(DefinedContributionPensionSchemePage, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -111,11 +111,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2016PostAlignment, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
-        .get
-        .set(DefinedContributionPensionSchemePage, true)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -127,11 +127,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2016PostAlignment, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
-        .get
-        .set(DefinedContributionPensionSchemePage, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -143,11 +143,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2017, SchemeIndex(4))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2017), true)
-        .get
-        .set(DefinedContributionPensionSchemePage, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -159,11 +159,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2017, SchemeIndex(4))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2017), true)
-        .get
-        .set(DefinedContributionPensionSchemePage, true)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -175,11 +175,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2016PreAlignment, SchemeIndex(4))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
-        .get
-        .set(DefinedContributionPensionSchemePage, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -191,11 +191,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2016PostAlignment, SchemeIndex(4))
 
       val userAnswers = emptyUserAnswers
+        .set(DefinedContributionPensionSchemePage, false)
+        .get
         .set(page, false)
         .get
         .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), true)
-        .get
-        .set(DefinedContributionPensionSchemePage, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url

@@ -64,9 +64,9 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeYouPaidPage(Period._2018, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2018), false)
-      .get
       .set(DefinedContributionPensionSchemePage, true)
+      .get
+      .set(MemberMoreThanOnePensionPage(Period._2018), false)
       .get
       .set(WhoPaidAAChargePage(Period._2018, SchemeIndex(0)), WhoPaidAACharge.You)
       .success
@@ -81,9 +81,9 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeYouPaidPage(Period._2018, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2018), false)
-      .get
       .set(DefinedContributionPensionSchemePage, false)
+      .get
+      .set(MemberMoreThanOnePensionPage(Period._2018), false)
       .get
       .set(WhoPaidAAChargePage(Period._2018, SchemeIndex(0)), WhoPaidAACharge.You)
       .success
@@ -98,9 +98,9 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeYouPaidPage(Period._2016PreAlignment, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
-      .get
       .set(DefinedContributionPensionSchemePage, true)
+      .get
+      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
       .get
       .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.You)
       .success
@@ -115,9 +115,9 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeYouPaidPage(Period._2016PreAlignment, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
-      .get
       .set(DefinedContributionPensionSchemePage, false)
+      .get
+      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
       .get
       .set(WhoPaidAAChargePage(Period._2016PreAlignment, SchemeIndex(0)), WhoPaidAACharge.You)
       .success
@@ -132,9 +132,9 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeYouPaidPage(Period._2016PostAlignment, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
-      .get
       .set(DefinedContributionPensionSchemePage, true)
+      .get
+      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
       .get
       .set(WhoPaidAAChargePage(Period._2016PostAlignment, SchemeIndex(0)), WhoPaidAACharge.You)
       .success
@@ -149,9 +149,9 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
     val page = HowMuchAAChargeYouPaidPage(Period._2016PostAlignment, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
-      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
-      .get
       .set(DefinedContributionPensionSchemePage, false)
+      .get
+      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
       .get
       .set(WhoPaidAAChargePage(Period._2016PostAlignment, SchemeIndex(0)), WhoPaidAACharge.You)
       .success

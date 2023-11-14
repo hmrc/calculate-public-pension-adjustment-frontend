@@ -41,14 +41,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
       val ua     = emptyUserAnswers
         .set(
-          DefinedContributionAmountPage(period),
-          BigInt("100")
+          FlexibleAccessStartDatePage,
+          flexiDate
         )
         .success
         .value
         .set(
-          FlexibleAccessStartDatePage,
-          flexiDate
+          DefinedContributionAmountPage(period),
+          BigInt("100")
         )
         .success
         .value
@@ -63,8 +63,8 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
       val ua     = emptyUserAnswers
         .set(
-          DefinedContributionAmountPage(period),
-          BigInt("100")
+          FlexibleAccessStartDatePage,
+          flexiDate
         )
         .success
         .value
@@ -75,8 +75,8 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
         .success
         .value
         .set(
-          FlexibleAccessStartDatePage,
-          flexiDate
+          DefinedContributionAmountPage(period),
+          BigInt("100")
         )
         .success
         .value
@@ -92,14 +92,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       "to FlexiAccessDefinedContributionAmountPage when answered and flexi access selected and not period end date" in {
         val ua     = emptyUserAnswers
           .set(
-            DefinedContributionAmountPage(period),
-            BigInt("100")
+            FlexibleAccessStartDatePage,
+            period.start
           )
           .success
           .value
           .set(
-            FlexibleAccessStartDatePage,
-            period.start
+            DefinedContributionAmountPage(period),
+            BigInt("100")
           )
           .success
           .value
@@ -196,12 +196,6 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
         val ua     = emptyUserAnswers
           .set(
-            DefinedContributionAmountPage(period),
-            BigInt("100")
-          )
-          .success
-          .value
-          .set(
             FlexibleAccessStartDatePage,
             flexiDate
           )
@@ -210,6 +204,12 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .set(
             ContributedToDuringRemedyPeriodPage(period),
             Set(ContributedToDuringRemedyPeriod.values.head)
+          )
+          .success
+          .value
+          .set(
+            DefinedContributionAmountPage(period),
+            BigInt("100")
           )
           .success
           .value
@@ -330,12 +330,6 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
         val ua     = emptyUserAnswers
           .set(
-            DefinedContributionAmountPage(period),
-            BigInt("100")
-          )
-          .success
-          .value
-          .set(
             FlexibleAccessStartDatePage,
             flexiDate
           )
@@ -344,6 +338,12 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
           .set(
             ContributedToDuringRemedyPeriodPage(period),
             Set(ContributedToDuringRemedyPeriod.values.head)
+          )
+          .success
+          .value
+          .set(
+            DefinedContributionAmountPage(period),
+            BigInt("100")
           )
           .success
           .value
@@ -360,14 +360,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
       "to FlexiAccessDefinedContributionAmountPage when answered and flexi access selected and not period end date" in {
         val ua     = emptyUserAnswers
           .set(
-            DefinedContributionAmountPage(period),
-            BigInt("100")
+            FlexibleAccessStartDatePage,
+            period.start
           )
           .success
           .value
           .set(
-            FlexibleAccessStartDatePage,
-            period.start
+            DefinedContributionAmountPage(period),
+            BigInt("100")
           )
           .success
           .value
@@ -464,14 +464,14 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
         val ua     = emptyUserAnswers
           .set(
-            DefinedContributionAmountPage(period),
-            BigInt("100")
+            FlexibleAccessStartDatePage,
+            flexiDate
           )
           .success
           .value
           .set(
-            FlexibleAccessStartDatePage,
-            flexiDate
+            DefinedContributionAmountPage(period),
+            BigInt("100")
           )
           .success
           .value

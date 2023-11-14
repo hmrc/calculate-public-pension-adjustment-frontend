@@ -22,8 +22,6 @@ import queries.Settable
 
 trait Section {
 
-  def pages(): Seq[Page] = Seq.empty[Page]
-
   def remove(answers: UserAnswers, forPages: Seq[Page]): UserAnswers =
     if (forPages.nonEmpty) {
       val page: Page = forPages.head

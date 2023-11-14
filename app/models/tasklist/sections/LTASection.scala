@@ -18,18 +18,18 @@ package models.tasklist.sections
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
-import models.tasklist.sections.PreAASection.sectionNavigation
 import models.tasklist.{Section, SectionStatus}
 import models.{SectionNavigation, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-import scala.util.Try
-
 case object LTASection extends Section {
 
-  def deleteAllAnswers(userAnswers: UserAnswers): Try[UserAnswers] =
-    userAnswers.removePath(JsPath \ "lta")
+  def removeAllUserAnswers(userAnswers: UserAnswers): UserAnswers =
+    userAnswers.removePath(JsPath \ "lta").get
+
+  def removeAllUserAnswersAndNavigation(userAnswers: UserAnswers): UserAnswers =
+    userAnswers.removePath(JsPath \ "lta").get.remove(sectionNavigation).get
 
   val initialPage: Call                     = ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
   val checkYourLTAAnswersPage: Call         = ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
@@ -65,6 +65,4 @@ case object LTASection extends Section {
 
   def saveNavigation(answers: UserAnswers, urlFragment: String): UserAnswers =
     answers.set(sectionNavigation, urlFragment).get
-
-  def removeNavigation(answers: UserAnswers): UserAnswers = answers.remove(sectionNavigation).get
 }

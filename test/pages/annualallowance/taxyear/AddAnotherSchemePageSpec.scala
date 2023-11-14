@@ -57,9 +57,9 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
       val page = AddAnotherSchemePage(Period._2018, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
-        .set(page, false)
-        .get
         .set(DefinedContributionPensionSchemePage, true)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -71,9 +71,9 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
       val page = AddAnotherSchemePage(Period._2018, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
-        .set(page, false)
-        .get
         .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -85,9 +85,9 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
       val page = AddAnotherSchemePage(Period._2016PreAlignment, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
-        .set(page, false)
-        .get
         .set(DefinedContributionPensionSchemePage, true)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -99,9 +99,9 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
       val page = AddAnotherSchemePage(Period._2016PreAlignment, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
-        .set(page, false)
-        .get
         .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -113,9 +113,9 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
       val page = AddAnotherSchemePage(Period._2016PostAlignment, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
-        .set(page, false)
-        .get
         .set(DefinedContributionPensionSchemePage, true)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -127,9 +127,9 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
       val page = AddAnotherSchemePage(Period._2016PostAlignment, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
-        .set(page, false)
-        .get
         .set(DefinedContributionPensionSchemePage, false)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url

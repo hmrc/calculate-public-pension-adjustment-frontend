@@ -65,4 +65,5 @@ case class OtherDefinedBenefitOrContributionPage(period: Period) extends Questio
       .remove(ContributedToDuringRemedyPeriodPage(period))
       .flatMap(_.remove(DefinedContributionAmountPage(period)))
       .flatMap(_.remove(DefinedBenefitAmountPage(period)))
+      .flatMap(_.remove(FlexiAccessDefinedContributionAmountPage(period)))
 }

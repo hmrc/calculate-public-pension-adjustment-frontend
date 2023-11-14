@@ -17,13 +17,15 @@
 package pages.annualallowance.preaaquestions
 
 import java.time.LocalDate
-
 import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import models.tasklist.sections.AASection
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object FlexibleAccessStartDatePage extends QuestionPage[LocalDate] {
 
@@ -41,5 +43,11 @@ case object FlexibleAccessStartDatePage extends QuestionPage[LocalDate] {
     answers.get(FlexibleAccessStartDatePage) match {
       case Some(_) => controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def cleanup(value: Option[LocalDate], userAnswers: UserAnswers): Try[UserAnswers] =
+    value match {
+      case Some(_) => Try(AASection.removeAllAAPeriodAnswersAndNavigation(userAnswers))
+      case None    => super.cleanup(value, userAnswers)
     }
 }

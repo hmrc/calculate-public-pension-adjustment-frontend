@@ -87,7 +87,10 @@ case class ContributedToDuringRemedyPeriodPage(period: Period)
     value
       .map { set =>
         if (!set.contains(ContributedToDuringRemedyPeriod.Definedcontribution)) {
-          userAnswers.remove(DefinedContributionAmountPage(period))
+          userAnswers
+            .remove(DefinedContributionAmountPage(period))
+            .get
+            .remove(FlexiAccessDefinedContributionAmountPage(period))
         } else if (!set.contains(ContributedToDuringRemedyPeriod.Definedbenefit)) {
           userAnswers.remove(DefinedBenefitAmountPage(period))
         } else {

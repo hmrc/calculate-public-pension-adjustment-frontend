@@ -16,7 +16,7 @@
 
 package pages.setupquestions
 
-import models.tasklist.sections.{LTASection, PreAASection}
+import models.tasklist.sections.{AASection, LTASection, PreAASection}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -47,12 +47,15 @@ case object SavingsStatementPage extends QuestionPage[Boolean] {
       .map {
         case true  => super.cleanup(value, userAnswers)
         case false =>
-          userAnswers
+          val answersWithNoPreAA = PreAASection.removeAllUserAnswersAndNavigation(userAnswers)
+          val answersWithNoAA    = AASection.removeAllAAPeriodAnswersAndNavigation(answersWithNoPreAA)
+          val answersWithNoLTA   = LTASection.removeAllUserAnswersAndNavigation(answersWithNoAA)
+          answersWithNoLTA
+            .remove(ReportingChangePage)
+            .get
+            .remove(ResubmittingAdjustmentPage)
+            .get
             .remove(ReasonForResubmissionPage)
-            .flatMap(_.remove(ReportingChangePage))
-            .flatMap(_.remove(ResubmittingAdjustmentPage))
-            .flatMap(answers => Try(PreAASection.removeNavigation(answers)))
-            .flatMap(answers => Try(LTASection.removeNavigation(answers)))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }
