@@ -16,67 +16,53 @@
 
 package models.tasklist.sections
 
-import models.UserAnswers
-import models.tasklist.helpers.LTASectionHelper
+import controllers.lifetimeallowance.{routes => ltaRoutes}
+import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
-import pages.Page
-import pages.lifetimeallowance._
+import models.{SectionNavigation, UserAnswers}
 import play.api.libs.json.JsPath
-
-import scala.util.Try
+import play.api.mvc.Call
 
 case object LTASection extends Section {
 
-  def deleteAllAnswers(userAnswers: UserAnswers): Try[UserAnswers] =
-    userAnswers.removePath(JsPath \ "lta")
+  def removeAllUserAnswers(userAnswers: UserAnswers): UserAnswers =
+    userAnswers.removePath(JsPath \ "lta").get
 
-  override def pages(): Seq[Page] =
-    Seq(
-      WhatYouWillNeedLtaPage,
-      HadBenefitCrystallisationEventPage,
-      DateOfBenefitCrystallisationEventPage,
-      ChangeInLifetimeAllowancePage,
-      ChangeInTaxChargePage,
-      MultipleBenefitCrystallisationEventPage,
-      LtaProtectionOrEnhancementsPage,
-      ProtectionTypePage,
-      ProtectionReferencePage,
-      EnhancementTypePage,
-      InternationalEnhancementReferencePage,
-      PensionCreditReferencePage,
-      ProtectionEnhancedChangedPage,
-      WhatNewProtectionTypeEnhancementPage,
-      ReferenceNewProtectionTypeEnhancementPage,
-      NewEnhancementTypePage,
-      NewInternationalEnhancementReferencePage,
-      NewPensionCreditReferencePage,
-      LifetimeAllowanceChargePage,
-      ExcessLifetimeAllowancePaidPage,
-      LumpSumValuePage,
-      AnnualPaymentValuePage,
-      WhoPaidLTAChargePage,
-      UserSchemeDetailsPage,
-      SchemeNameAndTaxRefPage,
-      QuarterChargePaidPage,
-      YearChargePaidPage,
-      NewExcessLifetimeAllowancePaidPage,
-      NewLumpSumValuePage,
-      NewAnnualPaymentValuePage,
-      WhoPayingExtraLtaChargePage,
-      LtaPensionSchemeDetailsPage
-    )
+  def removeAllUserAnswersAndNavigation(userAnswers: UserAnswers): UserAnswers =
+    userAnswers.removePath(JsPath \ "lta").get.remove(sectionNavigation).get
+
+  val initialPage: Call                     = ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
+  val checkYourLTAAnswersPage: Call         = ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+  val notAbleToUseThisServicePage: Call     = ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+  val cannotUseLtaServiceNoChargePage: Call = ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
 
   def status(answers: UserAnswers): SectionStatus =
-    if (LTASectionHelper.firstPageIsAnswered(answers)) {
-      if (LTASectionHelper.isLastPageAnswered(answers)) {
-        SectionStatus.Completed
-      } else LTASectionHelper.isLTAEligible(answers)
-    } else SectionStatus.NotStarted
-
-  def navigateTo(answers: UserAnswers): Page =
-    if (status(answers) == SectionStatus.Completed) {
-      CheckYourLTAAnswersPage
-    } else {
-      pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
+    navigateTo(answers) match {
+      case initialPage.url             => NotStarted
+      case checkYourLTAAnswersPage.url => Completed
+      case _                           => InProgress
     }
+
+  private val sectionNavigation: SectionNavigation = SectionNavigation("ltaSection")
+
+  def navigateTo(answers: UserAnswers): String = {
+    val taskListNavLink = answers.get(sectionNavigation).getOrElse(initialPage.url)
+    taskListNavLink match {
+      case notAbleToUseThisServicePage.url     => checkYourLTAAnswersPage.url
+      case cannotUseLtaServiceNoChargePage.url => checkYourLTAAnswersPage.url
+      case _                                   => taskListNavLink
+    }
+  }
+
+  def kickoutHasBeenReached(answers: UserAnswers): Boolean = {
+    val taskListNavLink: Option[String] = answers.get(sectionNavigation)
+    taskListNavLink match {
+      case Some(notAbleToUseThisServicePage.url)     => true
+      case Some(cannotUseLtaServiceNoChargePage.url) => true
+      case _                                         => false
+    }
+  }
+
+  def saveNavigation(answers: UserAnswers, urlFragment: String): UserAnswers =
+    answers.set(sectionNavigation, urlFragment).get
 }

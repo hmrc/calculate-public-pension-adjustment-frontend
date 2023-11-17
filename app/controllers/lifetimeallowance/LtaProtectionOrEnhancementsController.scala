@@ -19,6 +19,7 @@ package controllers.lifetimeallowance
 import controllers.actions._
 import forms.lifetimeallowance.LtaProtectionOrEnhancementsFormProvider
 import models.Mode
+import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.LtaProtectionOrEnhancementsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -62,8 +63,10 @@ class LtaProtectionOrEnhancementsController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(LtaProtectionOrEnhancementsPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(LtaProtectionOrEnhancementsPage.navigate(mode, updatedAnswers))
+              redirectUrl     = LtaProtectionOrEnhancementsPage.navigate(mode, updatedAnswers).url
+              answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

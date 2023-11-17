@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -42,7 +42,8 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
     answers.get(LifetimeAllowanceChargePage) match {
       case Some(true)  =>
         controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
-      case Some(false) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(false) =>
+        controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 

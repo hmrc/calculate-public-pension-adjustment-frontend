@@ -16,13 +16,17 @@
 
 package models.tasklist.sections
 
+import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
-import models.{Period, UserAnswers}
+import models.{NormalMode, Period, SectionNavigation, UserAnswers}
 import pages.Page
-import pages.annualallowance.preaaquestions._
+import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, FlexibleAccessStartDatePage, FlexiblyAccessedPensionPage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, RegisteredYearPage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
+import play.api.mvc.Call
 
 case object PreAASection extends Section {
-  override def pages(): Seq[Page] = Seq(
+
+  def pages(): Seq[Page] = Seq(
     ScottishTaxpayerFrom2016Page,
     WhichYearsScottishTaxpayerPage,
     PayingPublicPensionSchemePage,
@@ -48,32 +52,23 @@ case object PreAASection extends Section {
     PIAPreRemedyPage(Period._2015)
   )
 
+  val initialPage: Call                 = preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
+  val checkYourAASetupAnswersPage: Call = preAARoutes.CheckYourAASetupAnswersController.onPageLoad()
+
   def status(answers: UserAnswers): SectionStatus =
-    if (answers.get(ScottishTaxpayerFrom2016Page).isDefined) {
-      answers.get(PayTaxCharge1415Page) match {
-        case Some(true)  => SectionStatus.Completed
-        case Some(false) => lastRegisteredYearPageStatus(answers)
-        case _           => SectionStatus.InProgress
-      }
-    } else SectionStatus.NotStarted
-
-  private def lastRegisteredYearPageStatus(answers: UserAnswers): SectionStatus =
-    answers.get(RegisteredYearPage(Period._2015)) match {
-      case Some(false) => SectionStatus.Completed
-      case Some(true)  => lastPIAPageStatus(answers)
-      case _           => SectionStatus.InProgress
+    navigateTo(answers) match {
+      case initialPage.url                 => NotStarted
+      case checkYourAASetupAnswersPage.url => Completed
+      case _                               => InProgress
     }
 
-  private def lastPIAPageStatus(answers: UserAnswers): SectionStatus =
-    if (answers.get(PIAPreRemedyPage(Period._2015)).isDefined) {
-      SectionStatus.Completed
-    } else SectionStatus.InProgress
+  private val sectionNavigation: SectionNavigation = SectionNavigation("preAASection")
 
-  def navigateTo(answers: UserAnswers): Page =
-    if (status(answers) == SectionStatus.Completed) {
-      CheckYourAASetupAnswersPage
-    } else {
-      pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
-    }
+  def navigateTo(answers: UserAnswers): String =
+    answers.get(sectionNavigation).getOrElse(initialPage.url)
 
+  def saveNavigation(answers: UserAnswers, urlFragment: String): UserAnswers =
+    answers.set(sectionNavigation, urlFragment).get
+
+  def removeAllUserAnswersAndNavigation(answers: UserAnswers) = remove(answers, pages()).remove(sectionNavigation).get
 }

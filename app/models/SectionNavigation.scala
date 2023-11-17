@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-package models.tasklist
+package models
 
-import play.api.i18n.Messages
+import play.api.libs.json.JsPath
+import queries.{Gettable, Settable}
 
-final case class SectionViewModel(
-  name: String,
-  url: String,
-  status: SectionStatus,
-  id: String,
-  nameOverride: Option[String] = None
-) {
-  def label(messages: Messages) =
-    nameOverride match {
-      case Some(name) => messages(name)
-      case None       => messages(s"taskList.${status.toString}") + " " + messages(name)
-    }
+case class SectionNavigation(sectionIdentifier: String) extends Gettable[String] with Settable[String] {
+  override def path: JsPath = JsPath \ "navigation" \ sectionIdentifier
 }

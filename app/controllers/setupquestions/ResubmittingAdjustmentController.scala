@@ -18,8 +18,8 @@ package controllers.setupquestions
 
 import controllers.actions._
 import forms.ResubmittingAdjustmentFormProvider
-import javax.inject.Inject
 import models.Mode
+import models.tasklist.sections.SetupSection
 import pages.setupquestions.ResubmittingAdjustmentPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -27,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.ResubmittingAdjustmentView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ResubmittingAdjustmentController @Inject() (
@@ -62,8 +63,10 @@ class ResubmittingAdjustmentController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(ResubmittingAdjustmentPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(ResubmittingAdjustmentPage.navigate(mode, updatedAnswers))
+              redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
+              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

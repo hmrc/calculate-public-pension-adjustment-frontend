@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.HowMuchAAChargeSchemePaidFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.HowMuchAAChargeSchemePaidPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -64,8 +65,10 @@ class HowMuchAAChargeSchemePaidController @Inject() (
             for {
               updatedAnswers <-
                 Future.fromTry(request.userAnswers.set(HowMuchAAChargeSchemePaidPage(period, schemeIndex), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(HowMuchAAChargeSchemePaidPage(period, schemeIndex).navigate(mode, updatedAnswers))
+              redirectUrl     = HowMuchAAChargeSchemePaidPage(period, schemeIndex).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

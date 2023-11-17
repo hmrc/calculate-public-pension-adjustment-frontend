@@ -85,7 +85,7 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = LifetimeAllowanceChargePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-new-excess-paid")
     }
 
     "must redirect to journey recovery when no answer" in {

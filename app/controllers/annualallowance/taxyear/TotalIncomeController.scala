@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.TotalIncomeFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.TotalIncomePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -63,8 +64,10 @@ class TotalIncomeController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(TotalIncomePage(period), value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(TotalIncomePage(period).navigate(mode, updatedAnswers))
+              redirectUrl     = TotalIncomePage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
     }
 }

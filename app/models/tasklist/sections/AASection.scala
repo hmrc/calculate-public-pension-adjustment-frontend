@@ -16,136 +16,45 @@
 
 package models.tasklist.sections
 
-import models.ContributedToDuringRemedyPeriod.Definedbenefit
-import models.WhoPaidAACharge.{Both, Scheme, You}
+import controllers.annualallowance.taxyear.{routes => aaRoutes}
+import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
-import models.{ContributedToDuringRemedyPeriod, Period, SchemeIndex, UserAnswers}
-import pages.Page
-import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
-import pages.annualallowance.taxyear._
+import models.{Period, SectionNavigation, UserAnswers, UserAnswersPeriod}
+import play.api.mvc.Call
+import services.PeriodService
 
-case class AASection(period: Period, schemeIndex: SchemeIndex) extends Section {
+case class AASection(period: Period) extends Section {
 
-  override def pages(): Seq[Page] =
-    Seq(
-      WhatYouWillNeedPage(period),
-      MemberMoreThanOnePensionPage(period),
-      WhichSchemePage(period, schemeIndex),
-      PensionSchemeDetailsPage(period, schemeIndex),
-      PensionSchemeInputAmountsPage(period, schemeIndex),
-      PayAChargePage(period, schemeIndex),
-      WhoPaidAAChargePage(period, schemeIndex),
-      HowMuchAAChargeYouPaidPage(period, schemeIndex),
-      HowMuchAAChargeSchemePaidPage(period, schemeIndex),
-      AddAnotherSchemePage(period, schemeIndex),
-      OtherDefinedBenefitOrContributionPage(period),
-      DefinedBenefitAmountPage(period),
-      DefinedContributionAmountPage(period),
-      ContributedToDuringRemedyPeriodPage(period),
-      FlexiAccessDefinedContributionAmountPage(period),
-      ThresholdIncomePage(period),
-      AdjustedIncomePage(period),
-      TotalIncomePage(period)
-    )
+  val initialPage: Call                  = aaRoutes.WhatYouWillNeedAAController.onPageLoad(period)
+  val checkYourAAPeriodAnswersPage: Call = aaRoutes.CheckYourAAPeriodAnswersController.onPageLoad(period)
 
   def status(answers: UserAnswers): SectionStatus =
-    if (firstPageIsAnswered(answers)) {
-      if (isPostFirstPeriod) {
-        statusInPostFirstPeriod(answers)
-      } else {
-        statusInSubsequentPeriod(answers)
-      }
-    } else SectionStatus.NotStarted
-
-  private def statusInPostFirstPeriod(answers: UserAnswers) =
-    answers.get(DefinedContributionPensionSchemePage) match {
-      case Some(true)  => statusInDefinedBenefitOrContributionSection(answers)
-      case Some(false) => statusOfPayACharge(answers)
-      case None        => SectionStatus.InProgress
+    navigateTo(answers) match {
+      case initialPage.url                  => NotStarted
+      case checkYourAAPeriodAnswersPage.url => Completed
+      case _                                => InProgress
     }
 
-  private def statusInDefinedBenefitOrContributionSection(answers: UserAnswers) =
-    answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
-      case Some(true)  =>
-        answers.get(ContributedToDuringRemedyPeriodPage(period)) match {
-          case Some(contributions) => statusWhenContributionsInPeriod(answers, contributions)
-          case None                => SectionStatus.InProgress
-        }
-      case Some(false) => statusWhenNoContributionsInPeriod(answers)
-      case None        => SectionStatus.InProgress
-    }
+  private val sectionNavigation: SectionNavigation = SectionNavigation(s"aaSection$period")
 
-  private def statusInSubsequentPeriod(answers: UserAnswers) =
-    answers.get(TotalIncomePage(period)) match {
-      case Some(_) => SectionStatus.Completed
-      case None    => SectionStatus.InProgress
-    }
+  def navigateTo(answers: UserAnswers): String =
+    answers.get(sectionNavigation).getOrElse(initialPage.url)
 
-  private def statusWhenNoContributionsInPeriod(answers: UserAnswers) =
-    answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
-      case Some(_) => SectionStatus.Completed
-      case None    => SectionStatus.InProgress
-    }
+  def saveNavigation(answers: UserAnswers, urlFragment: String): UserAnswers =
+    answers.set(sectionNavigation, urlFragment).get
+}
 
-  private def statusWhenContributionsInPeriod(
-    answers: UserAnswers,
-    contributions: Set[ContributedToDuringRemedyPeriod]
-  ) =
-    if (contributions.contains(Definedbenefit)) {
-      statusWhenDefinedBenefitAmountSpecified(answers)
-    } else {
-      statusWhenNoDefinedBenefitAmountSpecified(answers)
-    }
+object AASection {
+  def removeAllAAPeriodAnswersAndNavigation(answers: UserAnswers): UserAnswers =
+    removeAAPeriodAnswersAndNavigation(answers, PeriodService.allRemedyPeriods)
 
-  private def statusWhenNoDefinedBenefitAmountSpecified(answers: UserAnswers) =
-    answers.get(DefinedContributionAmountPage(period)) match {
-      case Some(_) => SectionStatus.Completed
-      case None    => SectionStatus.InProgress
-    }
-
-  private def statusWhenDefinedBenefitAmountSpecified(answers: UserAnswers) =
-    answers.get(DefinedBenefitAmountPage(period)) match {
-      case Some(_) => SectionStatus.Completed
-      case None    => SectionStatus.InProgress
-    }
-
-  private def statusOfPayACharge(answers: UserAnswers) =
-    answers.get(PayAChargePage(period, schemeIndex)) match {
-      case Some(true)  => whoPaidChargeCheck(answers: UserAnswers)
-      case Some(false) => SectionStatus.Completed
-      case None        => SectionStatus.InProgress
-    }
-
-  private def whoPaidChargeCheck(answers: UserAnswers) =
-    answers.get(WhoPaidAAChargePage(period, schemeIndex)) match {
-      case Some(You)    => whenUserPaid(answers)
-      case Some(Scheme) => whenSchemePaid(answers)
-      case Some(Both)   => whenSchemePaid(answers)
-      case None         => SectionStatus.InProgress
-    }
-
-  private def whenUserPaid(answers: UserAnswers) =
-    answers.get(HowMuchAAChargeYouPaidPage(period, schemeIndex)) match {
-      case Some(_) => SectionStatus.Completed
-      case None    => SectionStatus.InProgress
-    }
-
-  private def whenSchemePaid(answers: UserAnswers) =
-    answers.get(HowMuchAAChargeSchemePaidPage(period, schemeIndex)) match {
-      case Some(_) => SectionStatus.Completed
-      case None    => SectionStatus.InProgress
-    }
-
-  private def isPostFirstPeriod =
-    period == Period._2016PostAlignment
-
-  private def firstPageIsAnswered(answers: UserAnswers) =
-    answers.get(MemberMoreThanOnePensionPage(period)).isDefined
-
-  def navigateTo(answers: UserAnswers): Page =
-    if (status(answers) == SectionStatus.Completed) {
-      CheckYourAAPeriodAnswersPage(period)
-    } else {
-      pages().findLast(page => answers.containsAnswerFor(page)).getOrElse(pages().head)
+  private def removeAAPeriodAnswersAndNavigation(answers: UserAnswers, periods: Seq[Period]): UserAnswers =
+    periods.headOption match {
+      case Some(period) =>
+        removeAAPeriodAnswersAndNavigation(
+          answers.remove(UserAnswersPeriod(period)).get.remove(SectionNavigation(s"aaSection$period")).get,
+          periods.tail
+        )
+      case None         => answers
     }
 }

@@ -20,6 +20,7 @@ import controllers.actions._
 import forms.lifetimeallowance.SchemeNameAndTaxRefFormProvider
 import javax.inject.Inject
 import models.Mode
+import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.SchemeNameAndTaxRefPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -62,8 +63,10 @@ class SchemeNameAndTaxRefController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(SchemeNameAndTaxRefPage, value))
-              _              <- sessionRepository.set(updatedAnswers)
-            } yield Redirect(SchemeNameAndTaxRefPage.navigate(mode, updatedAnswers))
+              redirectUrl     = SchemeNameAndTaxRefPage.navigate(mode, updatedAnswers).url
+              answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- sessionRepository.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

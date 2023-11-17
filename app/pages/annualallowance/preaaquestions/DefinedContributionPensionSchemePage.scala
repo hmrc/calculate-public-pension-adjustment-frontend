@@ -18,6 +18,7 @@ package pages.annualallowance.preaaquestions
 
 import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import models.tasklist.sections.AASection
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -50,8 +51,13 @@ case object DefinedContributionPensionSchemePage extends QuestionPage[Boolean] {
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true  => super.cleanup(value, userAnswers)
-        case false => userAnswers.remove(FlexiblyAccessedPensionPage).flatMap(_.remove(FlexibleAccessStartDatePage))
+        case true  => Try(AASection.removeAllAAPeriodAnswersAndNavigation(userAnswers))
+        case false =>
+          val answersWithNoAA = AASection.removeAllAAPeriodAnswersAndNavigation(userAnswers)
+          answersWithNoAA
+            .remove(FlexiblyAccessedPensionPage)
+            .get
+            .remove(FlexibleAccessStartDatePage)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }
