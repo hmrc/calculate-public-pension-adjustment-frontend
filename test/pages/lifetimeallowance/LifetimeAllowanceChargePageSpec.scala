@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode}
+import models.{CheckMode, LtaPensionSchemeDetails, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class LifetimeAllowanceChargePageSpec extends PageBehaviours {
@@ -85,7 +85,7 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = LifetimeAllowanceChargePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/change-new-excess-paid")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-excess-paid")
     }
 
     "must redirect to journey recovery when no answer" in {
@@ -144,16 +144,51 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
         )
         .success
         .value
+        .set(
+          NewExcessLifetimeAllowancePaidPage,
+          models.NewExcessLifetimeAllowancePaid.Annualpayment
+        )
+        .success
+        .value
+        .set(
+          NewLumpSumValuePage,
+          BigInt(11)
+        )
+        .success
+        .value
+        .set(
+          NewAnnualPaymentValuePage,
+          BigInt(12)
+        )
+        .success
+        .value
+        .set(
+          WhoPayingExtraLtaChargePage,
+          models.WhoPayingExtraLtaCharge.PensionScheme
+        )
+        .success
+        .value
+        .set(
+          LtaPensionSchemeDetailsPage,
+          LtaPensionSchemeDetails("string1", "ref1")
+        )
+        .success
+        .value
 
       val cleanedUserAnswers = LifetimeAllowanceChargePage.cleanup(Some(true), ua).success.value
 
-      cleanedUserAnswers.get(LumpSumValuePage) mustBe Some(BigInt(1))
-      cleanedUserAnswers.get(AnnualPaymentValuePage) mustBe Some(BigInt(10))
-      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe Some(models.UserSchemeDetails("string", "ref"))
-      cleanedUserAnswers.get(WhoPaidLTAChargePage) mustBe Some(models.WhoPaidLTACharge.You)
-      cleanedUserAnswers.get(SchemeNameAndTaxRefPage) mustBe Some(models.SchemeNameAndTaxRef("string", "ref"))
-      cleanedUserAnswers.get(YearChargePaidPage) mustBe Some(models.YearChargePaid._2017To2018)
-      cleanedUserAnswers.get(QuarterChargePaidPage) mustBe Some(models.QuarterChargePaid.JanToApr)
+      cleanedUserAnswers.get(LumpSumValuePage) mustBe None
+      cleanedUserAnswers.get(AnnualPaymentValuePage) mustBe None
+      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe None
+      cleanedUserAnswers.get(WhoPaidLTAChargePage) mustBe None
+      cleanedUserAnswers.get(SchemeNameAndTaxRefPage) mustBe None
+      cleanedUserAnswers.get(YearChargePaidPage) mustBe None
+      cleanedUserAnswers.get(QuarterChargePaidPage) mustBe None
+      cleanedUserAnswers.get(NewExcessLifetimeAllowancePaidPage) mustBe None
+      cleanedUserAnswers.get(NewLumpSumValuePage) mustBe None
+      cleanedUserAnswers.get(NewAnnualPaymentValuePage) mustBe None
+      cleanedUserAnswers.get(WhoPayingExtraLtaChargePage) mustBe None
+      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
     }
 
     "must cleanup correctly when false" in {
@@ -200,6 +235,36 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
         )
         .success
         .value
+        .set(
+          NewExcessLifetimeAllowancePaidPage,
+          models.NewExcessLifetimeAllowancePaid.Annualpayment
+        )
+        .success
+        .value
+        .set(
+          NewLumpSumValuePage,
+          BigInt(11)
+        )
+        .success
+        .value
+        .set(
+          NewAnnualPaymentValuePage,
+          BigInt(12)
+        )
+        .success
+        .value
+        .set(
+          WhoPayingExtraLtaChargePage,
+          models.WhoPayingExtraLtaCharge.PensionScheme
+        )
+        .success
+        .value
+        .set(
+          LtaPensionSchemeDetailsPage,
+          LtaPensionSchemeDetails("string1", "ref1")
+        )
+        .success
+        .value
 
       val cleanedUserAnswers = LifetimeAllowanceChargePage.cleanup(Some(false), ua).success.value
 
@@ -210,6 +275,11 @@ class LifetimeAllowanceChargePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(SchemeNameAndTaxRefPage) mustBe None
       cleanedUserAnswers.get(YearChargePaidPage) mustBe None
       cleanedUserAnswers.get(QuarterChargePaidPage) mustBe None
+      cleanedUserAnswers.get(NewExcessLifetimeAllowancePaidPage) mustBe None
+      cleanedUserAnswers.get(NewLumpSumValuePage) mustBe None
+      cleanedUserAnswers.get(NewAnnualPaymentValuePage) mustBe None
+      cleanedUserAnswers.get(WhoPayingExtraLtaChargePage) mustBe None
+      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
     }
 
   }

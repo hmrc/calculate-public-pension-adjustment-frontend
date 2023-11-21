@@ -43,15 +43,14 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
       case Some(true)  =>
         controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
       case Some(false) =>
-        controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
+        controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(NormalMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true  => super.cleanup(value, userAnswers)
-        case false =>
+        case true | false =>
           userAnswers
             .remove(ExcessLifetimeAllowancePaidPage)
             .flatMap(_.remove(LumpSumValuePage))
@@ -61,6 +60,11 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
             .flatMap(_.remove(SchemeNameAndTaxRefPage))
             .flatMap(_.remove(YearChargePaidPage))
             .flatMap(_.remove(QuarterChargePaidPage))
+            .flatMap(_.remove(NewExcessLifetimeAllowancePaidPage))
+            .flatMap(_.remove(NewLumpSumValuePage))
+            .flatMap(_.remove(NewAnnualPaymentValuePage))
+            .flatMap(_.remove(WhoPayingExtraLtaChargePage))
+            .flatMap(_.remove(LtaPensionSchemeDetailsPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }
