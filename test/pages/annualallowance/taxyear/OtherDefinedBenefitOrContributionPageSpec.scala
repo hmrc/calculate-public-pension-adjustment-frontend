@@ -163,7 +163,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
         .value
       val result = OtherDefinedBenefitOrContributionPage(_2013).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2013/contributed-to-dc-or-db-scheme")
+      checkNavigation(result, "/annual-allowance/2013/change-contributed-to-dc-or-db-scheme")
     }
   }
 }

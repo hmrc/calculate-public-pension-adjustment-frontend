@@ -167,15 +167,65 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
         checkNavigation(result, s"/there-is-a-problem")
       }
     }
+  }
 
-    "must Navigate correctly to CYA in check mode" in {
-      val ua     = emptyUserAnswers
+  "must Navigate correctly in check mode" - {
+
+    "to DefinedBenefitAmountPage when DB is required and DB amount does not exist" in {
+      val ua = emptyUserAnswers
         .set(
           FlexiAccessDefinedContributionAmountPage(Period._2013),
           BigInt("100")
         )
         .success
         .value
+        .set(
+          ContributedToDuringRemedyPeriodPage(Period._2013),
+          Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+        )
+        .success
+        .value
+
+      val result = FlexiAccessDefinedContributionAmountPage(Period._2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/annual-allowance/2013/change-pension-input-amount-defined-benefit")
+    }
+
+    "to CYA when DB is not required" in {
+      val ua = emptyUserAnswers
+        .set(
+          FlexiAccessDefinedContributionAmountPage(Period._2013),
+          BigInt("100")
+        )
+        .success
+        .value
+
+      val result = FlexiAccessDefinedContributionAmountPage(Period._2013).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/annual-allowance/2013/check-answers")
+    }
+
+    "to CYA when DB is required and DB amount does exist" in {
+      val ua = emptyUserAnswers
+        .set(
+          FlexiAccessDefinedContributionAmountPage(Period._2013),
+          BigInt("100")
+        )
+        .success
+        .value
+        .set(
+          ContributedToDuringRemedyPeriodPage(Period._2013),
+          Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+        )
+        .success
+        .value
+        .set(
+          DefinedBenefitAmountPage(Period._2013),
+          BigInt("100")
+        )
+        .success
+        .value
+
       val result = FlexiAccessDefinedContributionAmountPage(Period._2013).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/annual-allowance/2013/check-answers")

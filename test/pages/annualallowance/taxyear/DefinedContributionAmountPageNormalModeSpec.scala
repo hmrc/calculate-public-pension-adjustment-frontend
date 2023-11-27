@@ -22,7 +22,7 @@ import pages.behaviours.PageBehaviours
 
 import java.time.LocalDate
 
-class DefinedContributionAmountPageSpec extends PageBehaviours {
+class DefinedContributionAmountPageNormalModeSpec extends PageBehaviours {
 
   "DefinedContributionAmountPage" - {
 
@@ -493,18 +493,5 @@ class DefinedContributionAmountPageSpec extends PageBehaviours {
 
       checkNavigation(result, s"/there-is-a-problem")
     }
-  }
-
-  "must Navigate correctly to CYA in check mode" in {
-    val ua     = emptyUserAnswers
-      .set(
-        DefinedContributionAmountPage(Period._2013),
-        BigInt("100")
-      )
-      .success
-      .value
-    val result = DefinedContributionAmountPage(Period._2013).navigate(CheckMode, ua).url
-
-    checkNavigation(result, "/annual-allowance/2013/check-answers")
   }
 }
