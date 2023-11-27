@@ -96,20 +96,19 @@ savingsStatement.error.required = cy: Select yes if you have been told about the
 savingsStatement.checkYourAnswersLabel = cy: Have you been informed about using the calculate your public service pension adjustment?
 savingsStatement.change.hidden = cy: if you have been informed about Calculate your public service pension adjustment
 
-resubmittingAdjustment.title = cy: Do you want to resubmit an adjustment?
-resubmittingAdjustment.heading = cy: Do you want to resubmit an adjustment?
-resubmittingAdjustment.checkYourAnswersLabel = cy: Do you want to resubmit an adjustment?
-resubmittingAdjustment.error.required = cy: Select yes if you want to resubmit an adjustment
+resubmittingAdjustment.title = cy: Do you want to overwrite a previous submission?
+resubmittingAdjustment.heading = cy: Do you want to overwrite a previous submission?
+resubmittingAdjustment.checkYourAnswersLabel = cy: Do you want to overwrite a previous submission?
+resubmittingAdjustment.error.required = cy: Select yes if you want to overwrite a previous submission
 resubmittingAdjustment.change.hidden = cy: if you want to resubmit an adjustment
-resubmittingAdjustment.hint = cy: We are asking whether you are seeking an adjustment on your public service pension - either compensation or a tax charge.
+resubmittingAdjustment.hint = cy: Select no if this is your first time using the service.
 
-reasonForResubmission.title = cy: Why do you want to resubmit an adjustment?
-reasonForResubmission.heading = cy: Why do you want to resubmit an adjustment?
-reasonForResubmission.label = cy: Why do you want to resubmit an adjustment?
-reasonForResubmission.checkYourAnswersLabel = cy: Reason for resubmitting an adjustment
-reasonForResubmission.error.required = cy: Enter the reason you want to resubmit an adjustment
-reasonForResubmission.error.length = cy: The reason you want to resubmit an adjustment must be 500 characters or fewer
-reasonForResubmission.change.hidden = cy: reason for changing previous adjustment
+reasonForResubmission.title = cy: Why do you want to overwrite a previous submission?
+reasonForResubmission.heading = cy: Why do you want to overwrite a previous submission?
+reasonForResubmission.checkYourAnswersLabel = cy: Reason for overwriting a previous submission
+reasonForResubmission.error.required = cy: Enter the reason you want to overwrite a previous submission
+reasonForResubmission.error.length = cy: The reason you want to overwrite a previous submission must be 500 characters or fewer
+reasonForResubmission.change.hidden = cy: reason for overwriting a previous submission
 
 ineligible.title = cy: You cannot use this service
 ineligible.heading = cy: You cannot use this service

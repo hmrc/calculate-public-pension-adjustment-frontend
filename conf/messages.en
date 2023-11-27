@@ -96,20 +96,19 @@ savingsStatement.error.required = Select yes if you have been told about the cal
 savingsStatement.checkYourAnswersLabel = Have you been informed about using the calculate your public service pension adjustment?
 savingsStatement.change.hidden = if you have been informed about Calculate your public service pension adjustment
 
-resubmittingAdjustment.title = Do you want to resubmit an adjustment?
-resubmittingAdjustment.heading = Do you want to resubmit an adjustment?
-resubmittingAdjustment.checkYourAnswersLabel = Do you want to resubmit an adjustment?
-resubmittingAdjustment.error.required = Select yes if you want to resubmit an adjustment
+resubmittingAdjustment.title = Do you want to overwrite a previous submission?
+resubmittingAdjustment.heading = Do you want to overwrite a previous submission?
+resubmittingAdjustment.checkYourAnswersLabel = Do you want to overwrite a previous submission?
+resubmittingAdjustment.error.required = Select yes if you want to overwrite a previous submission
 resubmittingAdjustment.change.hidden = if you want to resubmit an adjustment
-resubmittingAdjustment.hint = We are asking whether you are seeking an adjustment on your public service pension - either compensation or a tax charge.
+resubmittingAdjustment.hint = Select no if this is your first time using the service.
 
-reasonForResubmission.title = Why do you want to resubmit an adjustment?
-reasonForResubmission.heading = Why do you want to resubmit an adjustment?
-reasonForResubmission.label = Why do you want to resubmit an adjustment?
-reasonForResubmission.checkYourAnswersLabel = Reason for resubmitting an adjustment
-reasonForResubmission.error.required = Enter the reason you want to resubmit an adjustment
-reasonForResubmission.error.length = The reason you want to resubmit an adjustment must be 500 characters or fewer
-reasonForResubmission.change.hidden = reason for changing previous adjustment
+reasonForResubmission.title = Why do you want to overwrite a previous submission?
+reasonForResubmission.heading = Why do you want to overwrite a previous submission?
+reasonForResubmission.checkYourAnswersLabel = Reason for overwriting a previous submission
+reasonForResubmission.error.required = Enter the reason you want to overwrite a previous submission
+reasonForResubmission.error.length = The reason you want to overwrite a previous submission must be 500 characters or fewer
+reasonForResubmission.change.hidden = reason for overwriting a previous submission
 
 ineligible.title = You cannot use this service
 ineligible.heading = You cannot use this service
