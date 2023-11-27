@@ -49,22 +49,21 @@ case object LifetimeAllowanceChargePage extends QuestionPage[Boolean] {
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map {
-        case true | false =>
-          userAnswers
-            .remove(ExcessLifetimeAllowancePaidPage)
-            .flatMap(_.remove(LumpSumValuePage))
-            .flatMap(_.remove(AnnualPaymentValuePage))
-            .flatMap(_.remove(UserSchemeDetailsPage))
-            .flatMap(_.remove(WhoPaidLTAChargePage))
-            .flatMap(_.remove(SchemeNameAndTaxRefPage))
-            .flatMap(_.remove(YearChargePaidPage))
-            .flatMap(_.remove(QuarterChargePaidPage))
-            .flatMap(_.remove(NewExcessLifetimeAllowancePaidPage))
-            .flatMap(_.remove(NewLumpSumValuePage))
-            .flatMap(_.remove(NewAnnualPaymentValuePage))
-            .flatMap(_.remove(WhoPayingExtraLtaChargePage))
-            .flatMap(_.remove(LtaPensionSchemeDetailsPage))
+      .map { case true | false =>
+        userAnswers
+          .remove(ExcessLifetimeAllowancePaidPage)
+          .flatMap(_.remove(LumpSumValuePage))
+          .flatMap(_.remove(AnnualPaymentValuePage))
+          .flatMap(_.remove(UserSchemeDetailsPage))
+          .flatMap(_.remove(WhoPaidLTAChargePage))
+          .flatMap(_.remove(SchemeNameAndTaxRefPage))
+          .flatMap(_.remove(YearChargePaidPage))
+          .flatMap(_.remove(QuarterChargePaidPage))
+          .flatMap(_.remove(NewExcessLifetimeAllowancePaidPage))
+          .flatMap(_.remove(NewLumpSumValuePage))
+          .flatMap(_.remove(NewAnnualPaymentValuePage))
+          .flatMap(_.remove(WhoPayingExtraLtaChargePage))
+          .flatMap(_.remove(LtaPensionSchemeDetailsPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }
