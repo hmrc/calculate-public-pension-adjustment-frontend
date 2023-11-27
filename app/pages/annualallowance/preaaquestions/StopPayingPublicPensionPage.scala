@@ -17,7 +17,8 @@
 package pages.annualallowance.preaaquestions
 
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
-import models.{NormalMode, Period, UserAnswers, UserAnswersPeriod}
+import models.tasklist.sections.AASection
+import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -40,12 +41,6 @@ case object StopPayingPublicPensionPage extends QuestionPage[LocalDate] {
 
   override def cleanup(value: Option[LocalDate], answers: UserAnswers): Try[UserAnswers] = {
     val periodsToCleanup = PeriodService.notRelevantPeriods(answers)
-    Try(cleanup(answers, periodsToCleanup))
+    Try(AASection.removeAAPeriodAnswersAndNavigation(answers, periodsToCleanup))
   }
-
-  def cleanup(answers: UserAnswers, periods: Seq[Period]): UserAnswers =
-    periods.headOption match {
-      case Some(period) => cleanup(answers.remove(UserAnswersPeriod(period)).get, periods.tail)
-      case None         => answers
-    }
 }

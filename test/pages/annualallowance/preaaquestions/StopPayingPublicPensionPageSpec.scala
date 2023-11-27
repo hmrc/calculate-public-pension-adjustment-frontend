@@ -16,13 +16,16 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.{CheckMode, NormalMode}
-
-import java.time.LocalDate
+import models.tasklist.sections.AASection
+import models.{CheckMode, NormalMode, PensionSchemeInputAmounts, Period, SchemeIndex, SectionNavigation}
 import org.scalacheck.Arbitrary
+import org.scalatest.matchers.must.Matchers
+import pages.annualallowance.taxyear.PensionSchemeInputAmountsPage
 import pages.behaviours.PageBehaviours
 
-class StopPayingPublicPensionPageSpec extends PageBehaviours {
+import java.time.LocalDate
+
+class StopPayingPublicPensionPageSpec extends PageBehaviours with Matchers {
 
   "StopPayingPublicPensionPage" - {
 
@@ -49,6 +52,31 @@ class StopPayingPublicPensionPageSpec extends PageBehaviours {
       val result = StopPayingPublicPensionPage.navigate(NormalMode, userAnswers).url
 
       checkNavigation(result, "/annual-allowance/defined-contributions-scheme")
+    }
+  }
+
+  "Clean up" - {
+
+    "must remove period answers and navigation state for periods that are not relevant" in {
+      val inputs2019 = PensionSchemeInputAmounts(1, 2)
+      val inputs2020 = PensionSchemeInputAmounts(3, 4)
+
+      val userAnswersWithPeriods = emptyUserAnswers
+        .set(PensionSchemeInputAmountsPage(Period._2019, SchemeIndex(0)), inputs2019)
+        .get
+        .set(PensionSchemeInputAmountsPage(Period._2020, SchemeIndex(0)), inputs2020)
+        .get
+
+      val answers2019 = AASection(Period._2019).saveNavigation(userAnswersWithPeriods, "/some-url-a")
+      val answers2020 = AASection(Period._2020).saveNavigation(answers2019, "/some-url-b")
+
+      val cleanedAnswers = answers2020.set(StopPayingPublicPensionPage, LocalDate.of(2018, 7, 1)).get
+
+      cleanedAnswers.get(PensionSchemeInputAmountsPage(Period._2019, SchemeIndex(0))) mustBe Some(inputs2019)
+      cleanedAnswers.get(SectionNavigation(s"aaSection${Period._2019}")) mustBe Some("/some-url-a")
+
+      cleanedAnswers.get(PensionSchemeInputAmountsPage(Period._2020, SchemeIndex(0))) mustBe None
+      cleanedAnswers.get(SectionNavigation(s"aaSection${Period._2020}")) mustBe None
     }
   }
 
