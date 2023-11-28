@@ -48,7 +48,7 @@ object AASection {
   def removeAllAAPeriodAnswersAndNavigation(answers: UserAnswers): UserAnswers =
     removeAAPeriodAnswersAndNavigation(answers, PeriodService.allRemedyPeriods)
 
-  private def removeAAPeriodAnswersAndNavigation(answers: UserAnswers, periods: Seq[Period]): UserAnswers =
+  def removeAAPeriodAnswersAndNavigation(answers: UserAnswers, periods: Seq[Period]): UserAnswers =
     periods.headOption match {
       case Some(period) =>
         removeAAPeriodAnswersAndNavigation(
