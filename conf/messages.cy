@@ -507,7 +507,7 @@ pensionSchemeDetails.checkYourAnswersLabel = cy: Pension scheme name and Pension
 pensionSchemeDetails.error.schemeName.required = cy: Enter the name of the pension scheme
 pensionSchemeDetails.error.schemeTaxRef.required = cy: Enter the Pension Scheme Tax Reference
 pensionSchemeDetails.error.schemeName.length = cy: The name of the pension scheme must be 100 characters or fewer
-pensionSchemeDetails.error.schemeTaxRef.invalid = cy: The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
+pensionSchemeDetails.error.schemeTaxRef.invalid = cy: The Pension Scheme Tax Reference that paid the annual allowance charge must be 8 numbers followed by 2 letters
 pensionSchemeDetails.change.hidden = cy: pension scheme name or pension scheme tax reference
 
 pensionSchemeInputAmounts.title = cy: Pension input amounts for the pension scheme
