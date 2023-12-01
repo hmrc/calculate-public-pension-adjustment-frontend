@@ -1019,3 +1019,5 @@ cannotUseLtaServiceNoCharge.message3 = You are still able to use this service to
 cannotUseLtaServiceNoCharge.list = You can:
 cannotUseLtaServiceNoCharge.listItem1 = contact your PSA for more information about your pension scheme
 cannotUseLtaServiceNoCharge.listItem2 = contact the pension schemes helpline for more information about pension schemes (opens in a new tab)
+optionalSignIn.title = optionalSignIn
+optionalSignIn.heading = optionalSignIn
