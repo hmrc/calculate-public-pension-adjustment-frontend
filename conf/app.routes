@@ -350,4 +350,4 @@ POST       /annual-allowance/change-registered/:period                 controlle
 
 GET        /lifetime-allowance/cannot-use-lta-service-no-charge                       controllers.lifetimeallowance.CannotUseLtaServiceNoChargeController.onPageLoad()
 
-GET        /optionalSignIn                       controllers.OptionalSignInController.onPageLoad()
+GET        /sign-in-government-gateway                       controllers.OptionalSignInController.onPageLoad()
