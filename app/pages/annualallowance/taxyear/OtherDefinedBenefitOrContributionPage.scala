@@ -18,7 +18,7 @@ package pages.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, ContributedToDuringRemedyPeriodController, ThresholdIncomeController, TotalIncomeController}
 import controllers.routes
-import models.{NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -47,7 +47,7 @@ case class OtherDefinedBenefitOrContributionPage(period: Period) extends Questio
       case Some(false) => CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.ContributedToDuringRemedyPeriodController
-          .onPageLoad(NormalMode, period)
+          .onPageLoad(CheckMode, period)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

@@ -16,8 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController
-import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, UserAnswers}
+import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -36,7 +35,7 @@ case class FlexiAccessDefinedContributionAmountPage(period: Period) extends Ques
     }
 
     if (definedBenefitExists) {
-      DefinedBenefitAmountController.onPageLoad(NormalMode, period)
+      controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
     } else {
       answers.get(FlexiAccessDefinedContributionAmountPage(period)) match {
         case Some(_) if period == Period._2016PostAlignment =>
@@ -51,6 +50,21 @@ case class FlexiAccessDefinedContributionAmountPage(period: Period) extends Ques
     }
   }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+
+    val definedBenefitExists = answers.get(ContributedToDuringRemedyPeriodPage(period)) match {
+      case Some(contributedTo) if contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit) => true
+      case _                                                                                             => false
+    }
+
+    if (definedBenefitExists) {
+      if (answers.get(DefinedBenefitAmountPage(period)).isDefined) {
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      } else {
+        controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(CheckMode, period)
+      }
+    } else {
+      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    }
+  }
 }
