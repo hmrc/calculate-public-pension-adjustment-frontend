@@ -1019,3 +1019,13 @@ cannotUseLtaServiceNoCharge.message3 = cy: You are still able to use this servic
 cannotUseLtaServiceNoCharge.list = cy: You can:
 cannotUseLtaServiceNoCharge.listItem1 = cy: contact your PSA for more information about your pension scheme
 cannotUseLtaServiceNoCharge.listItem2 = cy: contact the pension schemes helpline for more information about pension schemes (opens in a new tab)
+
+optionalSignIn.title = cy: Do you want to sign in using Government Gateway?
+optionalSignIn.heading = cy: Do you want to sign in using Government Gateway?
+optionalSignIn.message1 = cy: You can create a personal Government Gateway account if you do not already have one.
+optionalSignIn.message2 = cy: When you sign in, you can:
+optionalSignIn.list1 = cy: Calculate your pension adjustment at your own pace
+optionalSignIn.list2 = cy: Save your progress
+optionalSignIn.warning = cy: If you do not sign in, you will have to re-enter all the information that you have previously given us if you need to continue your application later.
+optionalSignIn.button = cy: Sign in
+optionalSignIn.link = cy: Continue without signing in
