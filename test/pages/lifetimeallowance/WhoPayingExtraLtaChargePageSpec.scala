@@ -154,6 +154,39 @@ class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
 
     }
 
+    "must cleanup correctly when pensionscheme is selected and WhoPayingExtraLtaChargePage is user and previous charge is true" in {
+      val ua = emptyUserAnswers
+        .set(
+          UserSchemeDetailsPage,
+          models.UserSchemeDetails("details3", "ref3")
+        ).success
+        .value
+        .set(
+          LifetimeAllowanceChargePage,
+          true
+        )
+        .success
+        .value
+        .set(
+          WhoPayingExtraLtaChargePage,
+          WhoPayingExtraLtaCharge.You
+        )
+        .success
+        .value
+        .set(
+          WhoPayingExtraLtaChargePage,
+          models.WhoPayingExtraLtaCharge.PensionScheme
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers =
+        WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.PensionScheme), ua).success.value
+
+      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe None
+
+    }
+
     "must cleanup correctly when you is selected" in {
       val ua = emptyUserAnswers
         .set(
@@ -173,6 +206,7 @@ class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
         WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.PensionScheme), ua).success.value
 
       cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
+      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe None
 
     }
 

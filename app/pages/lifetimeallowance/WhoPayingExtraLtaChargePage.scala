@@ -54,15 +54,16 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
 
   override def cleanup(value: Option[WhoPayingExtraLtaCharge], userAnswers: UserAnswers): Try[UserAnswers] = {
     val hasPreviousCharge = userAnswers.get(LifetimeAllowanceChargePage).getOrElse(false)
+    val whoPaidChargeIsUser = userAnswers.get(WhoPayingExtraLtaChargePage).contains(WhoPayingExtraLtaCharge.You)
     value
       .map {
-        case PensionScheme if !hasPreviousCharge =>
+        case PensionScheme if !hasPreviousCharge || whoPaidChargeIsUser =>
           userAnswers
             .remove(UserSchemeDetailsPage)
         case PensionScheme if hasPreviousCharge  => super.cleanup(value, userAnswers)
         case You                                 =>
           userAnswers
-            .remove(LtaPensionSchemeDetailsPage)
+            .remove(LtaPensionSchemeDetailsPage).flatMap(_.remove(UserSchemeDetailsPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
   }
