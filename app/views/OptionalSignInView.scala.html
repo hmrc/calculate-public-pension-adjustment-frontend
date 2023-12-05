@@ -19,37 +19,42 @@
         govukButton: GovukButton
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(redirectLocation: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("optionalSignIn.title"))) {
 
-<h1 class="govuk-heading-xl">@messages("optionalSignIn.heading")</h1>
+    <h1 class="govuk-heading-xl">@messages("optionalSignIn.heading")</h1>
 
-<p class="govuk-body">@messages("optionalSignIn.message1")</p>
+    <p class="govuk-body">@messages("optionalSignIn.message1")</p>
 
-<p class="govuk-body">@messages("optionalSignIn.message2")
-<ul class="govuk-body">
-    <li>@messages("optionalSignIn.list1")</li>
-    <li>@messages("optionalSignIn.list2")</li>
-</ul>
-</p>
+    <p class="govuk-body">@messages("optionalSignIn.message2")
+        <ul class="govuk-body">
+            <li>@messages("optionalSignIn.list1")</li>
+            <li>@messages("optionalSignIn.list2")</li>
+        </ul>
+    </p>
 
-<div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        @messages("optionalSignIn.warning")
-    </strong>
-</div>
+    <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            @messages("optionalSignIn.warning")
+        </strong>
+    </div>
 
-<p class="govuk-body">
-    @govukButton(
-    ButtonViewModel(messages("optionalSignIn.button"))
-    .asLink("youtube")
-    )
-</p>
+    <!--TODO change placeholder-->
+    <p class="govuk-body">
+        @govukButton(
+        ButtonViewModel(messages("optionalSignIn.button"))
+        .asLink("PLACEHOLDER TODO")
+        )
+    </p>
 
-<a class="govuk-link" href="https://www.gov.uk/log-in-register-hmrc-online-services/register">
-    @messages("optionalSignIn.link")
-</a>
+    <a class="govuk-link" href= @redirectLocation>
+        @messages("optionalSignIn.link")
+    </a>
+
+
+
+
 }

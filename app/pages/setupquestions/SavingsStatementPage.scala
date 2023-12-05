@@ -31,7 +31,7 @@ case object SavingsStatementPage extends QuestionPage[Boolean] {
   override def toString: String = "savingsStatement"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(SavingsStatementPage) match {
-    case Some(true)  => controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
+    case Some(true)  => controllers.routes.OptionalSignInController.onPageLoad()
     case Some(false) => controllers.setupquestions.routes.IneligibleController.onPageLoad
     case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
   }

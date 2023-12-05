@@ -17,6 +17,8 @@
 package controllers
 
 import controllers.actions._
+import models.NormalMode
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -34,6 +36,7 @@ class OptionalSignInController @Inject()(
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      Ok(view())
+      val redirectLocation = controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
+      Ok(view(redirectLocation))
   }
 }
