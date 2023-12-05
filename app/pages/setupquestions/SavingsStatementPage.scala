@@ -18,7 +18,7 @@ package pages.setupquestions
 
 import config.FrontendAppConfig
 import models.tasklist.sections.{AASection, LTASection, PreAASection}
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
