@@ -32,7 +32,7 @@ class SavingsStatementPageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "must redirect to resubmitting adjustment page when true" in {
+    "must redirect to optional sign in when true" in {
 
       val ua = emptyUserAnswers
         .set(SavingsStatementPage, true)
@@ -41,7 +41,7 @@ class SavingsStatementPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = SavingsStatementPage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/change-previous-adjustment")
+      checkNavigation(nextPageUrl, "/sign-in-government-gateway")
     }
 
     "must redirect to inelligble page when false" in {
