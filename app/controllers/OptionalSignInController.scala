@@ -25,18 +25,18 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.OptionalSignInView
 
-class OptionalSignInController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: OptionalSignInView
-                                     ) extends FrontendBaseController with I18nSupport {
+class OptionalSignInController @Inject() (
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: OptionalSignInView
+) extends FrontendBaseController
+    with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-      val redirectLocation = controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
-      Ok(view(redirectLocation))
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val redirectLocation = controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
+    Ok(view(redirectLocation))
   }
 }
