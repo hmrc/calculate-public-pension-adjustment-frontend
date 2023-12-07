@@ -47,6 +47,11 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val submitFrontend: String      = configuration.get[String]("urls.submitFrontend")
   val redirectToStartPage: String = configuration.get[String]("urls.redirectToStartPage")
 
+  val confidenceUpliftUrl: String = configuration.get[String]("urls.confidenceUplift")
+  val upliftFailureUrl            = configuration.get[String]("urls.upliftFailure")
+  val requiredAuthConfidenceLevel = configuration.get[String]("required-auth-confidence-level")
+  val upliftOrigin                = configuration.get[String]("uplift-origin")
+
   private val exitSurveyBaseUrl: String = configuration.get[Service]("microservice.services.feedback-frontend").baseUrl
   val exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/calculate-public-pension-adjustment-frontend"
 
@@ -58,6 +63,8 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   //    configuration.get[Boolean]("features.welsh-translation")
 
   val languageTranslationEnabled: Boolean = false
+
+  val origin = "PPA"
 
   def languageMap: Map[String, Lang] = Map(
     "en" -> Lang("en"),

@@ -16,39 +16,21 @@
 
 package controllers
 
-import config.FrontendAppConfig
-import controllers.actions._
-import models.NormalMode
-
-import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.OptionalSignInView
+import views.html.CannotUseServiceNotIndividualView
 
-class OptionalSignInController @Inject() (
+import javax.inject.Inject
+
+class CannotUseServiceNotIndividualController @Inject() (
   override val messagesApi: MessagesApi,
-  identify: IdentifierAction,
-  getData: DataRetrievalAction,
-  requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: OptionalSignInView,
-  config: FrontendAppConfig
+  view: CannotUseServiceNotIndividualView
 ) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val redirectLocation = controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
-    Ok(view(redirectLocation))
-  }
-
-  def onSubmit(): Action[AnyContent] = (identify andThen getData) { implicit request =>
-    Redirect(
-      config.loginUrl,
-      Map(
-        "origin"   -> Seq(config.origin),
-        "continue" -> Seq(config.loginContinueUrl)
-      )
-    )
+  def onPageLoad: Action[AnyContent] = Action { implicit request =>
+    Ok(view(controllers.auth.routes.AuthController.signOutUnauthorised.url))
   }
 }

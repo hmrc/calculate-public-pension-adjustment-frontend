@@ -43,5 +43,22 @@ class OptionalSignInControllerSpec extends SpecBase {
         contentAsString(result) mustEqual view(redirectLocation)(request, messages(application)).toString
       }
     }
+
+    "must redirect to sign in when form is submitted" in {
+
+      val application = applicationBuilder(None).build()
+
+      running(application) {
+
+        val request =
+          FakeRequest(POST, routes.OptionalSignInController.onPageLoad().url).withFormUrlEncodedBody("value" -> "true")
+        val result  = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual "http://localhost:9949/auth-login-stub/gg-sign-in?origin=PPA&continue=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fchange-previous-adjustment"
+      }
+    }
   }
 }

@@ -18,7 +18,7 @@ package services
 
 import models.tasklist._
 import models.tasklist.sections._
-import models.{NormalMode, Period, ReportingChange, UserAnswers}
+import models.{Period, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 
 import javax.inject.Inject

@@ -16,7 +16,6 @@
 
 package pages.setupquestions
 
-import config.FrontendAppConfig
 import models.tasklist.sections.{AASection, LTASection, PreAASection}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -33,7 +32,12 @@ case class SavingsStatementPage(optionalAuthEnabled: Boolean) extends QuestionPa
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     (answers.get(SavingsStatementPage(optionalAuthEnabled)), optionalAuthEnabled) match {
-      case (Some(true), true)  => controllers.routes.OptionalSignInController.onPageLoad()
+      case (Some(true), true)  =>
+        if (answers.authenticated) {
+          controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
+        } else {
+          controllers.routes.OptionalSignInController.onPageLoad()
+        }
       case (Some(true), false) =>
         controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
       case (Some(false), _)    => controllers.setupquestions.routes.IneligibleController.onPageLoad

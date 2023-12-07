@@ -17,7 +17,7 @@
 package controllers.actions
 
 import javax.inject.Inject
-import models.requests.{IdentifierRequest, OptionalDataRequest}
+import models.requests.{AuthenticatedIdentifierRequest, IdentifierRequest, OptionalDataRequest, UnauthenticatedIdentifierRequest}
 import play.api.mvc.ActionTransformer
 import repositories.SessionRepository
 
@@ -28,10 +28,25 @@ class DataRetrievalActionImpl @Inject() (
 )(implicit val executionContext: ExecutionContext)
     extends DataRetrievalAction {
 
-  override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] =
-    sessionRepository.get(request.userId).map {
-      OptionalDataRequest(request.request, request.userId, _)
+  override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = {
+
+    val authenticated = request match {
+      case AuthenticatedIdentifierRequest(_, _)   => true
+      case UnauthenticatedIdentifierRequest(_, _) => false
     }
+
+    for {
+      maybeUserAnswers <- sessionRepository.get(request.userId)
+    } yield OptionalDataRequest(
+      request,
+      request.userId,
+      maybeUserAnswers.map(
+        _.copy(
+          authenticated = authenticated
+        )
+      )
+    )
+  }
 }
 
 trait DataRetrievalAction extends ActionTransformer[IdentifierRequest, OptionalDataRequest]

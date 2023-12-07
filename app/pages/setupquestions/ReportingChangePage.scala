@@ -18,12 +18,10 @@ package pages.setupquestions
 
 import controllers.routes
 import models.tasklist.sections.{AASection, LTASection, PreAASection}
-import models.{Period, ReportingChange, UserAnswers, UserAnswersPeriod}
+import models.{ReportingChange, UserAnswers}
 import pages.QuestionPage
-import pages.annualallowance.preaaquestions._
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import services.PeriodService
 
 import scala.util.Try
 

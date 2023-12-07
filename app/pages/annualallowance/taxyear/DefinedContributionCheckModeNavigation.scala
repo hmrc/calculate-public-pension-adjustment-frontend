@@ -20,8 +20,6 @@ import models.{CheckMode, ContributedToDuringRemedyPeriod, Period, UserAnswers}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import play.api.mvc.Call
 
-import java.time.LocalDate
-
 class DefinedContributionCheckModeNavigation(period: Period) {
 
   def navigate(answers: UserAnswers): Call =

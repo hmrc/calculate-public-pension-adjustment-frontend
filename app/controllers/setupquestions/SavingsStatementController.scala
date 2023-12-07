@@ -19,6 +19,7 @@ package controllers.setupquestions
 import config.FrontendAppConfig
 import controllers.actions._
 import forms.SavingsStatementFormProvider
+import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
 import models.{Mode, UserAnswers}
 import pages.setupquestions.SavingsStatementPage
@@ -36,7 +37,6 @@ class SavingsStatementController @Inject() (
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  requireData: DataRequiredAction,
   formProvider: SavingsStatementFormProvider,
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
@@ -70,7 +70,7 @@ class SavingsStatementController @Inject() (
               Future
                 .fromTry(
                   request.userAnswers
-                    .getOrElse(UserAnswers(request.userId))
+                    .getOrElse(constructUserAnswers(request))
                     .set(SavingsStatementPage(config.optionalAuthEnabled), value)
                 )
             redirectUrl     = SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, updatedAnswers).url
@@ -79,4 +79,7 @@ class SavingsStatementController @Inject() (
           } yield Redirect(redirectUrl)
       )
   }
+
+  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) =
+    UserAnswers(request.userId, authenticated = request.request.isInstanceOf[AuthenticatedIdentifierRequest[_]])
 }

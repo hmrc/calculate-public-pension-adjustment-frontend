@@ -18,4 +18,27 @@ package models.requests
 
 import play.api.mvc.{Request, WrappedRequest}
 
-case class IdentifierRequest[A](request: Request[A], userId: String) extends WrappedRequest[A](request)
+sealed trait IdentifierRequest[A] extends Request[A] {
+
+  def request: Request[A]
+  def userId: String
+  val authenticated: Boolean
+}
+
+final case class AuthenticatedIdentifierRequest[A](
+  request: Request[A],
+  userId: String
+) extends WrappedRequest[A](request)
+    with IdentifierRequest[A] {
+
+  override val authenticated: Boolean = true
+}
+
+final case class UnauthenticatedIdentifierRequest[A](
+  request: Request[A],
+  userId: String
+) extends WrappedRequest[A](request)
+    with IdentifierRequest[A] {
+
+  override val authenticated: Boolean = false
+}
