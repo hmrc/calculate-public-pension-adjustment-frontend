@@ -39,7 +39,8 @@ case object YearChargePaidPage extends QuestionPage[YearChargePaid] {
       case Some(_) =>
         answers.get(NewExcessLifetimeAllowancePaidPage) match {
           case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-          case None => controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
+          case None    =>
+            controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
         }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

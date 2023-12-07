@@ -52,7 +52,8 @@ class SchemeNameAndTaxRefPageSpec extends PageBehaviours {
       val userAnswers =
         emptyUserAnswers
           .set(SchemeNameAndTaxRefPage, SchemeNameAndTaxRef("schemeName", "schemeRef"))
-          .get.set(QuarterChargePaidPage, models.QuarterChargePaid.AprToJul)
+          .get
+          .set(QuarterChargePaidPage, models.QuarterChargePaid.AprToJul)
           .get
 
       val nextPageUrl: String = SchemeNameAndTaxRefPage.navigate(CheckMode, userAnswers).url

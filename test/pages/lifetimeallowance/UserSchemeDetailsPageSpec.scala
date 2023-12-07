@@ -127,7 +127,8 @@ class UserSchemeDetailsPageSpec extends PageBehaviours {
           .set(LifetimeAllowanceChargePage, true)
           .get
           .set(UserSchemeDetailsPage, models.UserSchemeDetails("Some scheme", "01234567RT"))
-          .get.set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+          .get
+          .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
           .get
 
       val nextPageUrl: String = UserSchemeDetailsPage.navigate(CheckMode, userAnswers).url

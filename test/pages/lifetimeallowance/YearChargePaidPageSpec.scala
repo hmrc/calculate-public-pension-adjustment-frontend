@@ -64,7 +64,11 @@ class YearChargePaidSpec extends PageBehaviours {
 
     "when user has entered value for Year Charge Paid in Check mode and NewExcessLifetimeAllowancePaidPage exists" in {
 
-      val userAnswers = emptyUserAnswers.set(YearChargePaidPage, models.YearChargePaid._2016To2017).get.set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum).get
+      val userAnswers = emptyUserAnswers
+        .set(YearChargePaidPage, models.YearChargePaid._2016To2017)
+        .get
+        .set(NewExcessLifetimeAllowancePaidPage, models.NewExcessLifetimeAllowancePaid.Lumpsum)
+        .get
 
       val nextPageUrl: String = YearChargePaidPage.navigate(CheckMode, userAnswers).url
 
