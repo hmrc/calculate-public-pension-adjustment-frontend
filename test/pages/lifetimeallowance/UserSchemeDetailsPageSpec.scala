@@ -106,7 +106,7 @@ class UserSchemeDetailsPageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
     }
 
-    "when user has entered Scheme details page & hasPreviousCharge is true & newExcessPaid exists" in {
+    "when user has entered Scheme details page & hasPreviousCharge is true & newExcessPaid does not exist" in {
 
       val userAnswers =
         emptyUserAnswers
@@ -120,7 +120,7 @@ class UserSchemeDetailsPageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/lifetime-allowance/change-new-excess-paid")
     }
 
-    "when user has entered Scheme details page & hasPreviousCharge is true & newExcessPaid does not exist" in {
+    "when user has entered Scheme details page & hasPreviousCharge is true & newExcessPaid exists" in {
 
       val userAnswers =
         emptyUserAnswers

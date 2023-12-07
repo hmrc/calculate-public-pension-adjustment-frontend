@@ -53,7 +53,7 @@ class YearChargePaidSpec extends PageBehaviours {
 
   "check mode navigation" - {
 
-    "when user has entered value for Year Charge Paid in Check mode and no NewExcessLifetimeAllowancePaidPage page exist" in {
+    "when user has entered value for Year Charge Paid in Check mode and NewExcessLifetimeAllowancePaidPage does not exist" in {
 
       val userAnswers = emptyUserAnswers.set(YearChargePaidPage, models.YearChargePaid._2016To2017).get
 
