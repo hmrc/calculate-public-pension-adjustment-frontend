@@ -159,7 +159,8 @@ class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
         .set(
           UserSchemeDetailsPage,
           models.UserSchemeDetails("details3", "ref3")
-        ).success
+        )
+        .success
         .value
         .set(
           LifetimeAllowanceChargePage,
@@ -187,23 +188,58 @@ class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
 
     }
 
-    "must cleanup correctly when you is selected" in {
+    "must cleanup correctly when you is selected and previous charge is true" in {
       val ua = emptyUserAnswers
+        .set(
+          LifetimeAllowanceChargePage,
+          true
+        )
+        .success
+        .value
+        .set(
+          UserSchemeDetailsPage,
+          models.UserSchemeDetails("details3", "ref3")
+        )
+        .success
+        .value
         .set(
           LtaPensionSchemeDetailsPage,
           models.LtaPensionSchemeDetails("details3", "ref3")
         )
         .success
         .value
+
+      val cleanedUserAnswers =
+        WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.You), ua).success.value
+
+      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
+      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe Some(models.UserSchemeDetails("details3", "ref3"))
+
+    }
+
+    "must cleanup correctly when you is selected and previous charge is false" in {
+      val ua = emptyUserAnswers
         .set(
-          WhoPayingExtraLtaChargePage,
-          models.WhoPayingExtraLtaCharge.You
+          LifetimeAllowanceChargePage,
+          false
+        )
+        .success
+        .value
+        .set(
+          UserSchemeDetailsPage,
+          models.UserSchemeDetails("details3", "ref3")
+        )
+        .success
+        .value
+        .set(
+          LtaPensionSchemeDetailsPage,
+          models.LtaPensionSchemeDetails("details3", "ref3")
         )
         .success
         .value
 
       val cleanedUserAnswers =
-        WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.PensionScheme), ua).success.value
+        WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.You), ua).success.value
 
       cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
       cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe None
