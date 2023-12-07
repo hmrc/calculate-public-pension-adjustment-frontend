@@ -47,7 +47,22 @@ class SchemeNameAndTaxRefPageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "must navigate to LTA CYA page" in {
+    "must navigate to LTA CYA page when QuarterChargePaidPage exists" in {
+
+      val userAnswers =
+        emptyUserAnswers
+          .set(SchemeNameAndTaxRefPage, SchemeNameAndTaxRef("schemeName", "schemeRef"))
+          .get
+          .set(QuarterChargePaidPage, models.QuarterChargePaid.AprToJul)
+          .get
+
+      val nextPageUrl: String = SchemeNameAndTaxRefPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+
+    }
+
+    "must navigate to QuarterChargePaid page when QuarterChargePaidPage does not exist" in {
 
       val userAnswers =
         emptyUserAnswers
@@ -56,7 +71,7 @@ class SchemeNameAndTaxRefPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = SchemeNameAndTaxRefPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-quarter-charge-was-paid")
 
     }
   }

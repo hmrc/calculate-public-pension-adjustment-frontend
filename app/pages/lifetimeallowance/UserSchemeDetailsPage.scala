@@ -39,13 +39,16 @@ case object UserSchemeDetailsPage extends QuestionPage[UserSchemeDetails] {
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = {
-    val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
+    val hasPreviousCharge   = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
+    val newExcessPaidExists = answers.get(NewExcessLifetimeAllowancePaidPage).isDefined
     answers.get(UserSchemeDetailsPage) match {
-      case Some(_) if !hasPreviousCharge =>
+      case Some(_) if !hasPreviousCharge                        =>
         controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(_) if hasPreviousCharge  =>
+      case Some(_) if hasPreviousCharge && newExcessPaidExists  =>
+        controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(_) if hasPreviousCharge && !newExcessPaidExists =>
         controllers.lifetimeallowance.routes.NewExcessLifetimeAllowancePaidController.onPageLoad(CheckMode)
-      case _                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _                                                    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 }
