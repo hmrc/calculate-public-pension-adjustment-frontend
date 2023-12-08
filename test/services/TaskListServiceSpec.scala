@@ -84,7 +84,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
 
       val setupSection = setupGroup.sections(0)
       setupSection.status                must be(SectionStatus.InProgress)
-      urlWithNoContext(setupSection.url) must be("/change-previous-adjustment")
+      urlWithNoContext(setupSection.url) must be("/sign-in-government-gateway")
     }
 
     "the nextStepsGroup must be well formed" in {
@@ -109,10 +109,10 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
 
     def userAnswersAfterSavingsStatementPageSubmitted(): UserAnswers = {
       val answersWithPageData = emptyUserAnswers
-        .set(SavingsStatementPage, true)
+        .set(SavingsStatementPage(true), true)
         .get
 
-      val redirectedUrl = SavingsStatementPage.navigate(NormalMode, answersWithPageData).url
+      val redirectedUrl = SavingsStatementPage(true).navigate(NormalMode, answersWithPageData).url
       SetupSection.saveNavigation(answersWithPageData, redirectedUrl)
     }
   }

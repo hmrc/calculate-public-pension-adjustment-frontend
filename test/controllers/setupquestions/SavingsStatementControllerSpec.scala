@@ -17,7 +17,6 @@
 package controllers.setupquestions
 
 import base.SpecBase
-import config.FrontendAppConfig
 import controllers.setupquestions.{routes => setupRoutes}
 import forms.SavingsStatementFormProvider
 import models.{NormalMode, UserAnswers}
@@ -100,7 +99,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(SavingsStatementPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(SavingsStatementPage(true), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 

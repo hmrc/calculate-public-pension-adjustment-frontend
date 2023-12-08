@@ -23,44 +23,77 @@ class SavingsStatementPageSpec extends PageBehaviours {
 
   "SavingsStatementPage" - {
 
-    beRetrievable[Boolean](SavingsStatementPage)
+    beRetrievable[Boolean](SavingsStatementPage(true))
 
-    beSettable[Boolean](SavingsStatementPage)
+    beSettable[Boolean](SavingsStatementPage(true))
 
-    beRemovable[Boolean](SavingsStatementPage)
+    beRemovable[Boolean](SavingsStatementPage(true))
   }
 
   "Normal mode" - {
 
-    "must redirect to resubmitting adjustment page when true" in {
+    "must redirect to optional sign in when optionalAuthEnabled is true and selected Yes on the page" in {
 
       val ua = emptyUserAnswers
-        .set(SavingsStatementPage, true)
+        .set(SavingsStatementPage(true), true)
         .success
         .value
 
-      val nextPageUrl: String = SavingsStatementPage.navigate(NormalMode, ua).url
+      val nextPageUrl: String = SavingsStatementPage(true).navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/sign-in-government-gateway")
+    }
+
+    "must redirect to optional sign in when optionalAuthEnabled is false and selected Yes on the page" in {
+
+      val ua = emptyUserAnswers
+        .set(SavingsStatementPage(false), true)
+        .success
+        .value
+
+      val nextPageUrl: String = SavingsStatementPage(false).navigate(NormalMode, ua).url
 
       checkNavigation(nextPageUrl, "/change-previous-adjustment")
     }
 
-    "must redirect to inelligble page when false" in {
+    "must redirect to ineligible page when optionalAuthEnabled is true and selected No on the page" in {
 
       val ua = emptyUserAnswers
-        .set(SavingsStatementPage, false)
+        .set(SavingsStatementPage(true), false)
         .success
         .value
 
-      val nextPageUrl: String = SavingsStatementPage.navigate(NormalMode, ua).url
+      val nextPageUrl: String = SavingsStatementPage(true).navigate(NormalMode, ua).url
 
       checkNavigation(nextPageUrl, "/cannot-use-service")
     }
 
-    "must redirect to journey recovery when no answer" in {
+    "must redirect to ineligible page when optionalAuthEnabled is false and selected No on the page" in {
+
+      val ua = emptyUserAnswers
+        .set(SavingsStatementPage(false), false)
+        .success
+        .value
+
+      val nextPageUrl: String = SavingsStatementPage(false).navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-service")
+    }
+
+    "must redirect to journey recovery when optionalAuthEnabled is true and no answer on the page" in {
 
       val ua = emptyUserAnswers
 
-      val nextPageUrl: String = SavingsStatementPage.navigate(NormalMode, ua).url
+      val nextPageUrl: String = SavingsStatementPage(true).navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+
+    "must redirect to journey recovery when optionalAuthEnabled is false and no answer on the page" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = SavingsStatementPage(false).navigate(NormalMode, ua).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
@@ -71,23 +104,23 @@ class SavingsStatementPageSpec extends PageBehaviours {
     "must redirect to CYA page when true" in {
 
       val ua = emptyUserAnswers
-        .set(SavingsStatementPage, true)
+        .set(SavingsStatementPage(true), true)
         .success
         .value
 
-      val nextPageUrl: String = SavingsStatementPage.navigate(CheckMode, ua).url
+      val nextPageUrl: String = SavingsStatementPage(true).navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }
 
-    "must redirect to inelligble when false" in {
+    "must redirect to ineligible when false" in {
 
       val ua = emptyUserAnswers
-        .set(SavingsStatementPage, false)
+        .set(SavingsStatementPage(true), false)
         .success
         .value
 
-      val nextPageUrl: String = SavingsStatementPage.navigate(CheckMode, ua).url
+      val nextPageUrl: String = SavingsStatementPage(true).navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/cannot-use-service")
     }
@@ -96,7 +129,7 @@ class SavingsStatementPageSpec extends PageBehaviours {
 
       val ua = emptyUserAnswers
 
-      val nextPageUrl: String = SavingsStatementPage.navigate(CheckMode, ua).url
+      val nextPageUrl: String = SavingsStatementPage(true).navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }

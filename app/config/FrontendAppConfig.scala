@@ -71,4 +71,6 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val calculationAuditEventName =
     configuration.get[String]("auditing.calculation-request-event-name")
+
+  val optionalAuthEnabled = configuration.get[Boolean]("feature-flags.optionalAuth")
 }

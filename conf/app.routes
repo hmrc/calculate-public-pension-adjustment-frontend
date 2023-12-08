@@ -349,3 +349,5 @@ GET        /annual-allowance/change-registered/:period                 controlle
 POST       /annual-allowance/change-registered/:period                 controllers.annualallowance.preaaquestions.RegisteredYearController.onSubmit(mode: Mode = CheckMode, period: Period)
 
 GET        /lifetime-allowance/cannot-use-lta-service-no-charge                       controllers.lifetimeallowance.CannotUseLtaServiceNoChargeController.onPageLoad()
+
+GET        /sign-in-government-gateway                       controllers.OptionalSignInController.onPageLoad()
