@@ -24,10 +24,10 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object SavingsStatementSummary {
+case class SavingsStatementSummary(optionalAuthEnabled: Boolean) {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(SavingsStatementPage).map { answer =>
+    answers.get(SavingsStatementPage(optionalAuthEnabled)).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(

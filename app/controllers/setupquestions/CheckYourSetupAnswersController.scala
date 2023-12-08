@@ -17,6 +17,7 @@
 package controllers.setupquestions
 
 import com.google.inject.Inject
+import config.FrontendAppConfig
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.{NormalMode, ReportingChange}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -34,6 +35,7 @@ class CheckYourSetupAnswersController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: CheckYourAnswersView
 ) extends FrontendBaseController
@@ -41,7 +43,7 @@ class CheckYourSetupAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val rows: Seq[Option[SummaryListRow]] = Seq(
-      SavingsStatementSummary.row(request.userAnswers),
+      SavingsStatementSummary(config.optionalAuthEnabled).row(request.userAnswers),
       ResubmittingAdjustmentSummary.row(request.userAnswers),
       ReasonForResubmissionSummary.row(request.userAnswers),
       ReportingChangeSummary.row(request.userAnswers)

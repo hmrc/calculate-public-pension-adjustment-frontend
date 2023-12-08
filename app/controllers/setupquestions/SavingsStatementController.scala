@@ -16,6 +16,7 @@
 
 package controllers.setupquestions
 
+import config.FrontendAppConfig
 import controllers.actions._
 import forms.SavingsStatementFormProvider
 import models.tasklist.sections.SetupSection
@@ -37,6 +38,7 @@ class SavingsStatementController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   formProvider: SavingsStatementFormProvider,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: SavingsStatementView
 )(implicit ec: ExecutionContext)
@@ -46,10 +48,13 @@ class SavingsStatementController @Inject() (
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) { implicit request =>
-    val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(SavingsStatementPage) match {
-      case None        => form
-      case Some(value) => form.fill(value)
-    }
+    val preparedForm =
+      request.userAnswers
+        .getOrElse(UserAnswers(request.userId))
+        .get(SavingsStatementPage(config.optionalAuthEnabled)) match {
+        case None        => form
+        case Some(value) => form.fill(value)
+      }
 
     Ok(view(preparedForm, mode))
   }
@@ -63,8 +68,12 @@ class SavingsStatementController @Inject() (
           for {
             updatedAnswers <-
               Future
-                .fromTry(request.userAnswers.getOrElse(UserAnswers(request.userId)).set(SavingsStatementPage, value))
-            redirectUrl     = SavingsStatementPage.navigate(mode, updatedAnswers).url
+                .fromTry(
+                  request.userAnswers
+                    .getOrElse(UserAnswers(request.userId))
+                    .set(SavingsStatementPage(config.optionalAuthEnabled), value)
+                )
+            redirectUrl     = SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, updatedAnswers).url
             answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
             _              <- sessionRepository.set(answersWithNav)
           } yield Redirect(redirectUrl)
