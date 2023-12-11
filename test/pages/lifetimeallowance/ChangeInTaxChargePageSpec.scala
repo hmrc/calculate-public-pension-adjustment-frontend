@@ -155,7 +155,7 @@ class ChangeInTaxChargeSpec extends PageBehaviours {
       cleanedUserAnswers.get(LumpSumValuePage) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(AnnualPaymentValuePage) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(WhoPaidLTAChargePage) mustBe Some(WhoPaidLTACharge.PensionScheme)
-      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe Some(UserSchemeDetails("schemename", "taxref"))
+      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe None
       cleanedUserAnswers.get(SchemeNameAndTaxRefPage) mustBe Some(SchemeNameAndTaxRef("schemename", "taxref"))
       cleanedUserAnswers.get(QuarterChargePaidPage) mustBe Some(QuarterChargePaid.AprToJul)
       cleanedUserAnswers.get(YearChargePaidPage) mustBe Some(YearChargePaid._2020To2021)

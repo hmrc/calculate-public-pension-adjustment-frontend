@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode, WhoPayingExtraLtaCharge}
+import models.{CheckMode, NormalMode, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import pages.behaviours.PageBehaviours
 
 class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
@@ -154,7 +154,7 @@ class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
 
     }
 
-    "must cleanup correctly when pensionscheme is selected and WhoPayingExtraLtaChargePage is user and previous charge is true" in {
+    "must cleanup correctly when PensionScheme is selected and WhoPaidLTAChargePage is PensionScheme and previous charge is true" in {
       val ua = emptyUserAnswers
         .set(
           UserSchemeDetailsPage,
@@ -169,14 +169,8 @@ class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
         .success
         .value
         .set(
-          WhoPayingExtraLtaChargePage,
-          WhoPayingExtraLtaCharge.You
-        )
-        .success
-        .value
-        .set(
-          WhoPayingExtraLtaChargePage,
-          models.WhoPayingExtraLtaCharge.PensionScheme
+          WhoPaidLTAChargePage,
+          models.WhoPaidLTACharge.PensionScheme
         )
         .success
         .value
