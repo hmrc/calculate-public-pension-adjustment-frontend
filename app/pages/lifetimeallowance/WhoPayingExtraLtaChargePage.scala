@@ -19,7 +19,7 @@ package pages.lifetimeallowance
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
 import models.WhoPayingExtraLtaCharge.{PensionScheme, You}
-import models.{CheckMode, NormalMode, UserAnswers, WhoPayingExtraLtaCharge}
+import models.{CheckMode, NormalMode, UserAnswers, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -53,16 +53,22 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
   }
 
   override def cleanup(value: Option[WhoPayingExtraLtaCharge], userAnswers: UserAnswers): Try[UserAnswers] = {
-    val hasPreviousCharge = userAnswers.get(LifetimeAllowanceChargePage).getOrElse(false)
+    val hasPreviousCharge     = userAnswers.get(LifetimeAllowanceChargePage).getOrElse(false)
+    val whoPaidChargeIsScheme =
+      userAnswers.get(WhoPaidLTAChargePage).contains(WhoPaidLTACharge.PensionScheme)
     value
       .map {
-        case PensionScheme if !hasPreviousCharge =>
+        case PensionScheme if !hasPreviousCharge || whoPaidChargeIsScheme =>
           userAnswers
             .remove(UserSchemeDetailsPage)
-        case PensionScheme if hasPreviousCharge  => super.cleanup(value, userAnswers)
-        case You                                 =>
+        case PensionScheme if hasPreviousCharge                           => super.cleanup(value, userAnswers)
+        case You if hasPreviousCharge                                     =>
           userAnswers
             .remove(LtaPensionSchemeDetailsPage)
+        case You if !hasPreviousCharge                                    =>
+          userAnswers
+            .remove(LtaPensionSchemeDetailsPage)
+            .flatMap(_.remove(UserSchemeDetailsPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
   }

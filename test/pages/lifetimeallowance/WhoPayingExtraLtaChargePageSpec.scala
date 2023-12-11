@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode, WhoPayingExtraLtaCharge}
+import models.{CheckMode, NormalMode, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import pages.behaviours.PageBehaviours
 
 class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
@@ -154,17 +154,23 @@ class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
 
     }
 
-    "must cleanup correctly when you is selected" in {
+    "must cleanup correctly when PensionScheme is selected and WhoPaidLTAChargePage is PensionScheme and previous charge is true" in {
       val ua = emptyUserAnswers
         .set(
-          LtaPensionSchemeDetailsPage,
-          models.LtaPensionSchemeDetails("details3", "ref3")
+          UserSchemeDetailsPage,
+          models.UserSchemeDetails("details3", "ref3")
         )
         .success
         .value
         .set(
-          WhoPayingExtraLtaChargePage,
-          models.WhoPayingExtraLtaCharge.You
+          LifetimeAllowanceChargePage,
+          true
+        )
+        .success
+        .value
+        .set(
+          WhoPaidLTAChargePage,
+          models.WhoPaidLTACharge.PensionScheme
         )
         .success
         .value
@@ -172,7 +178,65 @@ class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
       val cleanedUserAnswers =
         WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.PensionScheme), ua).success.value
 
+      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe None
+
+    }
+
+    "must cleanup correctly when you is selected and previous charge is true" in {
+      val ua = emptyUserAnswers
+        .set(
+          LifetimeAllowanceChargePage,
+          true
+        )
+        .success
+        .value
+        .set(
+          UserSchemeDetailsPage,
+          models.UserSchemeDetails("details3", "ref3")
+        )
+        .success
+        .value
+        .set(
+          LtaPensionSchemeDetailsPage,
+          models.LtaPensionSchemeDetails("details3", "ref3")
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers =
+        WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.You), ua).success.value
+
       cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
+      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe Some(models.UserSchemeDetails("details3", "ref3"))
+
+    }
+
+    "must cleanup correctly when you is selected and previous charge is false" in {
+      val ua = emptyUserAnswers
+        .set(
+          LifetimeAllowanceChargePage,
+          false
+        )
+        .success
+        .value
+        .set(
+          UserSchemeDetailsPage,
+          models.UserSchemeDetails("details3", "ref3")
+        )
+        .success
+        .value
+        .set(
+          LtaPensionSchemeDetailsPage,
+          models.LtaPensionSchemeDetails("details3", "ref3")
+        )
+        .success
+        .value
+
+      val cleanedUserAnswers =
+        WhoPayingExtraLtaChargePage.cleanup(Some(models.WhoPayingExtraLtaCharge.You), ua).success.value
+
+      cleanedUserAnswers.get(LtaPensionSchemeDetailsPage) mustBe None
+      cleanedUserAnswers.get(UserSchemeDetailsPage) mustBe None
 
     }
 
