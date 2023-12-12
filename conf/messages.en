@@ -73,7 +73,6 @@ signedOut.bullet1 = Go to the Gov.uk service page
 signedOut.bullet2 = Press the start now button
 signedOut.bullet3 = Sign in using Government Gateway ID
 signedOut.message3 = Alternatively, continue your application now.
-signedOut.guidance = We did not save your answers.
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account

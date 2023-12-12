@@ -43,11 +43,4 @@
     </ul>
 
     <p class="govuk-body">@messages("signedOut.message3")</p>
-
-    <p class="govuk-body">
-        @govukButton(
-            ButtonViewModel(messages("site.signIn"))
-                .asLink(routes.IndexController.onPageLoad().url)
-        )
-    </p>
 }
