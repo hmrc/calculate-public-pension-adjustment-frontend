@@ -41,6 +41,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
     s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier&backUrl=$safeBackUrl"
   }
 
+  val baseUrl: String             = configuration.get[String]("urls.base")
   val loginUrl: String            = configuration.get[String]("urls.login")
   val loginContinueUrl: String    = configuration.get[String]("urls.loginContinue")
   val signOutUrl: String          = configuration.get[String]("urls.signOut")
@@ -64,7 +65,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val languageTranslationEnabled: Boolean = false
 
-  val origin = "PPA"
+  val origin = configuration.get[String]("origin")
 
   def languageMap: Map[String, Lang] = Map(
     "en" -> Lang("en"),

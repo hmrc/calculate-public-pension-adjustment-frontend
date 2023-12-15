@@ -31,17 +31,16 @@ case class SavingsStatementPage(optionalAuthEnabled: Boolean) extends QuestionPa
   override def toString: String = "savingsStatement"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    (answers.get(SavingsStatementPage(optionalAuthEnabled)), optionalAuthEnabled) match {
-      case (Some(true), true)  =>
-        if (answers.authenticated) {
-          controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-        } else {
-          controllers.routes.OptionalSignInController.onPageLoad()
-        }
-      case (Some(true), false) =>
+    (answers.get(SavingsStatementPage(optionalAuthEnabled)), optionalAuthEnabled, answers.authenticated) match {
+      case (Some(true), true, true) =>
         controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-      case (Some(false), _)    => controllers.setupquestions.routes.IneligibleController.onPageLoad
-      case (None, _)           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+
+      case (Some(true), true, false) =>
+        controllers.routes.OptionalSignInController.onPageLoad()
+      case (Some(true), false, _)    =>
+        controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
+      case (Some(false), _, _)       => controllers.setupquestions.routes.IneligibleController.onPageLoad
+      case (None, _, _)              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =

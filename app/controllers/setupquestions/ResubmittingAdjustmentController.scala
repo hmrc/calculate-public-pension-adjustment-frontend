@@ -78,6 +78,11 @@ class ResubmittingAdjustmentController @Inject() (
       )
   }
 
-  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) =
-    UserAnswers(request.userId, authenticated = request.request.isInstanceOf[AuthenticatedIdentifierRequest[_]])
+  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) = {
+    val authenticated = request.request match {
+      case AuthenticatedIdentifierRequest(_, _) => true
+      case _                                    => false
+    }
+    UserAnswers(request.userId, authenticated = authenticated)
+  }
 }

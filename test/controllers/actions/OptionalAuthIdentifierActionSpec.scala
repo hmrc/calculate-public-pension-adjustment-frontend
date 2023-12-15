@@ -98,22 +98,23 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
 
         "with insufficient confidence" - {
 
-          "they must be redirected to uplift their confidence level" in {
+          "they must be redirected to uplift their confidence level and on completion redirect to the same path" in {
 
             val authAction = new OptionalAuthIdentifierAction(
               new FakeFailingAuthConnector(InsufficientConfidenceLevel()),
               bodyParsers(application),
               config(application)
             )
-            val request    = FakeRequest().withSession(SessionKeys.sessionId -> sessionId)
+            val request    = FakeRequest("GET", "/some-path").withSession(SessionKeys.sessionId -> sessionId)
 
             val result = authAction(a => Ok(a.userId))(request)
 
             status(result) mustEqual SEE_OTHER
             redirectLocation(
               result
-            ).value mustEqual "http://localhost:9948/iv-stub/uplift?origin=PPA&confidenceLevel=250&completionURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fchange-previous-adjustment&failureURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fuplift-failure"
+            ).value mustEqual "http://localhost:9948/iv-stub/uplift?origin=PPA&confidenceLevel=250&completionURL=http%3A%2F%2Flocalhost%3A12804%2Fsome-path&failureURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fuplift-failure"
           }
+
         }
 
         "and a user id is retrieved" - {
