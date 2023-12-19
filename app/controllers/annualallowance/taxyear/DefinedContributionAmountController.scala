@@ -83,13 +83,7 @@ class DefinedContributionAmountController @Inject() (
             ),
           value =>
             if (flexiAccessExistsForPeriod) {
-              if (period == Period._2016PreAlignment) {
-                if (flexibleStartDate == Some(LocalDate.of(2015, 7, 8))) {
-                  updateAnswersForEndOfPeriodDate(mode, period, request, value)
-                } else {
-                  updateAnswersForNormalDate(mode, period, request, value)
-                }
-              } else if (flexibleStartDate == Some(LocalDate.of(period.end.getYear, 4, 5))) {
+              if (flexibleStartDate == Some(period.end)) {
                 updateAnswersForEndOfPeriodDate(mode, period, request, value)
               } else {
                 updateAnswersForNormalDate(mode, period, request, value)
@@ -135,18 +129,10 @@ class DefinedContributionAmountController @Inject() (
         case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
       }
 
-    if (period == Period._2016PostAlignment) {
-      if (flexibleStartDate == Some(LocalDate.of(2015, 7, 9))) {
-        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
-      } else {
-        normalDateFormatter
-      }
+    if (flexibleStartDate == Some(period.start)) {
+      period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
     } else {
-      if (flexibleStartDate == Some(LocalDate.of(period.start.getYear, 4, 6))) {
-        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
-      } else {
-        normalDateFormatter
-      }
+      normalDateFormatter
     }
   }
 }

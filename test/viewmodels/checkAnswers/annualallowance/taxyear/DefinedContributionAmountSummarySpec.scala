@@ -65,95 +65,30 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
     }
   }
 
-  "Flexi access dates at beginning of period" - {
+  "flexi access date is beginning of period" in {
 
-    "Period 2016 post alignment" - {
+    val period      = Period._2018
+    val userAnswers = UserAnswers("id")
+      .set(FlexibleAccessStartDatePage, LocalDate.of(2017, 4, 6))
+      .get
+      .set(
+        DefinedContributionAmountPage(period),
+        BigInt("100")
+      )
+      .get
 
-      "flexi access date is beginning of period" in {
-
-        val period      = Period._2016PostAlignment
-        val userAnswers = UserAnswers("id")
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 9))
-          .get
-          .set(
-            DefinedContributionAmountPage(period),
-            BigInt("100")
+    DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
+      SummaryListRowViewModel(
+        key = "definedContributionAmount.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent("&pound;100")),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
           )
-          .get
-
-        DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
-          SummaryListRowViewModel(
-            key = "definedContributionAmount.checkYourAnswersLabel",
-            value = ValueViewModel(HtmlContent("&pound;100")),
-            actions = Seq(
-              ActionItemViewModel(
-                "site.change",
-                routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
-              )
-                .withVisuallyHiddenText("definedContributionAmount.change.hidden.2016-post")
-            )
-          )
+            .withVisuallyHiddenText("definedContributionAmount.change.hidden.2018")
         )
-      }
-
-      "flexi access date is not beginning of period" in {
-
-        val period      = Period._2016PostAlignment
-        val userAnswers = UserAnswers("id")
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 10))
-          .get
-          .set(
-            DefinedContributionAmountPage(period),
-            BigInt("100")
-          )
-          .get
-
-        DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
-          SummaryListRowViewModel(
-            key = "definedContributionAmount.checkYourAnswersLabel",
-            value = ValueViewModel(HtmlContent("&pound;100")),
-            actions = Seq(
-              ActionItemViewModel(
-                "site.change",
-                routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
-              )
-                .withVisuallyHiddenText("definedContributionAmount.change.hidden.2016-post")
-            )
-          )
-        )
-      }
-    }
-
-    "Not Period 2016 post alignment" - {
-
-      "flexi access date is beginning of period" in {
-
-        val period      = Period._2018
-        val userAnswers = UserAnswers("id")
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2017, 4, 6))
-          .get
-          .set(
-            DefinedContributionAmountPage(period),
-            BigInt("100")
-          )
-          .get
-
-        DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
-          SummaryListRowViewModel(
-            key = "definedContributionAmount.checkYourAnswersLabel",
-            value = ValueViewModel(HtmlContent("&pound;100")),
-            actions = Seq(
-              ActionItemViewModel(
-                "site.change",
-                routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
-              )
-                .withVisuallyHiddenText("definedContributionAmount.change.hidden.2018")
-            )
-          )
-        )
-      }
-
-    }
+      )
+    )
   }
-
 }

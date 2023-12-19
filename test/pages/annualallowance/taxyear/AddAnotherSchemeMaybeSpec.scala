@@ -38,13 +38,13 @@ class AddAnotherSchemeMaybeSpec extends PageBehaviours {
     }
 
     "must redirect to journey recovery when member more than one scheme false & Defined Contribution not answered" in {
-      val page = AddAnotherSchemePage(Period._2016PostAlignment, SchemeIndex(0))
+      val page = AddAnotherSchemePage(Period._2018, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
         .set(page, false)
         .success
         .value
-        .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
+        .set(MemberMoreThanOnePensionPage(Period._2018), false)
         .success
         .value
 
@@ -55,7 +55,7 @@ class AddAnotherSchemeMaybeSpec extends PageBehaviours {
 
     "must navigate to AA period CYA page when answered in check mode" in {
 
-      val page = AddAnotherSchemePage(Period._2016PostAlignment, SchemeIndex(0))
+      val page = AddAnotherSchemePage(Period._2018, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
         .set(page, false)
@@ -64,7 +64,7 @@ class AddAnotherSchemeMaybeSpec extends PageBehaviours {
 
       val nextPagUrl = page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPagUrl, "/annual-allowance/2016-post/check-answers")
+      checkNavigation(nextPagUrl, "/annual-allowance/2018/check-answers")
     }
   }
 }

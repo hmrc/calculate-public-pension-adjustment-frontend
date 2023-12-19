@@ -27,64 +27,31 @@ class DefinedContributionNormalModeNavigation(period: Period) {
   // noinspection ScalaStyle
   def navigate(answers: UserAnswers): Call =
     answers.get(DefinedContributionAmountPage(period)) match {
-      case Some(_) if flexiAccessExistsForPeriod(answers) => flexiNavigation(answers)
+      case Some(_) if flexiAccessExistsForPeriod(answers) => flexiStandardNavigation(answers)
       case Some(_) if definedBenefitExists(answers)       =>
         controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
-      case Some(_) if period == Period._2016PostAlignment =>
-        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case Some(_) if period == Period._2016PreAlignment  =>
+      case Some(_) if period == Period._2016              =>
         controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
       case Some(_)                                        =>
         controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
       case None                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  private def flexiNavigation(answers: UserAnswers) =
-    if (period == Period._2016PreAlignment) {
-      flexiPre2016Navigation(answers)
-    } else {
-      flexiStandardNavigation(answers)
-    }
-
-  private def flexiPre2016Navigation(answers: UserAnswers) = {
-    // noinspection ScalaStyle
-    val endDate = LocalDate.of(2015, 7, 8)
-
+  private def flexiStandardNavigation(answers: UserAnswers) =
     answers.get(FlexibleAccessStartDatePage) match {
-      case Some(date) if date == endDate => flexiPre2016WhenFlexiDateIsPeriodEndDate(answers)
-      case Some(_)                       =>
-        controllers.annualallowance.taxyear.routes.FlexiAccessDefinedContributionAmountController
-          .onPageLoad(NormalMode, period)
-      case None                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-  }
-
-  private def flexiPre2016WhenFlexiDateIsPeriodEndDate(answers: UserAnswers) =
-    if (definedBenefitExists(answers)) {
-      controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
-    } else {
-      controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
-    }
-
-  private def flexiStandardNavigation(answers: UserAnswers) = {
-    // noinspection ScalaStyle
-    val endDate = LocalDate.of(period.end.getYear, 4, 5)
-
-    answers.get(FlexibleAccessStartDatePage) match {
-      case Some(date) if date == endDate =>
+      case Some(date) if date == period.end =>
         flexiStandardWhenFlexiDateIsPeriodEndDate(answers)
-      case Some(_)                       =>
+      case Some(_)                          =>
         controllers.annualallowance.taxyear.routes.FlexiAccessDefinedContributionAmountController
           .onPageLoad(NormalMode, period)
-      case None                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case None                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   private def flexiStandardWhenFlexiDateIsPeriodEndDate(answers: UserAnswers) =
     if (definedBenefitExists(answers)) {
       controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
-    } else if (period == Period._2016PostAlignment) {
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    } else if (period == Period._2016) {
+      controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
     } else {
       controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
     }

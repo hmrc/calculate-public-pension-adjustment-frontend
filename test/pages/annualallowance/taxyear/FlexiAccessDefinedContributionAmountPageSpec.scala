@@ -31,9 +31,9 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "for pre 15-16" - {
+      "for 15-16" - {
 
-        val period = Period._2016PreAlignment
+        val period = Period._2016
 
         "to DefinedBenefitPage when DB is selected" in {
           val ua     = emptyUserAnswers
@@ -71,49 +71,6 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
           val result = FlexiAccessDefinedContributionAmountPage(period).navigate(NormalMode, ua).url
 
           checkNavigation(result, s"/annual-allowance/$period/total-income")
-        }
-      }
-
-      "for post 15-16" - {
-
-        val period = Period._2016PostAlignment
-
-        "to DefinedBenefitPage when DB is selected" in {
-          val ua     = emptyUserAnswers
-            .set(
-              FlexiAccessDefinedContributionAmountPage(period),
-              BigInt("100")
-            )
-            .success
-            .value
-            .set(
-              ContributedToDuringRemedyPeriodPage(period),
-              Set(ContributedToDuringRemedyPeriod.values.tail.head)
-            )
-            .success
-            .value
-          val result = FlexiAccessDefinedContributionAmountPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
-        }
-
-        "to CheckYourAnswersPage when no DB selected" in {
-          val ua     = emptyUserAnswers
-            .set(
-              FlexiAccessDefinedContributionAmountPage(period),
-              BigInt("100")
-            )
-            .success
-            .value
-            .set(
-              ContributedToDuringRemedyPeriodPage(period),
-              Set(ContributedToDuringRemedyPeriod.values.head)
-            )
-            .success
-            .value
-          val result = FlexiAccessDefinedContributionAmountPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/check-answers")
         }
       }
 

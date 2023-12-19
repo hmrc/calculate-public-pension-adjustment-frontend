@@ -39,11 +39,10 @@ import scala.concurrent.Future
 
 class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider                   = new DefinedContributionAmountFormProvider()
-  val form                           = formProvider(Seq("6 April 2022 to 5 April 2023"))
-  val flexiForm                      = formProvider(Seq("6 April 2022 to 12 December 2022"))
-  val flexiFormStartOfPeriod         = formProvider(Seq("6 April 2022 to 6 April 2022"))
-  val flexiFormStartOfPeriodPost2016 = formProvider(Seq("9 July 2015 to 9 July 2015"))
+  val formProvider           = new DefinedContributionAmountFormProvider()
+  val form                   = formProvider(Seq("6 April 2022 to 5 April 2023"))
+  val flexiForm              = formProvider(Seq("6 April 2022 to 12 December 2022"))
+  val flexiFormStartOfPeriod = formProvider(Seq("6 April 2022 to 6 April 2022"))
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -51,12 +50,6 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
   lazy val definedContributionAmountRoute =
     DefinedContributionAmountController.onPageLoad(NormalMode, Period._2023).url
-
-  lazy val definedContributionAmountRoutePre2016 =
-    DefinedContributionAmountController.onPageLoad(NormalMode, Period._2016PreAlignment).url
-
-  lazy val definedContributionAmountRoutePost2016 =
-    DefinedContributionAmountController.onPageLoad(NormalMode, Period._2016PostAlignment).url
 
   "DefinedContributionAmount Controller" - {
 
@@ -145,36 +138,6 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must return OK and the correct view when user indicated flexi year for a GET when flexi date first day of period when post 2016 period" in {
-      val flexiDateStartOfPeriod = LocalDate.of(2015, 7, 9)
-
-      val userAnswers = UserAnswers(userAnswersId)
-        .set(FlexibleAccessStartDatePage, flexiDateStartOfPeriod)
-        .success
-        .value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, definedContributionAmountRoutePost2016)
-
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[DefinedContributionAmountView]
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
-          flexiFormStartOfPeriodPost2016,
-          NormalMode,
-          Period._2016PostAlignment,
-          "9 July 2015 to 9 July 2015"
-        )(
-          request,
-          messages(application)
-        ).toString
-      }
-    }
-
     "must populate flexi year amount answer for period with 0 when user has entered flexi date as last date of period" in {
       val validDate = LocalDate.of(2023, 4, 5)
 
@@ -210,43 +173,6 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must populate flexi year amount answer for period with 0 when user has entered flexi date as last date of period in pre 2016 period" in {
-      val validDate = LocalDate.of(2015, 7, 8)
-
-      val userAnswers = UserAnswers(userAnswersId)
-        .set(FlexibleAccessStartDatePage, validDate)
-        .success
-        .value
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
-
-      when(mockSessionRepository.set(userAnswersCaptor.capture())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(userAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, definedContributionAmountRoutePre2016)
-            .withFormUrlEncodedBody(("value", validAnswer.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-
-        val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2016PreAlignment)) mustBe Some(
-          BigInt(0)
-        )
-      }
-    }
-
     "must not populate flexi year amount answer for period with 0 when user has entered flexi date as any other date than last day of period" in {
       val validDate = LocalDate.of(2023, 4, 4)
 
@@ -279,41 +205,6 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val capturedUserAnswers = userAnswersCaptor.getValue
         capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2023)) mustBe None
-      }
-    }
-
-    "must not populate flexi year amount answer for period with 0 when flexi date not end date in pre 2016 period" in {
-      val validDate = LocalDate.of(2015, 7, 1)
-
-      val userAnswers = UserAnswers(userAnswersId)
-        .set(FlexibleAccessStartDatePage, validDate)
-        .success
-        .value
-
-      val mockSessionRepository = mock[SessionRepository]
-
-      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
-
-      when(mockSessionRepository.set(userAnswersCaptor.capture())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = Some(userAnswers))
-          .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, definedContributionAmountRoutePre2016)
-            .withFormUrlEncodedBody(("value", validAnswer.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-
-        val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2016PreAlignment)) mustBe None
       }
     }
 

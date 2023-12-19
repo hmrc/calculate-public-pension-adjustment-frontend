@@ -95,14 +95,10 @@ object TaxYear2016To2023 {
     (__ \ "period")
       .read[Period]
       .flatMap[Period] {
-        case p if p == Period._2016PreAlignment          =>
-          Reads(_ => JsSuccess(p))
-        case p if p == Period._2016PostAlignment         =>
-          Reads(_ => JsSuccess(p))
-        case p if p >= Period._2017 && p <= Period._2023 =>
+        case p if p >= Period._2016 && p <= Period._2023 =>
           Reads(_ => JsSuccess(p))
         case _                                           =>
-          Reads(_ => JsError("tax year must be `between 2016-pre and 2023`"))
+          Reads(_ => JsError("tax year must be `between 2016 and 2023`"))
       }
       .andKeep(normalReads orElse initialReads orElse postFlexiblyAccessedReads)
   }

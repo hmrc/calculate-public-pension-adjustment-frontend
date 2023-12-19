@@ -143,7 +143,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
 
       val periodSection = aaGroup.sections(1)
       periodSection.status                must be(SectionStatus.NotStarted)
-      urlWithNoContext(periodSection.url) must be("/annual-allowance/2016-pre/information")
+      urlWithNoContext(periodSection.url) must be("/annual-allowance/2016/information")
     }
 
     def userAnswersWhenAAPreReqsSatisfied(): UserAnswers = {

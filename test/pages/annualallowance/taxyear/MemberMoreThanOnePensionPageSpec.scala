@@ -32,33 +32,33 @@ class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
     "normal mode navigation" - {
 
       "when current period is first relevant period then capture scheme details for current period, scheme index 0" in {
-        val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false).get
+        val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016), false).get
 
         val nextPageUrl: String =
-          MemberMoreThanOnePensionPage(Period._2016PreAlignment).navigate(NormalMode, userAnswers).url
+          MemberMoreThanOnePensionPage(Period._2016).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/scheme-name-reference/0")
+        checkNavigation(nextPageUrl, "/annual-allowance/2016/scheme-name-reference/0")
       }
 
       "when current period is not first relevant period then select which scheme for current period, scheme index 0" in {
-        val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false).get
+        val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016), false).get
 
         val nextUrl: String =
-          MemberMoreThanOnePensionPage(Period._2016PostAlignment).navigate(NormalMode, userAnswers).url
+          MemberMoreThanOnePensionPage(Period._2017).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextUrl, "/annual-allowance/2016-post/select-scheme-0")
+        checkNavigation(nextUrl, "/annual-allowance/2017/select-scheme-0")
       }
     }
 
     "check mode navigation" - {
 
       "must navigate to CYA page when submitted" in {
-        val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false).get
+        val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2016), false).get
 
         val nextUrl: String =
-          MemberMoreThanOnePensionPage(Period._2016PostAlignment).navigate(CheckMode, userAnswers).url
+          MemberMoreThanOnePensionPage(Period._2017).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextUrl, "/annual-allowance/2016-post/check-answers")
+        checkNavigation(nextUrl, "/annual-allowance/2017/check-answers")
       }
     }
   }

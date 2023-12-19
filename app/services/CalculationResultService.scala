@@ -95,8 +95,7 @@ class CalculationResultService @Inject() (
 
     val _2016To2023TaxYears: List[TaxYear2016To2023] =
       List(
-        Period._2016PreAlignment,
-        Period._2016PostAlignment,
+        Period._2016,
         Period._2017,
         Period._2018,
         Period._2019,
@@ -124,23 +123,8 @@ class CalculationResultService @Inject() (
     userAnswers: UserAnswers,
     period: Period
   ): Option[TaxYear2016To2023] = {
-    val totalIncome: Int =
-      if (period == Period._2016PostAlignment)
-        userAnswers.get(TotalIncomePage(Period._2016PreAlignment)).map(_.toInt).getOrElse(0)
-      else
-        userAnswers.get(TotalIncomePage(period)).map(_.toInt).getOrElse(0)
-
-    val income: Option[Income] =
-      if (period == Period._2016PreAlignment | period == Period._2016PostAlignment)
-        None
-      else {
-        if (userAnswers.get(ThresholdIncomePage(period)).getOrElse(false)) {
-          Some(userAnswers.get(AdjustedIncomePage(period)).map(v => AboveThreshold(v.toInt)).getOrElse(BelowThreshold))
-        } else {
-          Some(BelowThreshold)
-        }
-
-      }
+    val totalIncome: Int = ???
+    val income: Option[Income] = ???
 
     val chargePaidByMember: Int =
       userAnswers.get(HowMuchAAChargeYouPaidPage(period, SchemeIndex(0))).map(_.toInt).getOrElse(0)

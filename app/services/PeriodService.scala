@@ -54,8 +54,7 @@ object PeriodService {
 
   def allRemedyPeriods =
     Seq(
-      Period._2016PreAlignment,
-      Period._2016PostAlignment,
+      Period._2016,
       Period._2017,
       Period._2018,
       Period._2019,

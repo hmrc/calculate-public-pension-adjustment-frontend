@@ -32,9 +32,9 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "for pre 15-16" - {
+      "for 15-16" - {
 
-        val period = Period._2016PreAlignment
+        val period = Period._2016
 
         "to ContributedToDuringRemedyPeriodPage when answered true" in {
           val ua     = emptyUserAnswers
@@ -46,7 +46,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
             .value
           val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/annual-allowance/2016-pre/contributed-to-dc-or-db-scheme")
+          checkNavigation(result, "/annual-allowance/2016/contributed-to-dc-or-db-scheme")
         }
 
         "to CheckYourAnswersPage when answered false" in {
@@ -59,37 +59,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
             .value
           val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/annual-allowance/2016-pre/total-income")
-        }
-      }
-
-      "for post 15-16" - {
-        val period = Period._2016PostAlignment
-
-        "to ContributedToDuringRemedyPeriodPage when answered true" in {
-          val ua     = emptyUserAnswers
-            .set(
-              OtherDefinedBenefitOrContributionPage(period),
-              true
-            )
-            .success
-            .value
-          val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, "/annual-allowance/2016-post/contributed-to-dc-or-db-scheme")
-        }
-
-        "to TotalIncomePage when answered false" in {
-          val ua     = emptyUserAnswers
-            .set(
-              OtherDefinedBenefitOrContributionPage(period),
-              false
-            )
-            .success
-            .value
-          val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, "/annual-allowance/2016-post/check-answers")
+          checkNavigation(result, "/annual-allowance/2016/total-income")
         }
       }
 

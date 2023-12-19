@@ -65,18 +65,11 @@ object FlexiAccessDefinedContributionAmountSummary {
         case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
       }
 
-    if (period == Period._2016PostAlignment) {
-      if (flexibleStartDate == Some(LocalDate.of(2015, 7, 9))) {
-        flexibleStartDate.get.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
-      } else {
-        normalDateFormatter
-      }
+    if (flexibleStartDate == Some(period.start)) {
+      flexibleStartDate.get.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
     } else {
-      if (flexibleStartDate == Some(LocalDate.of(period.start.getYear, 4, 6))) {
-        flexibleStartDate.get.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
-      } else {
-        normalDateFormatter
-      }
+      normalDateFormatter
     }
+
   }
 }

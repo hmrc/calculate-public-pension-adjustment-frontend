@@ -46,8 +46,7 @@ class PeriodServiceSpec extends SpecBase {
       val answers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2018, 1, 1))
 
       val expectedPeriods = Seq(
-        Period._2016PreAlignment,
-        Period._2016PostAlignment,
+        Period._2016,
         Period._2017,
         Period._2018
       )
@@ -59,8 +58,7 @@ class PeriodServiceSpec extends SpecBase {
       val answers = emptyUserAnswers
 
       val expectedPeriods = Seq(
-        Period._2016PreAlignment,
-        Period._2016PostAlignment,
+        Period._2016,
         Period._2017,
         Period._2018,
         Period._2019,
@@ -71,27 +69,6 @@ class PeriodServiceSpec extends SpecBase {
       )
 
       PeriodService.relevantPeriods(answers) must be(expectedPeriods)
-    }
-
-    "are included for pre alignment period" in {
-      val answers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 8))
-
-      val expectedPeriods = Seq(
-        Period._2016PreAlignment
-      )
-
-      PeriodService.relevantPeriods(answers.get) must be(expectedPeriods)
-    }
-
-    "are included for post alignment period" in {
-      val answers = emptyUserAnswers.set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 9))
-
-      val expectedPeriods = Seq(
-        Period._2016PreAlignment,
-        Period._2016PostAlignment
-      )
-
-      PeriodService.relevantPeriods(answers.get) must be(expectedPeriods)
     }
   }
 }
