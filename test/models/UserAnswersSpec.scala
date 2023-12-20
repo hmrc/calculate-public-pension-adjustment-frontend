@@ -30,8 +30,8 @@ class UserAnswersSpec extends SpecBase {
   }
 
   "should correctly identify when answers are contained for a question page with a parameterised path" in {
-    val page1 = AddAnotherSchemePage(Period._2016PreAlignment: Period, SchemeIndex(0))
-    val page2 = AddAnotherSchemePage(Period._2016PreAlignment: Period, SchemeIndex(1))
+    val page1 = AddAnotherSchemePage(Period._2016: Period, SchemeIndex(0))
+    val page2 = AddAnotherSchemePage(Period._2016: Period, SchemeIndex(1))
 
     val userAnswers: UserAnswers = emptyUserAnswers.set(page1, true).get
 
@@ -42,6 +42,6 @@ class UserAnswersSpec extends SpecBase {
   "should correctly identify if answers are contained for a non question page" in {
     val userAnswers: UserAnswers = emptyUserAnswers
 
-    userAnswers.containsAnswerFor(WhatYouWillNeedPage(Period._2016PreAlignment)) must be(false)
+    userAnswers.containsAnswerFor(WhatYouWillNeedPage(Period._2016)) must be(false)
   }
 }
