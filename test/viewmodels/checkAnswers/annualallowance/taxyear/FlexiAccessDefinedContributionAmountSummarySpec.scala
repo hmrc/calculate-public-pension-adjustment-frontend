@@ -65,94 +65,30 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
     }
   }
 
-  "Flexi access dates at beginning of period" - {
+  "flexi access date is beginning of period" in {
 
-    "Period 2016 post alignment" - {
+    val period      = Period._2018
+    val userAnswers = UserAnswers("id")
+      .set(FlexibleAccessStartDatePage, LocalDate.of(2017, 4, 6))
+      .get
+      .set(
+        FlexiAccessDefinedContributionAmountPage(period),
+        BigInt("100")
+      )
+      .get
 
-      "flexi access date is beginning of period" in {
-
-        val period      = Period._2016PostAlignment
-        val userAnswers = UserAnswers("id")
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 9))
-          .get
-          .set(
-            FlexiAccessDefinedContributionAmountPage(period),
-            BigInt("100")
+    FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
+      SummaryListRowViewModel(
+        key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent("&pound;100")),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            routes.FlexiAccessDefinedContributionAmountController.onPageLoad(CheckMode, period).url
           )
-          .get
-
-        FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
-          SummaryListRowViewModel(
-            key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
-            value = ValueViewModel(HtmlContent("&pound;100")),
-            actions = Seq(
-              ActionItemViewModel(
-                "site.change",
-                routes.FlexiAccessDefinedContributionAmountController.onPageLoad(CheckMode, period).url
-              )
-                .withVisuallyHiddenText("flexiAccessDefinedContributionAmount.change.hidden")
-            )
-          )
+            .withVisuallyHiddenText("flexiAccessDefinedContributionAmount.change.hidden")
         )
-      }
-
-      "flexi access date is not beginning of period" in {
-
-        val period      = Period._2016PostAlignment
-        val userAnswers = UserAnswers("id")
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 10))
-          .get
-          .set(
-            FlexiAccessDefinedContributionAmountPage(period),
-            BigInt("100")
-          )
-          .get
-
-        FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
-          SummaryListRowViewModel(
-            key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
-            value = ValueViewModel(HtmlContent("&pound;100")),
-            actions = Seq(
-              ActionItemViewModel(
-                "site.change",
-                routes.FlexiAccessDefinedContributionAmountController.onPageLoad(CheckMode, period).url
-              )
-                .withVisuallyHiddenText("flexiAccessDefinedContributionAmount.change.hidden")
-            )
-          )
-        )
-      }
-    }
-
-    "Not Period 2016 post alignment" - {
-
-      "flexi access date is beginning of period" in {
-
-        val period      = Period._2018
-        val userAnswers = UserAnswers("id")
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2017, 4, 6))
-          .get
-          .set(
-            FlexiAccessDefinedContributionAmountPage(period),
-            BigInt("100")
-          )
-          .get
-
-        FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
-          SummaryListRowViewModel(
-            key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
-            value = ValueViewModel(HtmlContent("&pound;100")),
-            actions = Seq(
-              ActionItemViewModel(
-                "site.change",
-                routes.FlexiAccessDefinedContributionAmountController.onPageLoad(CheckMode, period).url
-              )
-                .withVisuallyHiddenText("flexiAccessDefinedContributionAmount.change.hidden")
-            )
-          )
-        )
-      }
-
-    }
+      )
+    )
   }
 }
