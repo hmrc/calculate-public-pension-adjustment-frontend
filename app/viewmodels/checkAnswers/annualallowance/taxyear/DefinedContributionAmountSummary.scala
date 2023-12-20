@@ -64,18 +64,10 @@ object DefinedContributionAmountSummary {
         case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
       }
 
-    if (period == Period._2016PostAlignment) {
-      if (flexibleStartDate == Some(LocalDate.of(2015, 7, 9))) {
-        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
-      } else {
-        normalDateFormatter
-      }
+    if (flexibleStartDate == Some(period.start)) {
+      period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
     } else {
-      if (flexibleStartDate == Some(LocalDate.of(period.start.getYear, 4, 6))) {
-        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
-      } else {
-        normalDateFormatter
-      }
+      normalDateFormatter
     }
   }
 }

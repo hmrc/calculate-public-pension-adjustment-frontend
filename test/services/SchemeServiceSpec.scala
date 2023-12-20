@@ -31,7 +31,7 @@ class SchemeServiceSpec extends SpecBase {
     "options should include previous scheme references from a single period and new" in {
       val userAnswers = emptyUserAnswers
         .set(
-          PensionSchemeDetailsPage(Period._2016PreAlignment, SchemeIndex(0)),
+          PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)),
           PensionSchemeDetails("scheme1", "pstr1")
         )
         .get
@@ -42,12 +42,12 @@ class SchemeServiceSpec extends SpecBase {
     "options should include multiple scheme references from a single period and new" in {
       val userAnswers = emptyUserAnswers
         .set(
-          PensionSchemeDetailsPage(Period._2016PreAlignment, SchemeIndex(0)),
+          PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)),
           PensionSchemeDetails("scheme1", "pstr1")
         )
         .get
         .set(
-          PensionSchemeDetailsPage(Period._2016PreAlignment, SchemeIndex(1)),
+          PensionSchemeDetailsPage(Period._2016, SchemeIndex(1)),
           PensionSchemeDetails("scheme2", "pstr2")
         )
         .get
@@ -58,12 +58,12 @@ class SchemeServiceSpec extends SpecBase {
     "options should include scheme references from multiple periods and new" in {
       val userAnswers = emptyUserAnswers
         .set(
-          PensionSchemeDetailsPage(Period._2016PreAlignment, SchemeIndex(0)),
+          PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)),
           PensionSchemeDetails("scheme1", "pstr1")
         )
         .get
         .set(
-          PensionSchemeDetailsPage(Period._2016PostAlignment, SchemeIndex(0)),
+          PensionSchemeDetailsPage(Period._2017, SchemeIndex(0)),
           PensionSchemeDetails("scheme2", "pstr2")
         )
         .get
@@ -77,13 +77,13 @@ class SchemeServiceSpec extends SpecBase {
     "should not modify user answers if new pstr is specified" in {
       val userAnswers = emptyUserAnswers
         .set(
-          PensionSchemeDetailsPage(Period._2016PreAlignment, SchemeIndex(0)),
+          PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)),
           PensionSchemeDetails("scheme1", "pstr1")
         )
         .get
 
       val maybeUpdatedAnswers =
-        SchemeService.maybeAddSchemeDetailsToPeriod(userAnswers, PSTR.New, Period._2016PreAlignment, SchemeIndex(1))
+        SchemeService.maybeAddSchemeDetailsToPeriod(userAnswers, PSTR.New, Period._2016, SchemeIndex(1))
 
       maybeUpdatedAnswers must be(userAnswers)
     }
@@ -126,7 +126,7 @@ class SchemeServiceSpec extends SpecBase {
       val userAnswers = emptyUserAnswers
 
       val maybeUpdatedAnswers =
-        SchemeService.maybeAddSchemeDetailsToPeriod(userAnswers, "pstr1", Period._2016PreAlignment, SchemeIndex(1))
+        SchemeService.maybeAddSchemeDetailsToPeriod(userAnswers, "pstr1", Period._2016, SchemeIndex(1))
 
       maybeUpdatedAnswers must be(userAnswers)
     }
