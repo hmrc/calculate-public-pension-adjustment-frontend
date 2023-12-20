@@ -18,12 +18,13 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.annualallowance.taxyear.HowMuchAAChargeSchemePaidFormProvider
+import forms.annualallowance.taxyear.{HowMuchAAChargeSchemePaidFormProvider, PayAChargeFormProvider}
 import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.taxyear.HowMuchAAChargeSchemePaidPage
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -34,10 +35,6 @@ import views.html.annualallowance.taxyear.HowMuchAAChargeSchemePaidView
 import scala.concurrent.Future
 
 class HowMuchAAChargeSchemePaidControllerSpec extends SpecBase with MockitoSugar {
-
-  val formProvider = new HowMuchAAChargeSchemePaidFormProvider()
-  val form         = formProvider()
-
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt(0)
@@ -47,10 +44,22 @@ class HowMuchAAChargeSchemePaidControllerSpec extends SpecBase with MockitoSugar
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
       .url
 
+  lazy val howMuchAAChargeSchemePaid2019Route =
+    controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
+      .onPageLoad(NormalMode, Period._2019, SchemeIndex(0))
+      .url
+
   lazy val howMuchAAChargeSchemePaidCheckRoute =
     controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
       .onPageLoad(CheckMode, Period._2018, SchemeIndex(0))
       .url
+
+  private def formWithMockMessages = {
+    val messages = mock[Messages]
+
+    val formProvider = new HowMuchAAChargeSchemePaidFormProvider()
+    formProvider("")(messages)
+  }
 
   "HowMuchAAChargeSchemePaid Controller" - {
 
@@ -66,7 +75,13 @@ class HowMuchAAChargeSchemePaidControllerSpec extends SpecBase with MockitoSugar
         val view = application.injector.instanceOf[HowMuchAAChargeSchemePaidView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(
+          formWithMockMessages,
+          NormalMode,
+          Period._2018,
+          SchemeIndex(0),
+          "6 April 2017 and 5 April 2018"
+        )(
           request,
           messages(application)
         ).toString
@@ -76,21 +91,27 @@ class HowMuchAAChargeSchemePaidControllerSpec extends SpecBase with MockitoSugar
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(HowMuchAAChargeSchemePaidPage(Period._2018, SchemeIndex(0)), validAnswer)
+        .set(HowMuchAAChargeSchemePaidPage(Period._2019, SchemeIndex(0)), validAnswer)
         .success
         .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, howMuchAAChargeSchemePaidRoute)
+        val request = FakeRequest(GET, howMuchAAChargeSchemePaid2019Route)
 
         val view = application.injector.instanceOf[HowMuchAAChargeSchemePaidView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(
+          formWithMockMessages.fill(validAnswer),
+          NormalMode,
+          Period._2019,
+          SchemeIndex(0),
+          "6 April 2018 and 5 April 2019"
+        )(
           request,
           messages(application)
         ).toString
@@ -130,14 +151,20 @@ class HowMuchAAChargeSchemePaidControllerSpec extends SpecBase with MockitoSugar
           FakeRequest(POST, howMuchAAChargeSchemePaidRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = formWithMockMessages.bind(Map("value" -> "invalid value"))
 
         val view = application.injector.instanceOf[HowMuchAAChargeSchemePaidView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0))(
+        contentAsString(result) mustEqual view(
+          boundForm,
+          NormalMode,
+          Period._2018,
+          SchemeIndex(0),
+          startEndDate = "6 April 2017 and 5 April 2018"
+        )(
           request,
           messages(application)
         ).toString
