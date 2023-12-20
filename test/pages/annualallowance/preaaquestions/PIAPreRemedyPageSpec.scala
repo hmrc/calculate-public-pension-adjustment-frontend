@@ -68,10 +68,10 @@ class PIAPreRemedyPageSpec extends PageBehaviours {
 
       "next page should be JourneyRecovery if tax year is after pre remedy window" in {
         val userAnswers =
-          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2016PreAlignment), BigInt(1)).get
+          UserAnswers("1").set(preaaquestions.PIAPreRemedyPage(Period._2016), BigInt(1)).get
 
         val nextPageUrl =
-          preaaquestions.PIAPreRemedyPage(Period._2016PreAlignment).navigate(NormalMode, userAnswers).url
+          preaaquestions.PIAPreRemedyPage(Period._2016).navigate(NormalMode, userAnswers).url
 
         checkNavigation(nextPageUrl, "/there-is-a-problem")
       }

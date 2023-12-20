@@ -1165,7 +1165,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     "toTaxYear2016To2023" - {
 
       "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016PreAlignment" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016PreAlignment)
+        val result = service.toTaxYear2016To2023(userAnswers1, ???)
 
         result mustBe Some(
           InitialFlexiblyAccessedTaxYear(
@@ -1176,13 +1176,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0)),
             60000,
             0,
-            Period._2016PreAlignment
+            ???
           )
         )
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2016PostAlignment" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016PostAlignment)
+        val result = service.toTaxYear2016To2023(userAnswers1, ???)
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -1191,7 +1191,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             60000,
             2000,
             List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 0)),
-            Period._2016PostAlignment
+            ???
           )
         )
       }
@@ -1335,7 +1335,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0)),
                   60000,
                   0,
-                  Period._2016PreAlignment
+                  ???
                 ),
                 PostFlexiblyAccessedTaxYear(
                   40000,
@@ -1343,7 +1343,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   2000,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 0)),
-                  Period._2016PostAlignment
+                  ???
                 ),
                 PostFlexiblyAccessedTaxYear(
                   35000,
@@ -1471,7 +1471,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0)),
                   60000,
                   0,
-                  Period._2016PreAlignment
+                  ???
                 ),
                 PostFlexiblyAccessedTaxYear(
                   40000,
@@ -1479,7 +1479,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   2000,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 0)),
-                  Period._2016PostAlignment
+                  ???
                 ),
                 PostFlexiblyAccessedTaxYear(
                   35000,
