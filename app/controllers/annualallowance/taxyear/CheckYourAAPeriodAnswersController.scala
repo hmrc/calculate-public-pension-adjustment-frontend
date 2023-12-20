@@ -90,27 +90,15 @@ class CheckYourAAPeriodAnswersController @Inject() (
           TotalIncomeSummary.row(request.userAnswers, period)
         )
 
-      def maybeFlexiPeriodEndDateRowsStatus: Boolean = {
-        val pre2016EndDate  = LocalDate.of(2015, 7, 8)
-        val post2016EndDate = LocalDate.of(period.end.getYear, 4, 5)
-
+      def maybeFlexiPeriodEndDateRowsStatus: Boolean =
         if (flexiAccessExistsForPeriod) {
-          if (period == Period._2016PreAlignment) {
-            flexibleStartDate match {
-              case Some(date) if date == pre2016EndDate =>
-                true
-              case _                                    =>
-                false
-            }
-          } else
-            flexibleStartDate match {
-              case Some(date) if date == post2016EndDate =>
-                true
-              case _                                     =>
-                false
-            }
+          flexibleStartDate match {
+            case Some(date) if date == period.end =>
+              true
+            case _                                =>
+              false
+          }
         } else false
-      }
 
       val combinedRows: Seq[Option[SummaryListRow]] = Seq(rowsOne ++ rowsTwo).flatten
 
