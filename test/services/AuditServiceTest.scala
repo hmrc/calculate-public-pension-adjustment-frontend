@@ -76,7 +76,7 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
                     TaxYearScheme("Scheme 1", "00348916RT", 20000, 15000, 0),
                     TaxYearScheme("Scheme 2", "00348916RG", 20000, 18000, 0)
                   ),
-                  Period._2016PreAlignment
+                  ???
                 ),
                 PostFlexiblyAccessedTaxYear(
                   40000,
@@ -87,7 +87,7 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
                     TaxYearScheme("Scheme 1", "00348916RT", 30000, 25000, 0),
                     TaxYearScheme("Scheme 2", "00348916RG", 18000, 15000, 0)
                   ),
-                  Period._2016PostAlignment
+                  ???
                 ),
                 PostFlexiblyAccessedTaxYear(
                   38000,
@@ -124,7 +124,7 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
           TotalAmounts(0, 0, 0),
           List(
             OutOfDatesTaxYearsCalculation(
-              Period._2016PreAlignment,
+              ???,
               0,
               0,
               0,
@@ -138,7 +138,7 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
               )
             ),
             OutOfDatesTaxYearsCalculation(
-              Period._2016PostAlignment,
+              ???,
               0,
               0,
               3200,

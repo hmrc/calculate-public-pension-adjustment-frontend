@@ -33,13 +33,10 @@ case class OtherDefinedBenefitOrContributionPage(period: Period) extends Questio
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(OtherDefinedBenefitOrContributionPage(period)) match {
-      case Some(false) if period == Period._2016PreAlignment  =>
-        TotalIncomeController.onPageLoad(NormalMode, period)
-      case Some(false) if period == Period._2016PostAlignment =>
-        CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case Some(false)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period)
-      case Some(true)                                         => ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, period)
-      case None                                               => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false) if period == Period._2016 => TotalIncomeController.onPageLoad(NormalMode, period)
+      case Some(false)                           => ThresholdIncomeController.onPageLoad(NormalMode, period)
+      case Some(true)                            => ContributedToDuringRemedyPeriodController.onPageLoad(NormalMode, period)
+      case None                                  => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
