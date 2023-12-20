@@ -89,19 +89,19 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/annual-allowance/2018/threshold-income")
   }
 
-  "must redirect to total income page when does not have dc scheme and user has entered 5 schemes" in {
+  "must redirect to total income page when does not have dc scheme and user has entered 5 schemes in 2016" in {
 
-    val page = HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(4))
+    val page = HowMuchAAChargeSchemePaidPage(Period._2016, SchemeIndex(4))
 
     val userAnswers         = emptyUserAnswers
       .set(DefinedContributionPensionSchemePage, false)
       .success
       .value
-      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), true)
+      .set(MemberMoreThanOnePensionPage(Period._2016), true)
       .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/total-income")
+    checkNavigation(nextPageUrl, "/annual-allowance/2016/total-income")
   }
 
   "must redirect to threshold income page when does not have dc scheme and not member more than one scheme in standard period" in {
@@ -119,64 +119,34 @@ class HowMuchAAChargeSchemePaidPageSpec extends PageBehaviours {
     checkNavigation(nextPageUrl, "/annual-allowance/2018/threshold-income")
   }
 
-  "must redirect to other db/dc page when does have dc scheme and not member more than one scheme in 2016-pre period" in {
+  "must redirect to other db/dc page when does have dc scheme and not member more than one scheme in 2016 period" in {
 
-    val page = HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0))
-
-    val userAnswers         = emptyUserAnswers
-      .set(DefinedContributionPensionSchemePage, true)
-      .success
-      .value
-      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
-      .get
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
-
-    checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/contributed-to-any-other-dc-or-db-scheme")
-  }
-
-  "must redirect to total income page when does not have dc scheme and not member more than one scheme in 2016-pre period" in {
-
-    val page = HowMuchAAChargeSchemePaidPage(Period._2016PreAlignment, SchemeIndex(0))
-
-    val userAnswers         = emptyUserAnswers
-      .set(DefinedContributionPensionSchemePage, false)
-      .success
-      .value
-      .set(MemberMoreThanOnePensionPage(Period._2016PreAlignment), false)
-      .get
-    val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
-
-    checkNavigation(nextPageUrl, "/annual-allowance/2016-pre/total-income")
-  }
-
-  "must redirect to other db/dc page when does have dc scheme and not member more than one scheme in 2016-post period" in {
-
-    val page = HowMuchAAChargeSchemePaidPage(Period._2016PostAlignment, SchemeIndex(0))
+    val page = HowMuchAAChargeSchemePaidPage(Period._2016, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
       .set(DefinedContributionPensionSchemePage, true)
       .success
       .value
-      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
+      .set(MemberMoreThanOnePensionPage(Period._2016), false)
       .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/annual-allowance/2016-post/contributed-to-any-other-dc-or-db-scheme")
+    checkNavigation(nextPageUrl, "/annual-allowance/2016/contributed-to-any-other-dc-or-db-scheme")
   }
 
-  "must redirect to check answers page when does not have dc scheme and not member more than one scheme in 2016-post period" in {
+  "must redirect to total income page when does not have dc scheme and not member more than one scheme in 2016 period" in {
 
-    val page = HowMuchAAChargeSchemePaidPage(Period._2016PostAlignment, SchemeIndex(0))
+    val page = HowMuchAAChargeSchemePaidPage(Period._2016, SchemeIndex(0))
 
     val userAnswers         = emptyUserAnswers
       .set(DefinedContributionPensionSchemePage, false)
       .success
       .value
-      .set(MemberMoreThanOnePensionPage(Period._2016PostAlignment), false)
+      .set(MemberMoreThanOnePensionPage(Period._2016), false)
       .get
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/annual-allowance/2016-post/check-answers")
+    checkNavigation(nextPageUrl, "/annual-allowance/2016/total-income")
   }
 
   "must redirect to check your answers controller when user submits in check mode" in {
