@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,29 +16,20 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, PensionSchemeDetails, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, PensionSchemeInputAmounts, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class PensionSchemeDetailsPage(period: Period, schemeIndex: SchemeIndex)
-    extends QuestionPage[PensionSchemeDetails] {
+case class PensionSchemeInput2016preAmountsPage(period: Period, schemeIndex: SchemeIndex)
+    extends QuestionPage[PensionSchemeInputAmounts] {
 
-  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ "2016" \ "period1" \ "schemes" \ schemeIndex.toString \ toString
 
-  override def toString: String = "pensionSchemeDetails"
+  override def toString: String = "PensionSchemeInput2016preAmounts"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    if(period == Period._2016)
-      {
-        controllers.annualallowance.taxyear.routes.PensionSchemeInputAmounts1516Period1Controller
-          .onPageLoad(NormalMode, period, schemeIndex)
-      }
-      else{
-        controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
-          .onPageLoad(NormalMode, period, schemeIndex)
-      }
-  }
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    controllers.annualallowance.taxyear.routes.PayAChargeController.onPageLoad(NormalMode, period, schemeIndex)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
