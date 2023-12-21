@@ -20,6 +20,7 @@ GET         /annual-allowance/:period/check-answers                             
 GET         /account/sign-out-survey                                         controllers.auth.AuthController.signOut()
 GET         /account/sign-out                                                controllers.auth.AuthController.signOutNoSurvey()
 GET         /account/signed-out                                              controllers.auth.SignedOutController.onPageLoad()
+GET         /account/sign-out-unauthorised                                   controllers.auth.AuthController.signOutUnauthorised
 
 GET         /unauthorised                                                    controllers.UnauthorisedController.onPageLoad()
 
@@ -350,4 +351,8 @@ POST       /annual-allowance/change-registered/:period                 controlle
 
 GET        /lifetime-allowance/cannot-use-lta-service-no-charge                       controllers.lifetimeallowance.CannotUseLtaServiceNoChargeController.onPageLoad()
 
-GET        /sign-in-government-gateway                       controllers.OptionalSignInController.onPageLoad()
+GET        /sign-in-government-gateway                      controllers.OptionalSignInController.onPageLoad()
+POST       /sign-in-government-gateway                      controllers.OptionalSignInController.onSubmit()
+
+GET         /cannot-use-service-not-individual              controllers.CannotUseServiceNotIndividualController.onPageLoad
+GET         /uplift-failure                                 controllers.UpliftFailedController.onPageLoad()

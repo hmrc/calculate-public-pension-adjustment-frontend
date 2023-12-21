@@ -16,60 +16,108 @@
 
 package controllers.actions
 
-import com.google.inject.Inject
 import config.FrontendAppConfig
 import controllers.routes
-import models.requests.IdentifierRequest
-import play.api.mvc.Results._
+import models.requests.{AuthenticatedIdentifierRequest, IdentifierRequest, UnauthenticatedIdentifierRequest}
+import play.api.Logging
+import play.api.mvc.Results.Redirect
 import play.api.mvc._
 import uk.gov.hmrc.auth.core._
+import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
-import uk.gov.hmrc.http.{HeaderCarrier, UnauthorizedException}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 trait IdentifierAction
     extends ActionBuilder[IdentifierRequest, AnyContent]
     with ActionFunction[Request, IdentifierRequest]
 
-class AuthenticatedIdentifierAction @Inject() (
-  override val authConnector: AuthConnector,
-  config: FrontendAppConfig,
-  val parser: BodyParsers.Default
+class OptionalAuthIdentifierAction @Inject() (
+  val authConnector: AuthConnector,
+  val parser: BodyParsers.Default,
+  config: FrontendAppConfig
 )(implicit val executionContext: ExecutionContext)
     extends IdentifierAction
-    with AuthorisedFunctions {
+    with AuthorisedFunctions
+    with Logging {
 
-  override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
+  private val retrievals = Retrievals.internalId and
+    Retrievals.nino and
+    Retrievals.itmpName
+
+  override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] =
+    if (config.optionalAuthEnabled) {
+      invokeBlockOptionallyAuthenticated(request, block)
+    } else {
+      invokeBlockUnauthenticated(request, block)
+    }
+
+  private def invokeBlockOptionallyAuthenticated[A](
+    request: Request[A],
+    block: IdentifierRequest[A] => Future[Result]
+  ): Future[Result] = {
 
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
-    authorised().retrieve(Retrievals.internalId) {
-      _.map { internalId =>
-        block(IdentifierRequest(request, internalId))
-      }.getOrElse(throw new UnauthorizedException("Unable to retrieve internalId"))
-    } recover {
-      case _: NoActiveSession        =>
-        Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
-      case _: AuthorisationException =>
-        Redirect(routes.UnauthorisedController.onPageLoad())
+    val requiredConfidenceLevel = ConfidenceLevel.fromInt(config.requiredAuthConfidenceLevel.toInt).get
+
+    authorised(AffinityGroup.Individual and requiredConfidenceLevel and User).retrieve(retrievals) {
+      case Some(userId) ~ Some(_) ~ Some(_) =>
+        block(AuthenticatedIdentifierRequest(request, userId))
+      case _                                =>
+        logger.warn(s"Incomplete retrievals")
+        Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
+    } recoverWith {
+      case _: NoActiveSession             =>
+        hc.sessionId match {
+          case Some(sessionId) =>
+            block(UnauthenticatedIdentifierRequest(request, sessionId.value))
+          case None            =>
+            logger.error(s"User has no active sessionId: ${request.path}")
+            Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+        }
+      case _: InsufficientConfidenceLevel =>
+        insufficientConfidence(request)
+      case ex: UnsupportedAffinityGroup   =>
+        logger.warn(s"User has UnsupportedAffinityGroup. The reason is ${ex.reason} .")
+        Future.successful(Redirect(routes.CannotUseServiceNotIndividualController.onPageLoad))
+      case ex: AuthorisationException     =>
+        logger.warn(s"User has AuthorisationException. The reason is ${ex.reason} .")
+        Future.successful(Redirect(routes.UnauthorisedController.onPageLoad))
     }
   }
-}
 
-class SessionIdentifierAction @Inject() (
-  val parser: BodyParsers.Default
-)(implicit val executionContext: ExecutionContext)
-    extends IdentifierAction {
+  private def insufficientConfidence[A](request: Request[A]) = {
+    val upliftUrl           = s"${config.confidenceUpliftUrl}"
+    val upliftCompletionUrl = config.baseUrl + request.path
+    val upliftFailureUrl    = config.upliftFailureUrl
 
-  override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
+    Future.successful(
+      Redirect(
+        upliftUrl,
+        Map(
+          "origin"          -> Seq(config.upliftOrigin),
+          "confidenceLevel" -> Seq(config.requiredAuthConfidenceLevel),
+          "completionURL"   -> Seq(upliftCompletionUrl),
+          "failureURL"      -> Seq(upliftFailureUrl)
+        )
+      )
+    )
+  }
+
+  private def invokeBlockUnauthenticated[A](
+    request: Request[A],
+    block: IdentifierRequest[A] => Future[Result]
+  ): Future[Result] = {
 
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     hc.sessionId match {
       case Some(session) =>
-        block(IdentifierRequest(request, session.value))
+        block(UnauthenticatedIdentifierRequest(request, session.value))
       case None          =>
         Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
     }

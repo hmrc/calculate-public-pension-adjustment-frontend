@@ -32,9 +32,10 @@ class SavingsStatementPageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "must redirect to optional sign in when optionalAuthEnabled is true and selected Yes on the page" in {
+    "must redirect to optional sign in when optionalAuthEnabled is true, user is unauthenticated and selected Yes on the page" in {
 
       val ua = emptyUserAnswers
+        .copy(authenticated = false)
         .set(SavingsStatementPage(true), true)
         .success
         .value
@@ -42,6 +43,19 @@ class SavingsStatementPageSpec extends PageBehaviours {
       val nextPageUrl: String = SavingsStatementPage(true).navigate(NormalMode, ua).url
 
       checkNavigation(nextPageUrl, "/sign-in-government-gateway")
+    }
+
+    "must redirect to ResubmittingAdjustment page when optionalAuthEnabled is true, user is authenticated and selected Yes on the page" in {
+
+      val ua = emptyUserAnswers
+        .copy(authenticated = true)
+        .set(SavingsStatementPage(true), true)
+        .success
+        .value
+
+      val nextPageUrl: String = SavingsStatementPage(true).navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/change-previous-adjustment")
     }
 
     "must redirect to optional sign in when optionalAuthEnabled is false and selected Yes on the page" in {

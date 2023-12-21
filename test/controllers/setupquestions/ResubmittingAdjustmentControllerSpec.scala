@@ -17,22 +17,26 @@
 package controllers.setupquestions
 
 import base.SpecBase
-import config.FrontendAppConfig
 import controllers.setupquestions.{routes => setupRoutes}
 import forms.ResubmittingAdjustmentFormProvider
 import models.{NormalMode, UserAnswers}
-import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentCaptor
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.ResubmittingAdjustmentPage
+import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import uk.gov.hmrc.auth.core.AuthConnector
+import uk.gov.hmrc.auth.core.authorise.Predicate
+import uk.gov.hmrc.auth.core.retrieve.Retrieval
+import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.ResubmittingAdjustmentView
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Try
 
 class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
@@ -81,14 +85,18 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      val mockSessionRepository = mock[SessionRepository]
+      when(mockSessionRepository.set(userAnswersCaptor.capture())) thenReturn Future.successful(true)
+
+      val fakeAuthConnector = new FakeAuthConnector(Some("userId"))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[AuthConnector].toInstance(fakeAuthConnector)
           )
           .build()
 
@@ -100,6 +108,10 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(ResubmittingAdjustmentPage).get mustBe true
+        capturedUserAnswers.get(SavingsStatementPage(true)).get mustBe true
       }
     }
 
@@ -123,36 +135,38 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to start of the service for a GET if no existing data is found" in {
+    "when user answers can't be found and the user is signed in" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, userIsAuthenticated = true).build()
 
       running(application) {
-        val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   = FakeRequest(GET, resubmittingNormalRoute)
+        val request = FakeRequest(GET, resubmittingNormalRoute)
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) mustEqual OK
       }
     }
 
-    "must redirect to start of the servicey for a POST if no existing data is found" in {
+    "when user answers can't be found and the user is not signed in" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None, userIsAuthenticated = false).build()
 
       running(application) {
-        val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   =
-          FakeRequest(POST, resubmittingNormalRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+        val request = FakeRequest(GET, resubmittingNormalRoute)
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) mustEqual OK
       }
     }
+  }
+
+  class FakeAuthConnector[T](value: T) extends AuthConnector {
+    override def authorise[A](predicate: Predicate, retrieval: Retrieval[A])(implicit
+      hc: HeaderCarrier,
+      ec: ExecutionContext
+    ): Future[A] =
+      Future.fromTry(Try(value.asInstanceOf[A]))
   }
 }

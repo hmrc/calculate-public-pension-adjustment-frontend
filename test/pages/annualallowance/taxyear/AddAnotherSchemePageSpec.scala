@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, SchemeIndex}
+import models.{NormalMode, Period, SchemeIndex}
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.behaviours.PageBehaviours
 

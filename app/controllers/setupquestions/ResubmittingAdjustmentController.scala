@@ -17,10 +17,12 @@
 package controllers.setupquestions
 
 import controllers.actions._
+import config.FrontendAppConfig
 import forms.ResubmittingAdjustmentFormProvider
-import models.Mode
+import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
-import pages.setupquestions.ResubmittingAdjustmentPage
+import models.{Mode, UserAnswers}
+import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -35,8 +37,8 @@ class ResubmittingAdjustmentController @Inject() (
   sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  requireData: DataRequiredAction,
   formProvider: ResubmittingAdjustmentFormProvider,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: ResubmittingAdjustmentView
 )(implicit ec: ExecutionContext)
@@ -45,28 +47,42 @@ class ResubmittingAdjustmentController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(ResubmittingAdjustmentPage) match {
-      case None        => form
-      case Some(value) => form.fill(value)
-    }
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) { implicit request =>
+    val preparedForm =
+      request.userAnswers.getOrElse(constructUserAnswers(request)).get(ResubmittingAdjustmentPage) match {
+        case None        => form
+        case Some(value) => form.fill(value)
+      }
 
     Ok(view(preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
-      form
-        .bindFromRequest()
-        .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value =>
-            for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(ResubmittingAdjustmentPage, value))
-              redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
-              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
-            } yield Redirect(redirectUrl)
-        )
+  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
+    form
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+        value =>
+          for {
+            updatedAnswers <- Future.fromTry(
+                                request.userAnswers
+                                  .getOrElse(constructUserAnswers(request))
+                                  .set(SavingsStatementPage(config.optionalAuthEnabled), true)
+                                  .get
+                                  .set(ResubmittingAdjustmentPage, value)
+                              )
+            redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
+            answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
+            _              <- sessionRepository.set(answersWithNav)
+          } yield Redirect(redirectUrl)
+      )
+  }
+
+  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) = {
+    val authenticated = request.request match {
+      case AuthenticatedIdentifierRequest(_, _) => true
+      case _                                    => false
+    }
+    UserAnswers(request.userId, authenticated = authenticated)
   }
 }

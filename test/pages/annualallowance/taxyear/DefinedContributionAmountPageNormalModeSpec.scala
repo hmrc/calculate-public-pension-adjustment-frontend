@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period}
+import models.{ContributedToDuringRemedyPeriod, NormalMode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.behaviours.PageBehaviours
 

@@ -16,9 +16,8 @@
 
 package pages.setupquestions
 
-import config.FrontendAppConfig
 import models.tasklist.sections.{AASection, LTASection, PreAASection}
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -32,12 +31,16 @@ case class SavingsStatementPage(optionalAuthEnabled: Boolean) extends QuestionPa
   override def toString: String = "savingsStatement"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    (answers.get(SavingsStatementPage(optionalAuthEnabled)), optionalAuthEnabled) match {
-      case (Some(true), true)  => controllers.routes.OptionalSignInController.onPageLoad()
-      case (Some(true), false) =>
+    (answers.get(SavingsStatementPage(optionalAuthEnabled)), optionalAuthEnabled, answers.authenticated) match {
+      case (Some(true), true, true) =>
         controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-      case (Some(false), _)    => controllers.setupquestions.routes.IneligibleController.onPageLoad
-      case (None, _)           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+
+      case (Some(true), true, false) =>
+        controllers.routes.OptionalSignInController.onPageLoad()
+      case (Some(true), false, _)    =>
+        controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
+      case (Some(false), _, _)       => controllers.setupquestions.routes.IneligibleController.onPageLoad
+      case (None, _, _)              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =

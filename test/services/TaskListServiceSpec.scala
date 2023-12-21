@@ -23,7 +23,6 @@ import models.tasklist.{SectionGroupViewModel, SectionStatus, TaskListViewModel}
 import models.{NormalMode, ReportingChange, UserAnswers}
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import pages.behaviours.PageBehaviours
-import pages.lifetimeallowance.HadBenefitCrystallisationEventPage
 import pages.setupquestions.{ReportingChangePage, SavingsStatementPage}
 
 import java.time.LocalDate

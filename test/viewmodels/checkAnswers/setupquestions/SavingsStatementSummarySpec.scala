@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.SavingsStatementPage

@@ -41,11 +41,17 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
     s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier&backUrl=$safeBackUrl"
   }
 
+  val baseUrl: String             = configuration.get[String]("urls.base")
   val loginUrl: String            = configuration.get[String]("urls.login")
   val loginContinueUrl: String    = configuration.get[String]("urls.loginContinue")
   val signOutUrl: String          = configuration.get[String]("urls.signOut")
   val submitFrontend: String      = configuration.get[String]("urls.submitFrontend")
   val redirectToStartPage: String = configuration.get[String]("urls.redirectToStartPage")
+
+  val confidenceUpliftUrl: String = configuration.get[String]("urls.confidenceUplift")
+  val upliftFailureUrl            = configuration.get[String]("urls.upliftFailure")
+  val requiredAuthConfidenceLevel = configuration.get[String]("required-auth-confidence-level")
+  val upliftOrigin                = configuration.get[String]("uplift-origin")
 
   private val exitSurveyBaseUrl: String = configuration.get[Service]("microservice.services.feedback-frontend").baseUrl
   val exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/calculate-public-pension-adjustment-frontend"
@@ -58,6 +64,8 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   //    configuration.get[Boolean]("features.welsh-translation")
 
   val languageTranslationEnabled: Boolean = false
+
+  val origin = configuration.get[String]("origin")
 
   def languageMap: Map[String, Lang] = Map(
     "en" -> Lang("en"),

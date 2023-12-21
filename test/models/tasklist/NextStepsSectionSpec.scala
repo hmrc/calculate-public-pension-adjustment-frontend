@@ -17,12 +17,10 @@
 package models.tasklist
 
 import base.SpecBase
-import models.NewExcessLifetimeAllowancePaid.Lumpsum
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.sections.{LTASection, NextStepsSection}
 import models.{ReportingChange, UserAnswers}
 import pages.behaviours.PageBehaviours
-import pages.lifetimeallowance.{HadBenefitCrystallisationEventPage, LifetimeAllowanceChargePage, NewExcessLifetimeAllowancePaidPage, NewLumpSumValuePage}
 import pages.setupquestions.ReportingChangePage
 
 class NextStepsSectionSpec extends SpecBase with PageBehaviours {
