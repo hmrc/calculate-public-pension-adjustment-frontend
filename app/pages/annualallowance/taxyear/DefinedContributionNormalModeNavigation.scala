@@ -30,8 +30,6 @@ class DefinedContributionNormalModeNavigation(period: Period) {
       case Some(_) if flexiAccessExistsForPeriod(answers) => flexiStandardNavigation(answers)
       case Some(_) if definedBenefitExists(answers)       =>
         controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
-      case Some(_) if period == Period._2016              =>
-        controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
       case Some(_)                                        =>
         controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
       case None                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
@@ -50,8 +48,6 @@ class DefinedContributionNormalModeNavigation(period: Period) {
   private def flexiStandardWhenFlexiDateIsPeriodEndDate(answers: UserAnswers) =
     if (definedBenefitExists(answers)) {
       controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
-    } else if (period == Period._2016) {
-      controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
     } else {
       controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
     }
