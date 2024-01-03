@@ -47,11 +47,11 @@ class AuthController @Inject() (
     Redirect(config.signOutUrl, Map("continue" -> Seq(config.redirectToStartPage)))
   )
 
-  def signOutNoSurvey(): Action[AnyContent] = identify.async { implicit request =>
+  def sessionTimeout(): Action[AnyContent] = identify.async { implicit request =>
     sessionRepository
       .clear(request.userId)
       .map { _ =>
-        Redirect(config.signOutUrl, Map("continue" -> Seq(routes.SignedOutController.onPageLoad().url)))
+        Redirect(config.exitSurveyUrl)
       }
   }
 }
