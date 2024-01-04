@@ -29,7 +29,8 @@ case class PensionSchemeInput2016preAmountsPage(period: Period, schemeIndex: Sch
   override def toString: String = "PensionSchemeInput2016preAmounts"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.PensionSchemeInput2016postAmountsController.onPageLoad(NormalMode, period, schemeIndex)
+    controllers.annualallowance.taxyear.routes.PensionSchemeInput2016postAmountsController
+      .onPageLoad(NormalMode, period, schemeIndex)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)

@@ -30,15 +30,15 @@ import views.html.annualallowance.taxyear.{PensionSchemeInput2016postAmountsView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PensionSchemeInput2016postAmountsController @Inject()(
-                                                            override val messagesApi: MessagesApi,
-                                                            sessionRepository: SessionRepository,
-                                                            identify: IdentifierAction,
-                                                            getData: DataRetrievalAction,
-                                                            requireData: DataRequiredAction,
-                                                            formProvider: PensionSchemeInput2016postAmountsFormProvider,
-                                                            val controllerComponents: MessagesControllerComponents,
-                                                            view: PensionSchemeInput2016postAmountsView
+class PensionSchemeInput2016postAmountsController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: PensionSchemeInput2016postAmountsFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: PensionSchemeInput2016postAmountsView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -72,8 +72,10 @@ class PensionSchemeInput2016postAmountsController @Inject()(
           value =>
             for {
               updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(PensionSchemeInput2016postAmountsPage(period, schemeIndex), value))
-              redirectUrl     = PensionSchemeInput2016postAmountsPage(period, schemeIndex).navigate(mode, updatedAnswers).url
+                Future
+                  .fromTry(request.userAnswers.set(PensionSchemeInput2016postAmountsPage(period, schemeIndex), value))
+              redirectUrl     =
+                PensionSchemeInput2016postAmountsPage(period, schemeIndex).navigate(mode, updatedAnswers).url
               answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
               _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)

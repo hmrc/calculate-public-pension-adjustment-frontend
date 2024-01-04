@@ -28,17 +28,14 @@ case class PensionSchemeDetailsPage(period: Period, schemeIndex: SchemeIndex)
 
   override def toString: String = "pensionSchemeDetails"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    if(period == Period._2016)
-      {
-        controllers.annualallowance.taxyear.routes.PensionSchemeInput2016preAmountsController
-          .onPageLoad(NormalMode, period, schemeIndex)
-      }
-      else{
-        controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
-          .onPageLoad(NormalMode, period, schemeIndex)
-      }
-  }
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    if (period == Period._2016) {
+      controllers.annualallowance.taxyear.routes.PensionSchemeInput2016preAmountsController
+        .onPageLoad(NormalMode, period, schemeIndex)
+    } else {
+      controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
+        .onPageLoad(NormalMode, period, schemeIndex)
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
