@@ -18,8 +18,8 @@ package models
 
 import play.api.libs.json._
 
-case class PensionSchemeInput2016preAmounts(originalPIA: BigInt, revisedPIA: BigInt)
+case class PensionSchemeInput2016postAmounts(originalPIA: BigInt, revisedPIA: BigInt)
 
-object PensionSchemeInput2016preAmounts {
-  implicit val format = Json.format[PensionSchemeInput2016preAmounts]
+object PensionSchemeInput2016postAmounts {
+  implicit val format = Json.format[PensionSchemeInput2016postAmounts]
 }

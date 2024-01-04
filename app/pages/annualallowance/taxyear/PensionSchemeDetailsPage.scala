@@ -31,7 +31,7 @@ case class PensionSchemeDetailsPage(period: Period, schemeIndex: SchemeIndex)
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     if(period == Period._2016)
       {
-        controllers.annualallowance.taxyear.routes.PensionSchemeInputAmounts1516Period1Controller
+        controllers.annualallowance.taxyear.routes.PensionSchemeInput2016preAmountsController
           .onPageLoad(NormalMode, period, schemeIndex)
       }
       else{

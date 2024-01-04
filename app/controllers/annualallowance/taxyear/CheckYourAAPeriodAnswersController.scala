@@ -53,6 +53,8 @@ class CheckYourAAPeriodAnswersController @Inject() (
         Seq(
           PensionSchemeDetailsSummary.row(request.userAnswers, period, index),
           PensionSchemeInputAmountsSummary.row(request.userAnswers, period, index),
+          PensionSchemeInput2016preAmountsSummary.row(request.userAnswers, period, index),
+          PensionSchemeInput2016postAmountsSummary.row(request.userAnswers, period, index),
           PayAChargeSummary.row(request.userAnswers, period, index),
           WhoPaidAAChargeSummary.row(request.userAnswers, period, index),
           HowMuchAAChargeYouPaidSummary.row(request.userAnswers, period, index),

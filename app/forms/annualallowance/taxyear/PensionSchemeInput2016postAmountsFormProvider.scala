@@ -17,15 +17,15 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
-import models.{PensionSchemeInput2016preAmounts, PensionSchemeInputAmounts}
+import models.{PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts}
 import play.api.data.Form
 import play.api.data.Forms._
 
 import javax.inject.Inject
 
-class PensionSchemeInput2016preAmountsFormProvider @Inject() extends Mappings {
+class PensionSchemeInput2016postAmountsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[PensionSchemeInput2016preAmounts] = Form(
+  def apply(): Form[PensionSchemeInput2016postAmounts] = Form(
     mapping(
       "originalPIA" -> bigInt(
         "pensionSchemeInputAmounts.error.originalPIA.required",
@@ -39,6 +39,6 @@ class PensionSchemeInput2016preAmountsFormProvider @Inject() extends Mappings {
         "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric"
       )
         .verifying(inRange[BigInt](0, BigInt("999999999"), "pensionSchemeInputAmounts.error.revisedPIA.length"))
-    )(PensionSchemeInput2016preAmounts.apply)(PensionSchemeInput2016preAmounts.unapply)
+    )(PensionSchemeInput2016postAmounts.apply)(PensionSchemeInput2016postAmounts.unapply)
   )
 }

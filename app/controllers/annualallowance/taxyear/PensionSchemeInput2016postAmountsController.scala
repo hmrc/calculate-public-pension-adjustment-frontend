@@ -17,28 +17,28 @@
 package controllers.annualallowance.taxyear
 
 import controllers.actions._
-import forms.annualallowance.taxyear.PensionSchemeInput2016preAmountsFormProvider
+import forms.annualallowance.taxyear.{PensionSchemeInput2016postAmountsFormProvider, PensionSchemeInput2016preAmountsFormProvider}
 import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
-import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInput2016preAmountsPage}
+import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInput2016postAmountsPage, PensionSchemeInput2016preAmountsPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.annualallowance.taxyear.PensionSchemeInput2016preAmountsView
+import views.html.annualallowance.taxyear.{PensionSchemeInput2016postAmountsView, PensionSchemeInput2016preAmountsView}
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PensionSchemeInput2016preAmountsController @Inject()(
+class PensionSchemeInput2016postAmountsController @Inject()(
                                                             override val messagesApi: MessagesApi,
                                                             sessionRepository: SessionRepository,
                                                             identify: IdentifierAction,
                                                             getData: DataRetrievalAction,
                                                             requireData: DataRequiredAction,
-                                                            formProvider: PensionSchemeInput2016preAmountsFormProvider,
+                                                            formProvider: PensionSchemeInput2016postAmountsFormProvider,
                                                             val controllerComponents: MessagesControllerComponents,
-                                                            view: PensionSchemeInput2016preAmountsView
+                                                            view: PensionSchemeInput2016postAmountsView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -47,7 +47,7 @@ class PensionSchemeInput2016preAmountsController @Inject()(
 
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(PensionSchemeInput2016preAmountsPage(period, schemeIndex)) match {
+      val preparedForm = request.userAnswers.get(PensionSchemeInput2016postAmountsPage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
@@ -72,8 +72,8 @@ class PensionSchemeInput2016preAmountsController @Inject()(
           value =>
             for {
               updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(PensionSchemeInput2016preAmountsPage(period, schemeIndex), value))
-              redirectUrl     = PensionSchemeInput2016preAmountsPage(period, schemeIndex).navigate(mode, updatedAnswers).url
+                Future.fromTry(request.userAnswers.set(PensionSchemeInput2016postAmountsPage(period, schemeIndex), value))
+              redirectUrl     = PensionSchemeInput2016postAmountsPage(period, schemeIndex).navigate(mode, updatedAnswers).url
               answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
               _              <- sessionRepository.set(answersWithNav)
             } yield Redirect(redirectUrl)
