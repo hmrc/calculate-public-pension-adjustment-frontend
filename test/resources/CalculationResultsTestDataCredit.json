@@ -10,7 +10,7 @@
     },
     "outDates": [
         {
-            "period": "2016-pre",
+            "period": "2016",
             "directCompensation": 0,
             "indirectCompensation": 0,
             "chargePaidByMember": 0,
@@ -18,23 +18,6 @@
             "revisedChargableAmountBeforeTaxRate": 0,
             "revisedChargableAmountAfterTaxRate": 0,
             "unusedAnnualAllowance": 60000,
-            "taxYearSchemes": [
-                {
-                    "name": "Scheme 1",
-                    "pensionSchemeTaxReference": "pstrTest1",
-                    "compensation": 0
-                }
-            ]
-        },
-        {
-            "period": "2016-post",
-            "directCompensation": 7200,
-            "indirectCompensation": 0,
-            "chargePaidByMember": 7200,
-            "chargePaidBySchemes": 0,
-            "revisedChargableAmountBeforeTaxRate": 0,
-            "revisedChargableAmountAfterTaxRate": 0,
-            "unusedAnnualAllowance": 10000,
             "taxYearSchemes": [
                 {
                     "name": "Scheme 1",
