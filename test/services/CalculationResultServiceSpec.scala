@@ -84,7 +84,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    },
            |    "aa" : {
            |      "years" : {
-           |        "2016-pre" : {
+           |        "2016" : {
            |          "memberMoreThanOnePension" : false,
            |          "schemes" : {
            |            "0" : {
@@ -105,28 +105,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "flexiAccessDefinedContributionAmount" : 10000,
            |          "definedBenefitAmount" : 30000,
            |           "totalIncome" : 60000
-           |        },
-           |        "2016-post" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 45000,
-           |                "revisedPIA" : 40000
-           |              },
-           |              "payACharge" : true,
-           |              "whoPaidAACharge" : "you",
-           |              "howMuchAAChargeYouPaid" : 2000
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 40000
            |        },
            |        "2017" : {
            |          "memberMoreThanOnePension" : false,
@@ -1164,8 +1142,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
     "toTaxYear2016To2023" - {
 
-      "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016PreAlignment" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, ???)
+      "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016" in {
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016)
 
         result mustBe Some(
           InitialFlexiblyAccessedTaxYear(
@@ -1176,22 +1154,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0)),
             60000,
             0,
-            ???
-          )
-        )
-      }
-
-      "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2016PostAlignment" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, ???)
-
-        result mustBe Some(
-          PostFlexiblyAccessedTaxYear(
-            40000,
-            0,
-            60000,
-            2000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 0)),
-            ???
+            Period._2016,
+            None
           )
         )
       }
@@ -1335,15 +1299,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0)),
                   60000,
                   0,
-                  ???
-                ),
-                PostFlexiblyAccessedTaxYear(
-                  40000,
-                  0,
-                  60000,
-                  2000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 0)),
-                  ???
+                  Period._2016,
+                  None
                 ),
                 PostFlexiblyAccessedTaxYear(
                   35000,
@@ -1463,24 +1420,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               List(
                 TaxYear2011To2015(10000, Period._2012),
                 TaxYear2011To2015(40000, Period._2013),
-                InitialFlexiblyAccessedTaxYear(
-                  30000,
-                  LocalDate.parse("2015-05-25"),
-                  6000,
-                  10000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0)),
-                  60000,
-                  0,
-                  ???
-                ),
-                PostFlexiblyAccessedTaxYear(
-                  40000,
-                  0,
-                  60000,
-                  2000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 0)),
-                  ???
-                ),
                 PostFlexiblyAccessedTaxYear(
                   35000,
                   0,
@@ -1772,11 +1711,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         service.calculationResultsViewModel(calculationResult)
 
       val sections: Seq[Seq[RowViewModel]] = viewModel.outDates
-      sections.size mustBe 5
+      sections.size mustBe 4
 
       val year = sections(0)
 
-      checkRowNameAndValue(year, 0, "periodDateRangeAA.2016-pre", "2016-pre")
+      checkRowNameAndValue(year, 0, "periodDateRangeAA.2016", "2016")
       checkRowNameAndValue(year, 1, "calculationResults.annualResults.chargePaidBySchemes", "0")
       checkRowNameAndValue(year, 2, "calculationResults.annualResults.chargePaidByMember", "0")
       checkRowNameAndValue(year, 3, "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0")
@@ -1787,7 +1726,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       viewModel.annualResultsData mustBe List(
         List(
-          RowViewModel("periodDateRangeAA.2016-pre", "2016-pre"),
+          RowViewModel("periodDateRangeAA.2016", "2016"),
           RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
           RowViewModel("calculationResults.annualResults.chargePaidByMember", "0"),
           RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
@@ -1795,16 +1734,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           RowViewModel("calculationResults.annualResults.directCompensation", "0"),
           RowViewModel("calculationResults.annualResults.indirectCompensation", "0"),
           RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "60000")
-        ),
-        List(
-          RowViewModel("periodDateRangeAA.2016-post", "2016-post"),
-          RowViewModel("calculationResults.annualResults.chargePaidBySchemes", "0"),
-          RowViewModel("calculationResults.annualResults.chargePaidByMember", "7200"),
-          RowViewModel("calculationResults.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
-          RowViewModel("calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
-          RowViewModel("calculationResults.annualResults.directCompensation", "7200"),
-          RowViewModel("calculationResults.annualResults.indirectCompensation", "0"),
-          RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", "10000")
         ),
         List(
           RowViewModel("periodDateRangeAA.2017", "2017"),
