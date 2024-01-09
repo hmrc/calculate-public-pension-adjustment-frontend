@@ -123,8 +123,17 @@ class CalculationResultService @Inject() (
     userAnswers: UserAnswers,
     period: Period
   ): Option[TaxYear2016To2023] = {
-    val totalIncome: Int = ???
-    val income: Option[Income] = ???
+    val totalIncome: Int       = userAnswers.get(TotalIncomePage(period)).map(_.toInt).getOrElse(0)
+    val income: Option[Income] =
+      if (period == Period._2016)
+        None
+      else {
+        if (userAnswers.get(ThresholdIncomePage(period)).getOrElse(false)) {
+          Some(userAnswers.get(AdjustedIncomePage(period)).map(v => AboveThreshold(v.toInt)).getOrElse(BelowThreshold))
+        } else {
+          Some(BelowThreshold)
+        }
+      }
 
     val chargePaidByMember: Int =
       userAnswers.get(HowMuchAAChargeYouPaidPage(period, SchemeIndex(0))).map(_.toInt).getOrElse(0)
