@@ -836,7 +836,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             60000,
             0,
             Period._2016,
-            Some(BelowThreshold)
+            None
           )
         )
       }
@@ -981,7 +981,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   0,
                   Period._2016,
-                  Some(BelowThreshold)
+                  None
                 ),
                 PostFlexiblyAccessedTaxYear(
                   35000,
