@@ -41,27 +41,44 @@ class PensionSchemeDetailsPageSpec extends PageBehaviours {
 
         checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/pension-input-amount")
       }
-    }
 
-    "Check mode" - {
+      "must redirect to pension scheme input amount 2016 pre page when in 2016 period" in {
 
-      "must redirect to CYA page" in {
-
-        val page = PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))
+        val page = PensionSchemeDetailsPage(Period._2016, SchemeIndex(0))
 
         val userAnswers = emptyUserAnswers
           .set(
-            PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)),
+            PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)),
             PensionSchemeDetails("schemeName", "12345678RL")
           )
           .success
           .value
 
-        val nextPageUrl = page.navigate(CheckMode, userAnswers).url
+        val nextPageUrl = page.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/annual-allowance/2018/check-answers")
-
+        checkNavigation(nextPageUrl, "/annual-allowance/2016/pension-scheme-0/pension-input-amount-15-16-period-1")
       }
+    }
+  }
+
+  "Check mode" - {
+
+    "must redirect to CYA page" in {
+
+      val page = PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(
+          PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)),
+          PensionSchemeDetails("schemeName", "12345678RL")
+        )
+        .success
+        .value
+
+      val nextPageUrl = page.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/2018/check-answers")
+
     }
   }
 }
