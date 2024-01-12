@@ -16,26 +16,20 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, PensionSchemeDetails, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class PensionSchemeDetailsPage(period: Period, schemeIndex: SchemeIndex)
-    extends QuestionPage[PensionSchemeDetails] {
+case class PensionSchemeInput2016postAmountsPage(period: Period, schemeIndex: SchemeIndex)
+    extends QuestionPage[PensionSchemeInput2016postAmounts] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
 
-  override def toString: String = "pensionSchemeDetails"
+  override def toString: String = "PensionSchemeInput2016postAmounts"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    if (period == Period._2016) {
-      controllers.annualallowance.taxyear.routes.PensionSchemeInput2016preAmountsController
-        .onPageLoad(NormalMode, period, schemeIndex)
-    } else {
-      controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
-        .onPageLoad(NormalMode, period, schemeIndex)
-    }
+    controllers.annualallowance.taxyear.routes.PayAChargeController.onPageLoad(NormalMode, period, schemeIndex)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
