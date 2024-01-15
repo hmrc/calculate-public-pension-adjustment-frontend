@@ -39,7 +39,7 @@ import scala.concurrent.Future
 class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new DefinedContribution2016PostFlexiAmountFormProvider()
-  val form         = formProvider(Seq("2 January 2016 to 5 April 2016"))
+  val form         = formProvider(Seq("2 January 2016 and 5 April 2016"))
 
   val validDate = LocalDate.of(2016, 1, 1)
 
@@ -74,7 +74,7 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
         contentAsString(result) mustEqual view(
           form,
           NormalMode,
-          "2 January 2016 to 5 April 2016"
+          "2 January 2016 and 5 April 2016"
         )(request, messages(application)).toString
       }
     }
@@ -99,7 +99,7 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, "2 January 2016 to 5 April 2016")(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, "2 January 2016 and 5 April 2016")(
           request,
           messages(application)
         ).toString
@@ -152,7 +152,7 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          "2 January 2016 to 5 April 2016"
+          "2 January 2016 and 5 April 2016"
         )(
           request,
           messages(application)
@@ -207,7 +207,7 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        val flexiForm = formProvider(Seq("10 July 2015 to 5 April 2016"))
+        val flexiForm = formProvider(Seq("10 July 2015 and 5 April 2016"))
 
         val view = application.injector.instanceOf[DefinedContribution2016PostFlexiAmountView]
 
@@ -215,7 +215,7 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
         contentAsString(result) mustEqual view(
           flexiForm,
           NormalMode,
-          "10 July 2015 to 5 April 2016"
+          "10 July 2015 and 5 April 2016"
         )(
           request,
           messages(application)

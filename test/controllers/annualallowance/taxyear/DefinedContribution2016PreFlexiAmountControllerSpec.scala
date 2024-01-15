@@ -40,7 +40,7 @@ import scala.concurrent.Future
 class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new DefinedContribution2016PreFlexiAmountFormProvider()
-  val form         = formProvider(Seq("2 July 2015 to 8 July 2015"))
+  val form         = formProvider(Seq("2 July 2015 and 8 July 2015"))
 
   val validDate = LocalDate.of(2015, 7, 1)
 
@@ -72,7 +72,7 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
         val view = application.injector.instanceOf[DefinedContribution2016PreFlexiAmountView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, "2 July 2015 to 8 July 2015")(
+        contentAsString(result) mustEqual view(form, NormalMode, "2 July 2015 and 8 July 2015")(
           request,
           messages(application)
         ).toString
@@ -99,7 +99,7 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, "2 July 2015 to 8 July 2015")(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, "2 July 2015 and 8 July 2015")(
           request,
           messages(application)
         ).toString
@@ -152,7 +152,7 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          "2 July 2015 to 8 July 2015"
+          "2 July 2015 and 8 July 2015"
         )(
           request,
           messages(application)
@@ -207,12 +207,12 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
 
         val result = route(application, request).value
 
-        val flexiForm = formProvider(Seq("7 April 2015 to 8 July 2015"))
+        val flexiForm = formProvider(Seq("7 April 2015 and 8 July 2015"))
 
         val view = application.injector.instanceOf[DefinedContribution2016PreFlexiAmountView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(flexiForm, NormalMode, "7 April 2015 to 8 July 2015")(
+        contentAsString(result) mustEqual view(flexiForm, NormalMode, "7 April 2015 and 8 July 2015")(
           request,
           messages(application)
         ).toString

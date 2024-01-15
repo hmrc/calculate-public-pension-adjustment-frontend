@@ -40,9 +40,9 @@ import scala.concurrent.Future
 class DefinedContribution2016PreAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider           = new DefinedContribution2016PreAmountFormProvider()
-  val form                   = formProvider(Seq("6 April 2015 to 8 July 2015"))
-  val flexiForm              = formProvider(Seq("6 April 2015 to 1 July 2015"))
-  val flexiFormStartOfPeriod = formProvider(Seq("6 April 2015 to 6 April 2015"))
+  val form                   = formProvider(Seq("6 April 2015 and 8 July 2015"))
+  val flexiForm              = formProvider(Seq("6 April 2015 and 1 July 2015"))
+  val flexiFormStartOfPeriod = formProvider(Seq("6 April 2015 and 6 April 2015"))
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -68,7 +68,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
         contentAsString(result) mustEqual view(
           form,
           NormalMode,
-          "6 April 2015 to 8 July 2015"
+          "6 April 2015 and 8 July 2015"
         )(
           request,
           messages(application)
@@ -98,7 +98,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
         contentAsString(result) mustEqual view(
           flexiForm,
           NormalMode,
-          "6 April 2015 to 1 July 2015"
+          "6 April 2015 and 1 July 2015"
         )(
           request,
           messages(application)
@@ -128,7 +128,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
         contentAsString(result) mustEqual view(
           flexiForm,
           NormalMode,
-          "6 April 2015 to 6 April 2015"
+          "6 April 2015 and 6 April 2015"
         )(
           request,
           messages(application)
@@ -223,7 +223,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
         contentAsString(result) mustEqual view(
           form.fill(validAnswer),
           NormalMode,
-          "6 April 2015 to 8 July 2015"
+          "6 April 2015 and 8 July 2015"
         )(
           request,
           messages(application)
@@ -272,7 +272,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          "6 April 2015 to 8 July 2015"
+          "6 April 2015 and 8 July 2015"
         )(
           request,
           messages(application)

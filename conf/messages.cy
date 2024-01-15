@@ -80,6 +80,7 @@ unauthorised.heading = cy: You can’t access this service with this account
 annualAllowance.caption = cy: Annual allowance
 lifetimeAllowance.caption = cy: Lifetime allowance
 divider = cy: or
+startEndDateAnd = cy: And
 annualAllowance.period.caption.2016 = cy: Annual allowance between 6 April 2015 to 5 April 2016
 annualAllowance.period.caption.2016pre = cy: Annual allowance between 6 April 2015 to 8 July 2015
 annualAllowance.period.caption.2016post = cy: Annual allowance between 9 July 2015 to 5 April 2016

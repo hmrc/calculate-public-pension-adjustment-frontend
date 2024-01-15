@@ -80,6 +80,7 @@ unauthorised.heading = You can’t access this service with this account
 annualAllowance.caption = Annual allowance
 lifetimeAllowance.caption = Lifetime allowance
 divider = or
+startEndDateAnd = and
 annualAllowance.period.caption.2016 = Annual allowance between 6 April 2015 to 5 April 2016
 annualAllowance.period.caption.2016pre = Annual allowance between 6 April 2015 to 8 July 2015
 annualAllowance.period.caption.2016post = Annual allowance between 9 July 2015 to 5 April 2016

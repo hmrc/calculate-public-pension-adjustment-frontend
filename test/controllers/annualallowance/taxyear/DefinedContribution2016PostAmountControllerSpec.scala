@@ -40,9 +40,9 @@ import scala.concurrent.Future
 class DefinedContribution2016PostAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider           = new DefinedContribution2016PostAmountFormProvider()
-  val form                   = formProvider(Seq("9 July 2015 to 5 April 2016"))
-  val flexiForm              = formProvider(Seq("9 July 2015 to 1 December 2015"))
-  val flexiFormStartOfPeriod = formProvider(Seq("9 July 2015 to 9 July 2015"))
+  val form                   = formProvider(Seq("9 July 2015 and 5 April 2016"))
+  val flexiForm              = formProvider(Seq("9 July 2015 and 1 December 2015"))
+  val flexiFormStartOfPeriod = formProvider(Seq("9 July 2015 and 9 July 2015"))
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -65,7 +65,7 @@ class DefinedContribution2016PostAmountControllerSpec extends SpecBase with Mock
         val view = application.injector.instanceOf[DefinedContribution2016PostAmountView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, "9 July 2015 to 5 April 2016")(
+        contentAsString(result) mustEqual view(form, NormalMode, "9 July 2015 and 5 April 2016")(
           request,
           messages(application)
         ).toString
@@ -94,7 +94,7 @@ class DefinedContribution2016PostAmountControllerSpec extends SpecBase with Mock
         contentAsString(result) mustEqual view(
           flexiForm,
           NormalMode,
-          "9 July 2015 to 1 December 2015"
+          "9 July 2015 and 1 December 2015"
         )(
           request,
           messages(application)
@@ -124,7 +124,7 @@ class DefinedContribution2016PostAmountControllerSpec extends SpecBase with Mock
         contentAsString(result) mustEqual view(
           flexiForm,
           NormalMode,
-          "9 July 2015 to 9 July 2015"
+          "9 July 2015 and 9 July 2015"
         )(
           request,
           messages(application)
@@ -216,7 +216,7 @@ class DefinedContribution2016PostAmountControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, "9 July 2015 to 5 April 2016")(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, "9 July 2015 and 5 April 2016")(
           request,
           messages(application)
         ).toString
@@ -264,7 +264,7 @@ class DefinedContribution2016PostAmountControllerSpec extends SpecBase with Mock
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          "9 July 2015 to 5 April 2016"
+          "9 July 2015 and 5 April 2016"
         )(request, messages(application)).toString
       }
     }

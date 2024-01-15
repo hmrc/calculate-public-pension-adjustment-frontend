@@ -52,18 +52,23 @@ object DefinedContribution2016PostAmountSummary {
       )
     }
 
-  private def getStartEndDate(flexibleStartDate: Option[LocalDate]): String = {
+  private def getStartEndDate(flexibleStartDate: Option[LocalDate])(implicit messages: Messages): String = {
     val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
 
     def normalDateFormatter =
       flexibleStartDate match {
         case Some(date) if date.isAfter(Period.post2016Start) && date.isBefore(Period.post2016End) =>
-          Period.post2016Start.format(formatter) + " to " + date.format(formatter)
-        case _                                                                                     => Period.post2016Start.format(formatter) + " to " + Period.post2016End.format(formatter)
+          Period.post2016Start.format(formatter) + " " + messages("startEndDateAnd") + " " + date.format(formatter)
+        case _                                                                                     =>
+          Period.post2016Start.format(formatter) + " " + messages("startEndDateAnd") + " " + Period.post2016End.format(
+            formatter
+          )
       }
 
     if (flexibleStartDate == Some(Period.post2016Start)) {
-      Period.post2016Start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
+      Period.post2016Start.format(formatter) + " " + messages("startEndDateAnd") + " " + flexibleStartDate.get.format(
+        formatter
+      )
     } else {
       normalDateFormatter
     }
