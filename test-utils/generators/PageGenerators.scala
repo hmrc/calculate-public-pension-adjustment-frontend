@@ -24,6 +24,28 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryDefinedContribution2016PreFlexiAmountPage
+    : Arbitrary[DefinedContribution2016PreFlexiAmountPage.type] =
+    Arbitrary(DefinedContribution2016PreFlexiAmountPage)
+
+  implicit lazy val arbitraryDefinedContribution2016PostFlexiAmountPage
+    : Arbitrary[DefinedContribution2016PostFlexiAmountPage.type] =
+    Arbitrary(DefinedContribution2016PostFlexiAmountPage)
+
+  implicit lazy val arbitraryDefinedBenefit2016PostAmountPage: Arbitrary[DefinedBenefit2016PostAmountPage.type] =
+    Arbitrary(DefinedBenefit2016PostAmountPage)
+
+  implicit lazy val arbitraryDefinedContribution2016PreAmountPage
+    : Arbitrary[DefinedContribution2016PreAmountPage.type] =
+    Arbitrary(DefinedContribution2016PreAmountPage)
+
+  implicit lazy val arbitraryDefinedContribution2016PostAmountPage
+    : Arbitrary[DefinedContribution2016PostAmountPage.type] =
+    Arbitrary(DefinedContribution2016PostAmountPage)
+
+  implicit lazy val arbitraryDefinedBenefit2016PreAmountPage: Arbitrary[DefinedBenefit2016PreAmountPage.type] =
+    Arbitrary(DefinedBenefit2016PreAmountPage)
+
   implicit lazy val arbitraryRegisteredYearPage: Arbitrary[RegisteredYearPage.type] =
     Arbitrary(RegisteredYearPage)
 
