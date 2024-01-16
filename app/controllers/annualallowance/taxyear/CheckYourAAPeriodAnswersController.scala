@@ -92,14 +92,51 @@ class CheckYourAAPeriodAnswersController @Inject() (
           TotalIncomeSummary.row(request.userAnswers, period)
         )
 
+      val flexiPeriodEndateRows2016: Seq[Option[SummaryListRow]] =
+        Seq(
+          OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
+          ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
+          DefinedContribution2016PreAmountSummary.row(request.userAnswers),
+          DefinedContribution2016PostAmountSummary.row(request.userAnswers),
+          DefinedBenefit2016PreAmountSummary.row(request.userAnswers),
+          DefinedBenefit2016PostAmountSummary.row(request.userAnswers),
+          TotalIncomeSummary.row(request.userAnswers, period)
+        )
+
+      val regularRows2016: Seq[Option[SummaryListRow]] =
+        Seq(
+          OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
+          ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
+          DefinedContribution2016PreAmountSummary.row(request.userAnswers),
+          DefinedContribution2016PreFlexiAmountSummary.row(request.userAnswers),
+          DefinedContribution2016PostAmountSummary.row(request.userAnswers),
+          DefinedContribution2016PostFlexiAmountSummary.row(request.userAnswers),
+          DefinedBenefit2016PreAmountSummary.row(request.userAnswers),
+          DefinedBenefit2016PostAmountSummary.row(request.userAnswers),
+          TotalIncomeSummary.row(request.userAnswers, period)
+        )
+
+      def is2016Period: Boolean =
+        if (period == Period._2016)
+          true
+        else false
+
       def maybeFlexiPeriodEndDateRowsStatus: Boolean =
         if (flexiAccessExistsForPeriod) {
-          flexibleStartDate match {
-            case Some(date) if date == period.end =>
-              true
-            case _                                =>
-              false
-          }
+          if (period == Period._2016)
+            flexibleStartDate match {
+              case Some(date) if date == Period.pre2016End || date == Period.post2016End =>
+                true
+              case _                                                                     =>
+                false
+            }
+          else
+            flexibleStartDate match {
+              case Some(date) if date == period.end =>
+                true
+              case _                                =>
+                false
+            }
         } else false
 
       val combinedRows: Seq[Option[SummaryListRow]] = Seq(rowsOne ++ rowsTwo).flatten
@@ -107,11 +144,14 @@ class CheckYourAAPeriodAnswersController @Inject() (
       Ok(
         view(
           maybeFlexiPeriodEndDateRowsStatus,
+          is2016Period,
           s"checkYourAnswers.aa.period.subHeading.$period",
           controllers.routes.TaskListController.onPageLoad(),
           SummaryListViewModel(combinedRows.flatten),
           SummaryListViewModel(regularRows.flatten),
-          SummaryListViewModel(flexiPeriodEndateRows.flatten)
+          SummaryListViewModel(flexiPeriodEndateRows.flatten),
+          SummaryListViewModel(regularRows2016.flatten),
+          SummaryListViewModel(flexiPeriodEndateRows2016.flatten)
         )
       )
   }
