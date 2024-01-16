@@ -108,7 +108,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must return OK and the correct view when user indicated flexi year for a GET when flexi date first day of period not post 2016 period" in {
+    "must return OK and the correct view when user indicated flexi year for a GET when flexi date first day of period" in {
       val flexiDateStartOfPeriod = LocalDate.of(2022, 4, 6)
 
       val userAnswers = UserAnswers(userAnswersId)

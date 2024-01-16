@@ -38,12 +38,10 @@ case class FlexiAccessDefinedContributionAmountPage(period: Period) extends Ques
       controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(NormalMode, period)
     } else {
       answers.get(FlexiAccessDefinedContributionAmountPage(period)) match {
-        case Some(_) if period == Period._2016 =>
-          controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
-        case Some(_)                           =>
+        case Some(_) =>
           controllers.annualallowance.taxyear.routes.ThresholdIncomeController
             .onPageLoad(NormalMode, period)
-        case None                              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+        case None    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     }
   }
