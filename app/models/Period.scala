@@ -30,6 +30,11 @@ sealed trait Period {
 
 object Period {
 
+  val pre2016Start  = LocalDate.of(2015, 4, 6)
+  val pre2016End    = LocalDate.of(2015, 7, 8)
+  val post2016Start = LocalDate.of(2015, 7, 9)
+  val post2016End   = LocalDate.of(2016, 4, 5)
+
   case class Year(year: Int) extends Period {
 
     override lazy val toString: String = year.toString

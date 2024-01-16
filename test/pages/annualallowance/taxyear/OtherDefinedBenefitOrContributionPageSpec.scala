@@ -49,7 +49,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
           checkNavigation(result, "/annual-allowance/2016/contributed-to-dc-or-db-scheme")
         }
 
-        "to CheckYourAnswersPage when answered false" in {
+        "to total-income when answered false" in {
           val ua     = emptyUserAnswers
             .set(
               OtherDefinedBenefitOrContributionPage(period),
@@ -102,38 +102,41 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
       }
     }
 
-    "must Navigate correctly to CYA in check mode" in {
-      val ua     = emptyUserAnswers
-        .set(
-          OtherDefinedBenefitOrContributionPage(Period._2013),
-          false
-        )
-        .success
-        .value
-      val result = OtherDefinedBenefitOrContributionPage(_2013).navigate(CheckMode, ua).url
+    "must navigate correctly in Check Mode" - {
 
-      checkNavigation(result, "/annual-allowance/2013/check-answers")
-    }
+      "must navigate to CYA when false" in {
+        val ua     = emptyUserAnswers
+          .set(
+            OtherDefinedBenefitOrContributionPage(Period._2018),
+            false
+          )
+          .success
+          .value
+        val result = OtherDefinedBenefitOrContributionPage(Period._2018).navigate(CheckMode, ua).url
 
-    "to JourneyRecovery when not answered in Check Mode" in {
-      val result = OtherDefinedBenefitOrContributionPage(
-        _2013
-      ).navigate(CheckMode, emptyUserAnswers).url
+        checkNavigation(result, "/annual-allowance/2018/check-answers")
+      }
 
-      checkNavigation(result, "/there-is-a-problem")
-    }
+      "to JourneyRecovery when not answered in Check Mode" in {
+        val result = OtherDefinedBenefitOrContributionPage(
+          Period._2018
+        ).navigate(CheckMode, emptyUserAnswers).url
 
-    "must Navigate correctly to ContributedToDuringRemedyPeriodPage in normal mode" in {
-      val ua     = emptyUserAnswers
-        .set(
-          OtherDefinedBenefitOrContributionPage(Period._2013),
-          true
-        )
-        .success
-        .value
-      val result = OtherDefinedBenefitOrContributionPage(_2013).navigate(CheckMode, ua).url
+        checkNavigation(result, "/there-is-a-problem")
+      }
 
-      checkNavigation(result, "/annual-allowance/2013/change-contributed-to-dc-or-db-scheme")
+      "must Navigate correctly to ContributedToDuringRemedyPeriodPage" in {
+        val ua     = emptyUserAnswers
+          .set(
+            OtherDefinedBenefitOrContributionPage(Period._2018),
+            true
+          )
+          .success
+          .value
+        val result = OtherDefinedBenefitOrContributionPage(Period._2018).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2018/change-contributed-to-dc-or-db-scheme")
+      }
     }
   }
 }
