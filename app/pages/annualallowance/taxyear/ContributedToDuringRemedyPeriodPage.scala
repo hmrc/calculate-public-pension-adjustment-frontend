@@ -35,11 +35,20 @@ case class ContributedToDuringRemedyPeriodPage(period: Period)
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ContributedToDuringRemedyPeriodPage(period)) match {
       case Some(contributions) if contributions.contains(Definedcontribution) =>
-        controllers.annualallowance.taxyear.routes.DefinedContributionAmountController
-          .onPageLoad(NormalMode, period)
+        if (period == Period._2016) {
+          controllers.annualallowance.taxyear.routes.DefinedContribution2016PreAmountController
+            .onPageLoad(NormalMode)
+        } else {
+          controllers.annualallowance.taxyear.routes.DefinedContributionAmountController
+            .onPageLoad(NormalMode, period)
+        }
       case Some(_)                                                            =>
-        controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController
-          .onPageLoad(NormalMode, period)
+        if (period == Period._2016) {
+          controllers.annualallowance.taxyear.routes.DefinedBenefit2016PreAmountController.onPageLoad(NormalMode)
+        } else {
+          controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController
+            .onPageLoad(NormalMode, period)
+        }
       case None                                                               =>
         routes.JourneyRecoveryController.onPageLoad(None)
     }
@@ -60,24 +69,48 @@ case class ContributedToDuringRemedyPeriodPage(period: Period)
     }
 
   private def bothSelected(answers: UserAnswers) =
-    answers.get(DefinedContributionAmountPage(period)) match {
-      case None    =>
-        controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(CheckMode, period)
-      case Some(_) => onlyDefinedBenefitSelected(answers)
+    if (period == Period._2016) {
+      answers.get(DefinedContribution2016PreAmountPage) match {
+        case None    =>
+          controllers.annualallowance.taxyear.routes.DefinedContribution2016PreAmountController.onPageLoad(CheckMode)
+        case Some(_) => onlyDefinedBenefitSelected(answers)
+      }
+    } else {
+      answers.get(DefinedContributionAmountPage(period)) match {
+        case None    =>
+          controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(CheckMode, period)
+        case Some(_) => onlyDefinedBenefitSelected(answers)
+      }
     }
 
   private def onlyDefinedContributionSelected(answers: UserAnswers) =
-    answers.get(DefinedContributionAmountPage(period)) match {
-      case None    =>
-        controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(CheckMode, period)
-      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    if (period == Period._2016) {
+      answers.get(DefinedContribution2016PreAmountPage) match {
+        case None    =>
+          controllers.annualallowance.taxyear.routes.DefinedContribution2016PreAmountController.onPageLoad(CheckMode)
+        case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      }
+    } else {
+      answers.get(DefinedContributionAmountPage(period)) match {
+        case None    =>
+          controllers.annualallowance.taxyear.routes.DefinedContributionAmountController.onPageLoad(CheckMode, period)
+        case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      }
     }
 
   private def onlyDefinedBenefitSelected(answers: UserAnswers) =
-    answers.get(DefinedBenefitAmountPage(period)) match {
-      case None    =>
-        controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(CheckMode, period)
-      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    if (period == Period._2016) {
+      answers.get(DefinedBenefit2016PreAmountPage) match {
+        case None    =>
+          controllers.annualallowance.taxyear.routes.DefinedBenefit2016PreAmountController.onPageLoad(CheckMode)
+        case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      }
+    } else {
+      answers.get(DefinedBenefitAmountPage(period)) match {
+        case None    =>
+          controllers.annualallowance.taxyear.routes.DefinedBenefitAmountController.onPageLoad(CheckMode, period)
+        case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      }
     }
 
   override def cleanup(
@@ -87,12 +120,30 @@ case class ContributedToDuringRemedyPeriodPage(period: Period)
     value
       .map { set =>
         if (!set.contains(ContributedToDuringRemedyPeriod.Definedcontribution)) {
-          userAnswers
-            .remove(DefinedContributionAmountPage(period))
-            .get
-            .remove(FlexiAccessDefinedContributionAmountPage(period))
+          if (period == Period._2016) {
+            userAnswers
+              .remove(DefinedContribution2016PreAmountPage)
+              .get
+              .remove(DefinedContribution2016PreFlexiAmountPage)
+              .get
+              .remove(DefinedContribution2016PostAmountPage)
+              .get
+              .remove(DefinedContribution2016PostFlexiAmountPage)
+          } else {
+            userAnswers
+              .remove(DefinedContributionAmountPage(period))
+              .get
+              .remove(FlexiAccessDefinedContributionAmountPage(period))
+          }
         } else if (!set.contains(ContributedToDuringRemedyPeriod.Definedbenefit)) {
-          userAnswers.remove(DefinedBenefitAmountPage(period))
+          if (period == Period._2016) {
+            userAnswers
+              .remove(DefinedBenefit2016PreAmountPage)
+              .get
+              .remove(DefinedBenefit2016PostAmountPage)
+          } else {
+            userAnswers.remove(DefinedBenefitAmountPage(period))
+          }
         } else {
           super.cleanup(value, userAnswers)
         }

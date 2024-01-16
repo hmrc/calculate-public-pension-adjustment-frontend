@@ -31,23 +31,6 @@ class DefinedBenefitAmountPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "for 15-16" - {
-        val period: Period = Period._2016
-
-        "to TotalIncomePage when answered" in {
-          val ua     = emptyUserAnswers
-            .set(
-              DefinedBenefitAmountPage(period),
-              BigInt("100")
-            )
-            .success
-            .value
-          val result = DefinedBenefitAmountPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/total-income")
-        }
-      }
-
       "for 16-17 onwards" - {
         val period: Period = genPeriodNot2016.sample.value
 

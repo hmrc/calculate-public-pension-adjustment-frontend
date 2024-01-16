@@ -31,49 +31,6 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "for 15-16" - {
-
-        val period = Period._2016
-
-        "to DefinedBenefitPage when DB is selected" in {
-          val ua     = emptyUserAnswers
-            .set(
-              FlexiAccessDefinedContributionAmountPage(period),
-              BigInt("100")
-            )
-            .success
-            .value
-            .set(
-              ContributedToDuringRemedyPeriodPage(period),
-              Set(ContributedToDuringRemedyPeriod.values.tail.head)
-            )
-            .success
-            .value
-          val result = FlexiAccessDefinedContributionAmountPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/pension-input-amount-defined-benefit")
-        }
-
-        "to TotalIncomePage when no DB selected" in {
-          val ua     = emptyUserAnswers
-            .set(
-              FlexiAccessDefinedContributionAmountPage(period),
-              BigInt("100")
-            )
-            .success
-            .value
-            .set(
-              ContributedToDuringRemedyPeriodPage(period),
-              Set(ContributedToDuringRemedyPeriod.values.head)
-            )
-            .success
-            .value
-          val result = FlexiAccessDefinedContributionAmountPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/total-income")
-        }
-      }
-
       "for 16-17 onwards" - {
 
         val period = genPeriodNot2016.sample.value
