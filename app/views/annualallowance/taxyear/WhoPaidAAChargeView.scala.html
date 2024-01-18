@@ -22,9 +22,9 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whoPaidAACharge.title", schemeIndex))) {
+@layout(pageTitle = title(form, messages("whoPaidAACharge.title", schemeIndex, schemeName))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController.onSubmit(mode,period, schemeIndex), Symbol("autoComplete") -> "off") {
 
@@ -36,7 +36,7 @@
             RadiosViewModel(
                 field  = form("value"),
                 legend = HmrcPageHeadingLegend(
-                    content = messages("whoPaidAACharge.heading", schemeName),
+                    content = messages("whoPaidAACharge.heading", schemeName, startEndDate),
                     caption = HmrcSectionCaption(messages("annualAllowance.period.caption." + period) )),
                 items  = WhoPaidAACharge.options
             )
