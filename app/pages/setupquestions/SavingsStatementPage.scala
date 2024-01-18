@@ -34,7 +34,6 @@ case class SavingsStatementPage(optionalAuthEnabled: Boolean) extends QuestionPa
     (answers.get(SavingsStatementPage(optionalAuthEnabled)), optionalAuthEnabled, answers.authenticated) match {
       case (Some(true), true, true) =>
         controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-
       case (Some(true), true, false) =>
         controllers.routes.OptionalSignInController.onPageLoad()
       case (Some(true), false, _)    =>

@@ -43,7 +43,6 @@ class UserAnswersConnector @Inject()(config: Configuration, httpClient: HttpClie
       .logFailureReason(connectorName = "UserAnswersConnector on get")
 
   def set(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Done] = {
-    println("UserAnswers in the body" + Json.toJson(answers))
     httpClient
       .post(userAnswersUrl)
       .withBody(Json.toJson(answers))

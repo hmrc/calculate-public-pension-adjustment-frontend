@@ -23,7 +23,7 @@ import models.tasklist.sections.SetupSection
 import pages.setupquestions.ReasonForResubmissionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.ReasonForResubmissionView
 
@@ -32,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class ReasonForResubmissionController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -65,7 +65,7 @@ class ReasonForResubmissionController @Inject() (
               updatedAnswers <- Future.fromTry(request.userAnswers.set(ReasonForResubmissionPage, value))
               redirectUrl     = ReasonForResubmissionPage.navigate(mode, updatedAnswers).url
               answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
   }
