@@ -32,7 +32,7 @@ case class SavingsStatementPage(optionalAuthEnabled: Boolean) extends QuestionPa
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     (answers.get(SavingsStatementPage(optionalAuthEnabled)), optionalAuthEnabled, answers.authenticated) match {
-      case (Some(true), true, true) =>
+      case (Some(true), true, true)  =>
         controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
       case (Some(true), true, false) =>
         controllers.routes.OptionalSignInController.onPageLoad()

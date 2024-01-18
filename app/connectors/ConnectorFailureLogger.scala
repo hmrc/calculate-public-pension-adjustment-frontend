@@ -21,23 +21,22 @@ import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, RequestId, Upstre
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object ConnectorFailureLogger extends Logging{
+object ConnectorFailureLogger extends Logging {
   implicit class FromResultToConnectorFailureLogger[T](httpResult: Future[T]) {
     def logFailureReason(connectorName: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[T] = {
       val requestId = hc.requestId.getOrElse(RequestId("Undefined"))
       httpResult.recoverWith {
-        case e: UpstreamErrorResponse => {
+        case e: UpstreamErrorResponse =>
           logger.warn(s"Received error status ${e.statusCode} from $connectorName with requestId: ${requestId.value}")
           Future.failed(e)
-        }
-        case e: JsValidationException => {
-          logger.warn(s"Unable to parse the content of a response from $connectorName with requestId: ${requestId.value}")
+        case e: JsValidationException =>
+          logger.warn(
+            s"Unable to parse the content of a response from $connectorName with requestId: ${requestId.value}"
+          )
           Future.failed(e)
-        }
-        case e => {
+        case e                        =>
           logger.warn(s"Received an error from $connectorName with requestId: ${requestId.value}")
           Future.failed(e)
-        }
       }
     }
   }

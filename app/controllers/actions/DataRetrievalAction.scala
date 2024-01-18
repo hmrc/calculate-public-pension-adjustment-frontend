@@ -19,16 +19,19 @@ package controllers.actions
 import javax.inject.Inject
 import models.requests.{AuthenticatedIdentifierRequest, IdentifierRequest, OptionalDataRequest, UnauthenticatedIdentifierRequest}
 import play.api.mvc.ActionTransformer
-import repositories.SessionRepository
+import services.UserDataService
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class DataRetrievalActionImpl @Inject() (
-  val sessionRepository: SessionRepository
+  val userDataService: UserDataService
 )(implicit val executionContext: ExecutionContext)
     extends DataRetrievalAction {
 
   override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = {
+
+    val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     val authenticated = request match {
       case AuthenticatedIdentifierRequest(_, _)   => true
@@ -36,7 +39,7 @@ class DataRetrievalActionImpl @Inject() (
     }
 
     for {
-      maybeUserAnswers <- sessionRepository.get(request.userId)
+      maybeUserAnswers <- userDataService.get()(hc)
     } yield OptionalDataRequest(
       request,
       request.userId,

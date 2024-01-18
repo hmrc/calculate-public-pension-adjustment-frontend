@@ -18,13 +18,14 @@ package controllers.lifetimeallowance
 
 import controllers.actions._
 import forms.lifetimeallowance.LifetimeAllowanceChargeFormProvider
+
 import javax.inject.Inject
 import models.Mode
 import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.LifetimeAllowanceChargePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.lifetimeallowance.LifetimeAllowanceChargeView
 
@@ -32,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class LifetimeAllowanceChargeController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -65,7 +66,7 @@ class LifetimeAllowanceChargeController @Inject() (
               updatedAnswers <- Future.fromTry(request.userAnswers.set(LifetimeAllowanceChargePage, value))
               redirectUrl     = LifetimeAllowanceChargePage.navigate(mode, updatedAnswers).url
               answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
   }

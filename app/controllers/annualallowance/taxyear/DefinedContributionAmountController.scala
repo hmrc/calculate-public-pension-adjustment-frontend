@@ -25,8 +25,9 @@ import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.{DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.annualallowance.taxyear.DefinedContributionAmountView
 
 import java.time.LocalDate
@@ -37,7 +38,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DefinedContributionAmountController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -99,7 +100,8 @@ class DefinedContributionAmountController @Inject() (
     period: Period,
     request: DataRequest[AnyContent],
     value: BigInt
-  ) =
+  ) = {
+    val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     for {
       updatedAnswers <- Future.fromTry(
                           request.userAnswers
@@ -108,16 +110,24 @@ class DefinedContributionAmountController @Inject() (
                         )
       redirectUrl     = DefinedContributionAmountPage(period).navigate(mode, updatedAnswers).url
       answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-      _              <- sessionRepository.set(answersWithNav)
+      _              <- userDataService.set(answersWithNav)(hc)
     } yield Redirect(redirectUrl)
+  }
 
-  private def updateAnswersForNormalDate(mode: Mode, period: Period, request: DataRequest[AnyContent], value: BigInt) =
+  private def updateAnswersForNormalDate(
+    mode: Mode,
+    period: Period,
+    request: DataRequest[AnyContent],
+    value: BigInt
+  ) = {
+    val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     for {
       updatedAnswers <- Future.fromTry(request.userAnswers.set(DefinedContributionAmountPage(period), value))
       redirectUrl     = DefinedContributionAmountPage(period).navigate(mode, updatedAnswers).url
       answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-      _              <- sessionRepository.set(answersWithNav)
+      _              <- userDataService.set(answersWithNav)(hc)
     } yield Redirect(redirectUrl)
+  }
 
   private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate])(implicit
     messages: Messages

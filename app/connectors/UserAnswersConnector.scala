@@ -29,12 +29,11 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, Upstream
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class UserAnswersConnector @Inject()(config: Configuration, httpClient: HttpClientV2)
-                                    (implicit ec: ExecutionContext) {
+class UserAnswersConnector @Inject() (config: Configuration, httpClient: HttpClientV2)(implicit ec: ExecutionContext) {
 
-  private val baseUrl = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
+  private val baseUrl        = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
   private val userAnswersUrl = url"$baseUrl/calculate-public-pension-adjustment/user-answers"
-  private val keepAliveUrl = url"$baseUrl/calculate-public-pension-adjustment/user-answers/keep-alive"
+  private val keepAliveUrl   = url"$baseUrl/calculate-public-pension-adjustment/user-answers/keep-alive"
 
   def get()(implicit hc: HeaderCarrier): Future[Option[UserAnswers]] =
     httpClient
@@ -42,7 +41,7 @@ class UserAnswersConnector @Inject()(config: Configuration, httpClient: HttpClie
       .execute[Option[UserAnswers]]
       .logFailureReason(connectorName = "UserAnswersConnector on get")
 
-  def set(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Done] = {
+  def set(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Done] =
     httpClient
       .post(userAnswersUrl)
       .withBody(Json.toJson(answers))
@@ -55,7 +54,6 @@ class UserAnswersConnector @Inject()(config: Configuration, httpClient: HttpClie
           Future.failed(UpstreamErrorResponse("", response.status))
         }
       }
-  }
 
   def keepAlive()(implicit hc: HeaderCarrier): Future[Done] =
     httpClient

@@ -23,7 +23,7 @@ import models.tasklist.sections.PreAASection
 import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.preaaquestions.PayTaxCharge1415View
 
@@ -32,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class PayTaxCharge1415Controller @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -65,7 +65,7 @@ class PayTaxCharge1415Controller @Inject() (
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PayTaxCharge1415Page, value))
               redirectUrl     = PayTaxCharge1415Page.navigate(mode, updatedAnswers).url
               answersWithNav  = PreAASection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
   }

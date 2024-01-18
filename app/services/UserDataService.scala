@@ -24,7 +24,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class UserDataService @Inject()(connector: UserAnswersConnector) extends Logging {
+class UserDataService @Inject() (connector: UserAnswersConnector) extends Logging {
 
   def get()(implicit hc: HeaderCarrier): Future[Option[UserAnswers]] =
     connector.get()
