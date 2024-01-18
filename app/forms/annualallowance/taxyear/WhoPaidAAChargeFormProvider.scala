@@ -24,8 +24,12 @@ import javax.inject.Inject
 
 class WhoPaidAAChargeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[WhoPaidAACharge] =
+  def apply(schemeName: String, startEndDate: String): Form[WhoPaidAACharge] =
     Form(
-      "value" -> enumerable[WhoPaidAACharge]("whoPaidAACharge.error.required")
+      "value" -> enumerable[WhoPaidAACharge](
+        "whoPaidAACharge.error.required",
+        "error.invalid",
+        Seq(schemeName, startEndDate)
+      )
     )
 }
