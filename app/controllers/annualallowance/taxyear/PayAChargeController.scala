@@ -21,12 +21,14 @@ import forms.annualallowance.taxyear.PayAChargeFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.{PayAChargePage, PensionSchemeDetailsPage}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.PayAChargeView
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -48,12 +50,12 @@ class PayAChargeController @Inject() (
       val schemeName   = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName
       }
-      val form         = formProvider(schemeName.getOrElse(""))
+      val form         = formProvider(schemeName.getOrElse(""), startEndDate(period))
       val preparedForm = request.userAnswers.get(PayAChargePage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
-      Ok(view(preparedForm, mode, period, schemeIndex, schemeName.getOrElse("")))
+      Ok(view(preparedForm, mode, period, schemeIndex, schemeName.getOrElse(""), startEndDate(period)))
     }
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
@@ -61,12 +63,16 @@ class PayAChargeController @Inject() (
       val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName
       }
-      val form       = formProvider(schemeName.getOrElse(""))
+      val form       = formProvider(schemeName.getOrElse(""), startEndDate(period))
       form
         .bindFromRequest()
         .fold(
           formWithErrors =>
-            Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse("")))),
+            Future.successful(
+              BadRequest(
+                view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse(""), startEndDate(period))
+              )
+            ),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PayAChargePage(period, schemeIndex), value))
@@ -76,4 +82,9 @@ class PayAChargeController @Inject() (
             } yield Redirect(redirectUrl)
         )
     }
+
+  private def startEndDate(period: Period)(implicit messages: Messages): String = {
+    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+    period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
+  }
 }
