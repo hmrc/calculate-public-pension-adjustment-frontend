@@ -21,12 +21,14 @@ import forms.annualallowance.taxyear.HowMuchAAChargeSchemePaidFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.HowMuchAAChargeSchemePaidPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.HowMuchAAChargeSchemePaidView
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -43,24 +45,25 @@ class HowMuchAAChargeSchemePaidController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
-
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
+      val form         = formProvider(startEndDate(period))
       val preparedForm = request.userAnswers.get(HowMuchAAChargeSchemePaidPage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period, schemeIndex))
+      Ok(view(preparedForm, mode, period, schemeIndex, startEndDate(period)))
     }
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
+      val form = formProvider(startEndDate(period))
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex))),
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex, startEndDate(period)))),
           value =>
             for {
               updatedAnswers <-
@@ -71,4 +74,9 @@ class HowMuchAAChargeSchemePaidController @Inject() (
             } yield Redirect(redirectUrl)
         )
     }
+
+  private def startEndDate(period: Period)(implicit messages: Messages): String = {
+    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+    period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
+  }
 }

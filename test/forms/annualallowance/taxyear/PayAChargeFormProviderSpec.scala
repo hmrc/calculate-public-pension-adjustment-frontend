@@ -41,14 +41,15 @@ class PayAChargeFormProviderSpec extends BooleanFieldBehaviours {
     behave like mandatoryField(
       formWithMockMessages,
       fieldName,
-      requiredError = FormError(fieldName, "error message ")
+      requiredError = FormError(fieldName, "error message")
     )
 
     def formWithMockMessages = {
       val messages = mock[Messages]
       when(messages.apply(eqTo("payACharge.error.required"), any())).thenReturn("error message")
 
-      new PayAChargeFormProvider()("")(messages)
+      val formProvider = new PayAChargeFormProvider()
+      formProvider("", "")(messages)
     }
   }
 }

@@ -18,12 +18,13 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.annualallowance.taxyear.WhoPaidAAChargeFormProvider
+import forms.annualallowance.taxyear.{HowMuchAAChargeSchemePaidFormProvider, WhoPaidAAChargeFormProvider}
 import models.{NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidAACharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.taxyear.WhoPaidAAChargePage
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -42,8 +43,15 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
       .url
 
-  val formProvider = new WhoPaidAAChargeFormProvider()
-  val form         = formProvider()
+  lazy val whoPaidAACharge2019Route =
+    controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController
+      .onPageLoad(NormalMode, Period._2019, SchemeIndex(0))
+      .url
+
+  private def form = {
+    val formProvider = new WhoPaidAAChargeFormProvider()
+    formProvider("", "")
+  }
 
   "WhoPaidAACharge Controller" - {
 
@@ -59,7 +67,14 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[WhoPaidAAChargeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0), "")(
+        contentAsString(result) mustEqual view(
+          form,
+          NormalMode,
+          Period._2018,
+          SchemeIndex(0),
+          "",
+          "6 April 2017 and 5 April 2018"
+        )(
           request,
           messages(application)
         ).toString
@@ -69,14 +84,14 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(WhoPaidAAChargePage(Period._2018, SchemeIndex(0)), WhoPaidAACharge.values.head)
+        .set(WhoPaidAAChargePage(Period._2019, SchemeIndex(0)), WhoPaidAACharge.values.head)
         .success
         .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, whoPaidAAChargeRoute)
+        val request = FakeRequest(GET, whoPaidAACharge2019Route)
 
         val view = application.injector.instanceOf[WhoPaidAAChargeView]
 
@@ -86,9 +101,10 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           form.fill(WhoPaidAACharge.values.head),
           NormalMode,
-          Period._2018,
+          Period._2019,
           SchemeIndex(0),
-          ""
+          "",
+          startEndDate = "6 April 2018 and 5 April 2019"
         )(
           request,
           messages(application)
@@ -136,7 +152,14 @@ class WhoPaidAAChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "")(
+        contentAsString(result) mustEqual view(
+          boundForm,
+          NormalMode,
+          Period._2018,
+          SchemeIndex(0),
+          "",
+          "6 April 2017 and 5 April 2018"
+        )(
           request,
           messages(application)
         ).toString

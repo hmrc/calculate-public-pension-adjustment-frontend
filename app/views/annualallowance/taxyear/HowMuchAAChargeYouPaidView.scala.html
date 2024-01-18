@@ -24,9 +24,9 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("howMuchAAChargeYouPaid.title"))) {
+@layout(pageTitle = title(form, messages("howMuchAAChargeYouPaid.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.HowMuchAAChargeYouPaidController.onSubmit(mode,period, schemeIndex), Symbol("autoComplete") -> "off") {
 
@@ -38,7 +38,7 @@
             InputViewModel(
                 field = form("value"),
                 label = HmrcPageHeadingLabel(
-                    content = messages("howMuchAAChargeYouPaid.heading"),
+                    content = messages("howMuchAAChargeYouPaid.heading", startEndDate),
                     caption = messages("annualAllowance.period.caption." + period)
                 )
             )
