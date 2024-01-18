@@ -17,11 +17,14 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
+import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchersSugar.eqTo
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.data.FormError
+import play.api.i18n.Messages
 
 class HowMuchAAChargeYouPaidFormProviderSpec extends IntFieldBehaviours {
-
-  val form = new HowMuchAAChargeYouPaidFormProvider()()
 
   ".value" - {
 
@@ -33,20 +36,20 @@ class HowMuchAAChargeYouPaidFormProviderSpec extends IntFieldBehaviours {
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      form,
+      formWithMockMessages,
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      formWithMockMessages,
       fieldName,
       nonNumericError = FormError(fieldName, "howMuchAAChargeYouPaid.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "howMuchAAChargeYouPaid.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
-      form,
+      formWithMockMessages,
       fieldName,
       minimum = minimum,
       maximum = maximum,
@@ -54,9 +57,17 @@ class HowMuchAAChargeYouPaidFormProviderSpec extends IntFieldBehaviours {
     )
 
     behave like mandatoryField(
-      form,
+      formWithMockMessages,
       fieldName,
-      requiredError = FormError(fieldName, "howMuchAAChargeYouPaid.error.required")
+      requiredError = FormError(fieldName, "error message")
     )
+
+    def formWithMockMessages = {
+      val messages = mock[Messages]
+      when(messages.apply(eqTo("howMuchAAChargeYouPaid.error.required"), any())).thenReturn("error message")
+
+      val formProvider = new HowMuchAAChargeYouPaidFormProvider()
+      formProvider("")(messages)
+    }
   }
 }

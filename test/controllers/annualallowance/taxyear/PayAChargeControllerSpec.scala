@@ -19,12 +19,12 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.annualallowance.taxyear.PayAChargeFormProvider
-import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchersSugar.eqTo
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.PayAChargePage
+import pages.annualallowance.taxyear.{PayAChargePage, PensionSchemeDetailsPage}
 import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -46,6 +46,11 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
       .onPageLoad(NormalMode, Period._2018, SchemeIndex(0))
       .url
 
+  lazy val payACharge2019Route =
+    controllers.annualallowance.taxyear.routes.PayAChargeController
+      .onPageLoad(NormalMode, Period._2019, SchemeIndex(0))
+      .url
+
   lazy val payAChargeCheckRoute =
     controllers.annualallowance.taxyear.routes.PayAChargeController
       .onPageLoad(CheckMode, Period._2018, SchemeIndex(0))
@@ -53,17 +58,21 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
   private def formWithMockMessages = {
     val messages = mock[Messages]
-    when(messages.apply(eqTo("payACharge.error.required"), any())).thenReturn(expectedErrorMessage)
 
     val formProvider = new PayAChargeFormProvider()
-    formProvider("")(messages)
+    formProvider("", "")(messages)
   }
 
   "PayACharge Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeTaxRef"))
+        .success
+        .value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, payAChargeRoute)
@@ -73,7 +82,14 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[PayAChargeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(formWithMockMessages, NormalMode, Period._2018, SchemeIndex(0), "")(
+        contentAsString(result) mustEqual view(
+          formWithMockMessages,
+          NormalMode,
+          Period._2018,
+          SchemeIndex(0),
+          "schemeName",
+          "6 April 2017 and 5 April 2018"
+        )(
           request,
           messages(application)
         ).toString
@@ -82,12 +98,18 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(PayAChargePage(Period._2018, SchemeIndex(0)), true).success.value
+      val userAnswers = UserAnswers(userAnswersId)
+        .set(PayAChargePage(Period._2019, SchemeIndex(0)), true)
+        .success
+        .value
+        .set(PensionSchemeDetailsPage(Period._2019, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeTaxRef"))
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, payAChargeRoute)
+        val request = FakeRequest(GET, payACharge2019Route)
 
         val view = application.injector.instanceOf[PayAChargeView]
 
@@ -97,9 +119,10 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           formWithMockMessages.fill(true),
           NormalMode,
-          Period._2018,
+          Period._2019,
           SchemeIndex(0),
-          ""
+          "schemeName",
+          "6 April 2018 and 5 April 2019"
         )(
           request,
           messages(application)
@@ -138,16 +161,23 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, payAChargeRoute)
-            .withFormUrlEncodedBody(("value", ""))
+            .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = formWithMockMessages.bind(Map("value" -> ""))
+        val boundForm = formWithMockMessages.bind(Map("value" -> "invalid value"))
 
         val view = application.injector.instanceOf[PayAChargeView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "")(
+        contentAsString(result) mustEqual view(
+          boundForm,
+          NormalMode,
+          Period._2018,
+          SchemeIndex(0),
+          "",
+          startEndDate = "6 April 2017 and 5 April 2018"
+        )(
           request,
           messages(application)
         ).toString
