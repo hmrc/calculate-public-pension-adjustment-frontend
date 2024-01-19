@@ -22,7 +22,7 @@ import models.requests.DataRequest
 import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
-import pages.annualallowance.taxyear.{DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
+import pages.annualallowance.taxyear.{DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage}
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService

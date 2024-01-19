@@ -18,7 +18,6 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountFormProvider
 import models.{NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -31,8 +30,7 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.annualallowance.taxyear.{DefinedContribution2016PostFlexiAmountView, DefinedContribution2016PreFlexiAmountView}
-
+import views.html.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountView
 import java.time.LocalDate
 import scala.concurrent.Future
 

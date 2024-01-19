@@ -17,15 +17,15 @@
 package controllers.annualallowance.taxyear
 
 import controllers.actions._
-import forms.annualallowance.taxyear.{PensionSchemeInput2016postAmountsFormProvider, PensionSchemeInput2016preAmountsFormProvider}
+import forms.annualallowance.taxyear.PensionSchemeInput2016postAmountsFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
-import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInput2016postAmountsPage, PensionSchemeInput2016preAmountsPage}
+import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInput2016postAmountsPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.annualallowance.taxyear.{PensionSchemeInput2016postAmountsView, PensionSchemeInput2016preAmountsView}
+import views.html.annualallowance.taxyear.PensionSchemeInput2016postAmountsView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}

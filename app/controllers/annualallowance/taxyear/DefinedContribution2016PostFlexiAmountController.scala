@@ -21,7 +21,7 @@ import forms.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountFormP
 import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
-import pages.annualallowance.taxyear.{DefinedContribution2016PostFlexiAmountPage, DefinedContribution2016PreFlexiAmountPage}
+import pages.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService

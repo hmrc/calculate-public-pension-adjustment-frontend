@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{ChangeInTaxCharge, CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{ChangeInTaxCharge, CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.behaviours.PageBehaviours
 
 import java.time.LocalDate

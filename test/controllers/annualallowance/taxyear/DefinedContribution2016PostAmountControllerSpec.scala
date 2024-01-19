@@ -18,9 +18,8 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.DefinedContribution2016PostAmountFormProvider
-import models.{NormalMode, Period, UserAnswers}
+import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -31,7 +30,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import views.html.annualallowance.taxyear.DefinedContribution2016PostAmountView
 
 import java.time.LocalDate
@@ -140,16 +139,16 @@ class DefinedContribution2016PostAmountControllerSpec extends SpecBase with Mock
         .success
         .value
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockSessionRepository.set(userAnswersCaptor.capture())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
@@ -175,16 +174,16 @@ class DefinedContribution2016PostAmountControllerSpec extends SpecBase with Mock
         .success
         .value
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockSessionRepository.set(userAnswersCaptor.capture())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
@@ -225,13 +224,13 @@ class DefinedContribution2016PostAmountControllerSpec extends SpecBase with Mock
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
       running(application) {

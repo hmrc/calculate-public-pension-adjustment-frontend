@@ -19,8 +19,9 @@ package controllers.setupquestions
 import base.SpecBase
 import controllers.setupquestions.{routes => setupRoutes}
 import forms.ResubmittingAdjustmentFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentCaptor
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
@@ -28,7 +29,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.auth.core.AuthConnector
 import uk.gov.hmrc.auth.core.authorise.Predicate
 import uk.gov.hmrc.auth.core.retrieve.Retrieval
@@ -87,15 +88,15 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      val mockSessionRepository = mock[SessionRepository]
-      when(mockSessionRepository.set(userAnswersCaptor.capture())) thenReturn Future.successful(true)
+      val mockUserDataService = mock[UserDataService]
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
 
       val fakeAuthConnector = new FakeAuthConnector(Some("userId"))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[UserDataService].toInstance(mockUserDataService),
             bind[AuthConnector].toInstance(fakeAuthConnector)
           )
           .build()
