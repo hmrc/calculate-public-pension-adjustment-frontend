@@ -22,7 +22,7 @@ import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -82,18 +82,18 @@ class FlexiAccessDefinedContributionAmountController @Inject() (
         )
     }
 
-  private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate]): String = {
+  private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate])(implicit messages: Messages): String = {
     val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
 
     def normalDateFormatter =
       flexibleStartDate match {
         case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
-          date.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
-        case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
+          date.plusDays(1).format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
+        case _                                                                     => period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
       }
 
     if (flexibleStartDate == Some(period.start)) {
-      flexibleStartDate.get.plusDays(1).format(formatter) + " to " + period.end.format(formatter)
+      flexibleStartDate.get.plusDays(1).format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
     } else {
       normalDateFormatter
     }

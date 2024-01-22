@@ -21,12 +21,14 @@ import forms.annualallowance.taxyear.PensionSchemeInputAmountsFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInputAmountsPage}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.PensionSchemeInputAmountsView
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -47,6 +49,7 @@ class PensionSchemeInputAmountsController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
+      val startEndDate      = getStartEndDate(period)
       val preparedForm = request.userAnswers.get(PensionSchemeInputAmountsPage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -55,12 +58,13 @@ class PensionSchemeInputAmountsController @Inject() (
         answer.schemeName
       }
 
-      Ok(view(preparedForm, mode, period, schemeIndex, schemeName.getOrElse("")))
+      Ok(view(preparedForm, mode, period, schemeIndex, schemeName.getOrElse(""), startEndDate))
 
     }
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
+      val startEndDate      = getStartEndDate(period)
       val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName
       }
@@ -68,7 +72,7 @@ class PensionSchemeInputAmountsController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors =>
-            Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse("")))),
+            Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse(""), startEndDate))),
           value =>
             for {
               updatedAnswers <-
@@ -79,4 +83,9 @@ class PensionSchemeInputAmountsController @Inject() (
             } yield Redirect(redirectUrl)
         )
     }
+
+  private def getStartEndDate(period: Period)(implicit messages: Messages): String = {
+    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+    period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
+  }
 }

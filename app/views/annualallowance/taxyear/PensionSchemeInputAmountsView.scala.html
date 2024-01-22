@@ -25,7 +25,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHintForOriginalPIA = {
 
@@ -42,7 +42,7 @@
     @messages("pensionSchemeInputAmounts.revisedPIA.hint1")
 }
 
-@layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", schemeName))) {
+@layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", schemeName, startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController.onSubmit(mode, period, schemeIndex), Symbol("autoComplete") -> "off") {
 
@@ -50,8 +50,8 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <span class="govuk-caption-l">@messages("annualAllowance.period.caption."+{period.toString})</span>
-        <h1 class="govuk-heading-l">@messages("pensionSchemeInputAmounts.heading", schemeName)</h1>
+        <span class="govuk-caption-xl">@messages("annualAllowance.period.caption."+{period.toString})</span>
+        <h1 class="govuk-heading-l">@messages("pensionSchemeInputAmounts.heading", schemeName, startEndDate)</h1>
 
         @govukInput(
             InputViewModel(

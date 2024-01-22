@@ -40,6 +40,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
 
   val formProvider = new PensionSchemeInputAmountsFormProvider()
   val form         = formProvider()
+  val dateString = "6 April 2017 and 5 April 2018"
 
   lazy val pensionSchemeInputAmountsRoute =
     controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
@@ -76,7 +77,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0), "")(
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0), "", dateString)(
           request,
           messages(application)
         ).toString
@@ -105,7 +106,8 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
           NormalMode,
           Period._2018,
           SchemeIndex(0),
-          ""
+          "",
+          dateString
         )(
           request,
           messages(application)
@@ -153,7 +155,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "")(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "", dateString)(
           request,
           messages(application)
         ).toString

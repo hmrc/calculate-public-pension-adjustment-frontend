@@ -64,7 +64,7 @@ class DefinedBenefitAmountControllerSpec extends SpecBase with MockitoSugar {
           form,
           NormalMode,
           Period._2013,
-          "6 April 2012 to 5 April 2013"
+          "6 April 2012 and 5 April 2013"
         )(
           request,
           messages(application)
@@ -93,7 +93,7 @@ class DefinedBenefitAmountControllerSpec extends SpecBase with MockitoSugar {
           form.fill(validAnswer),
           NormalMode,
           Period._2013,
-          "6 April 2012 to 5 April 2013"
+          "6 April 2012 and 5 April 2013"
         )(
           request,
           messages(application)
@@ -145,7 +145,7 @@ class DefinedBenefitAmountControllerSpec extends SpecBase with MockitoSugar {
           boundForm,
           NormalMode,
           Period._2013,
-          "6 April 2012 to 5 April 2013"
+          "6 April 2012 and 5 April 2013"
         )(
           request,
           messages(application)
