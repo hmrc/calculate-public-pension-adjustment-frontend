@@ -49,7 +49,7 @@ class PensionSchemeInputAmountsController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val startEndDate      = getStartEndDate(period)
+      val startEndDate = getStartEndDate(period)
       val preparedForm = request.userAnswers.get(PensionSchemeInputAmountsPage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -64,15 +64,17 @@ class PensionSchemeInputAmountsController @Inject() (
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
-      val startEndDate      = getStartEndDate(period)
-      val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
+      val startEndDate = getStartEndDate(period)
+      val schemeName   = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName
       }
       form
         .bindFromRequest()
         .fold(
           formWithErrors =>
-            Future.successful(BadRequest(view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse(""), startEndDate))),
+            Future.successful(
+              BadRequest(view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse(""), startEndDate))
+            ),
           value =>
             for {
               updatedAnswers <-

@@ -40,7 +40,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
 
   val formProvider = new PensionSchemeInputAmountsFormProvider()
   val form         = formProvider()
-  val dateString = "6 April 2017 and 5 April 2018"
+  val dateString   = "6 April 2017 and 5 April 2018"
 
   lazy val pensionSchemeInputAmountsRoute =
     controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController

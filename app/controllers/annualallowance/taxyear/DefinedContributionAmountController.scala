@@ -119,14 +119,17 @@ class DefinedContributionAmountController @Inject() (
       _              <- sessionRepository.set(answersWithNav)
     } yield Redirect(redirectUrl)
 
-  private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate])(implicit messages: Messages): String = {
+  private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate])(implicit
+    messages: Messages
+  ): String = {
     val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
 
     def normalDateFormatter =
       flexibleStartDate match {
         case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
           period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + date.format(formatter)
-        case _                                                                     => period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
+        case _                                                                     =>
+          period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
       }
 
     if (flexibleStartDate == Some(period.start)) {
