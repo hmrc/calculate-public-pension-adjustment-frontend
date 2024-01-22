@@ -18,12 +18,11 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.annualallowance.taxyear.{HowMuchAAChargeSchemePaidFormProvider, HowMuchAAChargeYouPaidFormProvider}
+import forms.annualallowance.taxyear.HowMuchAAChargeYouPaidFormProvider
 import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.taxyear.HowMuchAAChargeYouPaidPage
 import play.api.i18n.Messages
 import play.api.inject.bind
