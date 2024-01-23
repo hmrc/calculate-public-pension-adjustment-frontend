@@ -19,6 +19,7 @@ package models
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 import viewmodels.govuk.checkbox._
 
 sealed trait ReportingChange
@@ -40,7 +41,7 @@ object ReportingChange extends Enumerable.Implicits {
         fieldId = "value",
         index = index,
         value = value.toString
-      )
+      ).withHint(Hint(content = Text(messages(s"reportingChange.${value.toString}.hint"))))
     }
 
   implicit val enumerable: Enumerable[ReportingChange] =
