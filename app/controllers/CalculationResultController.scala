@@ -18,10 +18,11 @@ package controllers
 
 import config.FrontendAppConfig
 import controllers.actions._
-import models.submission
+import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
+import models.{UserAnswers, submission}
 import models.submission.SubmissionResponse
 import play.api.data.Form
-import play.api.data.Forms.ignored
+import play.api.data.Forms.{ignored, indexedSeq}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.CalculationResultService
@@ -51,13 +52,15 @@ class CalculationResultController @Inject() (
       val includeCompensation2015: Boolean = calculationResponse.totalAmounts.outDatesCompensation > 0
       val isInCredit: Boolean              = calculationResponse.totalAmounts.inDatesCredit > 0
       val isInDebit: Boolean               = calculationResponse.totalAmounts.inDatesDebit > 0
+      val isUserAuthenticated: Boolean     = request.userAnswers.authenticated
       Ok(
         view(
           form,
           calculationResultService.calculationResultsViewModel(calculationResponse),
           includeCompensation2015,
           isInCredit,
-          isInDebit
+          isInDebit,
+          isUserAuthenticated
         )
       )
     }

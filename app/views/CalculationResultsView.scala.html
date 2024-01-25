@@ -24,7 +24,15 @@
         govukButton: GovukButton
 )
 
-@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean, isInCredit: Boolean, isInDebit: Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean, isInCredit: Boolean, isInDebit: Boolean, isUserAuthenticated : Boolean)(implicit request: Request[_], messages: Messages)
+
+@buttonContent = @{
+    if(isUserAuthenticated) {
+        messages("site.continue")
+    } else {
+        messages("site.continueSignIn")
+    }
+}
 
 @layout(pageTitle = titleNoForm(messages("calculationResults.title"))) {
 
@@ -121,14 +129,13 @@
             <li>@messages("calculationResults.whatHappensNext.hint.compensation.list2")</li>
         </ul>
     }
-    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint5")</p>
 
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint5")</p>
     @if(isInCredit || includeCompensation2015 || isInDebit) {
-        @formHelper(action = routes.CalculationResultController.onSubmit(), Symbol("autoComplete") -> "off") {
-            @govukButton(
-                ButtonViewModel(messages("site.continueSignIn"))
-            )
+            @formHelper(action = routes.CalculationResultController.onSubmit(), Symbol("autoComplete") -> "off") {
+                @govukButton(
+                    ButtonViewModel(HtmlContent(buttonContent))
+                )
+            }
         }
     }
-
-}
