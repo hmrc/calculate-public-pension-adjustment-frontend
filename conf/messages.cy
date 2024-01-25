@@ -207,7 +207,7 @@ flexibleAccessStartDate.error.invalid = cy: Enter the date when you stopped payi
 flexibleAccessStartDate.error.required = cy: The date must include {0}
 flexibleAccessStartDate.error.required.two = cy: The date must include {0} and {1}
 flexibleAccessStartDate.error.min = cy: The date when you first flexibly accessed your defined contribution pension must be after 5 April 2015
-flexibleAccessStartDate.error.max = cy: The date when you first flexibly accessed your defined contribution pension must be today or in the past
+flexibleAccessStartDate.error.max = cy: The date when you first flexibly accessed your defined contribution pension must be before 6 April 2023
 
 changeInLifetimeAllowance.title = cy: Have you been told about a change in the lifetime allowance percentage?
 changeInLifetimeAllowance.heading = cy: Have you been told about a change in the lifetime allowance percentage?

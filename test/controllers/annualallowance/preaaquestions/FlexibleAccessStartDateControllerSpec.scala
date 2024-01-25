@@ -42,7 +42,7 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/public-pension-adjustment/check-your-answers")
 
-  val validAnswer = LocalDate.now(ZoneOffset.UTC)
+  val validAnswer = LocalDate.of(2020, 1, 1)
 
   lazy val normalRoute = preAARoutes.FlexibleAccessStartDateController.onPageLoad(NormalMode).url
 

@@ -28,7 +28,7 @@ class FlexibleAccessStartDateFormProviderSpec extends DateBehaviours {
 
     val validData = datesBetween(
       min = LocalDate.of(2015, 4, 6),
-      max = LocalDate.now(ZoneOffset.UTC)
+      max = LocalDate.of(2023, 4, 5)
     )
 
     behave like dateField(form, "value", validData)
