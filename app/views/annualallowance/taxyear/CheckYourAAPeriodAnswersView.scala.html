@@ -15,36 +15,25 @@
  *@
 
 @this(
- layout: templates.Layout,
- govukSummaryList: GovukSummaryList,
- govukButton: GovukButton
+layout: templates.Layout,
+govukSummaryList: GovukSummaryList,
+govukButton: GovukButton
 )
 
-@(maybeFlexiPeriodEndDateRowsStatus: Boolean, is2016Period: Boolean, subHeadingMessageKey: String, continueURL:Call, combinedRows: SummaryList, regularRows: SummaryList, flexiPeriodEndateRows: SummaryList, regularRows2016: SummaryList, flexiPeriodEndateRows2016: SummaryList)(implicit request: Request[_], messages: Messages)
+@(maybeFlexiPeriodEndDateRowsStatus: SummaryList, subHeadingMessageKey: String, continueURL:Call)(implicit request: Request[_], messages: Messages)
 
- @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
+@layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
-    <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
+<h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
 
-    <h2 class="govuk-heading-m">@messages(subHeadingMessageKey)</h2>
+<h2 class="govuk-heading-m">@messages(subHeadingMessageKey)</h2>
 
-    @govukSummaryList(combinedRows)
-
-    @if(maybeFlexiPeriodEndDateRowsStatus == true && is2016Period == false) {
-     @govukSummaryList(flexiPeriodEndateRows)}
-
-    @if(maybeFlexiPeriodEndDateRowsStatus == false && is2016Period == false) {
-     @govukSummaryList(regularRows)}
-
-    @if(maybeFlexiPeriodEndDateRowsStatus == false && is2016Period == true) {
-    @govukSummaryList(regularRows2016)}
-
-    @if(maybeFlexiPeriodEndDateRowsStatus == true && is2016Period == true) {
-    @govukSummaryList(flexiPeriodEndateRows2016)}
+@govukSummaryList(maybeFlexiPeriodEndDateRowsStatus)
 
 
-    @govukButton(
-     ButtonViewModel(messages("site.continue"))
-      .asLink(continueURL.url)
-  )
+
+@govukButton(
+ButtonViewModel(messages("site.continue"))
+.asLink(continueURL.url)
+)
 }

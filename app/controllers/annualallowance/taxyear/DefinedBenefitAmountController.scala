@@ -21,7 +21,7 @@ import forms.annualallowance.taxyear.DefinedBenefitAmountFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.DefinedBenefitAmountPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -73,8 +73,8 @@ class DefinedBenefitAmountController @Inject() (
         )
     }
 
-  private def startEndDate(period: Period): String = {
+  private def startEndDate(period: Period)(implicit messages: Messages): String = {
     val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
-    period.start.format(formatter) + " to " + period.end.format(formatter)
+    period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
   }
 }

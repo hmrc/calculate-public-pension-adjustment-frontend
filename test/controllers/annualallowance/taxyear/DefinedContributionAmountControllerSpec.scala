@@ -40,9 +40,9 @@ import scala.concurrent.Future
 class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider           = new DefinedContributionAmountFormProvider()
-  val form                   = formProvider(Seq("6 April 2022 to 5 April 2023"))
-  val flexiForm              = formProvider(Seq("6 April 2022 to 12 December 2022"))
-  val flexiFormStartOfPeriod = formProvider(Seq("6 April 2022 to 6 April 2022"))
+  val form                   = formProvider(Seq("6 April 2022 and 5 April 2023"))
+  val flexiForm              = formProvider(Seq("6 April 2022 and 12 December 2022"))
+  val flexiFormStartOfPeriod = formProvider(Seq("6 April 2022 and 6 April 2022"))
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -69,7 +69,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
           form,
           NormalMode,
           Period._2023,
-          "6 April 2022 to 5 April 2023"
+          "6 April 2022 and 5 April 2023"
         )(
           request,
           messages(application)
@@ -100,7 +100,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
           flexiForm,
           NormalMode,
           Period._2023,
-          "6 April 2022 to 12 December 2022"
+          "6 April 2022 and 12 December 2022"
         )(
           request,
           messages(application)
@@ -130,7 +130,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
           flexiFormStartOfPeriod,
           NormalMode,
           Period._2023,
-          "6 April 2022 to 6 April 2022"
+          "6 April 2022 and 6 April 2022"
         )(
           request,
           messages(application)
@@ -229,7 +229,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
           form.fill(validAnswer),
           NormalMode,
           Period._2023,
-          "6 April 2022 to 5 April 2023"
+          "6 April 2022 and 5 April 2023"
         )(
           request,
           messages(application)
@@ -281,7 +281,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
           boundForm,
           NormalMode,
           Period._2023,
-          "6 April 2022 to 5 April 2023"
+          "6 April 2022 and 5 April 2023"
         )(
           request,
           messages(application)
@@ -316,7 +316,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
           boundForm,
           NormalMode,
           Period._2023,
-          "6 April 2022 to 12 December 2022"
+          "6 April 2022 and 12 December 2022"
         )(
           request,
           messages(application)
