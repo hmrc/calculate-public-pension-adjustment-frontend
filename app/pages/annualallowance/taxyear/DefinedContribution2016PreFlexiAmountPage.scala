@@ -18,6 +18,8 @@ package pages.annualallowance.taxyear
 
 import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
+import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
+import pages.annualallowance.taxyear.DefinedContribution2016PreAmountNormalModeNavigation.definedBenefitExists
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -29,30 +31,52 @@ case object DefinedContribution2016PreFlexiAmountPage extends QuestionPage[BigIn
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(DefinedContribution2016PreFlexiAmountPage) match {
-      case Some(_) =>
+      case Some(_) if maybeStopPayingInFirstSubPeriod(answers) => maybeDefinedBenefitExistsNavigation(answers)
+      case Some(_)                                             =>
         controllers.annualallowance.taxyear.routes.DefinedContribution2016PostAmountController.onPageLoad(NormalMode)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _                                                   => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    (
+      maybeStopPayingInFirstSubPeriod(answers),
+      definedBenefitExists(answers),
+      answers.get(DefinedContribution2016PostAmountPage).isDefined
+    ) match {
+      case (false, _, false) =>
+        controllers.annualallowance.taxyear.routes.DefinedContribution2016PostAmountController.onPageLoad(CheckMode)
+      case (true, false, _)  =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016)
+      case (_, _, _)         => maybeDefinedBenefitExistsCheckNavigation(answers)
+    }
 
-    val definedBenefitExists = answers.get(ContributedToDuringRemedyPeriodPage(Period._2016)) match {
+  private def maybeDefinedBenefitExistsNavigation(answers: UserAnswers) =
+    if (definedBenefitExists(answers)) {
+      controllers.annualallowance.taxyear.routes.DefinedBenefit2016PreAmountController.onPageLoad(NormalMode)
+    } else {
+      controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, Period._2016)
+    }
+
+  private def maybeDefinedBenefitExistsCheckNavigation(answers: UserAnswers) =
+    if (definedBenefitExists(answers)) {
+      answers.get(DefinedBenefit2016PreAmountPage) match {
+        case Some(_) =>
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016)
+        case None    =>
+          controllers.annualallowance.taxyear.routes.DefinedBenefit2016PreAmountController.onPageLoad(CheckMode)
+      }
+    } else {
+      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016)
+    }
+
+  private def definedBenefitExists(answers: UserAnswers) =
+    answers.get(ContributedToDuringRemedyPeriodPage(Period._2016)) match {
       case Some(contributedTo) if contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit) => true
       case _                                                                                             => false
     }
 
-    if (answers.get(DefinedContribution2016PostAmountPage).isDefined) {
-      if (definedBenefitExists) {
-        if (answers.get(DefinedBenefit2016PreAmountPage).isDefined) {
-          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016)
-        } else {
-          controllers.annualallowance.taxyear.routes.DefinedBenefit2016PreAmountController.onPageLoad(CheckMode)
-        }
-      } else {
-        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016)
-      }
-    } else {
-      controllers.annualallowance.taxyear.routes.DefinedContribution2016PostAmountController.onPageLoad(CheckMode)
-    }
+  private def maybeStopPayingInFirstSubPeriod(answers: UserAnswers) = answers.get(StopPayingPublicPensionPage) match {
+    case Some(date) => Period.pre2016Start.minusDays(1).isBefore(date) && Period.pre2016End.plusDays(1).isAfter(date)
+    case None       => false
   }
 }

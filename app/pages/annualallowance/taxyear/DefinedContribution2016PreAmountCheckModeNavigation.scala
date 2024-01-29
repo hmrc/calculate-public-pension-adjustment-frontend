@@ -17,7 +17,7 @@
 package pages.annualallowance.taxyear
 
 import models.{CheckMode, ContributedToDuringRemedyPeriod, Period, UserAnswers}
-import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
+import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, StopPayingPublicPensionPage}
 import play.api.mvc.Call
 
 object DefinedContribution2016PreAmountCheckModeNavigation {
@@ -30,7 +30,7 @@ object DefinedContribution2016PreAmountCheckModeNavigation {
       case None                                              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  private def flexiNavigation(answers: UserAnswers)               =
+  private def flexiNavigation(answers: UserAnswers) =
     answers.get(FlexibleAccessStartDatePage) match {
       case Some(date) if date == Period.pre2016End =>
         skipFlexiAmountPageNavigation(answers)
@@ -38,11 +38,18 @@ object DefinedContribution2016PreAmountCheckModeNavigation {
         standardFlexiDateNavigation(answers)
       case None                                    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
   private def skipFlexiAmountPageNavigation(answers: UserAnswers) =
-    if (answers.get(DefinedContribution2016PostAmountPage).isDefined) {
-      maybeDefinedBenefitExistsNavigation(answers)
-    } else {
-      controllers.annualallowance.taxyear.routes.DefinedContribution2016PostAmountController.onPageLoad(CheckMode)
+    (
+      maybeStopPayingInFirstSubPeriod(answers),
+      definedBenefitExists(answers),
+      answers.get(DefinedContribution2016PostAmountPage).isDefined
+    ) match {
+      case (false, _, false) =>
+        controllers.annualallowance.taxyear.routes.DefinedContribution2016PostAmountController.onPageLoad(CheckMode)
+      case (true, false, _)  =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016)
+      case (_, _, _)         => maybeDefinedBenefitExistsNavigation(answers)
     }
 
   private def standardFlexiDateNavigation(answers: UserAnswers) =
@@ -50,17 +57,6 @@ object DefinedContribution2016PreAmountCheckModeNavigation {
       maybeDefinedBenefitExistsNavigation(answers)
     } else {
       controllers.annualallowance.taxyear.routes.DefinedContribution2016PreFlexiAmountController.onPageLoad(CheckMode)
-    }
-
-  private def flexiAccessExistsForSubPeriod(answers: UserAnswers) = answers.get(FlexibleAccessStartDatePage) match {
-    case Some(date) => Period.pre2016Start.minusDays(1).isBefore(date) && Period.pre2016End.plusDays(1).isAfter(date)
-    case None       => false
-  }
-
-  private def definedBenefitExists(answers: UserAnswers) =
-    answers.get(ContributedToDuringRemedyPeriodPage(Period._2016)) match {
-      case Some(contributedTo) if contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit) => true
-      case _                                                                                             => false
     }
 
   private def maybeDefinedBenefitExistsNavigation(answers: UserAnswers) =
@@ -73,5 +69,21 @@ object DefinedContribution2016PreAmountCheckModeNavigation {
       }
     } else {
       controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016)
+    }
+
+  private def maybeStopPayingInFirstSubPeriod(answers: UserAnswers) = answers.get(StopPayingPublicPensionPage) match {
+    case Some(date) => Period.pre2016Start.minusDays(1).isBefore(date) && Period.pre2016End.plusDays(1).isAfter(date)
+    case None       => false
+  }
+
+  private def flexiAccessExistsForSubPeriod(answers: UserAnswers) = answers.get(FlexibleAccessStartDatePage) match {
+    case Some(date) => Period.pre2016Start.minusDays(1).isBefore(date) && Period.pre2016End.plusDays(1).isAfter(date)
+    case None       => false
+  }
+
+  private def definedBenefitExists(answers: UserAnswers) =
+    answers.get(ContributedToDuringRemedyPeriodPage(Period._2016)) match {
+      case Some(contributedTo) if contributedTo.contains(ContributedToDuringRemedyPeriod.Definedbenefit) => true
+      case _                                                                                             => false
     }
 }
