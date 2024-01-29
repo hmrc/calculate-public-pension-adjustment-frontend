@@ -15,7 +15,6 @@
  *@
 
 @import viewmodels.InputWidth._
-@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
@@ -70,7 +69,7 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                LabelViewModel(messages("adjustedIncome.heading3",period.start.getYear.toString, period.end.getYear.toString)).asPageHeading(LabelSize.Medium)
+                LabelViewModel(messages("adjustedIncome.heading3",period.start.getYear.toString, period.end.getYear.toString)).withCssClass("govuk-label--m")
             ).withHint(HintViewModel(messages("adjustedIncome.hint1")))
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
