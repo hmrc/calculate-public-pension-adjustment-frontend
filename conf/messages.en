@@ -162,7 +162,7 @@ payingPublicPensionScheme.heading = Did you continue paying into or increasing y
 payingPublicPensionScheme.hint = This includes if you are a member of a non-contributory public service pension scheme.
 payingPublicPensionScheme.error.required = Select yes if you continued paying into or increasing your public service pension scheme after 5 April 2022
 payingPublicPensionScheme.checkYourAnswersLabel = Did you continue paying into or increasing your public service pension scheme after 5 April 2022?
-payingPublicPensionScheme.change.hidden = if you continued paying into or increasing your public service pension scheme after 5 April 2022?
+payingPublicPensionScheme.change.hidden = if you continued paying into or increasing your public service pension scheme after 5 April 2022
 
 stopPayingPublicPension.title = At what date during the remedy period did you stop paying into a public service pension scheme?
 stopPayingPublicPension.heading = At what date during the remedy period did you stop paying into a public service pension scheme?
@@ -215,7 +215,7 @@ changeInLifetimeAllowance.message = This is the percentage of lifetime allowance
 changeInLifetimeAllowance.hint = You can find this on a revised benefit crystallisation event statement.
 changeInLifetimeAllowance.error.required =  Select yes if you been told about a change in the lifetime allowance percentage
 changeInLifetimeAllowance.checkYourAnswersLabel = Have you been told about a change in the lifetime allowance percentage?
-changeInLifetimeAllowance.change.hidden = if you have been told about a change in the lifetime allowance percentage?
+changeInLifetimeAllowance.change.hidden = if you have been told about a change in the lifetime allowance percentage
 
 changeInTaxCharge.title = Has the change in lifetime allowance led to a change in the tax charge?
 changeInTaxCharge.heading = Has the change in lifetime allowance led to a change in the tax charge?
@@ -390,7 +390,7 @@ protectionEnhancedChanged.both = Both
 protectionEnhancedChanged.no = No
 protectionEnhancedChanged.checkYourAnswersLabel = Has your protection type or enhancement changed between 6 April 2015 and 5 April 2023?
 protectionEnhancedChanged.error.required = Select if your protection type or enhancement changed between 6 April 2015 and 5 April 2023
-protectionEnhancedChanged.change.hidden = has your protection type or enhancement changed between 6 April 2015 and 5 April 2023?
+protectionEnhancedChanged.change.hidden = has your protection type or enhancement changed between 6 April 2015 and 5 April 2023
 
 referenceNewProtectionTypeEnhancement.title = What is your new lifetime allowance protection reference?
 referenceNewProtectionTypeEnhancement.heading = What is your new lifetime allowance protection reference?
@@ -419,7 +419,7 @@ lifetimeAllowanceCharge.title = Have you had a lifetime allowance charge from 6 
 lifetimeAllowanceCharge.heading = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
 lifetimeAllowanceCharge.checkYourAnswersLabel = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
 lifetimeAllowanceCharge.error.required = Select yes if you have had a lifetime allowance charge from 6 April 2015 to 5 April 2023
-lifetimeAllowanceCharge.change.hidden = if you have had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+lifetimeAllowanceCharge.change.hidden = if you have had a lifetime allowance charge from 6 April 2015 to 5 April 2023
 
 excessLifetimeAllowancePaid.title = How was the excess above your lifetime allowance paid to you?
 excessLifetimeAllowancePaid.heading = How was the excess above your lifetime allowance paid to you?
@@ -438,7 +438,7 @@ lifetimeAllowanceChargeAmount.error.nonNumeric = You have entered non-numerical 
 lifetimeAllowanceChargeAmount.error.required = Enter an amount for your lifetime allowance charge
 lifetimeAllowanceChargeAmount.error.wholeNumber = You have not entered a whole number for your lifetime allowance charge. You cannot use decimals.
 lifetimeAllowanceChargeAmount.error.outOfRange = You have entered too many characters for your lifetime allowance charge. The maximum number of characters you can enter is 9
-lifetimeAllowanceChargeAmount.change.hidden = the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.change.hidden = the value of your lifetime allowance charge
 lifetimeAllowanceChargeAmount.hint = Amounts must be rounded down to the nearest pound, for example 2300.
 
 periodDateRangeAA.caption = Annual allowance between
@@ -498,13 +498,13 @@ addAnotherScheme.heading = Do you need to add another pension scheme?
 addAnotherScheme.checkYourAnswersLabel = Do you need to add another pension scheme?
 addAnotherScheme.hint = You can add a maximum of five different pension schemes in a single tax year.
 addAnotherScheme.error.required = Select yes if you need to add another pension scheme
-addAnotherScheme.change.hidden = if you need to add another pension scheme.
+addAnotherScheme.change.hidden = if you need to add another pension scheme
 
 payACharge.title = Did you pay an annual allowance tax charge for pension scheme {1}?
 payACharge.heading = Did you pay an annual allowance tax charge for {2}?
 payACharge.checkYourAnswersLabel = Did you pay a charge?
 payACharge.error.required = Select yes if you paid an annual allowance tax charge for pension scheme
-payACharge.change.hidden = if you paid a charge.
+payACharge.change.hidden = if you paid a charge
 
 pensionSchemeDetails.title = What is the name and tax reference of the pension scheme?
 pensionSchemeDetails.heading = What is the name and tax reference of the pension scheme?
@@ -548,7 +548,7 @@ whichScheme.hint = Select from the options below or enter a new scheme.
 whichScheme.New = Enter a new pension scheme
 whichScheme.checkYourAnswersLabel = Select which scheme paid the charge or add new.
 whichScheme.error.required = Select which scheme you are entering details for
-whichScheme.change.hidden = the scheme are you entering details for?
+whichScheme.change.hidden = the scheme are you entering details for
 
 whoPaidAACharge.title = Who paid the annual allowance tax charge for {0}?
 whoPaidAACharge.heading = Who paid the annual allowance tax charge for {0}?
@@ -566,7 +566,7 @@ howMuchAAChargeSchemePaid.error.nonNumeric = The amount of annual allowance tax 
 howMuchAAChargeSchemePaid.error.required = Enter the amount of annual allowance tax charge your pension scheme paid
 howMuchAAChargeSchemePaid.error.wholeNumber = The amount of annual allowance tax charge your pension scheme paid must only include numbers 0 to 9
 howMuchAAChargeSchemePaid.error.outOfRange = The amount of annual allowance tax charge your pension scheme paid must be £999,999,999 or less
-howMuchAAChargeSchemePaid.change.hidden = how much tax charge your pension scheme paid.
+howMuchAAChargeSchemePaid.change.hidden = how much tax charge your pension scheme paid
 howMuchAAChargeSchemePaid.hint = Amounts must be rounded down to the nearest pound, for example 2300.
 
 howMuchAAChargeYouPaid.title = How much annual allowance tax charge did you pay?
@@ -576,7 +576,7 @@ howMuchAAChargeYouPaid.error.nonNumeric = The amount of annual allowance tax cha
 howMuchAAChargeYouPaid.error.required = Enter the amount of annual allowance tax charge you paid
 howMuchAAChargeYouPaid.error.wholeNumber = The amount of annual allowance tax charge you paid must only include numbers 0 to 9
 howMuchAAChargeYouPaid.error.outOfRange = The amount of annual allowance tax charge you paid must be £999,999,999 or less
-howMuchAAChargeYouPaid.change.hidden = how much tax charge you paid.
+howMuchAAChargeYouPaid.change.hidden = how much tax charge you paid
 howMuchAAChargeYouPaid.hint = Amounts must be rounded down to the nearest pound, for example 2300.
 
 whoPaidLTACharge.title = Who paid your lifetime allowance charge?
@@ -1003,7 +1003,7 @@ newPensionCreditReference.hint1 = The reference has a maximum character limit of
 newPensionCreditReference.error.required = Enter your new lifetime allowance pension credit reference
 newPensionCreditReference.error.length = Your new lifetime allowance pension credit reference must be 15 characters or fewer
 newPensionCreditReference.error.invalid = Your new lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
-newPensionCreditReference.change.hidden = your new lifetime allowance pension credit reference.
+newPensionCreditReference.change.hidden = your new lifetime allowance pension credit reference
 
 registeredYear.title = Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
 registeredYear.heading = Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
@@ -1019,7 +1019,7 @@ registeredYear.error.required.2012 = Select yes if you were a member of a regist
 registeredYear.error.required.2013 = Select yes if you were a member of a registered pension scheme between 6 April 2012 and 5 April 2013
 registeredYear.error.required.2014 = Select yes if you were a member of a registered pension scheme between 6 April 2013 and 5 April 2014
 registeredYear.error.required.2015 = Select yes if you were a member of a registered pension scheme between 6 April 2014 and 5 April 2015
-registeredYear.change.hidden = Were you a member of a registered pension scheme scheme between from 6 April {0} and 5 April {1}?
+registeredYear.change.hidden = if you were a member of a registered pension scheme scheme between from 6 April {0} and 5 April {1}
 
 cannotUseLtaServiceNoCharge.title = You cannot make a lifetime allowance adjustment
 cannotUseLtaServiceNoCharge.heading = You cannot make a lifetime allowance adjustment
