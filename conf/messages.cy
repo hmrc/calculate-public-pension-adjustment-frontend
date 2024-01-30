@@ -294,7 +294,7 @@ dateOfBenefitCrystallisationEvent.error.required.all = cy: Enter the date of the
 dateOfBenefitCrystallisationEvent.error.required.two = cy: The date of benefit crystallisation event must include include {0} and {1}
 dateOfBenefitCrystallisationEvent.error.required = cy: The date of benefit crystallisation event must include {0}
 dateOfBenefitCrystallisationEvent.error.invalid = cy: The date of benefit crystallisation event must only include numbers 0 to 9
-dateOfBenefitCrystallisationEvent.change.hidden = cy: date of the benefit crystallisation event
+dateOfBenefitCrystallisationEvent.change.hidden = cy: the date of the benefit crystallisation event
 dateOfBenefitCrystallisationEvent.error.min = cy: The date of benefit crystallisation event must be after {0}
 dateOfBenefitCrystallisationEvent.error.max = cy: The date of the benefit crystallisation event must be before 6 April 2023
 
