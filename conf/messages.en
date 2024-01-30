@@ -294,7 +294,7 @@ dateOfBenefitCrystallisationEvent.error.required.all = Enter the date of the ben
 dateOfBenefitCrystallisationEvent.error.required.two = The date of benefit crystallisation event must include include {0} and {1}
 dateOfBenefitCrystallisationEvent.error.required = The date of benefit crystallisation event must include {0}
 dateOfBenefitCrystallisationEvent.error.invalid = The date of benefit crystallisation event must only include numbers 0 to 9
-dateOfBenefitCrystallisationEvent.change.hidden = date of the benefit crystallisation event
+dateOfBenefitCrystallisationEvent.change.hidden = the date of the benefit crystallisation event
 dateOfBenefitCrystallisationEvent.error.min = The date of benefit crystallisation event must be after {0}
 dateOfBenefitCrystallisationEvent.error.max = The date of the benefit crystallisation event must be before 6 April 2023
 
@@ -1061,4 +1061,4 @@ previousClaimContinue.option1 = Yes
 previousClaimContinue.option2 = No
 previousClaimContinue.checkYourAnswersLabel = Do you want to start your claim from the beginning?
 previousClaimContinue.error.required = Select yes if you want to continue with your previous claim
-previousClaimContinue.change.hidden = Do you want to continue your previous claim?
+previousClaimContinue.change.hidden = if you want to continue your previous claim
