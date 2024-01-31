@@ -1051,3 +1051,11 @@ cannotUseServiceNotIndividual.title = Cannot use this service
 cannotUseServiceNotIndividual.heading = You cannot use this service with this account
 cannotUseServiceNotIndividual.message1 = Only individual user accounts can use this service. If you signed into the government gateway using an organisation or agent account, you must create a personal account instead.
 cannotUseServiceNotIndividual.link = More information about Government Gateway and creating account
+
+previousClaimContinue.title = PreviousClaimContinue
+previousClaimContinue.heading = PreviousClaimContinue
+previousClaimContinue.option1 = Option 1
+previousClaimContinue.option2 = Option 2
+previousClaimContinue.checkYourAnswersLabel = PreviousClaimContinue
+previousClaimContinue.error.required = Select previousClaimContinue
+previousClaimContinue.change.hidden = PreviousClaimContinue

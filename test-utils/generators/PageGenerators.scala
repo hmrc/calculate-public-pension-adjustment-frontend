@@ -24,6 +24,9 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryPreviousClaimContinuePage: Arbitrary[PreviousClaimContinuePage.type] =
+    Arbitrary(PreviousClaimContinuePage)
+
   implicit lazy val arbitraryRegisteredYearPage: Arbitrary[RegisteredYearPage.type] =
     Arbitrary(RegisteredYearPage)
 

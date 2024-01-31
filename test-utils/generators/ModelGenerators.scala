@@ -22,6 +22,11 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryPreviousClaimContinue: Arbitrary[PreviousClaimContinue] =
+    Arbitrary {
+      Gen.oneOf(PreviousClaimContinue.values.toSeq)
+    }
+
   implicit lazy val arbitraryNewExcessLifetimeAllowancePaid: Arbitrary[NewExcessLifetimeAllowancePaid] =
     Arbitrary {
       Gen.oneOf(NewExcessLifetimeAllowancePaid.values.toSeq)
