@@ -15,7 +15,6 @@
  *@
 
 @import viewmodels.InputWidth._
-@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
@@ -55,7 +54,7 @@
             <br>
             <br>
 
-            <h1 class="govuk-heading-l">@messages("adjustedIncome.heading2")</h1>
+            <h2 class="govuk-heading-l">@messages("adjustedIncome.heading2")</h2>
 
             <ul>
                 <li class="govuk-body">@messages("adjustedIncome.bullet1")</li>
@@ -70,7 +69,7 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                LabelViewModel(messages("adjustedIncome.heading3",period.start.getYear.toString, period.end.getYear.toString)).asPageHeading(LabelSize.Medium)
+                LabelViewModel(messages("adjustedIncome.heading3",period.start.getYear.toString, period.end.getYear.toString)).withCssClass("govuk-label--m")
             ).withHint(HintViewModel(messages("adjustedIncome.hint1")))
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
