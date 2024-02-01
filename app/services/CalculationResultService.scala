@@ -229,16 +229,62 @@ class CalculationResultService @Inject() (
           )
 
         case _ =>
-          Some(
-            NormalTaxYear(
-              taxYearSchemes.map(_.revisedPensionInputAmount).sum,
-              taxYearSchemes,
-              totalIncome,
-              chargePaidByMember,
-              period,
-              income
-            )
-          )
+          (
+            userAnswers.get(OtherDefinedBenefitOrContributionPage(period)),
+            userAnswers.get(FlexiAccessDefinedContributionAmountPage(period))
+          ) match {
+            case (Some(true), Some(postAccessDefinedContributionInputAmount)) =>
+              val definedBenefitInputAmount      =
+                userAnswers.get(DefinedBenefitAmountPage(period)).map(_.toInt).getOrElse(0)
+              val definedContributionInputAmount =
+                userAnswers.get(DefinedContributionAmountPage(period)).map(_.toInt).getOrElse(0)
+
+              val flexiAccessDate: LocalDate =
+                userAnswers.get(FlexibleAccessStartDatePage).getOrElse(LocalDate.parse("2010-01-01"))
+
+              Some(
+                InitialFlexiblyAccessedTaxYear(
+                  definedBenefitInputAmount,
+                  flexiAccessDate,
+                  definedContributionInputAmount,
+                  postAccessDefinedContributionInputAmount.toInt,
+                  taxYearSchemes,
+                  totalIncome,
+                  chargePaidByMember,
+                  period,
+                  income
+                )
+              )
+
+            case (Some(true), None) =>
+              val definedBenefitInputAmount      =
+                userAnswers.get(DefinedBenefitAmountPage(period)).map(_.toInt).getOrElse(0)
+              val definedContributionInputAmount =
+                userAnswers.get(DefinedContributionAmountPage(period)).map(_.toInt).getOrElse(0)
+              Some(
+                PostFlexiblyAccessedTaxYear(
+                  definedBenefitInputAmount,
+                  definedContributionInputAmount,
+                  totalIncome,
+                  chargePaidByMember,
+                  taxYearSchemes,
+                  period,
+                  income
+                )
+              )
+
+            case _ =>
+              Some(
+                NormalTaxYear(
+                  taxYearSchemes.map(_.revisedPensionInputAmount).sum,
+                  taxYearSchemes,
+                  totalIncome,
+                  chargePaidByMember,
+                  period,
+                  income
+                )
+              )
+          }
       }
     } else
       None
