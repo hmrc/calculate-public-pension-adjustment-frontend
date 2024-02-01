@@ -595,7 +595,7 @@ schemeNameAndTaxRef.checkYourAnswersLabel = What is the name and reference of th
 schemeNameAndTaxRef.name.error.required = Enter the name of the pension scheme that paid the lifetime allowance charge
 schemeNameAndTaxRef.taxRef.error.required = Enter the Pension Scheme Tax Reference of the pension scheme that paid the lifetime allowance charge
 schemeNameAndTaxRef.name.error.length = The name of the pension scheme that paid the lifetime allowance charge must be 100 characters or fewer
-schemeNameAndTaxRef.taxRef.invalid = The Pension Scheme Tax Reference that paid the lifetime allowance charge must be 8 numbers followed by 2 letters
+schemeNameAndTaxRef.taxRef.error.invalid = The Pension Scheme Tax Reference that paid the lifetime allowance charge must be 8 numbers followed by 2 letters
 schemeNameAndTaxRef.change.hidden = pension scheme name or pension scheme tax reference of the pension scheme that paid the charge
 
 otherDefinedBenefitOrContribution.title = Have you contributed to any other defined benefit or defined contribution scheme?
@@ -915,7 +915,7 @@ userSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of 
 userSchemeDetails.name.error.required = Enter the name of the pension scheme
 userSchemeDetails.taxRef.error.required = Enter the Pension Scheme Tax Reference
 userSchemeDetails.name.error.length = The name of your pension scheme must be 100 characters or less
-userSchemeDetails.taxRef.invalid = The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
+userSchemeDetails.taxRef.error.invalid = The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
 userSchemeDetails.change.hidden = What is the name and tax reference of the pension scheme?
 
 enhancementType.title = Which type of lifetime allowance enhancement did you have?

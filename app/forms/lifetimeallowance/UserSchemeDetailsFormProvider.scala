@@ -29,7 +29,11 @@ class UserSchemeDetailsFormProvider @Inject() extends Mappings {
     mapping(
       "name"   -> text("userSchemeDetails.name.error.required")
         .verifying(maxLength(100, "userSchemeDetails.name.error.length")),
-      "taxRef" -> pstr("userSchemeDetails.taxRef.error.required", "userSchemeDetails.taxRef.invalid")
+      "taxRef" -> pstr(
+        "userSchemeDetails.taxRef.error.required",
+        "userSchemeDetails.taxRef.error.invalid",
+        Seq("""(\d\s*){8}[A-Za-z]{2}""")
+      )
     )(UserSchemeDetails.apply)(UserSchemeDetails.unapply)
   )
 }

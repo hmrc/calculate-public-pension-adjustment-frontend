@@ -51,8 +51,8 @@ trait Formatters {
         baseFormatter
           .bind(key, data)
           .flatMap {
-            case s if PSTR.fromString(s).isDefined => Right(s)
-            case PSTR.New                          => Right(PSTR.New)
+            case s if PSTR.fromString(s).isDefined => Right(s.toUpperCase.replaceAll(" ", ""))
+            case PSTR.New                          => Right(PSTR.New.toUpperCase.replaceAll(" ", ""))
             case _                                 => Left(Seq(FormError(key, invalidKey, args)))
           }
 

@@ -54,6 +54,7 @@ class UserSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName   = "taxRef"
     val requiredKey = "userSchemeDetails.taxRef.error.required"
+    val invalidKey  = "userSchemeDetails.taxRef.error.invalid"
 
     behave like fieldThatBindsValidData(
       form,
@@ -61,10 +62,18 @@ class UserSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
       validPstrs
     )
 
+    behave like fieldThatDoesNotBindInvalidStrings(
+      form,
+      fieldName,
+      regex = """(\d\s*){8}[A-Za-z]{2}""",
+      stringsOfLength(10),
+      invalidKey
+    )
+
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq("""(\d\s*){8}[A-Za-z]{2}"""))
     )
   }
 }

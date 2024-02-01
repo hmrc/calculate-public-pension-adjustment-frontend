@@ -52,9 +52,9 @@ class LtaPensionSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".taxRef" - {
 
-    val fieldName = "taxRef"
-
+    val fieldName   = "taxRef"
     val requiredKey = "ltaPensionSchemeDetails.error.taxRef.required"
+    val invalidKey  = "ltaPensionSchemeDetails.error.taxRef.invalid"
 
     behave like fieldThatBindsValidData(
       form,
@@ -62,10 +62,18 @@ class LtaPensionSchemeDetailsFormProviderSpec extends StringFieldBehaviours {
       validPstrs
     )
 
+    behave like fieldThatDoesNotBindInvalidStrings(
+      form,
+      fieldName,
+      regex = """(\d\s*){8}[A-Za-z]{2}""",
+      stringsOfLength(10),
+      invalidKey
+    )
+
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq("""(\d\s*){8}[A-Za-z]{2}"""))
     )
   }
 }

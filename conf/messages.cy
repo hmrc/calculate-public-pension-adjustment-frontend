@@ -595,7 +595,7 @@ schemeNameAndTaxRef.checkYourAnswersLabel = cy: What is the name and reference o
 schemeNameAndTaxRef.name.error.required = cy: Enter the name of the pension scheme that paid the lifetime allowance charge
 schemeNameAndTaxRef.taxRef.error.required = cy: Enter the Pension Scheme Tax Reference of the pension scheme that paid the lifetime allowance charge
 schemeNameAndTaxRef.name.error.length = cy: The name of the pension scheme that paid the lifetime allowance charge must be 100 characters or fewer
-schemeNameAndTaxRef.taxRef.invalid = cy: The Pension Scheme Tax Reference that paid the lifetime allowance charge must be 8 numbers followed by 2 letters
+schemeNameAndTaxRef.taxRef.error.invalid = cy: The Pension Scheme Tax Reference that paid the lifetime allowance charge must be 8 numbers followed by 2 letters
 schemeNameAndTaxRef.change.hidden = cy: pension scheme name or pension scheme tax reference of the pension scheme that paid the charge
 
 otherDefinedBenefitOrContribution.title = cy: Have you contributed to any other defined benefit or defined contribution scheme?
@@ -669,7 +669,7 @@ ltaPensionSchemeDetails.hint = cy: For example, 00348916RT.
 ltaPensionSchemeDetails.checkYourAnswersLabel = cy: What is the name and tax reference of the scheme that is paying the extra charge?
 ltaPensionSchemeDetails.change.hidden = cy: name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.required = cy: Enter the Pension Scheme Tax Reference of the scheme that is paying the extra charge
-ltaPensionSchemeDetails.taxRef.invalid = cy: The Pension Scheme Tax Reference of the scheme that is paying the extra charge must only include letters a to z, numbers 0 to 9
+ltaPensionSchemeDetails.error.taxRef.invalid = cy: The Pension Scheme Tax Reference of the scheme that is paying the extra charge must only include letters a to z, numbers 0 to 9
 
 adjustedIncome.caption = cy: Annual allowance between 6 April {0} to 5 April {1}
 adjustedIncome.title = cy: What was your adjusted income from 6 April {0} to 5 April {1}?
@@ -915,7 +915,7 @@ userSchemeDetails.checkYourAnswersLabel = cy: What is the name and tax reference
 userSchemeDetails.name.error.required = cy: Enter the name of the pension scheme
 userSchemeDetails.taxRef.error.required = cy: Enter the Pension Scheme Tax Reference
 userSchemeDetails.name.error.length = cy: The name of your pension scheme must be 100 characters or less
-userSchemeDetails.taxRef.invalid = cy: The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
+userSchemeDetails.taxRef.error.invalid = cy: The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
 userSchemeDetails.change.hidden = cy: What is the name and tax reference of the pension scheme?
 
 enhancementType.title = cy: Which type of lifetime allowance enhancement did you have?

@@ -28,7 +28,11 @@ class SchemeNameAndTaxRefFormProvider @Inject() extends Mappings {
     mapping(
       "name"   -> text("schemeNameAndTaxRef.name.error.required")
         .verifying(maxLength(100, "schemeNameAndTaxRef.name.error.length")),
-      "taxRef" -> pstr("schemeNameAndTaxRef.taxRef.error.required", "schemeNameAndTaxRef.taxRef.invalid")
+      "taxRef" -> pstr(
+        "schemeNameAndTaxRef.taxRef.error.required",
+        "schemeNameAndTaxRef.taxRef.error.invalid",
+        Seq("""(\d\s*){8}[A-Za-z]{2}""")
+      )
     )(SchemeNameAndTaxRef.apply)(SchemeNameAndTaxRef.unapply)
   )
 }
