@@ -24,6 +24,11 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-body">@messages("previousClaimContinue.body")</p>
+    <p>@messages("previousClaimContinue.hint")</p>
+}
+
 @layout(pageTitle = title(form, messages("previousClaimContinue.title"))) {
 
     @formHelper(action = routes.PreviousClaimContinueController.onSubmit(mode), 'autoComplete -> "off") {
@@ -32,13 +37,16 @@
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
-        @govukRadios(
-            RadiosViewModel(
-                field  = form("value"),
-                legend = LegendViewModel(messages("previousClaimContinue.heading")).asPageHeading(),
-                items  = PreviousClaimContinue.options
+@govukRadios(
+            RadiosViewModel.yesNo(
+            field = form("value"),
+            legend = HmrcPageHeadingLegend(
+            content = messages("previousClaimContinue.heading"),
             )
         )
+        .withHint(HintViewModel(HtmlContent(contentHint)))
+        )
+
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))
