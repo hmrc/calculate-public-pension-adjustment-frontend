@@ -200,7 +200,7 @@ flexibleAccessStartDate.heading = cy: When did you first flexibly access your de
 flexibleAccessStartDate.checkYourAnswersLabel = cy: Date you first flexibly accessed your defined contribution pension
 flexibleAccessStartDate.hint1 = cy: You can find this on your flexible access statement.
 flexibleAccessStartDate.hint2 = cy: For example, 25 2 2015.
-flexibleAccessStartDate.change.hidden = cy: date you first flexibly accessed your defined contribution pension
+flexibleAccessStartDate.change.hidden = cy: the date you first flexibly accessed your defined contribution pension
 flexibleAccessStartDate.error.required.all = cy: Enter a date when you first flexibly accessed your defined contribution pension in the right format, with a date, month and year
 
 flexibleAccessStartDate.error.invalid = cy: Enter the date when you stopped paying into a public service pension scheme in the right format, with a date, month and year
@@ -390,7 +390,7 @@ protectionEnhancedChanged.both = cy: Both
 protectionEnhancedChanged.no = cy: No
 protectionEnhancedChanged.checkYourAnswersLabel = cy: Has your protection type or enhancement changed between 6 April 2015 and 5 April 2023?
 protectionEnhancedChanged.error.required = cy: Select if your protection type or enhancement changed between 6 April 2015 and 5 April 2023
-protectionEnhancedChanged.change.hidden = cy: has your protection type or enhancement changed between 6 April 2015 and 5 April 2023
+protectionEnhancedChanged.change.hidden = cy: if your protection type or enhancement changed between 6 April 2015 and 5 April 2023
 
 referenceNewProtectionTypeEnhancement.title = cy: What is your new lifetime allowance protection reference?
 referenceNewProtectionTypeEnhancement.heading = cy: What is your new lifetime allowance protection reference?
@@ -548,7 +548,7 @@ whichScheme.hint = cy: Select from the options below or enter a new scheme.
 whichScheme.New = cy: Enter a new pension scheme
 whichScheme.checkYourAnswersLabel = cy: Select which scheme paid the charge or add new.
 whichScheme.error.required = cy: Select which scheme you are entering details for
-whichScheme.change.hidden = cy: the scheme are you entering details for
+whichScheme.change.hidden = cy: the scheme you are entering details for
 
 whoPaidAACharge.title = cy: Who paid the annual allowance tax charge for {0}?
 whoPaidAACharge.heading = cy: Who paid the annual allowance tax charge for {0}?

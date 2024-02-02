@@ -200,7 +200,7 @@ flexibleAccessStartDate.heading = When did you first flexibly access your define
 flexibleAccessStartDate.checkYourAnswersLabel = Date you first flexibly accessed your defined contribution pension
 flexibleAccessStartDate.hint1 = You can find this on your flexible access statement.
 flexibleAccessStartDate.hint2 = For example, 25 2 2015.
-flexibleAccessStartDate.change.hidden = date you first flexibly accessed your defined contribution pension
+flexibleAccessStartDate.change.hidden = the date you first flexibly accessed your defined contribution pension
 flexibleAccessStartDate.error.required.all = Enter a date when you first flexibly accessed your defined contribution pension in the right format, with a date, month and year
 
 flexibleAccessStartDate.error.invalid = Enter the date when you stopped paying into a public service pension scheme in the right format, with a date, month and year
@@ -390,7 +390,7 @@ protectionEnhancedChanged.both = Both
 protectionEnhancedChanged.no = No
 protectionEnhancedChanged.checkYourAnswersLabel = Has your protection type or enhancement changed between 6 April 2015 and 5 April 2023?
 protectionEnhancedChanged.error.required = Select if your protection type or enhancement changed between 6 April 2015 and 5 April 2023
-protectionEnhancedChanged.change.hidden = has your protection type or enhancement changed between 6 April 2015 and 5 April 2023
+protectionEnhancedChanged.change.hidden = if your protection type or enhancement changed between 6 April 2015 and 5 April 2023
 
 referenceNewProtectionTypeEnhancement.title = What is your new lifetime allowance protection reference?
 referenceNewProtectionTypeEnhancement.heading = What is your new lifetime allowance protection reference?
@@ -548,7 +548,7 @@ whichScheme.hint = Select from the options below or enter a new scheme.
 whichScheme.New = Enter a new pension scheme
 whichScheme.checkYourAnswersLabel = Select which scheme paid the charge or add new.
 whichScheme.error.required = Select which scheme you are entering details for
-whichScheme.change.hidden = the scheme are you entering details for
+whichScheme.change.hidden = the scheme you are entering details for
 
 whoPaidAACharge.title = Who paid the annual allowance tax charge for {0}?
 whoPaidAACharge.heading = Who paid the annual allowance tax charge for {0}?
