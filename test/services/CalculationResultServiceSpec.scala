@@ -798,6 +798,325 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           |""".stripMargin)
       .as[JsObject]
 
+    val data9 = Json
+      .parse(s"""
+                |{
+                |    "savingsStatement": true,
+                |    "navigation": {
+                |      "setupSection": "/public-pension-adjustment/check-your-answers-setup",
+                |      "preAASection": "/public-pension-adjustment/annual-allowance/setup-check-answers",
+                |      "aaSection2016-pre": "/public-pension-adjustment/annual-allowance/2016-pre/check-answers",
+                |      "aaSection2016-post": "/public-pension-adjustment/annual-allowance/2016-post/check-answers",
+                |      "aaSection2017": "/public-pension-adjustment/annual-allowance/2017/check-answers",
+                |      "aaSection2018": "/public-pension-adjustment/annual-allowance/2018/check-answers",
+                |      "aaSection2019": "/public-pension-adjustment/annual-allowance/2019/check-answers"
+                |    },
+                |    "resubmittingAdjustment": false,
+                |    "reportingChange": [
+                |      "annualAllowance"
+                |    ],
+                |    "scottishTaxpayerFrom2016": true,
+                |    "whichYearsScottishTaxpayer": [
+                |      "2019"
+                |    ],
+                |    "payingPublicPensionScheme": false,
+                |    "stopPayingPublicPension": "2019-04-05",
+                |    "definedContributionPensionScheme": true,
+                |    "flexiblyAccessedPension": false,
+                |    "payTaxCharge1415": true,
+                |    "aa": {
+                |      "years": {
+                |        "2016-pre": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RO"
+                |              },
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 30000,
+                |                "revisedPIA": 20000
+                |              },
+                |              "payACharge": false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": true,
+                |          "contributedToDuringRemedyPeriod": [
+                |            "definedContribution"
+                |          ],
+                |          "definedContributionAmount": 20000,
+                |          "totalIncome": 60000
+                |        },
+                |        "2016-post": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RO"
+                |              },
+                |              "whichScheme": "00348916RO",
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 30000,
+                |                "revisedPIA": 22000
+                |              },
+                |              "payACharge": true,
+                |              "whoPaidAACharge": "both",
+                |              "howMuchAAChargeYouPaid": 3600,
+                |              "howMuchAAChargeSchemePaid": 3600
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": true,
+                |          "contributedToDuringRemedyPeriod": [
+                |            "definedContribution"
+                |          ],
+                |          "definedContributionAmount": 18000
+                |        },
+                |        "2017": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RO"
+                |              },
+                |              "whichScheme": "00348916RO",
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 38000,
+                |                "revisedPIA": 45000
+                |              },
+                |              "payACharge": false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": false,
+                |          "thresholdIncome": false,
+                |          "totalIncome": 60000
+                |        },
+                |        "2018": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RO"
+                |              },
+                |              "whichScheme": "00348916RO",
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 43000,
+                |                "revisedPIA": 38000
+                |              },
+                |              "payACharge": true,
+                |              "whoPaidAACharge": "both",
+                |              "howMuchAAChargeYouPaid": 200,
+                |              "howMuchAAChargeSchemePaid": 200
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": false,
+                |          "thresholdIncome": false,
+                |          "totalIncome": 60000
+                |        },
+                |        "2019": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RO"
+                |              },
+                |              "whichScheme": "00348916RO",
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 48000,
+                |                "revisedPIA": 43000
+                |              },
+                |              "payACharge": true,
+                |              "whoPaidAACharge": "you",
+                |              "howMuchAAChargeYouPaid": 3280
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": false,
+                |          "thresholdIncome": false,
+                |          "totalIncome": 60000
+                |        }
+                |      }
+                |    }
+                |  }
+                |""".stripMargin)
+      .as[JsObject]
+
+    val data10 = Json
+      .parse(s"""
+                |{
+                |    "savingsStatement": true,
+                |    "navigation": {
+                |      "setupSection": "/public-pension-adjustment/check-your-answers-setup",
+                |      "preAASection": "/public-pension-adjustment/annual-allowance/setup-check-answers",
+                |      "aaSection2016-pre": "/public-pension-adjustment/annual-allowance/2016-pre/check-answers",
+                |      "aaSection2016-post": "/public-pension-adjustment/annual-allowance/2016-post/check-answers",
+                |      "aaSection2017": "/public-pension-adjustment/annual-allowance/2017/check-answers",
+                |      "aaSection2018": "/public-pension-adjustment/annual-allowance/2018/check-answers",
+                |      "aaSection2019": "/public-pension-adjustment/annual-allowance/2019/check-answers",
+                |      "aaSection2020": "/public-pension-adjustment/annual-allowance/2020/check-answers"
+                |    },
+                |    "resubmittingAdjustment": false,
+                |    "reportingChange": [
+                |      "annualAllowance"
+                |    ],
+                |    "scottishTaxpayerFrom2016": false,
+                |    "payingPublicPensionScheme": false,
+                |    "definedContributionPensionScheme": true,
+                |    "flexiblyAccessedPension": true,
+                |    "flexibleAccessStartDate": "2017-10-20",
+                |    "payTaxCharge1415": true,
+                |    "stopPayingPublicPension": "2020-01-01",
+                |    "aa": {
+                |      "years": {
+                |        "2016-pre": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RP"
+                |              },
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 30000,
+                |                "revisedPIA": 28000
+                |              },
+                |              "payACharge": true,
+                |              "whoPaidAACharge": "you",
+                |              "howMuchAAChargeYouPaid": 300
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": true,
+                |          "contributedToDuringRemedyPeriod": [
+                |            "definedContribution",
+                |            "definedBenefit"
+                |          ],
+                |          "definedContributionAmount": 1800,
+                |          "definedBenefitAmount": 800,
+                |          "totalIncome": 60000
+                |        },
+                |        "2016-post": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RP"
+                |              },
+                |              "whichScheme": "00348916RP",
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 40000,
+                |                "revisedPIA": 34000
+                |              },
+                |              "payACharge": false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": false
+                |        },
+                |        "2017": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RP"
+                |              },
+                |              "whichScheme": "00348916RP",
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 32000,
+                |                "revisedPIA": 31000
+                |              },
+                |              "payACharge": true,
+                |              "whoPaidAACharge": "scheme",
+                |              "howMuchAAChargeSchemePaid": 8000
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": true,
+                |          "contributedToDuringRemedyPeriod": [
+                |            "definedBenefit"
+                |          ],
+                |          "definedBenefitAmount": 2000,
+                |          "thresholdIncome": false,
+                |          "totalIncome": 60000
+                |        },
+                |        "2018": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RP"
+                |              },
+                |              "whichScheme": "00348916RP",
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 46000,
+                |                "revisedPIA": 43000
+                |              },
+                |              "payACharge": false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": false,
+                |          "thresholdIncome": true,
+                |          "adjustedIncome": 160000,
+                |          "totalIncome": 200000
+                |        },
+                |        "2019": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RP"
+                |              },
+                |              "whichScheme": "00348916RP",
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 54000,
+                |                "revisedPIA": 52000
+                |              },
+                |              "payACharge": true,
+                |              "whoPaidAACharge": "both",
+                |              "howMuchAAChargeYouPaid": 3400,
+                |              "howMuchAAChargeSchemePaid": 4700
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": false,
+                |          "thresholdIncome": false,
+                |          "totalIncome": 60000
+                |        },
+                |        "2020": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RP"
+                |              },
+                |              "whichScheme": "00348916RP",
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 0,
+                |                "revisedPIA": 0
+                |              },
+                |              "payACharge": false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": true,
+                |          "thresholdIncome": false,
+                |          "contributedToDuringRemedyPeriod": [
+                |            "definedContribution",
+                |            "definedBenefit"
+                |          ],
+                |          "definedContributionAmount": 700,
+                |          "definedBenefitAmount": 4900,
+                |          "totalIncome": 60000
+                |        }
+                |      }
+                |    }
+                |  }
+                |""".stripMargin)
+      .as[JsObject]
+
     val userAnswers1 = UserAnswers(
       id = "session-5a356f3a-c83e-4e8c-a957-226163ba285f",
       data = data1
@@ -1187,6 +1506,137 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0)),
                   Period._2019,
+                  Some(BelowThreshold)
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
+
+      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9))
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Some(
+            AnnualAllowance(
+              List(Period._2019),
+              List(
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  20000,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 20000, 0)),
+                  Period._2016PreAlignment,
+                  None
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  18000,
+                  60000,
+                  3600,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 22000, 3600)),
+                  Period._2016PostAlignment,
+                  None
+                ),
+                NormalTaxYear(
+                  45000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 38000, 45000, 0)),
+                  60000,
+                  0,
+                  Period._2017,
+                  Some(BelowThreshold)
+                ),
+                NormalTaxYear(
+                  38000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 43000, 38000, 200)),
+                  60000,
+                  200,
+                  Period._2018,
+                  Some(BelowThreshold)
+                ),
+                NormalTaxYear(
+                  43000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 48000, 43000, 0)),
+                  60000,
+                  3280,
+                  Period._2019,
+                  Some(BelowThreshold)
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
+
+      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10))
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Some(
+            AnnualAllowance(
+              List(),
+              List(
+                PostFlexiblyAccessedTaxYear(
+                  800,
+                  1800,
+                  60000,
+                  300,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 30000, 28000, 0)),
+                  Period._2016PreAlignment,
+                  None
+                ),
+                NormalTaxYear(
+                  34000,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 40000, 34000, 0)),
+                  60000,
+                  0,
+                  Period._2016PostAlignment,
+                  None
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  2000,
+                  0,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 32000, 31000, 8000)),
+                  Period._2017,
+                  Some(BelowThreshold)
+                ),
+                InitialFlexiblyAccessedTaxYear(
+                  0,
+                  LocalDate.parse("2017-10-20"),
+                  0,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 46000, 43000, 0)),
+                  200000,
+                  0,
+                  Period._2018,
+                  Some(AboveThreshold(160000))
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
+                  60000,
+                  3400,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 54000, 52000, 4700)),
+                  Period._2019,
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  4900,
+                  700,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, 0)),
+                  Period._2020,
                   Some(BelowThreshold)
                 )
               )
