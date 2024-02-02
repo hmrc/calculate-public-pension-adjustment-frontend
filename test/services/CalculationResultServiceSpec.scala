@@ -893,7 +893,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         )
       }
 
-      "should return valid TaxYear2016To2023.NormalTaxYear for a Period 2018" in {
+      "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2018" in {
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2018)
 
         result mustBe Some(
@@ -941,7 +941,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         )
       }
 
-      "should return valid TaxYear2016To2023.NormalTaxYear for a Period 2021" in {
+      "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2021" in {
         val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2021)
 
         result mustBe
