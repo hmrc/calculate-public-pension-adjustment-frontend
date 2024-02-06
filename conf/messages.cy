@@ -1061,4 +1061,4 @@ previousClaimContinue.option1 = cy: Yes
 previousClaimContinue.option2 = cy: No
 previousClaimContinue.checkYourAnswersLabel = cy: Do you want to start your claim from the beginning?
 previousClaimContinue.error.required = cy: Select yes if you want to continue with your previous claim
-previousClaimContinue.change.hidden = cy: Do you want to continue with your previous claim?
+previousClaimContinue.change.hidden = cy: if you want to continue with your previous claim
