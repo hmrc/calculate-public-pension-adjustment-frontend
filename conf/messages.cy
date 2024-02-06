@@ -296,7 +296,7 @@ dateOfBenefitCrystallisationEvent.error.required = cy: The date of benefit cryst
 dateOfBenefitCrystallisationEvent.error.invalid = cy: The date of benefit crystallisation event must only include numbers 0 to 9
 dateOfBenefitCrystallisationEvent.change.hidden = cy: date of the benefit crystallisation event
 dateOfBenefitCrystallisationEvent.error.min = cy: The date of benefit crystallisation event must be after {0}
-dateOfBenefitCrystallisationEvent.error.max = cy: The date of the benefit crystallisation event must be today or in the past
+dateOfBenefitCrystallisationEvent.error.max = cy: The date of the benefit crystallisation event must be before 6 April 2023
 
 notAbleToUseThisServiceLta.title = cy: You cannot make a lifetime allowance adjustment
 notAbleToUseThisServiceLta.heading = cy: You cannot make a lifetime allowance adjustment
@@ -865,6 +865,7 @@ quarterChargePaid.change.hidden =  cy: quarter of that year your lifetime allowa
 yearChargePaid.title = cy: In which year was your lifetime allowance charge paid?
 yearChargePaid.heading = cy: In which year was your lifetime allowance charge paid?
 yearChargePaid.hint = cy: Select the year your lifetime allowance charge was paid.
+yearChargePaid.2022To2023 = cy: 6 April 2022 to 5 April 2023
 yearChargePaid.2021To2022 = cy: 6 April 2021 to 5 April 2022
 yearChargePaid.2020To2021 = cy: 6 April 2020 to 5 April 2021
 yearChargePaid.2019To2020 = cy: 6 April 2019 to 5 April 2020
