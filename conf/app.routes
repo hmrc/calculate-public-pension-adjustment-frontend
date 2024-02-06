@@ -356,3 +356,8 @@ POST       /sign-in-government-gateway                      controllers.Optional
 
 GET         /cannot-use-service-not-individual              controllers.CannotUseServiceNotIndividualController.onPageLoad
 GET         /uplift-failure                                 controllers.UpliftFailedController.onPageLoad()
+
+GET        /previous-claim-continue                        controllers.PreviousClaimContinueController.onPageLoad(mode: Mode = NormalMode)
+POST       /previous-claim-continue                        controllers.PreviousClaimContinueController.onSubmit(mode: Mode = NormalMode)
+GET        /change-previous-claim-continue                  controllers.PreviousClaimContinueController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-previous-claim-continue                  controllers.PreviousClaimContinueController.onSubmit(mode: Mode = CheckMode)
