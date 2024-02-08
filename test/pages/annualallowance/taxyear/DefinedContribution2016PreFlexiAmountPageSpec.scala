@@ -17,7 +17,10 @@
 package pages.annualallowance.taxyear
 
 import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, Period}
+import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class DefinedContribution2016PreFlexiAmountPageSpec extends PageBehaviours {
 
@@ -32,109 +35,220 @@ class DefinedContribution2016PreFlexiAmountPageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "must navigate to journey recovery when no answer" in {
+    "stopped paying in sub period" - {
 
-      val ua = emptyUserAnswers
+      "must navigate to journey recovery when no answer" in {
 
-      val result = DefinedContribution2016PreFlexiAmountPage.navigate(NormalMode, ua).url
+        val ua = emptyUserAnswers
 
-      checkNavigation(result, "/there-is-a-problem")
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(NormalMode, ua).url
 
+        checkNavigation(result, "/there-is-a-problem")
+
+      }
+
+      "must navigate to total income page when no DB indicated" in {
+
+        val ua = emptyUserAnswers
+          .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 1))
+          .success
+          .value
+          .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
+          .success
+          .value
+
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2016/total-income")
+
+      }
+
+      "must navigate to DB pre 2016 page when DB indicated" in {
+
+        val ua = emptyUserAnswers
+          .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 1))
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(Period._2016),
+            Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+          )
+          .success
+          .value
+          .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
+          .success
+          .value
+
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2016pre-pension-input-amount-defined-benefit")
+
+      }
     }
 
-    "must navigate to DC 2016post amount page when answered" in {
+    "didn't stop paying in sub period" - {
 
-      val ua = emptyUserAnswers
-        .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
-        .success
-        .value
+      "must navigate to DC post 2016 page when answered" in {
 
-      val result = DefinedContribution2016PreFlexiAmountPage.navigate(NormalMode, ua).url
+        val ua = emptyUserAnswers
+          .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
+          .success
+          .value
 
-      checkNavigation(result, "/annual-allowance/2016post-pension-input-amount-defined-contribution")
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(NormalMode, ua).url
 
+        checkNavigation(result, "/annual-allowance/2016post-pension-input-amount-defined-contribution")
+
+      }
     }
   }
 
-  "Check Mode" - {
+  "Check mode" - {
 
-    "must navigate to DC 2016post amount page when answered and DC2016Post not answered" in {
+    "stopped paying in sub period" - {
 
-      val ua = emptyUserAnswers
-        .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
-        .success
-        .value
+      "must navigate to DB pre 2016 page if DB indicated and not answered" in {
 
-      val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
+        val ua = emptyUserAnswers
+          .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 1))
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(Period._2016),
+            Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+          )
+          .success
+          .value
+          .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
+          .success
+          .value
 
-      checkNavigation(result, "/annual-allowance/change-2016post-pension-input-amount-defined-contribution")
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/change-2016pre-pension-input-amount-defined-benefit")
+      }
+
+      "must navigate to CYA if DB indicated and DB pre 2016 answered" in {
+
+        val ua = emptyUserAnswers
+          .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 1))
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(Period._2016),
+            Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+          )
+          .success
+          .value
+          .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
+          .success
+          .value
+          .set(DefinedBenefit2016PreAmountPage, BigInt(1))
+          .success
+          .value
+
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2016/check-answers")
+
+      }
+
+      "must navigate to CYA if DB not indicated" in {
+
+        val ua = emptyUserAnswers
+          .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 1))
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(Period._2016),
+            Set(ContributedToDuringRemedyPeriod.values.head)
+          )
+          .success
+          .value
+          .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
+          .success
+          .value
+
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2016/check-answers")
+      }
     }
 
-    "must navigate to CYA if DC2016Post answered and DB not indicated" in {
+    "didn't stop paying in sub period" - {
 
-      val ua = emptyUserAnswers
-        .set(
-          ContributedToDuringRemedyPeriodPage(Period._2016),
-          Set(ContributedToDuringRemedyPeriod.values.head)
-        )
-        .success
-        .value
-        .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
-        .success
-        .value
-        .set(DefinedContribution2016PostAmountPage, BigInt(1))
-        .success
-        .value
+      "must navigate to DC post 2016 if not answered" in {
 
-      val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
+        val ua = emptyUserAnswers
+          .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 30))
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(Period._2016),
+            Set(ContributedToDuringRemedyPeriod.values.head)
+          )
+          .success
+          .value
+          .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
+          .success
+          .value
 
-      checkNavigation(result, "/annual-allowance/2016/check-answers")
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
 
-    }
+        checkNavigation(result, "/annual-allowance/change-2016post-pension-input-amount-defined-contribution")
+      }
 
-    "must navigate to CYA if DCPost2016 answered, DB indicated and DBPre2016 answered" in {
+      "must navigate to DB pre 2016 if DB indicated and not answered and DC post 2016 answered" in {
 
-      val ua = emptyUserAnswers
-        .set(
-          ContributedToDuringRemedyPeriodPage(Period._2016),
-          Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
-        )
-        .success
-        .value
-        .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
-        .success
-        .value
-        .set(DefinedContribution2016PostAmountPage, BigInt(1))
-        .success
-        .value
-        .set(DefinedBenefit2016PreAmountPage, BigInt(1))
-        .success
-        .value
+        val ua = emptyUserAnswers
+          .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 30))
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(Period._2016),
+            Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+          )
+          .success
+          .value
+          .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
+          .success
+          .value
+          .set(DefinedContribution2016PostAmountPage, BigInt(1))
+          .success
+          .value
 
-      val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2016/check-answers")
-    }
+        checkNavigation(result, "/annual-allowance/change-2016pre-pension-input-amount-defined-benefit")
+      }
 
-    "must navigate to DBPre2016 if DCPost2016 answered, DB indicated and DBPre2016 not answered" in {
+      "must navigate to CYA if DB indicated and DB pre 2016 already answered" in {
 
-      val ua = emptyUserAnswers
-        .set(
-          ContributedToDuringRemedyPeriodPage(Period._2016),
-          Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
-        )
-        .success
-        .value
-        .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
-        .success
-        .value
-        .set(DefinedContribution2016PostAmountPage, BigInt(1))
-        .success
-        .value
+        val ua = emptyUserAnswers
+          .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 30))
+          .success
+          .value
+          .set(
+            ContributedToDuringRemedyPeriodPage(Period._2016),
+            Set(ContributedToDuringRemedyPeriod.values.head, ContributedToDuringRemedyPeriod.values.tail.head)
+          )
+          .success
+          .value
+          .set(DefinedContribution2016PreFlexiAmountPage, BigInt(1))
+          .success
+          .value
+          .set(DefinedContribution2016PostAmountPage, BigInt(1))
+          .success
+          .value
+          .set(DefinedBenefit2016PreAmountPage, BigInt(1))
+          .success
+          .value
 
-      val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
+        val result = DefinedContribution2016PreFlexiAmountPage.navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/change-2016pre-pension-input-amount-defined-benefit")
+        checkNavigation(result, "/annual-allowance/2016/check-answers")
+
+      }
     }
   }
 }
