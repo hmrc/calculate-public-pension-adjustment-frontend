@@ -23,7 +23,7 @@ import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.{PayAChargePage, PensionSchemeDetailsPage}
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.PayAChargeView
 
@@ -34,7 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class PayAChargeController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -78,7 +78,7 @@ class PayAChargeController @Inject() (
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PayAChargePage(period, schemeIndex), value))
               redirectUrl     = PayAChargePage(period, schemeIndex).navigate(mode, updatedAnswers).url
               answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }

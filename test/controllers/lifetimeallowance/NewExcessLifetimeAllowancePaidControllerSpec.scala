@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.lifetimeallowance.NewExcessLifetimeAllowancePaidFormProvider
-import models.{NewExcessLifetimeAllowancePaid, NormalMode, UserAnswers}
+import models.{Done, NewExcessLifetimeAllowancePaid, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -28,7 +28,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import views.html.lifetimeallowance.NewExcessLifetimeAllowancePaidView
 
 import scala.concurrent.Future
@@ -87,13 +87,13 @@ class NewExcessLifetimeAllowancePaidControllerSpec extends SpecBase with Mockito
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
       running(application) {

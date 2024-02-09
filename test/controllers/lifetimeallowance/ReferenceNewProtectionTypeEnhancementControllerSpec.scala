@@ -19,7 +19,7 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.lifetimeallowance.ReferenceNewProtectionTypeEnhancementFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Done, NormalMode, UserAnswers}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -29,7 +29,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import views.html.lifetimeallowance.ReferenceNewProtectionTypeEnhancementView
 
 import scala.concurrent.Future
@@ -81,16 +81,16 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
     }
 
     "must redirect to next page when submitted" in {
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val userAnswers = emptyUserAnswers
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
