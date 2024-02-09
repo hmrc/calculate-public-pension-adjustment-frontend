@@ -19,6 +19,7 @@ package generators
 import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
+import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -26,6 +27,15 @@ import pages.setupquestions.ReportingChangePage
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+
+  implicit lazy val arbitraryPreviousClaimContinueUserAnswersEntry
+    : Arbitrary[(PreviousClaimContinuePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PreviousClaimContinuePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
 
   implicit lazy val arbitraryDefinedContribution2016PreFlexiAmountUserAnswersEntry
     : Arbitrary[(DefinedContribution2016PreFlexiAmountPage.type, JsValue)] =

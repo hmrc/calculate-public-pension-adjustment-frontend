@@ -1129,3 +1129,13 @@ cannotUseServiceNotIndividual.title = Cannot use this service
 cannotUseServiceNotIndividual.heading = You cannot use this service with this account
 cannotUseServiceNotIndividual.message1 = Only individual user accounts can use this service. If you signed into the government gateway using an organisation or agent account, you must create a personal account instead.
 cannotUseServiceNotIndividual.link = More information about Government Gateway and creating account
+
+previousClaimContinue.title = Do you want to continue with your previous claim?
+previousClaimContinue.heading = Do you want to continue with your previous claim?
+previousClaimContinue.body = If you start your claim from the beginning, your current claim will be removed.
+previousClaimContinue.hint = Select no if you would like to start your claim from the beginning.
+previousClaimContinue.option1 = Yes
+previousClaimContinue.option2 = No
+previousClaimContinue.checkYourAnswersLabel = Do you want to start your claim from the beginning?
+previousClaimContinue.error.required = Select yes if you want to continue with your previous claim
+previousClaimContinue.change.hidden = Do you want to continue your previous claim?

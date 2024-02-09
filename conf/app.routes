@@ -396,3 +396,8 @@ GET        /annual-allowance/2016flexi-pre-pension-input-amount-defined-contribu
 POST       /annual-allowance/2016flexi-pre-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onSubmit(mode: Mode = NormalMode)
 GET        /annual-allowance/change-2016flexi-pre-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onPageLoad(mode: Mode = CheckMode)
 POST       /annual-allowance/change-2016flexi-pre-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /previous-claim-continue                        controllers.PreviousClaimContinueController.onPageLoad(mode: Mode = NormalMode)
+POST       /previous-claim-continue                        controllers.PreviousClaimContinueController.onSubmit(mode: Mode = NormalMode)
+GET        /change-previous-claim-continue                  controllers.PreviousClaimContinueController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-previous-claim-continue                  controllers.PreviousClaimContinueController.onSubmit(mode: Mode = CheckMode)
