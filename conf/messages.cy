@@ -344,6 +344,7 @@ tasklist.error.tasksToComplete = cy: You have tasks that you need to complete
 
 taskList.nextSteps.groupHeading = cy: Next steps
 taskList.nextSteps.calculate = cy: Calculate
+taskList.nextSteps.hidden = cy: Public Service Pension Adjustment
 taskList.nextSteps.continueToSignIn = cy: Continue to sign in
 taskList.nextSteps.setupRequired = cy: You must first complete the setup questions
 taskList.nextSteps.noFurtherAction = cy: No further action required

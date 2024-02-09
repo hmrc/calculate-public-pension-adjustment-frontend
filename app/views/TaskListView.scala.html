@@ -64,7 +64,11 @@
                                 @if(section.status == SectionStatus.CannotStartYet) {
                                    @section.label(messages)
                                 } else {
-                                    <a href="@section.url" class="govuk-link" aria-describedby="@section.id">@section.label(messages)</a>
+                                    @if(section.id == "next-steps-action") {
+                                        <a href="@section.url" class="govuk-link" aria-describedby="@section.id">@section.label(messages)<span class="govuk-visually-hidden">  @messages("taskList.nextSteps.hidden")</span></a>
+                                    } else {
+                                        <a href="@section.url" class="govuk-link" aria-describedby="@section.id">@section.label(messages)</a>
+                                    }
                                 }
                             </span>
                             <span class="hmrc-status-tag" id="@section.id">@TaskListStatus(section.status, messages)</span>
