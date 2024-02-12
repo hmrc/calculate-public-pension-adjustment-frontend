@@ -57,7 +57,7 @@ class StopPayingPublicPensionPageSpec extends PageBehaviours with Matchers {
 
   "Clean up" - {
 
-    "must remove period answers and navigation state for periods that are not relevant" in {
+    "must remove period answers and navigation state for periods on change" in {
       val inputs2019 = PensionSchemeInputAmounts(1, 2)
       val inputs2020 = PensionSchemeInputAmounts(3, 4)
 
@@ -72,8 +72,8 @@ class StopPayingPublicPensionPageSpec extends PageBehaviours with Matchers {
 
       val cleanedAnswers = answers2020.set(StopPayingPublicPensionPage, LocalDate.of(2018, 7, 1)).get
 
-      cleanedAnswers.get(PensionSchemeInputAmountsPage(Period._2019, SchemeIndex(0))) mustBe Some(inputs2019)
-      cleanedAnswers.get(SectionNavigation(s"aaSection${Period._2019}")) mustBe Some("/some-url-a")
+      cleanedAnswers.get(PensionSchemeInputAmountsPage(Period._2019, SchemeIndex(0))) mustBe None
+      cleanedAnswers.get(SectionNavigation(s"aaSection${Period._2019}")) mustBe None
 
       cleanedAnswers.get(PensionSchemeInputAmountsPage(Period._2020, SchemeIndex(0))) mustBe None
       cleanedAnswers.get(SectionNavigation(s"aaSection${Period._2020}")) mustBe None

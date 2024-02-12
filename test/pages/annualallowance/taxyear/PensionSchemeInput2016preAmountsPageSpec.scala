@@ -17,7 +17,10 @@
 package pages.annualallowance.taxyear
 
 import models.{CheckMode, NormalMode, PensionSchemeInput2016postAmounts, PensionSchemeInput2016preAmounts, Period, SchemeIndex}
+import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class PensionSchemeInput2016preAmountsPageSpec extends PageBehaviours {
 
@@ -25,11 +28,14 @@ class PensionSchemeInput2016preAmountsPageSpec extends PageBehaviours {
 
     "Normal mode" - {
 
-      "must navigate to PensionSchemeInput2016postAmounts page" in {
+      "must navigate to PensionSchemeInput2016postAmounts page when NOT stopped paying in 2016Pre sub period" in {
 
         val page = PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0))
 
         val userAnswers = emptyUserAnswers
+          .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 30))
+          .success
+          .value
           .set(
             PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0)),
             PensionSchemeInput2016preAmounts(BigInt(1), BigInt(1))
@@ -43,24 +49,44 @@ class PensionSchemeInput2016preAmountsPageSpec extends PageBehaviours {
       }
     }
 
-    "Check mode" - {
+    "must navigate to PayACharge page when stopped paying in 2016Pre sub period" in {
 
-      "must navigate to CYA page" in {
+      val page = PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0))
 
-        val page = PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0))
+      val userAnswers = emptyUserAnswers
+        .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 1))
+        .success
+        .value
+        .set(
+          PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0)),
+          PensionSchemeInput2016preAmounts(BigInt(1), BigInt(1))
+        )
+        .success
+        .value
 
-        val userAnswers = emptyUserAnswers
-          .set(
-            PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0)),
-            PensionSchemeInput2016preAmounts(BigInt(1), BigInt(1))
-          )
-          .success
-          .value
+      val nextPageUrl = page.navigate(NormalMode, userAnswers).url
 
-        val nextPageUrl = page.navigate(CheckMode, userAnswers).url
+      checkNavigation(nextPageUrl, "/annual-allowance/2016/pension-scheme-0/annual-allowance-charge")
+    }
+  }
 
-        checkNavigation(nextPageUrl, "/annual-allowance/2016/check-answers")
-      }
+  "Check mode" - {
+
+    "must navigate to CYA page" in {
+
+      val page = PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0))
+
+      val userAnswers = emptyUserAnswers
+        .set(
+          PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0)),
+          PensionSchemeInput2016preAmounts(BigInt(1), BigInt(1))
+        )
+        .success
+        .value
+
+      val nextPageUrl = page.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/2016/check-answers")
     }
   }
 }
