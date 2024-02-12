@@ -41,7 +41,7 @@ class SessionRepository @Inject() (
       collectionName = "user-answers",
       mongoComponent = mongoComponent,
       replaceIndexes = true,
-      domainFormat = UserAnswers.encryptedFormat,
+      domainFormat = UserAnswers.format,
       indexes = Seq(
         IndexModel(
           Indexes.ascending("lastUpdated"),

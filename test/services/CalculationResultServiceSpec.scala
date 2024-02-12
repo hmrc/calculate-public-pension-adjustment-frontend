@@ -92,7 +92,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |                "schemeName" : "Scheme 1",
            |                "schemeTaxRef" : "00348916RT"
            |              },
-           |              "pensionSchemeInputAmounts" : {
+           |              "PensionSchemeInput2016preAmounts" : {
+           |                "originalPIA" : 35000,
+           |                "revisedPIA" : 30000
+           |              },
+           |              "PensionSchemeInput2016postAmounts" : {
            |                "originalPIA" : 35000,
            |                "revisedPIA" : 30000
            |              },
@@ -101,10 +105,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          },
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
-           |          "definedContributionAmount" : 6000,
-           |          "flexiAccessDefinedContributionAmount" : 10000,
-           |          "definedBenefitAmount" : 30000,
-           |           "totalIncome" : 60000
+           |          "definedContribution2016PreAmount" : 6015,
+           |          "definedContribution2016PostAmount" : 6016,
+           |          "definedContribution2016PreFlexiAmount" : 10015,
+           |          "definedContribution2016PostFlexiAmount" : 10016,
+           |          "definedBenefit2016PreAmount" : 30015,
+           |          "definedBenefit2016PostAmount" : 30016,
+           |          "totalIncome" : 60000
            |        },
            |        "2017" : {
            |          "memberMoreThanOnePension" : false,
@@ -804,29 +811,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "payTaxCharge1415": true,
                 |    "aa": {
                 |      "years": {
-                |        "2016-pre": {
-                |          "memberMoreThanOnePension": false,
-                |          "schemes": {
-                |            "0": {
-                |              "pensionSchemeDetails": {
-                |                "schemeName": "Scheme 1",
-                |                "schemeTaxRef": "00348916RO"
-                |              },
-                |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 30000,
-                |                "revisedPIA": 20000
-                |              },
-                |              "payACharge": false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution": true,
-                |          "contributedToDuringRemedyPeriod": [
-                |            "definedContribution"
-                |          ],
-                |          "definedContributionAmount": 20000,
-                |          "totalIncome": 60000
-                |        },
-                |        "2016-post": {
+                |        "2016": {
                 |          "memberMoreThanOnePension": false,
                 |          "schemes": {
                 |            "0": {
@@ -835,9 +820,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |                "schemeTaxRef": "00348916RO"
                 |              },
                 |              "whichScheme": "00348916RO",
-                |              "pensionSchemeInputAmounts": {
+                |              "PensionSchemeInput2016postAmounts": {
                 |                "originalPIA": 30000,
                 |                "revisedPIA": 22000
+                |              },
+                |              "PensionSchemeInput2016preAmounts": {
+                |                "originalPIA": 30000,
+                |                "revisedPIA": 20000
                 |              },
                 |              "payACharge": true,
                 |              "whoPaidAACharge": "both",
@@ -849,7 +838,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "contributedToDuringRemedyPeriod": [
                 |            "definedContribution"
                 |          ],
-                |          "definedContributionAmount": 18000
+                |          "definedContribution2016PostAmount": 18000,
+                |          "definedContribution2016PreAmount": 20000
                 |        },
                 |        "2017": {
                 |          "memberMoreThanOnePension": false,
@@ -949,7 +939,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "stopPayingPublicPension": "2020-01-01",
                 |    "aa": {
                 |      "years": {
-                |        "2016-pre": {
+                |        "2016": {
                 |          "memberMoreThanOnePension": false,
                 |          "schemes": {
                 |            "0": {
@@ -957,9 +947,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |                "schemeName": "Scheme 1",
                 |                "schemeTaxRef": "00348916RP"
                 |              },
-                |              "pensionSchemeInputAmounts": {
+                |              "PensionSchemeInput2016preAmounts": {
                 |                "originalPIA": 30000,
                 |                "revisedPIA": 28000
+                |              },
+                |              "PensionSchemeInput2016postAmounts": {
+                |                "originalPIA": 40000,
+                |                "revisedPIA": 34000
                 |              },
                 |              "payACharge": true,
                 |              "whoPaidAACharge": "you",
@@ -971,27 +965,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedContribution",
                 |            "definedBenefit"
                 |          ],
-                |          "definedContributionAmount": 1800,
-                |          "definedBenefitAmount": 800,
+                |          "definedContribution2016PreAmount": 1800,
+                |          "definedBenefit2016PreAmount": 800,
                 |          "totalIncome": 60000
-                |        },
-                |        "2016-post": {
-                |          "memberMoreThanOnePension": false,
-                |          "schemes": {
-                |            "0": {
-                |              "pensionSchemeDetails": {
-                |                "schemeName": "Scheme 1",
-                |                "schemeTaxRef": "00348916RP"
-                |              },
-                |              "whichScheme": "00348916RP",
-                |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 40000,
-                |                "revisedPIA": 34000
-                |              },
-                |              "payACharge": false
-                |            }
-                |          },
-                |          "otherDefinedBenefitOrContribution": false
                 |        },
                 |        "2017": {
                 |          "memberMoreThanOnePension": false,
@@ -1147,15 +1123,18 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe Some(
           InitialFlexiblyAccessedTaxYear(
-            30000,
-            LocalDate.parse("2015-05-25"),
-            6000,
-            10000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0)),
+            30015,
+            Some(LocalDate.parse("2015-05-25")),
+            6015,
+            10015,
+            List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0, Some(35000), Some(30000))),
             60000,
             0,
             Period._2016,
-            None
+            None,
+            Some(30016),
+            Some(6016),
+            Some(10016)
           )
         )
       }
@@ -1169,7 +1148,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 35000, 0)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 35000, 0, None, None)),
             Period._2017,
             Some(BelowThreshold)
           )
@@ -1185,7 +1164,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             1000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000, None, None)),
             Period._2018,
             Some(BelowThreshold)
           )
@@ -1201,7 +1180,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0, None, None)),
             Period._2019,
             Some(BelowThreshold)
           )
@@ -1217,7 +1196,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 34000, 0)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 34000, 0, None, None)),
             Period._2020,
             Some(BelowThreshold)
           )
@@ -1234,7 +1213,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               0,
               60000,
               0,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0, None, None)),
               Period._2021,
               Some(AboveThreshold(160000))
             )
@@ -1250,7 +1229,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 44000, 0)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 44000, 0, None, None)),
             Period._2022,
             Some(BelowThreshold)
           )
@@ -1266,7 +1245,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 55000, 53000, 4400)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 55000, 53000, 4400, None, None)),
             Period._2023,
             Some(AboveThreshold(120000))
           )
@@ -1292,22 +1271,25 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 TaxYear2011To2015(20000, Period._2014),
                 TaxYear2011To2015(60000, Period._2015),
                 InitialFlexiblyAccessedTaxYear(
-                  30000,
-                  LocalDate.parse("2015-05-25"),
-                  6000,
-                  10000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0)),
+                  30015,
+                  Some(LocalDate.parse("2015-05-25")),
+                  6015,
+                  10015,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0, Some(35000), Some(30000))),
                   60000,
                   0,
                   Period._2016,
-                  None
+                  None,
+                  Some(30016),
+                  Some(6016),
+                  Some(10016)
                 ),
                 PostFlexiblyAccessedTaxYear(
                   35000,
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 35000, 0)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 35000, 0, None, None)),
                   Period._2017,
                   Some(BelowThreshold)
                 ),
@@ -1316,7 +1298,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   1000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000, None, None)),
                   Period._2018,
                   Some(BelowThreshold)
                 ),
@@ -1325,7 +1307,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0, None, None)),
                   Period._2019,
                   Some(BelowThreshold)
                 ),
@@ -1334,7 +1316,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 34000, 0)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 34000, 0, None, None)),
                   Period._2020,
                   Some(BelowThreshold)
                 ),
@@ -1343,7 +1325,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0, None, None)),
                   Period._2021,
                   Some(BelowThreshold)
                 ),
@@ -1352,7 +1334,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 44000, 0)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 44000, 0, None, None)),
                   Period._2022,
                   Some(BelowThreshold)
                 ),
@@ -1361,7 +1343,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 55000, 53000, 4400)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 55000, 53000, 4400, None, None)),
                   Period._2023,
                   Some(BelowThreshold)
                 )
@@ -1425,7 +1407,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 35000, 0)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 35000, 0, None, None)),
                   Period._2017,
                   Some(BelowThreshold)
                 ),
@@ -1434,7 +1416,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   1000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000, None, None)),
                   Period._2018,
                   Some(BelowThreshold)
                 ),
@@ -1443,7 +1425,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0, None, None)),
                   Period._2019,
                   Some(BelowThreshold)
                 )
@@ -1454,136 +1436,119 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         )
       }
 
-//      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
-//
-//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9))
-//
-//        result mustBe CalculationResults.CalculationInputs(
-//          Resubmission(false, None),
-//          Some(
-//            AnnualAllowance(
-//              List(Period._2019),
-//              List(
-//                PostFlexiblyAccessedTaxYear(
-//                  0,
-//                  20000,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 20000, 0)),
-//                  Period._2016PreAlignment,
-//                  None
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  0,
-//                  18000,
-//                  60000,
-//                  3600,
-//                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 22000, 3600)),
-//                  Period._2016PostAlignment,
-//                  None
-//                ),
-//                NormalTaxYear(
-//                  45000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RO", 38000, 45000, 0)),
-//                  60000,
-//                  0,
-//                  Period._2017,
-//                  Some(BelowThreshold)
-//                ),
-//                NormalTaxYear(
-//                  38000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RO", 43000, 38000, 200)),
-//                  60000,
-//                  200,
-//                  Period._2018,
-//                  Some(BelowThreshold)
-//                ),
-//                NormalTaxYear(
-//                  43000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RO", 48000, 43000, 0)),
-//                  60000,
-//                  3280,
-//                  Period._2019,
-//                  Some(BelowThreshold)
-//                )
-//              )
-//            )
-//          ),
-//          None
-//        )
-//      }
-//
-//      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
-//
-//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10))
-//
-//        result mustBe CalculationResults.CalculationInputs(
-//          Resubmission(false, None),
-//          Some(
-//            AnnualAllowance(
-//              List(),
-//              List(
-//                PostFlexiblyAccessedTaxYear(
-//                  800,
-//                  1800,
-//                  60000,
-//                  300,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 30000, 28000, 0)),
-//                  Period._2016PreAlignment,
-//                  None
-//                ),
-//                NormalTaxYear(
-//                  34000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 40000, 34000, 0)),
-//                  60000,
-//                  0,
-//                  Period._2016PostAlignment,
-//                  None
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  2000,
-//                  0,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 32000, 31000, 8000)),
-//                  Period._2017,
-//                  Some(BelowThreshold)
-//                ),
-//                InitialFlexiblyAccessedTaxYear(
-//                  0,
-//                  LocalDate.parse("2017-10-20"),
-//                  0,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 46000, 43000, 0)),
-//                  200000,
-//                  0,
-//                  Period._2018,
-//                  Some(AboveThreshold(160000))
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  0,
-//                  0,
-//                  60000,
-//                  3400,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 54000, 52000, 4700)),
-//                  Period._2019,
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  4900,
-//                  700,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, 0)),
-//                  Period._2020,
-//                  Some(BelowThreshold)
-//                )
-//              )
-//            )
-//          ),
-//          None
-//        )
-//      }
+      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9))
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Some(
+            AnnualAllowance(
+              List(Period._2019),
+              List(
+                NormalTaxYear(
+                  40000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 20000, 3600, Some(30000), Some(22000))),
+                  0,
+                  3600,
+                  Period._2016,
+                  None,
+                  Some(40000)
+                ),
+                NormalTaxYear(
+                  45000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 38000, 45000, 0, None, None)),
+                  60000,
+                  0,
+                  Period._2017,
+                  Some(BelowThreshold)
+                ),
+                NormalTaxYear(
+                  38000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 43000, 38000, 200, None, None)),
+                  60000,
+                  200,
+                  Period._2018,
+                  Some(BelowThreshold)
+                ),
+                NormalTaxYear(
+                  43000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 48000, 43000, 0, None, None)),
+                  60000,
+                  3280,
+                  Period._2019,
+                  Some(BelowThreshold)
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
+
+      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10))
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Some(
+            AnnualAllowance(
+              List(),
+              List(
+                NormalTaxYear(
+                  30600,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 30000, 28000, 0, Some(40000), Some(34000))),
+                  60000,
+                  300,
+                  Period._2016,
+                  None,
+                  Some(34000)
+                ),
+                NormalTaxYear(
+                  33000,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 32000, 31000, 8000, None, None)),
+                  60000,
+                  0,
+                  Period._2017,
+                  Some(BelowThreshold),
+                  None
+                ),
+                InitialFlexiblyAccessedTaxYear(
+                  0,
+                  Some(LocalDate.parse("2017-10-20")),
+                  0,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 46000, 43000, 0, None, None)),
+                  200000,
+                  0,
+                  Period._2018,
+                  Some(AboveThreshold(160000))
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
+                  60000,
+                  3400,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 54000, 52000, 4700, None, None)),
+                  Period._2019,
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  4900,
+                  700,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, 0, None, None)),
+                  Period._2020,
+                  Some(BelowThreshold)
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
 
     }
 
