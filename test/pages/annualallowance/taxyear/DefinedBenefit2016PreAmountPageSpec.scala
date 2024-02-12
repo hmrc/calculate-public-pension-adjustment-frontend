@@ -17,7 +17,10 @@
 package pages.annualallowance.taxyear
 
 import models.{CheckMode, NormalMode}
+import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class DefinedBenefit2016PreAmountPageSpec extends PageBehaviours {
 
@@ -32,9 +35,12 @@ class DefinedBenefit2016PreAmountPageSpec extends PageBehaviours {
 
   "Normal Mode" - {
 
-    "must navigate to 2016Post DB amount page when no answer for 2016post DB amount" in {
+    "must navigate to 2016Post DB amount page when NOT stopped paying in 2016pre sub period" in {
 
       val ua = emptyUserAnswers
+        .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 30))
+        .success
+        .value
         .set(DefinedBenefit2016PreAmountPage, BigInt(1))
         .success
         .value
@@ -42,6 +48,21 @@ class DefinedBenefit2016PreAmountPageSpec extends PageBehaviours {
       val result = DefinedBenefit2016PreAmountPage.navigate(NormalMode, ua).url
 
       checkNavigation(result, "/annual-allowance/2016post-pension-input-amount-defined-benefit")
+    }
+
+    "must navigate to total income page when stopped paying in 2016pre sub period" in {
+
+      val ua = emptyUserAnswers
+        .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 1))
+        .success
+        .value
+        .set(DefinedBenefit2016PreAmountPage, BigInt(1))
+        .success
+        .value
+
+      val result = DefinedBenefit2016PreAmountPage.navigate(NormalMode, ua).url
+
+      checkNavigation(result, "/annual-allowance/2016/total-income")
     }
 
     "must navigate to journey recovery when no answer" in {
@@ -56,8 +77,11 @@ class DefinedBenefit2016PreAmountPageSpec extends PageBehaviours {
 
   "Check Mode" - {
 
-    "must navigate to 2016 DB amount page when no answer for 2016post DB amount" in {
+    "must navigate to 2016 DB amount page when no answer for 2016post DB amount and not stopped paying in 2016 pre sub period" in {
       val ua = emptyUserAnswers
+        .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 30))
+        .success
+        .value
         .set(DefinedBenefit2016PreAmountPage, BigInt(1))
         .success
         .value
@@ -67,9 +91,27 @@ class DefinedBenefit2016PreAmountPageSpec extends PageBehaviours {
       checkNavigation(result, "/annual-allowance/change-2016post-pension-input-amount-defined-benefit")
     }
 
-    "must navigate to CYA when answer exists for 2016post DB amount" in {
+    "must navigate to CYA when stopped paying in 2016pre sub period" in {
 
       val ua = emptyUserAnswers
+        .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 1))
+        .success
+        .value
+        .set(DefinedBenefit2016PreAmountPage, BigInt(1))
+        .success
+        .value
+
+      val result = DefinedBenefit2016PreAmountPage.navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/annual-allowance/2016/check-answers")
+    }
+
+    "must navigate to CYA when answer exists for 2016post DB amount and not stopped paying in 2016pre sub period" in {
+
+      val ua = emptyUserAnswers
+        .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 30))
+        .success
+        .value
         .set(DefinedBenefit2016PreAmountPage, BigInt(1))
         .success
         .value

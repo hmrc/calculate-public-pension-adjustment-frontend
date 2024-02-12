@@ -16,8 +16,9 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, PensionSchemeInput2016preAmounts, PensionSchemeInputAmounts, Period, SchemeIndex, UserAnswers}
+import models.{CheckMode, NormalMode, PensionSchemeInput2016preAmounts, PensionSchemeInputAmounts, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
+import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -29,9 +30,18 @@ case class PensionSchemeInput2016preAmountsPage(period: Period, schemeIndex: Sch
   override def toString: String = "PensionSchemeInput2016preAmounts"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.PensionSchemeInput2016postAmountsController
-      .onPageLoad(NormalMode, period, schemeIndex)
+    if (maybeStopPayingInFirstSubPeriod(answers)) {
+      controllers.annualallowance.taxyear.routes.PayAChargeController.onPageLoad(NormalMode, period, schemeIndex)
+    } else {
+      controllers.annualallowance.taxyear.routes.PensionSchemeInput2016postAmountsController
+        .onPageLoad(NormalMode, period, schemeIndex)
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+
+  private def maybeStopPayingInFirstSubPeriod(answers: UserAnswers) = answers.get(StopPayingPublicPensionPage) match {
+    case Some(date) => Period.pre2016Start.minusDays(1).isBefore(date) && Period.pre2016End.plusDays(1).isAfter(date)
+    case None       => false
+  }
 }
