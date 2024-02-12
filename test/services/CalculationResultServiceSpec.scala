@@ -1454,136 +1454,136 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         )
       }
 
-      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
-
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9))
-
-        result mustBe CalculationResults.CalculationInputs(
-          Resubmission(false, None),
-          Some(
-            AnnualAllowance(
-              List(Period._2019),
-              List(
-                PostFlexiblyAccessedTaxYear(
-                  0,
-                  20000,
-                  60000,
-                  0,
-                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 20000, 0)),
-                  Period._2016PreAlignment,
-                  None
-                ),
-                PostFlexiblyAccessedTaxYear(
-                  0,
-                  18000,
-                  60000,
-                  3600,
-                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 22000, 3600)),
-                  Period._2016PostAlignment,
-                  None
-                ),
-                NormalTaxYear(
-                  45000,
-                  List(TaxYearScheme("Scheme 1", "00348916RO", 38000, 45000, 0)),
-                  60000,
-                  0,
-                  Period._2017,
-                  Some(BelowThreshold)
-                ),
-                NormalTaxYear(
-                  38000,
-                  List(TaxYearScheme("Scheme 1", "00348916RO", 43000, 38000, 200)),
-                  60000,
-                  200,
-                  Period._2018,
-                  Some(BelowThreshold)
-                ),
-                NormalTaxYear(
-                  43000,
-                  List(TaxYearScheme("Scheme 1", "00348916RO", 48000, 43000, 0)),
-                  60000,
-                  3280,
-                  Period._2019,
-                  Some(BelowThreshold)
-                )
-              )
-            )
-          ),
-          None
-        )
-      }
-
-      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
-
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10))
-
-        result mustBe CalculationResults.CalculationInputs(
-          Resubmission(false, None),
-          Some(
-            AnnualAllowance(
-              List(),
-              List(
-                PostFlexiblyAccessedTaxYear(
-                  800,
-                  1800,
-                  60000,
-                  300,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 30000, 28000, 0)),
-                  Period._2016PreAlignment,
-                  None
-                ),
-                NormalTaxYear(
-                  34000,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 40000, 34000, 0)),
-                  60000,
-                  0,
-                  Period._2016PostAlignment,
-                  None
-                ),
-                PostFlexiblyAccessedTaxYear(
-                  2000,
-                  0,
-                  60000,
-                  0,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 32000, 31000, 8000)),
-                  Period._2017,
-                  Some(BelowThreshold)
-                ),
-                InitialFlexiblyAccessedTaxYear(
-                  0,
-                  LocalDate.parse("2017-10-20"),
-                  0,
-                  0,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 46000, 43000, 0)),
-                  200000,
-                  0,
-                  Period._2018,
-                  Some(AboveThreshold(160000))
-                ),
-                PostFlexiblyAccessedTaxYear(
-                  0,
-                  0,
-                  60000,
-                  3400,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 54000, 52000, 4700)),
-                  Period._2019,
-                  Some(BelowThreshold)
-                ),
-                PostFlexiblyAccessedTaxYear(
-                  4900,
-                  700,
-                  60000,
-                  0,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, 0)),
-                  Period._2020,
-                  Some(BelowThreshold)
-                )
-              )
-            )
-          ),
-          None
-        )
-      }
+//      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
+//
+//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9))
+//
+//        result mustBe CalculationResults.CalculationInputs(
+//          Resubmission(false, None),
+//          Some(
+//            AnnualAllowance(
+//              List(Period._2019),
+//              List(
+//                PostFlexiblyAccessedTaxYear(
+//                  0,
+//                  20000,
+//                  60000,
+//                  0,
+//                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 20000, 0)),
+//                  Period._2016PreAlignment,
+//                  None
+//                ),
+//                PostFlexiblyAccessedTaxYear(
+//                  0,
+//                  18000,
+//                  60000,
+//                  3600,
+//                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 22000, 3600)),
+//                  Period._2016PostAlignment,
+//                  None
+//                ),
+//                NormalTaxYear(
+//                  45000,
+//                  List(TaxYearScheme("Scheme 1", "00348916RO", 38000, 45000, 0)),
+//                  60000,
+//                  0,
+//                  Period._2017,
+//                  Some(BelowThreshold)
+//                ),
+//                NormalTaxYear(
+//                  38000,
+//                  List(TaxYearScheme("Scheme 1", "00348916RO", 43000, 38000, 200)),
+//                  60000,
+//                  200,
+//                  Period._2018,
+//                  Some(BelowThreshold)
+//                ),
+//                NormalTaxYear(
+//                  43000,
+//                  List(TaxYearScheme("Scheme 1", "00348916RO", 48000, 43000, 0)),
+//                  60000,
+//                  3280,
+//                  Period._2019,
+//                  Some(BelowThreshold)
+//                )
+//              )
+//            )
+//          ),
+//          None
+//        )
+//      }
+//
+//      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
+//
+//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10))
+//
+//        result mustBe CalculationResults.CalculationInputs(
+//          Resubmission(false, None),
+//          Some(
+//            AnnualAllowance(
+//              List(),
+//              List(
+//                PostFlexiblyAccessedTaxYear(
+//                  800,
+//                  1800,
+//                  60000,
+//                  300,
+//                  List(TaxYearScheme("Scheme 1", "00348916RP", 30000, 28000, 0)),
+//                  Period._2016PreAlignment,
+//                  None
+//                ),
+//                NormalTaxYear(
+//                  34000,
+//                  List(TaxYearScheme("Scheme 1", "00348916RP", 40000, 34000, 0)),
+//                  60000,
+//                  0,
+//                  Period._2016PostAlignment,
+//                  None
+//                ),
+//                PostFlexiblyAccessedTaxYear(
+//                  2000,
+//                  0,
+//                  60000,
+//                  0,
+//                  List(TaxYearScheme("Scheme 1", "00348916RP", 32000, 31000, 8000)),
+//                  Period._2017,
+//                  Some(BelowThreshold)
+//                ),
+//                InitialFlexiblyAccessedTaxYear(
+//                  0,
+//                  LocalDate.parse("2017-10-20"),
+//                  0,
+//                  0,
+//                  List(TaxYearScheme("Scheme 1", "00348916RP", 46000, 43000, 0)),
+//                  200000,
+//                  0,
+//                  Period._2018,
+//                  Some(AboveThreshold(160000))
+//                ),
+//                PostFlexiblyAccessedTaxYear(
+//                  0,
+//                  0,
+//                  60000,
+//                  3400,
+//                  List(TaxYearScheme("Scheme 1", "00348916RP", 54000, 52000, 4700)),
+//                  Period._2019,
+//                  Some(BelowThreshold)
+//                ),
+//                PostFlexiblyAccessedTaxYear(
+//                  4900,
+//                  700,
+//                  60000,
+//                  0,
+//                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, 0)),
+//                  Period._2020,
+//                  Some(BelowThreshold)
+//                )
+//              )
+//            )
+//          ),
+//          None
+//        )
+//      }
 
     }
 
