@@ -114,7 +114,7 @@ reasonForResubmission.heading = cy: Why do you want to overwrite a previous subm
 reasonForResubmission.checkYourAnswersLabel = cy: Reason for overwriting a previous submission
 reasonForResubmission.error.required = cy: Enter the reason you want to overwrite a previous submission
 reasonForResubmission.error.length = cy: The reason you want to overwrite a previous submission must be 500 characters or fewer
-reasonForResubmission.change.hidden = cy: Reason for overwriting a previous submission
+reasonForResubmission.change.hidden = cy: reason for overwriting a previous submission
 
 ineligible.title = cy: You cannot use this service
 ineligible.heading = cy: You cannot use this service
@@ -134,7 +134,7 @@ reportingChange.lifetimeAllowance.hint = cy: Lifetime allowance (LTA) is the tot
 reportingChange.hint = cy: Select all that apply.
 reportingChange.paragraph = cy: You may be able to claim tax back if you paid any of these charges during the remedy period.
 reportingChange.checkYourAnswersLabel = cy: Charges to be adjusted
-reportingChange.change.hidden = cy: charges to be adjusted
+reportingChange.change.hidden = cy: tax charges to be adjusted
 
 scottishTaxpayerFrom2016.title = cy: Were you ever a Scottish taxpayer from 6 April 2016?
 scottishTaxpayerFrom2016.heading = cy: Were you ever a Scottish taxpayer from 6 April 2016?
@@ -162,7 +162,7 @@ payingPublicPensionScheme.heading = cy: Did you continue paying into or increasi
 payingPublicPensionScheme.hint = cy: This includes if you are a member of a non-contributory public service pension scheme.
 payingPublicPensionScheme.error.required = cy: Select yes if you continued paying into or increasing your public service pension scheme after 5 April 2022
 payingPublicPensionScheme.checkYourAnswersLabel = cy: Did you continue paying into or increasing your public service pension scheme after 5 April 2022?
-payingPublicPensionScheme.change.hidden = cy: if you continued paying into or increasing your public service pension scheme after 5 April 2022?
+payingPublicPensionScheme.change.hidden = cy: if you continued paying into or increasing your public service pension scheme after 5 April 2022
 
 stopPayingPublicPension.title = cy: At what date during the remedy period did you stop paying into a public service pension scheme?
 stopPayingPublicPension.heading = cy: At what date during the remedy period did you stop paying into a public service pension scheme?
@@ -200,7 +200,7 @@ flexibleAccessStartDate.heading = cy: When did you first flexibly access your de
 flexibleAccessStartDate.checkYourAnswersLabel = cy: Date you first flexibly accessed your defined contribution pension
 flexibleAccessStartDate.hint1 = cy: You can find this on your flexible access statement.
 flexibleAccessStartDate.hint2 = cy: For example, 25 2 2015.
-flexibleAccessStartDate.change.hidden = cy: date you first flexibly accessed your defined contribution pension
+flexibleAccessStartDate.change.hidden = cy: the date you first flexibly accessed your defined contribution pension
 flexibleAccessStartDate.error.required.all = cy: Enter a date when you first flexibly accessed your defined contribution pension in the right format, with a date, month and year
 
 flexibleAccessStartDate.error.invalid = cy: Enter the date when you stopped paying into a public service pension scheme in the right format, with a date, month and year
@@ -215,7 +215,7 @@ changeInLifetimeAllowance.message = cy: This is the percentage of lifetime allow
 changeInLifetimeAllowance.hint = cy: You can find this on a revised benefit crystallisation event statement.
 changeInLifetimeAllowance.error.required = cy:  Select yes if you been told about a change in the lifetime allowance percentage
 changeInLifetimeAllowance.checkYourAnswersLabel = cy: Have you been told about a change in the lifetime allowance percentage?
-changeInLifetimeAllowance.change.hidden = cy: if you have been told about a change in the lifetime allowance percentage?
+changeInLifetimeAllowance.change.hidden = cy: if you have been told about a change in the lifetime allowance percentage
 
 changeInTaxCharge.title = cy: Has the change in lifetime allowance led to a change in the tax charge?
 changeInTaxCharge.heading = cy: Has the change in lifetime allowance led to a change in the tax charge?
@@ -294,7 +294,7 @@ dateOfBenefitCrystallisationEvent.error.required.all = cy: Enter the date of the
 dateOfBenefitCrystallisationEvent.error.required.two = cy: The date of benefit crystallisation event must include include {0} and {1}
 dateOfBenefitCrystallisationEvent.error.required = cy: The date of benefit crystallisation event must include {0}
 dateOfBenefitCrystallisationEvent.error.invalid = cy: The date of benefit crystallisation event must only include numbers 0 to 9
-dateOfBenefitCrystallisationEvent.change.hidden = cy: date of the benefit crystallisation event
+dateOfBenefitCrystallisationEvent.change.hidden = cy: the date of the benefit crystallisation event
 dateOfBenefitCrystallisationEvent.error.min = cy: The date of benefit crystallisation event must be after {0}
 dateOfBenefitCrystallisationEvent.error.max = cy: The date of the benefit crystallisation event must be before 6 April 2023
 
@@ -390,7 +390,7 @@ protectionEnhancedChanged.both = cy: Both
 protectionEnhancedChanged.no = cy: No
 protectionEnhancedChanged.checkYourAnswersLabel = cy: Has your protection type or enhancement changed between 6 April 2015 and 5 April 2023?
 protectionEnhancedChanged.error.required = cy: Select if your protection type or enhancement changed between 6 April 2015 and 5 April 2023
-protectionEnhancedChanged.change.hidden = cy: Has your protection type or enhancement changed between 6 April 2015 and 5 April 2023?
+protectionEnhancedChanged.change.hidden = cy: if your protection type or enhancement changed between 6 April 2015 and 5 April 2023
 
 referenceNewProtectionTypeEnhancement.title = cy: What is your new lifetime allowance protection reference?
 referenceNewProtectionTypeEnhancement.heading = cy: What is your new lifetime allowance protection reference?
@@ -419,7 +419,7 @@ lifetimeAllowanceCharge.title = cy: Have you had a lifetime allowance charge fro
 lifetimeAllowanceCharge.heading = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
 lifetimeAllowanceCharge.checkYourAnswersLabel = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
 lifetimeAllowanceCharge.error.required = cy: Select yes if you have had a lifetime allowance charge from 6 April 2015 to 5 April 2023
-lifetimeAllowanceCharge.change.hidden = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
+lifetimeAllowanceCharge.change.hidden = cy: Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023
 
 excessLifetimeAllowancePaid.title = cy: How was the excess above your lifetime allowance paid to you?
 excessLifetimeAllowancePaid.heading = cy: How was the excess above your lifetime allowance paid to you?
@@ -438,7 +438,7 @@ lifetimeAllowanceChargeAmount.error.nonNumeric = cy: You have entered non-numeri
 lifetimeAllowanceChargeAmount.error.required = cy: Enter an amount for your lifetime allowance charge
 lifetimeAllowanceChargeAmount.error.wholeNumber = cy: You have not entered a whole number for your lifetime allowance charge. You cannot use decimals.
 lifetimeAllowanceChargeAmount.error.outOfRange = cy: You have entered too many characters for your lifetime allowance charge. The maximum number of characters you can enter is 9
-lifetimeAllowanceChargeAmount.change.hidden = cy: What was the value of your lifetime allowance charge?
+lifetimeAllowanceChargeAmount.change.hidden = cy: the value of your lifetime allowance charge?
 lifetimeAllowanceChargeAmount.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300.
 
 periodDateRangeAA.caption = cy: Annual allowance between
@@ -498,13 +498,13 @@ addAnotherScheme.heading = cy: Do you need to add another pension scheme?
 addAnotherScheme.checkYourAnswersLabel = cy: Do you need to add another pension scheme?
 addAnotherScheme.hint = cy: You can add a maximum of five different pension schemes in a single tax year.
 addAnotherScheme.error.required = cy: Select yes if you need to add another pension scheme
-addAnotherScheme.change.hidden = cy: Do you need to add another pension scheme?
+addAnotherScheme.change.hidden = cy: if you need to add another pension scheme
 
 payACharge.title = cy: Did you pay an annual allowance tax charge for pension scheme {2}?
 payACharge.heading = cy: Did you pay an annual allowance tax charge for {2}?
 payACharge.checkYourAnswersLabel = cy: Did you pay a charge?
 payACharge.error.required = cy: Select yes if you paid an annual allowance tax charge for pension scheme
-payACharge.change.hidden = cy: Did you pay a charge?
+payACharge.change.hidden = cy: if you paid a charge
 
 pensionSchemeDetails.title = cy: What is the name and tax reference of the pension scheme?
 pensionSchemeDetails.heading = cy: What is the name and tax reference of the pension scheme?
@@ -548,7 +548,7 @@ whichScheme.hint = cy: Select from the options below or enter a new scheme.
 whichScheme.New = cy: Enter a new pension scheme
 whichScheme.checkYourAnswersLabel = cy: Select which scheme paid the charge or add new.
 whichScheme.error.required = cy: Select which scheme you are entering details for
-whichScheme.change.hidden = cy: Which scheme are you entering details for?
+whichScheme.change.hidden = cy: the scheme you are entering details for
 
 whoPaidAACharge.title = cy: Who paid the annual allowance tax charge for {0}?
 whoPaidAACharge.heading = cy: Who paid the annual allowance tax charge for {0}?
@@ -557,7 +557,7 @@ whoPaidAACharge.scheme = cy: Pension scheme
 whoPaidAACharge.both = cy: Both
 whoPaidAACharge.error.required = cy: Select who paid the annual allowance tax charge
 whoPaidAACharge.change.hidden = cy: who paid the annual allowance tax charge for {0}
-whoPaidAACharge.checkYourAnswersLabel = cy: Who paid the annual allowance tax charge for {0}?
+whoPaidAACharge.checkYourAnswersLabel = cy: who paid the annual allowance tax charge for {0}.
 
 howMuchAAChargeSchemePaid.title = cy: How much annual allowance tax charge did your pension scheme pay?
 howMuchAAChargeSchemePaid.heading = cy: How much annual allowance tax charge did your pension scheme pay?
@@ -566,7 +566,7 @@ howMuchAAChargeSchemePaid.error.nonNumeric = cy: The amount of annual allowance 
 howMuchAAChargeSchemePaid.error.required = cy: Enter the amount of annual allowance tax charge your pension scheme paid
 howMuchAAChargeSchemePaid.error.wholeNumber = cy: The amount of annual allowance tax charge your pension scheme paid must only include numbers 0 to 9
 howMuchAAChargeSchemePaid.error.outOfRange = cy: The amount of annual allowance tax charge your pension scheme paid must be £999,999,999 or less
-howMuchAAChargeSchemePaid.change.hidden = cy: How much tax charge your pension scheme paid
+howMuchAAChargeSchemePaid.change.hidden = cy: how much tax charge your pension scheme paid
 howMuchAAChargeSchemePaid.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300.
 
 howMuchAAChargeYouPaid.title = cy: How much annual allowance tax charge did you pay?
@@ -585,7 +585,7 @@ whoPaidLTACharge.you = cy: You
 whoPaidLTACharge.pensionScheme = cy: Pension scheme
 whoPaidLTACharge.checkYourAnswersLabel = cy: Who paid your lifetime allowance charge?
 whoPaidLTACharge.error.required = cy: Select who paid your lifetime allowance charge
-whoPaidLTACharge.change.hidden = cy: Who paid your lifetime allowance charge?
+whoPaidLTACharge.change.hidden = cy: who paid your lifetime allowance charge
 
 schemeNameAndTaxRef.title = cy: What is the name and tax reference of the scheme that paid the lifetime allowance charge?
 schemeNameAndTaxRef.heading = cy: What is the name and tax reference of the scheme that paid the lifetime allowance charge?
@@ -634,13 +634,13 @@ thresholdIncome.checkYourAnswersLabel.2022 = cy: Was your threshold income more 
 thresholdIncome.checkYourAnswersLabel.2023 = cy: Was your threshold income more than £200,000?
 thresholdIncome.error.required.2021AndAbove = cy: Select yes if your threshold income was more than £200,000
 thresholdIncome.error.required.below2021 = cy: Select yes if your threshold income was more than £110,000
-thresholdIncome.change.hidden.2017 = cy: if your threshold income more than £110,000?
-thresholdIncome.change.hidden.2018 = cy: if your threshold income more than £110,000?
-thresholdIncome.change.hidden.2019 = cy: if your threshold income more than £110,000?
-thresholdIncome.change.hidden.2020 = cy: if your threshold income more than £110,000?
-thresholdIncome.change.hidden.2021 = cy: if your threshold income more than £200,000?
-thresholdIncome.change.hidden.2022 = cy: if your threshold income more than £200,000?
-thresholdIncome.change.hidden.2023 = cy: if your threshold income more than £200,000?
+thresholdIncome.change.hidden.2017 = cy: if your threshold income more than £110,000
+thresholdIncome.change.hidden.2018 = cy: if your threshold income more than £110,000
+thresholdIncome.change.hidden.2019 = cy: if your threshold income more than £110,000
+thresholdIncome.change.hidden.2020 = cy: if your threshold income more than £110,000
+thresholdIncome.change.hidden.2021 = cy: if your threshold income more than £200,000
+thresholdIncome.change.hidden.2022 = cy: if your threshold income more than £200,000
+thresholdIncome.change.hidden.2023 = cy: if your threshold income more than £200,000
 
 valueNewLtaCharge.title = cy: What is the value of the new lifetime allowance charge?
 valueNewLtaCharge.heading = cy: What is the value of the new lifetime allowance charge?
@@ -650,7 +650,7 @@ valueNewLtaCharge.error.nonNumeric = cy: You have entered non-numerical characte
 valueNewLtaCharge.error.required = cy: Enter an amount for your extra lifetime allowance charge
 valueNewLtaCharge.error.wholeNumber = cy: You have not entered a whole number for your extra lifetime allowance charge. You cannot use decimals.
 valueNewLtaCharge.error.outOfRange = cy: You have entered too many characters for your extra lifetime allowance charge. The maximum number of characters you can enter is 9
-valueNewLtaCharge.change.hidden = cy: What is the value of the new lifetime allowance charge?
+valueNewLtaCharge.change.hidden = cy: the value of the new lifetime allowance charge
 
 whoPayingExtraLtaCharge.title = cy: Who is paying the extra lifetime allowance charge?
 whoPayingExtraLtaCharge.heading = cy: Who is paying the extra lifetime allowance charge?
@@ -886,7 +886,7 @@ newAnnualPaymentValue.error.nonNumeric = cy: Your new annual payment value must 
 newAnnualPaymentValue.error.required = cy: Enter the new value of the annual payment
 newAnnualPaymentValue.error.wholeNumber = cy: Your new annual payment value must only include numbers 0 to 9
 newAnnualPaymentValue.error.outOfRange = cy: Your new annual payment value must be £999999999 or less
-newAnnualPaymentValue.change.hidden = cy: What is the new value of the annual payment?
+newAnnualPaymentValue.change.hidden = cy: what is the new value of the annual payment
 
 newLumpSumValue.title = cy: What is the new value of the lump sum?
 newLumpSumValue.heading = cy: What is the new value of the lump sum?
@@ -905,7 +905,7 @@ newExcessLifetimeAllowancePaid.lumpSum = cy: Lump Sum
 newExcessLifetimeAllowancePaid.both = cy: Both
 newExcessLifetimeAllowancePaid.checkYourAnswersLabel = cy: How will the new excess above your lifetime allowance be paid to you?
 newExcessLifetimeAllowancePaid.error.required = cy: Select how the new excess above your lifetime allowance will be paid to you
-newExcessLifetimeAllowancePaid.change.hidden = cy: how will the new excess above your lifetime allowance be paid to you?
+newExcessLifetimeAllowancePaid.change.hidden = cy: how will the new excess above your lifetime allowance be paid to you
 
 userSchemeDetails.title = cy: What is the name and tax reference of the pension scheme?
 userSchemeDetails.heading = cy: What is the name and tax reference of the pension scheme?
@@ -917,7 +917,7 @@ userSchemeDetails.name.error.required = cy: Enter the name of the pension scheme
 userSchemeDetails.taxRef.error.required = cy: Enter the Pension Scheme Tax Reference
 userSchemeDetails.name.error.length = cy: The name of your pension scheme must be 100 characters or less
 userSchemeDetails.taxRef.invalid = cy: The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
-userSchemeDetails.change.hidden = cy: What is the name and tax reference of the pension scheme?
+userSchemeDetails.change.hidden = cy: the name and tax reference of the pension scheme
 
 enhancementType.title = cy: Which type of lifetime allowance enhancement did you have?
 enhancementType.heading = cy: Which type of lifetime allowance enhancement did you have?
@@ -928,7 +928,7 @@ enhancementType.hint1 = cy: Check your lifetime allowance enhancement online (op
 enhancementType.hint2 = cy: Choose your enhancement type from the options below.
 enhancementType.checkYourAnswersLabel = cy: Which type of lifetime allowance enhancement did you have?
 enhancementType.error.required = cy: Select your lifetime allowance enhancement type
-enhancementType.change.hidden = cy: Which type of lifetime allowance enhancement did you have?
+enhancementType.change.hidden = cy: which type of lifetime allowance enhancement did you have
 
 internationalEnhancementReference.title = cy: What is your lifetime allowance international enhancement reference?
 internationalEnhancementReference.heading = cy: What is your lifetime allowance international enhancement reference?
@@ -939,7 +939,7 @@ internationalEnhancementReference.hint1 = cy: The reference has a maximum charac
 internationalEnhancementReference.error.required = cy: Enter your lifetime allowance international enhancement reference
 internationalEnhancementReference.error.length = cy: Your lifetime allowance international enhancement reference must be 15 characters or fewer
 internationalEnhancementReference.error.invalid = cy: Your lifetime allowance international enhancement reference must only include letters a to z and numbers 0 to 9
-internationalEnhancementReference.change.hidden = cy: What is your lifetime allowance international enhancement reference?
+internationalEnhancementReference.change.hidden = cy: your lifetime allowance international enhancement reference
 
 pensionCreditReference.title = cy: What is your lifetime allowance pension credit reference?
 pensionCreditReference.heading = cy: What is your lifetime allowance pension credit reference?
@@ -950,7 +950,7 @@ pensionCreditReference.hint1 = cy: The reference has a maximum character limit o
 pensionCreditReference.error.required = cy: Enter your lifetime allowance pension credit reference
 pensionCreditReference.error.length = cy: Your lifetime allowance pension credit reference must be 15 characters or fewer
 pensionCreditReference.error.invalid = cy: Your lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
-pensionCreditReference.change.hidden = cy: What is your lifetime allowance pension credit reference?
+pensionCreditReference.change.hidden = cy: your lifetime allowance pension credit reference
 
 annualPaymentValue.title = cy: What was the value of the annual payment?
 annualPaymentValue.heading = cy: What was the value of the annual payment?
@@ -981,7 +981,7 @@ newEnhancementType.hint1 = cy: Check your lifetime allowance enhancement online 
 newEnhancementType.hint2 = cy: Choose your enhancement type from the options below.
 newEnhancementType.checkYourAnswersLabel = cy: Select your new lifetime allowance enhancement type
 newEnhancementType.error.required = cy: Select your new lifetime allowance enhancement type
-newEnhancementType.change.hidden = cy: Which type of lifetime allowance enhancement did you have?
+newEnhancementType.change.hidden = cy: which type of lifetime allowance enhancement did you have
 
 newInternationalEnhancementReference.title = cy: What is your new lifetime allowance international enhancement reference?
 newInternationalEnhancementReference.heading = cy: What is your new lifetime allowance international enhancement reference?
@@ -992,7 +992,7 @@ newInternationalEnhancementReference.hint1 = cy: The reference has a maximum cha
 newInternationalEnhancementReference.error.required = cy: Enter your new lifetime allowance international enhancement reference
 newInternationalEnhancementReference.error.length = cy: Your new lifetime allowance international enhancement reference must be 15 characters or fewer
 newInternationalEnhancementReference.error.invalid = cy: Your new lifetime allowance international enhancement reference must only include letters a to z and numbers 0 to 9
-newInternationalEnhancementReference.change.hidden = cy: What is your new lifetime allowance international enhancement reference?
+newInternationalEnhancementReference.change.hidden = cy: your new lifetime allowance international enhancement reference
 
 newPensionCreditReference.title = cy: What is your new lifetime allowance pension credit reference?
 newPensionCreditReference.heading = cy: What is your new lifetime allowance pension credit reference?
@@ -1003,7 +1003,7 @@ newPensionCreditReference.hint1 = cy: The reference has a maximum character limi
 newPensionCreditReference.error.required = cy: Enter your new lifetime allowance pension credit reference
 newPensionCreditReference.error.length = cy: Your new lifetime allowance pension credit reference must be 15 characters or fewer
 newPensionCreditReference.error.invalid = cy: Your new lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
-newPensionCreditReference.change.hidden = cy: What is your new lifetime allowance pension credit reference?
+newPensionCreditReference.change.hidden = cy: your new lifetime allowance pension credit reference
 
 registeredYear.title = cy: Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
 registeredYear.heading = cy: Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
@@ -1019,7 +1019,7 @@ registeredYear.error.required.2012 = cy: Select yes if you were a member of a re
 registeredYear.error.required.2013 = cy: Select yes if you were a member of a registered pension scheme between 6 April 2012 and 5 April 2013
 registeredYear.error.required.2014 = cy: Select yes if you were a member of a registered pension scheme between 6 April 2013 and 5 April 2014
 registeredYear.error.required.2015 = cy: Select yes if you were a member of a registered pension scheme between 6 April 2014 and 5 April 2015
-registeredYear.change.hidden = cy: Were you a member of a registered pension scheme scheme between from 6 April {0} and 5 April {1}?
+registeredYear.change.hidden = cy: if you were a member of a registered pension scheme between from 6 April {0} and 5 April {1}
 
 cannotUseLtaServiceNoCharge.title = cy: You cannot make a lifetime allowance adjustment
 cannotUseLtaServiceNoCharge.heading = cy: You cannot make a lifetime allowance adjustment
@@ -1061,4 +1061,4 @@ previousClaimContinue.option1 = cy: Yes
 previousClaimContinue.option2 = cy: No
 previousClaimContinue.checkYourAnswersLabel = cy: Do you want to start your claim from the beginning?
 previousClaimContinue.error.required = cy: Select yes if you want to continue with your previous claim
-previousClaimContinue.change.hidden = cy: Do you want to continue with your previous claim?
+previousClaimContinue.change.hidden = cy: if you want to continue with your previous claim
