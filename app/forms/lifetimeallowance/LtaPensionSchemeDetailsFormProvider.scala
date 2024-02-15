@@ -29,7 +29,11 @@ class LtaPensionSchemeDetailsFormProvider @Inject() extends Mappings {
     mapping(
       "name"   -> text("ltaPensionSchemeDetails.error.name.required")
         .verifying(maxLength(100, "ltaPensionSchemeDetails.error.name.length")),
-      "taxRef" -> pstr("ltaPensionSchemeDetails.error.taxRef.required", "ltaPensionSchemeDetails.taxRef.invalid")
+      "taxRef" -> pstr(
+        "ltaPensionSchemeDetails.error.taxRef.required",
+        "ltaPensionSchemeDetails.error.taxRef.invalid",
+        Seq("""(\d\s*){8}[A-Za-z]{2}""")
+      )
     )(LtaPensionSchemeDetails.apply)(LtaPensionSchemeDetails.unapply)
   )
 }
