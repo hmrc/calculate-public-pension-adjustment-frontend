@@ -108,7 +108,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "definedContribution2016PreAmount" : 6015,
            |          "definedContribution2016PostAmount" : 6016,
            |          "definedContribution2016PreFlexiAmount" : 10015,
-           |          "definedContribution2016PostFlexiAmount" : 10016,
            |          "definedBenefit2016PreAmount" : 30015,
            |          "definedBenefit2016PostAmount" : 30016,
            |          "totalIncome" : 60000
@@ -1099,8 +1098,27 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             Period._2016,
             None,
             Some(30016),
-            Some(6016),
-            Some(10016)
+            Some(6016)
+          )
+        )
+      }
+
+      "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016 when PublicPension" in {
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016)
+
+        result mustBe Some(
+          InitialFlexiblyAccessedTaxYear(
+            30015,
+            Some(LocalDate.parse("2015-05-25")),
+            6015,
+            10015,
+            List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0, Some(35000), Some(30000))),
+            60000,
+            0,
+            Period._2016,
+            None,
+            Some(30016),
+            Some(6016)
           )
         )
       }
@@ -1247,8 +1265,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Period._2016,
                   None,
                   Some(30016),
-                  Some(6016),
-                  Some(10016)
+                  Some(6016)
                 ),
                 PostFlexiblyAccessedTaxYear(
                   35000,
