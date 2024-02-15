@@ -63,12 +63,15 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       }
     }
 
-    "must return maybeFlexiPeriodEndDateRowsStatus and is2016Period false when flexi date not end of period and not 2016 and the correct view for a GET" in {
+    "must return only relevant rows when not 2016 periood and flexi date =/= enddate and the correct view for a GET" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
       val ua = emptyUserAnswers
         .set(FlexibleAccessStartDatePage, LocalDate.of(2023, 4, 3))
+        .success
+        .value
+        .set(DefinedBenefit2016PreAmountPage, BigInt(1))
         .success
         .value
         .set(DefinedContributionAmountPage(Period._2023), BigInt(100))
@@ -112,12 +115,15 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       }
     }
 
-    "must return maybeFlexiPeriodEndDateRowsStatus true and is2016Period false when flexi date  end of period but not 2016 and the correct view for a GET" in {
+    "must return relevant rows only for when flexi date == period end date but not 2016 period and the correct view for a GET" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
       val ua = emptyUserAnswers
         .set(FlexibleAccessStartDatePage, LocalDate.of(2023, 4, 5))
+        .success
+        .value
+        .set(DefinedBenefit2016PreAmountPage, BigInt(100))
         .success
         .value
         .set(DefinedContributionAmountPage(Period._2023), BigInt(100))
@@ -158,7 +164,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       }
     }
 
-    "must return maybeFlexiPeriodEndDateRowsStatus false and is2016Period true when flexi date not end of period but is 2016 with correct view for a GET" in {
+    "must return relevant rows when period is 2016 but flexi date =/= sub period end dates with the correct view for a GET" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -215,7 +221,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       }
     }
 
-    "must return maybeFlexiPeriodEndDateRowsStatus and is2016Period true when flexi end of pre2016 sub period with correct view for a GET" in {
+    "must return relevant rows when period is 2016 and flexi date is pre sub period end dates with the correct view for a GET" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -236,6 +242,9 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         .success
         .value
         .set(DefinedContribution2016PostAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedContributionAmountPage(Period._2023), BigInt(100))
         .success
         .value
 
@@ -275,7 +284,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       }
     }
 
-    "must return maybeFlexiPeriodEndDateRowsStatus and is2016Period true when flexi end of post2016 sub period with correct view for a GET" in {
+    "must return relevant rows when period is 2016 and flexi date is post sub period end dates with the correct view for a GET" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -296,6 +305,9 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         .success
         .value
         .set(DefinedContribution2016PostFlexiAmountPage, BigInt(0))
+        .success
+        .value
+        .set(DefinedContributionAmountPage(Period._2023), BigInt(100))
         .success
         .value
 

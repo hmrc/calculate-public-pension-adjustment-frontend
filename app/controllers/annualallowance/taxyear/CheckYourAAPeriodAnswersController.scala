@@ -134,10 +134,10 @@ class CheckYourAAPeriodAnswersController @Inject() (
         (flexiAccessExistsForPeriod, period, flexibleStartDate) match {
           case (true, Period._2016, Some(date)) if date == Period.pre2016End || date == Period.post2016End =>
             flexiPeriodEndateRows2016
-          case (true, Period._2016, _)                                                                     =>
-            regularRows2016
           case (true, _, Some(date)) if date == period.end                                                 =>
             flexiPeriodEndateRows
+          case (_, Period._2016, _)                                                                        =>
+            regularRows2016
           case _                                                                                           =>
             regularRows
         }
