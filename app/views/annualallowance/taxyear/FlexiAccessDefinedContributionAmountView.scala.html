@@ -50,10 +50,12 @@
                 caption = messages("annualAllowance.period.caption." + period)
             )
         )
+        .withInputMode("numeric")
         .withWidth(Fixed10)
         .withCssClass("govuk-currency-input__inner__input")
         .withPrefix(PrefixOrSuffix(content = Text("£")))
         .withHint(HintViewModel(HtmlContent(contentHint))))
+
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

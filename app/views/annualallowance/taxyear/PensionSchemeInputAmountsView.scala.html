@@ -56,10 +56,12 @@
             InputViewModel(
                 field = form("originalPIA"),
                 label = LabelViewModel(messages("pensionSchemeInputAmounts.originalPIA", period, schemeIndex)).withCssClass("govuk-label--m")
+
             ).withHint(HintViewModel(HtmlContent(contentHintForOriginalPIA)))
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)
+            .withInputMode("numeric")
         )
 
         @govukInput(
@@ -70,6 +72,7 @@
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)
+            .withInputMode("numeric")
         )
 
         @govukButton(
