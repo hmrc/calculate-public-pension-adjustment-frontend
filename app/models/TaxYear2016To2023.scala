@@ -31,19 +31,23 @@ object TaxYear2016To2023 {
     totalIncome: Int,
     chargePaidByMember: Int,
     period: Period,
-    income: Option[Income] = None
+    income: Option[Income] = None,
+    pensionInput2016PostAmount: Option[Int] = None
   ) extends TaxYear2016To2023
 
   case class InitialFlexiblyAccessedTaxYear(
     definedBenefitInputAmount: Int,
-    flexiAccessDate: LocalDate,
+    flexiAccessDate: Option[LocalDate],
     preAccessDefinedContributionInputAmount: Int,
     postAccessDefinedContributionInputAmount: Int,
     taxYearSchemes: List[TaxYearScheme],
     totalIncome: Int,
     chargePaidByMember: Int,
     period: Period,
-    income: Option[Income] = None
+    income: Option[Income] = None,
+    definedBenefitInput2016PostAmount: Option[Int] = None,
+    definedContributionInput2016PostAmount: Option[Int] = None,
+    postAccessDefinedContributionInput2016PostAmount: Option[Int] = None
   ) extends TaxYear2016To2023
 
   case class PostFlexiblyAccessedTaxYear(
@@ -53,7 +57,9 @@ object TaxYear2016To2023 {
     chargePaidByMember: Int,
     taxYearSchemes: List[TaxYearScheme],
     period: Period,
-    income: Option[Income] = None
+    income: Option[Income] = None,
+    definedBenefitInput2016PostAmount: Option[Int] = None,
+    definedContributionInput2016PostAmount: Option[Int] = None
   ) extends TaxYear2016To2023
 
   implicit lazy val reads: Reads[TaxYear2016To2023] = {
@@ -65,19 +71,23 @@ object TaxYear2016To2023 {
       (__ \ "totalIncome").read[Int] and
       (__ \ "chargePaidByMember").read[Int] and
       (__ \ "period").read[Period] and
-      (__ \ "income").readNullable[Income])(
+      (__ \ "income").readNullable[Income] and
+      (__ \ "pensionInput2016PostAmount").readNullable[Int])(
       TaxYear2016To2023.NormalTaxYear
     )
 
     val initialReads: Reads[TaxYear2016To2023] = ((__ \ "definedBenefitInputAmount").read[Int] and
-      (__ \ "flexiAccessDate").read[LocalDate] and
+      (__ \ "flexiAccessDate").readNullable[LocalDate] and
       (__ \ "preAccessDefinedContributionInputAmount").read[Int] and
       (__ \ "postAccessDefinedContributionInputAmount").read[Int] and
       (__ \ "taxYearSchemes").read[List[TaxYearScheme]] and
       (__ \ "totalIncome").read[Int] and
       (__ \ "chargePaidByMember").read[Int] and
       (__ \ "period").read[Period] and
-      (__ \ "income").readNullable[Income])(
+      (__ \ "income").readNullable[Income] and
+      (__ \ "definedBenefitInput2016PostAmount").readNullable[Int] and
+      (__ \ "definedContributionInput2016PostAmount").readNullable[Int] and
+      (__ \ "postAccessDefinedContributionInput2016PostAmount").readNullable[Int])(
       TaxYear2016To2023.InitialFlexiblyAccessedTaxYear
     )
 
@@ -88,7 +98,9 @@ object TaxYear2016To2023 {
         (__ \ "chargePaidByMember").read[Int] and
         (__ \ "taxYearSchemes").read[List[TaxYearScheme]] and
         (__ \ "period").read[Period] and
-        (__ \ "income").readNullable[Income])(
+        (__ \ "income").readNullable[Income] and
+        (__ \ "definedBenefitInput2016PostAmount").readNullable[Int] and
+        (__ \ "definedContributionInput2016PostAmount").readNullable[Int])(
         TaxYear2016To2023.PostFlexiblyAccessedTaxYear
       )
 
@@ -113,19 +125,33 @@ object TaxYear2016To2023 {
         (__ \ "totalIncome").write[Int] and
         (__ \ "chargePaidByMember").write[Int] and
         (__ \ "period").write[Period] and
-        (__ \ "income").writeNullable[Income]
-    )(a => (a.pensionInputAmount, a.taxYearSchemes, a.totalIncome, a.chargePaidByMember, a.period, a.income))
+        (__ \ "income").writeNullable[Income] and
+        (__ \ "pensionInput2016PostAmount").writeNullable[Int]
+    )(a =>
+      (
+        a.pensionInputAmount,
+        a.taxYearSchemes,
+        a.totalIncome,
+        a.chargePaidByMember,
+        a.period,
+        a.income,
+        a.pensionInput2016PostAmount
+      )
+    )
 
     lazy val initialWrites: Writes[TaxYear2016To2023.InitialFlexiblyAccessedTaxYear] = (
       (__ \ "definedBenefitInputAmount").write[Int] and
-        (__ \ "flexiAccessDate").write[LocalDate] and
+        (__ \ "flexiAccessDate").writeNullable[LocalDate] and
         (__ \ "preAccessDefinedContributionInputAmount").write[Int] and
         (__ \ "postAccessDefinedContributionInputAmount").write[Int] and
         (__ \ "taxYearSchemes").write[List[TaxYearScheme]] and
         (__ \ "totalIncome").write[Int] and
         (__ \ "chargePaidByMember").write[Int] and
         (__ \ "period").write[Period] and
-        (__ \ "income").writeNullable[Income]
+        (__ \ "income").writeNullable[Income] and
+        (__ \ "definedBenefitInput2016PostAmount").writeNullable[Int] and
+        (__ \ "definedContributionInput2016PostAmount").writeNullable[Int] and
+        (__ \ "postAccessDefinedContributionInput2016PostAmount").writeNullable[Int]
     )(a =>
       (
         a.definedBenefitInputAmount,
@@ -136,7 +162,10 @@ object TaxYear2016To2023 {
         a.totalIncome,
         a.chargePaidByMember,
         a.period,
-        a.income
+        a.income,
+        a.definedBenefitInput2016PostAmount,
+        a.definedContributionInput2016PostAmount,
+        a.postAccessDefinedContributionInput2016PostAmount
       )
     )
 
@@ -147,7 +176,9 @@ object TaxYear2016To2023 {
         (__ \ "chargePaidByMember").write[Int] and
         (__ \ "taxYearSchemes").write[List[TaxYearScheme]] and
         (__ \ "period").write[Period] and
-        (__ \ "income").writeNullable[Income]
+        (__ \ "income").writeNullable[Income] and
+        (__ \ "definedBenefitInput2016PostAmount").writeNullable[Int] and
+        (__ \ "definedContributionInput2016PostAmount").writeNullable[Int]
     )(a =>
       (
         a.definedBenefitInputAmount,
@@ -156,7 +187,9 @@ object TaxYear2016To2023 {
         a.chargePaidByMember,
         a.taxYearSchemes,
         a.period,
-        a.income
+        a.income,
+        a.definedBenefitInput2016PostAmount,
+        a.definedContributionInput2016PostAmount
       )
     )
 
