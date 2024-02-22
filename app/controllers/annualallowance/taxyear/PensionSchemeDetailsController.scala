@@ -19,8 +19,8 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.PensionSchemeDetailsFormProvider
 import models.tasklist.sections.AASection
-import models.{Mode, Period, SchemeIndex}
-import pages.annualallowance.taxyear.PensionSchemeDetailsPage
+import models.{Mode, PSTR, Period, SchemeIndex}
+import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, WhichSchemePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -47,9 +47,13 @@ class PensionSchemeDetailsController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)) match {
-        case None        => form
-        case Some(value) => form.fill(value)
+      var preparedForm = form
+      val whichScheme  = request.userAnswers.get(WhichSchemePage(period, schemeIndex))
+
+      if (whichScheme.isDefined && !whichScheme.get.equalsIgnoreCase(PSTR.New)) {
+        preparedForm = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)) match {
+          case Some(value) => form.fill(value)
+        }
       }
 
       Ok(view(preparedForm, mode, period, schemeIndex))
