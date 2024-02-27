@@ -18,9 +18,9 @@ package controllers.annualallowance.preaaquestions
 
 import controllers.actions._
 import forms.annualallowance.preaaquestions.StopPayingPublicPensionFormProvider
-import models.Mode
+import models.{CheckMode, Mode}
 import models.tasklist.sections.PreAASection
-import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
+import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, FlexiblyAccessedPensionPage, StopPayingPublicPensionPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
@@ -56,13 +56,26 @@ class StopPayingPublicPensionController @Inject() (
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      var userAnswers = request.userAnswers
+
+      if (
+        mode.equals(CheckMode) && request.userAnswers.get(FlexiblyAccessedPensionPage).isDefined
+        && request.userAnswers.get(FlexiblyAccessedPensionPage).get
+      ) {
+        userAnswers = request.userAnswers
+          .remove(FlexiblyAccessedPensionPage)
+          .get
+          .remove(FlexibleAccessStartDatePage)
+          .get
+      }
+
       form
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(StopPayingPublicPensionPage, value))
+              updatedAnswers <- Future.fromTry(userAnswers.set(StopPayingPublicPensionPage, value))
               redirectUrl     = StopPayingPublicPensionPage.navigate(mode, updatedAnswers).url
               answersWithNav  = PreAASection.saveNavigation(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)

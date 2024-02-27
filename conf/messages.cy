@@ -208,7 +208,7 @@ flexibleAccessStartDate.error.invalid = Nodwch y dyddiad pan wnaethoch roi’r g
 flexibleAccessStartDate.error.required = cy: The date must include {0}
 flexibleAccessStartDate.error.required.two = cy: The date must include {0} and {1}
 flexibleAccessStartDate.error.min = cy: The date when you first flexibly accessed your defined contribution pension must be after 5 April 2015
-flexibleAccessStartDate.error.max = Mae’n rhaid i’r dyddiad pan wnaethoch gyrchu’ch pensiwn cyfraniadau diffiniedig yn hyblyg am y tro cyntaf fod cyn 6 Ebrill 2023
+flexibleAccessStartDate.error.max = Mae’n rhaid i’r dyddiad pan wnaethoch gyrchu’ch pensiwn cyfraniadau diffiniedig yn hyblyg am y tro cyntaf fod cyn {0}
 
 changeInLifetimeAllowance.title = A ydych wedi cael gwybod am newid yn y ganran lwfans oes?
 changeInLifetimeAllowance.heading = A ydych wedi cael gwybod am newid yn y ganran lwfans oes?

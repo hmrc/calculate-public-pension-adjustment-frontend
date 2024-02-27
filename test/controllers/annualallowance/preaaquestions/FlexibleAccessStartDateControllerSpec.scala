@@ -38,7 +38,7 @@ import scala.concurrent.Future
 class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new FlexibleAccessStartDateFormProvider()
-  private def form = formProvider()
+  private def form = formProvider(LocalDate.of(2023, 4, 5))
 
   def onwardRoute = Call("GET", "/public-pension-adjustment/check-your-answers")
 
