@@ -25,10 +25,10 @@ import play.api.test.Helpers._
 import viewmodels.govuk.SummaryListFluency
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
-import pages.annualallowance.taxyear.{DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
+import pages.annualallowance.taxyear.{DefinedBenefit2016PostAmountPage, DefinedBenefit2016PreAmountPage, DefinedContribution2016PostAmountPage, DefinedContribution2016PostFlexiAmountPage, DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
 import play.api.inject.bind
 import repositories.SessionRepository
-import viewmodels.checkAnswers.annualallowance.taxyear.{DefinedContributionAmountSummary, FlexiAccessDefinedContributionAmountSummary}
+import viewmodels.checkAnswers.annualallowance.taxyear.{DefinedBenefit2016PostAmountSummary, DefinedBenefit2016PreAmountSummary, DefinedContribution2016PostAmountSummary, DefinedContribution2016PreAmountSummary, DefinedContributionAmountSummary, FlexiAccessDefinedContributionAmountSummary}
 import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView
 
 import java.time.LocalDate
@@ -53,12 +53,9 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          false,
+          list,
           "checkYourAnswers.aa.period.subHeading.2023",
-          controllers.routes.TaskListController.onPageLoad(),
-          list,
-          list,
-          list
+          controllers.routes.TaskListController.onPageLoad()
         )(
           request,
           messages(application)
@@ -66,12 +63,15 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       }
     }
 
-    "must return maybeFlexiPeriodEndDateRowsStatus false when fleixble access date not end of period and the correct view for a GET" in {
+    "must return only relevant rows when not 2016 periood and flexi date =/= enddate and the correct view for a GET" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
       val ua = emptyUserAnswers
         .set(FlexibleAccessStartDatePage, LocalDate.of(2023, 4, 3))
+        .success
+        .value
+        .set(DefinedBenefit2016PreAmountPage, BigInt(1))
         .success
         .value
         .set(DefinedContributionAmountPage(Period._2023), BigInt(100))
@@ -101,17 +101,13 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
           DefinedContributionAmountSummary.row(ua, Period._2023)(messages(application)),
           FlexiAccessDefinedContributionAmountSummary.row(ua, Period._2023)(messages(application))
         ).flatten
-        val emptySequence           = SummaryListViewModel(Seq.empty)
         val sequenceWithFlexiAmount = SummaryListViewModel(expectedSeq)
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          maybeFlexiPeriodEndDateRowsStatus = false,
-          "checkYourAnswers.aa.period.subHeading.2023",
-          controllers.routes.TaskListController.onPageLoad(),
-          emptySequence,
           sequenceWithFlexiAmount,
-          emptySequence
+          "checkYourAnswers.aa.period.subHeading.2023",
+          controllers.routes.TaskListController.onPageLoad()
         )(
           request,
           messages(application)
@@ -119,12 +115,15 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       }
     }
 
-    "must return maybeFlexiPeriodEndDateRowsStatus true when fleixble access date is end of period and the correct view for a GET" in {
+    "must return relevant rows only for when flexi date == period end date but not 2016 period and the correct view for a GET" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
       val ua = emptyUserAnswers
         .set(FlexibleAccessStartDatePage, LocalDate.of(2023, 4, 5))
+        .success
+        .value
+        .set(DefinedBenefit2016PreAmountPage, BigInt(100))
         .success
         .value
         .set(DefinedContributionAmountPage(Period._2023), BigInt(100))
@@ -151,17 +150,196 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         val view   = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
 
         val expectedSeq                = Seq(DefinedContributionAmountSummary.row(ua, Period._2023)(messages(application))).flatten
-        val emptySequence              = SummaryListViewModel(Seq.empty)
         val sequenceWithoutFlexiAmount = SummaryListViewModel(expectedSeq)
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          maybeFlexiPeriodEndDateRowsStatus = true,
+          sequenceWithoutFlexiAmount,
           "checkYourAnswers.aa.period.subHeading.2023",
-          controllers.routes.TaskListController.onPageLoad(),
-          emptySequence,
-          emptySequence,
-          sequenceWithoutFlexiAmount
+          controllers.routes.TaskListController.onPageLoad()
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must return relevant rows when period is 2016 but flexi date =/= sub period end dates with the correct view for a GET" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      val ua = emptyUserAnswers
+        .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 1))
+        .success
+        .value
+        .set(DefinedBenefit2016PreAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedBenefit2016PostAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedContribution2016PreAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedContribution2016PostAmountPage, BigInt(100))
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(
+          GET,
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016).url
+        )
+
+        val result = route(application, request).value
+        val view   = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
+
+        val expectedSeq         = Seq(
+          DefinedContribution2016PreAmountSummary.row(ua)(messages(application)),
+          DefinedContribution2016PostAmountSummary.row(ua)(messages(application)),
+          DefinedBenefit2016PreAmountSummary.row(ua)(messages(application)),
+          DefinedBenefit2016PostAmountSummary.row(ua)(messages(application))
+        ).flatten
+        val summarySequence2016 = SummaryListViewModel(expectedSeq)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          summarySequence2016,
+          "checkYourAnswers.aa.period.subHeading.2016",
+          controllers.routes.TaskListController.onPageLoad()
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must return relevant rows when period is 2016 and flexi date is pre sub period end dates with the correct view for a GET" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      val ua = emptyUserAnswers
+        .set(FlexibleAccessStartDatePage, Period.pre2016End)
+        .success
+        .value
+        .set(DefinedBenefit2016PreAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedBenefit2016PostAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedContribution2016PreAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedContribution2016PreFlexiAmountPage, BigInt(0))
+        .success
+        .value
+        .set(DefinedContribution2016PostAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedContributionAmountPage(Period._2023), BigInt(100))
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(
+          GET,
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016).url
+        )
+
+        val result = route(application, request).value
+        val view   = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
+
+        val expectedSeq         = Seq(
+          DefinedContribution2016PreAmountSummary.row(ua)(messages(application)),
+          DefinedContribution2016PostAmountSummary.row(ua)(messages(application)),
+          DefinedBenefit2016PreAmountSummary.row(ua)(messages(application)),
+          DefinedBenefit2016PostAmountSummary.row(ua)(messages(application))
+        ).flatten
+        val summarySequence2016 = SummaryListViewModel(expectedSeq)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          summarySequence2016,
+          "checkYourAnswers.aa.period.subHeading.2016",
+          controllers.routes.TaskListController.onPageLoad()
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must return relevant rows when period is 2016 and flexi date is post sub period end dates with the correct view for a GET" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      val ua = emptyUserAnswers
+        .set(FlexibleAccessStartDatePage, Period.post2016End)
+        .success
+        .value
+        .set(DefinedBenefit2016PreAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedBenefit2016PostAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedContribution2016PreAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedContribution2016PostAmountPage, BigInt(100))
+        .success
+        .value
+        .set(DefinedContribution2016PostFlexiAmountPage, BigInt(0))
+        .success
+        .value
+        .set(DefinedContributionAmountPage(Period._2023), BigInt(100))
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(
+          GET,
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2016).url
+        )
+
+        val result = route(application, request).value
+        val view   = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
+
+        val expectedSeq         = Seq(
+          DefinedContribution2016PreAmountSummary.row(ua)(messages(application)),
+          DefinedContribution2016PostAmountSummary.row(ua)(messages(application)),
+          DefinedBenefit2016PreAmountSummary.row(ua)(messages(application)),
+          DefinedBenefit2016PostAmountSummary.row(ua)(messages(application))
+        ).flatten
+        val summarySequence2016 = SummaryListViewModel(expectedSeq)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          summarySequence2016,
+          "checkYourAnswers.aa.period.subHeading.2016",
+          controllers.routes.TaskListController.onPageLoad()
         )(
           request,
           messages(application)
@@ -184,117 +362,6 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
-      }
-    }
-
-    "pre-2016 period" - {
-
-      "must return maybeFlexiPeriodEndDateRowsStatus false when fleixble access date not end of period and the correct view for a GET" in {
-
-        val mockSessionRepository = mock[SessionRepository]
-
-        val ua = emptyUserAnswers
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 1))
-          .success
-          .value
-          .set(DefinedContributionAmountPage(Period._2016PreAlignment), BigInt(100))
-          .success
-          .value
-          .set(FlexiAccessDefinedContributionAmountPage(Period._2016PreAlignment), BigInt(100))
-          .success
-          .value
-
-        val application =
-          applicationBuilder(userAnswers = Some(ua))
-            .overrides(
-              bind[SessionRepository].toInstance(mockSessionRepository)
-            )
-            .build()
-
-        running(application) {
-          val request = FakeRequest(
-            GET,
-            controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-              .onPageLoad(Period._2016PreAlignment)
-              .url
-          )
-
-          val result = route(application, request).value
-          val view   = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
-
-          val expectedSeq             = Seq(
-            DefinedContributionAmountSummary.row(ua, Period._2016PreAlignment)(messages(application)),
-            FlexiAccessDefinedContributionAmountSummary.row(ua, Period._2016PreAlignment)(messages(application))
-          ).flatten
-          val emptySequence           = SummaryListViewModel(Seq.empty)
-          val sequenceWithFlexiAmount = SummaryListViewModel(expectedSeq)
-
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
-            maybeFlexiPeriodEndDateRowsStatus = false,
-            "checkYourAnswers.aa.period.subHeading.2016-pre",
-            controllers.routes.TaskListController.onPageLoad(),
-            emptySequence,
-            sequenceWithFlexiAmount,
-            emptySequence
-          )(
-            request,
-            messages(application)
-          ).toString
-        }
-      }
-
-      "must return maybeFlexiPeriodEndDateRowsStatus true when fleixble access date is end of period and the correct view for a GET" in {
-
-        val mockSessionRepository = mock[SessionRepository]
-
-        val ua = emptyUserAnswers
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 8))
-          .success
-          .value
-          .set(DefinedContributionAmountPage(Period._2016PreAlignment), BigInt(100))
-          .success
-          .value
-          .set(FlexiAccessDefinedContributionAmountPage(Period._2016PreAlignment), BigInt(0))
-          .success
-          .value
-
-        val application =
-          applicationBuilder(userAnswers = Some(ua))
-            .overrides(
-              bind[SessionRepository].toInstance(mockSessionRepository)
-            )
-            .build()
-
-        running(application) {
-          val request = FakeRequest(
-            GET,
-            controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-              .onPageLoad(Period._2016PreAlignment)
-              .url
-          )
-
-          val result = route(application, request).value
-          val view   = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
-
-          val expectedSeq                =
-            Seq(DefinedContributionAmountSummary.row(ua, Period._2016PreAlignment)(messages(application))).flatten
-          val emptySequence              = SummaryListViewModel(Seq.empty)
-          val sequenceWithoutFlexiAmount = SummaryListViewModel(expectedSeq)
-
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
-            maybeFlexiPeriodEndDateRowsStatus = true,
-            "checkYourAnswers.aa.period.subHeading.2016-pre",
-            controllers.routes.TaskListController.onPageLoad(),
-            emptySequence,
-            emptySequence,
-            sequenceWithoutFlexiAmount
-          )(
-            request,
-            messages(application)
-          ).toString
-        }
       }
     }
   }

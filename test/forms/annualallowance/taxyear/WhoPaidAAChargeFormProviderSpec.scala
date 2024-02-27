@@ -22,7 +22,10 @@ import play.api.data.FormError
 
 class WhoPaidAAChargeFormProviderSpec extends OptionFieldBehaviours {
 
-  val form = new WhoPaidAAChargeFormProvider()()
+  val schemeName: String   = "Test123"
+  val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
+  val formProvider         = new WhoPaidAAChargeFormProvider()
+  val form                 = formProvider(schemeName, startEndDate)
 
   ".value" - {
 
@@ -33,13 +36,13 @@ class WhoPaidAAChargeFormProviderSpec extends OptionFieldBehaviours {
       form,
       fieldName,
       validValues = WhoPaidAACharge.values,
-      invalidError = FormError(fieldName, "error.invalid")
+      invalidError = FormError(fieldName, "error.invalid", List(schemeName, startEndDate))
     )
 
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, List(schemeName, startEndDate))
     )
   }
 }

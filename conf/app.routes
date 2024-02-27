@@ -184,6 +184,16 @@ POST        /annual-allowance/:period/pension-scheme-:schemeIndex/pension-input-
 GET         /annual-allowance/:period/pension-scheme-:schemeIndex/change-pension-input-amount                           controllers.annualallowance.taxyear.PensionSchemeInputAmountsController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 POST        /annual-allowance/:period/pension-scheme-:schemeIndex/change-pension-input-amount                           controllers.annualallowance.taxyear.PensionSchemeInputAmountsController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
 
+GET         /annual-allowance/:period/pension-scheme-:schemeIndex/pension-input-amount-15-16-period-1                                  controllers.annualallowance.taxyear.PensionSchemeInput2016preAmountsController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST        /annual-allowance/:period/pension-scheme-:schemeIndex/pension-input-amount-15-16-period-1                                  controllers.annualallowance.taxyear.PensionSchemeInput2016preAmountsController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET         /annual-allowance/:period/pension-scheme-:schemeIndex/change-pension-input-amount-15-16-period-1                           controllers.annualallowance.taxyear.PensionSchemeInput2016preAmountsController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST        /annual-allowance/:period/pension-scheme-:schemeIndex/change-pension-input-amount-15-16-period-1                           controllers.annualallowance.taxyear.PensionSchemeInput2016preAmountsController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+
+GET         /annual-allowance/:period/pension-scheme-:schemeIndex/pension-input-amount-15-16-period-2                                  controllers.annualallowance.taxyear.PensionSchemeInput2016postAmountsController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+POST        /annual-allowance/:period/pension-scheme-:schemeIndex/pension-input-amount-15-16-period-2                                  controllers.annualallowance.taxyear.PensionSchemeInput2016postAmountsController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
+GET         /annual-allowance/:period/pension-scheme-:schemeIndex/change-pension-input-amount-15-16-period-2                           controllers.annualallowance.taxyear.PensionSchemeInput2016postAmountsController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+POST        /annual-allowance/:period/pension-scheme-:schemeIndex/change-pension-input-amount-15-16-period-2                           controllers.annualallowance.taxyear.PensionSchemeInput2016postAmountsController.onSubmit(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
+
 GET         /annual-allowance/:period/pension-scheme-:schemeIndex/annual-allowance-charge                               controllers.annualallowance.taxyear.PayAChargeController.onPageLoad(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
 POST        /annual-allowance/:period/pension-scheme-:schemeIndex/annual-allowance-charge                               controllers.annualallowance.taxyear.PayAChargeController.onSubmit(mode: Mode = NormalMode, period:Period, schemeIndex:SchemeIndex)
 GET         /annual-allowance/:period/pension-scheme-:schemeIndex/change-annual-allowance-charge                        controllers.annualallowance.taxyear.PayAChargeController.onPageLoad(mode: Mode = CheckMode, period:Period, schemeIndex:SchemeIndex)
@@ -356,3 +366,33 @@ POST       /sign-in-government-gateway                      controllers.Optional
 
 GET         /cannot-use-service-not-individual              controllers.CannotUseServiceNotIndividualController.onPageLoad
 GET         /uplift-failure                                 controllers.UpliftFailedController.onPageLoad()
+
+GET        /annual-allowance/2016pre-pension-input-amount-defined-benefit                  controllers.annualallowance.taxyear.DefinedBenefit2016PreAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /annual-allowance/2016pre-pension-input-amount-defined-benefit                  controllers.annualallowance.taxyear.DefinedBenefit2016PreAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /annual-allowance/change-2016pre-pension-input-amount-defined-benefit                        controllers.annualallowance.taxyear.DefinedBenefit2016PreAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /annual-allowance/change-2016pre-pension-input-amount-defined-benefit                        controllers.annualallowance.taxyear.DefinedBenefit2016PreAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /annual-allowance/2016post-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PostAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /annual-allowance/2016post-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PostAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /annual-allowance/change-2016post-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PostAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /annual-allowance/change-2016post-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PostAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /annual-allowance/2016pre-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PreAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /annual-allowance/2016pre-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PreAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /annual-allowance/change-2016pre-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PreAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /annual-allowance/change-2016pre-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PreAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /annual-allowance/2016post-pension-input-amount-defined-benefit                  controllers.annualallowance.taxyear.DefinedBenefit2016PostAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /annual-allowance/2016post-pension-input-amount-defined-benefit                  controllers.annualallowance.taxyear.DefinedBenefit2016PostAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /annual-allowance/change-2016post-pension-input-amount-defined-benefit                        controllers.annualallowance.taxyear.DefinedBenefit2016PostAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /annual-allowance/change-2016post-pension-input-amount-defined-benefit                        controllers.annualallowance.taxyear.DefinedBenefit2016PostAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /annual-allowance/2016flexi-post-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /annual-allowance/2016flexi-post-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /annual-allowance/change-2016flexi-post-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /annual-allowance/change-2016flexi-post-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /annual-allowance/2016flexi-pre-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onPageLoad(mode: Mode = NormalMode)
+POST       /annual-allowance/2016flexi-pre-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onSubmit(mode: Mode = NormalMode)
+GET        /annual-allowance/change-2016flexi-pre-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onPageLoad(mode: Mode = CheckMode)
+POST       /annual-allowance/change-2016flexi-pre-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onSubmit(mode: Mode = CheckMode)

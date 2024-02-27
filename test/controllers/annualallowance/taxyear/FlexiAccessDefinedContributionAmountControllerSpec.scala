@@ -39,7 +39,7 @@ import scala.concurrent.Future
 class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new FlexiAccessDefinedContributionAmountFormProvider()
-  val form         = formProvider(Seq("13 December 2022 to 5 April 2023"))
+  val form         = formProvider(Seq("13 December 2022 and 5 April 2023"))
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -73,7 +73,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
           form,
           NormalMode,
           Period._2023,
-          "13 December 2022 to 5 April 2023"
+          "13 December 2022 and 5 April 2023"
         )(
           request,
           messages(application)
@@ -105,7 +105,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
           form.fill(validAnswer),
           NormalMode,
           Period._2023,
-          "13 December 2022 to 5 April 2023"
+          "13 December 2022 and 5 April 2023"
         )(
           request,
           messages(application)
@@ -162,7 +162,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
           boundForm,
           NormalMode,
           Period._2023,
-          "13 December 2022 to 5 April 2023"
+          "13 December 2022 and 5 April 2023"
         )(
           request,
           messages(application)
@@ -205,72 +205,6 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
     "Flexi access and start date of period scenarios" - {
 
-      "must populate correctly when flexi access date = start of post 2016 period" in {
-        val userAnswers = UserAnswers(userAnswersId)
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 9))
-          .success
-          .value
-
-        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-        running(application) {
-          val request = FakeRequest(
-            GET,
-            FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2016PostAlignment).url
-          )
-
-          val post2016Form = formProvider(Seq("10 July 2015 to 5 April 2016"))
-
-          val view = application.injector.instanceOf[FlexiAccessDefinedContributionAmountView]
-
-          val result = route(application, request).value
-
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
-            post2016Form,
-            NormalMode,
-            Period._2016PostAlignment,
-            "10 July 2015 to 5 April 2016"
-          )(
-            request,
-            messages(application)
-          ).toString
-        }
-      }
-
-      "must populate correctly when flexi access date does not equal start of post 2016 period" in {
-        val userAnswers = UserAnswers(userAnswersId)
-          .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 10))
-          .success
-          .value
-
-        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-        running(application) {
-          val request = FakeRequest(
-            GET,
-            FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2016PostAlignment).url
-          )
-
-          val post2016Form = formProvider(Seq("11 July 2015 to 5 April 2016"))
-
-          val view = application.injector.instanceOf[FlexiAccessDefinedContributionAmountView]
-
-          val result = route(application, request).value
-
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
-            post2016Form,
-            NormalMode,
-            Period._2016PostAlignment,
-            "11 July 2015 to 5 April 2016"
-          )(
-            request,
-            messages(application)
-          ).toString
-        }
-      }
-
       "must populate correctly when flexi access date = start of in any other period" in {
         val userAnswers = UserAnswers(userAnswersId)
           .set(FlexibleAccessStartDatePage, LocalDate.of(2022, 4, 6))
@@ -283,7 +217,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
           val request =
             FakeRequest(GET, FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2023).url)
 
-          val flexiForm = formProvider(Seq("7 April 2022 to 5 April 2023"))
+          val flexiForm = formProvider(Seq("7 April 2022 and 5 April 2023"))
 
           val view = application.injector.instanceOf[FlexiAccessDefinedContributionAmountView]
 
@@ -294,7 +228,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
             flexiForm,
             NormalMode,
             Period._2023,
-            "7 April 2022 to 5 April 2023"
+            "7 April 2022 and 5 April 2023"
           )(
             request,
             messages(application)
@@ -314,7 +248,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
           val request =
             FakeRequest(GET, FlexiAccessDefinedContributionAmountController.onPageLoad(NormalMode, Period._2023).url)
 
-          val flexiForm = formProvider(Seq("8 April 2022 to 5 April 2023"))
+          val flexiForm = formProvider(Seq("8 April 2022 and 5 April 2023"))
 
           val view = application.injector.instanceOf[FlexiAccessDefinedContributionAmountView]
 
@@ -325,7 +259,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
             flexiForm,
             NormalMode,
             Period._2023,
-            "8 April 2022 to 5 April 2023"
+            "8 April 2022 and 5 April 2023"
           )(
             request,
             messages(application)

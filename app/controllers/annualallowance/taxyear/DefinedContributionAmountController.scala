@@ -23,7 +23,7 @@ import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.{DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -83,13 +83,7 @@ class DefinedContributionAmountController @Inject() (
             ),
           value =>
             if (flexiAccessExistsForPeriod) {
-              if (period == Period._2016PreAlignment) {
-                if (flexibleStartDate == Some(LocalDate.of(2015, 7, 8))) {
-                  updateAnswersForEndOfPeriodDate(mode, period, request, value)
-                } else {
-                  updateAnswersForNormalDate(mode, period, request, value)
-                }
-              } else if (flexibleStartDate == Some(LocalDate.of(period.end.getYear, 4, 5))) {
+              if (flexibleStartDate == Some(period.end)) {
                 updateAnswersForEndOfPeriodDate(mode, period, request, value)
               } else {
                 updateAnswersForNormalDate(mode, period, request, value)
@@ -125,28 +119,23 @@ class DefinedContributionAmountController @Inject() (
       _              <- sessionRepository.set(answersWithNav)
     } yield Redirect(redirectUrl)
 
-  private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate]): String = {
+  private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate])(implicit
+    messages: Messages
+  ): String = {
     val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
 
     def normalDateFormatter =
       flexibleStartDate match {
         case Some(date) if date.isAfter(period.start) && date.isBefore(period.end) =>
-          period.start.format(formatter) + " to " + date.format(formatter)
-        case _                                                                     => period.start.format(formatter) + " to " + period.end.format(formatter)
+          period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + date.format(formatter)
+        case _                                                                     =>
+          period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
       }
 
-    if (period == Period._2016PostAlignment) {
-      if (flexibleStartDate == Some(LocalDate.of(2015, 7, 9))) {
-        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
-      } else {
-        normalDateFormatter
-      }
+    if (flexibleStartDate == Some(period.start)) {
+      period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + flexibleStartDate.get.format(formatter)
     } else {
-      if (flexibleStartDate == Some(LocalDate.of(period.start.getYear, 4, 6))) {
-        period.start.format(formatter) + " to " + flexibleStartDate.get.format(formatter)
-      } else {
-        normalDateFormatter
-      }
+      normalDateFormatter
     }
   }
 }

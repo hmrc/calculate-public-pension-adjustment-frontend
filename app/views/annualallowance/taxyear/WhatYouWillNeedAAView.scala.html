@@ -29,7 +29,7 @@
 
     <span class="govuk-caption-xl">@messages("periodDateRangeAA.caption") @messages("periodDateRangeAA." + period)</span>
 
-    <h1 class="govuk-heading-xl">@messages("whatYouWillNeedAA.heading")</h1>
+    <h1 class="govuk-heading-xl" style="margin-bottom: 10px">@messages("whatYouWillNeedAA.heading")</h1>
 
     <p class="govuk-body">@messages("whatYouWillNeedAA.message1")</p>
 
@@ -43,6 +43,16 @@
         <li>
             @messages("whatYouWillNeedAA.bullet3")
         </li>
+        <li>
+            @messages("whatYouWillNeedAA.bullet4")
+        </li>
+        @if(period == Period._2016) {
+        <li>
+            @messages("whatYouWillNeedAA.bullet5")
+        </li>
+        }
+
+
     </ul>
 
     <p class="govuk-body">@messages("whatYouWillNeedAA.message2")</p>
@@ -50,21 +60,13 @@
     <p class="govuk-body">@messages("whatYouWillNeedAA.message3")</p>
 
     <ul class="govuk-body">
-        <li>
-            @messages("whatYouWillNeedAA.bullet4")
-        </li>
-
-        <li>
-            <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#threshold" rel="noreferrer noopener" target="_blank">
-                @messages("whatYouWillNeedAA.bullet5." + period) <span class="govuk-visually-hidden">(opens in new tab)</span>
-            </a>
-        </li>
-
+        @if(period != Period._2016){
         <li>
             <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance#threshold" rel="noreferrer noopener" target="_blank">
                 @messages("whatYouWillNeedAA.bullet6." + period) <span class="govuk-visually-hidden">(opens in new tab)</span>
             </a>
         </li>
+        }
 
         <li>
             @messages("whatYouWillNeedAA.bullet7")

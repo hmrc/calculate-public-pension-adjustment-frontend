@@ -1,0 +1,80 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import viewmodels.InputWidth._
+@import viewmodels.LabelSize
+
+@this(
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukInput: GovukInput,
+    govukButton: GovukButton
+)
+
+@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
+
+@contentHintForOriginalPIA = {
+
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.originalPIA.message1")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.originalPIA.message2")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.originalPIA.message3")</p>
+
+    @messages("pensionSchemeInputAmounts.originalPIA.hint1")
+}
+
+@contentHintForRevisedPIA = {
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message1")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message2")</p>
+    @messages("pensionSchemeInputAmounts.revisedPIA.hint1")
+}
+
+@layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", schemeName))) {
+
+    @formHelper(action = controllers.annualallowance.taxyear.routes.PensionSchemeInput2016postAmountsController.onSubmit(mode, period, schemeIndex), Symbol("autoComplete") -> "off") {
+
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form))
+        }
+
+        <span class="govuk-caption-xl">@messages("annualAllowance.period.caption.2016post")</span>
+        <h1 class="govuk-heading-xl">@messages("pensionSchemeInputAmounts.heading.2016-post", schemeName)</h1>
+
+        @govukInput(
+            InputViewModel(
+                field = form("originalPIA"),
+                label = LabelViewModel(messages("pensionSchemeInputAmounts.originalPIA", period, schemeIndex)).withCssClass("govuk-label--m")
+            ).withHint(HintViewModel(HtmlContent(contentHintForOriginalPIA)))
+            .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
+            .withWidth(Fixed10)
+        )
+
+        @govukInput(
+            InputViewModel(
+                field = form("revisedPIA"),
+                label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA", period, schemeIndex)).withCssClass("govuk-label--m")
+            ).withHint(HintViewModel(HtmlContent(contentHintForRevisedPIA)))
+            .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
+            .withWidth(Fixed10)
+        )
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+        )
+    }
+}

@@ -30,12 +30,8 @@ case class DefinedBenefitAmountPage(period: Period) extends QuestionPage[BigInt]
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(DefinedBenefitAmountPage(period)) match {
-      case Some(_) if period == Period._2016PostAlignment =>
-        CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case Some(_) if period == Period._2016PreAlignment  =>
-        TotalIncomeController.onPageLoad(NormalMode, period)
-      case Some(_)                                        => ThresholdIncomeController.onPageLoad(NormalMode, period)
-      case None                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_) => ThresholdIncomeController.onPageLoad(NormalMode, period)
+      case None    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =

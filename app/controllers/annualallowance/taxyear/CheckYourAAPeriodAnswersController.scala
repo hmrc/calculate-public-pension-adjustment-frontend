@@ -53,12 +53,75 @@ class CheckYourAAPeriodAnswersController @Inject() (
         Seq(
           PensionSchemeDetailsSummary.row(request.userAnswers, period, index),
           PensionSchemeInputAmountsSummary.row(request.userAnswers, period, index),
+          PensionSchemeInput2016preAmountsSummary.row(request.userAnswers, period, index),
+          PensionSchemeInput2016postAmountsSummary.row(request.userAnswers, period, index),
           PayAChargeSummary.row(request.userAnswers, period, index),
           WhoPaidAAChargeSummary.row(request.userAnswers, period, index),
           HowMuchAAChargeYouPaidSummary.row(request.userAnswers, period, index),
           HowMuchAAChargeSchemePaidSummary.row(request.userAnswers, period, index)
         )
       )
+
+      val combinedRows: Seq[Option[SummaryListRow]] = Seq(rowsOne ++ rowsTwo).flatten
+
+      val flexiPeriodEndateRows: Seq[Option[SummaryListRow]] =
+        Seq(
+          combinedRows ++
+            Seq(
+              OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
+              ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
+              DefinedContributionAmountSummary.row(request.userAnswers, period),
+              DefinedBenefitAmountSummary.row(request.userAnswers, period),
+              ThresholdIncomeSummary.row(request.userAnswers, period),
+              AdjustedIncomeSummary.row(request.userAnswers, period),
+              TotalIncomeSummary.row(request.userAnswers, period)
+            )
+        ).flatten
+
+      val regularRows: Seq[Option[SummaryListRow]] =
+        Seq(
+          combinedRows ++
+            Seq(
+              OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
+              ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
+              DefinedContributionAmountSummary.row(request.userAnswers, period),
+              FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period),
+              DefinedBenefitAmountSummary.row(request.userAnswers, period),
+              ThresholdIncomeSummary.row(request.userAnswers, period),
+              AdjustedIncomeSummary.row(request.userAnswers, period),
+              TotalIncomeSummary.row(request.userAnswers, period)
+            )
+        ).flatten
+
+      val flexiPeriodEndateRows2016: Seq[Option[SummaryListRow]] =
+        Seq(
+          combinedRows ++
+            Seq(
+              OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
+              ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
+              DefinedContribution2016PreAmountSummary.row(request.userAnswers),
+              DefinedContribution2016PostAmountSummary.row(request.userAnswers),
+              DefinedBenefit2016PreAmountSummary.row(request.userAnswers),
+              DefinedBenefit2016PostAmountSummary.row(request.userAnswers),
+              TotalIncomeSummary.row(request.userAnswers, period)
+            )
+        ).flatten
+
+      val regularRows2016: Seq[Option[SummaryListRow]] =
+        Seq(
+          combinedRows ++
+            Seq(
+              OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
+              ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
+              DefinedContribution2016PreAmountSummary.row(request.userAnswers),
+              DefinedContribution2016PreFlexiAmountSummary.row(request.userAnswers),
+              DefinedContribution2016PostAmountSummary.row(request.userAnswers),
+              DefinedContribution2016PostFlexiAmountSummary.row(request.userAnswers),
+              DefinedBenefit2016PreAmountSummary.row(request.userAnswers),
+              DefinedBenefit2016PostAmountSummary.row(request.userAnswers),
+              TotalIncomeSummary.row(request.userAnswers, period)
+            )
+        ).flatten
 
       val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
 
@@ -67,63 +130,24 @@ class CheckYourAAPeriodAnswersController @Inject() (
         case None       => false
       }
 
-      val flexiPeriodEndateRows: Seq[Option[SummaryListRow]] =
-        Seq(
-          OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
-          ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
-          DefinedContributionAmountSummary.row(request.userAnswers, period),
-          DefinedBenefitAmountSummary.row(request.userAnswers, period),
-          ThresholdIncomeSummary.row(request.userAnswers, period),
-          AdjustedIncomeSummary.row(request.userAnswers, period),
-          TotalIncomeSummary.row(request.userAnswers, period)
-        )
-
-      val regularRows: Seq[Option[SummaryListRow]] =
-        Seq(
-          OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
-          ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
-          DefinedContributionAmountSummary.row(request.userAnswers, period),
-          FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period),
-          DefinedBenefitAmountSummary.row(request.userAnswers, period),
-          ThresholdIncomeSummary.row(request.userAnswers, period),
-          AdjustedIncomeSummary.row(request.userAnswers, period),
-          TotalIncomeSummary.row(request.userAnswers, period)
-        )
-
-      def maybeFlexiPeriodEndDateRowsStatus: Boolean = {
-        val pre2016EndDate  = LocalDate.of(2015, 7, 8)
-        val post2016EndDate = LocalDate.of(period.end.getYear, 4, 5)
-
-        if (flexiAccessExistsForPeriod) {
-          if (period == Period._2016PreAlignment) {
-            flexibleStartDate match {
-              case Some(date) if date == pre2016EndDate =>
-                true
-              case _                                    =>
-                false
-            }
-          } else
-            flexibleStartDate match {
-              case Some(date) if date == post2016EndDate =>
-                true
-              case _                                     =>
-                false
-            }
-        } else false
-      }
-
-      val combinedRows: Seq[Option[SummaryListRow]] = Seq(rowsOne ++ rowsTwo).flatten
+      def maybeFlexiPeriodEndDateRowsStatus: Seq[Option[SummaryListRow]] =
+        (flexiAccessExistsForPeriod, period, flexibleStartDate) match {
+          case (true, Period._2016, Some(date)) if date == Period.pre2016End || date == Period.post2016End =>
+            flexiPeriodEndateRows2016
+          case (true, _, Some(date)) if date == period.end                                                 =>
+            flexiPeriodEndateRows
+          case (_, Period._2016, _)                                                                        =>
+            regularRows2016
+          case _                                                                                           =>
+            regularRows
+        }
 
       Ok(
         view(
-          maybeFlexiPeriodEndDateRowsStatus,
+          SummaryListViewModel(maybeFlexiPeriodEndDateRowsStatus.flatten),
           s"checkYourAnswers.aa.period.subHeading.$period",
-          controllers.routes.TaskListController.onPageLoad(),
-          SummaryListViewModel(combinedRows.flatten),
-          SummaryListViewModel(regularRows.flatten),
-          SummaryListViewModel(flexiPeriodEndateRows.flatten)
+          controllers.routes.TaskListController.onPageLoad()
         )
       )
   }
-
 }
