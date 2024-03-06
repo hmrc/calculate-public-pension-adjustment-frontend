@@ -23,7 +23,7 @@ import models.tasklist.sections.AASection
 import pages.annualallowance.taxyear.DefinedBenefit2016PreAmountPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.DefinedBenefit2016PreAmountView
 
@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DefinedBenefit2016PreAmountController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -66,7 +66,7 @@ class DefinedBenefit2016PreAmountController @Inject() (
               updatedAnswers <- Future.fromTry(request.userAnswers.set(DefinedBenefit2016PreAmountPage, value))
               redirectUrl     = DefinedBenefit2016PreAmountPage.navigate(mode, updatedAnswers).url
               answersWithNav  = AASection(Period._2016).saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
   }

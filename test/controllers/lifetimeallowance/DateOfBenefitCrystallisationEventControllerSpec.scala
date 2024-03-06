@@ -20,7 +20,7 @@ import base.SpecBase
 import config.FrontendAppConfig
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.DateOfBenefitCrystallisationEventFormProvider
-import models.{Mode, NormalMode, UserAnswers}
+import models.{Done, Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -29,7 +29,7 @@ import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import views.html.lifetimeallowance.DateOfBenefitCrystallisationEventView
 
 import java.time.LocalDate
@@ -96,14 +96,14 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
 
     "must redirect to the next page when valid data is submitted in normal mode" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 

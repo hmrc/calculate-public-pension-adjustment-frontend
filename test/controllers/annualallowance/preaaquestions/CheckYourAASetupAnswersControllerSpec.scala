@@ -22,11 +22,11 @@ import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
 import viewmodels.checkAnswers.annualallowance.preaaquestions.PayTaxCharge1415Summary
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAASetupAnswersView
 import play.api.inject.bind
+import services.UserDataService
 
 class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
@@ -64,14 +64,14 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
 
     "must return maybePensionInputAmounts false when user answers true to PayTaxCharge1415 Page" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
       val ua = emptyUserAnswers.set(PayTaxCharge1415Page, true).success.value
 
       val application =
         applicationBuilder(userAnswers = Some(ua))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
@@ -107,14 +107,14 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
 
     "must return maybePensionInputAmounts true when user answers false to PayTaxCharge1415 Page" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
       val ua = emptyUserAnswers.set(PayTaxCharge1415Page, false).success.value
 
       val application =
         applicationBuilder(userAnswers = Some(ua))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 

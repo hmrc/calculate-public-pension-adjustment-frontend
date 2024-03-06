@@ -27,7 +27,7 @@ import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.{DefinedBenefit2016PostAmountPage, DefinedBenefit2016PreAmountPage, DefinedContribution2016PostAmountPage, DefinedContribution2016PostFlexiAmountPage, DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
 import play.api.inject.bind
-import repositories.SessionRepository
+import services.UserDataService
 import viewmodels.checkAnswers.annualallowance.taxyear.{DefinedBenefit2016PostAmountSummary, DefinedBenefit2016PreAmountSummary, DefinedContribution2016PostAmountSummary, DefinedContribution2016PreAmountSummary, DefinedContributionAmountSummary, FlexiAccessDefinedContributionAmountSummary}
 import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView
 
@@ -65,7 +65,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
     "must return only relevant rows when not 2016 periood and flexi date =/= enddate and the correct view for a GET" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
       val ua = emptyUserAnswers
         .set(FlexibleAccessStartDatePage, LocalDate.of(2023, 4, 3))
@@ -84,7 +84,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       val application =
         applicationBuilder(userAnswers = Some(ua))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
@@ -117,7 +117,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
     "must return relevant rows only for when flexi date == period end date but not 2016 period and the correct view for a GET" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
       val ua = emptyUserAnswers
         .set(FlexibleAccessStartDatePage, LocalDate.of(2023, 4, 5))
@@ -136,7 +136,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       val application =
         applicationBuilder(userAnswers = Some(ua))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
@@ -166,7 +166,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
     "must return relevant rows when period is 2016 but flexi date =/= sub period end dates with the correct view for a GET" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
       val ua = emptyUserAnswers
         .set(FlexibleAccessStartDatePage, LocalDate.of(2015, 7, 1))
@@ -188,7 +188,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       val application =
         applicationBuilder(userAnswers = Some(ua))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
@@ -223,7 +223,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
     "must return relevant rows when period is 2016 and flexi date is pre sub period end dates with the correct view for a GET" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
       val ua = emptyUserAnswers
         .set(FlexibleAccessStartDatePage, Period.pre2016End)
@@ -251,7 +251,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       val application =
         applicationBuilder(userAnswers = Some(ua))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
@@ -286,7 +286,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
     "must return relevant rows when period is 2016 and flexi date is post sub period end dates with the correct view for a GET" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
       val ua = emptyUserAnswers
         .set(FlexibleAccessStartDatePage, Period.post2016End)
@@ -314,7 +314,7 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
       val application =
         applicationBuilder(userAnswers = Some(ua))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 

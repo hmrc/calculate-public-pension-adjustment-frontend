@@ -23,7 +23,7 @@ import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.NewExcessLifetimeAllowancePaidPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.lifetimeallowance.NewExcessLifetimeAllowancePaidView
 
@@ -32,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class NewExcessLifetimeAllowancePaidController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -65,7 +65,7 @@ class NewExcessLifetimeAllowancePaidController @Inject() (
               updatedAnswers <- Future.fromTry(request.userAnswers.set(NewExcessLifetimeAllowancePaidPage, value))
               redirectUrl     = NewExcessLifetimeAllowancePaidPage.navigate(mode, updatedAnswers).url
               answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
   }

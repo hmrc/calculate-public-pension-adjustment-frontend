@@ -19,7 +19,7 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.lifetimeallowance.MultipleBenefitCrystallisationEventFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -27,9 +27,9 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
 import views.html.lifetimeallowance.MultipleBenefitCrystallisationEventView
 import pages.lifetimeallowance.MultipleBenefitCrystallisationEventPage
+import services.UserDataService
 
 import scala.concurrent.Future
 
@@ -81,13 +81,13 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
       running(application) {
