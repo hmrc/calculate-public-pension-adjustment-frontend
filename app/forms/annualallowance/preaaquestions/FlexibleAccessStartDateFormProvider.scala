@@ -25,11 +25,14 @@ import play.api.data.Form
 
 class FlexibleAccessStartDateFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[LocalDate] = {
+  private val FLEXIBLE_ACCESS_DATE_MIN_YEAR  = 2015
+  private val FLEXIBLE_ACCESS_DATE_MIN_MONTH = 4
+  private val FLEXIBLE_ACCESS_DATE_MIN_DAY   = 6
 
-    val min                               = LocalDate.of(2015, 4, 6)
-    val max                               = LocalDate.of(2023, 4, 5)
-    val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+  def apply(flexibleAccessDateMax: LocalDate): Form[LocalDate] = {
+
+    val min                               = LocalDate.of(FLEXIBLE_ACCESS_DATE_MIN_YEAR, FLEXIBLE_ACCESS_DATE_MIN_MONTH, FLEXIBLE_ACCESS_DATE_MIN_DAY)
+    val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
     Form(
       "value" -> localDate(
@@ -38,7 +41,13 @@ class FlexibleAccessStartDateFormProvider @Inject() extends Mappings {
         twoRequiredKey = "flexibleAccessStartDate.error.required.two",
         requiredKey = "flexibleAccessStartDate.error.required"
       )
-        .verifying(maxDate(max, "flexibleAccessStartDate.error.max", max.format(dateTimeFormat)))
+        .verifying(
+          maxDate(
+            flexibleAccessDateMax,
+            "flexibleAccessStartDate.error.max",
+            flexibleAccessDateMax.plusDays(1).format(dateTimeFormat)
+          )
+        )
         .verifying(minDate(min, "flexibleAccessStartDate.error.min", min.format(dateTimeFormat)))
     )
   }

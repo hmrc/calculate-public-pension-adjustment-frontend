@@ -18,11 +18,10 @@ package pages.annualallowance.preaaquestions
 
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import models.tasklist.sections.AASection
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import services.PeriodService
 
 import java.time.LocalDate
 import scala.util.Try
@@ -37,7 +36,11 @@ case object StopPayingPublicPensionPage extends QuestionPage[LocalDate] {
     preAARoutes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
+    if (answers.get(FlexiblyAccessedPensionPage).isDefined && !answers.get(FlexiblyAccessedPensionPage).get) {
+      controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
+    } else {
+      preAARoutes.FlexiblyAccessedPensionController.onPageLoad(CheckMode)
+    }
 
   override def cleanup(value: Option[LocalDate], userAnswers: UserAnswers): Try[UserAnswers] =
     value match {
