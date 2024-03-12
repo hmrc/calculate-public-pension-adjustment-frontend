@@ -51,20 +51,22 @@ class CalculationResultService @Inject() (
                              )
     } yield calculationResponse
 
-  def submitUserAnswersAndCalculation(answers: UserAnswers): Future[SubmissionResponse] = {
+  def submitUserAnswersAndCalculation(answers: UserAnswers, sessionId: String): Future[SubmissionResponse] = {
     val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
     for {
       calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
       submissionResponse  <-
-        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, Some(calculationResponse)))
+        backendConnector.sendSubmissionRequest(
+          SubmissionRequest(calculationInputs, Some(calculationResponse), sessionId)
+        )
     } yield submissionResponse
   }
 
-  def submitUserAnswersWithNoCalculation(answers: UserAnswers): Future[SubmissionResponse] = {
+  def submitUserAnswersWithNoCalculation(answers: UserAnswers, sessionId: String): Future[SubmissionResponse] = {
     val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
     for {
       submissionResponse <-
-        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, None))
+        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, None, sessionId))
     } yield submissionResponse
   }
 

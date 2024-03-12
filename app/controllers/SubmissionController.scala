@@ -46,7 +46,7 @@ class SubmissionController @Inject() (
 
   def storeAndRedirect(): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      calculationResultService.submitUserAnswersWithNoCalculation(request.userAnswers).map {
+      calculationResultService.submitUserAnswersWithNoCalculation(request.userAnswers, request.userId).map {
         submissionResponse: SubmissionResponse =>
           submissionResponse match {
             case Success(uniqueId) => Redirect(submitFrontendLandingPageUrl(uniqueId))
