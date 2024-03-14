@@ -2267,7 +2267,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
       when(mockBackendConnector.sendSubmissionRequest(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers)
+      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, any)
       submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
     }
 
@@ -2277,7 +2277,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         .thenReturn(Future.failed(new RuntimeException("someError")))
       when(mockBackendConnector.sendSubmissionRequest(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
 
@@ -2289,7 +2289,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       when(mockBackendConnector.sendSubmissionRequest(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
   }

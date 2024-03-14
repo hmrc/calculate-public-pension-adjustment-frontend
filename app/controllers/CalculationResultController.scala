@@ -67,7 +67,7 @@ class CalculationResultController @Inject() (
   }
 
   def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    calculationResultService.submitUserAnswersAndCalculation(request.userAnswers).map {
+    calculationResultService.submitUserAnswersAndCalculation(request.userAnswers, request.userId).map {
       submissionResponse: SubmissionResponse =>
         submissionResponse match {
           case submission.Success(uniqueId) => Redirect(submitFrontendLandingPageUrl(uniqueId))

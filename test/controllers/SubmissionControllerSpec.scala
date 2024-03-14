@@ -44,7 +44,7 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val mockCalculationResultService: CalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.submitUserAnswersWithNoCalculation(any))
+      when(mockCalculationResultService.submitUserAnswersWithNoCalculation(any, any))
         .thenReturn(Future.successful(Success("someId")))
 
       val application =

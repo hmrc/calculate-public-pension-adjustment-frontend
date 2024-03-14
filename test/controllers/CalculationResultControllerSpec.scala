@@ -74,7 +74,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
     "must redirect to submit landing page on a POST when answers / calculation are submitted to backend successfully" in {
 
       val mockCalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.submitUserAnswersAndCalculation(any))
+      when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any))
         .thenReturn(Future.successful(Success("123")))
 
       val application =
@@ -99,7 +99,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
     "must redirect to journey recovery on a POST when answers / calculation submission fails" in {
 
       val mockCalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.submitUserAnswersAndCalculation(any))
+      when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any))
         .thenReturn(Future.successful(Failure(Seq("someError"))))
 
       val application =
