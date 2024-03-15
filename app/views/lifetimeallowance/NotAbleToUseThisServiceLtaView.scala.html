@@ -14,33 +14,33 @@
 * limitations under the License.
 *@
 
-@this(
-layout: templates.Layout,
-govukButton: GovukButton
+ @this(
+    layout: templates.Layout,
+    govukButton: GovukButton
 )
 
 @(annualAllowanceIncluded: Boolean)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("notAbleToUseThisServiceLta.title"))) {
 
-<h1 class="govuk-heading-xl">@messages("notAbleToUseThisServiceLta.heading")</h1>
-<p class="govuk-body">@messages("notAbleToUseThisServiceLta.message1")</p>
-<p class="govuk-body">@messages("notAbleToUseThisServiceLta.message2")</p>
+ <h1 class="govuk-heading-xl">@messages("notAbleToUseThisServiceLta.heading")</h1>
+ <p class="govuk-body">@messages("notAbleToUseThisServiceLta.message1")</p>
+ <p class="govuk-body">@messages("notAbleToUseThisServiceLta.message2")</p>
 
-<p class="govuk-body">@messages("notAbleToUseThisServiceLta.list")</p>
-<ul class="govuk-body">
+ <p class="govuk-body">@messages("notAbleToUseThisServiceLta.list")</p>
+ <ul class="govuk-body">
     <li>@messages("notAbleToUseThisServiceLta.listItem1")</li>
     <li>
         <a class="govuk-link" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/pension-scheme-enquiries" rel="noreferrer noopener" target="_blank">@messages("notAbleToUseThisServiceLta.listItem2")</a>
     </li>
 </ul>
 
-@if(annualAllowanceIncluded) {
-<p class="govuk-body">
-    @govukButton(
-    ButtonViewModel(messages("site.continue"))
-    .asLink(controllers.routes.TaskListController.onPageLoad().url)
-    )
-</p>
-}
+    @if(annualAllowanceIncluded) {
+        <p class="govuk-body">
+            @govukButton(
+            ButtonViewModel(messages("site.continue"))
+            .asLink(controllers.routes.TaskListController.onPageLoad().url)
+            )
+        </p>
+    }
 }
