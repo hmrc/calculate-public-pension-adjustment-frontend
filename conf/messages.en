@@ -403,8 +403,8 @@ referenceNewProtectionTypeEnhancement.error.required = Enter your new lifetime a
 referenceNewProtectionTypeEnhancement.error.length = Your new lifetime allowance protection reference must be 15 characters or fewer
 referenceNewProtectionTypeEnhancement.change.hidden = new lifetime allowance protection reference
 
-whatNewProtectionTypeEnhancement.title = What is your new lifetime allowance protection type or enhancement?
-whatNewProtectionTypeEnhancement.heading = What is your new lifetime allowance protection type or enhancement?
+whatNewProtectionTypeEnhancement.title = What is your new lifetime allowance protection type?
+whatNewProtectionTypeEnhancement.heading = What is your new lifetime allowance protection type?
 whatNewProtectionTypeEnhancement.hint1 = Check your lifetime allowance protection online (opens in a new tab)
 whatNewProtectionTypeEnhancement.enhancedProtection = Enhanced protection
 whatNewProtectionTypeEnhancement.primaryProtection = Primary protection
@@ -413,7 +413,7 @@ whatNewProtectionTypeEnhancement.fixedProtection2014 = Fixed protection 2014
 whatNewProtectionTypeEnhancement.fixedProtection2016 = Fixed protection 2016
 whatNewProtectionTypeEnhancement.individualProtection2014 = Individual protection 2014
 whatNewProtectionTypeEnhancement.individualProtection2016 = Individual protection 2016
-whatNewProtectionTypeEnhancement.checkYourAnswersLabel = What is your new lifetime allowance protection type or enhancement?
+whatNewProtectionTypeEnhancement.checkYourAnswersLabel = What is your new lifetime allowance protection type?
 whatNewProtectionTypeEnhancement.error.required = Select your new lifetime allowance protection type or enhancement
 whatNewProtectionTypeEnhancement.change.hidden = new lifetime allowance protection type or enhancement
 
