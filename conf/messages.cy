@@ -521,7 +521,6 @@ pensionSchemeInputAmounts.heading.2016-pre = Symiau talu i mewn i bensiwn ar gyf
 pensionSchemeInputAmounts.heading.2016-post = Symiau talu i mewn i bensiwn ar gyfer {0} rhwng 9 Gorffennaf 2015 a 5 Ebrill 2015
 pensionSchemeInputAmounts.heading = Symiau talu i mewn i bensiwn ar gyfer {0}
 pensionSchemeInputAmounts.hint = Os gwnaeth mwy nag un cynllun pensiwn dalu’r dreth, neu gytuno i’w thalu, gallwch eu hychwanegu yn nes ymlaen.
-
 pensionSchemeInputAmounts.originalPIA = Beth yw eich swm talu i mewn i bensiwn?
 pensionSchemeInputAmounts.originalPIA.hint1 = Mae’n rhaid talgrynnu’r swm i lawr i’r bunt agosaf, er enghraifft 2300.
 pensionSchemeInputAmounts.originalPIA.message1 = Dyma’r cyfanswm a delir i mewn i gynllun pensiwn cyfraniadau diffiniedig neu unrhyw gynnydd a fu ynddo mewn blwyddyn dreth.
