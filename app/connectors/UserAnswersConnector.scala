@@ -18,9 +18,9 @@ package connectors
 
 import config.Service
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
-import models.{Done, UserAnswers}
+import models.{Done, SubmissionStatusResponse, UserAnswers}
 import play.api.Configuration
-import play.api.http.Status.NO_CONTENT
+import play.api.http.Status.{NOT_FOUND, NO_CONTENT}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -78,6 +78,19 @@ class UserAnswersConnector @Inject() (config: Configuration, httpClient: HttpCli
           Future.successful(Done)
         } else {
           Future.failed(UpstreamErrorResponse("", response.status))
+        }
+      }
+
+  def checkSubmissionStatusWithId(id: String)(implicit hc: HeaderCarrier): Future[Option[SubmissionStatusResponse]] =
+    httpClient
+      .get(url"$baseUrl/calculate-public-pension-adjustment/check-submission-status/$id")
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "UserAnswersConnector on checkSubmissionStartedWithId")
+      .flatMap { response =>
+        if (response.status == NOT_FOUND) {
+          Future.successful(None)
+        } else {
+          Future.successful(Some(response.json.as[SubmissionStatusResponse]))
         }
       }
 }

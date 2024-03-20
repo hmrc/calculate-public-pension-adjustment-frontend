@@ -18,15 +18,17 @@ package controllers.setupquestions
 
 import config.FrontendAppConfig
 import controllers.actions._
+import controllers.routes
 import forms.SavingsStatementFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
-import models.{Mode, UserAnswers}
+import models.{Mode, NormalMode, SubmissionStatusResponse, UserAnswers}
 import pages.setupquestions.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.setupquestions.SavingsStatementView
 
 import javax.inject.Inject
@@ -73,12 +75,41 @@ class SavingsStatementController @Inject() (
                     .getOrElse(constructUserAnswers(request))
                     .set(SavingsStatementPage(config.optionalAuthEnabled), value)
                 )
-            redirectUrl     = SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, updatedAnswers).url
-            answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
+            redirectUrl    <- generateRedirect(request, mode, updatedAnswers)
+            answersWithNav  = generateNav(updatedAnswers, mode, redirectUrl)
             _              <- userDataService.set(answersWithNav)
           } yield Redirect(redirectUrl)
       )
   }
+
+  private def generateNav(userAnswers: UserAnswers, mode: Mode, redirectUrl: String): UserAnswers =
+    if (redirectUrl.equals(SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url)) {
+      SetupSection.saveNavigation(userAnswers, redirectUrl)
+    } else {
+      userAnswers
+    }
+
+  private def generateRedirect(
+    request: OptionalDataRequest[AnyContent],
+    mode: Mode,
+    userAnswers: UserAnswers
+  ): Future[String] =
+    if (userAnswers.authenticated) {
+      val headerCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+
+      userDataService
+        .checkSubmissionStatusWithId(request.userId)(headerCarrier)
+        .map {
+          case Some(SubmissionStatusResponse(_, true))  =>
+            routes.TaskListController.onPageLoad.url
+          case Some(SubmissionStatusResponse(_, false)) =>
+            routes.PreviousClaimContinueController.onPageLoad(NormalMode).url
+          case None                                     =>
+            SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url
+        }
+    } else {
+      Future.successful(SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url)
+    }
 
   private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) = {
     val authenticated = request.request match {
