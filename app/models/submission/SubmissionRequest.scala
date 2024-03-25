@@ -22,7 +22,8 @@ import play.api.libs.json.{Format, Json}
 case class SubmissionRequest(
   calculationInputs: CalculationInputs,
   calculation: Option[CalculationResponse],
-  sessionId: String
+  sessionId: String,
+  uniqueId: String
 )
 
 object SubmissionRequest {
