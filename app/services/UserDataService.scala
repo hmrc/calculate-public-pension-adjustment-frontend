@@ -40,4 +40,11 @@ class UserDataService @Inject() (connector: UserAnswersConnector) extends Loggin
 
   def checkSubmissionStatusWithId(id: String)(implicit hc: HeaderCarrier): Future[Option[SubmissionStatusResponse]] =
     connector.checkSubmissionStatusWithId(id)
+
+  def recordsPresentInSubmissionService(uniqueId: String)(implicit hc: HeaderCarrier): Future[Boolean] =
+    connector.recordsPresentInSubmissionService(uniqueId)
+
+  def updateSubmissionStatus(uniqueId: String)(implicit hc: HeaderCarrier): Future[Done] =
+    connector.updateSubmissionStatus(uniqueId)
+
 }
