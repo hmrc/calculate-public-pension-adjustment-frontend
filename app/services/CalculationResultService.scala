@@ -57,7 +57,7 @@ class CalculationResultService @Inject() (
       calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
       submissionResponse  <-
         backendConnector.sendSubmissionRequest(
-          SubmissionRequest(calculationInputs, Some(calculationResponse), sessionId)
+          SubmissionRequest(calculationInputs, Some(calculationResponse), sessionId, answers.uniqueId)
         )
     } yield submissionResponse
   }
@@ -66,7 +66,7 @@ class CalculationResultService @Inject() (
     val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
     for {
       submissionResponse <-
-        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, None, sessionId))
+        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, None, sessionId, answers.uniqueId))
     } yield submissionResponse
   }
 

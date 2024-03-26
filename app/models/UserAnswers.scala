@@ -24,6 +24,7 @@ import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import uk.gov.hmrc.crypto.json.JsonEncryption
 import uk.gov.hmrc.crypto.{Decrypter, Encrypter}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
+import java.util.UUID
 
 import java.time.Instant
 import scala.util.{Failure, Success, Try}
@@ -31,6 +32,7 @@ import scala.util.{Failure, Success, Try}
 final case class UserAnswers(
   id: String,
   data: JsObject = Json.obj(),
+  uniqueId: String = UUID.randomUUID().toString,
   lastUpdated: Instant = Instant.now,
   authenticated: Boolean = false,
   submissionStarted: Boolean = false
@@ -106,6 +108,7 @@ object UserAnswers {
     (
       (__ \ "_id").read[String] and
         (__ \ "data").read[JsObject] and
+        (__ \ "uniqueId").read[String] and
         (__ \ "lastUpdated").read(MongoJavatimeFormats.instantFormat) and
         (__ \ "authenticated").read[Boolean] and
         (__ \ "submissionStarted").read[Boolean]
@@ -119,6 +122,7 @@ object UserAnswers {
     (
       (__ \ "_id").write[String] and
         (__ \ "data").write[JsObject] and
+        (__ \ "uniqueId").write[String] and
         (__ \ "lastUpdated").write(MongoJavatimeFormats.instantFormat) and
         (__ \ "authenticated").write[Boolean] and
         (__ \ "submissionStarted").write[Boolean]
@@ -138,21 +142,39 @@ object UserAnswers {
       (
         (__ \ "_id").read[String] and
           (__ \ "data").read[SensitiveString] and
+          (__ \ "uniqueId").read[String] and
           (__ \ "lastUpdated").read(MongoJavatimeFormats.instantFormat) and
           (__ \ "authenticated").read[Boolean] and
           (__ \ "submissionStarted").read[Boolean]
-      )((id, data, lastUpdated, authenticated, submissionStarted) =>
-        UserAnswers(id, Json.parse(data.decryptedValue).as[JsObject], lastUpdated, authenticated, submissionStarted)
+      )((id, data, uniqueId, lastUpdated, authenticated, submissionStarted) =>
+        UserAnswers(
+          id,
+          Json.parse(data.decryptedValue).as[JsObject],
+          uniqueId,
+          lastUpdated,
+          authenticated,
+          submissionStarted
+        )
       )
 
     val encryptedWrites: OWrites[UserAnswers] =
       (
         (__ \ "_id").write[String] and
           (__ \ "data").write[SensitiveString] and
+          (__ \ "uniqueId").write[String] and
           (__ \ "lastUpdated").write(MongoJavatimeFormats.instantFormat) and
           (__ \ "authenticated").write[Boolean] and
           (__ \ "submissionStarted").write[Boolean]
-      )(ua => (ua.id, SensitiveString(Json.stringify(ua.data)), ua.lastUpdated, ua.authenticated, ua.submissionStarted))
+      )(ua =>
+        (
+          ua.id,
+          SensitiveString(Json.stringify(ua.data)),
+          ua.uniqueId,
+          ua.lastUpdated,
+          ua.authenticated,
+          ua.submissionStarted
+        )
+      )
 
     OFormat(encryptedReads orElse reads, encryptedWrites)
   }

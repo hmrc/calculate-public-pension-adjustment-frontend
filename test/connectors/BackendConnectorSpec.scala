@@ -45,7 +45,8 @@ class BackendConnectorSpec extends SpecBase with WireMockHelper with ScalaCheckP
 
       running(app) {
         val connector         = app.injector.instanceOf[BackendConnector]
-        val submissionRequest = SubmissionRequest(CalculationInputs(Resubmission(false, None), None, None), None, "")
+        val submissionRequest =
+          SubmissionRequest(CalculationInputs(Resubmission(false, None), None, None), None, "", "")
 
         val responseBody = Json.toJson(Success("uniqueId")).toString
 
@@ -64,7 +65,8 @@ class BackendConnectorSpec extends SpecBase with WireMockHelper with ScalaCheckP
 
       running(app) {
         val connector         = app.injector.instanceOf[BackendConnector]
-        val submissionRequest = SubmissionRequest(CalculationInputs(Resubmission(false, None), None, None), None, "")
+        val submissionRequest =
+          SubmissionRequest(CalculationInputs(Resubmission(false, None), None, None), None, "", "")
 
         val responseBody = Json.toJson(Failure(Seq("someError"))).toString
 
