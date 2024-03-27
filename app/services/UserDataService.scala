@@ -18,7 +18,7 @@ package services
 
 import connectors.UserAnswersConnector
 import logging.Logging
-import models.{Done, UserAnswers}
+import models.{Done, SubmissionStatusResponse, UserAnswers}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
@@ -37,4 +37,7 @@ class UserDataService @Inject() (connector: UserAnswersConnector) extends Loggin
 
   def clear()(implicit hc: HeaderCarrier): Future[Done] =
     connector.clear()
+
+  def checkSubmissionStatusWithId(id: String)(implicit hc: HeaderCarrier): Future[Option[SubmissionStatusResponse]] =
+    connector.checkSubmissionStatusWithId(id)
 }
