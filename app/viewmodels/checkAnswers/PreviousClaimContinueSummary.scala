@@ -34,7 +34,10 @@ object PreviousClaimContinueSummary {
         key = "previousClaimContinue.checkYourAnswersLabel",
         value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.PreviousClaimContinueController.onPageLoad(CheckMode).url)
+          ActionItemViewModel(
+            "site.change",
+            routes.PreviousClaimContinueController.onPageLoad(CheckMode, false).url
+          ) // TODO
             .withVisuallyHiddenText(messages("previousClaimContinue.change.hidden"))
         )
       )

@@ -82,13 +82,6 @@ class SavingsStatementController @Inject() (
       )
   }
 
-  private def generateNav(userAnswers: UserAnswers, mode: Mode, redirectUrl: String): UserAnswers =
-    if (redirectUrl.equals(SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url)) {
-      SetupSection.saveNavigation(userAnswers, redirectUrl)
-    } else {
-      userAnswers
-    }
-
   private def generateRedirect(
     request: OptionalDataRequest[AnyContent],
     mode: Mode,
@@ -99,16 +92,38 @@ class SavingsStatementController @Inject() (
 
       userDataService
         .checkSubmissionStatusWithId(request.userId)(headerCarrier)
-        .map {
+        .flatMap {
           case Some(SubmissionStatusResponse(_, true))  =>
-            routes.TaskListController.onPageLoad.url
+            userDataService
+              .recordsPresentInSubmissionService(request.userId)(headerCarrier)
+              .map {
+                case true  =>
+                  routes.PreviousClaimContinueController.onPageLoad(NormalMode, true).url
+                case false =>
+                  userDataService.updateSubmissionStatus(request.userId)(headerCarrier)
+                  routes.TaskListController.onPageLoad.url
+              }
           case Some(SubmissionStatusResponse(_, false)) =>
-            routes.PreviousClaimContinueController.onPageLoad(NormalMode).url
+            Future.successful(routes.PreviousClaimContinueController.onPageLoad(NormalMode, false).url)
           case None                                     =>
-            SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url
+            userDataService
+              .recordsPresentInSubmissionService(request.userId)(headerCarrier)
+              .map {
+                case true  =>
+                  routes.PreviousClaimContinueController.onPageLoad(NormalMode, true).url
+                case false =>
+                  SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url
+              }
         }
     } else {
       Future.successful(SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url)
+    }
+
+  private def generateNav(userAnswers: UserAnswers, mode: Mode, redirectUrl: String): UserAnswers =
+    if (redirectUrl.equals(SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url)) {
+      SetupSection.saveNavigation(userAnswers, redirectUrl)
+    } else {
+      userAnswers
     }
 
   private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) = {

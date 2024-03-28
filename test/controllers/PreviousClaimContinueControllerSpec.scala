@@ -40,7 +40,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new PreviousClaimContinueFormProvider()
   val form         = formProvider()
 
-  lazy val previousClaimContinueRoute = routes.PreviousClaimContinueController.onPageLoad(NormalMode).url
+  lazy val previousClaimContinueRoute = routes.PreviousClaimContinueController.onPageLoad(NormalMode, true).url
 
   "PreviousClaimContinue Controller" - {
 
