@@ -29,6 +29,7 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
+import uk.gov.hmrc.http.HeaderCarrier
 import views.html.PreviousClaimContinueView
 
 import scala.concurrent.Future
@@ -60,7 +61,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
+    "must not populate the view on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId).set(PreviousClaimContinuePage, true).success.value
 
@@ -74,11 +75,11 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when valid data true is submitted" in {
 
       val mockUserDataService = mock[UserDataService]
 
@@ -97,7 +98,34 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad(None).url
+        redirectLocation(result).value mustEqual controllers.routes.TaskListController.onPageLoad.url
+      }
+    }
+
+    "must redirect to the next page when valid data false is submitted" in {
+
+      implicit val hc = HeaderCarrier()
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.clear()) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService))
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, previousClaimContinueRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual
+          controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
       }
     }
 

@@ -16,6 +16,7 @@
 
 package pages
 
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class PreviousClaimContinuePageSpec extends PageBehaviours {
@@ -27,5 +28,63 @@ class PreviousClaimContinuePageSpec extends PageBehaviours {
     beSettable[Boolean](PreviousClaimContinuePage)
 
     beRemovable[Boolean](PreviousClaimContinuePage)
+  }
+
+  "Normal mode" - {
+
+    "must redirect to tasklist when continuing previous claim" in {
+
+      val ua = emptyUserAnswers
+        .copy(authenticated = true)
+        .set(PreviousClaimContinuePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = PreviousClaimContinuePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/task-list")
+    }
+
+    "must redirect to resubmitting adjustment when restarting previous claim" in {
+
+      val ua = emptyUserAnswers
+        .copy(authenticated = true)
+        .set(PreviousClaimContinuePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = PreviousClaimContinuePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/change-previous-adjustment")
+    }
+  }
+
+  "Check mode" - {
+
+    "must redirect to tasklist when continuing previous claim" in {
+
+      val ua = emptyUserAnswers
+        .copy(authenticated = true)
+        .set(PreviousClaimContinuePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = PreviousClaimContinuePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/task-list")
+    }
+
+    "must redirect to resubmitting adjustment when restarting previous claim" in {
+
+      val ua = emptyUserAnswers
+        .copy(authenticated = true)
+        .set(PreviousClaimContinuePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = PreviousClaimContinuePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/change-change-previous-adjustment")
+    }
   }
 }

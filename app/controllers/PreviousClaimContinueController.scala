@@ -20,14 +20,15 @@ import controllers.actions._
 import forms.PreviousClaimContinueFormProvider
 
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, UserAnswers}
+import models.requests.{AuthenticatedIdentifierRequest, DataRequest, OptionalDataRequest}
 import pages.PreviousClaimContinuePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.PreviousClaimContinueView
-import services.UserDataService
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class PreviousClaimContinueController @Inject() (
@@ -47,12 +48,7 @@ class PreviousClaimContinueController @Inject() (
 
   def onPageLoad(mode: Mode, navigateToSubmission: Boolean): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val preparedForm = request.userAnswers.get(PreviousClaimContinuePage) match {
-        case None        => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+      Ok(view(form, mode))
     }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
@@ -61,11 +57,29 @@ class PreviousClaimContinueController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value =>
+          value => {
+
+            val userAnswers =
+              if (!value) {
+                userDataService.clear()
+                constructUserAnswers(request)
+              } else {
+                request.userAnswers
+              }
+
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(PreviousClaimContinuePage, value))
+              updatedAnswers <- Future.fromTry(userAnswers.set(PreviousClaimContinuePage, value))
               _              <- userDataService.set(updatedAnswers)
             } yield Redirect(PreviousClaimContinuePage.navigate(mode, updatedAnswers))
+          }
         )
+  }
+
+  private def constructUserAnswers(request: DataRequest[AnyContent]) = {
+    val authenticated = request.request match {
+      case AuthenticatedIdentifierRequest(_, _) => true
+      case _                                    => false
+    }
+    UserAnswers(request.userId, authenticated = authenticated)
   }
 }
