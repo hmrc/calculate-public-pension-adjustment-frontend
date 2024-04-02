@@ -29,9 +29,11 @@ trait Page extends Logging {
     case CheckMode  => navigateInCheckMode(answers)
   }
 
-  protected def navigateInNormalMode(answers: UserAnswers): Call
+  protected def navigateInNormalMode(answers: UserAnswers): Call =
+    throw new NotImplementedError("navigateInNormalMode is not implemented on this page")
 
-  protected def navigateInCheckMode(answers: UserAnswers): Call
+  protected def navigateInCheckMode(answers: UserAnswers): Call =
+    throw new NotImplementedError("navigateInCheckMode is not implemented on this page")
 }
 
 object Page {

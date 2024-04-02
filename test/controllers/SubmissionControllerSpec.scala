@@ -27,12 +27,14 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, _}
 import services.{CalculationResultService, UserDataService}
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
 
 class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute       = Call("GET", "/foo")
+  val hc: HeaderCarrier = HeaderCarrier()
 
   lazy val storeAndRedirectRoute = routes.SubmissionController.storeAndRedirect().url
 
@@ -44,7 +46,7 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val mockCalculationResultService: CalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.submitUserAnswersWithNoCalculation(any, any))
+      when(mockCalculationResultService.submitUserAnswersWithNoCalculation(any, any)(any))
         .thenReturn(Future.successful(Success("someId")))
 
       val application =

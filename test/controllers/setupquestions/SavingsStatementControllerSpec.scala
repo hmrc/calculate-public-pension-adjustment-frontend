@@ -21,7 +21,7 @@ import controllers.setupquestions.{routes => setupRoutes}
 import forms.SavingsStatementFormProvider
 import models.{Done, NormalMode, SubmissionStatusResponse, UserAnswers}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{atLeastOnce, times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import pages.setupquestions.SavingsStatementPage
 import play.api.inject.bind
@@ -29,7 +29,7 @@ import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserDataService
+import services.{SubmitBackendService, UserDataService}
 import views.html.setupquestions.SavingsStatementView
 
 import java.time.Instant
@@ -161,14 +161,15 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to PreviousClaimContinueController when submission started is true & recordsPresentInSubmissionService is true" in {
+    "must redirect to PreviousClaimContinueController when submission started is true & submissionsPresentInSubmissionService is true" in {
 
-      val mockUserDataService = mock[UserDataService]
+      val mockUserDataService      = mock[UserDataService]
+      val mockSubmitBackendService = mock[SubmitBackendService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
       when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn
         Future.successful(Some(SubmissionStatusResponse("id", true)))
-      when(mockUserDataService.recordsPresentInSubmissionService(any())(any())) thenReturn
+      when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any())) thenReturn
         Future.successful(true)
 
       val userAnswers =
@@ -182,6 +183,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService)
           )
+          .overrides(bind[SubmitBackendService].toInstance(mockSubmitBackendService))
           .build()
 
       running(application) {
@@ -192,22 +194,28 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        val navigateToSubmissionTrueStr = "navigateToSubmission=true"
         redirectLocation(result).get must be(
-          s"/public-pension-adjustment/previous-claim-continue?$navigateToSubmissionTrueStr"
+          s"/public-pension-adjustment/previous-claim-continue"
         )
       }
     }
 
     "must redirect to PreviousClaimContinueController when submission started is true & recordsPresentInSubmissionService is false" in {
 
-      val mockUserDataService = mock[UserDataService]
+      val mockUserDataService      = mock[UserDataService]
+      val mockSubmitBackendService = mock[SubmitBackendService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
       when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn
         Future.successful(Some(SubmissionStatusResponse("id", true)))
-      when(mockUserDataService.recordsPresentInSubmissionService(any())(any())) thenReturn
+      when(mockUserDataService.updateSubmissionStatus(any())(any())) thenReturn
+        Future.successful(Done)
+      when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any())) thenReturn
         Future.successful(false)
+      when(mockSubmitBackendService.clearUserAnswers()(any())) thenReturn
+        Future.successful(Done)
+      when(mockSubmitBackendService.clearSubmissions()(any())) thenReturn
+        Future.successful(Done)
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
@@ -220,6 +228,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService)
           )
+          .overrides(bind[SubmitBackendService].toInstance(mockSubmitBackendService))
           .build()
 
       running(application) {
@@ -230,7 +239,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).get must be("/public-pension-adjustment/task-list")
+        redirectLocation(result).get must be("/public-pension-adjustment/previous-claim-continue")
       }
     }
 
@@ -266,21 +275,21 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
 
-        val navigateToSubmissionFalseStr = "navigateToSubmission=false"
         redirectLocation(result).get must be(
-          s"/public-pension-adjustment/previous-claim-continue?$navigateToSubmissionFalseStr"
+          s"/public-pension-adjustment/previous-claim-continue"
         )
       }
     }
 
-    "must redirect to PreviousClaimContinueController when submission started is none & recordsPresentInSubmissionService is true" in {
+    "must redirect to PreviousClaimContinueController when submission started is none & submissionsPresentInSubmissionService is true" in {
 
-      val mockUserDataService = mock[UserDataService]
+      val mockUserDataService      = mock[UserDataService]
+      val mockSubmitBackendService = mock[SubmitBackendService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
       when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn
         Future.successful(None)
-      when(mockUserDataService.recordsPresentInSubmissionService(any())(any())) thenReturn
+      when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any())) thenReturn
         Future.successful(true)
 
       val userAnswers =
@@ -294,6 +303,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService)
           )
+          .overrides(bind[SubmitBackendService].toInstance(mockSubmitBackendService))
           .build()
 
       running(application) {
@@ -304,21 +314,21 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        val navigateToSubmissionTrueStr = "navigateToSubmission=true"
         redirectLocation(result).get must be(
-          s"/public-pension-adjustment/previous-claim-continue?$navigateToSubmissionTrueStr"
+          s"/public-pension-adjustment/previous-claim-continue"
         )
       }
     }
 
-    "must redirect to PreviousClaimContinueController when submission started is none & recordsPresentInSubmissionService is false" in {
+    "must redirect to PreviousClaimContinueController when submission started is none & submissionsPresentInSubmissionService is false" in {
 
-      val mockUserDataService = mock[UserDataService]
+      val mockUserDataService      = mock[UserDataService]
+      val mockSubmitBackendService = mock[SubmitBackendService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
       when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn
         Future.successful(None)
-      when(mockUserDataService.recordsPresentInSubmissionService(any())(any())) thenReturn
+      when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any())) thenReturn
         Future.successful(false)
 
       val userAnswers =
@@ -332,6 +342,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService)
           )
+          .overrides(bind[SubmitBackendService].toInstance(mockSubmitBackendService))
           .build()
 
       running(application) {

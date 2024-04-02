@@ -16,8 +16,14 @@
 
 package pages
 
-import models.{CheckMode, NormalMode}
+import models.NormalMode
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.behaviours.PageBehaviours
+import services.SubmitBackendService
+
+import scala.concurrent.Future
 
 class PreviousClaimContinuePageSpec extends PageBehaviours {
 
@@ -30,22 +36,22 @@ class PreviousClaimContinuePageSpec extends PageBehaviours {
     beRemovable[Boolean](PreviousClaimContinuePage)
   }
 
-  "Normal mode" - {
+  "Navigating in Either Mode" - {
 
-    "must redirect to tasklist when continuing previous claim" in {
-
+    "must redirect using PreviousClaimContinueController.redirect in the controller when true" in {
       val ua = emptyUserAnswers
         .copy(authenticated = true)
         .set(PreviousClaimContinuePage, true)
         .success
         .value
 
-      val nextPageUrl: String = PreviousClaimContinuePage.navigate(NormalMode, ua).url
+      val result = PreviousClaimContinuePage
+        .navigate(NormalMode, ua)
 
-      checkNavigation(nextPageUrl, "/task-list")
+      result mustEqual controllers.routes.PreviousClaimContinueController.redirect
     }
 
-    "must redirect to resubmitting adjustment when restarting previous claim" in {
+    "must redirect to resubmitting adjustment when restarting previous claim in NormalMode" in {
 
       val ua = emptyUserAnswers
         .copy(authenticated = true)
@@ -53,38 +59,12 @@ class PreviousClaimContinuePageSpec extends PageBehaviours {
         .success
         .value
 
-      val nextPageUrl: String = PreviousClaimContinuePage.navigate(NormalMode, ua).url
+      val nextPageUrl: String =
+        PreviousClaimContinuePage
+          .navigate(NormalMode, ua)
+          .url
 
       checkNavigation(nextPageUrl, "/change-previous-adjustment")
-    }
-  }
-
-  "Check mode" - {
-
-    "must redirect to tasklist when continuing previous claim" in {
-
-      val ua = emptyUserAnswers
-        .copy(authenticated = true)
-        .set(PreviousClaimContinuePage, true)
-        .success
-        .value
-
-      val nextPageUrl: String = PreviousClaimContinuePage.navigate(CheckMode, ua).url
-
-      checkNavigation(nextPageUrl, "/task-list")
-    }
-
-    "must redirect to resubmitting adjustment when restarting previous claim" in {
-
-      val ua = emptyUserAnswers
-        .copy(authenticated = true)
-        .set(PreviousClaimContinuePage, false)
-        .success
-        .value
-
-      val nextPageUrl: String = PreviousClaimContinuePage.navigate(CheckMode, ua).url
-
-      checkNavigation(nextPageUrl, "/change-change-previous-adjustment")
     }
   }
 }

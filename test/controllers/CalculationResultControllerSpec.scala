@@ -28,13 +28,15 @@ import play.api.mvc.{Call, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{route, status, _}
 import services.CalculationResultService
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
 import scala.io.Source
 
 class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute       = Call("GET", "/foo")
+  val hc: HeaderCarrier = HeaderCarrier()
 
   lazy val normalRoute    = routes.CalculationResultController.onPageLoad().url
   val dynamicDebit        = "You have extra tax charges to pay, you will receive a notice by post."
@@ -74,7 +76,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
     "must redirect to submit landing page on a POST when answers / calculation are submitted to backend successfully" in {
 
       val mockCalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any))
+      when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
         .thenReturn(Future.successful(Success("123")))
 
       val application =
@@ -99,7 +101,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
     "must redirect to journey recovery on a POST when answers / calculation submission fails" in {
 
       val mockCalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any))
+      when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
         .thenReturn(Future.successful(Failure(Seq("someError"))))
 
       val application =

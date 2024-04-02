@@ -16,17 +16,21 @@
 
 package controllers
 
+import config.FrontendAppConfig
 import controllers.actions._
 import forms.PreviousClaimContinueFormProvider
 
 import javax.inject.Inject
-import models.{Mode, UserAnswers}
+import models.{Done, Mode, NormalMode, SubmissionStatusResponse, UserAnswers}
 import models.requests.{AuthenticatedIdentifierRequest, DataRequest, OptionalDataRequest}
 import pages.PreviousClaimContinuePage
+import pages.setupquestions.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.UserDataService
+import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
+import services.{SubmissionDataService, SubmitBackendService, UserDataService}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.PreviousClaimContinueView
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -34,52 +38,70 @@ import scala.concurrent.{ExecutionContext, Future}
 class PreviousClaimContinueController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
+  submitBackendService: SubmitBackendService,
+  submissionDataService: SubmissionDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   formProvider: PreviousClaimContinueFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: PreviousClaimContinueView
+  view: PreviousClaimContinueView,
+  config: FrontendAppConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode, navigateToSubmission: Boolean): Action[AnyContent] =
+  def onPageLoad(): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      Ok(view(form, mode))
+      Ok(view(form))
     }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
+  def onSubmit(): Action[AnyContent] =
+    (identify andThen getData andThen requireData).async { implicit request =>
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value => {
-
-            val userAnswers =
-              if (!value) {
-                userDataService.clear()
-                constructUserAnswers(request)
-              } else {
-                request.userAnswers
-              }
-
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
+          value =>
             for {
-              updatedAnswers <- Future.fromTry(userAnswers.set(PreviousClaimContinuePage, value))
-              _              <- userDataService.set(updatedAnswers)
-            } yield Redirect(PreviousClaimContinuePage.navigate(mode, updatedAnswers))
-          }
+              _              <- clearIfNo(value)
+              updatedAnswers <-
+                Future.fromTry(request.userAnswers.set(PreviousClaimContinuePage, value))
+            } yield Redirect(
+              PreviousClaimContinuePage
+                .navigate(NormalMode, updatedAnswers)
+            )
         )
-  }
-
-  private def constructUserAnswers(request: DataRequest[AnyContent]) = {
-    val authenticated = request.request match {
-      case AuthenticatedIdentifierRequest(_, _) => true
-      case _                                    => false
     }
-    UserAnswers(request.userId, authenticated = authenticated)
+
+  private def clearIfNo(value: Boolean)(implicit hc: HeaderCarrier): Future[Done] =
+    if (!value) {
+      for {
+        _ <- submitBackendService.clearUserAnswers()
+        _ <- submitBackendService.clearSubmissions()
+        _ <- submissionDataService.clear()
+        r <- userDataService.clear()
+      } yield r
+    } else {
+      Future.successful(Done)
+    }
+
+  private def submitFrontendCalculationResultPageUrl() =
+    s"${config.submitFrontend}/calculation-result"
+
+  def redirect(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+    submitBackendService.submissionsPresentInSubmissionService(request.userAnswers.uniqueId)(hc).map {
+      result: Boolean =>
+        result match {
+          case true  =>
+            Redirect(Call("GET", submitFrontendCalculationResultPageUrl))
+          case false =>
+            Redirect(controllers.routes.TaskListController.onPageLoad)
+          case _     =>
+            Redirect(controllers.routes.JourneyRecoveryController.onPageLoad(None))
+        }
+    }
   }
 }

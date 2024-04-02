@@ -140,17 +140,6 @@ class UserDataServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {
       }
     }
 
-    "recordsPresentInSubmissionService" - {
-      "should call connector when checking submission status" in {
-        implicit val hc = HeaderCarrier()
-
-        service.recordsPresentInSubmissionService("id")
-
-        verify(mockUserAnswersConnector, times(1))
-          .recordsPresentInSubmissionService("id")
-      }
-    }
-
     "updateSubmissionStatus" - {
       "should call connector when checking submission status" in {
         implicit val hc = HeaderCarrier()

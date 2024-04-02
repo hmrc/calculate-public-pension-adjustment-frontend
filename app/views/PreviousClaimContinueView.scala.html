@@ -22,7 +22,7 @@ govukRadios: GovukRadios,
 govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_])(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
     <p class="govuk-body">@messages("previousClaimContinue.body")</p>
@@ -31,7 +31,7 @@ govukButton: GovukButton
 
 @layout(pageTitle = title(form, messages("previousClaimContinue.title"))) {
 
-@formHelper(action = routes.PreviousClaimContinueController.onSubmit(mode), 'autoComplete -> "off") {
+@formHelper(action = routes.PreviousClaimContinueController.onSubmit(), 'autoComplete -> "off") {
 
     @if(form.errors.nonEmpty) {
     @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
