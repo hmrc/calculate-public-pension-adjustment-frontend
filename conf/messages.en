@@ -80,6 +80,7 @@ annualAllowance.caption = Annual allowance
 lifetimeAllowance.caption = Lifetime allowance
 divider = or
 startEndDateAnd = and
+startEndDateTo = to
 annualAllowance.period.caption.2016 = Annual allowance between 6 April 2015 and 5 April 2016
 annualAllowance.period.caption.2016pre = Annual allowance between 6 April 2015 and 8 July 2015
 annualAllowance.period.caption.2016post = Annual allowance between 9 July 2015 and 5 April 2016
@@ -548,7 +549,7 @@ whichScheme.heading = Which scheme are you entering details for?
 whichScheme.hint = Select from the options below or enter a new scheme.
 whichScheme.New = Enter a new pension scheme
 whichScheme.checkYourAnswersLabel = Select which scheme paid the charge or add new.
-whichScheme.error.required = Select which scheme you are entering details for
+whichScheme.error.required = Select which scheme you are entering details for or add new
 whichScheme.change.hidden = the scheme you are entering details for
 
 whoPaidAACharge.title = Who paid the annual allowance tax charge for {1}?
@@ -671,7 +672,7 @@ ltaPensionSchemeDetails.hint = For example, 00348916RT.
 ltaPensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the scheme that is paying the extra charge?
 ltaPensionSchemeDetails.change.hidden = name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.required = Enter the Pension Scheme Tax Reference of the scheme that is paying the extra charge
-ltaPensionSchemeDetails.taxRef.invalid = The Pension Scheme Tax Reference of the scheme that is paying the extra charge must only include letters a to z, numbers 0 to 9
+ltaPensionSchemeDetails.error.taxRef.invalid = The Pension Scheme Tax Reference of the scheme that is paying the extra charge must only include letters a to z, numbers 0 to 9
 
 adjustedIncome.caption = Annual allowance between 6 April {0} and 5 April {1}
 adjustedIncome.title = What was your adjusted income from 6 April {0} and 5 April {1}?

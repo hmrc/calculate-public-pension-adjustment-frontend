@@ -80,7 +80,8 @@ class DefinedContribution2016PreFlexiAmountController @Inject() (
   }
 
   private def getStartEndDate(flexibleStartDate: Option[LocalDate])(implicit messages: Messages): String = {
-    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
+    val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
 
     def normalDateFormatter =
       flexibleStartDate match {
