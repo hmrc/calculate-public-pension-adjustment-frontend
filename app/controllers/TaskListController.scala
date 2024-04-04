@@ -17,16 +17,20 @@
 package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import models.UserAnswers
+import models.requests.{AuthenticatedIdentifierRequest, DataRequest, OptionalDataRequest}
 import models.tasklist.TaskListViewModel
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.TaskListService
+import services.{TaskListService, UserDataService}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.TaskListView
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
 class TaskListController @Inject() (
   override val messagesApi: MessagesApi,
@@ -35,14 +39,26 @@ class TaskListController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: TaskListView,
-  taskListService: TaskListService
+  taskListService: TaskListService,
+  userDataService: UserDataService
 ) extends FrontendBaseController
     with I18nSupport {
 
   val form = Form("_" -> ignored(()))
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    updateAuthFlag(request)
     val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
     Ok(view(form, taskListViewModel))
+  }
+
+  def updateAuthFlag(request: DataRequest[AnyContent])(implicit hc: HeaderCarrier) = {
+    val authenticated = request.request match {
+      case AuthenticatedIdentifierRequest(_, _) => true
+      case _                                    => false
+    }
+    if (authenticated) {
+      userDataService.set(request.userAnswers.copy(authenticated = true))
+    }
   }
 }
