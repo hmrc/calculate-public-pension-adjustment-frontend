@@ -7,6 +7,7 @@ site.no = Na
 site.yes = Iawn
 site.continue = Yn eich blaen
 site.continueSignIn = Yn eich blaen i fewngofnodi
+site.saveAndContinue = Yn eich blaen
 site.start = Dechrau nawr
 site.startAgain = Dechrau eto
 site.signIn = Mewngofnodi

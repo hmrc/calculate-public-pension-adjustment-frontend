@@ -21,7 +21,8 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String, startEndDate: String)(implicit request: Request[_], messages: Messages)
@@ -75,8 +76,6 @@
             .withInputMode("numeric")
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }

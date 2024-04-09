@@ -14,22 +14,25 @@
  * limitations under the License.
  *@
 
+@import config.FrontendAppConfig
+
 @this(
-        layout: templates.Layout,
-        govukSummaryList: GovukSummaryList,
-        govukButton: GovukButton,
-        continueButtonWithLink: components.ContinueButtonWithLink
+    govukButton: GovukButton,
+    frontendAppConfig : FrontendAppConfig
 )
 
-@(subHeadingMessageKey: String, continueURL:Call, list: SummaryList)(implicit request: Request[_], messages: Messages)
+@(continueURL: Call)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
+@if(frontendAppConfig.optionalAuthEnabled && request.signedIn) {
+    @govukButton(
+        ButtonViewModel(messages("site.saveAndContinue"))
 
-    <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
+        .asLink(continueURL.url)
+    )
 
-    <h2 class="govuk-heading-m">@messages(subHeadingMessageKey)</h2>
-
-    @govukSummaryList(list)
-
-    @continueButtonWithLink(continueURL)
+} else {
+    @govukButton(
+    ButtonViewModel(messages("site.continue"))
+    .asLink(continueURL.url)
+    )
 }
