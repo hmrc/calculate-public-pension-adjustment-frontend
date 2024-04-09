@@ -17,7 +17,7 @@
 package services
 
 import base.SpecBase
-import connectors.{BackendConnector, CalculationResultConnector}
+import connectors.{CalculationResultConnector, SubmissionsConnector}
 import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, Resubmission, RowViewModel}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
@@ -27,6 +27,7 @@ import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLif
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
+import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -36,11 +37,10 @@ import scala.io.Source
 class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
-  private val mockBackendConnector           = mock[BackendConnector]
+  private val mockSubmissionsConnector       = mock[SubmissionsConnector]
   private val mockAuditService               = mock[AuditService]
-
-  private val service =
-    new CalculationResultService(mockCalculationResultConnector, mockBackendConnector, mockAuditService)
+  private val service                        =
+    new CalculationResultService(mockCalculationResultConnector, mockSubmissionsConnector, mockAuditService)
 
   private def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
     val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
@@ -2523,9 +2523,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
-      when(mockBackendConnector.sendSubmissionRequest(any)).thenReturn(Future.successful(Success("uniqueId")))
+      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, any)
+      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
     }
 
@@ -2533,9 +2533,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       when(mockCalculationResultConnector.sendRequest(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
-      when(mockBackendConnector.sendSubmissionRequest(any)).thenReturn(Future.successful(Success("uniqueId")))
+      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, any)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
 
@@ -2544,10 +2544,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
-      when(mockBackendConnector.sendSubmissionRequest(any))
+      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, any)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
   }

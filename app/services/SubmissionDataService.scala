@@ -16,32 +16,16 @@
 
 package services
 
-import connectors.UserAnswersConnector
+import connectors.SubmissionsConnector
 import logging.Logging
-import models.{Done, SubmissionStatusResponse, UserAnswers}
+import models.Done
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class UserDataService @Inject() (connector: UserAnswersConnector) extends Logging {
-
-  def get()(implicit hc: HeaderCarrier): Future[Option[UserAnswers]] =
-    connector.get()
-
-  def set(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Done] =
-    connector.set(answers)
-
-  def keepAlive()(implicit hc: HeaderCarrier): Future[Done] =
-    connector.keepAlive()
+class SubmissionDataService @Inject() (connector: SubmissionsConnector) extends Logging {
 
   def clear()(implicit hc: HeaderCarrier): Future[Done] =
     connector.clear()
-
-  def checkSubmissionStatusWithId(id: String)(implicit hc: HeaderCarrier): Future[Option[SubmissionStatusResponse]] =
-    connector.checkSubmissionStatusWithId(id)
-
-  def updateSubmissionStatus(uniqueId: String)(implicit hc: HeaderCarrier): Future[Done] =
-    connector.updateSubmissionStatus(uniqueId)
-
 }

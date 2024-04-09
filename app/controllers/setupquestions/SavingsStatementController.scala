@@ -26,7 +26,7 @@ import models.{Mode, NormalMode, SubmissionStatusResponse, UserAnswers}
 import pages.setupquestions.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.UserDataService
+import services.{SubmitBackendService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.setupquestions.SavingsStatementView
@@ -37,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class SavingsStatementController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
+  submitBackendService: SubmitBackendService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   formProvider: SavingsStatementFormProvider,
@@ -94,23 +95,27 @@ class SavingsStatementController @Inject() (
         .checkSubmissionStatusWithId(request.userId)(headerCarrier)
         .flatMap {
           case Some(SubmissionStatusResponse(_, true))  =>
-            userDataService
-              .recordsPresentInSubmissionService(request.userId)(headerCarrier)
+            submitBackendService
+              .submissionsPresentInSubmissionService(userAnswers.uniqueId)(headerCarrier)
               .map {
                 case true  =>
-                  routes.PreviousClaimContinueController.onPageLoad(NormalMode, true).url
+                  routes.PreviousClaimContinueController.onPageLoad().url
                 case false =>
-                  userDataService.updateSubmissionStatus(request.userId)(headerCarrier)
-                  routes.TaskListController.onPageLoad.url
+                  for {
+                    _ <- userDataService.updateSubmissionStatus(request.userId)(headerCarrier)
+                    _ <- submitBackendService.clearUserAnswers()(headerCarrier)
+                    r <- submitBackendService.clearSubmissions()(headerCarrier)
+                  } yield r
+                  routes.PreviousClaimContinueController.onPageLoad().url
               }
           case Some(SubmissionStatusResponse(_, false)) =>
-            Future.successful(routes.PreviousClaimContinueController.onPageLoad(NormalMode, false).url)
+            Future.successful(routes.PreviousClaimContinueController.onPageLoad().url)
           case None                                     =>
-            userDataService
-              .recordsPresentInSubmissionService(request.userId)(headerCarrier)
+            submitBackendService
+              .submissionsPresentInSubmissionService(userAnswers.uniqueId)(headerCarrier)
               .map {
                 case true  =>
-                  routes.PreviousClaimContinueController.onPageLoad(NormalMode, true).url
+                  routes.PreviousClaimContinueController.onPageLoad().url
                 case false =>
                   SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url
               }

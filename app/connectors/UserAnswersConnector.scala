@@ -16,7 +16,6 @@
 
 package connectors
 
-import akka.http.scaladsl.model.HttpHeader.ParsingResult.Ok
 import config.Service
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.{Done, SubmissionStatusResponse, UserAnswers}
@@ -35,7 +34,6 @@ class UserAnswersConnector @Inject() (config: Configuration, httpClient: HttpCli
   private val baseUrl        = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
   private val userAnswersUrl = url"$baseUrl/calculate-public-pension-adjustment/user-answers"
   private val keepAliveUrl   = url"$baseUrl/calculate-public-pension-adjustment/user-answers/keep-alive"
-  private val baseUrlsubmit  = config.get[Service]("microservice.services.submit-public-pension-adjustment")
 
   def get()(implicit hc: HeaderCarrier): Future[Option[UserAnswers]] =
     httpClient
@@ -107,14 +105,5 @@ class UserAnswersConnector @Inject() (config: Configuration, httpClient: HttpCli
         } else {
           Future.failed(UpstreamErrorResponse("", response.status))
         }
-      }
-
-  def recordsPresentInSubmissionService(id: String)(implicit hc: HeaderCarrier): Future[Boolean] =
-    httpClient
-      .get(url"$baseUrlsubmit/submit-public-pension-adjustment/check-submission-status/$id")
-      .execute[HttpResponse]
-      .logFailureReason(connectorName = "UserAnswersConnector on recordsPresentInSubmissionService")
-      .flatMap { response =>
-        Future.successful(response.body.toBoolean)
       }
 }

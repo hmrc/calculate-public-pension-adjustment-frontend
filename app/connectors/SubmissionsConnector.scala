@@ -17,29 +17,33 @@
 package connectors
 
 import com.google.inject.Inject
-import config.FrontendAppConfig
+import config.{FrontendAppConfig, Service}
+import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
+import models.{Done, UserAnswers}
 import models.submission.{SubmissionRequest, SubmissionResponse, Success}
-import play.api.Logging
+import play.api.{Configuration, Logging}
 import play.api.http.Status._
 import play.api.libs.json.{JsValue, Json}
-import uk.gov.hmrc.http.{HttpClient, UpstreamErrorResponse}
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse, StringContextOps, UpstreamErrorResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class BackendConnector @Inject() (config: FrontendAppConfig, httpClient: HttpClient)(implicit
+class SubmissionsConnector @Inject() (config: Configuration, httpClient: HttpClientV2)(implicit
   ec: ExecutionContext
 ) extends Logging {
 
+  private val baseUrl       = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
+  private val submissionUrl = url"$baseUrl/calculate-public-pension-adjustment/submission"
+
   def sendSubmissionRequest(
     submissionRequest: SubmissionRequest
-  ): Future[SubmissionResponse] = {
-    val body: JsValue = Json.toJson(submissionRequest)
-
+  )(implicit hc: HeaderCarrier): Future[SubmissionResponse] =
     httpClient
-      .doPost(
-        s"${config.cppaBaseUrl}/calculate-public-pension-adjustment/submission",
-        body
-      )
+      .post(submissionUrl)
+      .withBody(Json.toJson(submissionRequest))
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "SubmissionsConnector on set")
       .flatMap { response =>
         response.status match {
           case ACCEPTED =>
@@ -56,5 +60,16 @@ class BackendConnector @Inject() (config: FrontendAppConfig, httpClient: HttpCli
             )
         }
       }
-  }
+  def clear()(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .delete(submissionUrl)
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "SubmissionsConnector on clear")
+      .flatMap { response =>
+        if (response.status == NO_CONTENT) {
+          Future.successful(Done)
+        } else {
+          Future.failed(UpstreamErrorResponse("", response.status))
+        }
+      }
 }

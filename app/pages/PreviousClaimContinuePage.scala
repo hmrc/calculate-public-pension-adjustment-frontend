@@ -16,27 +16,20 @@
 
 package pages
 
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
 case object PreviousClaimContinuePage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
-
+  override def path: JsPath     = JsPath \ toString
   override def toString: String = "previousClaimContinue"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PreviousClaimContinuePage) match {
-      case Some(true)  => controllers.routes.TaskListController.onPageLoad
+      case Some(true)  =>
+        controllers.routes.PreviousClaimContinueController.redirect
       case Some(false) => controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PreviousClaimContinuePage) match {
-      case Some(true)  => controllers.routes.TaskListController.onPageLoad
-      case Some(false) => controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(CheckMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

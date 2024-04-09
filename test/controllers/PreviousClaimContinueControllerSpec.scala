@@ -21,14 +21,15 @@ import config.FrontendAppConfig
 import forms.PreviousClaimContinueFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{atLeastOnce, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import pages.PreviousClaimContinuePage
+import play.api.inject.NewInstanceInjector.instanceOf
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserDataService
+import services.{SubmissionDataService, SubmitBackendService, UserDataService}
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.PreviousClaimContinueView
 
@@ -41,7 +42,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new PreviousClaimContinueFormProvider()
   val form         = formProvider()
 
-  lazy val previousClaimContinueRoute = routes.PreviousClaimContinueController.onPageLoad(NormalMode, true).url
+  lazy val previousClaimContinueRoute = routes.PreviousClaimContinueController.onPageLoad().url
 
   "PreviousClaimContinue Controller" - {
 
@@ -57,7 +58,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[PreviousClaimContinueView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form)(request, messages(application)).toString
       }
     }
 
@@ -75,7 +76,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form)(request, messages(application)).toString
       }
     }
 
@@ -98,22 +99,26 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.TaskListController.onPageLoad.url
+        redirectLocation(result).value mustEqual controllers.routes.PreviousClaimContinueController.redirect().url
       }
     }
 
     "must redirect to the next page when valid data false is submitted" in {
-
-      implicit val hc = HeaderCarrier()
-
-      val mockUserDataService = mock[UserDataService]
+      val mockUserDataService       = mock[UserDataService]
+      val mockSubmitBackendService  = mock[SubmitBackendService]
+      val mockSubmissionDataService = mock[SubmissionDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-      when(mockUserDataService.clear()) thenReturn Future.successful(Done)
+      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
+      when(mockSubmitBackendService.clearUserAnswers()(any())) thenReturn Future.successful(Done)
+      when(mockSubmitBackendService.clearSubmissions()(any())) thenReturn Future.successful(Done)
+      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
+          .overrides(bind[SubmitBackendService].toInstance(mockSubmitBackendService))
+          .overrides(bind[SubmissionDataService].toInstance(mockSubmissionDataService))
           .build()
 
       running(application) {
@@ -145,7 +150,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm)(request, messages(application)).toString
       }
     }
 
@@ -180,5 +185,51 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
+
+    "Redirect()" - {
+      "must redirect to the calculation result page when submissions are present" in {
+        val mockSubmitBackendService = mock[SubmitBackendService]
+
+        when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any()))
+          .thenReturn(Future.successful(true))
+
+        val application =
+          applicationBuilder(userAnswers = Some(emptyUserAnswers))
+            .overrides(bind[SubmitBackendService].toInstance(mockSubmitBackendService))
+            .build()
+
+        running(application) {
+          val appConfig = application.injector.instanceOf[FrontendAppConfig]
+          val request   = FakeRequest(GET, routes.PreviousClaimContinueController.redirect().url)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual s"${appConfig.submitFrontend}/calculation-result"
+        }
+      }
+
+      "must redirect to the Task List page when no submissions are present" in {
+        val mockSubmitBackendService = mock[SubmitBackendService]
+
+        when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any()))
+          .thenReturn(Future.successful(false))
+
+        val application =
+          applicationBuilder(userAnswers = Some(emptyUserAnswers))
+            .overrides(bind[SubmitBackendService].toInstance(mockSubmitBackendService))
+            .build()
+
+        running(application) {
+          val request = FakeRequest(GET, routes.PreviousClaimContinueController.redirect().url)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual controllers.routes.TaskListController.onPageLoad.url
+        }
+      }
+    }
   }
+
 }
