@@ -17,7 +17,7 @@
 package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.UserAnswers
+import models.{Done, UserAnswers}
 import models.requests.{AuthenticatedIdentifierRequest, DataRequest, OptionalDataRequest}
 import models.tasklist.TaskListViewModel
 import play.api.data.Form
@@ -30,7 +30,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.TaskListView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class TaskListController @Inject() (
   override val messagesApi: MessagesApi,
@@ -41,24 +41,23 @@ class TaskListController @Inject() (
   view: TaskListView,
   taskListService: TaskListService,
   userDataService: UserDataService
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   val form = Form("_" -> ignored(()))
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    updateAuthFlag(request)
-    val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
-    Ok(view(form, taskListViewModel))
+  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+    updateAuthFlag(request).map { _ =>
+      val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
+      Ok(view(form, taskListViewModel))
+    }
+
   }
 
-  def updateAuthFlag(request: DataRequest[AnyContent])(implicit hc: HeaderCarrier) = {
-    val authenticated = request.request match {
-      case AuthenticatedIdentifierRequest(_, _) => true
-      case _                                    => false
+  def updateAuthFlag(request: DataRequest[AnyContent])(implicit hc: HeaderCarrier): Future[Done] =
+    request.request match {
+      case AuthenticatedIdentifierRequest(_, _) => userDataService.set(request.userAnswers.copy(authenticated = true))
+      case _                                    => Future.successful(Done)
     }
-    if (authenticated) {
-      userDataService.set(request.userAnswers.copy(authenticated = true))
-    }
-  }
 }
