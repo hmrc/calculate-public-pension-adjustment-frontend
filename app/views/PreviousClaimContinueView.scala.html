@@ -19,7 +19,8 @@ layout: templates.Layout,
 formHelper: FormWithCSRF,
 govukErrorSummary: GovukErrorSummary,
 govukRadios: GovukRadios,
-govukButton: GovukButton
+govukButton: GovukButton,
+continueButton: components.ContinueButton
 )
 
 @(form: Form[_])(implicit request: Request[_], messages: Messages)
@@ -48,8 +49,6 @@ govukButton: GovukButton
     )
 
 
-    @govukButton(
-        ButtonViewModel(messages("site.continue"))
-    )
+    @continueButton()
     }
 }
