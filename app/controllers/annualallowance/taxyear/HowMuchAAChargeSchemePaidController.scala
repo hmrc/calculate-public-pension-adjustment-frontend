@@ -76,7 +76,8 @@ class HowMuchAAChargeSchemePaidController @Inject() (
     }
 
   private def startEndDate(period: Period)(implicit messages: Messages): String = {
-    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
+    val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
     period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
   }
 }

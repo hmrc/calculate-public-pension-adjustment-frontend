@@ -17,7 +17,6 @@
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
 import java.time.LocalDate
-
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -27,6 +26,7 @@ import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import controllers.annualallowance.preaaquestions.routes
+import views.helpers.ImplicitDateFormatter
 
 import scala.xml.Text
 
@@ -34,6 +34,7 @@ class StopPayingPublicPensionSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
   val validAnswer: LocalDate              = LocalDate.of(2015, 4, 6)
+  val languageTag                         = if (messages.lang.code == "cy") "cy" else "en"
 
   "row" - {
     "when value is entered, return the summary row" in {
@@ -46,7 +47,7 @@ class StopPayingPublicPensionSummarySpec extends AnyFreeSpec with Matchers {
       StopPayingPublicPensionSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "stopPayingPublicPension.checkYourAnswersLabel",
-          value = ValueViewModel(Text("06 April 2015").toString()),
+          value = ValueViewModel(StopPayingPublicPensionSummary.dateToString(validAnswer, languageTag)),
           actions = Seq(
             ActionItemViewModel("site.change", routes.StopPayingPublicPensionController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText("stopPayingPublicPension.change.hidden")
