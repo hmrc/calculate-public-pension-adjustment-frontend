@@ -80,7 +80,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
   }
 
   "sessionTimeout" - {
-    "must redirect to exit survey if authenticated" in {
+    "must redirect to sign out page if authenticated" in {
       val mockUserDataService = mock[UserDataService]
 
       val application =

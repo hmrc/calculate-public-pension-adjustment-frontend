@@ -46,7 +46,9 @@ class AuthController @Inject() (
 
   def sessionTimeout(): Action[AnyContent] = identify.async { implicit request =>
     if (request.authenticated)
-      Future.successful(Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url))))
+      Future.successful(
+        Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url)))
+      )
     else
       for {
         _ <- userDataService.clear()
