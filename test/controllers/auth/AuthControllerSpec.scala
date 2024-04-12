@@ -25,7 +25,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserDataService
+import services.{SubmissionDataService, UserDataService}
 
 import java.net.URLEncoder
 import scala.concurrent.Future
@@ -80,15 +80,43 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
   }
 
   "sessionTimeout" - {
-
-    "must clear users answers and redirect to exit Survey" in {
-
+    "must redirect to sign out page if authenticated" in {
       val mockUserDataService = mock[UserDataService]
-      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(None)
+        applicationBuilder(None, userIsAuthenticated = true)
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
+          .build()
+
+      running(application) {
+
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(GET, routes.AuthController.sessionTimeout().url)
+        val result    = route(application, request).value
+
+        val encodedContinueUrl  =
+          URLEncoder.encode("http://localhost:12804/public-pension-adjustment/account/signed-out", "UTF-8")
+        val expectedRedirectUrl = s"${appConfig.signOutUrl}?continue=$encodedContinueUrl"
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual expectedRedirectUrl
+      }
+    }
+
+    "must clear user answers and redirect to exit Survey if not authenticated" in {
+
+      val mockUserDataService       = mock[UserDataService]
+      val mockSubmissionDataService = mock[SubmissionDataService]
+
+      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
+      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(None, userIsAuthenticated = false)
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService),
+            bind[SubmissionDataService].toInstance(mockSubmissionDataService)
+          )
           .build()
 
       running(application) {
@@ -103,6 +131,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual expectedRedirectUrl
         verify(mockUserDataService, times(1)).clear()(any())
+        verify(mockSubmissionDataService, times(1)).clear()(any())
       }
     }
   }
