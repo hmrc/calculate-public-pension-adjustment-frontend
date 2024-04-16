@@ -34,6 +34,8 @@ POST        /change-previous-adjustment                                      con
 GET         /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = CheckMode)
 
+GET         /maybe-previous-claim-continue                                  controllers.MaybePreviousClaimController.redirect()
+
 GET         /change-reason                                                   controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = NormalMode)
 POST        /change-reason                                                   controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = NormalMode)
 GET         /change-change-reason                                            controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)

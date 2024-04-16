@@ -57,7 +57,7 @@ class OptionalSignInControllerSpec extends SpecBase {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual "http://localhost:9949/auth-login-stub/gg-sign-in?origin=PPA&continue=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fchange-previous-adjustment"
+        ).value mustEqual "http://localhost:9949/auth-login-stub/gg-sign-in?origin=PPA&continue=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fmaybe-previous-claim-continue"
       }
     }
   }
