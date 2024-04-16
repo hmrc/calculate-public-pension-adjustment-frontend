@@ -32,7 +32,7 @@ import views.html.setupquestions.SavingsStatementView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class MaybePreviousClaimController @Inject()(
+class MaybePreviousClaimController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
   submitBackendService: SubmitBackendService,
@@ -46,7 +46,7 @@ class MaybePreviousClaimController @Inject()(
     extends FrontendBaseController
     with I18nSupport {
 
-  def redirect():Action[AnyContent] = (identify andThen getData).async { implicit request =>
+  def redirect(): Action[AnyContent] = (identify andThen getData).async { implicit request =>
     for {
       updatedAnswers <-
         Future
