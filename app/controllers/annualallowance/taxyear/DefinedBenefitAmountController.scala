@@ -23,7 +23,7 @@ import models.{Mode, Period}
 import pages.annualallowance.taxyear.DefinedBenefitAmountPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.DefinedBenefitAmountView
 
@@ -34,7 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DefinedBenefitAmountController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -68,13 +68,14 @@ class DefinedBenefitAmountController @Inject() (
               updatedAnswers <- Future.fromTry(request.userAnswers.set(DefinedBenefitAmountPage(period), value))
               redirectUrl     = DefinedBenefitAmountPage(period).navigate(mode, updatedAnswers).url
               answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }
 
   private def startEndDate(period: Period)(implicit messages: Messages): String = {
-    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
+    val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
     period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
   }
 }

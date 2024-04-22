@@ -17,7 +17,8 @@
 @this(
         layout: templates.Layout,
         govukSummaryList: GovukSummaryList,
-        govukButton: GovukButton
+        govukButton: GovukButton,
+        continueButtonWithLink: components.ContinueButtonWithLink
 )
 
 @(subHeadingMessageKey: String, continueURL:Call, list: SummaryList)(implicit request: Request[_], messages: Messages)
@@ -30,8 +31,5 @@
 
     @govukSummaryList(list)
 
-    @govukButton(
-        ButtonViewModel(messages("site.continue"))
-                .asLink(continueURL.url)
-    )
+    @continueButtonWithLink(continueURL)
 }

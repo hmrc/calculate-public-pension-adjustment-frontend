@@ -34,6 +34,8 @@ POST        /change-previous-adjustment                                      con
 GET         /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = CheckMode)
 POST        /change-change-previous-adjustment                               controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = CheckMode)
 
+GET         /maybe-previous-claim-continue                                  controllers.MaybePreviousClaimController.redirect()
+
 GET         /change-reason                                                   controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = NormalMode)
 POST        /change-reason                                                   controllers.setupquestions.ReasonForResubmissionController.onSubmit(mode: Mode = NormalMode)
 GET         /change-change-reason                                            controllers.setupquestions.ReasonForResubmissionController.onPageLoad(mode: Mode = CheckMode)
@@ -396,3 +398,7 @@ GET        /annual-allowance/2016flexi-pre-pension-input-amount-defined-contribu
 POST       /annual-allowance/2016flexi-pre-pension-input-amount-defined-contribution                  controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onSubmit(mode: Mode = NormalMode)
 GET        /annual-allowance/change-2016flexi-pre-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onPageLoad(mode: Mode = CheckMode)
 POST       /annual-allowance/change-2016flexi-pre-pension-input-amount-defined-contribution                        controllers.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountController.onSubmit(mode: Mode = CheckMode)
+
+GET        /previous-claim-continue                        controllers.PreviousClaimContinueController.onPageLoad()
+POST       /previous-claim-continue                        controllers.PreviousClaimContinueController.onSubmit()
+GET        /previous-claim-navigate                         controllers.PreviousClaimContinueController.redirect()

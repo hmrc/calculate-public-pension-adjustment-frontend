@@ -17,12 +17,16 @@
 package generators
 
 import org.scalacheck.Arbitrary
+import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
 import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryPreviousClaimContinuePage: Arbitrary[PreviousClaimContinuePage.type] =
+    Arbitrary(PreviousClaimContinuePage)
 
   implicit lazy val arbitraryDefinedContribution2016PreFlexiAmountPage
     : Arbitrary[DefinedContribution2016PreFlexiAmountPage.type] =

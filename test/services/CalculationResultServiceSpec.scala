@@ -17,7 +17,7 @@
 package services
 
 import base.SpecBase
-import connectors.{BackendConnector, CalculationResultConnector}
+import connectors.{CalculationResultConnector, SubmissionsConnector}
 import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, Resubmission, RowViewModel}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
@@ -27,6 +27,7 @@ import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLif
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
+import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -36,11 +37,10 @@ import scala.io.Source
 class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
-  private val mockBackendConnector           = mock[BackendConnector]
+  private val mockSubmissionsConnector       = mock[SubmissionsConnector]
   private val mockAuditService               = mock[AuditService]
-
-  private val service =
-    new CalculationResultService(mockCalculationResultConnector, mockBackendConnector, mockAuditService)
+  private val service                        =
+    new CalculationResultService(mockCalculationResultConnector, mockSubmissionsConnector, mockAuditService)
 
   private def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
     val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
@@ -1319,6 +1319,180 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |""".stripMargin)
       .as[JsObject]
 
+    val data13 = Json
+      .parse(s"""
+                |{
+                |    "savingsStatement": true,
+                |    "navigation": {
+                |      "setupSection": "/public-pension-adjustment/check-your-answers-setup",
+                |      "preAASection": "/public-pension-adjustment/annual-allowance/setup-check-answers",
+                |      "aaSection2016": "/public-pension-adjustment/annual-allowance/2016/check-answers",
+                |      "aaSection2017": "/public-pension-adjustment/annual-allowance/2017/check-answers",
+                |      "aaSection2018": "/public-pension-adjustment/annual-allowance/2018/check-answers"
+                |    },
+                |    "resubmittingAdjustment": false,
+                |    "reportingChange": [
+                |      "annualAllowance"
+                |    ],
+                |    "scottishTaxpayerFrom2016": false,
+                |    "payingPublicPensionScheme": false,
+                |    "stopPayingPublicPension": "2017-10-12",
+                |    "definedContributionPensionScheme": true,
+                |    "flexiblyAccessedPension": true,
+                |    "flexibleAccessStartDate": "2015-05-20",
+                |    "payTaxCharge1415": true,
+                |    "aa": {
+                |      "years": {
+                |        "2016": {
+                |          "memberMoreThanOnePension": true,
+                |          "schemes": {
+                |            "0": {
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RD"
+                |              },
+                |              "PensionSchemeInput2016preAmounts": {
+                |                "originalPIA": 30000,
+                |                "revisedPIA": 27000
+                |              },
+                |              "PensionSchemeInput2016postAmounts": {
+                |                "originalPIA": 40000,
+                |                "revisedPIA": 36000
+                |              },
+                |              "payACharge": true,
+                |              "whoPaidAACharge": "both",
+                |              "howMuchAAChargeYouPaid": 1200,
+                |              "howMuchAAChargeSchemePaid": 1600,
+                |              "addAnotherScheme": false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": true,
+                |          "contributedToDuringRemedyPeriod": [
+                |            "definedContribution",
+                |            "definedBenefit"
+                |          ],
+                |          "definedContribution2016PreAmount": 2000,
+                |          "definedContribution2016PreFlexiAmount": 800,
+                |          "definedContribution2016PostAmount": 1400,
+                |          "definedBenefit2016PreAmount": 1800,
+                |          "definedBenefit2016PostAmount": 2100,
+                |          "totalIncome": 60000
+                |        },
+                |        "2017": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "whichScheme": "00348916RD",
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RD"
+                |              },
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 40000,
+                |                "revisedPIA": 36000
+                |              },
+                |              "payACharge": true,
+                |              "whoPaidAACharge": "you",
+                |              "howMuchAAChargeYouPaid": 800
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": true,
+                |          "contributedToDuringRemedyPeriod": [
+                |            "definedContribution"
+                |          ],
+                |          "definedContributionAmount": 1600,
+                |          "thresholdIncome": true,
+                |          "adjustedIncome": 120000,
+                |          "totalIncome": 140000
+                |        },
+                |        "2018": {
+                |          "memberMoreThanOnePension": false,
+                |          "schemes": {
+                |            "0": {
+                |              "whichScheme": "00348916RD",
+                |              "pensionSchemeDetails": {
+                |                "schemeName": "Scheme 1",
+                |                "schemeTaxRef": "00348916RD"
+                |              },
+                |              "pensionSchemeInputAmounts": {
+                |                "originalPIA": 40000,
+                |                "revisedPIA": 36000
+                |              },
+                |              "payACharge": true,
+                |              "whoPaidAACharge": "scheme",
+                |              "howMuchAAChargeSchemePaid": 900
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution": true,
+                |          "contributedToDuringRemedyPeriod": [
+                |            "definedBenefit"
+                |          ],
+                |          "definedBenefitAmount": 800,
+                |          "thresholdIncome": false,
+                |          "totalIncome": 80000
+                |        }
+                |      }
+                |    }
+                |  }
+                |""".stripMargin)
+      .as[JsObject]
+
+    val data14 = Json
+      .parse(s"""
+                |{
+                |  "savingsStatement": true,
+                |  "navigation": {
+                |    "setupSection": "/public-pension-adjustment/check-your-answers-setup",
+                |    "preAASection": "/public-pension-adjustment/annual-allowance/setup-check-answers",
+                |    "aaSection2016": "/public-pension-adjustment/annual-allowance/2016/check-answers"
+                |  },
+                |  "resubmittingAdjustment": false,
+                |  "reportingChange": [
+                |    "annualAllowance"
+                |  ],
+                |  "scottishTaxpayerFrom2016": false,
+                |  "payingPublicPensionScheme": false,
+                |  "stopPayingPublicPension": "2015-07-01",
+                |  "definedContributionPensionScheme": true,
+                |  "flexiblyAccessedPension": true,
+                |  "flexibleAccessStartDate": "2015-05-25",
+                |  "payTaxCharge1415": true,
+                |  "aa": {
+                |    "years": {
+                |      "2016": {
+                |        "memberMoreThanOnePension": false,
+                |        "schemes": {
+                |          "0": {
+                |            "pensionSchemeDetails": {
+                |              "schemeName": "Scheme 1",
+                |              "schemeTaxRef": "00348916RK"
+                |            },
+                |            "PensionSchemeInput2016preAmounts": {
+                |              "originalPIA": 20000,
+                |              "revisedPIA": 18000
+                |            },
+                |            "payACharge": true,
+                |            "whoPaidAACharge": "both",
+                |            "howMuchAAChargeYouPaid": 800,
+                |            "howMuchAAChargeSchemePaid": 1200
+                |          }
+                |        },
+                |        "otherDefinedBenefitOrContribution": true,
+                |        "contributedToDuringRemedyPeriod": [
+                |          "definedContribution",
+                |          "definedBenefit"
+                |        ],
+                |        "definedContribution2016PreAmount": 700,
+                |        "definedContribution2016PreFlexiAmount": 1200,
+                |        "definedBenefit2016PreAmount": 700,
+                |        "totalIncome": 60000
+                |      }
+                |    }
+                |  }
+                |}
+                |""".stripMargin)
+      .as[JsObject]
+
     val userAnswers1 = UserAnswers(
       id = "session-5a356f3a-c83e-4e8c-a957-226163ba285f",
       data = data1
@@ -1523,7 +1697,38 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
     "buildInputs" - {
 
-      "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016" in {
+      "should return 2016 as the InitialFlexiblyAccessedTaxYear when stopPayingPublicPension falls in 2016 " in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data14))
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Some(
+            AnnualAllowance(
+              List(),
+              List(
+                InitialFlexiblyAccessedTaxYear(
+                  700,
+                  Some(LocalDate.parse("2015-05-25")),
+                  700,
+                  1200,
+                  List(TaxYearScheme("Scheme 1", "00348916RK", 20000, 18000, 1200, None, None)),
+                  60000,
+                  800,
+                  Period._2016,
+                  None,
+                  None,
+                  None,
+                  None
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
+
+      "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016 post period" in {
 
         val result = service.buildCalculationInputs(userAnswers1.copy(data = data11))
 
@@ -1546,6 +1751,59 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Some(2100),
                   Some(1400),
                   Some(800)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  1600,
+                  140000,
+                  800,
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 40000, 36000, 0, None, None)),
+                  Period._2017,
+                  Some(AboveThreshold(120000)),
+                  None,
+                  None
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  800,
+                  0,
+                  80000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 40000, 36000, 900, None, None)),
+                  Period._2018,
+                  Some(BelowThreshold),
+                  None,
+                  None
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
+
+      "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016 pre period" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data13))
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Some(
+            AnnualAllowance(
+              List(),
+              List(
+                InitialFlexiblyAccessedTaxYear(
+                  1800,
+                  Some(LocalDate.parse("2015-05-20")),
+                  2000,
+                  800,
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 30000, 27000, 1600, Some(40000), Some(36000))),
+                  60000,
+                  1200,
+                  Period._2016,
+                  None,
+                  Some(2100),
+                  Some(1400),
+                  None
                 ),
                 PostFlexiblyAccessedTaxYear(
                   0,
@@ -2265,9 +2523,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
-      when(mockBackendConnector.sendSubmissionRequest(any)).thenReturn(Future.successful(Success("uniqueId")))
+      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers)
+      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
     }
 
@@ -2275,9 +2533,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       when(mockCalculationResultConnector.sendRequest(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
-      when(mockBackendConnector.sendSubmissionRequest(any)).thenReturn(Future.successful(Success("uniqueId")))
+      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
 
@@ -2286,10 +2544,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
-      when(mockBackendConnector.sendSubmissionRequest(any))
+      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
   }

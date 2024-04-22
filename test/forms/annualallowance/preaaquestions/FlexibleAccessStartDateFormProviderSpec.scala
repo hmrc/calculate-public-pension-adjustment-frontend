@@ -22,7 +22,7 @@ import forms.behaviours.DateBehaviours
 
 class FlexibleAccessStartDateFormProviderSpec extends DateBehaviours {
 
-  val form = new FlexibleAccessStartDateFormProvider()()
+  val form = new FlexibleAccessStartDateFormProvider()(LocalDate.of(2023, 4, 5))
 
   ".value" - {
 

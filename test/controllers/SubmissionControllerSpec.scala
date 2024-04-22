@@ -17,6 +17,7 @@
 package controllers
 
 import base.SpecBase
+import models.Done
 import models.submission.Success
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -25,14 +26,15 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, _}
-import repositories.SessionRepository
-import services.CalculationResultService
+import services.{CalculationResultService, UserDataService}
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
 
 class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute       = Call("GET", "/foo")
+  val hc: HeaderCarrier = HeaderCarrier()
 
   lazy val storeAndRedirectRoute = routes.SubmissionController.storeAndRedirect().url
 
@@ -40,17 +42,17 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
     "Must submit answers with no calculation and redirect to submit frontend when backend call succeeds" in {
 
-      val mockSessionRepository = mock[SessionRepository]
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      val mockUserDataService = mock[UserDataService]
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val mockCalculationResultService: CalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.submitUserAnswersWithNoCalculation(any))
+      when(mockCalculationResultService.submitUserAnswersWithNoCalculation(any, any)(any))
         .thenReturn(Future.successful(Success("someId")))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[UserDataService].toInstance(mockUserDataService),
             bind[CalculationResultService].toInstance(mockCalculationResultService)
           )
           .build()

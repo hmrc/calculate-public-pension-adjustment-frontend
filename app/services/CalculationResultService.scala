@@ -16,7 +16,7 @@
 
 package services
 
-import connectors.{BackendConnector, CalculationResultConnector}
+import connectors.{CalculationResultConnector, SubmissionsConnector}
 import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
@@ -36,7 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class CalculationResultService @Inject() (
   calculationResultConnector: CalculationResultConnector,
-  backendConnector: BackendConnector,
+  submissionsConnector: SubmissionsConnector,
   auditService: AuditService
 )(implicit
   ec: ExecutionContext
@@ -51,20 +51,28 @@ class CalculationResultService @Inject() (
                              )
     } yield calculationResponse
 
-  def submitUserAnswersAndCalculation(answers: UserAnswers): Future[SubmissionResponse] = {
+  def submitUserAnswersAndCalculation(answers: UserAnswers, sessionId: String)(implicit
+    hc: HeaderCarrier
+  ): Future[SubmissionResponse] = {
     val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
     for {
       calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
       submissionResponse  <-
-        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, Some(calculationResponse)))
+        submissionsConnector.sendSubmissionRequest(
+          SubmissionRequest(calculationInputs, Some(calculationResponse), sessionId, answers.uniqueId)
+        )
     } yield submissionResponse
   }
 
-  def submitUserAnswersWithNoCalculation(answers: UserAnswers): Future[SubmissionResponse] = {
+  def submitUserAnswersWithNoCalculation(answers: UserAnswers, sessionId: String)(implicit
+    hc: HeaderCarrier
+  ): Future[SubmissionResponse] = {
     val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
     for {
       submissionResponse <-
-        backendConnector.sendSubmissionRequest(SubmissionRequest(calculationInputs, None))
+        submissionsConnector.sendSubmissionRequest(
+          SubmissionRequest(calculationInputs, None, sessionId, answers.uniqueId)
+        )
     } yield submissionResponse
   }
 

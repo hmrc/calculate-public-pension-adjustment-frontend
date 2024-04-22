@@ -18,7 +18,7 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import models.{NormalMode, ReportingChange}
+import models.{Done, NormalMode, ReportingChange}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar.mock
@@ -27,7 +27,7 @@ import pages.setupquestions.ReportingChangePage
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import viewmodels.checkAnswers.setupquestions.ReportingChangeSummary
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
@@ -80,9 +80,9 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
     }
 
     "must redirect to ScottishTaxpayerFrom2016Controller if reporting page has indicated AA and Scottsih tax payer page has not been answered" in {
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val userAnswers = emptyUserAnswers
         .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
@@ -92,7 +92,7 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 
@@ -118,9 +118,9 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
     }
 
     "must redirect to task list controller if reporting page has indicated AA and Scottsih tax payer page has been answered" in {
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val userAnswers = emptyUserAnswers
         .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
@@ -133,7 +133,7 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 

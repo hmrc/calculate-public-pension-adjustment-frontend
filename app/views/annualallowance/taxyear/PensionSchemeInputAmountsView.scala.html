@@ -15,14 +15,14 @@
  *@
 
 @import viewmodels.InputWidth._
-@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String, startEndDate: String)(implicit request: Request[_], messages: Messages)
@@ -56,25 +56,26 @@
         @govukInput(
             InputViewModel(
                 field = form("originalPIA"),
-                label = LabelViewModel(messages("pensionSchemeInputAmounts.originalPIA", period, schemeIndex)).asPageHeading(LabelSize.Medium)
+                label = LabelViewModel(messages("pensionSchemeInputAmounts.originalPIA", period, schemeIndex)).withCssClass("govuk-label--m")
+
             ).withHint(HintViewModel(HtmlContent(contentHintForOriginalPIA)))
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)
+            .withInputMode("numeric")
         )
 
         @govukInput(
             InputViewModel(
                 field = form("revisedPIA"),
-                label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA", period, schemeIndex)).asPageHeading(LabelSize.Medium)
+                label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA", period, schemeIndex)).withCssClass("govuk-label--m")
             ).withHint(HintViewModel(HtmlContent(contentHintForRevisedPIA)))
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)
+            .withInputMode("numeric")
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }

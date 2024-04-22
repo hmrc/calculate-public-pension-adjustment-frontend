@@ -19,7 +19,8 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -30,7 +31,7 @@
 }
 
 @contentHint = {
-        <p class="govuk-inset-text"><a target="_blank" rel="noopener" href=@protectionUrl> @messages("ltaProtectionOrEnhancements.hint") </a></p>
+        <p class="govuk-inset-text"><a class="govuk-link" target="_blank" rel="noopener" href=@protectionUrl> @messages("ltaProtectionOrEnhancements.hint") </a></p>
 }
 
 @layout(pageTitle = title(form, messages("ltaProtectionOrEnhancements.title"))) {
@@ -51,8 +52,6 @@
             ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }

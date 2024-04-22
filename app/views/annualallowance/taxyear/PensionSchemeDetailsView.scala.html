@@ -15,14 +15,14 @@
  *@
 
 @import viewmodels.InputWidth._
-@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex)(implicit request: Request[_], messages: Messages)
@@ -41,7 +41,7 @@
         @govukInput(
             InputViewModel(
                 field = form("schemeName"),
-                label = LabelViewModel(messages("pensionSchemeDetails.schemeName")).asPageHeading(LabelSize.Medium)
+                label = LabelViewModel(messages("pensionSchemeDetails.schemeName")).withCssClass("govuk-label--m")
             )
             .withWidth(Fixed10)
         )
@@ -49,13 +49,11 @@
         @govukInput(
             InputViewModel(
                 field = form("schemeTaxRef"),
-                label = LabelViewModel(messages("pensionSchemeDetails.schemeTaxRef")).asPageHeading(LabelSize.Medium)
+                label = LabelViewModel(messages("pensionSchemeDetails.schemeTaxRef")).withCssClass("govuk-label--m")
             ).withHint(HintViewModel(messages("pensionSchemeDetails.schemeTaxRef.hint")))
             .withWidth(Fixed10)
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }

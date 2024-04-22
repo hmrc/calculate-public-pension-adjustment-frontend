@@ -20,38 +20,39 @@ import config.FrontendAppConfig
 import controllers.actions.IdentifierAction
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.{SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class AuthController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   config: FrontendAppConfig,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
+  submissionDataService: SubmissionDataService,
   identify: IdentifierAction
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
-  def signOut(): Action[AnyContent] = identify.async { implicit request =>
-    sessionRepository
-      .clear(request.userId)
-      .map { _ =>
-        Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url)))
-      }
-  }
+  def signOut(): Action[AnyContent] = Action(
+    Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url)))
+  )
 
   def signOutUnauthorised(): Action[AnyContent] = Action(
     Redirect(config.signOutUrl, Map("continue" -> Seq(config.redirectToStartPage)))
   )
 
   def sessionTimeout(): Action[AnyContent] = identify.async { implicit request =>
-    sessionRepository
-      .clear(request.userId)
-      .map { _ =>
-        Redirect(config.exitSurveyUrl)
-      }
+    if (request.authenticated)
+      Future.successful(
+        Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url)))
+      )
+    else
+      for {
+        _ <- userDataService.clear()
+        _ <- submissionDataService.clear()
+      } yield Redirect(config.exitSurveyUrl)
   }
 }

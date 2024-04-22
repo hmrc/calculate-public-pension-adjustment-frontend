@@ -17,7 +17,8 @@
 @this(
 layout: templates.Layout,
 govukSummaryList: GovukSummaryList,
-govukButton: GovukButton
+govukButton: GovukButton,
+continueButtonWithLink: components.ContinueButtonWithLink
 )
 
 @(maybeFlexiPeriodEndDateRowsStatus: SummaryList, subHeadingMessageKey: String, continueURL:Call)(implicit request: Request[_], messages: Messages)
@@ -32,8 +33,5 @@ govukButton: GovukButton
 
 
 
-@govukButton(
-ButtonViewModel(messages("site.continue"))
-.asLink(continueURL.url)
-)
+@continueButtonWithLink(continueURL)
 }

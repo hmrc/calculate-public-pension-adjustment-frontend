@@ -19,7 +19,7 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.lifetimeallowance.InternationalEnhancementReferenceFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -28,7 +28,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
+import services.UserDataService
 import views.html.lifetimeallowance.InternationalEnhancementReferenceView
 
 import scala.concurrent.Future
@@ -81,9 +81,9 @@ class InternationalEnhancementReferenceControllerSpec extends SpecBase with Mock
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockUserDataService = mock[UserDataService]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val userAnswers: UserAnswers =
         emptyUserAnswers
@@ -91,7 +91,7 @@ class InternationalEnhancementReferenceControllerSpec extends SpecBase with Mock
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[UserDataService].toInstance(mockUserDataService)
           )
           .build()
 

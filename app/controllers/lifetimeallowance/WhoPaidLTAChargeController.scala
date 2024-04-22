@@ -24,7 +24,7 @@ import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.WhoPaidLTAChargePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.lifetimeallowance.WhoPaidLTAChargeView
 
@@ -32,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class WhoPaidLTAChargeController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -65,7 +65,7 @@ class WhoPaidLTAChargeController @Inject() (
               updatedAnswers <- Future.fromTry(request.userAnswers.set(WhoPaidLTAChargePage, value))
               redirectUrl     = WhoPaidLTAChargePage.navigate(mode, updatedAnswers).url
               answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
   }

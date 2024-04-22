@@ -24,7 +24,7 @@ import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.FlexiAccessDefinedContributionAmountView
 
@@ -36,7 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class FlexiAccessDefinedContributionAmountController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -77,7 +77,7 @@ class FlexiAccessDefinedContributionAmountController @Inject() (
                 Future.fromTry(request.userAnswers.set(FlexiAccessDefinedContributionAmountPage(period), value))
               redirectUrl     = FlexiAccessDefinedContributionAmountPage(period).navigate(mode, updatedAnswers).url
               answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
     }
@@ -85,7 +85,8 @@ class FlexiAccessDefinedContributionAmountController @Inject() (
   private def getStartEndDate(period: Period, flexibleStartDate: Option[LocalDate])(implicit
     messages: Messages
   ): String = {
-    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
+    val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
 
     def normalDateFormatter =
       flexibleStartDate match {

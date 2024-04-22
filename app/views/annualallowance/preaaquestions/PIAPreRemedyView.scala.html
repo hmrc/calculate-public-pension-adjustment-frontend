@@ -22,7 +22,8 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
 @(form: Form[_], mode: Mode, period : Period)(implicit request: Request[_], messages: Messages)
@@ -53,11 +54,10 @@
                     .withCssClass("govuk-currency-input__inner__input")
                     .withPrefix(PrefixOrSuffix(content = Text("£")))
                     .withHint(HintViewModel(HtmlContent(contentHint)))
+                    .withInputMode("numeric")
         )
 
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }

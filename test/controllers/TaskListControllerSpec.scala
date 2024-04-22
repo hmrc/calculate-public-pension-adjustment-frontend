@@ -17,7 +17,7 @@
 package controllers
 
 import base.SpecBase
-import models.UserAnswers
+import models.{Done, UserAnswers}
 import models.tasklist.{SectionGroupViewModel, SectionStatus, SectionViewModel, TaskListViewModel}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -26,8 +26,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, _}
-import repositories.SessionRepository
-import services.TaskListService
+import services.{TaskListService, UserDataService}
 
 import scala.concurrent.Future
 class TaskListControllerSpec extends SpecBase with MockitoSugar {
@@ -40,15 +39,15 @@ class TaskListControllerSpec extends SpecBase with MockitoSugar {
 
     "must render a task list with sections containing correct names links and statuses" in {
 
-      val mockSessionRepository = mock[SessionRepository]
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      val mockUserDataService = mock[UserDataService]
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val mockTaskListService: TaskListService = whenAllSectionsAre(SectionStatus.Completed)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[UserDataService].toInstance(mockUserDataService),
             bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()

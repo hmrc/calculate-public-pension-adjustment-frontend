@@ -85,6 +85,8 @@ class StopPayingPublicPensionPageSpec extends PageBehaviours with Matchers {
     "must navigate to CYA page on submit" in {
 
       val userAnswers = emptyUserAnswers
+        .set(FlexiblyAccessedPensionPage, false)
+        .get
         .set(StopPayingPublicPensionPage, LocalDate.of(2020, 1, 1))
         .success
         .value
@@ -92,6 +94,18 @@ class StopPayingPublicPensionPageSpec extends PageBehaviours with Matchers {
       val result = StopPayingPublicPensionPage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(result, "/annual-allowance/setup-check-answers")
+    }
+
+    "must navigate to flexi access start date page on submit" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(StopPayingPublicPensionPage, LocalDate.of(2020, 1, 1))
+        .success
+        .value
+
+      val result = StopPayingPublicPensionPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(result, "/annual-allowance/change-flexibly-accessed")
     }
   }
 }

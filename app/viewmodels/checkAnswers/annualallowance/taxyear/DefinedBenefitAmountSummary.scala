@@ -34,8 +34,10 @@ object DefinedBenefitAmountSummary {
     messages: Messages
   ): Option[SummaryListRow] =
     answers.get(DefinedBenefitAmountPage(period)).map { answer =>
-      val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH)
-      val startEndDate: String = period.start.format(formatter) + " to " + period.end.format(formatter)
+      val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
+      val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+      val startEndDate: String =
+        period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
         key = messages("definedBenefitAmount.checkYourAnswersLabel", startEndDate),

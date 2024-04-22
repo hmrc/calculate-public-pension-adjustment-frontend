@@ -23,7 +23,7 @@ import models.{Mode, Period}
 import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.MemberMoreThanOnePensionView
 
@@ -32,7 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class MemberMoreThanOnePensionController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -69,7 +69,7 @@ class MemberMoreThanOnePensionController @Inject() (
                 updatedAnswers <- Future.fromTry(request.userAnswers.set(MemberMoreThanOnePensionPage(period), value))
                 redirectUrl     = MemberMoreThanOnePensionPage(period).navigate(mode, updatedAnswers).url
                 answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-                _              <- sessionRepository.set(answersWithNav)
+                _              <- userDataService.set(answersWithNav)
               } yield Redirect(redirectUrl)
           )
       } else { Future.successful(BadRequest(view(form.withGlobalError("error.invalid_aa_period"), mode, period))) }

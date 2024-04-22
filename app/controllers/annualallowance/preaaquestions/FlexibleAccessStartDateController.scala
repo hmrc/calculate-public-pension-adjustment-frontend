@@ -19,20 +19,22 @@ package controllers.annualallowance.preaaquestions
 import controllers.actions._
 import forms.annualallowance.preaaquestions.FlexibleAccessStartDateFormProvider
 import models.Mode
+import models.requests.DataRequest
 import models.tasklist.sections.PreAASection
-import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
+import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, StopPayingPublicPensionPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.preaaquestions.FlexibleAccessStartDateView
 
+import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class FlexibleAccessStartDateController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
+  userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -43,9 +45,12 @@ class FlexibleAccessStartDateController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  def form = formProvider()
+  private val FLEXIBLE_ACCESS_DATE_MAX_YEAR  = 2023
+  private val FLEXIBLE_ACCESS_DATE_MAX_MONTH = 4
+  private val FLEXIBLE_ACCESS_DATE_MAX_DAY   = 5
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val form         = formProvider(getFlexibleAccessDateMax(request))
     val preparedForm = request.userAnswers.get(FlexibleAccessStartDatePage) match {
       case None        => form
       case Some(value) => form.fill(value)
@@ -56,7 +61,7 @@ class FlexibleAccessStartDateController @Inject() (
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      form
+      formProvider(getFlexibleAccessDateMax(request))
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
@@ -65,8 +70,19 @@ class FlexibleAccessStartDateController @Inject() (
               updatedAnswers <- Future.fromTry(request.userAnswers.set(FlexibleAccessStartDatePage, value))
               redirectUrl     = FlexibleAccessStartDatePage.navigate(mode, updatedAnswers).url
               answersWithNav  = PreAASection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- sessionRepository.set(answersWithNav)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
+  }
+
+  private def getFlexibleAccessDateMax(request: DataRequest[AnyContent]): LocalDate = {
+    var flexibleAccessDateMax =
+      LocalDate.of(FLEXIBLE_ACCESS_DATE_MAX_YEAR, FLEXIBLE_ACCESS_DATE_MAX_MONTH, FLEXIBLE_ACCESS_DATE_MAX_DAY)
+
+    if (request.userAnswers.get(StopPayingPublicPensionPage).isDefined) {
+      flexibleAccessDateMax = request.userAnswers.get(StopPayingPublicPensionPage).get
+    }
+
+    flexibleAccessDateMax
   }
 }
