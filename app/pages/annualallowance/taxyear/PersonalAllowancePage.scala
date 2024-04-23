@@ -21,14 +21,16 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
+case class PersonalAllowancePage(period: Period) extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "totalIncome"
+  override def toString: String = "personalAllowance"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+    controllers.annualallowance.taxyear.routes.TaxReliefController.onPageLoad(NormalMode, period)
+
+  }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)

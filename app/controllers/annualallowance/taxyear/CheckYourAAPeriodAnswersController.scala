@@ -74,7 +74,9 @@ class CheckYourAAPeriodAnswersController @Inject() (
               DefinedBenefitAmountSummary.row(request.userAnswers, period),
               ThresholdIncomeSummary.row(request.userAnswers, period),
               AdjustedIncomeSummary.row(request.userAnswers, period),
-              TotalIncomeSummary.row(request.userAnswers, period)
+              TotalIncomeSummary.row(request.userAnswers, period),
+              PersonalAllowanceSummary.row(request.userAnswers, period),
+              TaxReliefSummary.row(request.userAnswers, period)
             )
         ).flatten
 
@@ -89,7 +91,9 @@ class CheckYourAAPeriodAnswersController @Inject() (
               DefinedBenefitAmountSummary.row(request.userAnswers, period),
               ThresholdIncomeSummary.row(request.userAnswers, period),
               AdjustedIncomeSummary.row(request.userAnswers, period),
-              TotalIncomeSummary.row(request.userAnswers, period)
+              TotalIncomeSummary.row(request.userAnswers, period),
+              PersonalAllowanceSummary.row(request.userAnswers, period),
+              TaxReliefSummary.row(request.userAnswers, period)
             )
         ).flatten
 
@@ -103,7 +107,9 @@ class CheckYourAAPeriodAnswersController @Inject() (
               DefinedContribution2016PostAmountSummary.row(request.userAnswers),
               DefinedBenefit2016PreAmountSummary.row(request.userAnswers),
               DefinedBenefit2016PostAmountSummary.row(request.userAnswers),
-              TotalIncomeSummary.row(request.userAnswers, period)
+              TotalIncomeSummary.row(request.userAnswers, period),
+              PersonalAllowanceSummary.row(request.userAnswers, period),
+              TaxReliefSummary.row(request.userAnswers, period)
             )
         ).flatten
 
@@ -119,7 +125,9 @@ class CheckYourAAPeriodAnswersController @Inject() (
               DefinedContribution2016PostFlexiAmountSummary.row(request.userAnswers),
               DefinedBenefit2016PreAmountSummary.row(request.userAnswers),
               DefinedBenefit2016PostAmountSummary.row(request.userAnswers),
-              TotalIncomeSummary.row(request.userAnswers, period)
+              TotalIncomeSummary.row(request.userAnswers, period),
+              PersonalAllowanceSummary.row(request.userAnswers, period),
+              TaxReliefSummary.row(request.userAnswers, period)
             )
         ).flatten
 
