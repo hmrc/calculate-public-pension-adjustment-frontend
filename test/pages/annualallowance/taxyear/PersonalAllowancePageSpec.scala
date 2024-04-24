@@ -32,7 +32,7 @@ class PersonalAllowancePageSpec extends PageBehaviours {
     "must Navigate correctly in normal mode" - {
 
       "to TaxReliefPage page when answered" in {
-        val ua = emptyUserAnswers
+        val ua     = emptyUserAnswers
           .set(
             PersonalAllowancePage(Period._2018),
             BigInt(100)
@@ -46,7 +46,7 @@ class PersonalAllowancePageSpec extends PageBehaviours {
     }
 
     "must Navigate correctly to CYA in check mode" in {
-      val ua = emptyUserAnswers
+      val ua     = emptyUserAnswers
         .set(
           PersonalAllowancePage(Period._2018),
           BigInt(100)

@@ -36,13 +36,14 @@ import scala.concurrent.Future
 class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new PersonalAllowanceFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt(0)
 
-  lazy val personalAllowanceRoute = controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, Period._2018).url
+  lazy val personalAllowanceRoute =
+    controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, Period._2018).url
 
   "PersonalAllowance Controller" - {
 
@@ -76,7 +77,10 @@ class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -118,7 +122,10 @@ class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
   }

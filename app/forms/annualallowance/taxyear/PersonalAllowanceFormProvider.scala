@@ -25,7 +25,11 @@ class PersonalAllowanceFormProvider @Inject() extends Mappings {
 
   def apply(): Form[BigInt] =
     Form(
-      "value" -> bigInt("personalAllowance.error.required", "personalAllowance.error.wholeNumber", "personalAllowance.error.nonNumeric")
+      "value" -> bigInt(
+        "personalAllowance.error.required",
+        "personalAllowance.error.wholeNumber",
+        "personalAllowance.error.nonNumeric"
+      )
         .verifying(inRange[BigInt](0, BigInt("999999999"), "personalAllowance.error.outOfRange"))
     )
 }

@@ -26,19 +26,17 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object PersonalAllowanceSummary  {
+object PersonalAllowanceSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(PersonalAllowancePage(period)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "personalAllowance.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(currencyFormat(answer))),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.PersonalAllowanceController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("personalAllowance.change.hidden"))
-          )
+    answers.get(PersonalAllowancePage(period)).map { answer =>
+      SummaryListRowViewModel(
+        key = "personalAllowance.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.PersonalAllowanceController.onPageLoad(CheckMode, period).url)
+            .withVisuallyHiddenText(messages("personalAllowance.change.hidden"))
         )
+      )
     }
 }

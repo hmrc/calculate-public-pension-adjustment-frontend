@@ -41,15 +41,15 @@ class PersonalAllowanceFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "personalAllowance.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "personalAllowance.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "personalAllowance.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
       form,
       fieldName,
-      minimum       = minimum,
-      maximum       = maximum,
+      minimum = minimum,
+      maximum = maximum,
       expectedError = FormError(fieldName, "personalAllowance.error.outOfRange", Seq(minimum, maximum))
     )
 

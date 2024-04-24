@@ -26,19 +26,17 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object TaxReliefSummary  {
+object TaxReliefSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(TaxReliefPage(period)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "taxRelief.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(currencyFormat(answer))),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.TaxReliefController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("taxRelief.change.hidden"))
-          )
+    answers.get(TaxReliefPage(period)).map { answer =>
+      SummaryListRowViewModel(
+        key = "taxRelief.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.TaxReliefController.onPageLoad(CheckMode, period).url)
+            .withVisuallyHiddenText(messages("taxRelief.change.hidden"))
         )
+      )
     }
 }
