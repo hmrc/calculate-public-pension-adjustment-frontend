@@ -117,13 +117,13 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
 
         }
 
-        "and a user id is retrieved" - {
+        "and a nino is retrieved" - {
 
           "they must succeed with an AuthenticatedIdentifierRequest" in {
 
             val authAction = new OptionalAuthIdentifierAction(
               new FakeAuthConnector(
-                Some(userId) ~ Some("nino") ~ Some(
+                Some("nino") ~ Some(
                   ItmpName(Some("firstN"), Some("middleN"), Some("last"))
                 )
               ),
@@ -140,16 +140,16 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
             )(request)
 
             status(result) mustEqual OK
-            contentAsString(result) mustEqual s"$userId"
+            contentAsString(result) mustEqual "nino"
           }
         }
 
-        "but no user id is retrieved" - {
+        "but nino is retrieved" - {
 
           "they must redirect to the unauthorised page" in {
 
             val authAction = new OptionalAuthIdentifierAction(
-              new FakeAuthConnector(None ~ None ~ None),
+              new FakeAuthConnector(None ~ None),
               bodyParsers(application),
               config(application)
             )

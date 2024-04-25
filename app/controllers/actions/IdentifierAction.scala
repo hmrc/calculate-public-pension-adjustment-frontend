@@ -44,9 +44,9 @@ class OptionalAuthIdentifierAction @Inject() (
     with AuthorisedFunctions
     with Logging {
 
-  private val retrievals = Retrievals.internalId and
+  private val retrievals =
     Retrievals.nino and
-    Retrievals.itmpName
+      Retrievals.itmpName
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] =
     if (config.optionalAuthEnabled) {
@@ -65,9 +65,9 @@ class OptionalAuthIdentifierAction @Inject() (
     val requiredConfidenceLevel = ConfidenceLevel.fromInt(config.requiredAuthConfidenceLevel.toInt).get
 
     authorised(AffinityGroup.Individual and requiredConfidenceLevel and User).retrieve(retrievals) {
-      case Some(userId) ~ Some(_) ~ Some(_) =>
-        block(AuthenticatedIdentifierRequest(request, userId))
-      case _                                =>
+      case Some(nino) ~ Some(_) =>
+        block(AuthenticatedIdentifierRequest(request, nino))
+      case _                    =>
         logger.warn(s"Incomplete retrievals")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
     } recoverWith {
