@@ -16,19 +16,19 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period, UserAnswers}
+import models.{Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
+case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "totalIncome"
+  override def toString: String = "taxRelief"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)

@@ -402,3 +402,13 @@ POST       /annual-allowance/change-2016flexi-pre-pension-input-amount-defined-c
 GET        /previous-claim-continue                        controllers.PreviousClaimContinueController.onPageLoad()
 POST       /previous-claim-continue                        controllers.PreviousClaimContinueController.onSubmit()
 GET        /previous-claim-navigate                         controllers.PreviousClaimContinueController.redirect()
+
+GET        /annual-allowance/:period/total-income/personal-allowance                  controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/total-income/personal-allowance                  controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /change-annual-allowance/:period/total-income/personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /change-annual-allowance/:period/total-income/personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/total-income/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/total-income/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /change-annual-allowance/:period/total-income/tax-relief                        controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /change-annual-allowance/:period/total-income/tax-relief                        controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = CheckMode, period:Period)

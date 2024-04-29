@@ -19,43 +19,43 @@ package pages.annualallowance.taxyear
 import models.{CheckMode, NormalMode, Period}
 import pages.behaviours.PageBehaviours
 
-class TotalIncomePageSpec extends PageBehaviours {
+class TaxReliefPageSpec extends PageBehaviours {
 
-  "TotalIncomePage" - {
+  "TaxReliefPage" - {
 
-    beRetrievable[BigInt](TotalIncomePage(Period._2013))
+    beRetrievable[BigInt](TaxReliefPage(Period._2018))
 
-    beSettable[BigInt](TotalIncomePage(Period._2013))
+    beSettable[BigInt](TaxReliefPage(Period._2018))
 
-    beRemovable[BigInt](TotalIncomePage(Period._2013))
+    beRemovable[BigInt](TaxReliefPage(Period._2018))
 
     "must Navigate correctly in normal mode" - {
 
       "to CYA page when answered" in {
         val ua     = emptyUserAnswers
           .set(
-            TotalIncomePage(Period._2013),
+            TaxReliefPage(Period._2018),
             BigInt(100)
           )
           .success
           .value
-        val result = TotalIncomePage(Period._2013).navigate(NormalMode, ua).url
+        val result = TaxReliefPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2013/total-income/personal-allowance")
+        checkNavigation(result, "/annual-allowance/2018/check-answers")
       }
     }
 
     "must Navigate correctly to CYA in check mode" in {
       val ua     = emptyUserAnswers
         .set(
-          TotalIncomePage(Period._2013),
+          TaxReliefPage(Period._2018),
           BigInt(100)
         )
         .success
         .value
-      val result = TotalIncomePage(Period._2013).navigate(CheckMode, ua).url
+      val result = TaxReliefPage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2013/check-answers")
+      checkNavigation(result, "/annual-allowance/2018/check-answers")
     }
   }
 }

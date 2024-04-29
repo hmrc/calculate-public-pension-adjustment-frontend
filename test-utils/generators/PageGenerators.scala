@@ -25,6 +25,12 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryTaxReliefPage: Arbitrary[TaxReliefPage.type] =
+    Arbitrary(TaxReliefPage)
+
+  implicit lazy val arbitraryPersonalAllowancePage: Arbitrary[PersonalAllowancePage.type] =
+    Arbitrary(PersonalAllowancePage)
+
   implicit lazy val arbitraryPreviousClaimContinuePage: Arbitrary[PreviousClaimContinuePage.type] =
     Arbitrary(PreviousClaimContinuePage)
 
