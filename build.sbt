@@ -6,7 +6,6 @@ import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 lazy val appName: String = "calculate-public-pension-adjustment-frontend"
 
-val bootstrapVersion = "8.5.0"
 val scala2_13_12 = "2.13.12"
 
 ThisBuild / majorVersion := 0
