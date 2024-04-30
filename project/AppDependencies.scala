@@ -28,7 +28,11 @@ object AppDependencies {
     "org.scalacheck"         %% "scalacheck"              % "1.15.4",
     "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-30" % mongoPlay30Version,
     "com.vladsch.flexmark"    % "flexmark-all"            % "0.62.2"
-  ).map(_ % "test, it")
+  )
+
+  val itDependencies = Seq(
+    "uk.gov.hmrc" %% "bootstrap-test-play-30" % bootstrapPlay30Version % Test
+  )
 
   def apply(): Seq[ModuleID] = compile ++ test
 }
