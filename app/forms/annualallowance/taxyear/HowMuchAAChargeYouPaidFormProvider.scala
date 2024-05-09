@@ -31,6 +31,6 @@ class HowMuchAAChargeYouPaidFormProvider @Inject() extends Mappings {
         "howMuchAAChargeYouPaid.error.wholeNumber",
         "howMuchAAChargeYouPaid.error.nonNumeric"
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "howMuchAAChargeYouPaid.error.outOfRange"))
+        .verifying(inRange[BigInt](1, BigInt("999999999"), "howMuchAAChargeYouPaid.error.outOfRange"))
     )
 }
