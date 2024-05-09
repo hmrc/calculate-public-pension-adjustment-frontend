@@ -39,7 +39,7 @@ class HowMuchAAChargeYouPaidControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = BigInt(0)
+  val validAnswer = BigInt(1)
 
   lazy val howMuchAAChargeYouPaidRoute =
     controllers.annualallowance.taxyear.routes.HowMuchAAChargeYouPaidController

@@ -37,7 +37,7 @@ import scala.concurrent.Future
 class HowMuchAAChargeSchemePaidControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = BigInt(0)
+  val validAnswer = BigInt(1)
 
   lazy val howMuchAAChargeSchemePaidRoute =
     controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
