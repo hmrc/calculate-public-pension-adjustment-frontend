@@ -560,7 +560,6 @@ howMuchAAChargeYouPaid.error.nonNumeric = Mae’n rhaid i swm y tâl treth lwfan
 howMuchAAChargeYouPaid.error.required = Nodwch swm y tâl treth lwfans blynyddol a dalwyd gennych rhwng {0}
 howMuchAAChargeYouPaid.error.wholeNumber = Mae’n rhaid i swm y tâl treth lwfans blynyddol a dalwyd gennych gynnwys rhifau 0 i 9 yn unig
 howMuchAAChargeYouPaid.error.outOfRange = Mae’n rhaid i swm y tâl treth lwfans blynyddol a dalwyd gennych fod yn £999,999,999 neu lai
-
 howMuchAAChargeYouPaid.change.hidden = Faint o dâl treth lwfans blynyddol wnaethoch chi ei dalu?
 howMuchAAChargeYouPaid.hint = Mae’n rhaid talgrynnu symiau i lawr i’r bunt agosaf, er enghraifft 2300.
 
