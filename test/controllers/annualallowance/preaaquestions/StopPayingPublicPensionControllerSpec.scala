@@ -21,16 +21,18 @@ import base.SpecBase
 import config.FrontendAppConfig
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import forms.annualallowance.preaaquestions.StopPayingPublicPensionFormProvider
-import models.{Done, Mode, NormalMode, UserAnswers}
+import models.{CheckMode, Done, Mode, NormalMode, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
+import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, FlexiblyAccessedPensionPage, StopPayingPublicPensionPage}
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
+import uk.gov.hmrc.http.HeaderCarrier
 import views.html.annualallowance.preaaquestions.StopPayingPublicPensionView
 
 import scala.concurrent.Future
@@ -45,6 +47,7 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
   val validAnswer: LocalDate = LocalDate.of(2015, 4, 6)
 
   lazy val NormalRoute = preAARoutes.StopPayingPublicPensionController.onPageLoad(NormalMode).url
+  lazy val CheckRoute  = preAARoutes.StopPayingPublicPensionController.onPageLoad(CheckMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
@@ -112,6 +115,54 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
       }
+    }
+
+    "must remove flexibly accessed user answers when on a POST in check mode and flexible accessed page answered" in {
+
+      val userAnswers = UserAnswers("id")
+        .set(
+          FlexiblyAccessedPensionPage,
+          true
+        )
+        .success
+        .value
+        .set(
+          FlexibleAccessStartDatePage,
+          LocalDate.of(2016, 1, 1)
+        )
+        .success
+        .value
+
+      val mockUserDataService = mock[UserDataService]
+
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, CheckRoute)
+            .withFormUrlEncodedBody(
+              "value.day"   -> validAnswer.getDayOfMonth.toString,
+              "value.month" -> validAnswer.getMonthValue.toString,
+              "value.year"  -> validAnswer.getYear.toString
+            )
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(FlexiblyAccessedPensionPage) mustBe None
+        capturedUserAnswers.get(FlexibleAccessStartDatePage) mustBe None
+      }
+
     }
 
     "must return a Bad Request and errors when invalid data is submitted" in {

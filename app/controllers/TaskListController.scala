@@ -17,8 +17,8 @@
 package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{Done, UserAnswers}
-import models.requests.{AuthenticatedIdentifierRequest, DataRequest, OptionalDataRequest}
+import models.Done
+import models.requests.{AuthenticatedIdentifierRequest, DataRequest}
 import models.tasklist.TaskListViewModel
 import play.api.data.Form
 import play.api.data.Forms.ignored

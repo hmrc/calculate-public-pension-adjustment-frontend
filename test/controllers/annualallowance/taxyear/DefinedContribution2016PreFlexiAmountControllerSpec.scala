@@ -18,7 +18,6 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -32,7 +31,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
 import views.html.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountView
-import views.html.helper.form
 
 import java.time.LocalDate
 import scala.concurrent.Future

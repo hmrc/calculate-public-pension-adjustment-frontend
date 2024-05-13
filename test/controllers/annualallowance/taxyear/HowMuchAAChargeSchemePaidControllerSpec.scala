@@ -18,7 +18,7 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.annualallowance.taxyear.{HowMuchAAChargeSchemePaidFormProvider, PayAChargeFormProvider}
+import forms.annualallowance.taxyear.HowMuchAAChargeSchemePaidFormProvider
 import models.{CheckMode, Done, NormalMode, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when

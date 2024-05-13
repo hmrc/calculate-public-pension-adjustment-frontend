@@ -28,8 +28,6 @@ import viewmodels.checkAnswers.annualallowance.taxyear._
 import viewmodels.govuk.summarylist._
 import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView
 
-import java.time.LocalDate
-
 class CheckYourAAPeriodAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,

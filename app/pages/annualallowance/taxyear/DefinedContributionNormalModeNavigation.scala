@@ -20,8 +20,6 @@ import models.{ContributedToDuringRemedyPeriod, NormalMode, Period, UserAnswers}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import play.api.mvc.Call
 
-import java.time.LocalDate
-
 class DefinedContributionNormalModeNavigation(period: Period) {
 
   // noinspection ScalaStyle

@@ -17,15 +17,15 @@
 package connectors
 
 import com.google.inject.Inject
-import config.{FrontendAppConfig, Service}
+import config.Service
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
-import models.{Done, UserAnswers}
+import models.Done
 import models.submission.{SubmissionRequest, SubmissionResponse, Success}
 import play.api.{Configuration, Logging}
 import play.api.http.Status._
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.client.HttpClientV2
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse, StringContextOps, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 

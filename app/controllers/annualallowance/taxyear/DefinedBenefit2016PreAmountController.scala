@@ -27,7 +27,6 @@ import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.DefinedBenefit2016PreAmountView
 
-import java.lang.ProcessBuilder.Redirect
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 

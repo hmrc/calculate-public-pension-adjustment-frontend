@@ -36,7 +36,7 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
 
   private val mockAuditConnector = mock[AuditConnector]
 
-  implicit val ec = ExecutionContext
+  implicit val ec: ExecutionContext.type = ExecutionContext
 
   private val app = GuiceApplicationBuilder()
     .overrides(

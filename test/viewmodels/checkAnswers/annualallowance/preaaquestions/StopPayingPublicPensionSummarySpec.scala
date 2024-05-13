@@ -26,9 +26,6 @@ import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import controllers.annualallowance.preaaquestions.routes
-import views.helpers.ImplicitDateFormatter
-
-import scala.xml.Text
 
 class StopPayingPublicPensionSummarySpec extends AnyFreeSpec with Matchers {
 

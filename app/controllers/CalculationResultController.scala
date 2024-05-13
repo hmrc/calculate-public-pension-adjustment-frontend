@@ -18,11 +18,10 @@ package controllers
 
 import config.FrontendAppConfig
 import controllers.actions._
-import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
-import models.{UserAnswers, submission}
+import models.submission
 import models.submission.SubmissionResponse
 import play.api.data.Form
-import play.api.data.Forms.{ignored, indexedSeq}
+import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.CalculationResultService

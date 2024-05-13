@@ -17,7 +17,7 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
-import models.{PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts}
+import models.PensionSchemeInput2016postAmounts
 import play.api.data.Form
 import play.api.data.Forms._
 

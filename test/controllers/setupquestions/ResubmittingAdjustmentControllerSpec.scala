@@ -24,7 +24,7 @@ import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
+import pages.setupquestions.ResubmittingAdjustmentPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, NormalMode, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{CheckMode, NormalMode, WhoPayingExtraLtaCharge}
 import pages.behaviours.PageBehaviours
 
 class WhoPayingExtraLtaChargeSpec extends PageBehaviours {
