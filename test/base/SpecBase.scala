@@ -198,7 +198,7 @@ trait SpecBase
       .set(PensionSchemeDetailsPage(_2021, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
       .success
       .value
-      .set(PensionSchemeInputAmountsPage(_2021, SchemeIndex(0)), PensionSchemeInputAmounts(BigInt(123), BigInt(123)))
+      .set(PensionSchemeInputAmountsPage(_2021, SchemeIndex(0)), PensionSchemeInputAmounts(BigInt(123)))
       .success
       .value
       .set(PayAChargePage(_2021, SchemeIndex(0)), true)
@@ -219,7 +219,7 @@ trait SpecBase
       .set(WhichSchemePage(_2021, SchemeIndex(1)), "schemeName")
       .success
       .value
-      .set(PensionSchemeInputAmountsPage(_2021, SchemeIndex(1)), PensionSchemeInputAmounts(BigInt(123), BigInt(123)))
+      .set(PensionSchemeInputAmountsPage(_2021, SchemeIndex(1)), PensionSchemeInputAmounts(BigInt(123)))
       .success
       .value
       .set(PayAChargePage(_2021, SchemeIndex(1)), true)
@@ -267,7 +267,7 @@ trait SpecBase
       .set(PensionSchemeDetailsPage(_2022, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
       .success
       .value
-      .set(PensionSchemeInputAmountsPage(_2022, SchemeIndex(0)), PensionSchemeInputAmounts(BigInt(123), BigInt(123)))
+      .set(PensionSchemeInputAmountsPage(_2022, SchemeIndex(0)), PensionSchemeInputAmounts(BigInt(123)))
       .success
       .value
       .set(PayAChargePage(_2022, SchemeIndex(0)), true)

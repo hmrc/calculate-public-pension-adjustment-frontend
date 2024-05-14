@@ -51,7 +51,6 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
     userAnswersId,
     Json.obj(
       PensionSchemeInputAmountsPage.toString -> Json.obj(
-        "originalPIA" -> "value 1",
         "revisedPIA"  -> "value 2"
       ),
       PensionSchemeDetailsPage.toString      -> Json.obj(
@@ -87,7 +86,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(PensionSchemeInputAmountsPage(Period._2018, SchemeIndex(0)), PensionSchemeInputAmounts(1, 2))
+        .set(PensionSchemeInputAmountsPage(Period._2018, SchemeIndex(0)), PensionSchemeInputAmounts(2))
         .success
         .value
 
@@ -102,7 +101,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(PensionSchemeInputAmounts(1, 2)),
+          form.fill(PensionSchemeInputAmounts(2)),
           NormalMode,
           Period._2018,
           SchemeIndex(0),
@@ -131,7 +130,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
       running(application) {
         val request =
           FakeRequest(POST, pensionSchemeInputAmountsRoute)
-            .withFormUrlEncodedBody(("originalPIA", "1"), ("revisedPIA", "2"))
+            .withFormUrlEncodedBody(("revisedPIA", "2"))
 
         val result = route(application, request).value
 
@@ -185,7 +184,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val request   =
           FakeRequest(POST, pensionSchemeInputAmountsRoute)
-            .withFormUrlEncodedBody(("originalPIA", "value 1"), ("revisedPIA", "value 2"))
+            .withFormUrlEncodedBody(("revisedPIA", "value 2"))
 
         val result = route(application, request).value
 

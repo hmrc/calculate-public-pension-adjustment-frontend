@@ -50,7 +50,6 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
     userAnswersId,
     Json.obj(
       PensionSchemeInput2016postAmountsPage.toString -> Json.obj(
-        "originalPIA" -> "value 1",
         "revisedPIA"  -> "value 2"
       ),
       PensionSchemeDetailsPage.toString              -> Json.obj(
@@ -88,7 +87,7 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
       val userAnswers = UserAnswers(userAnswersId)
         .set(
           PensionSchemeInput2016postAmountsPage(Period._2018, SchemeIndex(0)),
-          PensionSchemeInput2016postAmounts(1, 2)
+          PensionSchemeInput2016postAmounts(2)
         )
         .success
         .value
@@ -104,7 +103,7 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(PensionSchemeInput2016postAmounts(1, 2)),
+          form.fill(PensionSchemeInput2016postAmounts(2)),
           NormalMode,
           Period._2018,
           SchemeIndex(0),
@@ -132,7 +131,7 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
       running(application) {
         val request =
           FakeRequest(POST, pensionSchemeInput2016postAmountsRoute)
-            .withFormUrlEncodedBody(("originalPIA", "1"), ("revisedPIA", "2"))
+            .withFormUrlEncodedBody(("revisedPIA", "2"))
 
         val result = route(application, request).value
 
@@ -186,7 +185,7 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val request   =
           FakeRequest(POST, pensionSchemeInput2016postAmountsRoute)
-            .withFormUrlEncodedBody(("originalPIA", "value 1"), ("revisedPIA", "value 2"))
+            .withFormUrlEncodedBody(("revisedPIA", "value 2"))
 
         val result = route(application, request).value
 

@@ -38,7 +38,7 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           PensionSchemeInputAmountsPage(period, schemeIndex),
-          models.PensionSchemeInputAmounts(BigInt("100"), BigInt("100"))
+          models.PensionSchemeInputAmounts(BigInt("100"))
         )
         .get
         .set(
@@ -49,7 +49,7 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
       PensionSchemeInputAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionSchemeInputAmounts.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100 / &pound;100")),
+          value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

@@ -38,7 +38,7 @@ class PensionSchemeInput2016preAmountsPageSpec extends PageBehaviours {
           .value
           .set(
             PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0)),
-            PensionSchemeInput2016preAmounts(BigInt(1), BigInt(1))
+            PensionSchemeInput2016preAmounts(BigInt(1))
           )
           .success
           .value
@@ -59,7 +59,7 @@ class PensionSchemeInput2016preAmountsPageSpec extends PageBehaviours {
         .value
         .set(
           PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0)),
-          PensionSchemeInput2016preAmounts(BigInt(1), BigInt(1))
+          PensionSchemeInput2016preAmounts(BigInt(1))
         )
         .success
         .value
@@ -79,7 +79,7 @@ class PensionSchemeInput2016preAmountsPageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(
           PensionSchemeInput2016preAmountsPage(Period._2016, SchemeIndex(0)),
-          PensionSchemeInput2016preAmounts(BigInt(1), BigInt(1))
+          PensionSchemeInput2016preAmounts(BigInt(1))
         )
         .success
         .value

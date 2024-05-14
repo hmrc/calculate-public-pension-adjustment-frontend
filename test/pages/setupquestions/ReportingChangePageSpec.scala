@@ -142,7 +142,7 @@ class ReportingChangePageSpec extends PageBehaviours {
         PensionSchemeDetails("schemeName", "schemeRef")
       )
       cleanedUserAnswers.get(PensionSchemeInputAmountsPage(_2021, SchemeIndex(0))) mustBe Some(
-        PensionSchemeInputAmounts(BigInt(123), BigInt(123))
+        PensionSchemeInputAmounts(BigInt(123))
       )
       cleanedUserAnswers.get(PayAChargePage(_2021, SchemeIndex(0))) mustBe Some(true)
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2021, SchemeIndex(0))) mustBe Some(WhoPaidAACharge.Both)
@@ -151,7 +151,7 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(AddAnotherSchemePage(_2021, SchemeIndex(0))) mustBe Some(true)
       cleanedUserAnswers.get(WhichSchemePage(_2021, SchemeIndex(1))) mustBe Some("schemeName")
       cleanedUserAnswers.get(PensionSchemeInputAmountsPage(_2021, SchemeIndex(1))) mustBe Some(
-        PensionSchemeInputAmounts(BigInt(123), BigInt(123))
+        PensionSchemeInputAmounts(BigInt(123))
       )
       cleanedUserAnswers.get(PayAChargePage(_2021, SchemeIndex(1))) mustBe Some(true)
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2021, SchemeIndex(1))) mustBe Some(WhoPaidAACharge.Both)
@@ -172,7 +172,7 @@ class ReportingChangePageSpec extends PageBehaviours {
         PensionSchemeDetails("schemeName", "schemeRef")
       )
       cleanedUserAnswers.get(PensionSchemeInputAmountsPage(_2022, SchemeIndex(0))) mustBe Some(
-        PensionSchemeInputAmounts(BigInt(123), BigInt(123))
+        PensionSchemeInputAmounts(BigInt(123))
       )
       cleanedUserAnswers.get(PayAChargePage(_2022, SchemeIndex(0))) mustBe Some(true)
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2022, SchemeIndex(0))) mustBe Some(WhoPaidAACharge.Both)
@@ -330,7 +330,7 @@ class ReportingChangePageSpec extends PageBehaviours {
         PensionSchemeDetails("schemeName", "schemeRef")
       )
       cleanedUserAnswers.get(PensionSchemeInputAmountsPage(_2021, SchemeIndex(0))) mustBe Some(
-        PensionSchemeInputAmounts(BigInt(123), BigInt(123))
+        PensionSchemeInputAmounts(BigInt(123))
       )
       cleanedUserAnswers.get(PayAChargePage(_2021, SchemeIndex(0))) mustBe Some(true)
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2021, SchemeIndex(0))) mustBe Some(WhoPaidAACharge.Both)
@@ -339,7 +339,7 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(AddAnotherSchemePage(_2021, SchemeIndex(0))) mustBe Some(true)
       cleanedUserAnswers.get(WhichSchemePage(_2021, SchemeIndex(1))) mustBe Some("schemeName")
       cleanedUserAnswers.get(PensionSchemeInputAmountsPage(_2021, SchemeIndex(1))) mustBe Some(
-        PensionSchemeInputAmounts(BigInt(123), BigInt(123))
+        PensionSchemeInputAmounts(BigInt(123))
       )
       cleanedUserAnswers.get(PayAChargePage(_2021, SchemeIndex(1))) mustBe Some(true)
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2021, SchemeIndex(1))) mustBe Some(WhoPaidAACharge.Both)
@@ -360,7 +360,7 @@ class ReportingChangePageSpec extends PageBehaviours {
         PensionSchemeDetails("schemeName", "schemeRef")
       )
       cleanedUserAnswers.get(PensionSchemeInputAmountsPage(_2022, SchemeIndex(0))) mustBe Some(
-        PensionSchemeInputAmounts(BigInt(123), BigInt(123))
+        PensionSchemeInputAmounts(BigInt(123))
       )
       cleanedUserAnswers.get(PayAChargePage(_2022, SchemeIndex(0))) mustBe Some(true)
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2022, SchemeIndex(0))) mustBe Some(WhoPaidAACharge.Both)

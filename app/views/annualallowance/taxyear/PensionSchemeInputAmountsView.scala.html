@@ -53,29 +53,33 @@
         <span class="govuk-caption-xl">@messages("annualAllowance.period.caption."+{period.toString})</span>
         <h1 class="govuk-heading-xl">@messages("pensionSchemeInputAmounts.heading", schemeName, startEndDate)</h1>
 
-        @govukInput(
-            InputViewModel(
-                field = form("originalPIA"),
-                label = LabelViewModel(messages("pensionSchemeInputAmounts.originalPIA", period, schemeIndex)).withCssClass("govuk-label--m")
+        @if(period.start.getYear == 2022) {
+            @govukInput(
+                InputViewModel(
+                    field = form("revisedPIA"),
+                    label = LabelViewModel(messages("pensionSchemeInputAmounts.originalPIA", period, schemeIndex)).withCssClass("govuk-label--m")
 
-            ).withHint(HintViewModel(HtmlContent(contentHintForOriginalPIA)))
-            .withCssClass("govuk-currency-input__inner__input")
-            .withPrefix(PrefixOrSuffix(content = Text("£")))
-            .withWidth(Fixed10)
-            .withInputMode("numeric")
-        )
-
-        @govukInput(
+                ).withHint(HintViewModel(HtmlContent(contentHintForOriginalPIA)))
+                .withCssClass("govuk-currency-input__inner__input")
+                .withPrefix(PrefixOrSuffix(content = Text("£")))
+                .withWidth(Fixed10)
+                .withInputMode("numeric")
+            )
+        }else{
+            @govukInput(
             InputViewModel(
-                field = form("revisedPIA"),
-                label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA", period, schemeIndex)).withCssClass("govuk-label--m")
+            field = form("revisedPIA"),
+            label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA", period, schemeIndex)).withCssClass("govuk-label--m")
             ).withHint(HintViewModel(HtmlContent(contentHintForRevisedPIA)))
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)
             .withInputMode("numeric")
-        )
+            )
 
-        @continueButton()
+            @continueButton()
+        }
+
+
     }
 }

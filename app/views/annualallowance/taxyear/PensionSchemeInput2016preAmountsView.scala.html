@@ -28,15 +28,6 @@
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
 
-@contentHintForOriginalPIA = {
-
-    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.originalPIA.message1")</p>
-    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.originalPIA.message2")</p>
-    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.originalPIA.message3")</p>
-
-    @messages("pensionSchemeInputAmounts.originalPIA.hint1")
-}
-
 @contentHintForRevisedPIA = {
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message1")</p>
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message2")</p>
@@ -53,16 +44,6 @@
 
         <span class="govuk-caption-xl">@messages("annualAllowance.period.caption.2016pre")</span>
         <h1 class="govuk-heading-xl"> @messages("pensionSchemeInputAmounts.heading.2016-pre", schemeName)</h1>
-
-        @govukInput(
-            InputViewModel(
-                field = form("originalPIA"),
-                label = LabelViewModel(messages("pensionSchemeInputAmounts.originalPIA", period, schemeIndex)).withCssClass("govuk-label--m")
-            ).withHint(HintViewModel(HtmlContent(contentHintForOriginalPIA)))
-            .withCssClass("govuk-currency-input__inner__input")
-            .withPrefix(PrefixOrSuffix(content = Text("£")))
-            .withWidth(Fixed10)
-        )
 
         @govukInput(
             InputViewModel(

@@ -155,7 +155,7 @@ class CalculationResultService @Inject() (
           val oPensionSchemeInputAmounts: Option[PensionSchemeInputAmounts] =
             if (period == Period._2016) {
               userAnswers.get(PensionSchemeInput2016preAmountsPage(period, SchemeIndex(v))).map { pia =>
-                PensionSchemeInputAmounts(pia.originalPIA, pia.revisedPIA)
+                PensionSchemeInputAmounts(pia.revisedPIA)
               }
             } else {
               userAnswers.get(PensionSchemeInputAmountsPage(period, SchemeIndex(v)))
@@ -176,10 +176,8 @@ class CalculationResultService @Inject() (
                 TaxYearScheme(
                   pensionSchemeDetails.schemeName,
                   pensionSchemeDetails.schemeTaxRef,
-                  pensionSchemeInputAmounts.originalPIA.toInt,
                   pensionSchemeInputAmounts.revisedPIA.toInt,
                   oChargePaidByScheme.getOrElse(0),
-                  oPensionSchemeInput2016PostAmounts.map(_.originalPIA.toInt),
                   oPensionSchemeInput2016PostAmounts.map(_.revisedPIA.toInt)
                 )
               )

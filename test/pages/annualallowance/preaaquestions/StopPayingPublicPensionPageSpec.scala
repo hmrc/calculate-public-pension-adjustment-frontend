@@ -58,8 +58,8 @@ class StopPayingPublicPensionPageSpec extends PageBehaviours with Matchers {
   "Clean up" - {
 
     "must remove period answers and navigation state for periods on change" in {
-      val inputs2019 = PensionSchemeInputAmounts(1, 2)
-      val inputs2020 = PensionSchemeInputAmounts(3, 4)
+      val inputs2019 = PensionSchemeInputAmounts(2)
+      val inputs2020 = PensionSchemeInputAmounts(4)
 
       val userAnswersWithPeriods = emptyUserAnswers
         .set(PensionSchemeInputAmountsPage(Period._2019, SchemeIndex(0)), inputs2019)

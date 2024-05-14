@@ -38,7 +38,7 @@ class PensionSchemeInput2016postAmountsSummarySpec extends AnyFreeSpec with Matc
       val userAnswers = UserAnswers("id")
         .set(
           PensionSchemeInput2016postAmountsPage(period, schemeIndex),
-          models.PensionSchemeInput2016postAmounts(BigInt("100"), BigInt("100"))
+          models.PensionSchemeInput2016postAmounts(BigInt("100"))
         )
         .get
         .set(
@@ -49,7 +49,7 @@ class PensionSchemeInput2016postAmountsSummarySpec extends AnyFreeSpec with Matc
       PensionSchemeInput2016postAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionSchemeInputAmounts.2016-post.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100 / &pound;100")),
+          value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
