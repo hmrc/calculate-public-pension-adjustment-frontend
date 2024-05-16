@@ -51,7 +51,7 @@ class CalculationResultService @Inject() (
                              )
     } yield calculationResponse
 
-  def submitUserAnswersAndCalculation(answers: UserAnswers, sessionId: String)(implicit
+  def submitUserAnswersAndCalculation(answers: UserAnswers, userId: String)(implicit
     hc: HeaderCarrier
   ): Future[SubmissionResponse] = {
     val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
@@ -59,19 +59,19 @@ class CalculationResultService @Inject() (
       calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
       submissionResponse  <-
         submissionsConnector.sendSubmissionRequest(
-          SubmissionRequest(calculationInputs, Some(calculationResponse), sessionId, answers.uniqueId)
+          SubmissionRequest(calculationInputs, Some(calculationResponse), userId, answers.uniqueId)
         )
     } yield submissionResponse
   }
 
-  def submitUserAnswersWithNoCalculation(answers: UserAnswers, sessionId: String)(implicit
+  def submitUserAnswersWithNoCalculation(answers: UserAnswers, userId: String)(implicit
     hc: HeaderCarrier
   ): Future[SubmissionResponse] = {
     val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
     for {
       submissionResponse <-
         submissionsConnector.sendSubmissionRequest(
-          SubmissionRequest(calculationInputs, None, sessionId, answers.uniqueId)
+          SubmissionRequest(calculationInputs, None, userId, answers.uniqueId)
         )
     } yield submissionResponse
   }
