@@ -27,7 +27,7 @@ class PensionSchemeInput2016postAmountsFormProvider @Inject() extends Mappings {
 
   def apply(): Form[PensionSchemeInput2016postAmounts] = Form(
     mapping(
-      "revisedPIA"  -> bigInt(
+      "revisedPIA" -> bigInt(
         "pensionSchemeInputAmounts.error.revisedPIA.required",
         "pensionSchemeInputAmounts.error.revisedPIA.wholeNumber",
         "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric"

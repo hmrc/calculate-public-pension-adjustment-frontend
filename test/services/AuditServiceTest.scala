@@ -97,7 +97,7 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
                   0,
                   List(
                     TaxYearScheme("Scheme 1", "00348916RT", 0, 0, None),
-                    TaxYearScheme("Scheme 2", "00348916RG",25000, 0, None)
+                    TaxYearScheme("Scheme 2", "00348916RG", 25000, 0, None)
                   ),
                   Period._2018,
                   Some(BelowThreshold)

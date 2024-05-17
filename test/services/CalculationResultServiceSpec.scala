@@ -1622,7 +1622,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT",44000, 0, None)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 44000, 0, None)),
             Period._2022,
             Some(BelowThreshold)
           )
@@ -2023,7 +2023,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   1000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT",  40000, 1000, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
                   Period._2018,
                   Some(BelowThreshold)
                 ),
@@ -2146,7 +2146,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   700,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RP",  0, 0, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, None)),
                   Period._2020,
                   Some(BelowThreshold)
                 )

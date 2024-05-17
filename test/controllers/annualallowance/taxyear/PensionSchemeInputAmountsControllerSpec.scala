@@ -51,7 +51,7 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
     userAnswersId,
     Json.obj(
       PensionSchemeInputAmountsPage.toString -> Json.obj(
-        "revisedPIA"  -> "value 2"
+        "revisedPIA" -> "value 2"
       ),
       PensionSchemeDetailsPage.toString      -> Json.obj(
         "schemeName"   -> "Some Scheme",

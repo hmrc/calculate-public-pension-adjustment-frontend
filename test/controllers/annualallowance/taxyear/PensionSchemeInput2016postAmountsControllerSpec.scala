@@ -50,7 +50,7 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
     userAnswersId,
     Json.obj(
       PensionSchemeInput2016postAmountsPage.toString -> Json.obj(
-        "revisedPIA"  -> "value 2"
+        "revisedPIA" -> "value 2"
       ),
       PensionSchemeDetailsPage.toString              -> Json.obj(
         "schemeName"   -> "Some Scheme",
