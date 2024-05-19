@@ -111,6 +111,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
       when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
       when(mockSubmitBackendService.clearUserAnswers()(any())) thenReturn Future.successful(Done)
+      when(mockSubmitBackendService.clearCalcUserAnswers()(any())) thenReturn Future.successful(Done)
       when(mockSubmitBackendService.clearSubmissions()(any())) thenReturn Future.successful(Done)
       when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
 

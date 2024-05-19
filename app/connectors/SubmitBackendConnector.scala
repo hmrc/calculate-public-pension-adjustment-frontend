@@ -18,10 +18,9 @@ package connectors
 
 import config.Service
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
-import models.{Done, SubmissionStatusResponse, UserAnswers}
+import models.Done
 import play.api.Configuration
-import play.api.http.Status.{NOT_FOUND, NO_CONTENT, OK}
-import play.api.libs.json.Json
+import play.api.http.Status.NO_CONTENT
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
@@ -53,9 +52,31 @@ class SubmitBackendConnector @Inject() (config: Configuration, httpClient: HttpC
         Future.successful(response.body.toBoolean)
       }
 
+  def submissionsPresentInSubmissionServiceWithId(id: String)(implicit hc: HeaderCarrier): Future[Boolean] =
+    httpClient
+      .get(url"$baseUrl/submit-public-pension-adjustment/submissions-present-with-id/$id")
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "SubmitBackendConnector on submissionsPresentInSubmissionServiceWithId")
+      .flatMap { response =>
+        Future.successful(response.body.toBoolean)
+      }
+
   def clearUserAnswers()(implicit hc: HeaderCarrier): Future[Done] =
     httpClient
       .delete(url"$baseUrl/submit-public-pension-adjustment/user-answers")
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "SubmitBackendConnector on clear")
+      .flatMap { response =>
+        if (response.status == NO_CONTENT) {
+          Future.successful(Done)
+        } else {
+          Future.failed(UpstreamErrorResponse("", response.status))
+        }
+      }
+
+  def clearCalcUserAnswers()(implicit hc: HeaderCarrier): Future[Done] =
+    httpClient
+      .delete(url"$baseUrl/submit-public-pension-adjustment/calc-user-answers")
       .execute[HttpResponse]
       .logFailureReason(connectorName = "SubmitBackendConnector on clear")
       .flatMap { response =>
