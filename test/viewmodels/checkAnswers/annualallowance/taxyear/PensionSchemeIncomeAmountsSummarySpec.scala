@@ -32,7 +32,7 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the revised summary row" in {
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
@@ -48,7 +48,7 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
         .get
       PensionSchemeInputAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
-          key = "pensionSchemeInputAmounts.checkYourAnswersLabel",
+          key = "pensionSchemeInputAmounts.checkYourAnswersLabelRevised",
           value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
@@ -61,6 +61,36 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "row" - {
+      "when value is entered, return the original summary row" in {
+        val period      = Period._2018
+        val schemeIndex = SchemeIndex(0)
+        val userAnswers = UserAnswers("id")
+          .set(
+            PensionSchemeInputAmountsPage(period, schemeIndex),
+            models.PensionSchemeInputAmounts(BigInt("100"))
+          )
+          .get
+          .set(
+            PensionSchemeDetailsPage(period, schemeIndex),
+            models.PensionSchemeDetails("SomeScheme", "01234567TR")
+          )
+          .get
+        PensionSchemeInputAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+          SummaryListRowViewModel(
+            key = "pensionSchemeInputAmounts.checkYourAnswersLabel",
+            value = ValueViewModel(HtmlContent("&pound;100")),
+            actions = Seq(
+              ActionItemViewModel(
+                "site.change",
+                routes.PensionSchemeInputAmountsController.onPageLoad(CheckMode, period, schemeIndex).url
+              )
+                .withVisuallyHiddenText("pensionSchemeInputAmounts.change.hidden")
+            )
+          )
+        )
+      }
+
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
@@ -69,4 +99,5 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
     }
   }
 
+}
 }
