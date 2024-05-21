@@ -38,7 +38,11 @@ object PensionSchemeInputAmountsSummary {
       }
 
       SummaryListRowViewModel(
-        key = messages(if (period.start.getYear == 2022) "pensionSchemeInputAmounts.checkYourAnswersLabel" else "pensionSchemeInputAmounts.checkYourAnswersLabelRevised", schemeName.get),
+        key = messages(
+          if (period.start.getYear == 2022) "pensionSchemeInputAmounts.checkYourAnswersLabel"
+          else "pensionSchemeInputAmounts.checkYourAnswersLabelRevised",
+          schemeName.get
+        ),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(

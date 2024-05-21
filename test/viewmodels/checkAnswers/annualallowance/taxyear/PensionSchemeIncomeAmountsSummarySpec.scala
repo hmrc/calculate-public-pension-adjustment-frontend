@@ -63,7 +63,7 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
 
     "row" - {
       "when value is entered, return the original summary row" in {
-        val period      = Period._2018
+        val period      = Period._2023
         val schemeIndex = SchemeIndex(0)
         val userAnswers = UserAnswers("id")
           .set(
@@ -91,13 +91,13 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
         )
       }
 
-    "when answer unavailable, return empty" in {
-      val period      = Period._2018
-      val schemeIndex = SchemeIndex(0)
-      val userAnswers = UserAnswers("id")
-      PensionSchemeInputAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      "when answer unavailable, return empty" in {
+        val period      = Period._2018
+        val schemeIndex = SchemeIndex(0)
+        val userAnswers = UserAnswers("id")
+        PensionSchemeInputAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      }
     }
-  }
 
-}
+  }
 }
