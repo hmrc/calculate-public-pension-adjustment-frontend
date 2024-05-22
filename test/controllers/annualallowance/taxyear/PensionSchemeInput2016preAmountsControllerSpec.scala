@@ -50,8 +50,7 @@ class PensionSchemeInput2016preAmountsControllerSpec extends SpecBase with Mocki
     userAnswersId,
     Json.obj(
       PensionSchemeInput2016preAmountsPage.toString -> Json.obj(
-        "originalPIA" -> "value 1",
-        "revisedPIA"  -> "value 2"
+        "revisedPIA" -> "value 2"
       ),
       PensionSchemeDetailsPage.toString             -> Json.obj(
         "schemeName"   -> "Some Scheme",
@@ -86,7 +85,7 @@ class PensionSchemeInput2016preAmountsControllerSpec extends SpecBase with Mocki
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId)
-        .set(PensionSchemeInput2016preAmountsPage(Period._2018, SchemeIndex(0)), PensionSchemeInput2016preAmounts(1, 2))
+        .set(PensionSchemeInput2016preAmountsPage(Period._2018, SchemeIndex(0)), PensionSchemeInput2016preAmounts(2))
         .success
         .value
 
@@ -101,7 +100,7 @@ class PensionSchemeInput2016preAmountsControllerSpec extends SpecBase with Mocki
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(PensionSchemeInput2016preAmounts(1, 2)),
+          form.fill(PensionSchemeInput2016preAmounts(2)),
           NormalMode,
           Period._2018,
           SchemeIndex(0),
@@ -129,7 +128,7 @@ class PensionSchemeInput2016preAmountsControllerSpec extends SpecBase with Mocki
       running(application) {
         val request =
           FakeRequest(POST, pensionSchemeInput2016preAmountsRoute)
-            .withFormUrlEncodedBody(("originalPIA", "1"), ("revisedPIA", "2"))
+            .withFormUrlEncodedBody(("revisedPIA", "2"))
 
         val result = route(application, request).value
 
@@ -183,7 +182,7 @@ class PensionSchemeInput2016preAmountsControllerSpec extends SpecBase with Mocki
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val request   =
           FakeRequest(POST, pensionSchemeInput2016preAmountsRoute)
-            .withFormUrlEncodedBody(("originalPIA", "value 1"), ("revisedPIA", "value 2"))
+            .withFormUrlEncodedBody(("revisedPIA", "value 2"))
 
         val result = route(application, request).value
 

@@ -31,14 +31,18 @@ object PensionSchemeInputAmountsSummary {
     messages: Messages
   ): Option[SummaryListRow] =
     answers.get(PensionSchemeInputAmountsPage(period, schemeIndex)).map { answer =>
-      val value = HtmlContent(currencyFormat(answer.originalPIA) + " / " + currencyFormat(answer.revisedPIA))
+      val value = HtmlContent(currencyFormat(answer.revisedPIA))
 
       val schemeName = answers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName
       }
 
       SummaryListRowViewModel(
-        key = messages("pensionSchemeInputAmounts.checkYourAnswersLabel", schemeName.get),
+        key = messages(
+          if (period.start.getYear == 2022) "pensionSchemeInputAmounts.checkYourAnswersLabel"
+          else "pensionSchemeInputAmounts.checkYourAnswersLabelRevised",
+          schemeName.get
+        ),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(

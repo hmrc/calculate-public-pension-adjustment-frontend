@@ -93,11 +93,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |                "schemeTaxRef" : "00348916RT"
            |              },
            |              "PensionSchemeInput2016preAmounts" : {
-           |                "originalPIA" : 35000,
            |                "revisedPIA" : 30000
            |              },
            |              "PensionSchemeInput2016postAmounts" : {
-           |                "originalPIA" : 35000,
            |                "revisedPIA" : 30000
            |              },
            |              "payACharge" : false
@@ -122,7 +120,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 40000,
            |                "revisedPIA" : 35000
            |              },
            |              "payACharge" : false
@@ -144,7 +141,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 45000,
            |                "revisedPIA" : 40000
            |              },
            |              "payACharge" : true,
@@ -167,7 +163,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 37000,
            |                "revisedPIA" : 35000
            |              },
            |              "payACharge" : false
@@ -189,7 +184,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 36000,
            |                "revisedPIA" : 34000
            |              },
            |              "payACharge" : false
@@ -211,7 +205,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 38000,
            |                "revisedPIA" : 36000
            |              },
            |              "payACharge" : false
@@ -231,7 +224,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 45000,
            |                "revisedPIA" : 44000
            |              },
            |              "payACharge" : false
@@ -253,7 +245,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 55000,
            |                "revisedPIA" : 53000
            |              },
            |              "payACharge" : true,
@@ -319,11 +310,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |                "schemeTaxRef" : "00348916RT"
            |              },
            |              "PensionSchemeInput2016preAmounts" : {
-           |                "originalPIA" : 35000,
            |                "revisedPIA" : 30000
            |              },
            |              "PensionSchemeInput2016postAmounts" : {
-           |                "originalPIA" : 45000,
            |                "revisedPIA" : 40000
            |              },
            |              "payACharge" : false
@@ -347,7 +336,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 40000,
            |                "revisedPIA" : 35000
            |              },
            |              "payACharge" : false
@@ -369,7 +357,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 45000,
            |                "revisedPIA" : 40000
            |              },
            |              "payACharge" : true,
@@ -392,7 +379,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 37000,
            |                "revisedPIA" : 35000
            |              },
            |              "payACharge" : false
@@ -414,7 +400,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 36000,
            |                "revisedPIA" : 34000
            |              },
            |              "payACharge" : false
@@ -436,7 +421,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 38000,
            |                "revisedPIA" : 36000
            |              },
            |              "payACharge" : false
@@ -457,7 +441,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 45000,
            |                "revisedPIA" : 44000
            |              },
            |              "payACharge" : false
@@ -479,7 +462,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 55000,
            |                "revisedPIA" : 53000
            |              },
            |              "payACharge" : true,
@@ -540,11 +522,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |                "schemeTaxRef" : "00348916RT"
            |              },
            |              "PensionSchemeInput2016preAmounts" : {
-           |                "originalPIA" : 35000,
            |                "revisedPIA" : 30000
            |              },
            |              "PensionSchemeInput2016postAmounts" : {
-           |                "originalPIA" : 45000,
            |                "revisedPIA" : 40000
            |              },
            |              "payACharge" : true,
@@ -570,7 +550,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 40000,
            |                "revisedPIA" : 35000
            |              },
            |              "payACharge" : false
@@ -592,7 +571,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 45000,
            |                "revisedPIA" : 40000
            |              },
            |              "payACharge" : true,
@@ -615,7 +593,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |              },
            |              "whichScheme" : "00348916RT",
            |              "pensionSchemeInputAmounts" : {
-           |                "originalPIA" : 37000,
            |                "revisedPIA" : 35000
            |              },
            |              "payACharge" : false
@@ -787,11 +764,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              },
                 |              "whichScheme": "00348916RO",
                 |              "PensionSchemeInput2016postAmounts": {
-                |                "originalPIA": 30000,
                 |                "revisedPIA": 22000
                 |              },
                 |              "PensionSchemeInput2016preAmounts": {
-                |                "originalPIA": 30000,
                 |                "revisedPIA": 20000
                 |              },
                 |              "payACharge": true,
@@ -817,7 +792,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              },
                 |              "whichScheme": "00348916RO",
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 38000,
                 |                "revisedPIA": 45000
                 |              },
                 |              "payACharge": false
@@ -837,7 +811,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              },
                 |              "whichScheme": "00348916RO",
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 43000,
                 |                "revisedPIA": 38000
                 |              },
                 |              "payACharge": true,
@@ -860,7 +833,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              },
                 |              "whichScheme": "00348916RO",
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 48000,
                 |                "revisedPIA": 43000
                 |              },
                 |              "payACharge": true,
@@ -913,11 +885,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |                "schemeTaxRef": "00348916RP"
                 |              },
                 |              "PensionSchemeInput2016preAmounts": {
-                |                "originalPIA": 30000,
                 |                "revisedPIA": 28000
                 |              },
                 |              "PensionSchemeInput2016postAmounts": {
-                |                "originalPIA": 40000,
                 |                "revisedPIA": 34000
                 |              },
                 |              "payACharge": true,
@@ -944,7 +914,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              },
                 |              "whichScheme": "00348916RP",
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 32000,
                 |                "revisedPIA": 31000
                 |              },
                 |              "payACharge": true,
@@ -970,7 +939,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              },
                 |              "whichScheme": "00348916RP",
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 46000,
                 |                "revisedPIA": 43000
                 |              },
                 |              "payACharge": false
@@ -991,7 +959,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              },
                 |              "whichScheme": "00348916RP",
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 54000,
                 |                "revisedPIA": 52000
                 |              },
                 |              "payACharge": true,
@@ -1014,7 +981,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              },
                 |              "whichScheme": "00348916RP",
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 0,
                 |                "revisedPIA": 0
                 |              },
                 |              "payACharge": false
@@ -1069,11 +1035,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |                "schemeTaxRef": "00348916RD"
                 |              },
                 |              "PensionSchemeInput2016preAmounts": {
-                |                "originalPIA": 30000,
                 |                "revisedPIA": 27000
                 |              },
                 |              "PensionSchemeInput2016postAmounts": {
-                |                "originalPIA": 40000,
                 |                "revisedPIA": 36000
                 |              },
                 |              "payACharge": true,
@@ -1105,7 +1069,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |                "schemeTaxRef": "00348916RD"
                 |              },
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 40000,
                 |                "revisedPIA": 36000
                 |              },
                 |              "payACharge": true,
@@ -1132,7 +1095,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |                "schemeTaxRef": "00348916RD"
                 |              },
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 40000,
                 |                "revisedPIA": 36000
                 |              },
                 |              "payACharge": true,
@@ -1210,11 +1172,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              "schemeTaxRef": "00348916RU"
                 |            },
                 |            "PensionSchemeInput2016preAmounts": {
-                |              "originalPIA": 30000,
                 |              "revisedPIA": 28000
                 |            },
                 |            "PensionSchemeInput2016postAmounts": {
-                |              "originalPIA": 40000,
                 |              "revisedPIA": 36000
                 |            },
                 |            "payACharge": true,
@@ -1244,7 +1204,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              "schemeTaxRef": "00348916RU"
                 |            },
                 |            "pensionSchemeInputAmounts": {
-                |              "originalPIA": 40000,
                 |              "revisedPIA": 33000
                 |            },
                 |            "payACharge": true,
@@ -1270,7 +1229,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            },
                 |            "whichScheme": "00348916RU",
                 |            "pensionSchemeInputAmounts": {
-                |              "originalPIA": 60000,
                 |              "revisedPIA": 54000
                 |            },
                 |            "payACharge": true,
@@ -1300,7 +1258,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            },
                 |            "whichScheme": "00348916RU",
                 |            "pensionSchemeInputAmounts": {
-                |              "originalPIA": 50000,
                 |              "revisedPIA": 46000
                 |            },
                 |            "payACharge": true,
@@ -1352,11 +1309,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |                "schemeTaxRef": "00348916RD"
                 |              },
                 |              "PensionSchemeInput2016preAmounts": {
-                |                "originalPIA": 30000,
                 |                "revisedPIA": 27000
                 |              },
                 |              "PensionSchemeInput2016postAmounts": {
-                |                "originalPIA": 40000,
                 |                "revisedPIA": 36000
                 |              },
                 |              "payACharge": true,
@@ -1388,7 +1343,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |                "schemeTaxRef": "00348916RD"
                 |              },
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 40000,
                 |                "revisedPIA": 36000
                 |              },
                 |              "payACharge": true,
@@ -1415,7 +1369,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |                "schemeTaxRef": "00348916RD"
                 |              },
                 |              "pensionSchemeInputAmounts": {
-                |                "originalPIA": 40000,
                 |                "revisedPIA": 36000
                 |              },
                 |              "payACharge": true,
@@ -1468,7 +1421,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |              "schemeTaxRef": "00348916RK"
                 |            },
                 |            "PensionSchemeInput2016preAmounts": {
-                |              "originalPIA": 20000,
                 |              "revisedPIA": 18000
                 |            },
                 |            "payACharge": true,
@@ -1549,7 +1501,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             Some(LocalDate.parse("2015-05-25")),
             6015,
             10015,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0, Some(35000), Some(30000))),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 0, Some(30000))),
             60000,
             0,
             Period._2016,
@@ -1569,7 +1521,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             Some(LocalDate.parse("2015-05-25")),
             6015,
             10015,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0, Some(35000), Some(30000))),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 0, Some(30000))),
             60000,
             0,
             Period._2016,
@@ -1589,7 +1541,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 35000, 0, None, None)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
             Period._2017,
             Some(BelowThreshold)
           )
@@ -1605,7 +1557,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             1000,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000, None, None)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
             Period._2018,
             Some(BelowThreshold)
           )
@@ -1621,7 +1573,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0, None, None)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
             Period._2019,
             Some(BelowThreshold)
           )
@@ -1637,7 +1589,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 34000, 0, None, None)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 34000, 0, None)),
             Period._2020,
             Some(BelowThreshold)
           )
@@ -1654,7 +1606,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               0,
               60000,
               0,
-              List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0, None, None)),
+              List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 0, None)),
               Period._2021,
               Some(AboveThreshold(160000))
             )
@@ -1670,7 +1622,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 44000, 0, None, None)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 44000, 0, None)),
             Period._2022,
             Some(BelowThreshold)
           )
@@ -1686,7 +1638,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             60000,
             0,
-            List(TaxYearScheme("Scheme 1", "00348916RT", 55000, 53000, 4400, None, None)),
+            List(TaxYearScheme("Scheme 1", "00348916RT", 53000, 4400, None)),
             Period._2023,
             Some(AboveThreshold(120000))
           )
@@ -1712,7 +1664,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Some(LocalDate.parse("2015-05-25")),
                   700,
                   1200,
-                  List(TaxYearScheme("Scheme 1", "00348916RK", 20000, 18000, 1200, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RK", 18000, 1200, None)),
                   60000,
                   800,
                   Period._2016,
@@ -1743,7 +1695,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Some(LocalDate.parse("2015-12-20")),
                   2000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RD", 30000, 27000, 1600, Some(40000), Some(36000))),
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 27000, 1600, Some(36000))),
                   60000,
                   1200,
                   Period._2016,
@@ -1757,7 +1709,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   1600,
                   140000,
                   800,
-                  List(TaxYearScheme("Scheme 1", "00348916RD", 40000, 36000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 0, None)),
                   Period._2017,
                   Some(AboveThreshold(120000)),
                   None,
@@ -1768,7 +1720,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   80000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RD", 40000, 36000, 900, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 900, None)),
                   Period._2018,
                   Some(BelowThreshold),
                   None,
@@ -1796,7 +1748,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Some(LocalDate.parse("2015-05-20")),
                   2000,
                   800,
-                  List(TaxYearScheme("Scheme 1", "00348916RD", 30000, 27000, 1600, Some(40000), Some(36000))),
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 27000, 1600, Some(36000))),
                   60000,
                   1200,
                   Period._2016,
@@ -1810,7 +1762,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   1600,
                   140000,
                   800,
-                  List(TaxYearScheme("Scheme 1", "00348916RD", 40000, 36000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 0, None)),
                   Period._2017,
                   Some(AboveThreshold(120000)),
                   None,
@@ -1821,7 +1773,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   80000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RD", 40000, 36000, 900, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 900, None)),
                   Period._2018,
                   Some(BelowThreshold),
                   None,
@@ -1849,7 +1801,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 TaxYear2011To2015(18000, Period._2015),
                 NormalTaxYear(
                   50000,
-                  List(TaxYearScheme("Scheme 1", "00348916RU", 30000, 28000, 1700, Some(40000), Some(36000))),
+                  List(TaxYearScheme("Scheme 1", "00348916RU", 28000, 1700, Some(36000))),
                   60000,
                   900,
                   Period._2016,
@@ -1858,7 +1810,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 ),
                 NormalTaxYear(
                   56000,
-                  List(TaxYearScheme("Scheme 1", "00348916RU", 40000, 33000, 1900, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RU", 33000, 1900, None)),
                   80000,
                   0,
                   Period._2017,
@@ -1870,7 +1822,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Some(LocalDate.parse("2017-11-09")),
                   3200,
                   4200,
-                  List(TaxYearScheme("Scheme 1", "00348916RU", 60000, 54000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RU", 54000, 0, None)),
                   140000,
                   2700,
                   Period._2018,
@@ -1884,7 +1836,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   90000,
                   800,
-                  List(TaxYearScheme("Scheme 1", "00348916RU", 50000, 46000, 2600, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RU", 46000, 2600, None)),
                   Period._2019,
                   Some(BelowThreshold),
                   None,
@@ -1917,7 +1869,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Some(LocalDate.parse("2015-05-25")),
                   6015,
                   10015,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0, Some(35000), Some(30000))),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 0, Some(30000))),
                   60000,
                   0,
                   Period._2016,
@@ -1930,7 +1882,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 35000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
                   Period._2017,
                   Some(BelowThreshold)
                 ),
@@ -1939,7 +1891,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   1000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
                   Period._2018,
                   Some(BelowThreshold)
                 ),
@@ -1948,7 +1900,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
                   Period._2019,
                   Some(BelowThreshold)
                 ),
@@ -1957,7 +1909,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 34000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 34000, 0, None)),
                   Period._2020,
                   Some(BelowThreshold)
                 ),
@@ -1966,7 +1918,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 38000, 36000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 0, None)),
                   Period._2021,
                   Some(BelowThreshold)
                 ),
@@ -1975,7 +1927,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 44000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 44000, 0, None)),
                   Period._2022,
                   Some(BelowThreshold)
                 ),
@@ -1984,7 +1936,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 55000, 53000, 4400, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 53000, 4400, None)),
                   Period._2023,
                   Some(BelowThreshold)
                 )
@@ -2048,7 +2000,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Some(LocalDate.parse("2015-05-25")),
                   6000,
                   10000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 30000, 0, Some(45000), Some(40000))),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 0, Some(40000))),
                   60000,
                   2000,
                   Period._2016,
@@ -2062,7 +2014,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 35000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
                   Period._2017,
                   Some(BelowThreshold)
                 ),
@@ -2071,7 +2023,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   1000,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 45000, 40000, 1000, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
                   Period._2018,
                   Some(BelowThreshold)
                 ),
@@ -2080,7 +2032,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RT", 37000, 35000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
                   Period._2019,
                   Some(BelowThreshold)
                 )
@@ -2103,7 +2055,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               List(
                 NormalTaxYear(
                   40000,
-                  List(TaxYearScheme("Scheme 1", "00348916RO", 30000, 20000, 3600, Some(30000), Some(22000))),
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 20000, 3600, Some(22000))),
                   0,
                   3600,
                   Period._2016,
@@ -2112,7 +2064,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 ),
                 NormalTaxYear(
                   45000,
-                  List(TaxYearScheme("Scheme 1", "00348916RO", 38000, 45000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 45000, 0, None)),
                   60000,
                   0,
                   Period._2017,
@@ -2120,7 +2072,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 ),
                 NormalTaxYear(
                   38000,
-                  List(TaxYearScheme("Scheme 1", "00348916RO", 43000, 38000, 200, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 38000, 200, None)),
                   60000,
                   200,
                   Period._2018,
@@ -2128,7 +2080,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 ),
                 NormalTaxYear(
                   43000,
-                  List(TaxYearScheme("Scheme 1", "00348916RO", 48000, 43000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 43000, 0, None)),
                   60000,
                   3280,
                   Period._2019,
@@ -2153,7 +2105,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               List(
                 NormalTaxYear(
                   30600,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 30000, 28000, 0, Some(40000), Some(34000))),
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 28000, 0, Some(34000))),
                   60000,
                   300,
                   Period._2016,
@@ -2162,7 +2114,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 ),
                 NormalTaxYear(
                   33000,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 32000, 31000, 8000, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 31000, 8000, None)),
                   60000,
                   0,
                   Period._2017,
@@ -2174,7 +2126,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   Some(LocalDate.parse("2017-10-20")),
                   0,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 46000, 43000, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 43000, 0, None)),
                   200000,
                   0,
                   Period._2018,
@@ -2185,7 +2137,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   60000,
                   3400,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 54000, 52000, 4700, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 52000, 4700, None)),
                   Period._2019,
                   Some(BelowThreshold)
                 ),
@@ -2194,7 +2146,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   700,
                   60000,
                   0,
-                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, 0, None, None)),
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, None)),
                   Period._2020,
                   Some(BelowThreshold)
                 )

@@ -31,7 +31,7 @@ object PensionSchemeInput2016postAmountsSummary {
     messages: Messages
   ): Option[SummaryListRow] =
     answers.get(PensionSchemeInput2016postAmountsPage(period, schemeIndex)).map { answer =>
-      val value = HtmlContent(currencyFormat(answer.originalPIA) + " / " + currencyFormat(answer.revisedPIA))
+      val value = HtmlContent(currencyFormat(answer.revisedPIA))
 
       val schemeName = answers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName
