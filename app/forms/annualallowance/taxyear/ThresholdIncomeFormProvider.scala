@@ -17,17 +17,17 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
-import models.Period
+import models.{Period, ThresholdIncome}
 import play.api.data.Form
 
 import javax.inject.Inject
 
 class ThresholdIncomeFormProvider @Inject() extends Mappings {
 
-  def apply(period: Period): Form[Boolean] = {
+  def apply(period: Period): Form[ThresholdIncome] = {
     val errorMessage =
       if (period.toString.toInt >= 2021) "thresholdIncome.error.required.2021AndAbove"
       else "thresholdIncome.error.required.below2021"
-    Form("value" -> boolean(errorMessage))
+    Form("value" -> enumerable[ThresholdIncome](errorMessage))
   }
 }

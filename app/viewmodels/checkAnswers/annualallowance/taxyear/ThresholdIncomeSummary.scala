@@ -29,7 +29,7 @@ object ThresholdIncomeSummary {
     messages: Messages
   ): Option[SummaryListRow] =
     answers.get(ThresholdIncomePage(period)).map { answer =>
-      val value = if (answer) "site.yes" else "site.no"
+      val value = if (answer == "Yes") "site.yes" else "site.no"
 
       SummaryListRowViewModel(
         key = "thresholdIncome.checkYourAnswersLabel." + period,

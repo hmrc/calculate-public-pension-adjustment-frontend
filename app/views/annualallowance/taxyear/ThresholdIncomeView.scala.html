@@ -80,11 +80,12 @@
         }
 
         @govukRadios(
-            RadiosViewModel.yesNo(
+            RadiosViewModel(
                 field = form("value"),
                 legend = HmrcPageHeadingLegend(
                 content = messages("thresholdIncome.heading"),
-                caption = HmrcSectionCaption((messages("annualAllowance.period.caption." + period)))
+                caption = HmrcSectionCaption((messages("annualAllowance.period.caption." + period))),
+                items = ThresholdIncome.options()
                 )
             ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
