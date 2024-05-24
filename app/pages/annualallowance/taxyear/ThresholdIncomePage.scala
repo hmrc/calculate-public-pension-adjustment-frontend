@@ -42,14 +42,14 @@ case class ThresholdIncomePage(period: Period) extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ThresholdIncomePage(period)) match {
-      case Some(true)  => AdjustedIncomeController.onPageLoad(NormalMode, period)
+      case Some(true)  => TotalIncomeController.onPageLoad(NormalMode, period)
       case Some(false) => TotalIncomeController.onPageLoad(NormalMode, period)
       case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ThresholdIncomePage(period)) match {
-      case Some(true)  => AdjustedIncomeController.onPageLoad(CheckMode, period)
+      case Some(true)  => CheckYourAAPeriodAnswersController.onPageLoad(period)
       case Some(false) => CheckYourAAPeriodAnswersController.onPageLoad(period)
       case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
