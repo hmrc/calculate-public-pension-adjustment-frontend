@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package forms
+package pages
 
-import javax.inject.Inject
-import forms.mappings.Mappings
-import play.api.data.Form
-import models.{Period, ThresholdIncomeNew}
+import models.ThresholdIncomeNew
+import pages.annualallowance.taxyear.ThresholdIncomeNewPage
+import pages.behaviours.PageBehaviours
 
-class ThresholdIncomeNewFormProvider @Inject() extends Mappings {
+class ThresholdIncomeNewSpec extends PageBehaviours {
 
-  def apply(period: Period): Form[ThresholdIncomeNew] = {
-    val errorMessage =
-      if (period.toString.toInt >= 2021) "thresholdIncome.error.required.2021AndAbove"
-      else "thresholdIncome.error.required.below2021"
-    Form(
-      "value" -> enumerable[ThresholdIncomeNew](errorMessage)
-    )
+  "ThresholdIncomeNewPage" - {
+
+    beRetrievable[ThresholdIncomeNew](ThresholdIncomeNewPage)
+
+    beSettable[ThresholdIncomeNew](ThresholdIncomeNewPage)
+
+    beRemovable[ThresholdIncomeNew](ThresholdIncomeNewPage)
   }
-
 }

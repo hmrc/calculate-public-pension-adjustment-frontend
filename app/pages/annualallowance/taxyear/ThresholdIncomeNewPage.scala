@@ -14,30 +14,28 @@
  * limitations under the License.
  */
 
-package pages
+package pages.annualallowance.taxyear
 
-import models.ThresholdIncomeNew
-import models.UserAnswers
+import models.{Period, ThresholdIncomeNew, UserAnswers}
+import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object ThresholdIncomeNewPage extends QuestionPage[ThresholdIncomeNew] {
+case class ThresholdIncomeNewPage(period: Period) extends QuestionPage[ThresholdIncomeNew] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "thresholdIncomeNew"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    answers.get(ThresholdIncomeNewPage) match {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    answers.get(ThresholdIncomeNewPage(period)) match {
       case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
-    answers.get(ThresholdIncomeNewPage) match {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    answers.get(ThresholdIncomeNewPage(period)) match {
       case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

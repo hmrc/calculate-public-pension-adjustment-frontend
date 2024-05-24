@@ -28,16 +28,16 @@ object ThresholdIncomeNew extends Enumerable.Implicits {
   case object No extends WithName("no") with ThresholdIncomeNew
 
   val values: Seq[ThresholdIncomeNew] = Seq(
-    Yes, No
+    Yes,
+    No
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"thresholdIncomeNew.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
+  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
+    RadioItem(
+      content = Text(messages(s"thresholdIncomeNew.${value.toString}")),
+      value = Some(value.toString),
+      id = Some(s"value_$index")
+    )
   }
 
   implicit val enumerable: Enumerable[ThresholdIncomeNew] =

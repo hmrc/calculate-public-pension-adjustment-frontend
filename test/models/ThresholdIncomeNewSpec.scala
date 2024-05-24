@@ -32,10 +32,8 @@ class ThresholdIncomeNewSpec extends AnyFreeSpec with Matchers with ScalaCheckPr
 
       val gen = Gen.oneOf(ThresholdIncomeNew.values.toSeq)
 
-      forAll(gen) {
-        thresholdIncomeNew =>
-
-          JsString(thresholdIncomeNew.toString).validate[ThresholdIncomeNew].asOpt.value mustEqual thresholdIncomeNew
+      forAll(gen) { thresholdIncomeNew =>
+        JsString(thresholdIncomeNew.toString).validate[ThresholdIncomeNew].asOpt.value mustEqual thresholdIncomeNew
       }
     }
 
@@ -43,10 +41,8 @@ class ThresholdIncomeNewSpec extends AnyFreeSpec with Matchers with ScalaCheckPr
 
       val gen = arbitrary[String] suchThat (!ThresholdIncomeNew.values.map(_.toString).contains(_))
 
-      forAll(gen) {
-        invalidValue =>
-
-          JsString(invalidValue).validate[ThresholdIncomeNew] mustEqual JsError("error.invalid")
+      forAll(gen) { invalidValue =>
+        JsString(invalidValue).validate[ThresholdIncomeNew] mustEqual JsError("error.invalid")
       }
     }
 
@@ -54,10 +50,8 @@ class ThresholdIncomeNewSpec extends AnyFreeSpec with Matchers with ScalaCheckPr
 
       val gen = Gen.oneOf(ThresholdIncomeNew.values.toSeq)
 
-      forAll(gen) {
-        thresholdIncomeNew =>
-
-          Json.toJson(thresholdIncomeNew) mustEqual JsString(thresholdIncomeNew.toString)
+      forAll(gen) { thresholdIncomeNew =>
+        Json.toJson(thresholdIncomeNew) mustEqual JsString(thresholdIncomeNew.toString)
       }
     }
   }

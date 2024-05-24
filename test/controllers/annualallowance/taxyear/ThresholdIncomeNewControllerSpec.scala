@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.annualallowance.taxyear
 
 import base.SpecBase
-import forms.ThresholdIncomeNewFormProvider
-import models.{NormalMode, ThresholdIncomeNew, UserAnswers, Done}
+import controllers.routes
+import forms.annualallowance.taxyear.ThresholdIncomeNewFormProvider
+import models.{Done, NormalMode, ThresholdIncomeNew, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ThresholdIncomeNewPage
+import pages.annualallowance.taxyear.ThresholdIncomeNewPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -36,10 +37,10 @@ class ThresholdIncomeNewControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val thresholdIncomeNewRoute = routes.ThresholdIncomeNewController.onPageLoad(NormalMode).url
+  lazy val thresholdIncomeNewRoute = routes.ThresholdIncomeNewController(period).onPageLoad(NormalMode).url
 
   val formProvider = new ThresholdIncomeNewFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "ThresholdIncomeNew Controller" - {
 
@@ -61,7 +62,8 @@ class ThresholdIncomeNewControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ThresholdIncomeNewPage, ThresholdIncomeNew.values.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(ThresholdIncomeNewPage, ThresholdIncomeNew.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -73,7 +75,10 @@ class ThresholdIncomeNewControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ThresholdIncomeNew.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ThresholdIncomeNew.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

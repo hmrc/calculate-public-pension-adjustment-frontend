@@ -22,7 +22,7 @@ import org.scalacheck.{Arbitrary, Gen}
 import org.scalatest.TryValues
 import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear.{DefinedBenefit2016PostAmountPage, DefinedBenefit2016PreAmountPage, DefinedContribution2016PostAmountPage, DefinedContribution2016PostFlexiAmountPage, DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage, PersonalAllowancePage, TaxReliefPage}
+import pages.annualallowance.taxyear.{DefinedBenefit2016PostAmountPage, DefinedBenefit2016PreAmountPage, DefinedContribution2016PostAmountPage, DefinedContribution2016PostFlexiAmountPage, DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage, PersonalAllowancePage, TaxReliefPage, ThresholdIncomeNewPage}
 import pages.lifetimeallowance._
 import play.api.libs.json.{JsValue, Json}
 
@@ -31,8 +31,8 @@ trait UserAnswersGenerator extends TryValues {
 
   val generators: Seq[Gen[(QuestionPage[_], JsValue)]] =
     arbitrary[(ThresholdIncomeNewPage.type, JsValue)] ::
-    arbitrary[(ThresholdIncome2Page.type, JsValue)] ::
-    arbitrary[(UserSchemeDetailsPage.type, JsValue)] ::
+      arbitrary[(ThresholdIncome2Page.type, JsValue)] ::
+      arbitrary[(UserSchemeDetailsPage.type, JsValue)] ::
       arbitrary[(DefinedContribution2016PreFlexiAmountPage.type, JsValue)] ::
       arbitrary[(DefinedContribution2016PostFlexiAmountPage.type, JsValue)] ::
       arbitrary[(DefinedBenefit2016PostAmountPage.type, JsValue)] ::

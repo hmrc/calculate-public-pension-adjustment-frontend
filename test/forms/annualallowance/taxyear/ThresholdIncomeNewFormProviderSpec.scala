@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package forms
+package forms.annualallowance.taxyear
 
 import forms.behaviours.OptionFieldBehaviours
 import models.ThresholdIncomeNew
@@ -26,13 +26,13 @@ class ThresholdIncomeNewFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "thresholdIncomeNew.error.required"
 
     behave like optionsField[ThresholdIncomeNew](
       form,
       fieldName,
-      validValues  = ThresholdIncomeNew.values,
+      validValues = ThresholdIncomeNew.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

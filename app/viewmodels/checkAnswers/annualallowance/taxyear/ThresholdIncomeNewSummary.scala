@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.annualallowance.taxyear
 
-import controllers.routes
-import models.{CheckMode, UserAnswers}
-import pages.ThresholdIncomeNewPage
+import models.{CheckMode, Period, UserAnswers}
+import pages.annualallowance.taxyear.ThresholdIncomeNewPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -26,25 +25,26 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ThresholdIncomeNewSummary  {
+object ThresholdIncomeNewSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ThresholdIncomeNewPage).map {
-      answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"thresholdIncomeNew.$answer"))
-          )
+  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(ThresholdIncomeNewPage(period)).map { answer =>
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"thresholdIncomeNew.$answer"))
         )
+      )
 
-        SummaryListRowViewModel(
-          key     = "thresholdIncomeNew.checkYourAnswersLabel",
-          value   = value,
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.ThresholdIncomeNewController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("thresholdIncomeNew.change.hidden"))
+      SummaryListRowViewModel(
+        key = "thresholdIncomeNew.checkYourAnswersLabel",
+        value = value,
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.ThresholdIncomeNewController.onPageLoad(CheckMode, period).url
           )
+            .withVisuallyHiddenText(messages("thresholdIncomeNew.change.hidden"))
         )
+      )
     }
 }
