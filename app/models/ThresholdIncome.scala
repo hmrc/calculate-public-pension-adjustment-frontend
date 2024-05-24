@@ -24,11 +24,11 @@ sealed trait ThresholdIncome
 
 object ThresholdIncome extends Enumerable.Implicits {
 
-  case object Yes extends WithName("aprToJul") with ThresholdIncome
+  case object Yes extends WithName("yes") with ThresholdIncome
 
-  case object No extends WithName("julToOct") with ThresholdIncome
+  case object No extends WithName("no") with ThresholdIncome
 
-  case object IDontKnow extends WithName("octToJan") with ThresholdIncome
+  case object IDontKnow extends WithName("iDontKnow") with ThresholdIncome
 
 
   val values: Seq[ThresholdIncome] = Seq(
@@ -39,7 +39,7 @@ object ThresholdIncome extends Enumerable.Implicits {
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map { case (value, index) =>
     RadioItem(
-      content = Text(messages(s"quarterChargePaid.${value.toString}")),
+      content = Text(messages(s"thresholdIncome.${value.toString}")),
       value = Some(value.toString),
       id = Some(s"value_$index")
     )
