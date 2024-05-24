@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.ThresholdIncomeNewFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, Period}
 import pages.ThresholdIncomeNewPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -42,23 +43,25 @@ class ThresholdIncomeNewController @Inject()(
 
 
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val form = formProvider()
+      val form = formProvider(period)
+
       val preparedForm = request.userAnswers.get(ThresholdIncomeNewPage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, period))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      val form = formProvider(period)
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, mode, period))),
 
         value =>
           for {
