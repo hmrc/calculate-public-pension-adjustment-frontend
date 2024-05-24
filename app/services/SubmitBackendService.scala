@@ -31,10 +31,16 @@ class SubmitBackendService @Inject() (connector: SubmitBackendConnector) extends
   def clearSubmissions()(implicit hc: HeaderCarrier): Future[Done] =
     connector.clearSubmissions()
 
+  def clearCalcUserAnswers()(implicit hc: HeaderCarrier): Future[Done] =
+    connector.clearCalcUserAnswers()
+
   def userAnswersPresentInSubmissionService(uniqueId: String)(implicit hc: HeaderCarrier): Future[Boolean] =
     connector.userAnswersPresentInSubmissionService(uniqueId)
 
   def submissionsPresentInSubmissionService(uniqueId: String)(implicit hc: HeaderCarrier): Future[Boolean] =
     connector.submissionsPresentInSubmissionService(uniqueId)
+
+  def submissionsPresentInSubmissionServiceWithId(id: String)(implicit hc: HeaderCarrier): Future[Boolean] =
+    connector.submissionsPresentInSubmissionServiceWithId(id)
 
 }

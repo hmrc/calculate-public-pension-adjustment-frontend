@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package controllers.setupquestions
+package controllers
 
 import base.SpecBase
-import controllers.setupquestions.{routes => setupRoutes}
-import forms.SavingsStatementFormProvider
-import models.{Done, NormalMode, SubmissionStatusResponse, UserAnswers}
+import models.{Done, SubmissionStatusResponse, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
@@ -30,138 +28,127 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.{CalculateBackendService, SubmitBackendService, UserDataService}
-import views.html.setupquestions.SavingsStatementView
 
 import java.time.Instant
 import scala.concurrent.Future
-
-class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
+class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new SavingsStatementFormProvider()
-  val form         = formProvider()
+  "MaybePreviousClaimController" - {
 
-  lazy val savingsStatementNormalRoute = setupRoutes.SavingsStatementController.onPageLoad(NormalMode).url
+    "must redirect to the correct URL based on the user answers" in {
 
-  "SavingsStatementController" - {
+      val mockUserDataService         = mock[UserDataService]
+      val mockSubmitBackendService    = mock[SubmitBackendService]
+      val mockCalculateBackendService = mock[CalculateBackendService]
 
-    "must return OK and the correct view for a GET" in {
+      when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn Future.successful(None)
+      when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) thenReturn Future
+        .successful(
+          true
+        )
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val userAnswers = UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, authenticated = true)
+        .set(SavingsStatementPage(true), true)
+        .success
+        .value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers))
+        .overrides(
+          bind[UserDataService].toInstance(mockUserDataService),
+          bind[SubmitBackendService].toInstance(mockSubmitBackendService),
+          bind[CalculateBackendService].toInstance(mockCalculateBackendService)
+        )
+        .build()
 
       running(application) {
-        val request = FakeRequest(GET, savingsStatementNormalRoute)
+        val request = FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url)
+        val result  = route(application, request).value
 
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[SavingsStatementView]
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.PreviousClaimContinueController.onPageLoad().url
       }
     }
 
-    "must return OK for a GET if no existing data is found" in {
+    // TODO Revisit Unit test
+    //    "must update user answers if authenticated and no existing user answers" in {
+    //      val mockCalculateBackendService = mock[CalculateBackendService]
+    //      when(mockCalculateBackendService.updateUserAnswersFromCalcUA(any())(any())) thenReturn Future.successful(Done)
+    //
+    //      val application = applicationBuilder(userAnswers = None, userIsAuthenticated = true)
+    //        .overrides(
+    //          bind[CalculateBackendService].toInstance(mockCalculateBackendService)
+    //        ).build()
+    //
+    //      running(application) {
+    //        val request = AuthenticatedIdentifierRequest(FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url), "id")
+    //        val result = route(application, request).value
+    //
+    //        status(result) mustEqual SEE_OTHER
+    //        verify(mockCalculateBackendService, times(1)).updateUserAnswersFromCalcUA(any())(any())
+    //      }
+    //    }
 
-      val application = applicationBuilder(userAnswers = None).build()
+    "must not update user answers if not authenticated" in {
+      val mockCalculateBackendService = mock[CalculateBackendService]
+
+      val application = applicationBuilder(userAnswers = None, userIsAuthenticated = false)
+        .overrides(
+          bind[CalculateBackendService].toInstance(mockCalculateBackendService)
+        )
+        .build()
 
       running(application) {
-        val request = FakeRequest(GET, savingsStatementNormalRoute)
+        val request = FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url)
+        val result  = route(application, request).value
 
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
+        status(result) mustEqual SEE_OTHER
+        verify(mockCalculateBackendService, times(0)).updateUserAnswersFromCalcUA(any())(any())
       }
     }
 
-    "must redirect to the next page when valid data is submitted test and no previous user answers" in {
+    "must not update user answers if there are existing user answers" in {
+      val mockCalculateBackendService = mock[CalculateBackendService]
+      val userAnswers                 = UserAnswers(userAnswersId, Json.obj())
 
-      val mockUserDataService = mock[UserDataService]
+      val application = applicationBuilder(userAnswers = Some(userAnswers), userIsAuthenticated = true)
+        .overrides(
+          bind[CalculateBackendService].toInstance(mockCalculateBackendService)
+        )
+        .build()
+
+      running(application) {
+        val request = FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url)
+        val result  = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        verify(mockCalculateBackendService, times(0)).updateUserAnswersFromCalcUA(any())(any())
+      }
+    }
+
+    "must redirect to the next page when valid data is submitted and no previous user answers" in {
+      val mockUserDataService         = mock[UserDataService]
+      val mockCalculateBackendService = mock[CalculateBackendService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
-      val application =
-        applicationBuilder(userAnswers = None)
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService)
-          )
-          .build()
+      val application = applicationBuilder(userAnswers = None)
+        .overrides(
+          bind[UserDataService].toInstance(mockUserDataService),
+          bind[CalculateBackendService].toInstance(mockCalculateBackendService)
+        )
+        .build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, savingsStatementNormalRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
+        val request = FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url)
+        val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(SavingsStatementPage(true), true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, savingsStatementNormalRoute)
-
-        val view = application.injector.instanceOf[SavingsStatementView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted" in {
-
-      val mockUserDataService = mock[UserDataService]
-
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, savingsStatementNormalRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-      }
-    }
-
-    "must return a Bad Request and errors when invalid data is submitted" in {
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, savingsStatementNormalRoute)
-            .withFormUrlEncodedBody(("value", ""))
-
-        val boundForm = form.bind(Map("value" -> ""))
-
-        val view = application.injector.instanceOf[SavingsStatementView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must redirect to PreviousClaimContinueController when submission started is true & submissionsPresentInSubmissionServiceWithId is true" in {
+    "must redirect to PreviousClaimContinueController when submission started is true & submissionsPresentInSubmissionService is true" in {
 
       val mockUserDataService      = mock[UserDataService]
       val mockSubmitBackendService = mock[SubmitBackendService]
@@ -187,11 +174,8 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, savingsStatementNormalRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
+        val request = FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url)
+        val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).get must be(
@@ -232,11 +216,8 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, savingsStatementNormalRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
+        val request = FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url)
+        val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).get must be("/public-pension-adjustment/previous-claim-continue")
@@ -266,12 +247,8 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, savingsStatementNormalRoute)
-            .withSession()
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
+        val request = FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url)
+        val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
 
@@ -307,11 +284,8 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, savingsStatementNormalRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
+        val request = FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url)
+        val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).get must be(
@@ -320,7 +294,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to change-previous-adjustment when submission started is none & submissionsPresentInSubmissionServiceWithId is false" in {
+    "must redirect to PreviousClaimContinueController when submission started is none & recordsPresentInSubmissionService is false" in {
 
       val mockUserDataService      = mock[UserDataService]
       val mockSubmitBackendService = mock[SubmitBackendService]
@@ -328,8 +302,14 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
       when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn
         Future.successful(None)
+      when(mockUserDataService.updateSubmissionStatus(any())(any())) thenReturn
+        Future.successful(Done)
       when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) thenReturn
         Future.successful(false)
+      when(mockSubmitBackendService.clearUserAnswers()(any())) thenReturn
+        Future.successful(Done)
+      when(mockSubmitBackendService.clearSubmissions()(any())) thenReturn
+        Future.successful(Done)
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
@@ -346,71 +326,11 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, savingsStatementNormalRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
+        val request = FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url)
+        val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).get must be("/public-pension-adjustment/change-previous-adjustment")
-      }
-    }
-
-    // TODO Revisit Unit test
-//    "must call updateUserAnswersFromCalcUA when authenticated and no existing user answers" in {
-//      val mockCalculateBackendService = mock[CalculateBackendService]
-//      when(mockCalculateBackendService.updateUserAnswersFromCalcUA(any())(any())) thenReturn Future.successful(Done)
-//
-//      val application = applicationBuilder(userAnswers = None, userIsAuthenticated = true)
-//        .overrides(
-//          bind[CalculateBackendService].toInstance(mockCalculateBackendService)
-//        )
-//        .build()
-//
-//      running(application) {
-//        val request = AuthenticatedIdentifierRequest(FakeRequest(GET, savingsStatementNormalRoute), "id")
-//        val result  = route(application, request).value
-//
-//        status(result) mustEqual OK
-//        verify(mockCalculateBackendService, times(1)).updateUserAnswersFromCalcUA(any())(any())
-//      }
-//    }
-
-    "must not call updateUserAnswersFromCalcUA when not authenticated" in {
-      val mockCalculateBackendService = mock[CalculateBackendService]
-
-      val application = applicationBuilder(userAnswers = None, userIsAuthenticated = false)
-        .overrides(
-          bind[CalculateBackendService].toInstance(mockCalculateBackendService)
-        )
-        .build()
-
-      running(application) {
-        val request = FakeRequest(GET, savingsStatementNormalRoute)
-        val result  = route(application, request).value
-
-        status(result) mustEqual OK
-        verify(mockCalculateBackendService, times(0)).updateUserAnswersFromCalcUA(any())(any())
-      }
-    }
-
-    "must not call updateUserAnswersFromCalcUA when there are existing user answers" in {
-      val mockCalculateBackendService = mock[CalculateBackendService]
-      val userAnswers                 = UserAnswers(userAnswersId, Json.obj())
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers), userIsAuthenticated = true)
-        .overrides(
-          bind[CalculateBackendService].toInstance(mockCalculateBackendService)
-        )
-        .build()
-
-      running(application) {
-        val request = FakeRequest(GET, savingsStatementNormalRoute).withSession("authToken" -> "some-auth-token")
-        val result  = route(application, request).value
-
-        status(result) mustEqual OK
-        verify(mockCalculateBackendService, times(0)).updateUserAnswersFromCalcUA(any())(any())
       }
     }
   }

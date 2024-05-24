@@ -81,6 +81,7 @@ class PreviousClaimContinueController @Inject() (
       for {
         _ <- submitBackendService.clearUserAnswers()
         _ <- submitBackendService.clearSubmissions()
+        _ <- submitBackendService.clearCalcUserAnswers()
         _ <- submissionDataService.clear()
         r <- userDataService.clear()
       } yield r

@@ -55,6 +55,28 @@ class SubmitBackendServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
       }
     }
 
+    "clearCalcUserAnswers" - {
+      "must return Done when the connector clears successfully" in {
+        val connector = mock[SubmitBackendConnector]
+        val service   = new SubmitBackendService(connector)
+
+        when(connector.clearCalcUserAnswers()(any())) thenReturn Future.successful(Done)
+
+        val result = service.clearCalcUserAnswers()(hc).futureValue
+        result mustBe Done
+      }
+
+      "must return a failed future when the connector fails to clear" in {
+        val connector = mock[SubmitBackendConnector]
+        val service   = new SubmitBackendService(connector)
+
+        when(connector.clearCalcUserAnswers()(any())) thenReturn Future.failed(new RuntimeException("Clear failed"))
+
+        val result = service.clearCalcUserAnswers()(hc).failed.futureValue
+        result mustBe a[RuntimeException]
+      }
+    }
+
     "clearSubmissions" - {
       "must return Done when the connector clears successfully" in {
         val connector = mock[SubmitBackendConnector]
@@ -102,5 +124,19 @@ class SubmitBackendServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
           .submissionsPresentInSubmissionService("uniqueId")(hc)
       }
     }
+
+    "submissionsPresentInSubmissionServiceWithId" - {
+      "should call connector when checking submission status" in {
+        val mockUserAnswersConnector = mock[SubmitBackendConnector]
+
+        val service = new SubmitBackendService(mockUserAnswersConnector)
+
+        service.submissionsPresentInSubmissionServiceWithId("id")(hc)
+
+        verify(mockUserAnswersConnector, times(1))
+          .submissionsPresentInSubmissionServiceWithId("id")(hc)
+      }
+    }
+
   }
 }

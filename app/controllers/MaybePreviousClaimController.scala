@@ -18,16 +18,14 @@ package controllers
 
 import config.FrontendAppConfig
 import controllers.actions._
-import forms.SavingsStatementFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
-import models.{NormalMode, SubmissionStatusResponse, UserAnswers}
+import models.{Done, NormalMode, SubmissionStatusResponse, UserAnswers}
 import pages.setupquestions.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{SubmitBackendService, UserDataService}
+import services.{CalculateBackendService, SubmitBackendService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
-import views.html.setupquestions.SavingsStatementView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,16 +36,20 @@ class MaybePreviousClaimController @Inject() (
   submitBackendService: SubmitBackendService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  formProvider: SavingsStatementFormProvider,
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
-  view: SavingsStatementView
+  calculateBackendService: CalculateBackendService
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
   def redirect(): Action[AnyContent] = (identify andThen getData).async { implicit request =>
     for {
+      _              <- if (isAuthenticated(request) && request.userAnswers.isEmpty) {
+                          calculateBackendService.updateUserAnswersFromCalcUA(request.userId)
+                        } else {
+                          Future.successful(Done)
+                        }
       updatedAnswers <-
         Future
           .fromTry(
@@ -71,7 +73,7 @@ class MaybePreviousClaimController @Inject() (
         .flatMap {
           case Some(SubmissionStatusResponse(_, true))  =>
             submitBackendService
-              .submissionsPresentInSubmissionService(userAnswers.uniqueId)(headerCarrier)
+              .submissionsPresentInSubmissionServiceWithId(request.userId)(headerCarrier)
               .map {
                 case true  =>
                   routes.PreviousClaimContinueController.onPageLoad().url
@@ -87,7 +89,7 @@ class MaybePreviousClaimController @Inject() (
             Future.successful(routes.PreviousClaimContinueController.onPageLoad().url)
           case None                                     =>
             submitBackendService
-              .submissionsPresentInSubmissionService(userAnswers.uniqueId)(headerCarrier)
+              .submissionsPresentInSubmissionServiceWithId(request.userId)(headerCarrier)
               .map {
                 case true  =>
                   routes.PreviousClaimContinueController.onPageLoad().url
@@ -99,11 +101,12 @@ class MaybePreviousClaimController @Inject() (
       Future.successful(SavingsStatementPage(config.optionalAuthEnabled).navigate(NormalMode, userAnswers).url)
     }
 
-  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) = {
-    val authenticated = request.request match {
+  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) =
+    UserAnswers(request.userId, authenticated = isAuthenticated(request))
+
+  private def isAuthenticated(request: OptionalDataRequest[AnyContent]): Boolean =
+    request.request match {
       case AuthenticatedIdentifierRequest(_, _) => true
       case _                                    => false
     }
-    UserAnswers(request.userId, authenticated = authenticated)
-  }
 }

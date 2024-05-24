@@ -73,6 +73,41 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
 
     }
 
+    "clearCalcUserAnswers" - {
+      "must return Done when the server responds with NO_CONTENT" in {
+        val app = application
+
+        server.stubFor(
+          delete(urlEqualTo("/submit-public-pension-adjustment/calc-user-answers"))
+            .willReturn(aResponse().withStatus(NO_CONTENT))
+        )
+
+        running(app) {
+          val connector = app.injector.instanceOf[SubmitBackendConnector]
+          val result    = connector.clearCalcUserAnswers().futureValue
+
+          result mustBe Done
+        }
+      }
+
+      "must return a failed future when the server responds with an error status" in {
+        val app = application
+
+        server.stubFor(
+          delete(urlEqualTo("/submit-public-pension-adjustment/calc-user-answers"))
+            .willReturn(aResponse().withStatus(BAD_REQUEST))
+        )
+
+        running(app) {
+          val connector = app.injector.instanceOf[SubmitBackendConnector]
+          val result    = connector.clearCalcUserAnswers().failed.futureValue
+
+          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+        }
+      }
+
+    }
+
     "clearSubmissions" - {
       "must return Done when the server responds with NO_CONTENT" in {
         val app = application
@@ -216,6 +251,63 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
 
           whenReady(connector.userAnswersPresentInSubmissionService("uniqueId")(hc).failed) { exc =>
+            exc mustBe a[java.lang.IllegalArgumentException]
+          }
+        }
+      }
+    }
+
+    "submissionsPresentInSubmissionServiceWithId" - {
+      "must return a true when server returns future true" in {
+        implicit val hc = HeaderCarrier()
+
+        val url = s"/submit-public-pension-adjustment/submissions-present-with-id/id"
+        val app = application
+
+        val responseBody = "true"
+
+        server.stubFor(get(urlEqualTo(url)).willReturn(aResponse().withStatus(OK).withBody(responseBody)))
+
+        running(app) {
+          val connector = app.injector.instanceOf[SubmitBackendConnector]
+
+          val result = connector.submissionsPresentInSubmissionServiceWithId("id")(hc).futureValue
+
+          result mustBe true
+        }
+      }
+
+      "must return a false when server returns future false" in {
+        implicit val hc = HeaderCarrier()
+
+        val url = s"/submit-public-pension-adjustment/submissions-present-with-id/id"
+        val app = application
+
+        val responseBody = "false"
+
+        server.stubFor(get(urlEqualTo(url)).willReturn(aResponse().withStatus(OK).withBody(responseBody)))
+
+        running(app) {
+          val connector = app.injector.instanceOf[SubmitBackendConnector]
+
+          val result = connector.submissionsPresentInSubmissionServiceWithId("id")(hc).futureValue
+
+          result mustBe false
+        }
+      }
+
+      "must return a failed future when the server responds with BAD_REQUEST" in {
+        implicit val hc = HeaderCarrier()
+
+        val url = s"/submit-public-pension-adjustment/submissions-present-with-id/uniqueId"
+        val app = application
+
+        server.stubFor(get(urlEqualTo(url)).willReturn(aResponse().withStatus(BAD_REQUEST)))
+
+        running(app) {
+          val connector = app.injector.instanceOf[SubmitBackendConnector]
+
+          whenReady(connector.userAnswersPresentInSubmissionService("id")(hc).failed) { exc =>
             exc mustBe a[java.lang.IllegalArgumentException]
           }
         }

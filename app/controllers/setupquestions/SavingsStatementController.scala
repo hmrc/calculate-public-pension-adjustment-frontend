@@ -22,16 +22,17 @@ import controllers.routes
 import forms.SavingsStatementFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
-import models.{Mode, NormalMode, SubmissionStatusResponse, UserAnswers}
+import models.{Done, Mode, SubmissionStatusResponse, UserAnswers}
 import pages.setupquestions.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{SubmitBackendService, UserDataService}
+import services.{CalculateBackendService, SubmitBackendService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.setupquestions.SavingsStatementView
 
 import javax.inject.Inject
+import scala.Console.println
 import scala.concurrent.{ExecutionContext, Future}
 
 class SavingsStatementController @Inject() (
@@ -43,23 +44,32 @@ class SavingsStatementController @Inject() (
   formProvider: SavingsStatementFormProvider,
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
-  view: SavingsStatementView
+  view: SavingsStatementView,
+  calculateBackendService: CalculateBackendService
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) { implicit request =>
-    val preparedForm =
-      request.userAnswers
-        .getOrElse(UserAnswers(request.userId))
-        .get(SavingsStatementPage(config.optionalAuthEnabled)) match {
-        case None        => form
-        case Some(value) => form.fill(value)
-      }
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
+    for {
+      _ <- if (isAuthenticated(request) && request.userAnswers.isEmpty) {
+             calculateBackendService.updateUserAnswersFromCalcUA(request.userId)
+           } else {
+             Future.successful(Done)
+           }
+    } yield {
+      val preparedForm =
+        request.userAnswers
+          .getOrElse(UserAnswers(request.userId))
+          .get(SavingsStatementPage(config.optionalAuthEnabled)) match {
+          case None        => form
+          case Some(value) => form.fill(value)
+        }
 
-    Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode))
+    }
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
@@ -96,7 +106,7 @@ class SavingsStatementController @Inject() (
         .flatMap {
           case Some(SubmissionStatusResponse(_, true))  =>
             submitBackendService
-              .submissionsPresentInSubmissionService(userAnswers.uniqueId)(headerCarrier)
+              .submissionsPresentInSubmissionServiceWithId(request.userId)(headerCarrier)
               .map {
                 case true  =>
                   routes.PreviousClaimContinueController.onPageLoad().url
@@ -112,7 +122,7 @@ class SavingsStatementController @Inject() (
             Future.successful(routes.PreviousClaimContinueController.onPageLoad().url)
           case None                                     =>
             submitBackendService
-              .submissionsPresentInSubmissionService(userAnswers.uniqueId)(headerCarrier)
+              .submissionsPresentInSubmissionServiceWithId(request.userId)(headerCarrier)
               .map {
                 case true  =>
                   routes.PreviousClaimContinueController.onPageLoad().url
@@ -131,11 +141,13 @@ class SavingsStatementController @Inject() (
       userAnswers
     }
 
-  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) = {
-    val authenticated = request.request match {
+  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) =
+    UserAnswers(request.userId, authenticated = isAuthenticated(request))
+
+  private def isAuthenticated(request: OptionalDataRequest[AnyContent]): Boolean =
+    request.request match {
       case AuthenticatedIdentifierRequest(_, _) => true
       case _                                    => false
     }
-    UserAnswers(request.userId, authenticated = authenticated)
-  }
+
 }
