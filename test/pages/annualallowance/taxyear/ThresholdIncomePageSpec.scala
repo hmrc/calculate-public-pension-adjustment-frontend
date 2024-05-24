@@ -42,7 +42,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
           .value
         val result = ThresholdIncomePage(_2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2013/adjusted-income")
+        checkNavigation(result, "/annual-allowance/2013/total-income")
       }
 
       "to TotalIncomePage when answered false" in {
@@ -91,7 +91,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
           .value
         val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2013/change-adjusted-income")
+        checkNavigation(result, "/annual-allowance/2013/check-answers")
       }
 
       "must navigate to journey recovery when no answer" in {
