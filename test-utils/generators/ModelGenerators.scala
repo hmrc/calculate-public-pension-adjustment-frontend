@@ -22,6 +22,16 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryThresholdIncomeNew: Arbitrary[ThresholdIncomeNew] =
+    Arbitrary {
+      Gen.oneOf(ThresholdIncomeNew.values.toSeq)
+    }
+
+  implicit lazy val arbitraryThresholdIncome2: Arbitrary[ThresholdIncome2] =
+    Arbitrary {
+      Gen.oneOf(ThresholdIncome2.values.toSeq)
+    }
+
   implicit lazy val arbitraryNewExcessLifetimeAllowancePaid: Arbitrary[NewExcessLifetimeAllowancePaid] =
     Arbitrary {
       Gen.oneOf(NewExcessLifetimeAllowancePaid.values.toSeq)

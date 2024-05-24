@@ -412,3 +412,13 @@ GET        /annual-allowance/:period/total-income/tax-relief                  co
 POST       /annual-allowance/:period/total-income/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /change-annual-allowance/:period/total-income/tax-relief                        controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /change-annual-allowance/:period/total-income/tax-relief                        controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /thresholdIncome2                        controllers.ThresholdIncome2Controller.onPageLoad(mode: Mode = NormalMode)
+POST       /thresholdIncome2                        controllers.ThresholdIncome2Controller.onSubmit(mode: Mode = NormalMode)
+GET        /changeThresholdIncome2                  controllers.ThresholdIncome2Controller.onPageLoad(mode: Mode = CheckMode)
+POST       /changeThresholdIncome2                  controllers.ThresholdIncome2Controller.onSubmit(mode: Mode = CheckMode)
+
+GET        /thresholdIncomeNew                        controllers.ThresholdIncomeNewController.onPageLoad(mode: Mode = NormalMode)
+POST       /thresholdIncomeNew                        controllers.ThresholdIncomeNewController.onSubmit(mode: Mode = NormalMode)
+GET        /changeThresholdIncomeNew                  controllers.ThresholdIncomeNewController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeThresholdIncomeNew                  controllers.ThresholdIncomeNewController.onSubmit(mode: Mode = CheckMode)

@@ -1136,3 +1136,19 @@ taxRelief.error.required = Enter your tax relief
 taxRelief.error.wholeNumber = Your tax relief must only include numbers 0 to 9
 taxRelief.error.outOfRange = Your tax relief must be £999,999,999 or less
 taxRelief.change.hidden = your tax relief
+
+thresholdIncome2.title = thresholdIncome2
+thresholdIncome2.heading = thresholdIncome2
+thresholdIncome2.option1 = Yes
+thresholdIncome2.no = No
+thresholdIncome2.checkYourAnswersLabel = thresholdIncome2
+thresholdIncome2.error.required = Select thresholdIncome2
+thresholdIncome2.change.hidden = ThresholdIncome2
+
+thresholdIncomeNew.title = ThresholdIncomeNew
+thresholdIncomeNew.heading = ThresholdIncomeNew
+thresholdIncomeNew.yes = Yes
+thresholdIncomeNew.no = No
+thresholdIncomeNew.checkYourAnswersLabel = ThresholdIncomeNew
+thresholdIncomeNew.error.required = Select thresholdIncomeNew
+thresholdIncomeNew.change.hidden = ThresholdIncomeNew

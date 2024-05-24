@@ -25,6 +25,12 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryThresholdIncomeNewPage: Arbitrary[ThresholdIncomeNewPage.type] =
+    Arbitrary(ThresholdIncomeNewPage)
+
+  implicit lazy val arbitraryThresholdIncome2Page: Arbitrary[ThresholdIncome2Page.type] =
+    Arbitrary(ThresholdIncome2Page)
+
   implicit lazy val arbitraryTaxReliefPage: Arbitrary[TaxReliefPage.type] =
     Arbitrary(TaxReliefPage)
 

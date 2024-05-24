@@ -1,0 +1,89 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@this(
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukRadios: GovukRadios,
+    govukButton: GovukButton
+)
+
+@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+
+@contentHint = {
+<p class="govuk-body">@messages("thresholdIncome.message1")</p>
+
+<a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance" rel="noreferrer noopener" target="_blank">
+    @messages("thresholdIncome.message2")
+</a>
+
+<br>
+<br>
+
+<h2 class="govuk-heading-l">@messages("thresholdIncome.subHeading1")</h2>
+
+<ul>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list1")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list2")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list3")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list4")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list5")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list6")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list7")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list8")
+    </li>
+</ul>
+
+<h2 class="govuk-heading-l">@messages("thresholdIncome.subHeading2." + period)</h2>
+}
+@layout(pageTitle = title(form, messages("thresholdIncome.title"))) {
+
+
+    @formHelper(action = routes.ThresholdIncomeNewController.onSubmit(mode), 'autoComplete -> "off") {
+
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
+        }
+
+        @govukRadios(
+            RadiosViewModel(
+                field  = form("value"),
+                legend = LegendViewModel(messages("thresholdIncomeNew.heading")).asPageHeading(),
+                items  = ThresholdIncomeNew.options
+            )
+        )
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+        )
+    }
+}

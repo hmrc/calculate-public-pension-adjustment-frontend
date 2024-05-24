@@ -28,6 +28,22 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryThresholdIncomeNewUserAnswersEntry: Arbitrary[(ThresholdIncomeNewPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ThresholdIncomeNewPage.type]
+        value <- arbitrary[ThresholdIncomeNew].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryThresholdIncome2UserAnswersEntry: Arbitrary[(ThresholdIncome2Page.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ThresholdIncome2Page.type]
+        value <- arbitrary[ThresholdIncome2].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryTaxReliefUserAnswersEntry: Arbitrary[(TaxReliefPage.type, JsValue)] =
     Arbitrary {
       for {
