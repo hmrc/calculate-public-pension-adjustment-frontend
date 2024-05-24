@@ -31,16 +31,16 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ThresholdIncomeController @Inject() (
-  override val messagesApi: MessagesApi,
-  userDataService: UserDataService,
-  identify: IdentifierAction,
-  getData: DataRetrievalAction,
-  requireData: DataRequiredAction,
-  formProvider: ThresholdIncomeFormProvider,
-  val controllerComponents: MessagesControllerComponents,
-  view: ThresholdIncomeView
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+                                            override val messagesApi: MessagesApi,
+                                            userDataService: UserDataService,
+                                            identify: IdentifierAction,
+                                            getData: DataRetrievalAction,
+                                            requireData: DataRequiredAction,
+                                            formProvider: ThresholdIncomeFormProvider,
+                                            val controllerComponents: MessagesControllerComponents,
+                                            view: ThresholdIncomeView
+                                          )(implicit ec: ExecutionContext)
+  extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] =

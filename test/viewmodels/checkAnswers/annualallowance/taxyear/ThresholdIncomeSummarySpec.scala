@@ -17,12 +17,13 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
-import models.{CheckMode, Period, UserAnswers}
+import models.{CheckMode, Period, ThresholdIncome, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.ThresholdIncomePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -36,13 +37,13 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           ThresholdIncomePage(Period._2018),
-          true
+          ThresholdIncome.Yes
         )
         .get
       ThresholdIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = s"thresholdIncome.checkYourAnswersLabel.$period",
-          value = ValueViewModel("site.yes"),
+          value = ValueViewModel(HtmlContent("thresholdIncome.yes")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
@@ -59,13 +60,36 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
         .set(
           ThresholdIncomePage(Period._2018),
-          false
+          ThresholdIncome.No
         )
         .get
       ThresholdIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = s"thresholdIncome.checkYourAnswersLabel.$period",
-          value = ValueViewModel("site.no"),
+          value = ValueViewModel(HtmlContent("thresholdIncome.no")),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              routes.ThresholdIncomeController.onPageLoad(CheckMode, period).url
+            )
+              .withVisuallyHiddenText("thresholdIncome.change.hidden.2018")
+          )
+        )
+      )
+    }
+
+    "when IDoNotKnow is selected, return the summary row" in {
+      val period = Period._2018
+      val userAnswers = UserAnswers("id")
+        .set(
+          ThresholdIncomePage(Period._2018),
+          ThresholdIncome.IDoNotKnow
+        )
+        .get
+      ThresholdIncomeSummary.row(userAnswers, period) shouldBe Some(
+        SummaryListRowViewModel(
+          key = s"thresholdIncome.checkYourAnswersLabel.$period",
+          value = ValueViewModel(HtmlContent("thresholdIncome.idk")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

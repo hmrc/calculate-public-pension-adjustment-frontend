@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.annualallowance.taxyear.ThresholdIncomeFormProvider
-import models.{Done, NormalMode, Period, UserAnswers}
+import models.{Done, NormalMode, Period, UserAnswers, ThresholdIncome}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -48,6 +48,8 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
       )
       .url
 
+  val thresholdIncome  = ThresholdIncome
+
   "ThresholdIncome Controller" - {
 
     "must return OK and the correct view for a GET" in {
@@ -75,7 +77,7 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
       val userAnswers = UserAnswers(userAnswersId)
         .set(
           ThresholdIncomePage(Period._2013),
-          true
+          ThresholdIncome.Yes
         )
         .success
         .value
@@ -91,7 +93,7 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          form.fill(true),
+          form.fill(ThresholdIncome.Yes),
           NormalMode,
           Period._2013
         )(request, messages(application)).toString
@@ -109,10 +111,10 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
-      running(application) {
-        val request =
-          FakeRequest(POST, thresholdIncomeRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+        running(application) {
+          val request =
+            FakeRequest(POST, thresholdIncomeRoute)
+              .withFormUrlEncodedBody(("value", ThresholdIncome.values.head.toString))
 
         val result = route(application, request).value
 

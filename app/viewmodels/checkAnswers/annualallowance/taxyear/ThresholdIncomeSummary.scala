@@ -19,6 +19,8 @@ package viewmodels.checkAnswers.annualallowance.taxyear
 import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.ThresholdIncomePage
 import play.api.i18n.Messages
+import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
@@ -26,14 +28,18 @@ import viewmodels.implicits._
 object ThresholdIncomeSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit
-    messages: Messages
+                                                messages: Messages
   ): Option[SummaryListRow] =
     answers.get(ThresholdIncomePage(period)).map { answer =>
-      val value = if (answer) "site.yes" else "site.no"
+      val value = ValueViewModel(
+        HtmlContent(
+          HtmlFormat.escape(messages(s"thresholdIncome.$answer"))
+        )
+      )
 
       SummaryListRowViewModel(
         key = "thresholdIncome.checkYourAnswersLabel." + period,
-        value = ValueViewModel(value),
+        value = value,
         actions = Seq(
           ActionItemViewModel(
             "site.change",
