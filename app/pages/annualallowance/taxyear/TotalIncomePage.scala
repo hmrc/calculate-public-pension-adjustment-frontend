@@ -28,7 +28,7 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
   override def toString: String = "totalIncome"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
