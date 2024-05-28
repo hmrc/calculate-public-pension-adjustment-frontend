@@ -28,7 +28,7 @@ import viewmodels.implicits._
 object ThresholdIncomeSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit
-                                                messages: Messages
+    messages: Messages
   ): Option[SummaryListRow] =
     answers.get(ThresholdIncomePage(period)).map { answer =>
       val value = ValueViewModel(

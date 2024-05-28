@@ -79,7 +79,7 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when IDoNotKnow is selected, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val userAnswers = UserAnswers("id")
         .set(
           ThresholdIncomePage(Period._2018),
