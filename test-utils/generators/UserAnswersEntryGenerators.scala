@@ -73,6 +73,24 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryLumpSumDeathBenefitsValueUserAnswersEntry
+    : Arbitrary[(LumpSumDeathBenefitsValuePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[LumpSumDeathBenefitsValuePage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAnyLumpSumDeathBenefitsUserAnswersEntry
+    : Arbitrary[(AnyLumpSumDeathBenefitsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AnyLumpSumDeathBenefitsPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryTaxReliefUserAnswersEntry: Arbitrary[(TaxReliefPage.type, JsValue)] =
     Arbitrary {
       for {
