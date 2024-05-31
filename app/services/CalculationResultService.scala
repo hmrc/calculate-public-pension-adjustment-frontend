@@ -22,7 +22,7 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -144,7 +144,7 @@ class CalculationResultService @Inject() (
     val income: Option[Income] =
       if (period == Period._2016)
         None
-      else if (userAnswers.get(ThresholdIncomePage(period)).getOrElse(false))
+      else if (userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.Yes))
         Some(userAnswers.get(AdjustedIncomePage(period)).map(v => AboveThreshold(v.toInt)).getOrElse(BelowThreshold))
       else
         Some(BelowThreshold)
