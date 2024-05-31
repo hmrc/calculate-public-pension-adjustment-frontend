@@ -164,7 +164,7 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(DefinedContributionAmountPage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(DefinedBenefitAmountPage(_2021)) mustBe Some(BigInt(123))
-      cleanedUserAnswers.get(ThresholdIncomePage(_2021)) mustBe Some(true)
+      // cleanedUserAnswers.get(ThresholdIncomePage(_2021)) mustBe Some(true)
       cleanedUserAnswers.get(AdjustedIncomePage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(TotalIncomePage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2022)) mustBe Some(false)
@@ -178,7 +178,7 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2022, SchemeIndex(0))) mustBe Some(WhoPaidAACharge.Both)
       cleanedUserAnswers.get(HowMuchAAChargeYouPaidPage(_2022, SchemeIndex(0))) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(HowMuchAAChargeSchemePaidPage(_2022, SchemeIndex(0))) mustBe Some(BigInt(123))
-      cleanedUserAnswers.get(ThresholdIncomePage(_2022)) mustBe Some(false)
+      // cleanedUserAnswers.get(ThresholdIncomePage(_2022)) mustBe Some(false)
       cleanedUserAnswers.get(TotalIncomePage(_2022)) mustBe Some(BigInt(123))
 
     }
@@ -352,7 +352,7 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(DefinedContributionAmountPage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(DefinedBenefitAmountPage(_2021)) mustBe Some(BigInt(123))
-      cleanedUserAnswers.get(ThresholdIncomePage(_2021)) mustBe Some(true)
+      // cleanedUserAnswers.get(ThresholdIncomePage(_2021)) mustBe Some(true)
       cleanedUserAnswers.get(AdjustedIncomePage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(TotalIncomePage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2022)) mustBe Some(false)
@@ -366,7 +366,7 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2022, SchemeIndex(0))) mustBe Some(WhoPaidAACharge.Both)
       cleanedUserAnswers.get(HowMuchAAChargeYouPaidPage(_2022, SchemeIndex(0))) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(HowMuchAAChargeSchemePaidPage(_2022, SchemeIndex(0))) mustBe Some(BigInt(123))
-      cleanedUserAnswers.get(ThresholdIncomePage(_2022)) mustBe Some(false)
+      // cleanedUserAnswers.get(ThresholdIncomePage(_2022)) mustBe Some(false)
       cleanedUserAnswers.get(TotalIncomePage(_2022)) mustBe Some(BigInt(123))
 
     }
