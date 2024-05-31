@@ -17,29 +17,29 @@
 package controllers.annualallowance.taxyear
 
 import controllers.actions._
-import forms.annualallowance.taxyear.AnySalarySacrificeArrangementsFormProvider
+import forms.annualallowance.taxyear.HowMuchTaxReliefPensionFormProvider
 import models.tasklist.sections.AASection
 
 import javax.inject.Inject
 import models.{Mode, Period}
-import pages.annualallowance.taxyear.AnySalarySacrificeArrangementsPage
+import pages.annualallowance.taxyear.HowMuchTaxReliefPensionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import services.UserDataService
-import views.html.annualallowance.taxyear.AnySalarySacrificeArrangementsView
+import views.html.annualallowance.taxyear.HowMuchTaxReliefPensionView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AnySalarySacrificeArrangementsController @Inject() (
+class HowMuchTaxReliefPensionController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: AnySalarySacrificeArrangementsFormProvider,
+  formProvider: HowMuchTaxReliefPensionFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: AnySalarySacrificeArrangementsView
+  view: HowMuchTaxReliefPensionView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -48,7 +48,7 @@ class AnySalarySacrificeArrangementsController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.get(AnySalarySacrificeArrangementsPage(period)) match {
+      val preparedForm = request.userAnswers.get(HowMuchTaxReliefPensionPage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
@@ -65,8 +65,8 @@ class AnySalarySacrificeArrangementsController @Inject() (
           value =>
             for {
               updatedAnswers <-
-                Future.fromTry(request.userAnswers.set(AnySalarySacrificeArrangementsPage(period), value))
-              redirectUrl     = AnySalarySacrificeArrangementsPage(period).navigate(mode, updatedAnswers).url
+                Future.fromTry(request.userAnswers.set(HowMuchTaxReliefPensionPage(period), value))
+              redirectUrl     = HowMuchTaxReliefPensionPage(period).navigate(mode, updatedAnswers).url
               answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)

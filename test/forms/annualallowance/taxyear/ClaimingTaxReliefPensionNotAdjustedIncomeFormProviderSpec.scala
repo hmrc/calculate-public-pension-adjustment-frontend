@@ -19,12 +19,12 @@ package forms.annualallowance.taxyear
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class AnySalarySacrificeArrangementsFormProviderSpec extends BooleanFieldBehaviours {
+class ClaimingTaxReliefPensionNotAdjustedIncomeFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "anySalarySacrificeArrangements.error.required"
+  val requiredKey = "claimingTaxReliefPensionNotAdjustedIncome.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new AnySalarySacrificeArrangementsFormProvider()()
+  val form = new ClaimingTaxReliefPensionNotAdjustedIncomeFormProvider()()
 
   ".value" - {
 
