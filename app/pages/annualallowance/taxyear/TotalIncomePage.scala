@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -28,8 +28,32 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
   override def toString: String = "totalIncome"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    if (period != Period._2016) {
+      answers.get(ThresholdIncomePage(period)) match {
+        case Some(ThresholdIncome.IDoNotKnow) =>
+          controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
+            .onPageLoad(NormalMode, period)
+        case Some(ThresholdIncome.Yes)        =>
+          controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+            .onPageLoad(NormalMode, period)
+        case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    } else {
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    if (period != Period._2016) {
+      answers.get(ThresholdIncomePage(period)) match {
+        case Some(ThresholdIncome.IDoNotKnow) =>
+          controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
+            .onPageLoad(CheckMode, period)
+        case Some(ThresholdIncome.Yes)        =>
+          controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+            .onPageLoad(CheckMode, period)
+        case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    } else {
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }
