@@ -16,15 +16,15 @@
 
 package forms.annualallowance.taxyear
 
-import forms.behaviours.BooleanFieldBehaviours
-import models.Period
+import forms.behaviours.{BooleanFieldBehaviours, OptionFieldBehaviours}
+import models.{Period, ThresholdIncome}
 import play.api.data.FormError
 
-class ThresholdIncomeFormProviderSpec extends BooleanFieldBehaviours {
+class ThresholdIncomeFormProviderSpec extends OptionFieldBehaviours {
 
   val requiredBelowKey = "thresholdIncome.error.required.below2021"
   val requiredAboveKey = "thresholdIncome.error.required.2021AndAbove"
-  val invalidKey       = "error.boolean"
+  val invalidKey       = "error.invalid"
 
   val formBelow = new ThresholdIncomeFormProvider()(Period._2013)
 
@@ -32,9 +32,10 @@ class ThresholdIncomeFormProviderSpec extends BooleanFieldBehaviours {
 
     val fieldName = "value"
 
-    behave like booleanField(
+    behave like optionsField[ThresholdIncome](
       formBelow,
       fieldName,
+      validValues = ThresholdIncome.values,
       invalidError = FormError(fieldName, invalidKey)
     )
 
@@ -51,9 +52,10 @@ class ThresholdIncomeFormProviderSpec extends BooleanFieldBehaviours {
 
     val fieldName = "value"
 
-    behave like booleanField(
+    behave like optionsField[ThresholdIncome](
       formAfter,
       fieldName,
+      validValues = ThresholdIncome.values,
       invalidError = FormError(fieldName, invalidKey)
     )
 

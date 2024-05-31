@@ -18,7 +18,7 @@ package base
 
 import controllers.actions._
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{ChangeInTaxCharge, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{ChangeInTaxCharge, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
@@ -252,7 +252,7 @@ trait SpecBase
       .set(DefinedBenefitAmountPage(_2021), BigInt(123))
       .success
       .value
-      .set(ThresholdIncomePage(_2021), true)
+      .set(ThresholdIncomePage(_2021), ThresholdIncome.Yes)
       .success
       .value
       .set(AdjustedIncomePage(_2021), BigInt(123))
@@ -282,7 +282,7 @@ trait SpecBase
       .set(HowMuchAAChargeSchemePaidPage(_2022, SchemeIndex(0)), BigInt(123))
       .success
       .value
-      .set(ThresholdIncomePage(_2022), false)
+      .set(ThresholdIncomePage(_2022), ThresholdIncome.No)
       .success
       .value
       .set(TotalIncomePage(_2022), BigInt(123))

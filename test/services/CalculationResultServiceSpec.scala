@@ -128,7 +128,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2018" : {
@@ -150,7 +150,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2019" : {
@@ -171,7 +171,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2020" : {
@@ -192,7 +192,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 34000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2021" : {
@@ -211,7 +211,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2022" : {
@@ -232,7 +232,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 44000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2023" : {
@@ -255,7 +255,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 53000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        }
            |      }
@@ -344,7 +344,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2018" : {
@@ -366,7 +366,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2019" : {
@@ -387,7 +387,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2020" : {
@@ -408,7 +408,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 34000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2021" : {
@@ -427,7 +427,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : true,
+           |          "thresholdIncome" : "yes",
            |          "adjustedIncome" : 160000,
            |          "totalIncome" : 60000
            |        },
@@ -449,7 +449,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 44000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2023" : {
@@ -472,7 +472,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 53000,
-           |          "thresholdIncome" : true,
+           |          "thresholdIncome" : "yes",
            |          "adjustedIncome" : 120000,
            |          "totalIncome" : 60000
            |        }
@@ -558,7 +558,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2018" : {
@@ -580,7 +580,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        },
            |        "2019" : {
@@ -601,7 +601,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
+           |          "thresholdIncome" : "no",
            |          "totalIncome" : 60000
            |        }
            |      }
@@ -798,7 +798,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": false,
+                |          "thresholdIncome": "no",
                 |          "totalIncome": 60000
                 |        },
                 |        "2018": {
@@ -820,7 +820,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": false,
+                |          "thresholdIncome": "no",
                 |          "totalIncome": 60000
                 |        },
                 |        "2019": {
@@ -841,7 +841,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": false,
+                |          "thresholdIncome": "no",
                 |          "totalIncome": 60000
                 |        }
                 |      }
@@ -926,7 +926,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedBenefit"
                 |          ],
                 |          "definedBenefitAmount": 2000,
-                |          "thresholdIncome": false,
+                |          "thresholdIncome": "no",
                 |          "totalIncome": 60000
                 |        },
                 |        "2018": {
@@ -945,7 +945,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": true,
+                |          "thresholdIncome": "yes",
                 |          "adjustedIncome": 160000,
                 |          "totalIncome": 200000
                 |        },
@@ -968,7 +968,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": false,
+                |          "thresholdIncome": "no",
                 |          "totalIncome": 60000
                 |        },
                 |        "2020": {
@@ -987,7 +987,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": true,
-                |          "thresholdIncome": false,
+                |          "thresholdIncome": "no",
                 |          "contributedToDuringRemedyPeriod": [
                 |            "definedContribution",
                 |            "definedBenefit"
@@ -1081,7 +1081,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedContribution"
                 |          ],
                 |          "definedContributionAmount": 1600,
-                |          "thresholdIncome": true,
+                |          "thresholdIncome": "yes",
                 |          "adjustedIncome": 120000,
                 |          "totalIncome": 140000
                 |        },
@@ -1107,7 +1107,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedBenefit"
                 |          ],
                 |          "definedBenefitAmount": 800,
-                |          "thresholdIncome": false,
+                |          "thresholdIncome": "no",
                 |          "totalIncome": 80000
                 |        }
                 |      }
@@ -1216,7 +1216,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "definedContribution"
                 |        ],
                 |        "definedContributionAmount": 23000,
-                |        "thresholdIncome": false,
+                |        "thresholdIncome": "no",
                 |        "totalIncome": 80000
                 |      },
                 |      "2018": {
@@ -1244,7 +1244,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |        "definedContributionAmount": 3200,
                 |        "flexiAccessDefinedContributionAmount": 4200,
                 |        "definedBenefitAmount": 8000,
-                |        "thresholdIncome": true,
+                |        "thresholdIncome": "yes",
                 |        "adjustedIncome": 120000,
                 |        "totalIncome": 140000
                 |      },
@@ -1267,7 +1267,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          }
                 |        },
                 |        "otherDefinedBenefitOrContribution": false,
-                |        "thresholdIncome": false,
+                |        "thresholdIncome": "no",
                 |        "totalIncome": 90000
                 |      }
                 |    }
@@ -1355,7 +1355,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedContribution"
                 |          ],
                 |          "definedContributionAmount": 1600,
-                |          "thresholdIncome": true,
+                |          "thresholdIncome": "yes",
                 |          "adjustedIncome": 120000,
                 |          "totalIncome": 140000
                 |        },
@@ -1381,7 +1381,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedBenefit"
                 |          ],
                 |          "definedBenefitAmount": 800,
-                |          "thresholdIncome": false,
+                |          "thresholdIncome": "no",
                 |          "totalIncome": 80000
                 |        }
                 |      }
