@@ -17,13 +17,32 @@
 package generators
 
 import org.scalacheck.Arbitrary
-import pages.PreviousClaimContinuePage
+import pages.{AnySalarySacrificeArrangementsPage, FlexibleRemunerationArrangementsPage, PreviousClaimContinuePage}
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
 import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryFlexibleRemunerationArrangementsPage
+    : Arbitrary[FlexibleRemunerationArrangementsPage.type] =
+    Arbitrary(FlexibleRemunerationArrangementsPage)
+
+  implicit lazy val arbitraryAnySalarySacrificeArrangementsPage: Arbitrary[AnySalarySacrificeArrangementsPage.type] =
+    Arbitrary(AnySalarySacrificeArrangementsPage)
+
+  implicit lazy val arbitraryAmountFlexibleRemunerationArrangementsPage
+    : Arbitrary[AmountFlexibleRemunerationArrangementsPage.type] =
+    Arbitrary(AmountFlexibleRemunerationArrangementsPage)
+
+  implicit lazy val arbitraryHowMuchContributionPensionSchemePage
+    : Arbitrary[HowMuchContributionPensionSchemePage.type] =
+    Arbitrary(HowMuchContributionPensionSchemePage)
+
+  implicit lazy val arbitraryAmountSalarySacrificeArrangementsPage
+    : Arbitrary[AmountSalarySacrificeArrangementsPage.type] =
+    Arbitrary(AmountSalarySacrificeArrangementsPage)
 
   implicit lazy val arbitraryTaxReliefPage: Arbitrary[TaxReliefPage.type] =
     Arbitrary(TaxReliefPage)
