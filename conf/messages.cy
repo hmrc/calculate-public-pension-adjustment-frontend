@@ -1175,3 +1175,18 @@ flexibleRemunerationArrangements.heading = cy: Flexible remuneration
 flexibleRemunerationArrangements.checkYourAnswersLabel = cy: Flexible remuneration
 flexibleRemunerationArrangements.error.required = cy: Select yes if flexible remuneration
 flexibleRemunerationArrangements.change.hidden = cy: Flexible remuneration
+
+anyLumpSumDeathBenefits.title = cy: anyLumpSumDeathBenefits
+anyLumpSumDeathBenefits.heading = cy: anyLumpSumDeathBenefits
+anyLumpSumDeathBenefits.checkYourAnswersLabel = cy: anyLumpSumDeathBenefits
+anyLumpSumDeathBenefits.error.required = cy: Select yes if anyLumpSumDeathBenefits
+anyLumpSumDeathBenefits.change.hidden = cy: AnyLumpSumDeathBenefits
+
+lumpSumDeathBenefitsValue.title = cy: LumpSumDeathBenefitsValue
+lumpSumDeathBenefitsValue.heading = cy: LumpSumDeathBenefitsValue
+lumpSumDeathBenefitsValue.checkYourAnswersLabel = cy: LumpSumDeathBenefitsValue
+lumpSumDeathBenefitsValue.error.nonNumeric = cy: Enter your lumpSumDeathBenefitsValue using numbers
+lumpSumDeathBenefitsValue.error.required = cy: Enter your lumpSumDeathBenefitsValue
+lumpSumDeathBenefitsValue.error.wholeNumber = cy: Enter your lumpSumDeathBenefitsValue using whole numbers
+lumpSumDeathBenefitsValue.error.outOfRange = cy: LumpSumDeathBenefitsValue must be between {0} and {1}
+lumpSumDeathBenefitsValue.change.hidden = cy: LumpSumDeathBenefitsValue
