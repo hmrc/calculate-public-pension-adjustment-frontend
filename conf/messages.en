@@ -1139,3 +1139,42 @@ taxRelief.error.required = Enter your tax relief
 taxRelief.error.wholeNumber = Your tax relief must only include numbers 0 to 9
 taxRelief.error.outOfRange = Your tax relief must be £999,999,999 or less
 taxRelief.change.hidden = your tax relief
+
+amountSalarySacrificeArrangements.title = Salary sacrifice amount
+amountSalarySacrificeArrangements.heading = Salary sacrifice amount
+amountSalarySacrificeArrangements.checkYourAnswersLabel = Salary sacrifice amount
+amountSalarySacrificeArrangements.error.nonNumeric = Enter your Salary sacrifice amount using numbers
+amountSalarySacrificeArrangements.error.required = Enter your Salary sacrifice amount
+amountSalarySacrificeArrangements.error.wholeNumber = Enter your Salary sacrifice amount using whole numbers
+amountSalarySacrificeArrangements.error.outOfRange = Salary sacrifice amount must be between {0} and {1}
+amountSalarySacrificeArrangements.change.hidden = Salary sacrifice amount
+
+amountFlexibleRemunerationArrangements.title = Flexi remuneration amount
+amountFlexibleRemunerationArrangements.heading = Flexi remuneration amount
+amountFlexibleRemunerationArrangements.checkYourAnswersLabel = Flexi remuneration amount
+amountFlexibleRemunerationArrangements.error.nonNumeric = Enter your Flexi remuneration amount using numbers
+amountFlexibleRemunerationArrangements.error.required = Enter your Flexi remuneration amount
+amountFlexibleRemunerationArrangements.error.wholeNumber = Enter your Flexi remuneration amount using whole numbers
+amountFlexibleRemunerationArrangements.error.outOfRange = Flexi remuneration amount must be between {0} and {1}
+amountFlexibleRemunerationArrangements.change.hidden = Flexi remuneration amount
+
+howMuchContributionPensionScheme.title = Pre-Relief pension contributions
+howMuchContributionPensionScheme.heading = Pre-Relief pension contributions
+howMuchContributionPensionScheme.checkYourAnswersLabel = Pre-Relief pension contributions
+howMuchContributionPensionScheme.error.nonNumeric = Enter your Pre-Relief pension contributions using numbers
+howMuchContributionPensionScheme.error.required = Enter your Pre-Relief pension contributions
+howMuchContributionPensionScheme.error.wholeNumber = Enter your Pre-Relief pension contributions using whole numbers
+howMuchContributionPensionScheme.error.outOfRange = Pre-Relief pension contributions must be between {0} and {1}
+howMuchContributionPensionScheme.change.hidden = Pre-Relief pension contributions
+
+anySalarySacrificeArrangements.title = Salary sacrifice
+anySalarySacrificeArrangements.heading = Salary sacrifice
+anySalarySacrificeArrangements.checkYourAnswersLabel = Salary sacrifice
+anySalarySacrificeArrangements.error.required = Select yes if Salary sacrifice
+anySalarySacrificeArrangements.change.hidden = Salary sacrifice
+
+flexibleRemunerationArrangements.title = Flexible remuneration
+flexibleRemunerationArrangements.heading = Flexible remuneration
+flexibleRemunerationArrangements.checkYourAnswersLabel = Flexible remuneration
+flexibleRemunerationArrangements.error.required = Select yes if flexible remuneration
+flexibleRemunerationArrangements.change.hidden = Flexible remuneration
