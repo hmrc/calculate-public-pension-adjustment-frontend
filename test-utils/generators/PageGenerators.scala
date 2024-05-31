@@ -44,6 +44,12 @@ trait PageGenerators {
     : Arbitrary[AmountSalarySacrificeArrangementsPage.type] =
     Arbitrary(AmountSalarySacrificeArrangementsPage)
 
+  implicit lazy val arbitraryLumpSumDeathBenefitsValuePage: Arbitrary[LumpSumDeathBenefitsValuePage.type] =
+    Arbitrary(LumpSumDeathBenefitsValuePage)
+
+  implicit lazy val arbitraryAnyLumpSumDeathBenefitsPage: Arbitrary[AnyLumpSumDeathBenefitsPage.type] =
+    Arbitrary(AnyLumpSumDeathBenefitsPage)
+
   implicit lazy val arbitraryTaxReliefPage: Arbitrary[TaxReliefPage.type] =
     Arbitrary(TaxReliefPage)
 
