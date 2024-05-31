@@ -19,7 +19,7 @@ package generators
 import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
-import pages.PreviousClaimContinuePage
+import pages.{AnySalarySacrificeArrangementsPage, FlexibleRemunerationArrangementsPage, PreviousClaimContinuePage}
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -27,6 +27,51 @@ import pages.setupquestions.ReportingChangePage
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+
+  implicit lazy val arbitraryFlexibleRemunerationArrangementsUserAnswersEntry
+    : Arbitrary[(FlexibleRemunerationArrangementsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[FlexibleRemunerationArrangementsPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAnySalarySacrificeArrangementsUserAnswersEntry
+    : Arbitrary[(AnySalarySacrificeArrangementsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AnySalarySacrificeArrangementsPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAmountFlexibleRemunerationArrangementsUserAnswersEntry
+    : Arbitrary[(AmountFlexibleRemunerationArrangementsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AmountFlexibleRemunerationArrangementsPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHowMuchContributionPensionSchemeUserAnswersEntry
+    : Arbitrary[(HowMuchContributionPensionSchemePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HowMuchContributionPensionSchemePage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAmountSalarySacrificeArrangementsUserAnswersEntry
+    : Arbitrary[(AmountSalarySacrificeArrangementsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AmountSalarySacrificeArrangementsPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
 
   implicit lazy val arbitraryTaxReliefUserAnswersEntry: Arbitrary[(TaxReliefPage.type, JsValue)] =
     Arbitrary {
