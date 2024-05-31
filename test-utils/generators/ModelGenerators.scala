@@ -156,4 +156,9 @@ trait ModelGenerators {
     Arbitrary {
       Gen.oneOf(ChangeInTaxCharge.values.toSeq)
     }
+
+  implicit lazy val arbitraryThresholdIncome: Arbitrary[ThresholdIncome] =
+    Arbitrary {
+      Gen.oneOf(ThresholdIncome.values.toSeq)
+    }
 }
