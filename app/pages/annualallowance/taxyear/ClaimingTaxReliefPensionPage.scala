@@ -16,26 +16,26 @@
 
 package pages.annualallowance.taxyear
 
-import models.UserAnswers
+import models.{Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object ClaimingTaxReliefPensionPage extends QuestionPage[Boolean] {
+case class ClaimingTaxReliefPensionPage(period: Period) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "claimingTaxReliefPension"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    answers.get(ClaimingTaxReliefPensionPage) match {
+    answers.get(ClaimingTaxReliefPensionPage(period)) match {
       case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = {
-    answers.get(ClaimingTaxReliefPensionPage) match {
+    answers.get(ClaimingTaxReliefPensionPage(period)) match {
       case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

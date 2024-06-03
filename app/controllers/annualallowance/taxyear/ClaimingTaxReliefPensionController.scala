@@ -18,13 +18,13 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
-import models.Mode
+import models.{Mode, Period}
 import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.ClaimingTaxReliefPensionView
+import views.html.annualallowance.taxyear.ClaimingTaxReliefPensionView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -42,29 +42,29 @@ class ClaimingTaxReliefPensionController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(ClaimingTaxReliefPensionPage) match {
+      val preparedForm = request.userAnswers.get(ClaimingTaxReliefPensionPage(period)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, period))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, mode, period))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage(period), value))
             _              <- userDataService.set(updatedAnswers)
-          } yield Redirect(ClaimingTaxReliefPensionPage.navigate(mode, updatedAnswers))
+          } yield Redirect(ClaimingTaxReliefPensionPage(period).navigate(mode, updatedAnswers))
       )
   }
 }

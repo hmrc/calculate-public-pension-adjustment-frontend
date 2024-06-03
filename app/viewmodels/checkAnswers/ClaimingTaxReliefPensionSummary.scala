@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -26,8 +26,8 @@ import viewmodels.implicits._
 
 object ClaimingTaxReliefPensionSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ClaimingTaxReliefPensionPage).map {
+  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(ClaimingTaxReliefPensionPage(period)).map {
       answer =>
 
         val value = if (answer) "site.yes" else "site.no"
@@ -36,7 +36,7 @@ object ClaimingTaxReliefPensionSummary  {
           key     = "claimingTaxReliefPension.checkYourAnswersLabel",
           value   = ValueViewModel(value),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode, period).url)
               .withVisuallyHiddenText(messages("claimingTaxReliefPension.change.hidden"))
           )
         )
