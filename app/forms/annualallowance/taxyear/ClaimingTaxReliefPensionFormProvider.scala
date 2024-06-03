@@ -17,13 +17,14 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
+import models.Period
 import play.api.data.Form
 
 import javax.inject.Inject
 
 class ClaimingTaxReliefPensionFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(period: Period): Form[Boolean] =
     Form(
       "value" -> boolean("claimingTaxReliefPension.error.required")
     )

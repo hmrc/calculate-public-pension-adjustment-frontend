@@ -40,10 +40,10 @@ class ClaimingTaxReliefPensionController @Inject()(
                                          view: ClaimingTaxReliefPensionView
                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      val form = formProvider(period)
 
       val preparedForm = request.userAnswers.get(ClaimingTaxReliefPensionPage(period)) match {
         case None => form
@@ -55,6 +55,7 @@ class ClaimingTaxReliefPensionController @Inject()(
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      val form = formProvider(period)
 
       form.bindFromRequest().fold(
         formWithErrors =>
