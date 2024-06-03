@@ -1,16 +1,15 @@
-package controllers
+package controllers.annualallowance.taxyear
 
 import controllers.actions._
-import forms.InterestFromSavingsFormProvider
-import javax.inject.Inject
+import forms.annualallowance.taxyear.InterestFromSavingsFormProvider
 import models.Mode
-import pages.InterestFromSavingsPage
+import pages.annualallowance.taxyear.InterestFromSavingsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.InterestFromSavingsView
 import services.UserDataService
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class InterestFromSavingsController @Inject()(

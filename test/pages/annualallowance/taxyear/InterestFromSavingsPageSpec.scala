@@ -1,4 +1,4 @@
-package pages
+package pages.annualallowance.taxyear
 
 import pages.behaviours.PageBehaviours
 

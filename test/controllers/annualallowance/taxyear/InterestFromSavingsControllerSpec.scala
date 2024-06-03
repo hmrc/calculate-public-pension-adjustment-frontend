@@ -1,18 +1,18 @@
-package controllers
+package controllers.annualallowance.taxyear
 
 import base.SpecBase
-import forms.InterestFromSavingsFormProvider
-import models.{NormalMode, UserAnswers, Done}
+import controllers.routes
+import forms.annualallowance.taxyear.InterestFromSavingsFormProvider
+import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.InterestFromSavingsPage
+import pages.annualallowance.taxyear.InterestFromSavingsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.InterestFromSavingsView
 
 import scala.concurrent.Future
 

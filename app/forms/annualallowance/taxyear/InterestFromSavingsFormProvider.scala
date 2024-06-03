@@ -1,8 +1,9 @@
-package forms
+package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
-import javax.inject.Inject
 import play.api.data.Form
+
+import javax.inject.Inject
 
 class InterestFromSavingsFormProvider @Inject() extends Mappings {
 
