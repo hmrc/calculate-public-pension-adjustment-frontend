@@ -39,7 +39,7 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
         case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {
-      controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
@@ -54,6 +54,6 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
         case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {
-      controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
     }
 }
