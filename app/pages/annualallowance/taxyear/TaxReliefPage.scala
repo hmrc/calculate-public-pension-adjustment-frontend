@@ -16,7 +16,8 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, UserAnswers}
+import controllers.annualallowance.taxyear.routes.InterestFromSavingsController
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -27,9 +28,17 @@ case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
 
   override def toString: String = "taxRelief"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+    answers.get(InterestFromSavingsPage(period)) match {
+      case Some(_) => InterestFromSavingsController.onPageLoad(NormalMode, period)
+      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+    answers.get(InterestFromSavingsPage(period)) match {
+      case Some(_) => InterestFromSavingsController.onPageLoad(CheckMode, period)
+      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+  }
 }
