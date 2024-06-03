@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package forms
-
-import javax.inject.Inject
+package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
 import play.api.data.Form
+
+import javax.inject.Inject
 
 class ClaimingTaxReliefPensionFormProvider @Inject() extends Mappings {
 

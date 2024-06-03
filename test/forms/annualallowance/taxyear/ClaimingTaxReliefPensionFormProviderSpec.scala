@@ -1,4 +1,4 @@
-package forms
+package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError

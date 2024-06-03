@@ -448,7 +448,7 @@ POST       /annual-allowance/threshold-income/lump-sum-death-benefits-value/:per
 GET        /annual-allowance/threshold-income/change-lump-sum-death-benefits-value/:period                       controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/threshold-income/change-lump-sum-death-benefits-value/:period                        controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET        /claimingTaxReliefPension                        controllers.ClaimingTaxReliefPensionController.onPageLoad(mode: Mode = NormalMode)
-POST       /claimingTaxReliefPension                        controllers.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = NormalMode)
-GET        /changeClaimingTaxReliefPension                  controllers.ClaimingTaxReliefPensionController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeClaimingTaxReliefPension                  controllers.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = CheckMode)
+GET        /claimingTaxReliefPension                        controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onPageLoad(mode: Mode = NormalMode)
+POST       /claimingTaxReliefPension                        controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = NormalMode)
+GET        /changeClaimingTaxReliefPension                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeClaimingTaxReliefPension                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = CheckMode)

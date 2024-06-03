@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.annualallowance.taxyear
 
 import controllers.actions._
-import forms.ClaimingTaxReliefPensionFormProvider
-import javax.inject.Inject
+import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
 import models.Mode
-import pages.ClaimingTaxReliefPensionPage
+import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ClaimingTaxReliefPensionView
-import services.UserDataService
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ClaimingTaxReliefPensionController @Inject()(

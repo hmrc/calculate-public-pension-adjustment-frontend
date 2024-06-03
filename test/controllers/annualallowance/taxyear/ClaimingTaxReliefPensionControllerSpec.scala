@@ -1,12 +1,13 @@
-package controllers
+package controllers.annualallowance.taxyear
 
 import base.SpecBase
-import forms.ClaimingTaxReliefPensionFormProvider
-import models.{NormalMode, UserAnswers, Done}
+import controllers.routes
+import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
+import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ClaimingTaxReliefPensionPage
+import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
