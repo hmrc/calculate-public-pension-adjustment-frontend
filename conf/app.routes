@@ -453,7 +453,7 @@ POST       /annual-allowance/adjusted-income/claiming-tax-relief-pension/:period
 GET        /annual-allowance/adjusted-income/change-claiming-tax-relief-pension/:period                   controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/adjusted-income/change-claiming-tax-relief-pension/:period                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET        /interestFromSavings                  controllers.annualallowance.taxyear.InterestFromSavingsController.onPageLoad(mode: Mode = NormalMode)
-POST       /interestFromSavings                  controllers.annualallowance.taxyear.InterestFromSavingsController.onSubmit(mode: Mode = NormalMode)
-GET        /changeInterestFromSavings                        controllers.annualallowance.taxyear.InterestFromSavingsController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeInterestFromSavings                        controllers.annualallowance.taxyear.InterestFromSavingsController.onSubmit(mode: Mode = CheckMode)
+GET        /annual-allowance/interest-from-savings/:period                 controllers.annualallowance.taxyear.InterestFromSavingsController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/interest-from-savings/:period                  controllers.annualallowance.taxyear.InterestFromSavingsController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/change-interest-from-savings/:period                        controllers.annualallowance.taxyear.InterestFromSavingsController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/change-interest-from-savings/:period                        controllers.annualallowance.taxyear.InterestFromSavingsController.onSubmit(mode: Mode = CheckMode, period:Period)
