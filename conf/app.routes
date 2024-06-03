@@ -452,3 +452,8 @@ GET        /annual-allowance/adjusted-income/claiming-tax-relief-pension/:period
 POST       /annual-allowance/adjusted-income/claiming-tax-relief-pension/:period                         controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/adjusted-income/change-claiming-tax-relief-pension/:period                   controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/adjusted-income/change-claiming-tax-relief-pension/:period                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /interestFromSavings                  controllers.InterestFromSavingsController.onPageLoad(mode: Mode = NormalMode)
+POST       /interestFromSavings                  controllers.InterestFromSavingsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeInterestFromSavings                        controllers.InterestFromSavingsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeInterestFromSavings                        controllers.InterestFromSavingsController.onSubmit(mode: Mode = CheckMode)

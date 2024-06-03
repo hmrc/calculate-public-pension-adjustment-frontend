@@ -1199,3 +1199,12 @@ claimingTaxReliefPension.heading = claimingTaxReliefPension
 claimingTaxReliefPension.checkYourAnswersLabel = claimingTaxReliefPension
 claimingTaxReliefPension.error.required = Select yes if claimingTaxReliefPension
 claimingTaxReliefPension.change.hidden = ClaimingTaxReliefPension
+
+interestFromSavings.title = InterestFromSavings
+interestFromSavings.heading = InterestFromSavings
+interestFromSavings.checkYourAnswersLabel = InterestFromSavings
+interestFromSavings.error.nonNumeric = Enter your interestFromSavings using numbers
+interestFromSavings.error.required = Enter your interestFromSavings
+interestFromSavings.error.wholeNumber = Enter your interestFromSavings using whole numbers
+interestFromSavings.error.outOfRange = InterestFromSavings must be between {0} and {1}
+interestFromSavings.change.hidden = InterestFromSavings
