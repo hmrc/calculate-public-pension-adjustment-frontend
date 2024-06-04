@@ -19,6 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import controllers.routes
 import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
+import controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -98,7 +99,7 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad(None).url
+        redirectLocation(result).value mustEqual ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period).url
       }
     }
 

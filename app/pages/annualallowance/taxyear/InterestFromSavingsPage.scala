@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import controllers.annualallowance.taxyear.routes.InterestFromSavingsController
+import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, InterestFromSavingsController}
 import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -37,7 +37,7 @@ case class InterestFromSavingsPage(period: Period) extends QuestionPage[BigInt] 
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = {
     answers.get(InterestFromSavingsPage(period)) match {
-      case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_) => CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
