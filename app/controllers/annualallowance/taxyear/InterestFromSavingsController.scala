@@ -29,25 +29,25 @@ import views.html.annualallowance.taxyear.InterestFromSavingsView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class InterestFromSavingsController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        userDataService: UserDataService,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: InterestFromSavingsFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: InterestFromSavingsView
-                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
-
-
+class InterestFromSavingsController @Inject() (
+  override val messagesApi: MessagesApi,
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: InterestFromSavingsFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: InterestFromSavingsView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val form = formProvider(period)
 
       val preparedForm = request.userAnswers.get(InterestFromSavingsPage(period)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -58,15 +58,15 @@ class InterestFromSavingsController @Inject()(
     implicit request =>
       val form = formProvider(period)
 
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, period))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(InterestFromSavingsPage(period), value))
-            _              <- userDataService.set(updatedAnswers)
-          } yield Redirect(InterestFromSavingsPage(period).navigate(mode, updatedAnswers))
-      )
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(InterestFromSavingsPage(period), value))
+              _              <- userDataService.set(updatedAnswers)
+            } yield Redirect(InterestFromSavingsPage(period).navigate(mode, updatedAnswers))
+        )
   }
 }

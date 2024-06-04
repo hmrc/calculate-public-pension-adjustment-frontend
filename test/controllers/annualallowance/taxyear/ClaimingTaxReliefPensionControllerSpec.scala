@@ -39,11 +39,12 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
   def onwardRoute = Call("GET", "/foo")
 
-  val period = Period._2020
+  val period       = Period._2020
   val formProvider = new ClaimingTaxReliefPensionFormProvider()
-  val form = formProvider(period)
+  val form         = formProvider(period)
 
-  lazy val claimingTaxReliefPensionRoute = controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period).url
+  lazy val claimingTaxReliefPensionRoute =
+    controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period).url
 
   "ClaimingTaxReliefPension Controller" - {
 
@@ -77,7 +78,10 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, period)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, period)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -154,5 +158,5 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
-}
+  }
 }

@@ -24,21 +24,24 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ClaimingTaxReliefPensionSummary  {
+object ClaimingTaxReliefPensionSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ClaimingTaxReliefPensionPage(period)).map {
-      answer =>
+    answers.get(ClaimingTaxReliefPensionPage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key     = "claimingTaxReliefPension.checkYourAnswersLabel",
-          value   = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("claimingTaxReliefPension.change.hidden"))
+      SummaryListRowViewModel(
+        key = "claimingTaxReliefPension.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController
+              .onPageLoad(CheckMode, period)
+              .url
           )
+            .withVisuallyHiddenText(messages("claimingTaxReliefPension.change.hidden"))
         )
+      )
     }
 }

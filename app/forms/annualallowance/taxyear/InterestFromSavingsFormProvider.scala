@@ -29,7 +29,8 @@ class InterestFromSavingsFormProvider @Inject() extends Mappings {
       "value" -> bigInt(
         "interestFromSavings.error.required",
         "interestFromSavings.error.wholeNumber",
-        "interestFromSavings.error.nonNumeric")
-      .verifying(inRange[BigInt](1, BigInt("999999999"), "interestFromSavings.error.outOfRange"))
+        "interestFromSavings.error.nonNumeric"
+      )
+        .verifying(inRange[BigInt](1, BigInt("999999999"), "interestFromSavings.error.outOfRange"))
     )
 }

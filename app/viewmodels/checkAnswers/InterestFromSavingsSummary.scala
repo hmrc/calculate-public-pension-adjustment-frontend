@@ -24,19 +24,20 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object InterestFromSavingsSummary  {
+object InterestFromSavingsSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(InterestFromSavingsPage(period)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "interestFromSavings.checkYourAnswersLabel",
-          value   = ValueViewModel(answer.toString),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.InterestFromSavingsController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("interestFromSavings.change.hidden"))
+    answers.get(InterestFromSavingsPage(period)).map { answer =>
+      SummaryListRowViewModel(
+        key = "interestFromSavings.checkYourAnswersLabel",
+        value = ValueViewModel(answer.toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.InterestFromSavingsController.onPageLoad(CheckMode, period).url
           )
+            .withVisuallyHiddenText(messages("interestFromSavings.change.hidden"))
         )
+      )
     }
 }

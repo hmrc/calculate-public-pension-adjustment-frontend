@@ -28,19 +28,17 @@ case class ClaimingTaxReliefPensionPage(period: Period) extends QuestionPage[Boo
 
   override def toString: String = "claimingTaxReliefPension"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ClaimingTaxReliefPensionPage(period)) match {
-      case Some(true) => TaxReliefController.onPageLoad(NormalMode, period)
+      case Some(true)  => TaxReliefController.onPageLoad(NormalMode, period)
       case Some(false) => InterestFromSavingsController.onPageLoad(NormalMode, period)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ClaimingTaxReliefPensionPage(period)) match {
-      case Some(true) => TaxReliefController.onPageLoad(CheckMode, period)
+      case Some(true)  => TaxReliefController.onPageLoad(CheckMode, period)
       case Some(false) => CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

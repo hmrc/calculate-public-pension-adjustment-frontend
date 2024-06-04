@@ -84,17 +84,17 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
     }
 
     "must Navigate correctly to CYA in check mode when answered no" in {
-    val ua     = emptyUserAnswers
-      .set(
-        ClaimingTaxReliefPensionPage(period),
-        false
-      )
-      .success
-      .value
-    val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
+      val ua     = emptyUserAnswers
+        .set(
+          ClaimingTaxReliefPensionPage(period),
+          false
+        )
+        .success
+        .value
+      val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
-    checkNavigation(result, "/annual-allowance/2019/check-answers")
-  }
+      checkNavigation(result, "/annual-allowance/2019/check-answers")
+    }
 
     "to JourneyRecovery when not answered" in {
       val ua     = emptyUserAnswers
@@ -103,8 +103,5 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
       checkNavigation(result, "/there-is-a-problem")
     }
   }
-
-
-
 
 }

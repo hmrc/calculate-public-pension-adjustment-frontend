@@ -37,15 +37,16 @@ import scala.concurrent.Future
 
 class InterestFromSavingsControllerSpec extends SpecBase with MockitoSugar {
 
-  val period = Period._2019
+  val period       = Period._2019
   val formProvider = new InterestFromSavingsFormProvider()
-  val form = formProvider(period)
+  val form         = formProvider(period)
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt(1)
 
-  lazy val interestFromSavingsRoute = controllers.annualallowance.taxyear.routes.InterestFromSavingsController.onPageLoad(NormalMode, period).url
+  lazy val interestFromSavingsRoute =
+    controllers.annualallowance.taxyear.routes.InterestFromSavingsController.onPageLoad(NormalMode, period).url
 
   "InterestFromSavings Controller" - {
 
@@ -79,7 +80,10 @@ class InterestFromSavingsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, period)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, period)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

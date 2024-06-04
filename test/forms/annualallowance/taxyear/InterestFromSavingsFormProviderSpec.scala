@@ -23,7 +23,7 @@ import play.api.data.FormError
 class InterestFromSavingsFormProviderSpec extends IntFieldBehaviours {
 
   val period = Period._2019
-  val form = new InterestFromSavingsFormProvider()(period)
+  val form   = new InterestFromSavingsFormProvider()(period)
 
   ".value" - {
 
@@ -43,15 +43,15 @@ class InterestFromSavingsFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "interestFromSavings.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "interestFromSavings.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "interestFromSavings.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
       form,
       fieldName,
-      minimum       = minimum,
-      maximum       = maximum,
+      minimum = minimum,
+      maximum = maximum,
       expectedError = FormError(fieldName, "interestFromSavings.error.outOfRange", Seq(minimum, maximum))
     )
 
