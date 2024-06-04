@@ -1190,3 +1190,18 @@ lumpSumDeathBenefitsValue.error.required = cy: Enter your lumpSumDeathBenefitsVa
 lumpSumDeathBenefitsValue.error.wholeNumber = cy: Enter your lumpSumDeathBenefitsValue using whole numbers
 lumpSumDeathBenefitsValue.error.outOfRange = cy: LumpSumDeathBenefitsValue must be between {0} and {1}
 lumpSumDeathBenefitsValue.change.hidden = cy: LumpSumDeathBenefitsValue
+
+claimingTaxReliefPension.title = cy: claimingTaxReliefPension
+claimingTaxReliefPension.heading = cy: claimingTaxReliefPension
+claimingTaxReliefPension.checkYourAnswersLabel = cy: claimingTaxReliefPension
+claimingTaxReliefPension.error.required = cy: Select yes if claimingTaxReliefPension
+claimingTaxReliefPension.change.hidden = cy: ClaimingTaxReliefPension
+
+interestFromSavings.title = cy: InterestFromSavings
+interestFromSavings.heading = cy: InterestFromSavings
+interestFromSavings.checkYourAnswersLabel = cy: InterestFromSavings
+interestFromSavings.error.nonNumeric = cy: Enter your interestFromSavings using numbers
+interestFromSavings.error.required = cy: Enter your interestFromSavings
+interestFromSavings.error.wholeNumber = cy: Enter your interestFromSavings using whole numbers
+interestFromSavings.error.outOfRange = cy: InterestFromSavings must be between {0} and {1}
+interestFromSavings.change.hidden = cy: InterestFromSavings
