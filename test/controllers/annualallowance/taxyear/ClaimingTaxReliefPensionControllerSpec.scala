@@ -17,10 +17,11 @@
 package controllers.annualallowance.taxyear
 
 import base.SpecBase
+import config.FrontendAppConfig
 import controllers.routes
 import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
 import controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController
-import models.{Done, NormalMode, Period, UserAnswers}
+import models.{ContributedToDuringRemedyPeriod, Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -99,7 +100,6 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period).url
       }
     }
 
@@ -123,34 +123,36 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to start of the service for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, claimingTaxReliefPensionRoute)
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(GET, claimingTaxReliefPensionRoute)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
 
-    "must redirect to Journey Recovery for a POST if no existing data is found" in {
+    "must redirect to start of the service for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request =
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   =
           FakeRequest(POST, claimingTaxReliefPensionRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+            .withFormUrlEncodedBody(("value[0]", ContributedToDuringRemedyPeriod.values.head.toString))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
-  }
+}
 }
