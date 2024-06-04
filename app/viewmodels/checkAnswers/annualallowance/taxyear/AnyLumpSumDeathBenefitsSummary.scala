@@ -14,31 +14,32 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.annualallowance.taxyear
 
-import controllers.routes
 import models.{CheckMode, Period, UserAnswers}
-import pages.annualallowance.taxyear.LumpSumDeathBenefitsValuePage
+import pages.annualallowance.taxyear.AnyLumpSumDeathBenefitsPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object LumpSumDeathBenefitsValueSummary {
+object AnyLumpSumDeathBenefitsSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(LumpSumDeathBenefitsValuePage(period)).map { answer =>
+    answers.get(AnyLumpSumDeathBenefitsPage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
+
       SummaryListRowViewModel(
-        key = "lumpSumDeathBenefitsValue.checkYourAnswersLabel",
-        value = ValueViewModel(answer.toString),
+        key = "anyLumpSumDeathBenefits.checkYourAnswersLabel",
+        value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            controllers.annualallowance.taxyear.routes.LumpSumDeathBenefitsValueController
+            controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("lumpSumDeathBenefitsValue.change.hidden"))
+            .withVisuallyHiddenText(messages("anyLumpSumDeathBenefits.change.hidden"))
         )
       )
     }

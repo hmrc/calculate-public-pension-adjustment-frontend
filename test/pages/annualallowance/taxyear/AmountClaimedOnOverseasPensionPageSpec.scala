@@ -19,41 +19,41 @@ package pages.annualallowance.taxyear
 import models.{CheckMode, NormalMode, Period}
 import pages.behaviours.PageBehaviours
 
-class PersonalAllowancePageSpec extends PageBehaviours {
+class AmountClaimedOnOverseasPensionPageSpec extends PageBehaviours {
 
-  "PersonalAllowancePage" - {
+  "AmountClaimedOnOverseasPensionPage" - {
 
-    beRetrievable[BigInt](PersonalAllowancePage(Period._2018))
+    beRetrievable[BigInt](AmountClaimedOnOverseasPensionPage(Period._2018))
 
-    beSettable[BigInt](PersonalAllowancePage(Period._2018))
+    beSettable[BigInt](AmountClaimedOnOverseasPensionPage(Period._2018))
 
-    beRemovable[BigInt](PersonalAllowancePage(Period._2018))
+    beRemovable[BigInt](AmountClaimedOnOverseasPensionPage(Period._2018))
 
     "must Navigate correctly in normal mode" - {
 
-      "to TaxReliefPage page when answered" in {
-        val ua     = emptyUserAnswers
+      "to DoYouKnowPersonalAllowance page when answered" in {
+        val ua = emptyUserAnswers
           .set(
-            PersonalAllowancePage(Period._2018),
+            AmountClaimedOnOverseasPensionPage(Period._2018),
             BigInt(100)
           )
           .success
           .value
-        val result = PersonalAllowancePage(Period._2018).navigate(NormalMode, ua).url
+        val result = AmountClaimedOnOverseasPensionPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/adjusted-income/personal-allowance/2018")
       }
     }
 
     "must Navigate correctly to CYA in check mode" in {
-      val ua     = emptyUserAnswers
+      val ua = emptyUserAnswers
         .set(
-          PersonalAllowancePage(Period._2018),
+          AmountClaimedOnOverseasPensionPage(Period._2018),
           BigInt(100)
         )
         .success
         .value
-      val result = PersonalAllowancePage(Period._2018).navigate(CheckMode, ua).url
+      val result = AmountClaimedOnOverseasPensionPage(Period._2018).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/annual-allowance/2018/check-answers")
     }

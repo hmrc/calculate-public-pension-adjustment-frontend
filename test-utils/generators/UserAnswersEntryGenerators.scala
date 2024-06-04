@@ -45,6 +45,41 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryDoYouKnowPersonalAllowanceUserAnswersEntry
+    : Arbitrary[(DoYouKnowPersonalAllowancePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DoYouKnowPersonalAllowancePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAreYouNonDomUserAnswersEntry: Arbitrary[(AreYouNonDomPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AreYouNonDomPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHasReliefClaimedOnOverseasPensionUserAnswersEntry
+    : Arbitrary[(HasReliefClaimedOnOverseasPensionPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HasReliefClaimedOnOverseasPensionPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAmountClaimedOnOverseasPensionUserAnswersEntry
+    : Arbitrary[(AmountClaimedOnOverseasPensionPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AmountClaimedOnOverseasPensionPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryFlexibleRemunerationArrangementsUserAnswersEntry
     : Arbitrary[(FlexibleRemunerationArrangementsPage.type, JsValue)] =
     Arbitrary {

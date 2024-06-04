@@ -90,6 +90,10 @@ class CheckYourAAPeriodAnswersController @Inject() (
               ThresholdIncomeSummary.row(request.userAnswers, period),
               AdjustedIncomeSummary.row(request.userAnswers, period),
               TotalIncomeSummary.row(request.userAnswers, period),
+              AreYouNonDomSummary.row(request.userAnswers, period),
+              HasReliefClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
+              AmountClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
+              DoYouKnowPersonalAllowanceSummary.row(request.userAnswers, period),
               PersonalAllowanceSummary.row(request.userAnswers, period),
               TaxReliefSummary.row(request.userAnswers, period)
             )

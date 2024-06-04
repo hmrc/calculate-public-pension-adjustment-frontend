@@ -18,30 +18,27 @@ package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.routes
 import models.{CheckMode, Period, UserAnswers}
-import pages.annualallowance.taxyear.AnyLumpSumDeathBenefitsPage
+import pages.annualallowance.taxyear.AreYouNonDomPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object AnyLumpSumDeathBenefitsSummary {
+object AreYouNonDomSummary  {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(AnyLumpSumDeathBenefitsPage(period)).map { answer =>
-      val value = if (answer) "site.yes" else "site.no"
+    answers.get(AreYouNonDomPage(period)).map {
+      answer =>
 
-      SummaryListRowViewModel(
-        key = "anyLumpSumDeathBenefits.checkYourAnswersLabel",
-        value = ValueViewModel(value),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
-              .onPageLoad(CheckMode, period)
-              .url
+        val value = if (answer) "site.yes" else "site.no"
+
+        SummaryListRowViewModel(
+          key     = "areYouNonDom.checkYourAnswersLabel",
+          value   = ValueViewModel(value),
+          actions = Seq(
+            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(CheckMode, period).url)
+              .withVisuallyHiddenText(messages("areYouNonDom.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("anyLumpSumDeathBenefits.change.hidden"))
         )
-      )
     }
 }
