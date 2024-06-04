@@ -22,7 +22,7 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class InterestFromSavingsPage(period: Period) extends QuestionPage[Int] {
+case class InterestFromSavingsPage(period: Period) extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ toString
 

@@ -4,14 +4,15 @@ import models.Period
 import pages.behaviours.PageBehaviours
 
 class InterestFromSavingsPageSpec extends PageBehaviours {
+
   val period = Period._2019
 
   "InterestFromSavingsPage" - {
 
-    beRetrievable[Int](InterestFromSavingsPage(period))
+    beRetrievable[BigInt](InterestFromSavingsPage(period))
 
-    beSettable[Int](InterestFromSavingsPage(period))
+    beSettable[BigInt](InterestFromSavingsPage(period))
 
-    beRemovable[Int](InterestFromSavingsPage(period))
+    beRemovable[BigInt](InterestFromSavingsPage(period))
   }
 }

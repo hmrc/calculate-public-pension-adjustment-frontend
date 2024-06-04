@@ -24,12 +24,12 @@ import javax.inject.Inject
 
 class InterestFromSavingsFormProvider @Inject() extends Mappings {
 
-  def apply(period: Period): Form[Int] =
+  def apply(period: Period): Form[BigInt] =
     Form(
-      "value" -> int(
+      "value" -> bigInt(
         "interestFromSavings.error.required",
         "interestFromSavings.error.wholeNumber",
         "interestFromSavings.error.nonNumeric")
-          .verifying(inRange(1, 999999999, "interestFromSavings.error.outOfRange"))
+      .verifying(inRange[BigInt](1, BigInt("999999999"), "interestFromSavings.error.outOfRange"))
     )
 }
