@@ -38,9 +38,12 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new DoYouKnowPersonalAllowanceFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val doYouKnowPersonalAllowanceRoute = controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, Period._2018).url
+  lazy val doYouKnowPersonalAllowanceRoute =
+    controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController
+      .onPageLoad(NormalMode, Period._2018)
+      .url
 
   "DoYouKnowPersonalAllowance Controller" - {
 
@@ -74,7 +77,10 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -97,7 +103,9 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, Period._2018).url
+        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.PersonalAllowanceController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
       }
     }
 
@@ -117,7 +125,10 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -127,7 +138,7 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request = FakeRequest(GET, doYouKnowPersonalAllowanceRoute)
+        val request   = FakeRequest(GET, doYouKnowPersonalAllowanceRoute)
 
         val result = route(application, request).value
 
@@ -142,7 +153,7 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request =
+        val request   =
           FakeRequest(POST, doYouKnowPersonalAllowanceRoute)
             .withFormUrlEncodedBody(("value", "true"))
 

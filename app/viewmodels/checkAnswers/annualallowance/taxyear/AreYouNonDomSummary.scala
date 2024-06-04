@@ -24,21 +24,22 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object AreYouNonDomSummary  {
+object AreYouNonDomSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(AreYouNonDomPage(period)).map {
-      answer =>
+    answers.get(AreYouNonDomPage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key     = "areYouNonDom.checkYourAnswersLabel",
-          value   = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("areYouNonDom.change.hidden"))
+      SummaryListRowViewModel(
+        key = "areYouNonDom.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(CheckMode, period).url
           )
+            .withVisuallyHiddenText(messages("areYouNonDom.change.hidden"))
         )
+      )
     }
 }

@@ -30,24 +30,25 @@ import views.html.annualallowance.taxyear.AreYouNonDomView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class AreYouNonDomController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         userDataService: UserDataService,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: AreYouNonDomFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: AreYouNonDomView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class AreYouNonDomController @Inject() (
+  override val messagesApi: MessagesApi,
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: AreYouNonDomFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: AreYouNonDomView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val preparedForm = request.userAnswers.get(AreYouNonDomPage(period)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -56,18 +57,17 @@ class AreYouNonDomController @Inject()(
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, period))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouNonDomPage(period), value))
-            redirectUrl = AreYouNonDomPage(period).navigate(mode, updatedAnswers).url
-            answersWithNav = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-            _ <- userDataService.set(answersWithNav)
-          } yield Redirect(redirectUrl)
-      )
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(AreYouNonDomPage(period), value))
+              redirectUrl     = AreYouNonDomPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
+        )
   }
 }

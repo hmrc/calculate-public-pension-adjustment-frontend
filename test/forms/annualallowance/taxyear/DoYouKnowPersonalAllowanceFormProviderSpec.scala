@@ -22,7 +22,7 @@ import play.api.data.FormError
 class DoYouKnowPersonalAllowanceFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "doYouKnowPersonalAllowance.error.required"
-  val invalidKey = "error.boolean"
+  val invalidKey  = "error.boolean"
 
   val form = new DoYouKnowPersonalAllowanceFormProvider()()
 

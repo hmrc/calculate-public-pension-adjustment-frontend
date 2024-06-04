@@ -29,21 +29,25 @@ case class AreYouNonDomPage(period: Period) extends QuestionPage[Boolean] {
 
   override def toString: String = "areYouNonDom"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(AreYouNonDomPage(period)) match {
-      case Some(true) => controllers.annualallowance.taxyear.routes.HasReliefClaimedOnOverseasPensionController.onPageLoad(NormalMode, period)
-      case Some(false) => controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.HasReliefClaimedOnOverseasPensionController
+          .onPageLoad(NormalMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AreYouNonDomPage(period)) match {
-      case Some(true) => controllers.annualallowance.taxyear.routes.HasReliefClaimedOnOverseasPensionController.onPageLoad(CheckMode, period)
-      case Some(false) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.HasReliefClaimedOnOverseasPensionController
+          .onPageLoad(CheckMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
@@ -53,7 +57,7 @@ case class AreYouNonDomPage(period: Period) extends QuestionPage[Boolean] {
             updated1 <- userAnswers.remove(HasReliefClaimedOnOverseasPensionPage(period))
             updated2 <- updated1.remove(AmountClaimedOnOverseasPensionPage(period))
           } yield updated2
-        case true => super.cleanup(value, userAnswers)
+        case true  => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

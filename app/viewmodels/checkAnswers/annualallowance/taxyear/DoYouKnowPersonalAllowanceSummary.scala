@@ -23,21 +23,24 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object DoYouKnowPersonalAllowanceSummary  {
+object DoYouKnowPersonalAllowanceSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(DoYouKnowPersonalAllowancePage(period)).map {
-      answer =>
+    answers.get(DoYouKnowPersonalAllowancePage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key     = "doYouKnowPersonalAllowance.checkYourAnswersLabel",
-          value   = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("doYouKnowPersonalAllowance.change.hidden"))
+      SummaryListRowViewModel(
+        key = "doYouKnowPersonalAllowance.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController
+              .onPageLoad(CheckMode, period)
+              .url
           )
+            .withVisuallyHiddenText(messages("doYouKnowPersonalAllowance.change.hidden"))
         )
+      )
     }
 }

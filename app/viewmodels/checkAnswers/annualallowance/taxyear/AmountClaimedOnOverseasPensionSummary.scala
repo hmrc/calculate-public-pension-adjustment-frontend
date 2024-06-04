@@ -26,19 +26,22 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object AmountClaimedOnOverseasPensionSummary  {
+object AmountClaimedOnOverseasPensionSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(AmountClaimedOnOverseasPensionPage(period)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "amountClaimedOnOverseasPension.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(currencyFormat(answer))),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("amountClaimedOnOverseasPension.change.hidden"))
+    answers.get(AmountClaimedOnOverseasPensionPage(period)).map { answer =>
+      SummaryListRowViewModel(
+        key = "amountClaimedOnOverseasPension.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController
+              .onPageLoad(CheckMode, period)
+              .url
           )
+            .withVisuallyHiddenText(messages("amountClaimedOnOverseasPension.change.hidden"))
         )
+      )
     }
 }

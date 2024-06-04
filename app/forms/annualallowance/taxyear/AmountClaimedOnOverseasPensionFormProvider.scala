@@ -28,10 +28,11 @@ class AmountClaimedOnOverseasPensionFormProvider @Inject() extends Mappings {
       "value" -> bigInt(
         "amountClaimedOnOverseasPension.error.required",
         "amountClaimedOnOverseasPension.error.wholeNumber",
-        "amountClaimedOnOverseasPension.error.nonNumeric")
-          .verifying(
-            minimumValue[BigInt](0, "amountClaimedOnOverseasPension.error.minimum"),
-            maximumValue[BigInt](BigInt("999999999"), "amountClaimedOnOverseasPension.error.maximum")
-          )
+        "amountClaimedOnOverseasPension.error.nonNumeric"
+      )
+        .verifying(
+          minimumValue[BigInt](0, "amountClaimedOnOverseasPension.error.minimum"),
+          maximumValue[BigInt](BigInt("999999999"), "amountClaimedOnOverseasPension.error.maximum")
+        )
     )
 }

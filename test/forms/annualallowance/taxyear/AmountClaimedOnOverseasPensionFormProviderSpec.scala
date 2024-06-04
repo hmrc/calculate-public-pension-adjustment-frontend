@@ -41,7 +41,7 @@ class AmountClaimedOnOverseasPensionFormProviderSpec extends IntFieldBehaviours 
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "amountClaimedOnOverseasPension.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "amountClaimedOnOverseasPension.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "amountClaimedOnOverseasPension.error.wholeNumber")
     )
 

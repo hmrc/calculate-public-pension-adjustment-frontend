@@ -55,7 +55,7 @@ class AreYouNonDomSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when user click No, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val userAnswers = UserAnswers("id")
         .set(
           AreYouNonDomPage(period),

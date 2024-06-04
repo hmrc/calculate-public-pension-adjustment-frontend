@@ -29,27 +29,30 @@ case class DoYouKnowPersonalAllowancePage(period: Period) extends QuestionPage[B
 
   override def toString: String = "doYouKnowPersonalAllowance"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(DoYouKnowPersonalAllowancePage(period)) match {
-      case Some(true) => controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
-      case Some(false) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period) // This needs to be changed
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
+          .onPageLoad(period) // This needs to be changed
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(DoYouKnowPersonalAllowancePage(period)) match {
-      case Some(true) => controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(CheckMode, period)
-      case Some(false) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(CheckMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
         case false => userAnswers.remove(PersonalAllowancePage(period))
-        case true => super.cleanup(value, userAnswers)
+        case true  => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

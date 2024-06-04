@@ -38,9 +38,12 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new HasReliefClaimedOnOverseasPensionFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val hasReliefClaimedOnOverseasPensionRoute = controllers.annualallowance.taxyear.routes.HasReliefClaimedOnOverseasPensionController.onPageLoad(NormalMode, Period._2018).url
+  lazy val hasReliefClaimedOnOverseasPensionRoute =
+    controllers.annualallowance.taxyear.routes.HasReliefClaimedOnOverseasPensionController
+      .onPageLoad(NormalMode, Period._2018)
+      .url
 
   "ReliefClaimedOnOverseasPension Controller" - {
 
@@ -62,7 +65,8 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(HasReliefClaimedOnOverseasPensionPage(Period._2018), true).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(HasReliefClaimedOnOverseasPensionPage(Period._2018), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +78,10 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -97,7 +104,11 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController.onPageLoad(NormalMode, Period._2018).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
       }
     }
 
@@ -117,7 +128,10 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -127,7 +141,7 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request = FakeRequest(GET, hasReliefClaimedOnOverseasPensionRoute)
+        val request   = FakeRequest(GET, hasReliefClaimedOnOverseasPensionRoute)
 
         val result = route(application, request).value
 
@@ -142,7 +156,7 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request =
+        val request   =
           FakeRequest(POST, hasReliefClaimedOnOverseasPensionRoute)
             .withFormUrlEncodedBody(("value", "true"))
 

@@ -56,7 +56,7 @@ class DoYouKnowPersonalAllowanceSummarySpec extends AnyFreeSpec with Matchers {
     }
 
     "when No is clicked, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val userAnswers = UserAnswers("id")
         .set(
           DoYouKnowPersonalAllowancePage(period),

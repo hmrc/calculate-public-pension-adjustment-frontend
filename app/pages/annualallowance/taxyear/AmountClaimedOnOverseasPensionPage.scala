@@ -30,7 +30,6 @@ case class AmountClaimedOnOverseasPensionPage(period: Period) extends QuestionPa
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-  }
 }

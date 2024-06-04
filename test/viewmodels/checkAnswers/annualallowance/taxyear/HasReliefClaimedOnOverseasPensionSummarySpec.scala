@@ -32,7 +32,7 @@ class HasReliefClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matc
 
   "row" - {
     "when user click Yes, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val userAnswers = UserAnswers("id")
         .set(
           HasReliefClaimedOnOverseasPensionPage(period),
@@ -55,7 +55,7 @@ class HasReliefClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matc
     }
 
     "when user click No, return the summary row" in {
-      val period = Period._2018
+      val period      = Period._2018
       val userAnswers = UserAnswers("id")
         .set(
           HasReliefClaimedOnOverseasPensionPage(period),
@@ -78,7 +78,7 @@ class HasReliefClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matc
     }
 
     "when answer unavailable, return empty" in {
-      val period = Period._2018
+      val period      = Period._2018
       val userAnswers = UserAnswers("id")
       HasReliefClaimedOnOverseasPensionSummary.row(userAnswers, period) shouldBe None
     }
