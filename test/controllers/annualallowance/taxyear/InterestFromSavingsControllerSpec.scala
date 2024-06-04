@@ -3,7 +3,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import controllers.routes
 import forms.annualallowance.taxyear.InterestFromSavingsFormProvider
-import models.{Done, NormalMode, UserAnswers}
+import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -13,19 +13,21 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
+import views.html.annualallowance.taxyear.InterestFromSavingsView
 
 import scala.concurrent.Future
 
 class InterestFromSavingsControllerSpec extends SpecBase with MockitoSugar {
 
+  val period = Period._2019
   val formProvider = new InterestFromSavingsFormProvider()
-  val form = formProvider()
+  val form = formProvider(period)
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = 1
 
-  lazy val interestFromSavingsRoute = routes.InterestFromSavingsController.onPageLoad(NormalMode).url
+  lazy val interestFromSavingsRoute = controllers.annualallowance.taxyear.routes.InterestFromSavingsController.onPageLoad(NormalMode, period).url
 
   "InterestFromSavings Controller" - {
 
@@ -41,13 +43,13 @@ class InterestFromSavingsControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[InterestFromSavingsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, period)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(InterestFromSavingsPage, validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(InterestFromSavingsPage(period), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -59,7 +61,7 @@ class InterestFromSavingsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, period)(request, messages(application)).toString
       }
     }
 
@@ -102,7 +104,7 @@ class InterestFromSavingsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, period)(request, messages(application)).toString
       }
     }
 

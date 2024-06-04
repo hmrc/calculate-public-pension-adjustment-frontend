@@ -1,11 +1,13 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
+import models.Period
 import play.api.data.FormError
 
 class InterestFromSavingsFormProviderSpec extends IntFieldBehaviours {
 
-  val form = new InterestFromSavingsFormProvider()()
+  val period = Period._2019
+  val form = new InterestFromSavingsFormProvider()(period)
 
   ".value" - {
 
