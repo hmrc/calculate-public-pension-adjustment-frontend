@@ -1256,3 +1256,24 @@ doYouKnowPersonalAllowance.heading = cy: Do you know your personal allowance?
 doYouKnowPersonalAllowance.checkYourAnswersLabel = cy: Do you know your personal allowance?
 doYouKnowPersonalAllowance.error.required = cy: Select yes if you know your personal allowance
 doYouKnowPersonalAllowance.change.hidden = cy: your personal allowance
+
+marriageAllowance.title = cy: Are you claiming marriage allowance?
+marriageAllowance.heading = cy: Are you claiming marriage allowance?
+marriageAllowance.checkYourAnswersLabel = cy: Are you claiming marriage allowance?
+marriageAllowance.error.required = cy: Select yes if you are claiming marriage allowance
+marriageAllowance.change.hidden = cy: if you are claiming marriage allowance
+
+marriageAllowanceAmount.title = cy: How much are you receiving from your partner?
+marriageAllowanceAmount.heading = cy: How much are you receiving from your partner?
+marriageAllowanceAmount.checkYourAnswersLabel = cy: How much are you receiving from your partner?
+marriageAllowanceAmount.error.nonNumeric = cy: Amount received from your partner must only include numbers 0 to 9
+marriageAllowanceAmount.error.required = cy: Enter amount received from your partner
+marriageAllowanceAmount.error.wholeNumber = cy: Amount received from your partner must only include numbers 0 to 9
+marriageAllowanceAmount.error.outOfRange = cy: Amount received from your partner must be £999,999,999 or less
+marriageAllowanceAmount.change.hidden = cy: amount received from your partner
+
+blindAllowance.title = cy: Are you claiming for blind person allowance?
+blindAllowance.heading = cy: Are you claiming for blind person allowance?
+blindAllowance.checkYourAnswersLabel = cy: Are you claiming for blind person allowance?
+blindAllowance.error.required = cy: Select yes if you are claiming for blind person allowance
+blindAllowance.change.hidden = cy: if you are claiming for blind person allowance

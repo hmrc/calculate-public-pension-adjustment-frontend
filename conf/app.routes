@@ -497,3 +497,18 @@ GET        /annual-allowance/personal-allowance/:period                        c
 POST       /annual-allowance/personal-allowance/:period                         controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/change-personal-allowance/:period                   controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/change-personal-allowance/:period                   controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/total-income/marriage-allowance/:period                         controllers.annualallowance.taxyear.MarriageAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/total-income/marriage-allowance/:period                         controllers.annualallowance.taxyear.MarriageAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/total-income/change-marriage-allowance/:period                  controllers.annualallowance.taxyear.MarriageAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/total-income/change-marriage-allowance/:period                  controllers.annualallowance.taxyear.MarriageAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/total-income/marriage-allowance-amount/:period                  controllers.annualallowance.taxyear.MarriageAllowanceAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/total-income/marriage-allowance-amount/:period                  controllers.annualallowance.taxyear.MarriageAllowanceAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/total-income/change-marriage-allowance-amount/:period                        controllers.annualallowance.taxyear.MarriageAllowanceAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/total-income/change-marriage-allowance-amount/:period                       controllers.annualallowance.taxyear.MarriageAllowanceAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/total-income/blind-person-allowance/:period                        controllers.annualallowance.taxyear.BlindAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/total-income/blind-person-allowance/:period                        controllers.annualallowance.taxyear.BlindAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/total-income/change-blind-person-allowance/:period                  controllers.annualallowance.taxyear.BlindAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/total-income/change-blind-person-allowance/:period                  controllers.annualallowance.taxyear.BlindAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
