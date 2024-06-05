@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class TotalIncomePageSpec extends PageBehaviours {
@@ -30,32 +30,75 @@ class TotalIncomePageSpec extends PageBehaviours {
     beRemovable[BigInt](TotalIncomePage(Period._2013))
 
     "must Navigate correctly in normal mode" - {
-
-      "to CYA page when answered" in {
-        val ua     = emptyUserAnswers
+      "to AnySalarySacrificeArrangements page when not in 15/16 and idk is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.IDoNotKnow)
+          .success
+          .value
           .set(
-            TotalIncomePage(Period._2013),
+            TotalIncomePage(Period._2017),
             BigInt(100)
           )
           .success
           .value
-        val result = TotalIncomePage(Period._2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2013/check-answers")
+        val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/threshold-income/any-salary-sacrifice-arrangements/2017")
+      }
+
+      "to HowMuchContributionPensionScheme page when not in 15/16 and yes is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.Yes)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+
+        val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/threshold-income/how-much-contribution/2017")
       }
     }
 
-    "must Navigate correctly to CYA in check mode" in {
-      val ua     = emptyUserAnswers
-        .set(
-          TotalIncomePage(Period._2013),
-          BigInt(100)
-        )
-        .success
-        .value
-      val result = TotalIncomePage(Period._2013).navigate(CheckMode, ua).url
+    "must Navigate correctly in check mode" - {
+      "to AnySalarySacrificeArrangements page when not in 15/16 and idk is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.IDoNotKnow)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
 
-      checkNavigation(result, "/annual-allowance/2013/check-answers")
+        val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/threshold-income/change-any-salary-sacrifice-arrangements/2017")
+      }
+
+      "to HowMuchContributionPensionScheme page when not in 15/16 and yes is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.Yes)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+
+        val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/threshold-income/change-how-much-contribution/2017")
+      }
     }
   }
 }

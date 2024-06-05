@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.Period
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
@@ -28,5 +28,32 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
     beSettable[BigInt](HowMuchContributionPensionSchemePage(Period._2018))
 
     beRemovable[BigInt](HowMuchContributionPensionSchemePage(Period._2018))
+
+    "must Navigate correctly in normal mode" - {
+      "to AnyLumpSumDeathBenefits page when anything answered" in {
+        val ua = emptyUserAnswers
+          .set(HowMuchContributionPensionSchemePage(Period._2017), BigInt(5000))
+          .success
+          .value
+
+        val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/threshold-income/any-lump-sum-death-benefits/2017")
+      }
+    }
+
+    "must Navigate correctly in check mode" - {
+      "to AnyLumpSumDeathBenefits page when anything answered" in {
+        val ua = emptyUserAnswers
+          .set(HowMuchContributionPensionSchemePage(Period._2017), BigInt(5000))
+          .success
+          .value
+
+        val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/threshold-income/change-any-lump-sum-death-benefits/2017")
+      }
+    }
+
   }
 }
