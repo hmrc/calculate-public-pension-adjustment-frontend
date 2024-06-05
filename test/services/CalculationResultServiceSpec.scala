@@ -27,7 +27,6 @@ import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLif
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import play.api.libs.json.{JsObject, JsValue, Json}
-import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global

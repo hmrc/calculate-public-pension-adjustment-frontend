@@ -30,7 +30,7 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.annualallowance.taxyear.{DefinedContribution2016PostFlexiAmountView, DefinedContribution2016PreFlexiAmountView}
+import views.html.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountView
 
 import java.time.LocalDate
 import scala.concurrent.Future

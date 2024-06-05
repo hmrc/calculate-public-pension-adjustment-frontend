@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, SchemeIndex, UserAnswers}
+import models.{NormalMode, PensionSchemeInput2016postAmounts, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call

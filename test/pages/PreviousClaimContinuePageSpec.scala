@@ -17,13 +17,7 @@
 package pages
 
 import models.NormalMode
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.behaviours.PageBehaviours
-import services.SubmitBackendService
-
-import scala.concurrent.Future
 
 class PreviousClaimContinuePageSpec extends PageBehaviours {
 

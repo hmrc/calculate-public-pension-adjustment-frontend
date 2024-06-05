@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
-import java.time.format.DateTimeFormatter
 import models.{CheckMode, UserAnswers}
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import play.api.i18n.Messages

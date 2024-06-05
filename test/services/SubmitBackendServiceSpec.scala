@@ -17,15 +17,13 @@
 package services
 
 import base.SpecBase
-import connectors.{SubmitBackendConnector, UserAnswersConnector}
-import models.{Done, UserAnswers}
+import connectors.SubmitBackendConnector
+import models.Done
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import org.scalatest.concurrent.ScalaFutures
-import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 
-import java.time.Instant
 import scala.concurrent.Future
 
 class SubmitBackendServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {

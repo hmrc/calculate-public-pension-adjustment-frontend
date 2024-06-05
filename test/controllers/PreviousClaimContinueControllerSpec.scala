@@ -21,16 +21,14 @@ import config.FrontendAppConfig
 import forms.PreviousClaimContinueFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{atLeastOnce, verify, when}
+import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.PreviousClaimContinuePage
-import play.api.inject.NewInstanceInjector.instanceOf
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.{SubmissionDataService, SubmitBackendService, UserDataService}
-import uk.gov.hmrc.http.HeaderCarrier
 import views.html.PreviousClaimContinueView
 
 import scala.concurrent.Future

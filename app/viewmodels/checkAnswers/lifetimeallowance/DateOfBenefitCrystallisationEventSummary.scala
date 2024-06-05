@@ -21,12 +21,9 @@ import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import viewmodels.checkAnswers.annualallowance.preaaquestions.StopPayingPublicPensionSummary.dateToString
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import views.helpers.ImplicitDateFormatter
-
-import java.time.format.DateTimeFormatter
 
 object DateOfBenefitCrystallisationEventSummary extends ImplicitDateFormatter {
 

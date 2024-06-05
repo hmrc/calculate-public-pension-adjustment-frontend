@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, SchemeIndex}
+import models.{CheckMode, NormalMode, PensionSchemeInput2016postAmounts, Period, SchemeIndex}
 import pages.behaviours.PageBehaviours
 
 class PensionSchemeInput2016postAmountsPageSpec extends PageBehaviours {

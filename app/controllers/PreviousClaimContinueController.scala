@@ -21,16 +21,13 @@ import controllers.actions._
 import forms.PreviousClaimContinueFormProvider
 
 import javax.inject.Inject
-import models.{Done, Mode, NormalMode, SubmissionStatusResponse, UserAnswers}
-import models.requests.{AuthenticatedIdentifierRequest, DataRequest, OptionalDataRequest}
+import models.{Done, NormalMode}
 import pages.PreviousClaimContinuePage
-import pages.setupquestions.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import services.{SubmissionDataService, SubmitBackendService, UserDataService}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.PreviousClaimContinueView
 
 import scala.concurrent.{ExecutionContext, Future}

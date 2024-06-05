@@ -32,7 +32,6 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.setupquestions.SavingsStatementView
 
 import javax.inject.Inject
-import scala.Console.println
 import scala.concurrent.{ExecutionContext, Future}
 
 class SavingsStatementController @Inject() (

@@ -21,7 +21,6 @@ import config.FrontendAppConfig
 import forms.annualallowance.taxyear.PayAChargeFormProvider
 import models.{CheckMode, Done, NormalMode, PensionSchemeDetails, Period, SchemeIndex, UserAnswers}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchersSugar.eqTo
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.taxyear.{PayAChargePage, PensionSchemeDetailsPage}

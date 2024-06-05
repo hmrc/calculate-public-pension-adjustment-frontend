@@ -22,7 +22,7 @@ import org.scalacheck.{Arbitrary, Gen}
 import org.scalatest.TryValues
 import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear.{DefinedBenefit2016PostAmountPage, DefinedBenefit2016PreAmountPage, DefinedContribution2016PostAmountPage, DefinedContribution2016PostFlexiAmountPage, DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage, PersonalAllowancePage, TaxReliefPage}
+import pages.annualallowance.taxyear.{DefinedBenefit2016PostAmountPage, DefinedBenefit2016PreAmountPage, DefinedContribution2016PostAmountPage, DefinedContribution2016PostFlexiAmountPage, DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage}
 import pages.lifetimeallowance._
 import play.api.libs.json.{JsValue, Json}
 
