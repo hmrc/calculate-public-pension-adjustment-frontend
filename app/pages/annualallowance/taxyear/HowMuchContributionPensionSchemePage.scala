@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -29,13 +29,15 @@ case class HowMuchContributionPensionSchemePage(period: Period) extends Question
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(HowMuchContributionPensionSchemePage(period)) match {
-      case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_) =>
+        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onPageLoad(NormalMode, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(HowMuchContributionPensionSchemePage(period)) match {
-      case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_) =>
+        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onPageLoad(CheckMode, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
