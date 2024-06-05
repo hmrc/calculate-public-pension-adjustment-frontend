@@ -31,7 +31,7 @@ class TaxReliefPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "to CYA page when answered" in {
+      "to InterestFromSavingsPage when answered" in {
         val ua     = emptyUserAnswers
           .set(
             TaxReliefPage(Period._2018),
@@ -41,11 +41,11 @@ class TaxReliefPageSpec extends PageBehaviours {
           .value
         val result = TaxReliefPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/interest-from-savings/2018")
       }
     }
 
-    "must Navigate correctly to CYA in check mode" in {
+    "must Navigate to InterestFromSavingsPage in check mode" in {
       val ua     = emptyUserAnswers
         .set(
           TaxReliefPage(Period._2018),

@@ -25,6 +25,12 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryInterestFromSavingsPage: Arbitrary[InterestFromSavingsPage.type] =
+    Arbitrary(InterestFromSavingsPage)
+
+  implicit lazy val arbitraryClaimingTaxReliefPensionPage: Arbitrary[ClaimingTaxReliefPensionPage.type] =
+    Arbitrary(ClaimingTaxReliefPensionPage)
+
   implicit lazy val arbitraryFlexibleRemunerationArrangementsPage
     : Arbitrary[FlexibleRemunerationArrangementsPage.type] =
     Arbitrary(FlexibleRemunerationArrangementsPage)

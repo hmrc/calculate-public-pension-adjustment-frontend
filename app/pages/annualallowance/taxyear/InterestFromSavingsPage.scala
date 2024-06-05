@@ -22,20 +22,20 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
+case class InterestFromSavingsPage(period: Period) extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "taxRelief"
+  override def toString: String = "interestFromSavings"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(TaxReliefPage(period)) match {
-      case Some(_) => InterestFromSavingsController.onPageLoad(NormalMode, period)
+    answers.get(InterestFromSavingsPage(period)) match {
+      case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(TaxReliefPage(period)) match {
+    answers.get(InterestFromSavingsPage(period)) match {
       case Some(_) => CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
