@@ -16,27 +16,29 @@
 
 package pages.annualallowance.taxyear
 
-import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, InterestFromSavingsController}
+import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, InterestFromSavingsController, TaxReliefController}
 import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
+case class ClaimingTaxReliefPensionPage(period: Period) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "taxRelief"
+  override def toString: String = "claimingTaxReliefPension"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(TaxReliefPage(period)) match {
-      case Some(_) => InterestFromSavingsController.onPageLoad(NormalMode, period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(ClaimingTaxReliefPensionPage(period)) match {
+      case Some(true)  => TaxReliefController.onPageLoad(NormalMode, period)
+      case Some(false) => InterestFromSavingsController.onPageLoad(NormalMode, period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(TaxReliefPage(period)) match {
-      case Some(_) => CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(ClaimingTaxReliefPensionPage(period)) match {
+      case Some(true)  => TaxReliefController.onPageLoad(CheckMode, period)
+      case Some(false) => CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
