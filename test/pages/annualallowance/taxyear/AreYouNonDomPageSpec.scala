@@ -40,7 +40,7 @@ class AreYouNonDomPageSpec extends PageBehaviours {
 
         val result = AreYouNonDomPage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/adjusted-income/any-tax-relief-overseas-pension/2018")
+        checkNavigation(result, "/annual-allowance/any-tax-relief-overseas-pension/2018")
       }
 
       "must redirect to DoYouKnowPersonalAllowance page when false" in {
@@ -52,7 +52,7 @@ class AreYouNonDomPageSpec extends PageBehaviours {
 
         val result = AreYouNonDomPage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/adjusted-income/personal-allowance/2018")
+        checkNavigation(result, "/annual-allowance/personal-allowance/2018")
       }
 
     }
@@ -68,7 +68,7 @@ class AreYouNonDomPageSpec extends PageBehaviours {
 
         val result = AreYouNonDomPage(Period._2018).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/adjusted-income/any-tax-relief-overseas-pension/2018")
+        checkNavigation(result, "/annual-allowance/any-tax-relief-overseas-pension/2018")
       }
 
       "must redirect to CYA page when false" in {
