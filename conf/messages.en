@@ -1174,7 +1174,7 @@ anySalarySacrificeArrangements.message1 = A salary sacrifice arrangement is an a
 anySalarySacrificeArrangements.message2 = An example would be if you and your employer will agree to reduce your salary. In return you receive a bike that you can use to cycle to work.
 anySalarySacrificeArrangements.message3 = You can only include any relevant salary sacrifice arrangements made after 8 July 2015.
 anySalarySacrificeArrangements.checkYourAnswersLabel = Salary sacrifice
-anySalarySacrificeArrangements.error.required = Select yes if Salary sacrifice
+anySalarySacrificeArrangements.error.required = Select yes if you had any salary sacrifice arrangements from {0}
 anySalarySacrificeArrangements.change.hidden = Salary sacrifice
 
 flexibleRemunerationArrangements.title = Flexible remuneration

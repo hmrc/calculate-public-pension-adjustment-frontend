@@ -46,10 +46,12 @@ class AnySalarySacrificeArrangementsController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
 
-  def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData){
+
     implicit request =>
+      val form = formProvider(startEndDate(period))
+
       val preparedForm = request.userAnswers.get(AnySalarySacrificeArrangementsPage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -60,6 +62,8 @@ class AnySalarySacrificeArrangementsController @Inject() (
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      val form = formProvider(startEndDate(period))
+
       form
         .bindFromRequest()
         .fold(

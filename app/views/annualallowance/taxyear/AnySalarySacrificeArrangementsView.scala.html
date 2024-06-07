@@ -31,7 +31,7 @@
 <h2 class="govuk-heading-m">@messages("anySalarySacrificeArrangements.heading") @startEndDate</h2>
 }
 
-@layout(pageTitle = title(form, messages("anySalarySacrificeArrangements.title"))) {
+@layout(pageTitle = title(form, messages("anySalarySacrificeArrangements.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController.onSubmit(mode, period), 'autoComplete -> "off") {
 
