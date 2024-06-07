@@ -38,9 +38,10 @@ class MarriageAllowanceControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new MarriageAllowanceFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val marriageAllowanceRoute = controllers.annualallowance.taxyear.routes.MarriageAllowanceController.onPageLoad(NormalMode, Period._2018).url
+  lazy val marriageAllowanceRoute =
+    controllers.annualallowance.taxyear.routes.MarriageAllowanceController.onPageLoad(NormalMode, Period._2018).url
 
   "MarriageAllowance Controller" - {
 
@@ -74,7 +75,10 @@ class MarriageAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -97,7 +101,11 @@ class MarriageAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.MarriageAllowanceAmountController.onPageLoad(NormalMode, Period._2018).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.annualallowance.taxyear.routes.MarriageAllowanceAmountController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
       }
     }
 
@@ -117,7 +125,10 @@ class MarriageAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -127,7 +138,7 @@ class MarriageAllowanceControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request = FakeRequest(GET, marriageAllowanceRoute)
+        val request   = FakeRequest(GET, marriageAllowanceRoute)
 
         val result = route(application, request).value
 
@@ -142,7 +153,7 @@ class MarriageAllowanceControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request =
+        val request   =
           FakeRequest(POST, marriageAllowanceRoute)
             .withFormUrlEncodedBody(("value", "true"))
 

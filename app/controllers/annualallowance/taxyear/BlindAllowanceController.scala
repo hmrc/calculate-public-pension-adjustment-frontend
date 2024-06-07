@@ -29,24 +29,25 @@ import views.html.annualallowance.taxyear.BlindAllowanceView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class BlindAllowanceController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         userDataService: UserDataService,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: BlindAllowanceFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: BlindAllowanceView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class BlindAllowanceController @Inject() (
+  override val messagesApi: MessagesApi,
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: BlindAllowanceFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: BlindAllowanceView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val preparedForm = request.userAnswers.get(BlindAllowancePage(period)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -55,18 +56,17 @@ class BlindAllowanceController @Inject()(
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, period))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(BlindAllowancePage(period), value))
-            redirectUrl = BlindAllowancePage(period).navigate(mode, updatedAnswers).url
-            answersWithNav = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-            _ <- userDataService.set(answersWithNav)
-          } yield Redirect(redirectUrl)
-      )
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(BlindAllowancePage(period), value))
+              redirectUrl     = BlindAllowancePage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
+        )
   }
 }

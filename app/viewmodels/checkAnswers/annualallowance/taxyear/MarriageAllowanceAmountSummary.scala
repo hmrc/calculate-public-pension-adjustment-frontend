@@ -26,19 +26,22 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object MarriageAllowanceAmountSummary  {
+object MarriageAllowanceAmountSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(MarriageAllowanceAmountPage(period)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "marriageAllowanceAmount.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(currencyFormat(answer))),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.MarriageAllowanceAmountController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("marriageAllowanceAmount.change.hidden"))
+    answers.get(MarriageAllowanceAmountPage(period)).map { answer =>
+      SummaryListRowViewModel(
+        key = "marriageAllowanceAmount.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.MarriageAllowanceAmountController
+              .onPageLoad(CheckMode, period)
+              .url
           )
+            .withVisuallyHiddenText(messages("marriageAllowanceAmount.change.hidden"))
         )
+      )
     }
 }

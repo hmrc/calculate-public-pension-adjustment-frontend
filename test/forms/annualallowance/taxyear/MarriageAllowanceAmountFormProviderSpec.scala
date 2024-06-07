@@ -41,10 +41,9 @@ class MarriageAllowanceAmountFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "marriageAllowanceAmount.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "marriageAllowanceAmount.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "marriageAllowanceAmount.error.wholeNumber")
     )
-
 
     behave like mandatoryField(
       form,

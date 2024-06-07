@@ -36,13 +36,14 @@ import scala.concurrent.Future
 class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new MarriageAllowanceAmountFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt("0")
 
-  lazy val marriageAllowanceAmountRoute = routes.MarriageAllowanceAmountController.onPageLoad(NormalMode, Period._2018).url
+  lazy val marriageAllowanceAmountRoute =
+    routes.MarriageAllowanceAmountController.onPageLoad(NormalMode, Period._2018).url
 
   "MarriageAllowanceAmount Controller" - {
 
@@ -64,7 +65,8 @@ class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(MarriageAllowanceAmountPage(Period._2018), validAnswer).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(MarriageAllowanceAmountPage(Period._2018), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -76,7 +78,10 @@ class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -99,7 +104,9 @@ class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, Period._2018).url
+        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.BlindAllowanceController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
       }
     }
 
@@ -119,7 +126,10 @@ class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -129,7 +139,7 @@ class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request = FakeRequest(GET, marriageAllowanceAmountRoute)
+        val request   = FakeRequest(GET, marriageAllowanceAmountRoute)
 
         val result = route(application, request).value
 
@@ -144,7 +154,7 @@ class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request =
+        val request   =
           FakeRequest(POST, marriageAllowanceAmountRoute)
             .withFormUrlEncodedBody(("value", validAnswer.toString))
 

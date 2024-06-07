@@ -1269,7 +1269,8 @@ marriageAllowanceAmount.checkYourAnswersLabel = cy: How much are you receiving f
 marriageAllowanceAmount.error.nonNumeric = cy: Amount received from your partner must only include numbers 0 to 9
 marriageAllowanceAmount.error.required = cy: Enter amount received from your partner
 marriageAllowanceAmount.error.wholeNumber = cy: Amount received from your partner must only include numbers 0 to 9
-marriageAllowanceAmount.error.outOfRange = cy: Amount received from your partner must be £999,999,999 or less
+marriageAllowanceAmount.error.minimum = cy: Amount received from your partner must be £1 or greater
+marriageAllowanceAmount.error.maximum = cy: Amount received from your partner must be £999,999,999 or less
 marriageAllowanceAmount.change.hidden = cy: amount received from your partner
 
 blindAllowance.title = cy: Are you claiming for blind person allowance?

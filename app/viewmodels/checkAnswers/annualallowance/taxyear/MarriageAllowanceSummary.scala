@@ -24,21 +24,22 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object MarriageAllowanceSummary  {
+object MarriageAllowanceSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(MarriageAllowancePage(period)).map {
-      answer =>
+    answers.get(MarriageAllowancePage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key     = "marriageAllowance.checkYourAnswersLabel",
-          value   = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.MarriageAllowanceController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("marriageAllowance.change.hidden"))
+      SummaryListRowViewModel(
+        key = "marriageAllowance.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.MarriageAllowanceController.onPageLoad(CheckMode, period).url
           )
+            .withVisuallyHiddenText(messages("marriageAllowance.change.hidden"))
         )
+      )
     }
 }

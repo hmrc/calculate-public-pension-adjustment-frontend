@@ -28,10 +28,11 @@ class MarriageAllowanceAmountFormProvider @Inject() extends Mappings {
       "value" -> bigInt(
         "marriageAllowanceAmount.error.required",
         "marriageAllowanceAmount.error.wholeNumber",
-        "marriageAllowanceAmount.error.nonNumeric")
-          .verifying(
-            minimumValue[BigInt](0, "marriageAllowanceAmount.error.minimum"),
-            maximumValue[BigInt](BigInt("999999999"), "marriageAllowanceAmount.error.maximum")
-          )
+        "marriageAllowanceAmount.error.nonNumeric"
+      )
+        .verifying(
+          minimumValue[BigInt](0, "marriageAllowanceAmount.error.minimum"),
+          maximumValue[BigInt](BigInt("999999999"), "marriageAllowanceAmount.error.maximum")
+        )
     )
 }

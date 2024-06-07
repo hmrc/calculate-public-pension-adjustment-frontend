@@ -27,11 +27,9 @@ case class BlindAllowancePage(period: Period) extends QuestionPage[Boolean] {
 
   override def toString: String = "blindAllowance"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-  }
 }

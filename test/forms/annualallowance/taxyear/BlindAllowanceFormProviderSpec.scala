@@ -22,7 +22,7 @@ import play.api.data.FormError
 class BlindAllowanceFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "blindAllowance.error.required"
-  val invalidKey = "error.boolean"
+  val invalidKey  = "error.boolean"
 
   val form = new BlindAllowanceFormProvider()()
 

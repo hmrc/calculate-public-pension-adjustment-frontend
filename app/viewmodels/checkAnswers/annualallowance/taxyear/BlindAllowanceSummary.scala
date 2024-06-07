@@ -24,21 +24,22 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object BlindAllowanceSummary  {
+object BlindAllowanceSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(BlindAllowancePage(period)).map {
-      answer =>
+    answers.get(BlindAllowancePage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key     = "blindAllowance.checkYourAnswersLabel",
-          value   = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("blindAllowance.change.hidden"))
+      SummaryListRowViewModel(
+        key = "blindAllowance.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(CheckMode, period).url
           )
+            .withVisuallyHiddenText(messages("blindAllowance.change.hidden"))
         )
+      )
     }
 }

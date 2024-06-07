@@ -27,19 +27,21 @@ case class MarriageAllowancePage(period: Period) extends QuestionPage[Boolean] {
 
   override def toString: String = "marriageAllowance"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(MarriageAllowancePage(period)) match {
-      case Some(true) => controllers.annualallowance.taxyear.routes.MarriageAllowanceAmountController.onPageLoad(NormalMode, period)
-      case Some(false) => controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.MarriageAllowanceAmountController.onPageLoad(NormalMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(MarriageAllowancePage(period)) match {
-      case Some(true) => controllers.annualallowance.taxyear.routes.MarriageAllowanceAmountController.onPageLoad(CheckMode, period)
-      case Some(false) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.MarriageAllowanceAmountController.onPageLoad(CheckMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }
