@@ -1178,10 +1178,14 @@ anySalarySacrificeArrangements.checkYourAnswersLabel = Salary sacrifice
 anySalarySacrificeArrangements.error.required = Select yes if you had any salary sacrifice arrangements from {0}
 anySalarySacrificeArrangements.change.hidden = Salary sacrifice
 
-flexibleRemunerationArrangements.title = Flexible remuneration
-flexibleRemunerationArrangements.heading = Flexible remuneration
-flexibleRemunerationArrangements.checkYourAnswersLabel = Flexible remuneration
-flexibleRemunerationArrangements.error.required = Select yes if flexible remuneration
+flexibleRemunerationArrangements.title = Did you have any flexible remuneration arrangements from {0}
+flexibleRemunerationArrangements.heading = Did you have any flexible remuneration arrangements from
+flexibleRemunerationArrangements.message1 = Flexible remuneration is when you agree to reduce your cash pay to increase the amount your employer contributes to your pension.
+flexibleRemunerationArrangements.message2 = An example would be if you and your employer will agree to reduce your salary. Your employer will then pay the difference into your pension, along with their contribution to the scheme.
+flexibleRemunerationArrangements.message3 = You can only include any relevant flexible remuneration arrangements made after 8 July 2015.
+flexibleRemunerationArrangements.caption = Annual allowance threshold income
+flexibleRemunerationArrangements.checkYourAnswersLabel = Did you have any flexible remuneration arrangements from
+flexibleRemunerationArrangements.error.required = Select yes if you had any flexible remuneration arrangements from {0}
 flexibleRemunerationArrangements.change.hidden = Flexible remuneration
 
 anyLumpSumDeathBenefits.title = anyLumpSumDeathBenefits

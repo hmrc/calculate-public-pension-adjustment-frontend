@@ -17,14 +17,14 @@
 package forms.annualallowance.taxyear
 
 import javax.inject.Inject
-
 import forms.mappings.Mappings
 import play.api.data.Form
+import play.api.i18n.Messages
 
 class FlexibleRemunerationArrangementsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(startEndDate: String)(implicit messages: Messages): Form[Boolean] =
     Form(
-      "value" -> boolean("flexibleRemunerationArrangements.error.required")
+      "value" -> boolean(messages("flexibleRemunerationArrangements.error.required", startEndDate))
     )
 }
