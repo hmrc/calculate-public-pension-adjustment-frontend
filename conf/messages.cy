@@ -805,6 +805,8 @@ calculationResults.printYourResults.heading = Argraffu’ch canlyniadau
 calculationResults.printYourResults.hint = Bydd angen i chi wneud hyn gan na fydd modd i chi ddod yn ôl i’ch canlyniadau’n nes ymlaen.
 calculationResults.whatHappensNext.heading = Yr hyn sy’n digwydd nesaf
 calculationResults.whatHappensNext.hint1 = Er mwyn cyflwyno’r wybodaeth, bydd angen i chi fewngofnodi i’ch cyfrif Porth y Llywodraeth a rhoi:
+calculationResults.hint2.false = cy: 6 April 2015 to 5 April 2019 does not include compensation
+calculationResults.hint2.true = cy: 6 April 2015 to 5 April 2019 does include compensation
 calculationResults.whatHappensNext.hint1.list1 = eich manylion personol
 calculationResults.whatHappensNext.hint1.list2 = manylion eich cynlluniau sector cyhoeddus
 calculationResults.whatHappensNext.hint1.list3 = manylion unrhyw newidiadau i’ch taliadau lwfans oes, os yw hynny’n briodol
@@ -889,6 +891,7 @@ userSchemeDetails.checkYourAnswersLabel = Beth yw enw a chyfeirnod treth y cynll
 userSchemeDetails.name.error.required = Nodwch enw’r cynllun pensiwn
 userSchemeDetails.taxRef.error.required = Nodwch Gyfeirnod Treth y Cynllun Pensiwn
 userSchemeDetails.name.error.length = Mae’n rhaid i enw’ch cynllun pensiwn fod yn 100 o gymeriadau neu lai
+userSchemeDetails.taxRef.error.invalid = cy: The Pension Scheme Tax Reference must be 8 numbers followed by 2 letters
 userSchemeDetails.change.hidden = Beth yw enw a chyfeirnod treth y cynllun pensiwn?
 
 enhancementType.title = Pa fath o ddiogelwch lwfans oes uwch oedd gennych chi?
@@ -1226,3 +1229,30 @@ claimingTaxReliefPensionNotAdjustedIncome.heading = cy: Claiming pension tax rel
 claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel = cy: Claiming pension tax relief
 claimingTaxReliefPensionNotAdjustedIncome.error.required = cy: Select yes if claiming pension tax relief
 claimingTaxReliefPensionNotAdjustedIncome.change.hidden = cy: Claiming pension tax relief
+
+amountClaimedOnOverseasPension.title = cy: Amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.heading = cy: Amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.checkYourAnswersLabel = cy: Amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.error.nonNumeric = cy: Amount of relief claimed on overseas pensions must only include numbers 0 to 9
+amountClaimedOnOverseasPension.error.required = cy: Enter your Amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.error.wholeNumber = cy: Amount of relief claimed on overseas pensions must only include numbers 0 to 9
+amountClaimedOnOverseasPension.error.outOfRange = cy: Amount of relief claimed on overseas pensions must be £999,999,999 or less
+amountClaimedOnOverseasPension.change.hidden = cy: amount of relief claimed on overseas pensions
+
+hasReliefClaimedOnOverseasPension.title = cy: Did you claim relief on overseas pension?
+hasReliefClaimedOnOverseasPension.heading = cy: Did you claim relief on overseas pension?
+hasReliefClaimedOnOverseasPension.checkYourAnswersLabel = cy: Did you claim relief on overseas pension?
+hasReliefClaimedOnOverseasPension.error.required = cy: Select yes if you have claimed relief on overseas pension
+hasReliefClaimedOnOverseasPension.change.hidden = cy: if you have claimed relief on overseas pension
+
+areYouNonDom.title = cy: Are you a non-dom?
+areYouNonDom.heading =  cy: Are you a non-dom?
+areYouNonDom.checkYourAnswersLabel = cy: Are you a non-dom?
+areYouNonDom.error.required = cy: Select yes if you are a nom-dom
+areYouNonDom.change.hidden = cy: if you are a nom-dom
+
+doYouKnowPersonalAllowance.title = cy: Do you know your personal allowance?
+doYouKnowPersonalAllowance.heading = cy: Do you know your personal allowance?
+doYouKnowPersonalAllowance.checkYourAnswersLabel = cy: Do you know your personal allowance?
+doYouKnowPersonalAllowance.error.required = cy: Select yes if you know your personal allowance
+doYouKnowPersonalAllowance.change.hidden = cy: your personal allowance
