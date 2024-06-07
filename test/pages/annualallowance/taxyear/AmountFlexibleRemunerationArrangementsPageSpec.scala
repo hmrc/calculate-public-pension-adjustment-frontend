@@ -42,7 +42,7 @@ class AmountFlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
         .value
       val result = AmountFlexibleRemunerationArrangementsPage(Period._2018).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/threshold-income/how-much-contribution/2018")
+      checkNavigation(result, "/annual-allowance/2018/how-much-contribution")
     }
   }
 
@@ -56,7 +56,7 @@ class AmountFlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
       .value
     val result = AmountFlexibleRemunerationArrangementsPage(Period._2018).navigate(CheckMode, ua).url
 
-    checkNavigation(result, "/annual-allowance/threshold-income/change-how-much-contribution/2018")
+    checkNavigation(result, "/annual-allowance/2018/change-how-much-contribution")
   }
 
 }

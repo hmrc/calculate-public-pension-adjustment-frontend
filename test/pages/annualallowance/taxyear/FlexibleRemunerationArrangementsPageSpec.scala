@@ -41,7 +41,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
         .value
       val result = FlexibleRemunerationArrangementsPage(Period._2018).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/threshold-income/amount-flexible-remuneration-arrangements/2018")
+      checkNavigation(result, "/annual-allowance/2018/amount-flexible-remuneration-arrangements")
     }
 
     "to how-much-contribution when answered false" in {
@@ -54,7 +54,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
         .value
       val result = FlexibleRemunerationArrangementsPage(Period._2018).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/threshold-income/how-much-contribution/2018")
+      checkNavigation(result, "/annual-allowance/2018/how-much-contribution")
     }
 
     "to JourneyRecovery when not answered" in {
@@ -79,7 +79,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
 
       checkNavigation(
         result,
-        "/annual-allowance/threshold-income/change-amount-flexible-remuneration-arrangements/2018"
+        "/annual-allowance/2018/change-amount-flexible-remuneration-arrangements"
       )
     }
 
@@ -93,7 +93,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
         .value
       val result = FlexibleRemunerationArrangementsPage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/threshold-income/change-how-much-contribution/2018")
+      checkNavigation(result, "/annual-allowance/2018/change-how-much-contribution")
     }
 
     "to JourneyRecovery when not answered" in {
