@@ -16,30 +16,19 @@
 
 package forms.annualallowance.taxyear
 
-import forms.behaviours.BooleanFieldBehaviours
-import play.api.data.FormError
+import forms.mappings.Mappings
+import javax.inject.Inject
+import play.api.data.Form
 
-class AnySalarySacrificeArrangementsFormProviderSpec extends BooleanFieldBehaviours {
+class HowMuchTaxReliefPensionFormProvider @Inject() extends Mappings {
 
-  val requiredKey = "anySalarySacrificeArrangements.error.required"
-  val invalidKey  = "error.boolean"
-
-  val form = new AnySalarySacrificeArrangementsFormProvider()()
-
-  ".value" - {
-
-    val fieldName = "value"
-
-    behave like booleanField(
-      form,
-      fieldName,
-      invalidError = FormError(fieldName, invalidKey)
+  def apply(): Form[BigInt] =
+    Form(
+      "value" -> bigInt(
+        "howMuchTaxReliefPension.error.required",
+        "howMuchTaxReliefPension.error.wholeNumber",
+        "howMuchTaxReliefPension.error.nonNumeric"
+      )
+        .verifying(inRange[BigInt](0, 999999999, "howMuchTaxReliefPension.error.outOfRange"))
     )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
-  }
 }

@@ -17,45 +17,44 @@
 package controllers.annualallowance.taxyear
 
 import base.SpecBase
-import forms.annualallowance.taxyear.FlexibleRemunerationArrangementsFormProvider
+import config.FrontendAppConfig
+import forms.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.FlexibleRemunerationArrangementsPage
+import pages.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.annualallowance.taxyear.FlexibleRemunerationArrangementsView
+import views.html.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeView
 
 import scala.concurrent.Future
 
-class FlexibleRemunerationArrangementsControllerSpec extends SpecBase with MockitoSugar {
+class ClaimingTaxReliefPensionNotAdjustedIncomeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new FlexibleRemunerationArrangementsFormProvider()
+  val formProvider = new ClaimingTaxReliefPensionNotAdjustedIncomeFormProvider()
   val form         = formProvider()
 
-  lazy val flexibleRemunerationArrangementsRoute =
-    controllers.annualallowance.taxyear.routes.FlexibleRemunerationArrangementsController
-      .onPageLoad(NormalMode, Period._2018)
-      .url
+  lazy val ClaimingTaxReliefPensionNotAdjustedIncomeRoute =
+    routes.ClaimingTaxReliefPensionNotAdjustedIncomeController.onPageLoad(NormalMode, Period._2018).url
 
-  "FlexibleRemunerationArrangements Controller" - {
+  "ClaimingTaxReliefPensionNotAdjustedIncome Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, flexibleRemunerationArrangementsRoute)
+        val request = FakeRequest(GET, ClaimingTaxReliefPensionNotAdjustedIncomeRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[FlexibleRemunerationArrangementsView]
+        val view = application.injector.instanceOf[ClaimingTaxReliefPensionNotAdjustedIncomeView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
@@ -65,14 +64,14 @@ class FlexibleRemunerationArrangementsControllerSpec extends SpecBase with Mocki
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers =
-        UserAnswers(userAnswersId).set(FlexibleRemunerationArrangementsPage(Period._2018), true).success.value
+        UserAnswers(userAnswersId).set(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, flexibleRemunerationArrangementsRoute)
+        val request = FakeRequest(GET, ClaimingTaxReliefPensionNotAdjustedIncomeRoute)
 
-        val view = application.injector.instanceOf[FlexibleRemunerationArrangementsView]
+        val view = application.injector.instanceOf[ClaimingTaxReliefPensionNotAdjustedIncomeView]
 
         val result = route(application, request).value
 
@@ -97,7 +96,7 @@ class FlexibleRemunerationArrangementsControllerSpec extends SpecBase with Mocki
 
       running(application) {
         val request =
-          FakeRequest(POST, flexibleRemunerationArrangementsRoute)
+          FakeRequest(POST, ClaimingTaxReliefPensionNotAdjustedIncomeRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -112,12 +111,12 @@ class FlexibleRemunerationArrangementsControllerSpec extends SpecBase with Mocki
 
       running(application) {
         val request =
-          FakeRequest(POST, flexibleRemunerationArrangementsRoute)
+          FakeRequest(POST, ClaimingTaxReliefPensionNotAdjustedIncomeRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[FlexibleRemunerationArrangementsView]
+        val view = application.injector.instanceOf[ClaimingTaxReliefPensionNotAdjustedIncomeView]
 
         val result = route(application, request).value
 
@@ -126,6 +125,38 @@ class FlexibleRemunerationArrangementsControllerSpec extends SpecBase with Mocki
           request,
           messages(application)
         ).toString
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+
+      val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(GET, ClaimingTaxReliefPensionNotAdjustedIncomeRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no existing data is found" in {
+
+      val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   =
+          FakeRequest(POST, ClaimingTaxReliefPensionNotAdjustedIncomeRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }
