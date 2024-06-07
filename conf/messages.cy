@@ -1230,7 +1230,6 @@ claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel = cy: Claiming p
 claimingTaxReliefPensionNotAdjustedIncome.error.required = cy: Select yes if claiming pension tax relief
 claimingTaxReliefPensionNotAdjustedIncome.change.hidden = cy: Claiming pension tax relief
 
-
 amountClaimedOnOverseasPension.title = cy: Amount of relief claimed on overseas pensions
 amountClaimedOnOverseasPension.heading = cy: Amount of relief claimed on overseas pensions
 amountClaimedOnOverseasPension.checkYourAnswersLabel = cy: Amount of relief claimed on overseas pensions
