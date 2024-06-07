@@ -405,7 +405,7 @@ GET        /previous-claim-navigate                         controllers.Previous
 
 GET        /annual-allowance/:period/total-income/personal-allowance                  controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
 POST       /annual-allowance/:period/total-income/personal-allowance                  controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /change-annual-allowance/:period/total-income/change-personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+GET        /annual-allowance/:period/total-income/change-personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/total-income/change-personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
 
 GET        /annual-allowance/:period/total-income/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = NormalMode, period:Period)
@@ -457,3 +457,18 @@ GET        /annual-allowance/interest-from-savings/:period                 contr
 POST       /annual-allowance/interest-from-savings/:period                  controllers.annualallowance.taxyear.InterestFromSavingsController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/change-interest-from-savings/:period                        controllers.annualallowance.taxyear.InterestFromSavingsController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/change-interest-from-savings/:period                        controllers.annualallowance.taxyear.InterestFromSavingsController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/adjusted-income/know-adjusted-amount/:period                        controllers.annualallowance.taxyear.KnowAdjustedAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/adjusted-income/know-adjusted-amount/:period                        controllers.annualallowance.taxyear.KnowAdjustedAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/adjusted-income/change-know-adjusted-amount/:period                  controllers.annualallowance.taxyear.KnowAdjustedAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/adjusted-income/change-know-adjusted-amount/:period                  controllers.annualallowance.taxyear.KnowAdjustedAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/how-much-tax-relief-pension/:period                 controllers.annualallowance.taxyear.HowMuchTaxReliefPensionController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/how-much-tax-relief-pension/:period                  controllers.annualallowance.taxyear.HowMuchTaxReliefPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/change-how-much-tax-relief-pension/:period                        controllers.annualallowance.taxyear.HowMuchTaxReliefPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/change-how-much-tax-relief-pension/:period                        controllers.annualallowance.taxyear.HowMuchTaxReliefPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/claiming-tax-relief-pension/:period                        controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/claiming-tax-relief-pension/:period                        controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/change-claiming-tax-relief-pension/:period                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/change-claiming-tax-relief-pension/:period                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)

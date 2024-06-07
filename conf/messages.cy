@@ -1205,3 +1205,24 @@ interestFromSavings.error.required = cy: Enter your interestFromSavings
 interestFromSavings.error.wholeNumber = cy: Enter your interestFromSavings using whole numbers
 interestFromSavings.error.outOfRange = cy: InterestFromSavings must be between {0} and {1}
 interestFromSavings.change.hidden = cy: InterestFromSavings
+
+knowAdjustedAmount.title = cy: Adjusted income
+knowAdjustedAmount.heading = cy: Adjusted income
+knowAdjustedAmount.checkYourAnswersLabel = cy: Adjusted income
+knowAdjustedAmount.error.required = cy: Select yes if adjusted income
+knowAdjustedAmount.change.hidden = cy: Adjusted income
+
+howMuchTaxReliefPension.title = cy: Amount of relief claimed
+howMuchTaxReliefPension.heading = cy: Amount of relief claimed
+howMuchTaxReliefPension.checkYourAnswersLabel = cy: Amount of relief claimed
+howMuchTaxReliefPension.error.nonNumeric = cy: Enter your amount of relief claimed using numbers
+howMuchTaxReliefPension.error.required = cy: Enter your amount of relief claimed
+howMuchTaxReliefPension.error.wholeNumber = cy: Enter your amount of relief claimed using whole numbers
+howMuchTaxReliefPension.error.outOfRange = cy: Amount of relief claimed must be between {0} and {1}
+howMuchTaxReliefPension.change.hidden = cy: Amount of relief claimed
+
+claimingTaxReliefPensionNotAdjustedIncome.title = cy: Claiming pension tax relief
+claimingTaxReliefPensionNotAdjustedIncome.heading = cy: Claiming pension tax relief
+claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel = cy: Claiming pension tax relief
+claimingTaxReliefPensionNotAdjustedIncome.error.required = cy: Select yes if claiming pension tax relief
+claimingTaxReliefPensionNotAdjustedIncome.change.hidden = cy: Claiming pension tax relief

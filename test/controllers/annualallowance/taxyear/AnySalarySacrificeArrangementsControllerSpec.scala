@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.annualallowance.taxyear
 
 import base.SpecBase
-import forms.AnySalarySacrificeArrangementsFormProvider
+import forms.annualallowance.taxyear.AnySalarySacrificeArrangementsFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.AnySalarySacrificeArrangementsPage
+import pages.annualallowance.taxyear.AnySalarySacrificeArrangementsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

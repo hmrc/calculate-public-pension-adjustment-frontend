@@ -17,12 +17,12 @@
 package controllers.annualallowance.taxyear
 
 import controllers.actions._
-import forms.FlexibleRemunerationArrangementsFormProvider
+import forms.annualallowance.taxyear.FlexibleRemunerationArrangementsFormProvider
 
 import javax.inject.Inject
 import models.{Mode, Period}
 import models.tasklist.sections.AASection
-import pages.FlexibleRemunerationArrangementsPage
+import pages.annualallowance.taxyear.FlexibleRemunerationArrangementsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
