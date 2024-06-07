@@ -22,12 +22,13 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
 <p class="govuk-body">@messages("anySalarySacrificeArrangements.message1")</p>
 <p class="govuk-body">@messages("anySalarySacrificeArrangements.message2")</p>
 <p class="govuk-body">@messages("anySalarySacrificeArrangements.message3")</p>
+<h2 class="govuk-heading-m">@messages("anySalarySacrificeArrangements.heading") @startEndDate</h2>
 }
 
 @layout(pageTitle = title(form, messages("anySalarySacrificeArrangements.title"))) {
@@ -41,9 +42,10 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("anySalarySacrificeArrangements.heading")).asPageHeading(),
-            )
-            .withHint(HintViewModel(HtmlContent(contentHint)))
+                legend = LegendViewModel(
+                    content = messages("anySalarySacrificeArrangements.heading") + " " + startEndDate).asPageHeading(),
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
+
         )
 
         @govukButton(
