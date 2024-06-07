@@ -21,30 +21,28 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class FlexibleRemunerationArrangementsPage(period: Period) extends QuestionPage[Boolean] {
+case class KnowAdjustedAmountPage(period: Period) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "flexibleRemunerationArrangements"
+  override def toString: String = "knowAdjustedAmount"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(FlexibleRemunerationArrangementsPage(period)) match {
+    answers.get(KnowAdjustedAmountPage(period)) match {
       case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.AmountFlexibleRemunerationArrangementsController
-          .onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.AdjustedIncomeController.onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+        controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
           .onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(FlexibleRemunerationArrangementsPage(period)) match {
+    answers.get(KnowAdjustedAmountPage(period)) match {
       case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.AmountFlexibleRemunerationArrangementsController
-          .onPageLoad(CheckMode, period)
+        controllers.annualallowance.taxyear.routes.AdjustedIncomeController.onPageLoad(CheckMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+        controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
           .onPageLoad(CheckMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

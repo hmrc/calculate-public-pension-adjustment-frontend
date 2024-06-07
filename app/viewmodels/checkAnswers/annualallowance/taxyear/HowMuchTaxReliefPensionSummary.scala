@@ -17,29 +17,27 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import models.{CheckMode, Period, UserAnswers}
-import pages.annualallowance.taxyear.AnySalarySacrificeArrangementsPage
+import pages.annualallowance.taxyear.HowMuchTaxReliefPensionPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object AnySalarySacrificeArrangementsSummary {
+object HowMuchTaxReliefPensionSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(AnySalarySacrificeArrangementsPage(period)).map { answer =>
-      val value = if (answer) "site.yes" else "site.no"
-
+    answers.get(HowMuchTaxReliefPensionPage(period)).map { answer =>
       SummaryListRowViewModel(
-        key = "anySalarySacrificeArrangements.checkYourAnswersLabel",
-        value = ValueViewModel(value),
+        key = "howMuchTaxReliefPension.checkYourAnswersLabel",
+        value = ValueViewModel(answer.toString),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
+            controllers.annualallowance.taxyear.routes.HowMuchTaxReliefPensionController
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("anySalarySacrificeArrangements.change.hidden"))
+            .withVisuallyHiddenText(messages("howMuchTaxReliefPension.change.hidden"))
         )
       )
     }

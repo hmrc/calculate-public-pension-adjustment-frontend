@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package pages
+package pages.annualallowance.taxyear
 
 import models.{CheckMode, NormalMode, Period, UserAnswers}
+import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 

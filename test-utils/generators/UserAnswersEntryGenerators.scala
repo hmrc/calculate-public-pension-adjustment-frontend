@@ -19,7 +19,7 @@ package generators
 import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
-import pages.{AnySalarySacrificeArrangementsPage, FlexibleRemunerationArrangementsPage, PreviousClaimContinuePage}
+import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -104,6 +104,32 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[AnyLumpSumDeathBenefitsPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryClaimingTaxReliefPensionNotAdjustedIncomeUserAnswersEntry
+    : Arbitrary[(ClaimingTaxReliefPensionNotAdjustedIncomePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ClaimingTaxReliefPensionNotAdjustedIncomePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHowMuchTaxReliefPensionUserAnswersEntry
+    : Arbitrary[(HowMuchTaxReliefPensionPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HowMuchTaxReliefPensionPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryKnowAdjustedAmountUserAnswersEntry: Arbitrary[(KnowAdjustedAmountPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[KnowAdjustedAmountPage.type]
         value <- arbitrary[Boolean].map(Json.toJson(_))
       } yield (page, value)
     }
