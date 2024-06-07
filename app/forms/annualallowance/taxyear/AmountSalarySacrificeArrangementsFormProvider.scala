@@ -18,18 +18,19 @@ package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
 import play.api.data.Form
+import play.api.i18n.Messages
 
 import javax.inject.Inject
 
 class AmountSalarySacrificeArrangementsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(startEndDate: String)(implicit messages: Messages): Form[BigInt] =
     Form(
-      "value" -> bigInt(
-        "amountSalarySacrificeArrangements.error.required",
+      "value" -> bigInt(messages(
+        "amountSalarySacrificeArrangements.error.required", startEndDate,
         "amountSalarySacrificeArrangements.error.wholeNumber",
-        "amountSalarySacrificeArrangements.error.nonNumeric"
-      )
+        "amountSalarySacrificeArrangements.error.nonNumeric", startEndDate
+      ))
         .verifying(inRange[BigInt](0, BigInt("999999999"), "amountSalarySacrificeArrangements.error.outOfRange"))
     )
 }

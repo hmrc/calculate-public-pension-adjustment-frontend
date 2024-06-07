@@ -1140,11 +1140,12 @@ taxRelief.error.wholeNumber = Your tax relief must only include numbers 0 to 9
 taxRelief.error.outOfRange = Your tax relief must be £999,999,999 or less
 taxRelief.change.hidden = your tax relief
 
-amountSalarySacrificeArrangements.title = Salary sacrifice amount
-amountSalarySacrificeArrangements.heading = Salary sacrifice amount
-amountSalarySacrificeArrangements.checkYourAnswersLabel = Salary sacrifice amount
-amountSalarySacrificeArrangements.error.nonNumeric = Enter your Salary sacrifice amount using numbers
-amountSalarySacrificeArrangements.error.required = Enter your Salary sacrifice amount
+amountSalarySacrificeArrangements.title = What was the amount of your salary sacrifice arrangements from {0}
+amountSalarySacrificeArrangements.heading = What was the amount of your salary sacrifice or flexible remuneration arrangements from
+amountSalarySacrificeArrangements.checkYourAnswersLabel = What was the amount of your salary sacrifice arrangements from
+amountSalarySacrificeArrangements.hint = Amount must be rounded down to the nearest pound, for example 2300
+amountSalarySacrificeArrangements.error.nonNumeric = he amount of your salary sacrifice arrangements from {0} must only include numbers 0 to 9
+amountSalarySacrificeArrangements.error.required = Enter your Salary sacrifice amount from {0}
 amountSalarySacrificeArrangements.error.wholeNumber = Enter your Salary sacrifice amount using whole numbers
 amountSalarySacrificeArrangements.error.outOfRange = Salary sacrifice amount must be between {0} and {1}
 amountSalarySacrificeArrangements.change.hidden = Salary sacrifice amount
@@ -1167,7 +1168,7 @@ howMuchContributionPensionScheme.error.wholeNumber = Enter your Pre-Relief pensi
 howMuchContributionPensionScheme.error.outOfRange = Pre-Relief pension contributions must be between {0} and {1}
 howMuchContributionPensionScheme.change.hidden = Pre-Relief pension contributions
 
-anySalarySacrificeArrangements.title = Did you have any salary sacrifice arrangements from
+anySalarySacrificeArrangements.title = Did you have any salary sacrifice arrangements from {0}
 anySalarySacrificeArrangements.heading = Did you have any salary sacrifice arrangements from
 anySalarySacrificeArrangements.caption = Annual allowance threshold income
 anySalarySacrificeArrangements.message1 = A salary sacrifice arrangement is an agreement to reduce your cash pay, usually in return for a non-cash benefit.
