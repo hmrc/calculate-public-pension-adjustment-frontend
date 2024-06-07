@@ -24,6 +24,12 @@
 
 @(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+<p class="govuk-body">@messages("anySalarySacrificeArrangements.message1")</p>
+<p class="govuk-body">@messages("anySalarySacrificeArrangements.message2")</p>
+<p class="govuk-body">@messages("anySalarySacrificeArrangements.message3")</p>
+}
+
 @layout(pageTitle = title(form, messages("anySalarySacrificeArrangements.title"))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController.onSubmit(mode, period), 'autoComplete -> "off") {
@@ -35,8 +41,9 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("anySalarySacrificeArrangements.heading")).asPageHeading()
+                legend = LegendViewModel(messages("anySalarySacrificeArrangements.heading")).asPageHeading(),
             )
+            .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

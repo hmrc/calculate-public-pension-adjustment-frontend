@@ -1167,8 +1167,12 @@ howMuchContributionPensionScheme.error.wholeNumber = Enter your Pre-Relief pensi
 howMuchContributionPensionScheme.error.outOfRange = Pre-Relief pension contributions must be between {0} and {1}
 howMuchContributionPensionScheme.change.hidden = Pre-Relief pension contributions
 
-anySalarySacrificeArrangements.title = Salary sacrifice
-anySalarySacrificeArrangements.heading = Salary sacrifice
+anySalarySacrificeArrangements.title = Did you have any salary sacrifice arrangements from {0}
+anySalarySacrificeArrangements.heading = Did you have any salary sacrifice arrangements from {0}
+anySalarySacrificeArrangements.caption = Annual allowance threshold income
+anySalarySacrificeArrangements.message1 = A salary sacrifice arrangement is an agreement to reduce your cash pay, usually in return for a non-cash benefit.
+anySalarySacrificeArrangements.message2 = An example would be if you and your employer will agree to reduce your salary. In return you receive a bike that you can use to cycle to work.
+anySalarySacrificeArrangements.message3 = You can only include any relevant salary sacrifice arrangements made after 8 July 2015.
 anySalarySacrificeArrangements.checkYourAnswersLabel = Salary sacrifice
 anySalarySacrificeArrangements.error.required = Select yes if Salary sacrifice
 anySalarySacrificeArrangements.change.hidden = Salary sacrifice
