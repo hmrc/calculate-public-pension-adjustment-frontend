@@ -1229,3 +1229,30 @@ claimingTaxReliefPensionNotAdjustedIncome.heading = Claiming pension tax relief
 claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel = Claiming pension tax relief
 claimingTaxReliefPensionNotAdjustedIncome.error.required = Select yes if claiming pension tax relief
 claimingTaxReliefPensionNotAdjustedIncome.change.hidden = Claiming pension tax relief
+
+amountClaimedOnOverseasPension.title = Amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.heading = Amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.checkYourAnswersLabel = Amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.error.nonNumeric = Amount of relief claimed on overseas pensions must only include numbers 0 to 9
+amountClaimedOnOverseasPension.error.required = Enter your Amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.error.wholeNumber =Amount of relief claimed on overseas pensions must only include numbers 0 to 9
+amountClaimedOnOverseasPension.error.outOfRange = Amount of relief claimed on overseas pensions must be £999,999,999 or less
+amountClaimedOnOverseasPension.change.hidden = amount of relief claimed on overseas pensions
+
+hasReliefClaimedOnOverseasPension.title = Did you claim relief on overseas pension?
+hasReliefClaimedOnOverseasPension.heading = Did you claim relief on overseas pension?
+hasReliefClaimedOnOverseasPension.checkYourAnswersLabel = Did you claim relief on overseas pension?
+hasReliefClaimedOnOverseasPension.error.required = Select yes if you have claimed relief on overseas pension
+hasReliefClaimedOnOverseasPension.change.hidden = if you have claimed relief on overseas pension
+
+areYouNonDom.title = Are you a non-dom?
+areYouNonDom.heading =  Are you a non-dom?
+areYouNonDom.checkYourAnswersLabel = Are you a non-dom?
+areYouNonDom.error.required = Select yes if you are a nom-dom
+areYouNonDom.change.hidden = if you are a nom-dom
+
+doYouKnowPersonalAllowance.title = Do you know your personal allowance?
+doYouKnowPersonalAllowance.heading = Do you know your personal allowance?
+doYouKnowPersonalAllowance.checkYourAnswersLabel = Do you know your personal allowance?
+doYouKnowPersonalAllowance.error.required = Select yes if you know your personal allowance
+doYouKnowPersonalAllowance.change.hidden = your personal allowance

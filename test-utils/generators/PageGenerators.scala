@@ -31,6 +31,19 @@ trait PageGenerators {
   implicit lazy val arbitraryClaimingTaxReliefPensionPage: Arbitrary[ClaimingTaxReliefPensionPage.type] =
     Arbitrary(ClaimingTaxReliefPensionPage)
 
+  implicit lazy val arbitraryDoYouKnowPersonalAllowancePage: Arbitrary[DoYouKnowPersonalAllowancePage.type] =
+    Arbitrary(DoYouKnowPersonalAllowancePage)
+
+  implicit lazy val arbitraryAreYouNonDomPage: Arbitrary[AreYouNonDomPage.type] =
+    Arbitrary(AreYouNonDomPage)
+
+  implicit lazy val arbitraryHasReliefClaimedOnOverseasPensionPage
+    : Arbitrary[HasReliefClaimedOnOverseasPensionPage.type] =
+    Arbitrary(HasReliefClaimedOnOverseasPensionPage)
+
+  implicit lazy val arbitraryAmountClaimedOnOverseasPensionPage: Arbitrary[AmountClaimedOnOverseasPensionPage.type] =
+    Arbitrary(AmountClaimedOnOverseasPensionPage)
+
   implicit lazy val arbitraryFlexibleRemunerationArrangementsPage
     : Arbitrary[FlexibleRemunerationArrangementsPage.type] =
     Arbitrary(FlexibleRemunerationArrangementsPage)

@@ -472,3 +472,28 @@ GET        /annual-allowance/claiming-tax-relief-pension/:period                
 POST       /annual-allowance/claiming-tax-relief-pension/:period                        controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/change-claiming-tax-relief-pension/:period                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/change-claiming-tax-relief-pension/:period                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/tax-relief-overseas-pension-value/:period                   controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/tax-relief-overseas-pension-value/:period                   controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/change-tax-relief-overseas-pension-value/:period                         controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/change-tax-relief-overseas-pension-value/:period                         controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/tax-relief-overseas-pension-value/:period                   controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/tax-relief-overseas-pension-value/:period                   controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/change-tax-relief-overseas-pension-value/:period                         controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/change-tax-relief-overseas-pension-value/:period                         controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/any-tax-relief-overseas-pension/:period                         controllers.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/any-tax-relief-overseas-pension/:period                         controllers.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/any-tax-relief-overseas-pension/:period                   controllers.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/any-tax-relief-overseas-pension/:period                   controllers.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/non-domicile/:period                        controllers.annualallowance.taxyear.AreYouNonDomController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/non-domicile/:period                        controllers.annualallowance.taxyear.AreYouNonDomController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/change-non-domicile/:period                   controllers.annualallowance.taxyear.AreYouNonDomController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/change-non-domicile/:period                   controllers.annualallowance.taxyear.AreYouNonDomController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/personal-allowance/:period                        controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/personal-allowance/:period                         controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/change-personal-allowance/:period                   controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/change-personal-allowance/:period                   controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
