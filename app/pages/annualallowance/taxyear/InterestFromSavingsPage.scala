@@ -17,10 +17,12 @@
 package pages.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, InterestFromSavingsController}
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
-import play.api.mvc.Call
+import play.api.mvc.{Call, Result}
+
+import scala.concurrent.Future
 
 case class InterestFromSavingsPage(period: Period) extends QuestionPage[BigInt] {
 
@@ -30,7 +32,7 @@ case class InterestFromSavingsPage(period: Period) extends QuestionPage[BigInt] 
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(InterestFromSavingsPage(period)) match {
-      case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_) => is2016Period(answers, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -39,4 +41,56 @@ case class InterestFromSavingsPage(period: Period) extends QuestionPage[BigInt] 
       case Some(_) => CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  private def is2016Period(answers: UserAnswers, period: Period): Call =
+    if (period == Period._2016) {
+      controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+    } else {
+      thresholdAnswer(answers, period)
+    }
+
+  private def thresholdAnswer(answers: UserAnswers, period: Period): Call =
+    answers.get(ThresholdIncomePage(period)) match {
+      case Some(ThresholdIncome.Yes)        =>
+        controllers.annualallowance.taxyear.routes.AdjustedIncomeController.onPageLoad(NormalMode, period)
+      case Some(ThresholdIncome.No)         =>
+        controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+      case Some(ThresholdIncome.IDoNotKnow) => thresholdStatus(answers, period)
+      case _                                => controllers.routes.JourneyRecoveryController.onPageLoad()
+    }
+
+  private def thresholdStatus(answers: UserAnswers, period: Period): Call =
+    if (period == Period._2016 || period == Period._2017 || period == Period._2018 || period == Period._2019) {
+      thresholdRoutingPre2020(answers, period)
+    } else {
+      thresholdRoutingPost2019(answers, period)
+    }
+
+  private def thresholdRoutingPre2020(answers: UserAnswers, period: Period) =
+    calculateThresholdStatus(answers, period) match {
+      case a if a > 110000 =>
+        controllers.annualallowance.taxyear.routes.AdjustedIncomeController.onPageLoad(NormalMode, period)
+      case b if b < 110000 =>
+        controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+      case _               => controllers.routes.JourneyRecoveryController.onPageLoad()
+    }
+
+  private def thresholdRoutingPost2019(answers: UserAnswers, period: Period) =
+    calculateThresholdStatus(answers, period) match {
+      case a if a > 200000 =>
+        controllers.annualallowance.taxyear.routes.AdjustedIncomeController.onPageLoad(NormalMode, period)
+      case b if b < 200000 =>
+        controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+      case _               => controllers.routes.JourneyRecoveryController.onPageLoad()
+    }
+
+  private def calculateThresholdStatus(answers: UserAnswers, period: Period): BigInt =
+    answers.get(TotalIncomePage(period)).get - answers.get(TaxReliefPage(period)).get +
+      answers.get(AmountSalarySacrificeArrangementsPage(period)).get + answers
+        .get(AmountFlexibleRemunerationArrangementsPage(period))
+        .get -
+      answers.get(HowMuchContributionPensionSchemePage(period)).get - answers
+        .get(LumpSumDeathBenefitsValuePage(period))
+        .get
+
 }
