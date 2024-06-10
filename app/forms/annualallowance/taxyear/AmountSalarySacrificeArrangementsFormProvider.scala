@@ -26,11 +26,11 @@ class AmountSalarySacrificeArrangementsFormProvider @Inject() extends Mappings {
 
   def apply(startEndDate: String)(implicit messages: Messages): Form[BigInt] =
     Form(
-      "value" -> bigInt(messages(
-        "amountSalarySacrificeArrangements.error.required", startEndDate,
-        "amountSalarySacrificeArrangements.error.wholeNumber",
-        "amountSalarySacrificeArrangements.error.nonNumeric", startEndDate
-      ))
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "amountSalarySacrificeArrangements.error.outOfRange"))
+      "value" -> bigInt(
+        messages("amountSalarySacrificeArrangements.error.required", startEndDate),
+        messages("amountSalarySacrificeArrangements.error.wholeNumber", startEndDate),
+        messages("amountSalarySacrificeArrangements.error.nonNumeric", startEndDate)
+      )
+        .verifying(inRange[BigInt](0, BigInt("999999999"), messages("amountSalarySacrificeArrangements.error.outOfRange",startEndDate)))
     )
 }
