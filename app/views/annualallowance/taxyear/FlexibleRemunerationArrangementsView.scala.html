@@ -25,10 +25,10 @@
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-<p class="govuk-body">@messages("flexibleRemunerationArrangements.message1")</p>
-<p class="govuk-body">@messages("flexibleRemunerationArrangements.message2")</p>
-<p class="govuk-body">@messages("flexibleRemunerationArrangements.message3")</p>
-<h2 class="govuk-heading-m">@messages("flexibleRemunerationArrangements.heading") @startEndDate</h2>
+    <p class="govuk-body">@messages("flexibleRemunerationArrangements.message1")</p>
+    <p class="govuk-body">@messages("flexibleRemunerationArrangements.message2")</p>
+    <p class="govuk-body">@messages("flexibleRemunerationArrangements.message3")</p>
+    <h2 class="govuk-heading-m">@messages("flexibleRemunerationArrangements.heading") @startEndDate</h2>
 }
 
 @layout(pageTitle = title(form, messages("flexibleRemunerationArrangements.title", startEndDate))) {

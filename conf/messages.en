@@ -1150,11 +1150,12 @@ amountSalarySacrificeArrangements.error.wholeNumber = Enter your Salary sacrific
 amountSalarySacrificeArrangements.error.outOfRange = Salary sacrifice amount must be between {0} and {1}
 amountSalarySacrificeArrangements.change.hidden = Salary sacrifice amount
 
-amountFlexibleRemunerationArrangements.title = Flexi remuneration amount
-amountFlexibleRemunerationArrangements.heading = Flexi remuneration amount
-amountFlexibleRemunerationArrangements.checkYourAnswersLabel = Flexi remuneration amount
+amountFlexibleRemunerationArrangements.title = What was the amount of your salary sacrifice arrangements from {0}
+amountFlexibleRemunerationArrangements.heading = What was the amount of your salary sacrifice arrangements from
+amountFlexibleRemunerationArrangements.caption = Annual allowance threshold income
+amountFlexibleRemunerationArrangements.checkYourAnswersLabel = What was the amount of your salary sacrifice arrangements from
 amountFlexibleRemunerationArrangements.error.nonNumeric = Enter your Flexi remuneration amount using numbers
-amountFlexibleRemunerationArrangements.error.required = Enter your Flexi remuneration amount
+amountFlexibleRemunerationArrangements.error.required = Enter the amount of your salary sacrifice arrangements from {0}
 amountFlexibleRemunerationArrangements.error.wholeNumber = Enter your Flexi remuneration amount using whole numbers
 amountFlexibleRemunerationArrangements.error.outOfRange = Flexi remuneration amount must be between {0} and {1}
 amountFlexibleRemunerationArrangements.change.hidden = Flexi remuneration amount
