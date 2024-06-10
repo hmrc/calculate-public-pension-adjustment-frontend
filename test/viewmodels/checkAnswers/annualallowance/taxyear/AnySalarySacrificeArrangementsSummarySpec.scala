@@ -29,6 +29,7 @@ import viewmodels.implicits._
 class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
+  val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
 
   "row" - {
     "when Yes is selected, return the summary row" in {
@@ -39,7 +40,7 @@ class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matcher
           true
         )
         .get
-      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) shouldBe Some(
+      AnySalarySacrificeArrangementsSummary.row(userAnswers, period, startEndDate) shouldBe Some(
         SummaryListRowViewModel(
           key = "anySalarySacrificeArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +63,7 @@ class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matcher
           false
         )
         .get
-      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) shouldBe Some(
+      AnySalarySacrificeArrangementsSummary.row(userAnswers, period, startEndDate) shouldBe Some(
         SummaryListRowViewModel(
           key = "anySalarySacrificeArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +81,7 @@ class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matcher
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) shouldBe None
+      AnySalarySacrificeArrangementsSummary.row(userAnswers, period, startEndDate) shouldBe None
     }
   }
 

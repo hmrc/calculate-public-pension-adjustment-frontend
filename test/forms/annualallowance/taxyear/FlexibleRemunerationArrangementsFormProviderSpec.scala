@@ -17,14 +17,18 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
+import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.data.FormError
+import play.api.i18n.Messages
 
 class FlexibleRemunerationArrangementsFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "flexibleRemunerationArrangements.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new FlexibleRemunerationArrangementsFormProvider()()
+  val messages             = mock[Messages]
+  val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
+  val form = new FlexibleRemunerationArrangementsFormProvider()(startEndDate)(messages)
 
   ".value" - {
 

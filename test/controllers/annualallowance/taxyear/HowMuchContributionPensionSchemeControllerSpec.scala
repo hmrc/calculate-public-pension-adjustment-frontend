@@ -23,6 +23,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.taxyear.HowMuchContributionPensionSchemePage
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -35,7 +36,9 @@ import scala.concurrent.Future
 class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new HowMuchContributionPensionSchemeFormProvider()
-  val form         = formProvider()
+  val messages             = mock[Messages]
+  val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
+  val form         = formProvider(startEndDate)(messages)
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -60,7 +63,7 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
         val view = application.injector.instanceOf[HowMuchContributionPensionSchemeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(request, messages(application)).toString
       }
     }
 
@@ -79,7 +82,7 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -124,7 +127,7 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString

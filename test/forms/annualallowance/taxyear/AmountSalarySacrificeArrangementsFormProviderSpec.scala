@@ -17,11 +17,15 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
+import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.data.FormError
+import play.api.i18n.Messages
 
 class AmountSalarySacrificeArrangementsFormProviderSpec extends IntFieldBehaviours {
 
-  val form = new AmountSalarySacrificeArrangementsFormProvider()()
+  val messages             = mock[Messages]
+  val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
+  val form = new AmountSalarySacrificeArrangementsFormProvider()(startEndDate)(messages)
 
   ".value" - {
 
