@@ -1166,10 +1166,10 @@ howMuchContributionPensionScheme.caption = Annual allowance
 howMuchContributionPensionScheme.message1 = You can find this information in your P60 document for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
 howMuchContributionPensionScheme.hint = Amounts must be rounded down to the nearest pound, for example 2300
 howMuchContributionPensionScheme.checkYourAnswersLabel = The amount you contributed from {0}
-howMuchContributionPensionScheme.error.nonNumeric = Enter your Pre-Relief pension contributions using numbers
+howMuchContributionPensionScheme.error.nonNumeric = The amount you contributed from {0} must only include numbers 0 to 9
 howMuchContributionPensionScheme.error.required = Enter the amount you contributed to from {0}
-howMuchContributionPensionScheme.error.wholeNumber = Enter your Pre-Relief pension contributions using whole numbers
-howMuchContributionPensionScheme.error.outOfRange = Pre-Relief pension contributions must be between {0} and {1}
+howMuchContributionPensionScheme.error.wholeNumber = The amount you contributed from {0} must be a whole number
+howMuchContributionPensionScheme.error.outOfRange = The amount you contributed from {0} must be between £1 and £999,999,999
 howMuchContributionPensionScheme.change.hidden = Pre-Relief pension contributions
 
 anySalarySacrificeArrangements.title = Did you have any salary sacrifice arrangements from {0}
