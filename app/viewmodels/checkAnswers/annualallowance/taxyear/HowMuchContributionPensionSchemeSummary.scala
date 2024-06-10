@@ -25,10 +25,10 @@ import viewmodels.implicits._
 
 object HowMuchContributionPensionSchemeSummary {
 
-  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, period: Period, startEndDate : String)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(HowMuchContributionPensionSchemePage(period)).map { answer =>
       SummaryListRowViewModel(
-        key = "howMuchContributionPensionScheme.checkYourAnswersLabel",
+        key = messages("howMuchContributionPensionScheme.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(answer.toString),
         actions = Seq(
           ActionItemViewModel(

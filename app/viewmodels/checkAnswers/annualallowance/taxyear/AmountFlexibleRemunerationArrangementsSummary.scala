@@ -25,10 +25,10 @@ import viewmodels.implicits._
 
 object AmountFlexibleRemunerationArrangementsSummary {
 
-  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, period: Period, startEndDate: String)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(AmountFlexibleRemunerationArrangementsPage(period)).map { answer =>
       SummaryListRowViewModel(
-        key = "amountFlexibleRemunerationArrangements.checkYourAnswersLabel",
+        key = messages("amountFlexibleRemunerationArrangements.checkYourAnswersLabel",startEndDate),
         value = ValueViewModel(answer.toString),
         actions = Seq(
           ActionItemViewModel(

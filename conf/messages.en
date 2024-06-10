@@ -1142,7 +1142,7 @@ taxRelief.change.hidden = your tax relief
 
 amountSalarySacrificeArrangements.title = What was the amount of your salary sacrifice arrangements from {0}
 amountSalarySacrificeArrangements.heading = What was the amount of your salary sacrifice or flexible remuneration arrangements from
-amountSalarySacrificeArrangements.checkYourAnswersLabel = What was the amount of your salary sacrifice arrangements from
+amountSalarySacrificeArrangements.checkYourAnswersLabel = What was the amount of your salary sacrifice arrangements from {0}
 amountSalarySacrificeArrangements.hint = Amount must be rounded down to the nearest pound, for example 2300
 amountSalarySacrificeArrangements.error.nonNumeric = The amount of your salary sacrifice arrangements from {0} must only include numbers 0 to 9
 amountSalarySacrificeArrangements.error.required = Enter your Salary sacrifice amount from {0}
@@ -1178,7 +1178,7 @@ anySalarySacrificeArrangements.caption = Annual allowance threshold income
 anySalarySacrificeArrangements.message1 = A salary sacrifice arrangement is an agreement to reduce your cash pay, usually in return for a non-cash benefit.
 anySalarySacrificeArrangements.message2 = An example would be if you and your employer will agree to reduce your salary. In return you receive a bike that you can use to cycle to work.
 anySalarySacrificeArrangements.message3 = You can only include any relevant salary sacrifice arrangements made after 8 July 2015.
-anySalarySacrificeArrangements.checkYourAnswersLabel = Salary sacrifice
+anySalarySacrificeArrangements.checkYourAnswersLabel = Did you have any salary sacrifice arrangements from {0}
 anySalarySacrificeArrangements.error.required = Select yes if you had any salary sacrifice arrangements from {0}
 anySalarySacrificeArrangements.change.hidden = Salary sacrifice
 
