@@ -47,7 +47,7 @@ class TotalIncomePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/threshold-income/any-salary-sacrifice-arrangements/2017")
       }
 
-      "to HowMuchContributionPensionScheme page when not in 15/16 and yes is selected on threshold income" in {
+      "to claiming-tax-relief-pension page when not in 15/16 and yes is selected on threshold income" in {
         val ua = emptyUserAnswers
           .set(ThresholdIncomePage(Period._2017), ThresholdIncome.Yes)
           .success
@@ -61,7 +61,24 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/threshold-income/how-much-contribution/2017")
+        checkNavigation(result, "/annual-allowance/adjusted-income/claiming-tax-relief-pension/2017")
+      }
+
+      "to claiming-tax-relief-pension page when not in 15/16 and no is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.No)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+
+        val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/adjusted-income/claiming-tax-relief-pension/2017")
       }
     }
 
@@ -83,7 +100,7 @@ class TotalIncomePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/threshold-income/change-any-salary-sacrifice-arrangements/2017")
       }
 
-      "to HowMuchContributionPensionScheme page when not in 15/16 and yes is selected on threshold income" in {
+      "to claiming-tax-relief-pension page when not in 15/16 and yes is selected on threshold income" in {
         val ua = emptyUserAnswers
           .set(ThresholdIncomePage(Period._2017), ThresholdIncome.Yes)
           .success
@@ -97,7 +114,24 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/threshold-income/change-how-much-contribution/2017")
+        checkNavigation(result, "/annual-allowance/adjusted-income/change-claiming-tax-relief-pension/2017")
+      }
+
+      "to claiming-tax-relief-pension page when not in 15/16 and no is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.No)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+
+        val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/adjusted-income/change-claiming-tax-relief-pension/2017")
       }
     }
   }

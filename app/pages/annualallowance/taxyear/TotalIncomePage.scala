@@ -35,7 +35,7 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
             .onPageLoad(NormalMode, period)
         case Some(ThresholdIncome.Yes)        =>
           controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
-        case Some(ThresholdIncome.No)        =>
+        case Some(ThresholdIncome.No)         =>
           controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
         case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
@@ -48,10 +48,10 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
       answers.get(ThresholdIncomePage(period)) match {
         case Some(ThresholdIncome.IDoNotKnow) =>
           controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
-            .onPageLoad(NormalMode, period)
+            .onPageLoad(CheckMode, period)
         case Some(ThresholdIncome.Yes)        =>
           controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode, period)
-        case Some(ThresholdIncome.No)        =>
+        case Some(ThresholdIncome.No)         =>
           controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode, period)
         case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }

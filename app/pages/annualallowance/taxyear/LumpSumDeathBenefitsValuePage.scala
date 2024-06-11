@@ -33,8 +33,9 @@ case class LumpSumDeathBenefitsValuePage(period: Period) extends QuestionPage[Bi
         case Some(ThresholdIncome.IDoNotKnow) =>
           controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
         case Some(ThresholdIncome.Yes)        =>
-          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController.onPageLoad(NormalMode, period)
-        case Some(ThresholdIncome.No)        =>
+          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
+            .onPageLoad(NormalMode, period)
+        case Some(ThresholdIncome.No)         =>
           controllers.routes.JourneyRecoveryController.onPageLoad(None)
         case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
@@ -48,8 +49,9 @@ case class LumpSumDeathBenefitsValuePage(period: Period) extends QuestionPage[Bi
         case Some(ThresholdIncome.IDoNotKnow) =>
           controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode, period)
         case Some(ThresholdIncome.Yes)        =>
-          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController.onPageLoad(CheckMode, period)
-        case Some(ThresholdIncome.No)        =>
+          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
+            .onPageLoad(CheckMode, period)
+        case Some(ThresholdIncome.No)         =>
           controllers.routes.JourneyRecoveryController.onPageLoad(None)
         case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
