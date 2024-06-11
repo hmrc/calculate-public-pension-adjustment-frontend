@@ -18,14 +18,44 @@ package services
 
 import connectors.CalculateBackendConnector
 import logging.Logging
-import models.Done
+import models.{Done, Period, TaxFreeInterestRequest, UserAnswers, WhichYearsScottishTaxpayer}
+import pages.annualallowance.preaaquestions.WhichYearsScottishTaxpayerPage
+import pages.annualallowance.taxyear.TotalIncomePage
+import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
 import scala.concurrent.Future
 
 class CalculateBackendService @Inject() (connector: CalculateBackendConnector) extends Logging {
+
+  def findTaxFreeInterestValue(userAnswers: UserAnswers, period: Period)(implicit headerCarrier: HeaderCarrier): Future[Int] = {
+    connector.findTaxFreeInterestValue(buildTaxFreeInterestRequest(userAnswers, period))
+  }
+
   def updateUserAnswersFromCalcUA(id: String)(implicit hc: HeaderCarrier): Future[Done] =
     connector.updateUserAnswersFromCalcUA(id)
 
+  def buildTaxFreeInterestRequest(userAnswers: UserAnswers, period: Period): TaxFreeInterestRequest = {
+
+    val income = userAnswers.get(
+      TotalIncomePage(period)
+    ).get.toInt
+
+    val scottishTaxYears: List[Period] = userAnswers.data.fields
+      .find(_._1 == WhichYearsScottishTaxpayerPage.toString)
+      .fold {
+        List.empty[Period]
+      } {
+        _._2.as[List[String]] flatMap { sYear =>
+          Period.fromString(sYear)
+        }
+      }
+
+    TaxFreeInterestRequest(
+      period,
+      income,
+      scottishTaxYears
+    )
+  }
 }

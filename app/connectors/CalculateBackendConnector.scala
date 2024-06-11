@@ -17,9 +17,10 @@
 package connectors
 
 import config.Service
-import models.Done
+import models.{Done, TaxFreeInterestRequest}
 import play.api.{Configuration, Logging}
 import play.api.http.Status.{NO_CONTENT, OK}
+import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
@@ -28,10 +29,34 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class CalculateBackendConnector @Inject() (config: Configuration, httpClient: HttpClientV2)(implicit
-  ec: ExecutionContext
+                                                                                            ec: ExecutionContext
 ) extends Logging {
 
   private val baseUrl = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
+
+  def findTaxFreeInterestValue(
+                                taxFreeInterestRequest: TaxFreeInterestRequest
+                              )(implicit hc: HeaderCarrier): Future[Int] = {
+    httpClient
+      .post(
+        url"$baseUrl/calculate-public-pension-adjustment/tax-free-interest-value"
+      )
+      .withBody(Json.toJson(taxFreeInterestRequest))
+      .execute[HttpResponse]
+      .flatMap { response =>
+        response.status match {
+          case OK =>
+            println(s"=========MIKE==============${response.body.toInt}===============MIKE=================")
+            Future.successful(response.body.toInt)
+          case _ => Future.failed(
+            UpstreamErrorResponse(
+              "Unexpected response from calculate-public-pension-adjustment/tax-free-interest-value",
+              response.status
+            )
+          )
+        }
+      }
+  }
 
   def updateUserAnswersFromCalcUA(id: String)(implicit hc: HeaderCarrier): Future[Done] =
     httpClient

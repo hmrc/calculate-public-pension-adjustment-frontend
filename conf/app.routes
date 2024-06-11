@@ -457,6 +457,7 @@ GET        /annual-allowance/interest-from-savings/:period                 contr
 POST       /annual-allowance/interest-from-savings/:period                  controllers.annualallowance.taxyear.InterestFromSavingsController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/change-interest-from-savings/:period                        controllers.annualallowance.taxyear.InterestFromSavingsController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/change-interest-from-savings/:period                        controllers.annualallowance.taxyear.InterestFromSavingsController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET        /annual-allowance/tax-free-interest-value/:period                                     controllers.annualallowance.taxyear.InterestFromSavingsController.findTaxFreeInterestValue(period: Period)
 
 GET        /annual-allowance/adjusted-income/know-adjusted-amount/:period                        controllers.annualallowance.taxyear.KnowAdjustedAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
 POST       /annual-allowance/adjusted-income/know-adjusted-amount/:period                        controllers.annualallowance.taxyear.KnowAdjustedAmountController.onSubmit(mode: Mode = NormalMode, period:Period)

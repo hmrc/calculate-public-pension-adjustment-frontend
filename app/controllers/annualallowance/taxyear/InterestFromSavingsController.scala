@@ -21,8 +21,9 @@ import forms.annualallowance.taxyear.InterestFromSavingsFormProvider
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.InterestFromSavingsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.UserDataService
+import services.{CalculateBackendService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.InterestFromSavingsView
 
@@ -34,6 +35,7 @@ class InterestFromSavingsController @Inject() (
   userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
+  calculateBackendService: CalculateBackendService,
   requireData: DataRequiredAction,
   formProvider: InterestFromSavingsFormProvider,
   val controllerComponents: MessagesControllerComponents,
@@ -45,6 +47,8 @@ class InterestFromSavingsController @Inject() (
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val form = formProvider(period)
+
+      println(s"===================${findTaxFreeInterestValue(period)}====================")
 
       val preparedForm = request.userAnswers.get(InterestFromSavingsPage(period)) match {
         case None        => form
@@ -69,4 +73,14 @@ class InterestFromSavingsController @Inject() (
             } yield Redirect(InterestFromSavingsPage(period).navigate(mode, updatedAnswers))
         )
   }
+
+
+  def findTaxFreeInterestValue(period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+   implicit request =>
+     calculateBackendService.findTaxFreeInterestValue(request.userAnswers, period)
+
+     }
+
+
+
 }
