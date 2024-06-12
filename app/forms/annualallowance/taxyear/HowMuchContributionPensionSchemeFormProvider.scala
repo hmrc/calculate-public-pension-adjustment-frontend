@@ -31,6 +31,12 @@ class HowMuchContributionPensionSchemeFormProvider @Inject() extends Mappings {
         messages("howMuchContributionPensionScheme.error.wholeNumber", startEndDate),
         messages("howMuchContributionPensionScheme.error.nonNumeric", startEndDate)
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), messages("howMuchContributionPensionScheme.error.outOfRange", startEndDate)))
+        .verifying(
+          inRange[BigInt](
+            0,
+            BigInt("999999999"),
+            messages("howMuchContributionPensionScheme.error.outOfRange", startEndDate)
+          )
+        )
     )
 }

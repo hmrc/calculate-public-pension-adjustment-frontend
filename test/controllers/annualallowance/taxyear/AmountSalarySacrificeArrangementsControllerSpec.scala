@@ -36,10 +36,10 @@ import scala.concurrent.Future
 
 class AmountSalarySacrificeArrangementsControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new AmountSalarySacrificeArrangementsFormProvider()
+  val formProvider         = new AmountSalarySacrificeArrangementsFormProvider()
   val messages             = mock[Messages]
   val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
-  val form         = formProvider(startEndDate)(messages)
+  val form                 = formProvider(startEndDate)(messages)
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -64,7 +64,10 @@ class AmountSalarySacrificeArrangementsControllerSpec extends SpecBase with Mock
         val view = application.injector.instanceOf[AmountSalarySacrificeArrangementsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

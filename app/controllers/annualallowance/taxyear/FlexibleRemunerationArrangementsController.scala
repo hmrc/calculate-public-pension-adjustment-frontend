@@ -46,8 +46,6 @@ class FlexibleRemunerationArrangementsController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-
-
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val form = formProvider(startEndDate(period))

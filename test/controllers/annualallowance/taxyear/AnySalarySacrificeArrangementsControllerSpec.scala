@@ -37,10 +37,10 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new AnySalarySacrificeArrangementsFormProvider()
+  val formProvider         = new AnySalarySacrificeArrangementsFormProvider()
   val messages             = mock[Messages]
   val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
-  val form         = formProvider(startEndDate)(messages)
+  val form                 = formProvider(startEndDate)(messages)
 
   lazy val anySalarySacrificeArrangementsRoute =
     controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
@@ -61,7 +61,10 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
         val view = application.injector.instanceOf[AnySalarySacrificeArrangementsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

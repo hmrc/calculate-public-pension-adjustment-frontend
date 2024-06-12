@@ -26,7 +26,9 @@ import viewmodels.implicits._
 
 object FlexibleRemunerationArrangementsSummary {
 
-  def row(answers: UserAnswers, period: Period, startEndDate: String)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, period: Period, startEndDate: String)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] =
     answers.get(FlexibleRemunerationArrangementsPage(period)).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 

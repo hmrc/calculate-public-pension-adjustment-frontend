@@ -31,6 +31,8 @@ class AmountFlexibleRemunerationArrangementsFormProvider @Inject() extends Mappi
         messages("amountFlexibleRemunerationArrangements.error.wholeNumber", startEndDate),
         messages("amountFlexibleRemunerationArrangements.error.nonNumeric", startEndDate)
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), messages("amountFlexibleRemunerationArrangements.error.outOfRange")))
+        .verifying(
+          inRange[BigInt](0, BigInt("999999999"), messages("amountFlexibleRemunerationArrangements.error.outOfRange"))
+        )
     )
 }

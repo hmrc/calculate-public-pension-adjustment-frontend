@@ -28,7 +28,7 @@ class AnySalarySacrificeArrangementsFormProviderSpec extends BooleanFieldBehavio
 
   val messages             = mock[Messages]
   val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
-  val form = new AnySalarySacrificeArrangementsFormProvider()(startEndDate)(messages)
+  val form                 = new AnySalarySacrificeArrangementsFormProvider()(startEndDate)(messages)
 
   ".value" - {
 

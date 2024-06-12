@@ -31,6 +31,12 @@ class AmountSalarySacrificeArrangementsFormProvider @Inject() extends Mappings {
         messages("amountSalarySacrificeArrangements.error.wholeNumber", startEndDate),
         messages("amountSalarySacrificeArrangements.error.nonNumeric", startEndDate)
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), messages("amountSalarySacrificeArrangements.error.outOfRange",startEndDate)))
+        .verifying(
+          inRange[BigInt](
+            0,
+            BigInt("999999999"),
+            messages("amountSalarySacrificeArrangements.error.outOfRange", startEndDate)
+          )
+        )
     )
 }

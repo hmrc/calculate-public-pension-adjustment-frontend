@@ -29,7 +29,7 @@ import viewmodels.implicits._
 class FlexibleRemunerationArrangementsSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
-  val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
+  val startEndDate: String                = "Between 6th April 2018 to 5th April 2019"
 
   "row" - {
     "when Yes is selected, return the summary row" in {
