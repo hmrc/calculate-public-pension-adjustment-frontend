@@ -1147,7 +1147,7 @@ amountSalarySacrificeArrangements.hint = Amount must be rounded down to the near
 amountSalarySacrificeArrangements.error.nonNumeric = The amount of your salary sacrifice arrangements from {0} must only include numbers 0 to 9
 amountSalarySacrificeArrangements.error.required = Enter your Salary sacrifice amount from {0}
 amountSalarySacrificeArrangements.error.wholeNumber = Enter your Salary sacrifice amount using whole numbers {0}
-amountSalarySacrificeArrangements.error.outOfRange = The amount of your salary sacrifice arrangements from {0} must be between £1 and £999,999,999
+amountSalarySacrificeArrangements.error.outOfRange = The amount of your salary sacrifice arrangements from {0} must be between £0 and £999,999,999
 amountSalarySacrificeArrangements.change.hidden = Salary sacrifice amount
 
 amountFlexibleRemunerationArrangements.title = What was the amount of your flexible remuneration arrangements from {0}
@@ -1157,7 +1157,7 @@ amountFlexibleRemunerationArrangements.checkYourAnswersLabel = What was the amou
 amountFlexibleRemunerationArrangements.error.nonNumeric = The amount of your flexible remuneration arrangements from {0} must only include numbers 0 to 9
 amountFlexibleRemunerationArrangements.error.required = Enter the amount of your flexible remuneration arrangements from {0}
 amountFlexibleRemunerationArrangements.error.wholeNumber = Enter your Flexi remuneration amount using whole numbers
-amountFlexibleRemunerationArrangements.error.outOfRange = The amount of your flexible remuneration arrangements from {0} must be between £1 and £999,999,999
+amountFlexibleRemunerationArrangements.error.outOfRange = The amount of your flexible remuneration arrangements from {0} must be between £0 and £999,999,999
 amountFlexibleRemunerationArrangements.change.hidden = Flexi remuneration amount
 
 howMuchContributionPensionScheme.title = How much did you contribute in total to all of your pension schemes from {0}

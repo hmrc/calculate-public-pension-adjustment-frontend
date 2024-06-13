@@ -35,10 +35,7 @@ import scala.concurrent.Future
 
 class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider         = new HowMuchContributionPensionSchemeFormProvider()
-  val messages             = mock[Messages]
-  val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
-  val form                 = formProvider(startEndDate)(messages)
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -48,6 +45,13 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
     controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
       .onPageLoad(NormalMode, Period._2018)
       .url
+
+  private def formWithMockMessages = {
+    val messages = mock[Messages]
+
+    val formProvider = new HowMuchContributionPensionSchemeFormProvider()
+    formProvider("")(messages)
+  }
 
   "HowMuchContributionPensionScheme Controller" - {
 
@@ -63,7 +67,7 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
         val view = application.injector.instanceOf[HowMuchContributionPensionSchemeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+        contentAsString(result) mustEqual view(formWithMockMessages, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -85,7 +89,7 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
+        contentAsString(result) mustEqual view(formWithMockMessages.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -123,7 +127,7 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
           FakeRequest(POST, howMuchContributionPensionSchemeRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = formWithMockMessages.bind(Map("value" -> "invalid value"))
 
         val view = application.injector.instanceOf[HowMuchContributionPensionSchemeView]
 

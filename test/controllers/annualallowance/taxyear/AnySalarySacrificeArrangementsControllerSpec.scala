@@ -37,16 +37,19 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider         = new AnySalarySacrificeArrangementsFormProvider()
-  val messages             = mock[Messages]
-  val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
-  val form                 = formProvider(startEndDate)(messages)
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
 
   lazy val anySalarySacrificeArrangementsRoute =
     controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
       .onPageLoad(NormalMode, Period._2018)
       .url
 
+  private def formWithMockMessages = {
+    val messages = mock[Messages]
+
+    val formProvider = new AnySalarySacrificeArrangementsFormProvider()
+    formProvider("")(messages)
+  }
   "AnySalarySacrificeArrangements Controller" - {
 
     "must return OK and the correct view for a GET" in {
@@ -61,7 +64,7 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
         val view = application.injector.instanceOf[AnySalarySacrificeArrangementsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+        contentAsString(result) mustEqual view(formWithMockMessages, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -83,7 +86,7 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, startEndDate)(
+        contentAsString(result) mustEqual view(formWithMockMessages.fill(true), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -121,7 +124,7 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
           FakeRequest(POST, anySalarySacrificeArrangementsRoute)
             .withFormUrlEncodedBody(("value", ""))
 
-        val boundForm = form.bind(Map("value" -> ""))
+        val boundForm = formWithMockMessages.bind(Map("value" -> ""))
 
         val view = application.injector.instanceOf[AnySalarySacrificeArrangementsView]
 

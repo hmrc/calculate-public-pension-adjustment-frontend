@@ -18,7 +18,7 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import controllers.routes
-import forms.annualallowance.taxyear.AmountSalarySacrificeArrangementsFormProvider
+import forms.annualallowance.taxyear.{AmountSalarySacrificeArrangementsFormProvider, HowMuchContributionPensionSchemeFormProvider}
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -36,10 +36,7 @@ import scala.concurrent.Future
 
 class AmountSalarySacrificeArrangementsControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider         = new AmountSalarySacrificeArrangementsFormProvider()
-  val messages             = mock[Messages]
-  val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
-  val form                 = formProvider(startEndDate)(messages)
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -49,6 +46,13 @@ class AmountSalarySacrificeArrangementsControllerSpec extends SpecBase with Mock
     controllers.annualallowance.taxyear.routes.AmountSalarySacrificeArrangementsController
       .onPageLoad(NormalMode, Period._2018)
       .url
+
+  private def formWithMockMessages = {
+    val messages = mock[Messages]
+
+    val formProvider = new AmountSalarySacrificeArrangementsFormProvider()
+    formProvider("")(messages)
+  }
 
   "AmountSalarySacrificeArrangements Controller" - {
 
@@ -64,7 +68,7 @@ class AmountSalarySacrificeArrangementsControllerSpec extends SpecBase with Mock
         val view = application.injector.instanceOf[AmountSalarySacrificeArrangementsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+        contentAsString(result) mustEqual view(formWithMockMessages, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -86,7 +90,7 @@ class AmountSalarySacrificeArrangementsControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
+        contentAsString(result) mustEqual view(formWithMockMessages.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -124,7 +128,7 @@ class AmountSalarySacrificeArrangementsControllerSpec extends SpecBase with Mock
           FakeRequest(POST, amountSalarySacrificeArrangementsRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = formWithMockMessages.bind(Map("value" -> "invalid value"))
 
         val view = application.injector.instanceOf[AmountSalarySacrificeArrangementsView]
 

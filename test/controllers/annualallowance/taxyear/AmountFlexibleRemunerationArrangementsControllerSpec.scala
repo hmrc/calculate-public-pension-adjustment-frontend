@@ -47,6 +47,7 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
 
   val validAnswer = BigInt(100)
 
+
   lazy val amountFlexibleRemunerationArrangementsRoute =
     controllers.annualallowance.taxyear.routes.AmountFlexibleRemunerationArrangementsController
       .onPageLoad(NormalMode, Period._2018)

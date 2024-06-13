@@ -27,9 +27,9 @@ class HowMuchContributionPensionSchemeFormProvider @Inject() extends Mappings {
   def apply(startEndDate: String)(implicit messages: Messages): Form[BigInt] =
     Form(
       "value" -> bigInt(
-        messages("howMuchContributionPensionScheme.error.required", startEndDate),
-        messages("howMuchContributionPensionScheme.error.wholeNumber", startEndDate),
-        messages("howMuchContributionPensionScheme.error.nonNumeric", startEndDate)
+        messages(Seq("howMuchContributionPensionScheme.error.required",
+          "howMuchContributionPensionScheme.error.wholeNumber",
+          "howMuchContributionPensionScheme.error.nonNumeric"), startEndDate)
       )
         .verifying(
           inRange[BigInt](

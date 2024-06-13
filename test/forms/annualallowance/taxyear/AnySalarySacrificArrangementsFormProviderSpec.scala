@@ -17,6 +17,9 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
+import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchersSugar.eqTo
+import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.data.FormError
 import play.api.i18n.Messages
@@ -41,9 +44,17 @@ class AnySalarySacrificeArrangementsFormProviderSpec extends BooleanFieldBehavio
     )
 
     behave like mandatoryField(
-      form,
+      formWithMockMessages,
       fieldName,
       requiredError = FormError(fieldName, requiredKey)
     )
+  }
+
+  def formWithMockMessages = {
+    val messages = mock[Messages]
+    when(messages.apply(eqTo("anySalarySacrificeArrangements.error.required"), any())).thenReturn("error message")
+
+    val formProvider = new HowMuchAAChargeSchemePaidFormProvider()
+    formProvider("")(messages)
   }
 }
