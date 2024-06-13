@@ -34,9 +34,6 @@ trait PageGenerators {
   implicit lazy val arbitraryMarriageAllowancePage: Arbitrary[MarriageAllowancePage.type] =
     Arbitrary(MarriageAllowancePage)
 
-  implicit lazy val arbitraryInterestFromSavingsPage: Arbitrary[InterestFromSavingsPage.type] =
-    Arbitrary(InterestFromSavingsPage)
-
   implicit lazy val arbitraryClaimingTaxReliefPensionPage: Arbitrary[ClaimingTaxReliefPensionPage.type] =
     Arbitrary(ClaimingTaxReliefPensionPage)
 
