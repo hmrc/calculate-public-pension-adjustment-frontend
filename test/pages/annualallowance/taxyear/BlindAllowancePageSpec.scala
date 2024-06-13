@@ -40,7 +40,7 @@ class BlindAllowancePageSpec extends PageBehaviours {
 
         val result = BlindAllowancePage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/blind-persons-allowance-amount/2018")
+        checkNavigation(result, "/annual-allowance/2018/blind-persons-allowance-amount")
       }
 
       "must redirect to CYA page when false" in {
@@ -68,7 +68,7 @@ class BlindAllowancePageSpec extends PageBehaviours {
 
         val result = BlindAllowancePage(Period._2018).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/change-blind-persons-allowance-amount/2018")
+        checkNavigation(result, "/annual-allowance/2018/change-blind-persons-allowance-amount")
       }
 
       "must redirect to CYA page when false" in {

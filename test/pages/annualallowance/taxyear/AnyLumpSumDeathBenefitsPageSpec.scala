@@ -130,6 +130,9 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
         )
         .success
         .value
+        .set(ThresholdIncomePage(Period._2017), ThresholdIncome.IDoNotKnow)
+        .success
+        .value
       val result = AnyLumpSumDeathBenefitsPage(Period._2017).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief")

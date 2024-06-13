@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class KnowAdjustedAmountPageSpec extends PageBehaviours {
@@ -44,17 +44,64 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/adjusted-income")
       }
 
-      "to ClaimingTaxReliefPensionNotAdjustedIncome when answered false" in {
-        val ua     = emptyUserAnswers
+      "to ClaimingTaxReliefPensionNotAdjustedIncome when false, when threshold income is idk" in {
+        val ua = emptyUserAnswers
           .set(
             KnowAdjustedAmountPage(Period._2018),
             false
           )
           .success
           .value
+          .set(
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.IDoNotKnow
+          )
+          .success
+          .value
+
         val result = KnowAdjustedAmountPage(Period._2018).navigate(NormalMode, ua).url
 
         checkNavigation(result, "/annual-allowance/claiming-tax-relief-pension/2018")
+      }
+
+      "to AnyLumpSumDeathBenefitsController when false, when threshold income is yes" in {
+        val ua = emptyUserAnswers
+          .set(
+            KnowAdjustedAmountPage(Period._2018),
+            false
+          )
+          .success
+          .value
+          .set(
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.Yes
+          )
+          .success
+          .value
+
+        val result = KnowAdjustedAmountPage(Period._2018).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2018/how-much-contribution")
+      }
+
+      "to JourneyRecovery when false, when threshold income is anything else" in {
+        val ua = emptyUserAnswers
+          .set(
+            KnowAdjustedAmountPage(Period._2018),
+            false
+          )
+          .success
+          .value
+          .set(
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.No
+          )
+          .success
+          .value
+
+        val result = KnowAdjustedAmountPage(Period._2018).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -80,17 +127,64 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/change-adjusted-income")
       }
 
-      "to ClaimingTaxReliefPensionNotAdjustedIncome when answered false" in {
-        val ua     = emptyUserAnswers
+      "to ClaimingTaxReliefPensionNotAdjustedIncome when false, when threshold income is idk" in {
+        val ua = emptyUserAnswers
           .set(
             KnowAdjustedAmountPage(Period._2018),
             false
           )
           .success
           .value
+          .set(
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.IDoNotKnow
+          )
+          .success
+          .value
+
         val result = KnowAdjustedAmountPage(Period._2018).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/annual-allowance/change-claiming-tax-relief-pension/2018")
+      }
+
+      "to AnyLumpSumDeathBenefitsController when false, when threshold income is yes" in {
+        val ua = emptyUserAnswers
+          .set(
+            KnowAdjustedAmountPage(Period._2018),
+            false
+          )
+          .success
+          .value
+          .set(
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.Yes
+          )
+          .success
+          .value
+
+        val result = KnowAdjustedAmountPage(Period._2018).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2018/change-how-much-contribution")
+      }
+
+      "to JourneyRecovery when false, when threshold income is anything else" in {
+        val ua = emptyUserAnswers
+          .set(
+            KnowAdjustedAmountPage(Period._2018),
+            false
+          )
+          .success
+          .value
+          .set(
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.No
+          )
+          .success
+          .value
+
+        val result = KnowAdjustedAmountPage(Period._2018).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
       }
 
       "to JourneyRecovery when not answered" in {

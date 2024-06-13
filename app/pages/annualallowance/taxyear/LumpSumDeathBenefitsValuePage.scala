@@ -29,33 +29,41 @@ case class LumpSumDeathBenefitsValuePage(period: Period) extends QuestionPage[Bi
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     if (period != Period._2016) {
-      answers.get(ThresholdIncomePage(period)) match {
-        case Some(ThresholdIncome.IDoNotKnow) =>
-          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
-        case Some(ThresholdIncome.Yes)        =>
-          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
-            .onPageLoad(NormalMode, period)
-        case Some(ThresholdIncome.No)         =>
-          controllers.routes.JourneyRecoveryController.onPageLoad(None)
-        case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      answers.get(LumpSumDeathBenefitsValuePage(period)) match {
+        case Some(_) =>
+          answers.get(ThresholdIncomePage(period)) match {
+            case Some(ThresholdIncome.IDoNotKnow) =>
+              controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController
+                .onPageLoad(NormalMode, period)
+            case Some(ThresholdIncome.Yes)        =>
+              controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
+                .onPageLoad(NormalMode, period)
+            case _                                =>
+              controllers.routes.JourneyRecoveryController.onPageLoad(None)
+          }
+        case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     if (period != Period._2016) {
-      answers.get(ThresholdIncomePage(period)) match {
-        case Some(ThresholdIncome.IDoNotKnow) =>
-          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode, period)
-        case Some(ThresholdIncome.Yes)        =>
-          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
-            .onPageLoad(CheckMode, period)
-        case Some(ThresholdIncome.No)         =>
-          controllers.routes.JourneyRecoveryController.onPageLoad(None)
-        case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      answers.get(LumpSumDeathBenefitsValuePage(period)) match {
+        case Some(_) =>
+          answers.get(ThresholdIncomePage(period)) match {
+            case Some(ThresholdIncome.IDoNotKnow) =>
+              controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController
+                .onPageLoad(CheckMode, period)
+            case Some(ThresholdIncome.Yes)        =>
+              controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
+                .onPageLoad(CheckMode, period)
+            case _                                =>
+              controllers.routes.JourneyRecoveryController.onPageLoad(None)
+          }
+        case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

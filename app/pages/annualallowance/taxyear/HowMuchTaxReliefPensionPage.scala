@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -28,14 +28,22 @@ case class HowMuchTaxReliefPensionPage(period: Period) extends QuestionPage[BigI
   override def toString: String = "howMuchTaxReliefPension"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(HowMuchTaxReliefPensionPage(period)) match {
-      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    if (period != Period._2016) {
+      answers.get(HowMuchTaxReliefPensionPage(period)) match {
+        case Some(_) => controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(NormalMode, period)
+        case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    } else {
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(HowMuchTaxReliefPensionPage(period)) match {
-      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    if (period != Period._2016) {
+      answers.get(HowMuchTaxReliefPensionPage(period)) match {
+        case Some(_) => controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(CheckMode, period)
+        case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    } else {
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
