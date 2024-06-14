@@ -83,7 +83,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
       )
     }
 
-    "to how-much-contribution when answered false" in {
+    "to how-much-contribution when answered false " in {
       val ua     = emptyUserAnswers
         .set(
           FlexibleRemunerationArrangementsPage(Period._2018),
