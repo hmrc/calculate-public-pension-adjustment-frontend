@@ -34,12 +34,13 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
           controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
             .onPageLoad(NormalMode, period)
         case Some(ThresholdIncome.Yes)        =>
-          controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
-            .onPageLoad(NormalMode, period)
+          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
+        case Some(ThresholdIncome.No)         =>
+          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
         case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
@@ -49,11 +50,12 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
           controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
             .onPageLoad(CheckMode, period)
         case Some(ThresholdIncome.Yes)        =>
-          controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
-            .onPageLoad(CheckMode, period)
+          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode, period)
+        case Some(ThresholdIncome.No)         =>
+          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode, period)
         case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(CheckMode, period)
     }
 }
