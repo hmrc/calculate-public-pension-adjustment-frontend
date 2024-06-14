@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.Period
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class LumpSumDeathBenefitsValuePageSpec extends PageBehaviours {
@@ -28,5 +28,111 @@ class LumpSumDeathBenefitsValuePageSpec extends PageBehaviours {
     beSettable[BigInt](LumpSumDeathBenefitsValuePage(Period._2016))
 
     beRemovable[BigInt](LumpSumDeathBenefitsValuePage(Period._2016))
+
+    "NormalMode" - {
+
+      "to ClaimingTaxReliefPension when period not 2016 and threshold income is IDoNotKnow" in {
+        val ua     = emptyUserAnswers
+          .set(
+            LumpSumDeathBenefitsValuePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.IDoNotKnow)
+          .success
+          .value
+        val result = LumpSumDeathBenefitsValuePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/adjusted-income/claiming-tax-relief-pension/2017")
+      }
+
+      "to ClaimingTaxReliefPensionNotAdjustedIncome when period not 2016 and threshold income is Yes" in {
+        val ua     = emptyUserAnswers
+          .set(
+            LumpSumDeathBenefitsValuePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.Yes)
+          .success
+          .value
+        val result = LumpSumDeathBenefitsValuePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/claiming-tax-relief-pension/2017")
+      }
+
+      "to JourneyRecovery when period not 2016 and threshold income is no" in {
+        val ua     = emptyUserAnswers
+          .set(
+            LumpSumDeathBenefitsValuePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.No)
+          .success
+          .value
+        val result = LumpSumDeathBenefitsValuePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+
+    }
+
+    "CheckMode" - {
+
+      "to ClaimingTaxReliefPension when period not 2016 and threshold income is IDoNotKnow" in {
+        val ua     = emptyUserAnswers
+          .set(
+            LumpSumDeathBenefitsValuePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.IDoNotKnow)
+          .success
+          .value
+        val result = LumpSumDeathBenefitsValuePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/adjusted-income/change-claiming-tax-relief-pension/2017")
+      }
+
+      "to ClaimingTaxReliefPensionNotAdjustedIncome when period not 2016 and threshold income is Yes" in {
+        val ua     = emptyUserAnswers
+          .set(
+            LumpSumDeathBenefitsValuePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.Yes)
+          .success
+          .value
+        val result = LumpSumDeathBenefitsValuePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/change-claiming-tax-relief-pension/2017")
+      }
+
+      "to JourneyRecovery when period not 2016 and threshold income is no" in {
+        val ua     = emptyUserAnswers
+          .set(
+            LumpSumDeathBenefitsValuePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.No)
+          .success
+          .value
+        val result = LumpSumDeathBenefitsValuePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+
+    }
+
   }
+
 }
