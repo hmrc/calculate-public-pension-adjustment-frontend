@@ -19,17 +19,26 @@ package viewmodels.checkAnswers.annualallowance.taxyear
 import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.LumpSumDeathBenefitsValuePage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object LumpSumDeathBenefitsValueSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(LumpSumDeathBenefitsValuePage(period)).map { answer =>
+      val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
+      val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+      val startEndDate: String =
+        period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
       SummaryListRowViewModel(
-        key = "lumpSumDeathBenefitsValue.checkYourAnswersLabel",
-        value = ValueViewModel(answer.toString),
+        key = messages("lumpSumDeathBenefitsValue.checkYourAnswersLabel", startEndDate),
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
@@ -37,7 +46,7 @@ object LumpSumDeathBenefitsValueSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("lumpSumDeathBenefitsValue.change.hidden"))
+            .withVisuallyHiddenText(messages("lumpSumDeathBenefitsValue.change.hidden", startEndDate))
         )
       )
     }

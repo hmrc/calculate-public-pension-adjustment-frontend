@@ -438,15 +438,15 @@ POST       /annual-allowance/:period/flexible-remuneration-arrangements         
 GET        /annual-allowance/:period/change-flexible-remuneration-arrangements                  controllers.annualallowance.taxyear.FlexibleRemunerationArrangementsController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/change-flexible-remuneration-arrangements                  controllers.annualallowance.taxyear.FlexibleRemunerationArrangementsController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET        /annual-allowance/threshold-income/any-lump-sum-death-benefits/:period                        controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/threshold-income/any-lump-sum-death-benefits/:period                        controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /annual-allowance/threshold-income/change-any-lump-sum-death-benefits/:period                  controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /annual-allowance/threshold-income/change-any-lump-sum-death-benefits/:period                  controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET        /annual-allowance/:period/any-lump-sum-death-benefits                       controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/any-lump-sum-death-benefits                     controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-any-lump-sum-death-benefits                 controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-any-lump-sum-death-benefits                  controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET        /annual-allowance/threshold-income/lump-sum-death-benefits-value/:period                 controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/threshold-income/lump-sum-death-benefits-value/:period                  controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /annual-allowance/threshold-income/change-lump-sum-death-benefits-value/:period                       controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /annual-allowance/threshold-income/change-lump-sum-death-benefits-value/:period                        controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET        /annual-allowance/:period/lump-sum-death-benefits-value                 controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/lump-sum-death-benefits-value                  controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-lump-sum-death-benefits-value                      controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-lump-sum-death-benefits-value                       controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onSubmit(mode: Mode = CheckMode, period:Period)
 
 GET        /annual-allowance/adjusted-income/claiming-tax-relief-pension/:period                        controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onPageLoad(mode: Mode = NormalMode, period:Period)
 POST       /annual-allowance/adjusted-income/claiming-tax-relief-pension/:period                         controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
