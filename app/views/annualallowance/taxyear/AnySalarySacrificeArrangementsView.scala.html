@@ -22,9 +22,16 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("anySalarySacrificeArrangements.title"))) {
+@contentHint = {
+<p class="govuk-body">@messages("anySalarySacrificeArrangements.message1")</p>
+<p class="govuk-body">@messages("anySalarySacrificeArrangements.message2")</p>
+<p class="govuk-body">@messages("anySalarySacrificeArrangements.message3")</p>
+<h2 class="govuk-heading-m">@messages("anySalarySacrificeArrangements.heading", startEndDate)</h2>
+}
+
+@layout(pageTitle = title(form, messages("anySalarySacrificeArrangements.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -35,9 +42,12 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("anySalarySacrificeArrangements.heading")).asPageHeading()
-            )
-        )
+                legend = HmrcPageHeadingLegend(
+                    content = messages("anySalarySacrificeArrangements.heading", startEndDate),
+                    caption = HmrcSectionCaption(messages("annualAllowanceThresholdIncome.caption")))
+
+            ).withHint(HintViewModel(HtmlContent(contentHint))
+        ))
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

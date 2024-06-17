@@ -42,7 +42,7 @@ class AnySalarySacrificeArrangementsPageSpec extends PageBehaviours {
         .value
       val result = AnySalarySacrificeArrangementsPage(Period._2018).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/threshold-income/amount-salary-sacrifice-arrangements/2018")
+      checkNavigation(result, "/annual-allowance/2018/amount-salary-sacrifice-arrangements")
     }
 
     "to flexible-remuneration-arrangements when answered false" in {
@@ -55,7 +55,7 @@ class AnySalarySacrificeArrangementsPageSpec extends PageBehaviours {
         .value
       val result = AnySalarySacrificeArrangementsPage(Period._2018).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/threshold-income/flexible-remuneration-arrangements/2018")
+      checkNavigation(result, "/annual-allowance/2018/flexible-remuneration-arrangements")
     }
 
     "to JourneyRecovery when not answered" in {
@@ -78,7 +78,7 @@ class AnySalarySacrificeArrangementsPageSpec extends PageBehaviours {
         .value
       val result = AnySalarySacrificeArrangementsPage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/threshold-income/change-amount-salary-sacrifice-arrangements/2018")
+      checkNavigation(result, "/annual-allowance/2018/change-amount-salary-sacrifice-arrangements")
     }
 
     "to flexible-remuneration-arrangements when answered false" in {
@@ -91,7 +91,7 @@ class AnySalarySacrificeArrangementsPageSpec extends PageBehaviours {
         .value
       val result = AnySalarySacrificeArrangementsPage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/threshold-income/change-flexible-remuneration-arrangements/2018")
+      checkNavigation(result, "/annual-allowance/2018/change-flexible-remuneration-arrangements")
     }
 
     "to JourneyRecovery when not answered" in {

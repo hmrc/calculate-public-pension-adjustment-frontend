@@ -24,9 +24,14 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("amountFlexibleRemunerationArrangements.title"))) {
+@contentHint = {
+    <h1 class="govuk-heading-m">@messages("amountFlexibleRemunerationArrangements.heading", startEndDate)</h1>
+    <p class="govuk-hint">@messages("amountSalarySacrificeArrangements.hint")</p>
+}
+
+@layout(pageTitle = title(form, messages("amountFlexibleRemunerationArrangements.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.AmountFlexibleRemunerationArrangementsController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -37,10 +42,12 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("amountFlexibleRemunerationArrangements.heading")).asPageHeading()
-            )
+                label = HmrcPageHeadingLabel(messages("amountFlexibleRemunerationArrangements.heading", startEndDate),
+                caption = messages("annualAllowanceThresholdIncome.caption")
+            ))
             .asNumeric()
             .withWidth(Fixed10)
+            .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @govukButton(

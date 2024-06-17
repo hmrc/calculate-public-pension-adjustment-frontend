@@ -23,7 +23,10 @@ import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.taxyear.AmountFlexibleRemunerationArrangementsPage
+import play.api.i18n.Messages
+import play.api.i18n.Messages.implicitMessagesProviderToMessages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -37,6 +40,8 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
 
   val formProvider = new AmountFlexibleRemunerationArrangementsFormProvider()
   val form         = formProvider()
+
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -61,7 +66,10 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
         val view = application.injector.instanceOf[AmountFlexibleRemunerationArrangementsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -83,7 +91,7 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -128,7 +136,7 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
