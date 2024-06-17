@@ -50,7 +50,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
       val result = ClaimingTaxReliefPensionPage(Period._2016).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2016/total-income/tax-relief")
+      checkNavigation(result, "/annual-allowance/2016/tax-relief")
 
     }
 
@@ -103,6 +103,8 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
           val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
+      checkNavigation(result, "/annual-allowance/2019/tax-relief")
+    }
           checkNavigation(result, s"/annual-allowance/personal-allowance/$period")
 
         }
@@ -249,6 +251,8 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
+      checkNavigation(result, "/annual-allowance/2019/change-tax-relief")
+    }
               checkNavigation(result, s"/annual-allowance/adjusted-income/know-adjusted-amount/$period")
             }
 

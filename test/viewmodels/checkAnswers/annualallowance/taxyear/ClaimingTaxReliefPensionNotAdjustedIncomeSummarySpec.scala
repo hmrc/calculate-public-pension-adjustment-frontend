@@ -45,6 +45,7 @@ import viewmodels.implicits._
 class ClaimingTaxReliefPensionNotAdjustedIncomeSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
+  val startEndDate: String                = "6 April 2017 to 5 April 2018"
 
   "row" - {
     "when Yes is selected, return the summary row" in {

@@ -22,9 +22,20 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("claimingTaxReliefPensionNotAdjustedIncome.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.message1")</p>
+    <ul class="govuk-body">
+        <li class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.bullet1")</li>
+        <li class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.bullet2")</li>
+        <li class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.bullet3")</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">@messages("claimingTaxReliefPensionNotAdjustedIncome.heading", startEndDate)</h2>
+}
+
+@layout(pageTitle = title(form, messages("claimingTaxReliefPensionNotAdjustedIncome.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -32,12 +43,14 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = LegendViewModel(messages("claimingTaxReliefPensionNotAdjustedIncome.heading")).asPageHeading()
-            )
-        )
+                @govukRadios(
+                    RadiosViewModel.yesNo(
+                    field = form("value"),
+                        legend = HmrcPageHeadingLegend(
+                        content = messages("claimingTaxReliefPensionNotAdjustedIncome.heading", startEndDate),
+                        caption = HmrcSectionCaption(messages("adjustedIncomeCaption.caption")))
+                    ).withHint(HintViewModel(HtmlContent(contentHint))
+                ))
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

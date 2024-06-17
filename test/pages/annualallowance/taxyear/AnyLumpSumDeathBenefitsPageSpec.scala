@@ -74,7 +74,7 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
         .value
       val result = AnyLumpSumDeathBenefitsPage(Period._2017).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/claiming-tax-relief-pension/2017")
+      checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief-pension")
     }
 
     "to JourneyRecovery when period not 2016 and answered false and threshold income is no" in {
@@ -145,7 +145,7 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
         .value
       val result = AnyLumpSumDeathBenefitsPage(Period._2017).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/change-claiming-tax-relief-pension/2017")
+      checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief-pension")
     }
 
     "to JourneyRecovery when period not 2016 and answered false and threshold income is no" in {
