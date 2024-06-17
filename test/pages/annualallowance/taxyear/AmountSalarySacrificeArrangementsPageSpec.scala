@@ -42,7 +42,7 @@ class AmountSalarySacrificeArrangementsPageSpec extends PageBehaviours {
         .value
       val result = AmountSalarySacrificeArrangementsPage(Period._2018).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/threshold-income/flexible-remuneration-arrangements/2018")
+      checkNavigation(result, "/annual-allowance/2018/flexible-remuneration-arrangements")
     }
   }
 
@@ -56,7 +56,7 @@ class AmountSalarySacrificeArrangementsPageSpec extends PageBehaviours {
       .value
     val result = AmountSalarySacrificeArrangementsPage(Period._2018).navigate(CheckMode, ua).url
 
-    checkNavigation(result, "/annual-allowance/threshold-income/change-flexible-remuneration-arrangements/2018")
+    checkNavigation(result, "/annual-allowance/2018/change-flexible-remuneration-arrangements")
   }
 
 }

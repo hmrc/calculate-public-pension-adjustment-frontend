@@ -23,6 +23,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.taxyear.FlexibleRemunerationArrangementsPage
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -38,6 +39,8 @@ class FlexibleRemunerationArrangementsControllerSpec extends SpecBase with Mocki
 
   val formProvider = new FlexibleRemunerationArrangementsFormProvider()
   val form         = formProvider()
+
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
 
   lazy val flexibleRemunerationArrangementsRoute =
     controllers.annualallowance.taxyear.routes.FlexibleRemunerationArrangementsController
@@ -58,7 +61,10 @@ class FlexibleRemunerationArrangementsControllerSpec extends SpecBase with Mocki
         val view = application.injector.instanceOf[FlexibleRemunerationArrangementsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -77,7 +83,7 @@ class FlexibleRemunerationArrangementsControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -113,16 +119,21 @@ class FlexibleRemunerationArrangementsControllerSpec extends SpecBase with Mocki
       running(application) {
         val request =
           FakeRequest(POST, flexibleRemunerationArrangementsRoute)
-            .withFormUrlEncodedBody(("value", ""))
+            .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = form.bind(Map("value" -> ""))
+        val boundForm = form.bind(Map("value" -> "invalid value"))
 
         val view = application.injector.instanceOf[FlexibleRemunerationArrangementsView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(
+          boundForm,
+          NormalMode,
+          Period._2018,
+          startEndDate
+        )(
           request,
           messages(application)
         ).toString
