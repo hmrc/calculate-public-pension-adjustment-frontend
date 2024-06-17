@@ -18,12 +18,12 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.PersonalAllowanceFormProvider
-import models.{Mode, Period}
+import models.{Mode, NormalMode, Period}
 import models.tasklist.sections.AASection
 import pages.annualallowance.taxyear.PersonalAllowancePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.UserDataService
+import services.{CalculateBackendService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.PersonalAllowanceView
 
@@ -33,6 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class PersonalAllowanceController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
+  calculateBackendService: CalculateBackendService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -69,5 +70,17 @@ class PersonalAllowanceController @Inject() (
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
+  }
+
+  def checkBasicRate(period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+    implicit request =>
+      calculateBackendService.findTaxRateStatus(request.userAnswers, period).map {
+        case true  =>
+          Redirect(
+            controllers.annualallowance.taxyear.routes.MarriageAllowanceController.onPageLoad(NormalMode, period)
+          )
+        case false =>
+          Redirect(controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period))
+      }
   }
 }

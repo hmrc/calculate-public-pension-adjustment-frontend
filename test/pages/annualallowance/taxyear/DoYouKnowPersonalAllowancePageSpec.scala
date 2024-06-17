@@ -43,18 +43,35 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/total-income/personal-allowance")
       }
 
-      "must redirect to CYA page when false" in {
+      "must redirect to BlindAllowance page when false and Net Income over 100K" in {
 
         val userAnswers = emptyUserAnswers
           .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
           .success
           .value
+          .set(TotalIncomePage(Period._2018), BigInt("110000"))
+          .success
+          .value
 
         val result = DoYouKnowPersonalAllowancePage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/total-income/blind-person-allowance/2018")
       }
 
+      "must redirect to DoYouKnowPersonalAllowance to check basic rate page when false and Net Income less than 100K" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
+          .success
+          .value
+          .set(TotalIncomePage(Period._2018), BigInt("100000"))
+          .success
+          .value
+
+        val result = DoYouKnowPersonalAllowancePage(Period._2018).navigate(NormalMode, userAnswers).url
+
+        checkNavigation(result, "/annual-allowance/check-basic-rate-status/2018")
+      }
     }
 
     "Check mode" - {

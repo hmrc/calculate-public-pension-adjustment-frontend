@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.annualallowance.taxyear.DoYouKnowPersonalAllowanceFormProvider
-import pages.annualallowance.taxyear.DoYouKnowPersonalAllowancePage
+import pages.annualallowance.taxyear.{DoYouKnowPersonalAllowancePage, TotalIncomePage}
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -28,7 +28,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserDataService
+import services.{CalculateBackendService, UserDataService}
 import views.html.annualallowance.taxyear.DoYouKnowPersonalAllowanceView
 
 import scala.concurrent.Future
@@ -161,6 +161,96 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+      }
+    }
+
+    "must redirect to MarriageAllowanceController when basic rate is Charged" in {
+
+      val mockCalculateBackendService = mock[CalculateBackendService]
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      when(mockCalculateBackendService.findTaxRateStatus(any(), any())(any())) thenReturn
+        Future.successful(true)
+
+      val userAnswers = emptyUserAnswers
+        .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
+        .success
+        .value
+        .set(TotalIncomePage(Period._2018), BigInt("30000"))
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService),
+            bind[CalculateBackendService].toInstance(mockCalculateBackendService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(
+            GET,
+            controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController
+              .checkBasicRate(Period._2018)
+              .url
+          )
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).get must be(
+          s"/public-pension-adjustment/annual-allowance/total-income/marriage-allowance/2018"
+        )
+      }
+    }
+
+    "must redirect to BlindAllowanceController when basic rate is Not Charged" in {
+
+      val mockCalculateBackendService = mock[CalculateBackendService]
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      when(mockCalculateBackendService.findTaxRateStatus(any(), any())(any())) thenReturn
+        Future.successful(false)
+
+      val userAnswers = emptyUserAnswers
+        .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
+        .success
+        .value
+        .set(TotalIncomePage(Period._2018), BigInt("70000"))
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService),
+            bind[CalculateBackendService].toInstance(mockCalculateBackendService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(
+            GET,
+            controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController
+              .checkBasicRate(Period._2018)
+              .url
+          )
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).get must be(
+          s"/public-pension-adjustment/annual-allowance/total-income/blind-person-allowance/2018"
+        )
       }
     }
   }

@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{CheckMode, Mode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -34,8 +34,11 @@ case class DoYouKnowPersonalAllowancePage(period: Period) extends QuestionPage[B
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-          .onPageLoad(period) // This needs to be changed
+        if (isNetIncomeOver100K(answers)) {
+          controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period)
+        } else {
+          controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.checkBasicRate(period)
+        }
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -55,4 +58,11 @@ case class DoYouKnowPersonalAllowancePage(period: Period) extends QuestionPage[B
         case true  => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
+
+  private def isNetIncomeOver100K(answers: UserAnswers): Boolean =
+    answers.get(TotalIncomePage(period)) match {
+      case Some(value) if value > 100000 => true
+      case _                             => false
+    }
+
 }
