@@ -23,6 +23,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.taxyear.HowMuchContributionPensionSchemePage
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -36,6 +37,8 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
 
   val formProvider = new HowMuchContributionPensionSchemeFormProvider()
   val form         = formProvider()
+
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -60,7 +63,10 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
         val view = application.injector.instanceOf[HowMuchContributionPensionSchemeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -79,7 +85,7 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -124,7 +130,7 @@ class HowMuchContributionPensionSchemeControllerSpec extends SpecBase with Mocki
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString

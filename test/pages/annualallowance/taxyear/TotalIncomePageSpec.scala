@@ -44,7 +44,7 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/threshold-income/any-salary-sacrifice-arrangements/2017")
+        checkNavigation(result, "/annual-allowance/2017/any-salary-sacrifice-arrangements")
       }
 
       "to claiming-tax-relief-pension page when not in 15/16 and yes is selected on threshold income" in {
@@ -97,7 +97,7 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/threshold-income/change-any-salary-sacrifice-arrangements/2017")
+        checkNavigation(result, "/annual-allowance/2017/change-any-salary-sacrifice-arrangements")
       }
 
       "to claiming-tax-relief-pension page when not in 15/16 and yes is selected on threshold income" in {
