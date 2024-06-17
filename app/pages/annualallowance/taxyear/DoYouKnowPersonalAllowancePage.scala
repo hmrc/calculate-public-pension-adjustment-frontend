@@ -61,8 +61,8 @@ case class DoYouKnowPersonalAllowancePage(period: Period) extends QuestionPage[B
 
   private def isNetIncomeOver100K(answers: UserAnswers): Boolean =
     answers.get(TotalIncomePage(period)) match {
-      case Some(value) if value > 100000 => true
-      case _                             => false
+      case Some(value) if value > BigInt(100000) => true
+      case _                                     => false
     }
 
 }

@@ -26,7 +26,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserDataService
+import services.{CalculateBackendService, UserDataService}
 import views.html.annualallowance.taxyear.PersonalAllowanceView
 import pages.annualallowance.taxyear.PersonalAllowancePage
 
@@ -125,6 +125,70 @@ class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
           request,
           messages(application)
         ).toString
+      }
+    }
+
+    "must redirect to MarriageAllowanceController when basic rate is Charged" in {
+
+      val mockCalculateBackendService = mock[CalculateBackendService]
+
+      when(mockCalculateBackendService.findTaxRateStatus(any(), any())(any())) thenReturn
+        Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[CalculateBackendService].toInstance(mockCalculateBackendService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(
+            GET,
+            controllers.annualallowance.taxyear.routes.PersonalAllowanceController
+              .checkBasicRate(Period._2018)
+              .url
+          )
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.MarriageAllowanceController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
+      }
+    }
+
+    "must redirect to BlindAllowanceController when basic rate is Not Charged" in {
+
+      val mockCalculateBackendService = mock[CalculateBackendService]
+
+      when(mockCalculateBackendService.findTaxRateStatus(any(), any())(any())) thenReturn
+        Future.successful(false)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[CalculateBackendService].toInstance(mockCalculateBackendService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(
+            GET,
+            controllers.annualallowance.taxyear.routes.PersonalAllowanceController
+              .checkBasicRate(Period._2018)
+              .url
+          )
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.BlindAllowanceController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
       }
     }
   }

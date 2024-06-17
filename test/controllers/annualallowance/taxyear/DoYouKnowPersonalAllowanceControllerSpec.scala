@@ -168,10 +168,6 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
       val mockCalculateBackendService = mock[CalculateBackendService]
 
-      val mockUserDataService = mock[UserDataService]
-
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-
       when(mockCalculateBackendService.findTaxRateStatus(any(), any())(any())) thenReturn
         Future.successful(true)
 
@@ -179,14 +175,13 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
         .success
         .value
-        .set(TotalIncomePage(Period._2018), BigInt("30000"))
+        .set(TotalIncomePage(Period._2018), BigInt(30000))
         .success
         .value
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            bind[UserDataService].toInstance(mockUserDataService),
             bind[CalculateBackendService].toInstance(mockCalculateBackendService)
           )
           .build()
@@ -203,19 +198,15 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).get must be(
-          s"/public-pension-adjustment/annual-allowance/total-income/marriage-allowance/2018"
-        )
+        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.MarriageAllowanceController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
       }
     }
 
     "must redirect to BlindAllowanceController when basic rate is Not Charged" in {
 
       val mockCalculateBackendService = mock[CalculateBackendService]
-
-      val mockUserDataService = mock[UserDataService]
-
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       when(mockCalculateBackendService.findTaxRateStatus(any(), any())(any())) thenReturn
         Future.successful(false)
@@ -224,14 +215,13 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
         .success
         .value
-        .set(TotalIncomePage(Period._2018), BigInt("70000"))
+        .set(TotalIncomePage(Period._2018), BigInt(30000))
         .success
         .value
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            bind[UserDataService].toInstance(mockUserDataService),
             bind[CalculateBackendService].toInstance(mockCalculateBackendService)
           )
           .build()
@@ -248,9 +238,9 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).get must be(
-          s"/public-pension-adjustment/annual-allowance/total-income/blind-person-allowance/2018"
-        )
+        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.BlindAllowanceController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
       }
     }
   }
