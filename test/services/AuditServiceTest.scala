@@ -159,7 +159,13 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
         )
 
         val calculationSubmissionAuditEvent =
-          CalculationAuditEvent(calculationInputs, calculationResponse)
+          CalculationAuditEvent(
+            "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
+            true,
+            "AA000000A",
+            calculationInputs,
+            calculationResponse
+          )
 
         await(service.auditCalculationRequest(calculationSubmissionAuditEvent)(hc)) mustBe ()
       }

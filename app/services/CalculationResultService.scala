@@ -46,9 +46,16 @@ class CalculationResultService @Inject() (
     for {
       calculationInputs   <- Future.successful(buildCalculationInputs(userAnswers))
       calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
-      _                   <- auditService.auditCalculationRequest(
-                               CalculationAuditEvent(calculationInputs, calculationResponse)
-                             )
+      _                   <-
+        auditService.auditCalculationRequest(
+          CalculationAuditEvent(
+            userAnswers.uniqueId,
+            userAnswers.authenticated,
+            userAnswers.id,
+            calculationInputs,
+            calculationResponse
+          )
+        )
     } yield calculationResponse
 
   def submitUserAnswersAndCalculation(answers: UserAnswers, userId: String)(implicit
