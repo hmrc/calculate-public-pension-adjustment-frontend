@@ -73,6 +73,7 @@ unauthorised.heading = You can’t access this service with this account
 
 annualAllowance.caption = Annual allowance
 annualAllowanceThresholdIncome.caption = Annual allowance threshold income
+annualAllowanceAdjustedIncome.caption = Annual allowance adjusted income
 lifetimeAllowance.caption = Lifetime allowance
 divider = or
 startEndDateAnd = and
@@ -1256,10 +1257,12 @@ hasReliefClaimedOnOverseasPension.checkYourAnswersLabel = Did you claim relief o
 hasReliefClaimedOnOverseasPension.error.required = Select yes if you have claimed relief on overseas pension
 hasReliefClaimedOnOverseasPension.change.hidden = if you have claimed relief on overseas pension
 
-areYouNonDom.title = Are you a non-dom?
-areYouNonDom.heading =  Are you a non-dom?
-areYouNonDom.checkYourAnswersLabel = Are you a non-dom?
-areYouNonDom.error.required = Select yes if you are a nom-dom
+areYouNonDom.title = Were you a non-domicile individual from {0}?
+areYouNonDom.heading =  Were you a non-domicile individual from {0}?
+areYouNonDom.message1 = UK residents who have their permanent home, ‘domicile’, outside the UK may not have to pay UK tax on foreign income
+areYouNonDom.message2 = Find out more about non-domiciled residents (opens in a new tab)
+areYouNonDom.checkYourAnswersLabel = Were you a non-domicile individual from {0}?
+areYouNonDom.error.required = Select yes if you were a non-domicile individual
 areYouNonDom.change.hidden = if you are a nom-dom
 
 doYouKnowPersonalAllowance.title = Do you know your personal allowance?

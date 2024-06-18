@@ -23,9 +23,19 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("areYouNonDom.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("areYouNonDom.message1")</p>
+    <p class="govuk-body">
+        <a class="govuk-link" href="https://https://www.gov.uk/income-tax-reliefs" rel="noreferrer noopener" target="_blank">
+            @messages("areYouNonDom.message2")
+        </a>
+    </p>
+    <h2 class="govuk-heading-m">@messages("areYouNonDom.heading", startEndDate)</h2>
+}
+
+@layout(pageTitle = title(form, messages("areYouNonDom.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.AreYouNonDomController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -35,11 +45,16 @@
 
         @govukRadios(
             RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = LegendViewModel(messages("areYouNonDom.heading")).asPageHeading()
-            )
-        )
+            field = form("value"),
+            legend = HmrcPageHeadingLegend(
+                content = messages("areYouNonDom.heading", startEndDate),
+                caption = HmrcSectionCaption(messages("annualAllowanceAdjustedIncome.caption")))
 
-        @continueButton()
+        ).withHint(HintViewModel(HtmlContent(contentHint))
+        ))
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+        )
     }
 }
