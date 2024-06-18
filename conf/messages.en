@@ -1267,9 +1267,11 @@ areYouNonDom.checkYourAnswersLabel = Were you a non-domicile individual from {0}
 areYouNonDom.error.required = Select yes if you were a non-domicile individual
 areYouNonDom.change.hidden = if you are a nom-dom
 
-doYouKnowPersonalAllowance.title = Do you know your personal allowance?
-doYouKnowPersonalAllowance.heading = Do you know your personal allowance?
-doYouKnowPersonalAllowance.checkYourAnswersLabel = Do you know your personal allowance?
+doYouKnowPersonalAllowance.title = Do you know your personal allowance from {0}?
+doYouKnowPersonalAllowance.heading = Do you know your personal allowance from {0}?
+doYouKnowPersonalAllowance.message1 = Your personal allowance is the amount of money that you can earn without paying any income tax.
+doYouKnowPersonalAllowance.message2 = If you have filed for self-assessment you will find this information in your SA-302 document.
+doYouKnowPersonalAllowance.checkYourAnswersLabel = Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.error.required = Select yes if you know your personal allowance
 doYouKnowPersonalAllowance.change.hidden = your personal allowance
 

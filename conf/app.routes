@@ -493,10 +493,10 @@ POST       /annual-allowance/:period/non-domicile                        control
 GET        /annual-allowance/:period/change-non-domicile                   controllers.annualallowance.taxyear.AreYouNonDomController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/change-non-domicile                   controllers.annualallowance.taxyear.AreYouNonDomController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET        /annual-allowance/personal-allowance/:period                        controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/personal-allowance/:period                         controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /annual-allowance/change-personal-allowance/:period                   controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /annual-allowance/change-personal-allowance/:period                   controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET        /annual-allowance/:period/do-you-know-personal-allowance                        controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/do-you-know-personal-allowance                        controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-do-you-know-personal-allowance                  controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-do-you-know-personal-allowance                  controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
 
 GET        /annual-allowance/total-income/marriage-allowance/:period                         controllers.annualallowance.taxyear.MarriageAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
 POST       /annual-allowance/total-income/marriage-allowance/:period                         controllers.annualallowance.taxyear.MarriageAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
