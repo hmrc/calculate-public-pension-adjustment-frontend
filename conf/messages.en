@@ -1251,10 +1251,11 @@ amountClaimedOnOverseasPension.error.wholeNumber =Amount of relief claimed on ov
 amountClaimedOnOverseasPension.error.outOfRange = Amount of relief claimed on overseas pensions must be £999,999,999 or less
 amountClaimedOnOverseasPension.change.hidden = amount of relief claimed on overseas pensions
 
-hasReliefClaimedOnOverseasPension.title = Did you claim relief on overseas pension?
-hasReliefClaimedOnOverseasPension.heading = Did you claim relief on overseas pension?
-hasReliefClaimedOnOverseasPension.checkYourAnswersLabel = Did you claim relief on overseas pension?
-hasReliefClaimedOnOverseasPension.error.required = Select yes if you have claimed relief on overseas pension
+hasReliefClaimedOnOverseasPension.title = Did you claim any tax relief on savings in an overseas pension scheme from {0}?
+hasReliefClaimedOnOverseasPension.heading = Did you claim any tax relief on savings in an overseas pension scheme from {0}?
+hasReliefClaimedOnOverseasPension.checkYourAnswersLabel = Did you claim any tax relief on savings in an overseas pension scheme from {0}?
+hasReliefClaimedOnOverseasPension.message1 = Find out more about non-domiciled residents (opens in a new tab)
+hasReliefClaimedOnOverseasPension.error.required = Select yes if you claimed any tax relief on savings in an overseas pension scheme
 hasReliefClaimedOnOverseasPension.change.hidden = if you have claimed relief on overseas pension
 
 areYouNonDom.title = Were you a non-domicile individual from {0}?

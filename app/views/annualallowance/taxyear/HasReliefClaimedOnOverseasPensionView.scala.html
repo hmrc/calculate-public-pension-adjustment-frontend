@@ -23,9 +23,18 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("hasReliefClaimedOnOverseasPension.title"))) {
+@contentHint = {
+<p class="govuk-body">
+    <a class="govuk-link" href="https://www.gov.uk/tax-foreign-income/non-domiciled-residents" rel="noreferrer noopener" target="_blank">
+        @messages("hasReliefClaimedOnOverseasPension.message1")
+    </a>
+</p>
+<h2 class="govuk-heading-m">@messages("hasReliefClaimedOnOverseasPension.heading", startEndDate)</h2>
+}
+
+@layout(pageTitle = title(form, messages("hasReliefClaimedOnOverseasPension.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.HasReliefClaimedOnOverseasPensionController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -35,11 +44,16 @@
 
         @govukRadios(
             RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = LegendViewModel(messages("hasReliefClaimedOnOverseasPension.heading")).asPageHeading()
-            )
-        )
+            field = form("value"),
+            legend = HmrcPageHeadingLegend(
+                content = messages("hasReliefClaimedOnOverseasPension.heading", startEndDate),
+                caption = HmrcSectionCaption(messages("annualAllowanceAdjustedIncome.caption")))
 
-        @continueButton()
+        ).withHint(HintViewModel(HtmlContent(contentHint))
+        ))
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+        )
     }
 }
