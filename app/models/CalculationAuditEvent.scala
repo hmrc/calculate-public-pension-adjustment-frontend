@@ -20,6 +20,9 @@ import models.CalculationResults.{CalculationInputs, CalculationResponse}
 import play.api.libs.json._
 
 case class CalculationAuditEvent(
+  uniqueId: String,
+  authenticated: Boolean,
+  userId: String,
   calculationInputs: CalculationInputs,
   calculationResponse: CalculationResponse
 )
