@@ -40,7 +40,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
 
         val result = DoYouKnowPersonalAllowancePage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/do-you-know-personal-allowance")
+        checkNavigation(result, "/annual-allowance/2018/total-income/personal-allowance")
       }
 
       "must redirect to CYA page when false" in {
@@ -68,7 +68,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
 
         val result = DoYouKnowPersonalAllowancePage(Period._2018).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/change-do-you-know-personal-allowance")
+        checkNavigation(result, "/annual-allowance/2018/total-income/change-personal-allowance")
       }
 
       "must redirect to CYA page when false" in {
