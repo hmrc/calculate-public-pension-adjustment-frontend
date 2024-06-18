@@ -77,6 +77,7 @@ lifetimeAllowance.caption = Lwfans oes
 divider = neu
 startEndDateAnd = a
 startEndDateTo = i
+rounding.hint = Mae’n rhaid talgrynnu symiau i lawr i’r bunt agosaf, er enghraifft 2300
 annualAllowance.period.caption.2016 = Lwfans blynyddol rhwng 6 Ebrill 2015 a 5 Ebrill 2016
 annualAllowance.period.caption.2016pre = Lwfans blynyddol rhwng 6 Ebrill 2015 a 8 Gorffennaf 2015
 annualAllowance.period.caption.2016post = Lwfans blynyddol rhwng 9 Gorffennaf 2015 a 5 Ebrill 2016
