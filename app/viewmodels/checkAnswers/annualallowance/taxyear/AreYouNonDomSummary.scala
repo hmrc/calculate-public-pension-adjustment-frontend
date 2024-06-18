@@ -39,7 +39,7 @@ object AreYouNonDomSummary {
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key = messages("areYouNonDom.checkYourAnswersLabel",startEndDate)
+        key = messages("areYouNonDom.checkYourAnswersLabel",startEndDate),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
