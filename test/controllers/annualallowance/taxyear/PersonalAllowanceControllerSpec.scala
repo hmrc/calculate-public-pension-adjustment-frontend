@@ -147,7 +147,7 @@ class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
           FakeRequest(
             GET,
             controllers.annualallowance.taxyear.routes.PersonalAllowanceController
-              .checkBasicRate(Period._2018)
+              .checkIfBasicRateCharged(Period._2018)
               .url
           )
 
@@ -179,7 +179,7 @@ class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
           FakeRequest(
             GET,
             controllers.annualallowance.taxyear.routes.PersonalAllowanceController
-              .checkBasicRate(Period._2018)
+              .checkIfBasicRateCharged(Period._2018)
               .url
           )
 

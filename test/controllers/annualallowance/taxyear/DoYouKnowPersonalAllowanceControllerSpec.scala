@@ -191,7 +191,7 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
           FakeRequest(
             GET,
             controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController
-              .checkBasicRate(Period._2018)
+              .checkIfBasicRateCharged(Period._2018)
               .url
           )
 
@@ -215,7 +215,7 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
         .success
         .value
-        .set(TotalIncomePage(Period._2018), BigInt(30000))
+        .set(TotalIncomePage(Period._2018), BigInt(70000))
         .success
         .value
 
@@ -231,7 +231,7 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
           FakeRequest(
             GET,
             controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController
-              .checkBasicRate(Period._2018)
+              .checkIfBasicRateCharged(Period._2018)
               .url
           )
 

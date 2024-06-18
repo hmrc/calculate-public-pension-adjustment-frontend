@@ -407,7 +407,7 @@ GET        /annual-allowance/:period/total-income/personal-allowance            
 POST       /annual-allowance/:period/total-income/personal-allowance                  controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/:period/total-income/change-personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/total-income/change-personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
-GET        /annual-allowance/check-basic-rate-status/:period                             controllers.annualallowance.taxyear.PersonalAllowanceController.checkBasicRate(period:Period)
+GET        /annual-allowance/check-basic-rate-status/:period                             controllers.annualallowance.taxyear.PersonalAllowanceController.checkIfBasicRateCharged(period:Period)
 
 GET        /annual-allowance/:period/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = NormalMode, period:Period)
 POST       /annual-allowance/:period/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = NormalMode, period:Period)
@@ -488,7 +488,7 @@ GET        /annual-allowance/personal-allowance/:period                        c
 POST       /annual-allowance/personal-allowance/:period                         controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/change-personal-allowance/:period                   controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/change-personal-allowance/:period                   controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
-GET        /annual-allowance/check-basic-rate-status/:period                             controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.checkBasicRate(period:Period)
+GET        /annual-allowance/check-basic-rate-status/:period                             controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.checkIfBasicRateCharged(period:Period)
 
 GET        /annual-allowance/total-income/marriage-allowance/:period                         controllers.annualallowance.taxyear.MarriageAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
 POST       /annual-allowance/total-income/marriage-allowance/:period                         controllers.annualallowance.taxyear.MarriageAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)

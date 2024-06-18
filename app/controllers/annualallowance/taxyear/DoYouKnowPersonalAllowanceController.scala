@@ -73,8 +73,8 @@ class DoYouKnowPersonalAllowanceController @Inject() (
         )
   }
 
-  def checkBasicRate(period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
+  def checkIfBasicRateCharged(period: Period): Action[AnyContent] =
+    (identify andThen getData andThen requireData).async { implicit request =>
       calculateBackendService.findTaxRateStatus(request.userAnswers, period).map {
         case true  =>
           Redirect(
@@ -83,5 +83,5 @@ class DoYouKnowPersonalAllowanceController @Inject() (
         case false =>
           Redirect(controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period))
       }
-  }
+    }
 }

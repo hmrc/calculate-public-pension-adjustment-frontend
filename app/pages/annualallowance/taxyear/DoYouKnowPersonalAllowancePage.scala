@@ -37,7 +37,8 @@ case class DoYouKnowPersonalAllowancePage(period: Period) extends QuestionPage[B
         if (isNetIncomeOver100K(answers)) {
           controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period)
         } else {
-          controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.checkBasicRate(period)
+          controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController
+            .checkIfBasicRateCharged(period)
         }
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
