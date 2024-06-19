@@ -1250,7 +1250,7 @@ howMuchTaxReliefPension.error.outOfRange = cy: Amount of relief claimed must be 
 howMuchTaxReliefPension.change.hidden = cy: Amount of relief claimed
 
 claimingTaxReliefPensionNotAdjustedIncome.title = cy: Did you claim for tax relief on your pension from {0}
-claimingTaxReliefPensionNotAdjustedIncome.heading = cy: Did you claim for tax relief on your pension from {0}
+claimingTaxReliefPensionNotAdjustedIncome.heading = cy: Claiming income tax relief
 claimingTaxReliefPensionNotAdjustedIncome.message1 = cy: You may have claimed income tax relief if any of the following applied to you:
 claimingTaxReliefPensionNotAdjustedIncome.bullet1 = cy: you claimed tax relief for job expenses such as trade union membership fees or uniforms
 claimingTaxReliefPensionNotAdjustedIncome.bullet2 = cy: you made any gift-aid payments to charity or donated any shares or property to charity
