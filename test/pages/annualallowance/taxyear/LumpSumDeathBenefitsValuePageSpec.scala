@@ -101,7 +101,7 @@ class LumpSumDeathBenefitsValuePageSpec extends PageBehaviours {
 
     "Check mode" - {
 
-      "to ClaimingTaxRelief when answered, when period not 2016, when threshold income is idk" in {
+      "to ClaimingTaxReliefPension in normal mode when period not 2016 and threshold income is IDoNotKnow" in {
         val ua = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2017),
@@ -118,10 +118,10 @@ class LumpSumDeathBenefitsValuePageSpec extends PageBehaviours {
 
         val result = LumpSumDeathBenefitsValuePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief")
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
       }
 
-      "to ClaimingTaxReliefPensionNotAdjusted when answered, when period not 2016, when threshold income is yes" in {
+      "to ClaimingTaxReliefPensionNotAdjustedIncome in normal mode when period not 2016 and threshold income is Yes" in {
         val ua = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2017),
@@ -138,7 +138,7 @@ class LumpSumDeathBenefitsValuePageSpec extends PageBehaviours {
 
         val result = LumpSumDeathBenefitsValuePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief-pension")
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief-pension")
       }
 
       "to journeyrecovery when answered, when period not 2016, when threshold income is anything else" in {
@@ -167,8 +167,43 @@ class LumpSumDeathBenefitsValuePageSpec extends PageBehaviours {
 
         checkNavigation(result, "/there-is-a-problem")
       }
-
     }
+    "cleanup" - {
 
+      "must cleanup correctly" in {
+
+        val period = Period._2022
+
+        val cleanedUserAnswers = LumpSumDeathBenefitsValuePage(Period._2022)
+          .cleanup(Some(BigInt(1)), incomeSubJourneyData)
+          .success
+          .value
+
+        cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.IDoNotKnow)
+        cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
+        cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
+        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
+        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
+      }
+    }
   }
 }
