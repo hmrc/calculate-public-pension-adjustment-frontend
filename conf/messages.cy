@@ -1255,6 +1255,7 @@ claimingTaxReliefPensionNotAdjustedIncome.message1 = cy: You may have claimed in
 claimingTaxReliefPensionNotAdjustedIncome.bullet1 = cy: you claimed tax relief for job expenses such as trade union membership fees or uniforms
 claimingTaxReliefPensionNotAdjustedIncome.bullet2 = cy: you made any gift-aid payments to charity or donated any shares or property to charity
 claimingTaxReliefPensionNotAdjustedIncome.bullet3 = cy: you are self employed and you claimed for trading losses
+claimingTaxReliefPensionNotAdjustedIncome.heading2 = cy: Did you claim for income tax relief from {0}?
 claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel = cy: Did you claim for tax relief on your pension from {0}
 claimingTaxReliefPensionNotAdjustedIncome.error.required = cy: Select yes if you claimed for tax relief on your pension
 claimingTaxReliefPensionNotAdjustedIncome.change.hidden = cy: Claiming pension tax relief
