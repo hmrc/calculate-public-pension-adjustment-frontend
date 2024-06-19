@@ -68,7 +68,7 @@ class AreYouNonDomPageSpec extends PageBehaviours {
 
         val result = AreYouNonDomPage(Period._2018).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/any-tax-relief-overseas-pension/2018")
+        checkNavigation(result, "/annual-allowance/change-any-tax-relief-overseas-pension/2018")
       }
 
       "must redirect to CYA page when false" in {
