@@ -26,7 +26,7 @@ class AnyLumpSumDeathBenefitsFormProviderSpec extends BooleanFieldBehaviours {
   val invalidKey  = "error.boolean"
 
   val period = Period._2020
-  val form   = new AnyLumpSumDeathBenefitsFormProvider()(period)
+  val form   = new AnyLumpSumDeathBenefitsFormProvider()()
 
   ".value" - {
 

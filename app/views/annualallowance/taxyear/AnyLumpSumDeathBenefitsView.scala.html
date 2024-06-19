@@ -19,12 +19,52 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("anyLumpSumDeathBenefits.title"))) {
+@contentHint = {
+
+<p class="govuk-body">@messages("anyLumpSumDeathBenefits.message1")</p>
+<p class="govuk-body">@messages("anyLumpSumDeathBenefits.message2")</p>
+
+<ul>
+    <li class="govuk-body">
+        @messages("anyLumpSumDeathBenefits.list1")
+    </li>
+    <li class="govuk-body">
+        @messages("anyLumpSumDeathBenefits.list2")
+    </li>
+    <li class="govuk-body">
+        @messages("anyLumpSumDeathBenefits.list3")
+    </li>
+    <li class="govuk-body">
+        @messages("anyLumpSumDeathBenefits.list4")
+    </li>
+</ul>
+
+<p class="govuk-body">@messages("anyLumpSumDeathBenefits.message3")</p>
+
+<ul>
+    <li class="govuk-body">
+        @messages("anyLumpSumDeathBenefits.list5")
+    </li>
+    <li class="govuk-body">
+        @messages("anyLumpSumDeathBenefits.list6")
+    </li>
+</ul>
+
+<a class="govuk-link" href="https://www.gov.uk/guidance/pension-administrators-lump-sum-death-benefit-payments" rel="noreferrer noopener" target="_blank">
+    @messages("anyLumpSumDeathBenefits.link") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+</a>
+<br><br/>
+
+<h2 class="govuk-heading-m">@messages("anyLumpSumDeathBenefits.heading2", startEndDate)</h2>
+}
+
+@layout(pageTitle = title(form, messages("anyLumpSumDeathBenefits.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -32,15 +72,17 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("anyLumpSumDeathBenefits.heading")).asPageHeading()
-            )
+                legend = HmrcPageHeadingLegend(
+                    content = messages("anyLumpSumDeathBenefits.heading"),
+                    caption = HmrcSectionCaption(messages("annualAllowance.thresholdIncome.caption"))
+        )
+        )        .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }

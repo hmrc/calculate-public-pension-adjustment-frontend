@@ -90,6 +90,8 @@ class CheckYourAAPeriodAnswersController @Inject() (
               ThresholdIncomeSummary.row(request.userAnswers, period),
               AdjustedIncomeSummary.row(request.userAnswers, period),
               TotalIncomeSummary.row(request.userAnswers, period),
+              AnyLumpSumDeathBenefitsSummary.row(request.userAnswers, period),
+              LumpSumDeathBenefitsValueSummary.row(request.userAnswers, period),
               AreYouNonDomSummary.row(request.userAnswers, period),
               HasReliefClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
               AmountClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
