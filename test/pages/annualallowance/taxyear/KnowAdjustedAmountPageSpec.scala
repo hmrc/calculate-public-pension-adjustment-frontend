@@ -54,7 +54,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
           .value
         val result = KnowAdjustedAmountPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/claiming-tax-relief-pension")
+        checkNavigation(result, "/annual-allowance/2018/claiming-tax-relief")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -90,7 +90,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
           .value
         val result = KnowAdjustedAmountPage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/change-claiming-tax-relief-pension")
+        checkNavigation(result, "/annual-allowance/2018/change-claiming-tax-relief")
       }
 
       "to JourneyRecovery when not answered" in {
