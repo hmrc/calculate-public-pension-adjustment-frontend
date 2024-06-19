@@ -23,7 +23,7 @@ import play.api.data.FormError
 class LumpSumDeathBenefitsValueFormProviderSpec extends IntFieldBehaviours {
 
   val period = Period._2023
-  val form   = new LumpSumDeathBenefitsValueFormProvider()(period)
+  val form   = new LumpSumDeathBenefitsValueFormProvider()()
 
   ".value" - {
 

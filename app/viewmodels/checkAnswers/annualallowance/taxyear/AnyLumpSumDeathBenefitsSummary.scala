@@ -23,14 +23,21 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 object AnyLumpSumDeathBenefitsSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(AnyLumpSumDeathBenefitsPage(period)).map { answer =>
-      val value = if (answer) "site.yes" else "site.no"
+      val value                = if (answer) "site.yes" else "site.no"
+      val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
+      val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+      val startEndDate: String =
+        period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key = "anyLumpSumDeathBenefits.checkYourAnswersLabel",
+        key = messages("anyLumpSumDeathBenefits.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
@@ -39,7 +46,7 @@ object AnyLumpSumDeathBenefitsSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("anyLumpSumDeathBenefits.change.hidden"))
+            .withVisuallyHiddenText(messages("anyLumpSumDeathBenefits.change.hidden", startEndDate))
         )
       )
     }

@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 class LumpSumDeathBenefitsValueFormProvider @Inject() extends Mappings {
 
-  def apply(period: Period): Form[BigInt] =
+  def apply(): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "lumpSumDeathBenefitsValue.error.required",

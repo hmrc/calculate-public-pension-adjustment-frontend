@@ -17,14 +17,13 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
-import models.Period
 import play.api.data.Form
 
 import javax.inject.Inject
 
 class AnyLumpSumDeathBenefitsFormProvider @Inject() extends Mappings {
 
-  def apply(period: Period): Form[Boolean] =
+  def apply(): Form[Boolean] =
     Form(
       "value" -> boolean("anyLumpSumDeathBenefits.error.required")
     )

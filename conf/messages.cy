@@ -12,6 +12,7 @@ site.start = Dechrau nawr
 site.startAgain = Dechrau eto
 site.signIn = Mewngofnodi
 site.govuk = GOV.UK
+site.opensInNewTab = cy: (opens in a new tab)
 
 date.day = Diwrnod
 date.month = Mis
@@ -35,7 +36,6 @@ error.number = Nodwch rif dilys
 error.required = Nodwch werth
 error.summary.title = Mae problem wedi codi
 error.invalid_aa_period = Cyfnod lwfans blynyddol annilys
-
 
 checkYourAnswers.title = Gwiriwch eich atebion
 checkYourAnswers.heading = Gwiriwch eich atebion
@@ -73,6 +73,7 @@ unauthorised.title = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r cyfrif hwn
 unauthorised.heading = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r cyfrif hwn
 
 annualAllowance.caption = Lwfans blynyddol
+annualAllowance.thresholdIncome.caption = cy: Annual allowance threshold income
 lifetimeAllowance.caption = Lwfans oes
 divider = neu
 startEndDateAnd = a
@@ -517,6 +518,7 @@ pensionSchemeInputAmounts.revisedPIA.message1 = ‘Swm diwygiedig o ran talu i m
 pensionSchemeInputAmounts.revisedPIA.message2 = Mae’n rhaid i chi ychwanegu’r symiau o’ch cynlluniau pensiwn hanesyddol a’ch cynlluniau ôl-ddiwygio, os yw’n berthnasol.
 pensionSchemeInputAmounts.revisedPIA.hint1 = Mae’n rhaid talgrynnu’r swm i lawr i’r bunt agosaf, er enghraifft 2300.
 pensionSchemeInputAmounts.checkYourAnswersLabel = Symiau talu i mewn i bensiwn ar gyfer {0} rhwng {1}
+pensionSchemeInputAmounts.checkYourAnswersLabelRevised = cy: Revised pension scheme {0} input amount
 pensionSchemeInputAmounts.2016-pre.checkYourAnswersLabel = Cynllun Pensiwn {0} symiau talu i mewn rhwng 6 Ebrill 2015 a 8 Gorffennaf 2015
 pensionSchemeInputAmounts.2016-post.checkYourAnswersLabel = Cynllun Pensiwn {0} symiau talu i mewn rhwng 9 Gorffennaf 2015 a 5 Ebrill 2015
 pensionSchemeInputAmounts.error.originalPIA.required = Nodwch eich swm talu i mewn i bensiwn
@@ -1189,20 +1191,32 @@ flexibleRemunerationArrangements.checkYourAnswersLabel = cy: Did you have any fl
 flexibleRemunerationArrangements.error.required = cy: Select yes if you had any flexible remuneration arrangements
 flexibleRemunerationArrangements.change.hidden = cy: Flexible remuneration
 
-anyLumpSumDeathBenefits.title = cy: anyLumpSumDeathBenefits
-anyLumpSumDeathBenefits.heading = cy: anyLumpSumDeathBenefits
-anyLumpSumDeathBenefits.checkYourAnswersLabel = cy: anyLumpSumDeathBenefits
-anyLumpSumDeathBenefits.error.required = cy: Select yes if anyLumpSumDeathBenefits
-anyLumpSumDeathBenefits.change.hidden = cy: AnyLumpSumDeathBenefits
+anyLumpSumDeathBenefits.title = cy: Did you have any lump sum death benefits from {0}?
+anyLumpSumDeathBenefits.heading = cy: Lump sum death benefits
+anyLumpSumDeathBenefits.heading2 = cy: Did you have any lump sum death benefits from {0}?
+anyLumpSumDeathBenefits.checkYourAnswersLabel = cy: Did you have any lump sum death benefits from {0}?
+anyLumpSumDeathBenefits.error.required = cy: Select yes if you received any lump sum death benefits from a pension scheme
+anyLumpSumDeathBenefits.message1 = cy: A lump sum death benefit payment is a lump sum paid from a pension scheme after the death of the member or beneficiary.
+anyLumpSumDeathBenefits.message2 = cy: Taxable lump sum death benefits include:
+anyLumpSumDeathBenefits.message3 = cy: If the member or beneficiary was 75 or over when they died, the following lump sum death benefit payments are taxable:
+anyLumpSumDeathBenefits.link = cy: Find out more about lump sum death benefits
+anyLumpSumDeathBenefits.list1 = cy: defined benefits
+anyLumpSumDeathBenefits.list2 = cy: uncrystallised funds
+anyLumpSumDeathBenefits.list3 = cy: drawdown pension fund
+anyLumpSumDeathBenefits.list4 = cy: flexi-access drawdown fund
+anyLumpSumDeathBenefits.list5 = cy: pension protection
+anyLumpSumDeathBenefits.list6 = cy: annuity protection
+anyLumpSumDeathBenefits.change.hidden = cy: if you received any lump sum death benefits from a pension scheme from {0}
 
-lumpSumDeathBenefitsValue.title = cy: LumpSumDeathBenefitsValue
-lumpSumDeathBenefitsValue.heading = cy: LumpSumDeathBenefitsValue
-lumpSumDeathBenefitsValue.checkYourAnswersLabel = cy: LumpSumDeathBenefitsValue
-lumpSumDeathBenefitsValue.error.nonNumeric = cy: Enter your lumpSumDeathBenefitsValue using numbers
-lumpSumDeathBenefitsValue.error.required = cy: Enter your lumpSumDeathBenefitsValue
-lumpSumDeathBenefitsValue.error.wholeNumber = cy: Enter your lumpSumDeathBenefitsValue using whole numbers
-lumpSumDeathBenefitsValue.error.outOfRange = cy: LumpSumDeathBenefitsValue must be between {0} and {1}
-lumpSumDeathBenefitsValue.change.hidden = cy: LumpSumDeathBenefitsValue
+lumpSumDeathBenefitsValue.title = cy: How much were the lump sum death benefits from {0}?
+lumpSumDeathBenefitsValue.heading = cy: How much were the lump sum death benefits from {0}?
+lumpSumDeathBenefitsValue.hint = cy: Amount must be rounded down to the nearest pound, for example 2300.
+lumpSumDeathBenefitsValue.checkYourAnswersLabel = cy: How much were the lump sum death benefits from {0}
+lumpSumDeathBenefitsValue.error.nonNumeric = cy: Your lump sum death benefit amount must only include numbers 0 to 9
+lumpSumDeathBenefitsValue.error.required = cy: Enter your lump sum death benefit amount
+lumpSumDeathBenefitsValue.error.wholeNumber = cy: Your lump sum death benefit amount must only include numbers 0 to 9
+lumpSumDeathBenefitsValue.error.outOfRange = cy: Your lump sum death benefit amount must be more than £0 and less than £999,999,999
+lumpSumDeathBenefitsValue.change.hidden = cy: the amount of pension savings your employer made from {0}
 
 claimingTaxReliefPension.title = cy: claimingTaxReliefPension
 claimingTaxReliefPension.heading = cy: claimingTaxReliefPension

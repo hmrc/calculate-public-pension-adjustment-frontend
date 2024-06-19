@@ -38,7 +38,7 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
 
         val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/threshold-income/any-lump-sum-death-benefits/2017")
+        checkNavigation(result, "/annual-allowance/2017/any-lump-sum-death-benefits")
       }
     }
 
@@ -51,7 +51,7 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
 
         val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/threshold-income/change-any-lump-sum-death-benefits/2017")
+        checkNavigation(result, "/annual-allowance/2017/change-any-lump-sum-death-benefits")
       }
     }
 

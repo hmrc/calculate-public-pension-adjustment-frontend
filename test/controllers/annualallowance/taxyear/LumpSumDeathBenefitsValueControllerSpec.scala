@@ -38,7 +38,8 @@ class LumpSumDeathBenefitsValueControllerSpec extends SpecBase with MockitoSugar
 
   val period       = Period._2022
   val formProvider = new LumpSumDeathBenefitsValueFormProvider()
-  val form         = formProvider(period)
+  val startEndDate = "6 April 2021 to 5 April 2022"
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -61,7 +62,10 @@ class LumpSumDeathBenefitsValueControllerSpec extends SpecBase with MockitoSugar
         val view = application.injector.instanceOf[LumpSumDeathBenefitsValueView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, period)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, period, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -79,7 +83,7 @@ class LumpSumDeathBenefitsValueControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, period)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -125,7 +129,10 @@ class LumpSumDeathBenefitsValueControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, period)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, period, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
