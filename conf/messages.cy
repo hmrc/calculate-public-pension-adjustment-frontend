@@ -1308,3 +1308,14 @@ blindAllowance.heading = cy: Are you claiming for blind person allowance?
 blindAllowance.checkYourAnswersLabel = cy: Are you claiming for blind person allowance?
 blindAllowance.error.required = cy: Select yes if you are claiming for blind person allowance
 blindAllowance.change.hidden = cy: if you are claiming for blind person allowance
+
+blindPersonsAllowanceAmount.title = cy: How much blind persons allowance did you claim from {0}?
+blindPersonsAllowanceAmount.heading = cy: How much blind persons allowance did you claim from {0}?
+blindPersonsAllowanceAmount.checkYourAnswersLabel = cy: Blind persons allowance from {0}
+blindPersonsAllowanceAmount.caption = cy: Annual allowance net income
+blindPersonsAllowanceAmount.error.nonNumeric = cy: Your blind persons allowance must only include numbers 0 to 9
+blindPersonsAllowanceAmount.error.required = cy: How much blind persons allowance did you claim?
+blindPersonsAllowanceAmount.error.wholeNumber = cy: Your blind persons allowance must only include numbers 0 to 9
+blindPersonsAllowanceAmount.change.hidden = cy: your blind persons allowance
+blindPersonsAllowanceAmount.error.maximum = cy: Your blind persons allowance must be {0} or less
+blindPersonsAllowanceAmount.error.minimum = cy: Your blind persons allowance must be {0} or more
