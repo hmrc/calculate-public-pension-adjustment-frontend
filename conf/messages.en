@@ -1249,13 +1249,14 @@ howMuchTaxReliefPension.error.wholeNumber = Enter your amount of relief claimed 
 howMuchTaxReliefPension.error.outOfRange = Amount of relief claimed must be between {0} and {1}
 howMuchTaxReliefPension.change.hidden = Amount of relief claimed
 
-claimingTaxReliefPensionNotAdjustedIncome.title = Did you claim for tax relief on your pension from {0}
-claimingTaxReliefPensionNotAdjustedIncome.heading = Did you claim for tax relief on your pension from {0}
+claimingTaxReliefPensionNotAdjustedIncome.title = Did you claim for tax relief on your pension from {0}?
+claimingTaxReliefPensionNotAdjustedIncome.heading = Did you claim for tax relief on your pension from {0}?
 claimingTaxReliefPensionNotAdjustedIncome.message1 = You may have claimed income tax relief if any of the following applied to you:
 claimingTaxReliefPensionNotAdjustedIncome.bullet1 = you claimed tax relief for job expenses such as trade union membership fees or uniforms
 claimingTaxReliefPensionNotAdjustedIncome.bullet2 = you made any gift-aid payments to charity or donated any shares or property to charity
 claimingTaxReliefPensionNotAdjustedIncome.bullet3 = you are self employed and you claimed for trading losses
-claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel = Did you claim for tax relief on your pension from {0}
+claimingTaxReliefPensionNotAdjustedIncome.heading2 = Did you claim for income tax relief from {0}?
+claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel = Did you claim for tax relief on your pension from {0}?
 claimingTaxReliefPensionNotAdjustedIncome.error.required = Select yes if you claimed for tax relief on your pension
 claimingTaxReliefPensionNotAdjustedIncome.change.hidden = Claiming pension tax relief
 
