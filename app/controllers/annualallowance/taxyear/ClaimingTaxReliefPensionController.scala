@@ -56,7 +56,7 @@ class ClaimingTaxReliefPensionController @Inject() (
       Ok(view(preparedForm, mode, period, startEndDate(period)))
   }
 
-  def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, period: Period): Action[AnyContent]                  = (identify andThen getData andThen requireData).async {
     implicit request =>
       val form = formProvider(period)
 

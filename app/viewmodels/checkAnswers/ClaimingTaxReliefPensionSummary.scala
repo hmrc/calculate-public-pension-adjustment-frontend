@@ -38,9 +38,8 @@ object ClaimingTaxReliefPensionSummary {
       val startEndDate: String =
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
-
       SummaryListRowViewModel(
-        key = messages("claimingTaxReliefPension.checkYourAnswersLabel",startEndDate),
+        key = messages("claimingTaxReliefPension.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
