@@ -22,12 +22,13 @@ import play.api.data.Form
 
 class HowMuchTaxReliefPensionFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(args: Seq[String]): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "howMuchTaxReliefPension.error.required",
         "howMuchTaxReliefPension.error.wholeNumber",
-        "howMuchTaxReliefPension.error.nonNumeric"
+        "howMuchTaxReliefPension.error.nonNumeric",
+        args
       )
         .verifying(inRange[BigInt](0, 999999999, "howMuchTaxReliefPension.error.outOfRange"))
     )

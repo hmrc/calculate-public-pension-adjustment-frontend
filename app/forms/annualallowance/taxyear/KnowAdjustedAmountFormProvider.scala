@@ -23,8 +23,8 @@ import play.api.data.Form
 
 class KnowAdjustedAmountFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(args: Seq[String]): Form[Boolean] =
     Form(
-      "value" -> boolean("knowAdjustedAmount.error.required")
+      "value" -> boolean("knowAdjustedAmount.error.required", "error.boolean", args)
     )
 }

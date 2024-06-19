@@ -85,7 +85,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
           val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/annual-allowance/adjusted-income/know-adjusted-amount/$period")
+          checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
 
         }
 
@@ -145,7 +145,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/adjusted-income/know-adjusted-amount/$period")
+              checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
             }
 
             "to know personal allowance page when threshold value calculated to be below 110000 " in {
@@ -249,7 +249,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/adjusted-income/know-adjusted-amount/$period")
+              checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
             }
 
             "to know personal allowance page when threshold value calculated to be below 200000" in {

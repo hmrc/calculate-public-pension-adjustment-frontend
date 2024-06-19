@@ -19,12 +19,33 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("knowAdjustedAmount.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("knowAdjustedAmount.message1")</p>
+
+    <ul class="govuk-body">
+        <li>
+        @messages("knowAdjustedAmount.bullet1")
+        </li>
+        <li>
+        @messages("knowAdjustedAmount.bullet2")
+        </li>
+        <li>
+        @messages("knowAdjustedAmount.bullet3")
+        </li>
+    </ul>
+
+    <p class="govuk-body">@messages("knowAdjustedAmount.message2")</p>
+
+    <p class="govuk-heading-l govuk-!-padding-0">@messages("knowAdjustedAmount.heading2")</p>
+}
+
+@layout(pageTitle = title(form, messages("knowAdjustedAmount.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -35,12 +56,13 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("knowAdjustedAmount.heading")).asPageHeading()
-            )
+                legend = HmrcPageHeadingLegend(
+                    content = messages("knowAdjustedAmount.heading1"),
+                    caption = HmrcSectionCaption(messages("knowAdjustedAmount.caption"))
+                )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }

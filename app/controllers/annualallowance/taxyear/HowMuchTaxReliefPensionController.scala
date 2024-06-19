@@ -23,12 +23,14 @@ import models.tasklist.sections.AASection
 import javax.inject.Inject
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.HowMuchTaxReliefPensionPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import services.UserDataService
 import views.html.annualallowance.taxyear.HowMuchTaxReliefPensionView
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import scala.concurrent.{ExecutionContext, Future}
 
 class HowMuchTaxReliefPensionController @Inject() (
@@ -44,24 +46,24 @@ class HowMuchTaxReliefPensionController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
-
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      val form = formProvider(Seq(startEndDate(period)))
+
       val preparedForm = request.userAnswers.get(HowMuchTaxReliefPensionPage(period)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period))
+      Ok(view(preparedForm, mode, period, startEndDate(period)))
   }
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      form
+      formProvider(Seq(startEndDate(period)))
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
             for {
               updatedAnswers <-
@@ -71,5 +73,11 @@ class HowMuchTaxReliefPensionController @Inject() (
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
+  }
+
+  private def startEndDate(period: Period)(implicit messages: Messages): String = {
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
+    val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+    period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
   }
 }
