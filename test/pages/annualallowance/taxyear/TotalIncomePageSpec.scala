@@ -61,7 +61,7 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/adjusted-income/claiming-tax-relief-pension/2017")
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
       }
 
       "to claiming-tax-relief-pension page when not in 15/16 and no is selected on threshold income" in {
@@ -78,7 +78,7 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/adjusted-income/claiming-tax-relief-pension/2017")
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
       }
     }
 
@@ -114,7 +114,7 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/adjusted-income/change-claiming-tax-relief-pension/2017")
+        checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief")
       }
 
       "to claiming-tax-relief-pension page when not in 15/16 and no is selected on threshold income" in {
@@ -131,7 +131,7 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/adjusted-income/change-claiming-tax-relief-pension/2017")
+        checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief")
       }
     }
   }

@@ -1218,11 +1218,16 @@ lumpSumDeathBenefitsValue.error.wholeNumber = Your lump sum death benefit amount
 lumpSumDeathBenefitsValue.error.outOfRange = Your lump sum death benefit amount must be more than £0 and less than £999,999,999
 lumpSumDeathBenefitsValue.change.hidden = the amount of pension savings your employer made from {0}
 
-claimingTaxReliefPension.title = claimingTaxReliefPension
-claimingTaxReliefPension.heading = claimingTaxReliefPension
-claimingTaxReliefPension.checkYourAnswersLabel = claimingTaxReliefPension
-claimingTaxReliefPension.error.required = Select yes if claimingTaxReliefPension
-claimingTaxReliefPension.change.hidden = ClaimingTaxReliefPension
+claimingTaxReliefPension.title = Did you claim for tax relief on your pension from {0}?
+claimingTaxReliefPension.heading = Claiming income tax relief
+claimingTaxReliefPension.message1 = You may have claimed income tax relief if any of the following applied to you:
+claimingTaxReliefPension.bullet1 = you claimed tax relief for job expenses such as trade union membership fees or uniforms
+claimingTaxReliefPension.bullet2 = you made any gift-aid payments to charity or donated any shares or property to charity
+claimingTaxReliefPension.bullet3 = you are self employed and you claimed for trading losses
+claimingTaxReliefPension.heading2 = Did you claim for income tax relief from {0}?
+claimingTaxReliefPension.checkYourAnswersLabel = Did you claim for tax relief on your pension from {0}?
+claimingTaxReliefPension.error.required = Select yes if you claimed for tax relief on your pension
+claimingTaxReliefPension.change.hidden = Claiming pension tax relief
 
 interestFromSavings.title = InterestFromSavings
 interestFromSavings.heading = InterestFromSavings

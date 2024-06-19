@@ -1248,11 +1248,16 @@ howMuchTaxReliefPension.error.wholeNumber = cy: Enter your amount of relief clai
 howMuchTaxReliefPension.error.outOfRange = cy: Amount of relief claimed must be between {0} and {1}
 howMuchTaxReliefPension.change.hidden = cy: Amount of relief claimed
 
-claimingTaxReliefPensionNotAdjustedIncome.title = cy: Claiming pension tax relief
-claimingTaxReliefPensionNotAdjustedIncome.heading = cy: Claiming pension tax relief
-claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel = cy: Claiming pension tax relief
-claimingTaxReliefPensionNotAdjustedIncome.error.required = cy: Select yes if claiming pension tax relief
-claimingTaxReliefPensionNotAdjustedIncome.change.hidden = cy: Claiming pension tax relief
+claimingTaxReliefPension.title = cy: Did you claim for tax relief on your pension from {0}?
+claimingTaxReliefPension.heading = cy: Claiming income tax relief
+claimingTaxReliefPension.message1 = cy: You may have claimed income tax relief if any of the following applied to you:
+claimingTaxReliefPension.bullet1 = cy: you claimed tax relief for job expenses such as trade union membership fees or uniforms
+claimingTaxReliefPension.bullet2 = cy: you made any gift-aid payments to charity or donated any shares or property to charity
+claimingTaxReliefPension.bullet3 = cy: you are self employed and you claimed for trading losses
+claimingTaxReliefPension.heading2 = cy: Did you claim for income tax relief from {0}?
+claimingTaxReliefPension.checkYourAnswersLabel = cy: Did you claim for tax relief on your pension from {0}?
+claimingTaxReliefPension.error.required = cy: Select yes if you claimed for tax relief on your pension
+claimingTaxReliefPension.change.hidden = cy: Claiming pension tax relief
 
 amountClaimedOnOverseasPension.title = cy: Amount of relief claimed on overseas pensions
 amountClaimedOnOverseasPension.heading = cy: Amount of relief claimed on overseas pensions

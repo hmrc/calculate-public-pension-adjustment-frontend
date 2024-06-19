@@ -42,6 +42,7 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
   val period       = Period._2020
   val formProvider = new ClaimingTaxReliefPensionFormProvider()
   val form         = formProvider(period)
+  val startEndDate: String = "6 April 2019 to 5 April 2020"
 
   lazy val claimingTaxReliefPensionRoute =
     controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period).url
@@ -60,7 +61,7 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
         val view = application.injector.instanceOf[ClaimingTaxReliefPensionView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, period)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, period, startEndDate)(request, messages(application)).toString
       }
     }
 
@@ -78,7 +79,7 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, period)(
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -123,7 +124,7 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, period)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, period, startEndDate)(request, messages(application)).toString
       }
     }
 
