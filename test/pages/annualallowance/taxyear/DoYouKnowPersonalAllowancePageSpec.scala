@@ -102,7 +102,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
     }
 
     "Clean up" - {
-      "must clean up correctly when both DC and DB selected" in {
+      "must clean up correctly when user doesn't know personal allowance" in {
 
         val ua = emptyUserAnswers.set(PersonalAllowancePage(Period._2018), BigInt("100")).success.value
 

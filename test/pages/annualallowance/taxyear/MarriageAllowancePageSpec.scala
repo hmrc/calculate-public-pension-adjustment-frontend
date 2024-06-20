@@ -85,7 +85,7 @@ class MarriageAllowancePageSpec extends PageBehaviours {
     }
 
     "Clean up" - {
-      "must clean up correctly when both DC and DB selected" in {
+      "must clean up correctly when user is not claiming marriage allowance" in {
 
         val ua = emptyUserAnswers.set(MarriageAllowanceAmountPage(Period._2018), BigInt("100")).success.value
 

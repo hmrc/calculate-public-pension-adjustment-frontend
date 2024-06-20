@@ -44,13 +44,6 @@ class BlindPersonsAllowanceAmountPageSpec extends PageBehaviours {
       }
     }
 
-    "to JourneyRecoveryPage when not answred" in {
-      val ua     = emptyUserAnswers
-      val result = BlindPersonsAllowanceAmountPage(Period._2013).navigate(NormalMode, ua).url
-
-      checkNavigation(result, s"/there-is-a-problem")
-    }
-
     "must Navigate correctly to CYA" in {
       val ua     = emptyUserAnswers
         .set(

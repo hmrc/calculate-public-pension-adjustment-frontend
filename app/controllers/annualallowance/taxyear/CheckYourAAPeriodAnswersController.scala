@@ -72,7 +72,7 @@ class CheckYourAAPeriodAnswersController @Inject() (
               DefinedBenefitAmountSummary.row(request.userAnswers, period),
               ThresholdIncomeSummary.row(request.userAnswers, period),
               AdjustedIncomeSummary.row(request.userAnswers, period),
-              TotalIncomeSummary.row(request.userAnswers, period),
+              TotalIncomeSummary.row(request.userAnswers, period)
             )
         ).flatten
 

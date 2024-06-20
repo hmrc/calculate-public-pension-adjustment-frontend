@@ -28,14 +28,9 @@ case class BlindPersonsAllowanceAmountPage(period: Period) extends QuestionPage[
   override def toString: String = "blindPersonsAllowanceAmount"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(BlindPersonsAllowanceAmountPage(period)) match {
-      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(BlindPersonsAllowanceAmountPage(period)) match {
-      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+
 }
