@@ -55,7 +55,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
 
         val result = DoYouKnowPersonalAllowancePage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/total-income/blind-person-allowance/2018")
+        checkNavigation(result, "/annual-allowance/2018/blind-person-allowance")
       }
 
       "must redirect to DoYouKnowPersonalAllowance to check basic rate page when false and Net Income less than 100K" in {

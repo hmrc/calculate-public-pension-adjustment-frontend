@@ -40,7 +40,7 @@ class MarriageAllowancePageSpec extends PageBehaviours {
 
         val result = MarriageAllowancePage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/total-income/marriage-allowance-amount/2018")
+        checkNavigation(result, "/annual-allowance/2018/marriage-allowance-amount")
       }
 
       "must redirect to BlindAllowance page when false" in {
@@ -52,7 +52,7 @@ class MarriageAllowancePageSpec extends PageBehaviours {
 
         val result = MarriageAllowancePage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/total-income/blind-person-allowance/2018")
+        checkNavigation(result, "/annual-allowance/2018/blind-person-allowance")
       }
 
     }
@@ -68,7 +68,7 @@ class MarriageAllowancePageSpec extends PageBehaviours {
 
         val result = MarriageAllowancePage(Period._2018).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/total-income/change-marriage-allowance-amount/2018")
+        checkNavigation(result, "/annual-allowance/2018/change-marriage-allowance-amount")
       }
 
       "must redirect to CYA page when false" in {

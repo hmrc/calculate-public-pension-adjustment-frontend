@@ -41,7 +41,7 @@ class MarriageAllowanceAmountPageSpec extends PageBehaviours {
           .value
         val result = MarriageAllowanceAmountPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/total-income/blind-person-allowance/2018")
+        checkNavigation(result, "/annual-allowance/2018/blind-person-allowance")
       }
     }
 

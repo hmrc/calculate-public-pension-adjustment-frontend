@@ -23,9 +23,24 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("blindAllowance.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("blindAllowance.message1")</p>
+
+    <ul class="govuk-body">
+        <li>
+        @messages("blindAllowance.bullet1")
+        </li>
+        <li>
+        @messages("blindAllowance.bullet2")
+        </li>
+    </ul>
+
+    <p class="govuk-heading-l govuk-!-padding-0">@messages("blindAllowance.heading2", startEndDate)</p>
+}
+
+@layout(pageTitle = title(form, messages("blindAllowance.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.BlindAllowanceController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -36,8 +51,11 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("blindAllowance.heading")).asPageHeading()
-            )
+                legend = HmrcPageHeadingLegend(
+                    content = messages("blindAllowance.heading1"),
+                    caption = HmrcSectionCaption(messages("blindAllowance.caption"))
+                )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()

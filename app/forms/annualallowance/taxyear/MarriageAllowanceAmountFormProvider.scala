@@ -23,16 +23,17 @@ import javax.inject.Inject
 
 class MarriageAllowanceAmountFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(args: Seq[String]): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "marriageAllowanceAmount.error.required",
         "marriageAllowanceAmount.error.wholeNumber",
-        "marriageAllowanceAmount.error.nonNumeric"
+        "marriageAllowanceAmount.error.nonNumeric",
+        args
       )
         .verifying(
-          minimumValue[BigInt](0, "marriageAllowanceAmount.error.minimum"),
-          maximumValue[BigInt](BigInt("999999999"), "marriageAllowanceAmount.error.maximum")
+          minimumValue[BigInt](1, "marriageAllowanceAmount.error.minimum", args(0)),
+          maximumValue[BigInt](BigInt(args(1)), "marriageAllowanceAmount.error.maximum", args(0))
         )
     )
 }
