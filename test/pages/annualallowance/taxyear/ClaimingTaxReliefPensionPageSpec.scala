@@ -50,7 +50,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
       val result = ClaimingTaxReliefPensionPage(Period._2016).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2016/total-income/tax-relief")
+      checkNavigation(result, "/annual-allowance/2016/tax-relief")
 
     }
 
