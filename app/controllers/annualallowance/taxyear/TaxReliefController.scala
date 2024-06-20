@@ -72,6 +72,7 @@ class TaxReliefController @Inject() (
             } yield Redirect(redirectUrl)
         )
   }
+
   private def startEndDate(period: Period)(implicit messages: Messages): String = {
     val languageTag = if (messages.lang.code == "cy") "cy" else "en"
     val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
