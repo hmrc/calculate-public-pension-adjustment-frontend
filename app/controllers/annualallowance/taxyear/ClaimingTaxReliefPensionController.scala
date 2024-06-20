@@ -20,12 +20,14 @@ import controllers.actions._
 import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.ClaimingTaxReliefPensionView
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -51,7 +53,7 @@ class ClaimingTaxReliefPensionController @Inject() (
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period))
+      Ok(view(preparedForm, mode, period, startEndDate(period)))
   }
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
@@ -61,12 +63,18 @@ class ClaimingTaxReliefPensionController @Inject() (
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage(period), value))
               _              <- userDataService.set(updatedAnswers)
             } yield Redirect(ClaimingTaxReliefPensionPage(period).navigate(mode, updatedAnswers))
         )
+  }
+
+  private def startEndDate(period: Period)(implicit messages: Messages): String = {
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
+    val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+    period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
   }
 }

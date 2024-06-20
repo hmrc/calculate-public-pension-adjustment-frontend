@@ -22,9 +22,20 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("claimingTaxReliefPension.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("claimingTaxReliefPension.message1")</p>
+        <ul class="govuk-body">
+            <li class="govuk-body">@messages("claimingTaxReliefPension.bullet1")</li>
+            <li class="govuk-body">@messages("claimingTaxReliefPension.bullet2")</li>
+            <li class="govuk-body">@messages("claimingTaxReliefPension.bullet3")</li>
+        </ul>
+
+    <h2 class="govuk-heading-m">@messages("claimingTaxReliefPension.heading2", startEndDate)</h2>
+}
+
+@layout(pageTitle = title(form, messages("claimingTaxReliefPension.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -35,9 +46,11 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("claimingTaxReliefPension.heading")).asPageHeading()
-            )
-        )
+                legend = HmrcPageHeadingLegend(
+                    content = messages("claimingTaxReliefPension.heading", startEndDate),
+                    caption = HmrcSectionCaption(messages("adjustedIncomeCaption.caption")))
+            ).withHint(HintViewModel(HtmlContent(contentHint))
+        ))
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))
