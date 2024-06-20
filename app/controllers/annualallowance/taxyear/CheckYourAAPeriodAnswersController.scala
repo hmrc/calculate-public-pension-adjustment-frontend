@@ -97,7 +97,8 @@ class CheckYourAAPeriodAnswersController @Inject() (
               AmountClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
               DoYouKnowPersonalAllowanceSummary.row(request.userAnswers, period),
               PersonalAllowanceSummary.row(request.userAnswers, period),
-              TaxReliefSummary.row(request.userAnswers, period)
+              TaxReliefSummary.row(request.userAnswers, period),
+              BlindPersonsAllowanceAmountSummary.row(request.userAnswers, period)
             )
         ).flatten
 
@@ -131,7 +132,8 @@ class CheckYourAAPeriodAnswersController @Inject() (
               DefinedBenefit2016PostAmountSummary.row(request.userAnswers),
               TotalIncomeSummary.row(request.userAnswers, period),
               PersonalAllowanceSummary.row(request.userAnswers, period),
-              TaxReliefSummary.row(request.userAnswers, period)
+              TaxReliefSummary.row(request.userAnswers, period),
+              BlindPersonsAllowanceAmountSummary.row(request.userAnswers, period)
             )
         ).flatten
 

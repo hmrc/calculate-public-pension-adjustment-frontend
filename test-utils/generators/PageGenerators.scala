@@ -25,6 +25,9 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryBlindPersonsAllowanceAmountPage: Arbitrary[BlindPersonsAllowanceAmountPage.type] =
+    Arbitrary(BlindPersonsAllowanceAmountPage)
+
   implicit lazy val arbitraryBlindAllowancePage: Arbitrary[BlindAllowancePage.type] =
     Arbitrary(BlindAllowancePage)
 

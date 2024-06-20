@@ -18,67 +18,84 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.annualallowance.taxyear.BlindAllowanceFormProvider
-import pages.annualallowance.taxyear.BlindAllowancePage
+import controllers.routes
+import forms.annualallowance.taxyear.{BlindPersonsAllowanceAmountFormProvider, HowMuchAAChargeSchemePaidFormProvider}
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.annualallowance.taxyear.BlindPersonsAllowanceAmountPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.annualallowance.taxyear.BlindAllowanceView
+import views.html.annualallowance.taxyear.BlindPersonsAllowanceAmountView
+import play.api.i18n.Messages
 
 import scala.concurrent.Future
 
-class BlindAllowanceControllerSpec extends SpecBase with MockitoSugar {
+class BlindPersonsAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new BlindAllowanceFormProvider()
-  val form         = formProvider()
+  val validAnswer = BigInt("2300")
 
-  lazy val blindAllowanceRoute =
-    controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, Period._2018).url
+  val startEndDate = "6 April 2016 to 5 April 2017"
 
-  "BlindAllowance Controller" - {
+  lazy val blindPersonsAllowanceAmountRoute =
+    controllers.annualallowance.taxyear.routes.BlindPersonsAllowanceAmountController
+      .onPageLoad(NormalMode, Period._2017)
+      .url
+
+  private def formWithMockMessages = {
+
+    val formProvider = new BlindPersonsAllowanceAmountFormProvider()
+    formProvider(Period._2017)()
+  }
+
+  "BlindPersonsAllowanceAmount Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, blindAllowanceRoute)
+        val request = FakeRequest(GET, blindPersonsAllowanceAmountRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[BlindAllowanceView]
+        val view = application.injector.instanceOf[BlindPersonsAllowanceAmountView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(formWithMockMessages, NormalMode, Period._2017, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(BlindAllowancePage(Period._2018), true).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(BlindPersonsAllowanceAmountPage(Period._2017), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, blindAllowanceRoute)
+        val request = FakeRequest(GET, blindPersonsAllowanceAmountRoute)
 
-        val view = application.injector.instanceOf[BlindAllowanceView]
+        val view = application.injector.instanceOf[BlindPersonsAllowanceAmountView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(
+          formWithMockMessages.fill(validAnswer),
+          NormalMode,
+          Period._2017,
+          startEndDate
+        )(request, messages(application)).toString
       }
     }
 
@@ -95,8 +112,8 @@ class BlindAllowanceControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, blindAllowanceRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+          FakeRequest(POST, blindPersonsAllowanceAmountRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
 
         val result = route(application, request).value
 
@@ -110,17 +127,17 @@ class BlindAllowanceControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, blindAllowanceRoute)
-            .withFormUrlEncodedBody(("value", ""))
+          FakeRequest(POST, blindPersonsAllowanceAmountRoute)
+            .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = form.bind(Map("value" -> ""))
+        val boundForm = formWithMockMessages.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[BlindAllowanceView]
+        val view = application.injector.instanceOf[BlindPersonsAllowanceAmountView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2017, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -133,7 +150,7 @@ class BlindAllowanceControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   = FakeRequest(GET, blindAllowanceRoute)
+        val request   = FakeRequest(GET, blindPersonsAllowanceAmountRoute)
 
         val result = route(application, request).value
 
@@ -149,12 +166,13 @@ class BlindAllowanceControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val request   =
-          FakeRequest(POST, blindAllowanceRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+          FakeRequest(POST, blindPersonsAllowanceAmountRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
