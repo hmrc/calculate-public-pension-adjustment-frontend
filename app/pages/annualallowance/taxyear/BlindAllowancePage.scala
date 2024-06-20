@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -28,8 +28,19 @@ case class BlindAllowancePage(period: Period) extends QuestionPage[Boolean] {
   override def toString: String = "blindAllowance"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    answers.get(BlindAllowancePage(period)) match {
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.BlindPersonsAllowanceAmountController.onPageLoad(NormalMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+  override protected def navigateInCheckMode(answers: UserAnswers): Call  =
+    answers.get(BlindAllowancePage(period)) match {
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.BlindPersonsAllowanceAmountController.onPageLoad(CheckMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }
