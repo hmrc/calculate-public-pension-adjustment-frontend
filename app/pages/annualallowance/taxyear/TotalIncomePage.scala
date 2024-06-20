@@ -59,10 +59,9 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
       controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
     }
 
-  // TODO Needs Blind Persons Allowance Amount Page Adding to List
   override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map { case _ =>
+      .map { _ =>
         userAnswers
           .remove(AnySalarySacrificeArrangementsPage(period))
           .flatMap(_.remove(AmountSalarySacrificeArrangementsPage(period)))
@@ -85,6 +84,7 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
           .flatMap(_.remove(MarriageAllowancePage(period)))
           .flatMap(_.remove(MarriageAllowanceAmountPage(period)))
           .flatMap(_.remove(BlindAllowancePage(period)))
+          .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -176,6 +176,9 @@ class ThresholdIncomePageSpec extends PageBehaviours {
           .set(BlindAllowancePage(period), true)
           .success
           .value
+          .set(BlindPersonsAllowanceAmountPage(period), BigInt(1))
+          .success
+          .value
 
         val cleanedUserAnswers = ThresholdIncomePage(Period._2017)
           .cleanup(Some(ThresholdIncome.Yes), userAnswers)
@@ -204,6 +207,7 @@ class ThresholdIncomePageSpec extends PageBehaviours {
         cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
         cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
         cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
       }
     }
   }

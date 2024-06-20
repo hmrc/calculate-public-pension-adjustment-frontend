@@ -114,7 +114,7 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief")
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
       }
 
       "to claiming-tax-relief-pension page in normal mode when not in 15/16 and no is selected on threshold income" in {
@@ -131,7 +131,7 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief")
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
       }
     }
 
@@ -205,6 +205,9 @@ class TotalIncomePageSpec extends PageBehaviours {
           .set(BlindAllowancePage(period), true)
           .success
           .value
+          .set(BlindPersonsAllowanceAmountPage(period), BigInt(1))
+          .success
+          .value
 
         val cleanedUserAnswers = TotalIncomePage(Period._2017)
           .cleanup(Some(BigInt(1000)), userAnswers)
@@ -232,6 +235,7 @@ class TotalIncomePageSpec extends PageBehaviours {
         cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
         cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
         cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
       }
     }
   }

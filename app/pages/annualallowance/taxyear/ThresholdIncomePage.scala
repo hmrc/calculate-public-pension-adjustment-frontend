@@ -42,10 +42,9 @@ case class ThresholdIncomePage(period: Period) extends QuestionPage[ThresholdInc
       case None    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  // TODO Needs Blind Persons Allowance Amount Page Adding to List
   override def cleanup(value: Option[ThresholdIncome], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map { case _ =>
+      .map { _ =>
         userAnswers
           .remove(TotalIncomePage(period))
           .flatMap(_.remove(AnySalarySacrificeArrangementsPage(period)))
@@ -69,6 +68,7 @@ case class ThresholdIncomePage(period: Period) extends QuestionPage[ThresholdInc
           .flatMap(_.remove(MarriageAllowancePage(period)))
           .flatMap(_.remove(MarriageAllowanceAmountPage(period)))
           .flatMap(_.remove(BlindAllowancePage(period)))
+          .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }
