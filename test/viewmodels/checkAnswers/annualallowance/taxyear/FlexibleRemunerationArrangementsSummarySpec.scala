@@ -40,7 +40,7 @@ class FlexibleRemunerationArrangementsSummarySpec extends AnyFreeSpec with Match
           true
         )
         .get
-      FlexibleRemunerationArrangementsSummary.row(userAnswers, period, startEndDate) shouldBe Some(
+      FlexibleRemunerationArrangementsSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "flexibleRemunerationArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -63,7 +63,7 @@ class FlexibleRemunerationArrangementsSummarySpec extends AnyFreeSpec with Match
           false
         )
         .get
-      FlexibleRemunerationArrangementsSummary.row(userAnswers, period, startEndDate) shouldBe Some(
+      FlexibleRemunerationArrangementsSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "flexibleRemunerationArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -81,7 +81,7 @@ class FlexibleRemunerationArrangementsSummarySpec extends AnyFreeSpec with Match
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      FlexibleRemunerationArrangementsSummary.row(userAnswers, period, startEndDate) shouldBe None
+      FlexibleRemunerationArrangementsSummary.row(userAnswers, period) shouldBe None
     }
   }
 
