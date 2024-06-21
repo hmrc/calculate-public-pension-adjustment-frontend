@@ -57,13 +57,13 @@ class TaxReliefPageSpec extends PageBehaviours {
           val period = Gen.oneOf(pre2020Periods).sample.get
 
           val ua = emptyUserAnswers
+            .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
+            .success
+            .value
             .set(
               TaxReliefPage(period),
               BigInt(1)
             )
-            .success
-            .value
-            .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
             .success
             .value
 
@@ -78,13 +78,13 @@ class TaxReliefPageSpec extends PageBehaviours {
           val period = Gen.oneOf(pre2020Periods).sample.get
 
           val ua = emptyUserAnswers
+            .set(ThresholdIncomePage(period), ThresholdIncome.No)
+            .success
+            .value
             .set(
               TaxReliefPage(period),
               BigInt(1)
             )
-            .success
-            .value
-            .set(ThresholdIncomePage(period), ThresholdIncome.No)
             .success
             .value
 

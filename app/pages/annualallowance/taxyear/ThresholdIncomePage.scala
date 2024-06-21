@@ -30,16 +30,6 @@ case class ThresholdIncomePage(period: Period) extends QuestionPage[ThresholdInc
 
   override def toString: String = "thresholdIncome"
 
-//  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
-//    value
-//      .map {
-//        case true  => super.cleanup(value, userAnswers)
-//        case false =>
-//          userAnswers
-//            .remove(AdjustedIncomePage(period))
-//      }
-//      .getOrElse(super.cleanup(value, userAnswers))
-
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ThresholdIncomePage(period)) match {
       case Some(_) => TotalIncomeController.onPageLoad(NormalMode, period)
@@ -48,7 +38,37 @@ case class ThresholdIncomePage(period: Period) extends QuestionPage[ThresholdInc
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ThresholdIncomePage(period)) match {
-      case Some(_) => CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case Some(_) => TotalIncomeController.onPageLoad(NormalMode, period)
       case None    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[ThresholdIncome], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(TotalIncomePage(period))
+          .flatMap(_.remove(AnySalarySacrificeArrangementsPage(period)))
+          .flatMap(_.remove(AmountSalarySacrificeArrangementsPage(period)))
+          .flatMap(_.remove(FlexibleRemunerationArrangementsPage(period)))
+          .flatMap(_.remove(AmountFlexibleRemunerationArrangementsPage(period)))
+          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
+          .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
+          .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
+          .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
+          .flatMap(_.remove(TaxReliefPage(period)))
+          .flatMap(_.remove(KnowAdjustedAmountPage(period)))
+          .flatMap(_.remove(AdjustedIncomePage(period)))
+          .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
+          .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+          .flatMap(_.remove(AreYouNonDomPage(period)))
+          .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
+          .flatMap(_.remove(PersonalAllowancePage(period)))
+          .flatMap(_.remove(MarriageAllowancePage(period)))
+          .flatMap(_.remove(MarriageAllowanceAmountPage(period)))
+          .flatMap(_.remove(BlindAllowancePage(period)))
+          .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }
