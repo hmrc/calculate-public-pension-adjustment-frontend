@@ -21,7 +21,8 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
@@ -34,7 +35,7 @@
         <li>@messages("taxRelief.bullet2")</li>
         }
     </ul>
-    <a class="govuk-link" href="https://https://www.gov.uk/income-tax-reliefs" rel="noreferrer noopener" target="_blank">
+    <a class="govuk-link" href="https://www.gov.uk/tax-relief-for-employees" rel="noreferrer noopener" target="_blank">
         @messages("taxRelief.message2")
     </a>
     <p class="govuk-hint">@messages("taxRelief.hint")</p>
@@ -67,12 +68,6 @@
             .withInputMode("numeric")
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }
