@@ -46,10 +46,10 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
       "must redirect to BlindAllowance page when false and Net Income over 100K" in {
 
         val userAnswers = emptyUserAnswers
-          .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
+          .set(TotalIncomePage(Period._2018), BigInt("110000"))
           .success
           .value
-          .set(TotalIncomePage(Period._2018), BigInt("110000"))
+          .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
           .success
           .value
 
@@ -61,10 +61,10 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
       "must redirect to DoYouKnowPersonalAllowance to check basic rate page when false and Net Income less than 100K" in {
 
         val userAnswers = emptyUserAnswers
-          .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
+          .set(TotalIncomePage(Period._2018), BigInt("100000"))
           .success
           .value
-          .set(TotalIncomePage(Period._2018), BigInt("100000"))
+          .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
           .success
           .value
 
