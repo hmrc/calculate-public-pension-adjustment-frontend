@@ -47,14 +47,14 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
       "to ClaimingTaxReliefPensionNotAdjustedIncome when false, when threshold income is idk" in {
         val ua = emptyUserAnswers
           .set(
-            KnowAdjustedAmountPage(Period._2018),
-            false
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.IDoNotKnow
           )
           .success
           .value
           .set(
-            ThresholdIncomePage(Period._2018),
-            ThresholdIncome.IDoNotKnow
+            KnowAdjustedAmountPage(Period._2018),
+            false
           )
           .success
           .value
@@ -67,14 +67,14 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
       "to AnyLumpSumDeathBenefitsController when false, when threshold income is yes" in {
         val ua = emptyUserAnswers
           .set(
-            KnowAdjustedAmountPage(Period._2018),
-            false
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.Yes
           )
           .success
           .value
           .set(
-            ThresholdIncomePage(Period._2018),
-            ThresholdIncome.Yes
+            KnowAdjustedAmountPage(Period._2018),
+            false
           )
           .success
           .value
@@ -87,14 +87,14 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
       "to JourneyRecovery when false, when threshold income is anything else" in {
         val ua = emptyUserAnswers
           .set(
-            KnowAdjustedAmountPage(Period._2018),
-            false
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.No
           )
           .success
           .value
           .set(
-            ThresholdIncomePage(Period._2018),
-            ThresholdIncome.No
+            KnowAdjustedAmountPage(Period._2018),
+            false
           )
           .success
           .value
@@ -130,14 +130,14 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
       "to ClaimingTaxReliefPensionNotAdjustedIncome when false, when threshold income is idk" in {
         val ua = emptyUserAnswers
           .set(
-            KnowAdjustedAmountPage(Period._2018),
-            false
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.IDoNotKnow
           )
           .success
           .value
           .set(
-            ThresholdIncomePage(Period._2018),
-            ThresholdIncome.IDoNotKnow
+            KnowAdjustedAmountPage(Period._2018),
+            false
           )
           .success
           .value
@@ -150,14 +150,14 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
       "to AnyLumpSumDeathBenefitsController when false, when threshold income is yes" in {
         val ua = emptyUserAnswers
           .set(
-            KnowAdjustedAmountPage(Period._2018),
-            false
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.Yes
           )
           .success
           .value
           .set(
-            ThresholdIncomePage(Period._2018),
-            ThresholdIncome.Yes
+            KnowAdjustedAmountPage(Period._2018),
+            false
           )
           .success
           .value
@@ -170,14 +170,14 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
       "to JourneyRecovery when false, when threshold income is anything else" in {
         val ua = emptyUserAnswers
           .set(
-            KnowAdjustedAmountPage(Period._2018),
-            false
+            ThresholdIncomePage(Period._2018),
+            ThresholdIncome.No
           )
           .success
           .value
           .set(
-            ThresholdIncomePage(Period._2018),
-            ThresholdIncome.No
+            KnowAdjustedAmountPage(Period._2018),
+            false
           )
           .success
           .value
