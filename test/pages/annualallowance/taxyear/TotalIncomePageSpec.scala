@@ -83,7 +83,7 @@ class TotalIncomePageSpec extends PageBehaviours {
     }
 
     "must Navigate correctly in check mode" - {
-      "to AnySalarySacrificeArrangements page when not in 15/16 and idk is selected on threshold income" in {
+      "to AnySalarySacrificeArrangements page in normal mode when not in 15/16 and idk is selected on threshold income" in {
         val ua = emptyUserAnswers
           .set(ThresholdIncomePage(Period._2017), ThresholdIncome.IDoNotKnow)
           .success
@@ -97,10 +97,10 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/change-any-salary-sacrifice-arrangements")
+        checkNavigation(result, "/annual-allowance/2017/any-salary-sacrifice-arrangements")
       }
 
-      "to claiming-tax-relief-pension page when not in 15/16 and yes is selected on threshold income" in {
+      "to claiming-tax-relief-pension page in normal mode when not in 15/16 and yes is selected on threshold income" in {
         val ua = emptyUserAnswers
           .set(ThresholdIncomePage(Period._2017), ThresholdIncome.Yes)
           .success
@@ -114,10 +114,10 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief")
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
       }
 
-      "to claiming-tax-relief-pension page when not in 15/16 and no is selected on threshold income" in {
+      "to claiming-tax-relief-pension page in normal mode when not in 15/16 and no is selected on threshold income" in {
         val ua = emptyUserAnswers
           .set(ThresholdIncomePage(Period._2017), ThresholdIncome.No)
           .success
@@ -131,7 +131,111 @@ class TotalIncomePageSpec extends PageBehaviours {
 
         val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief")
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
+      }
+    }
+
+    "cleanup" - {
+
+      "must cleanup correctly" in {
+
+        val period = Period._2017
+
+        val userAnswers = emptyUserAnswers
+          .set(AnySalarySacrificeArrangementsPage(period), true)
+          .success
+          .value
+          .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+          .success
+          .value
+          .set(FlexibleRemunerationArrangementsPage(period), true)
+          .success
+          .value
+          .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+          .success
+          .value
+          .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
+          .success
+          .value
+          .set(AnyLumpSumDeathBenefitsPage(period), true)
+          .success
+          .value
+          .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+          .success
+          .value
+          .set(ClaimingTaxReliefPensionPage(period), true)
+          .success
+          .value
+          .set(TaxReliefPage(period), BigInt(1))
+          .success
+          .value
+          .set(KnowAdjustedAmountPage(period), true)
+          .success
+          .value
+          .set(AdjustedIncomePage(period), BigInt(1))
+          .success
+          .value
+          .set(ClaimingTaxReliefPensionNotAdjustedIncomePage(period), true)
+          .success
+          .value
+          .set(HowMuchTaxReliefPensionPage(period), BigInt(1))
+          .success
+          .value
+          .set(AreYouNonDomPage(period), true)
+          .success
+          .value
+          .set(HasReliefClaimedOnOverseasPensionPage(period), true)
+          .success
+          .value
+          .set(AmountClaimedOnOverseasPensionPage(period), BigInt(1))
+          .success
+          .value
+          .set(DoYouKnowPersonalAllowancePage(period), true)
+          .success
+          .value
+          .set(PersonalAllowancePage(period), BigInt(1))
+          .success
+          .value
+          .set(MarriageAllowancePage(period), true)
+          .success
+          .value
+          .set(MarriageAllowanceAmountPage(period), BigInt(1))
+          .success
+          .value
+          .set(BlindAllowancePage(period), true)
+          .success
+          .value
+          .set(BlindPersonsAllowanceAmountPage(period), BigInt(1))
+          .success
+          .value
+
+        val cleanedUserAnswers = TotalIncomePage(Period._2017)
+          .cleanup(Some(BigInt(1000)), userAnswers)
+          .success
+          .value
+
+        cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe None
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
+        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
+        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
       }
     }
   }
