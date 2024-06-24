@@ -83,5 +83,19 @@ class MarriageAllowancePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/check-answers")
       }
     }
+
+    "Clean up" - {
+      "must clean up correctly when user is not claiming marriage allowance" in {
+
+        val ua = emptyUserAnswers.set(MarriageAllowanceAmountPage(Period._2018), BigInt("100")).success.value
+
+        val cleanedUserAnswers = MarriageAllowancePage(Period._2018)
+          .cleanup(Some(false), ua)
+          .success
+          .value
+
+        cleanedUserAnswers.get(MarriageAllowanceAmountPage(Period._2018)) mustBe None
+      }
+    }
   }
 }

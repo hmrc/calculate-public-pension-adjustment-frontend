@@ -41,7 +41,7 @@ class PersonalAllowancePageSpec extends PageBehaviours {
           .value
         val result = PersonalAllowancePage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/check-basic-rate-status/2018")
       }
     }
 
