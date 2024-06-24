@@ -83,5 +83,19 @@ class BlindAllowancePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/check-answers")
       }
     }
+
+    "Clean up" - {
+      "must clean up correctly when BlindPersonAllowance is No" in {
+
+        val ua = emptyUserAnswers.set(BlindPersonsAllowanceAmountPage(Period._2018), BigInt("100")).success.value
+
+        val cleanedUserAnswers = BlindAllowancePage(Period._2018)
+          .cleanup(Some(false), ua)
+          .success
+          .value
+
+        cleanedUserAnswers.get(PersonalAllowancePage(Period._2018)) mustBe None
+      }
+    }
   }
 }

@@ -28,14 +28,9 @@ case class MarriageAllowanceAmountPage(period: Period) extends QuestionPage[BigI
   override def toString: String = "marriageAllowanceAmount"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(MarriageAllowanceAmountPage(period)) match {
-      case Some(_) => controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(MarriageAllowanceAmountPage(period)) match {
-      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+
 }

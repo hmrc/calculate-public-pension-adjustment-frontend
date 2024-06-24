@@ -52,7 +52,7 @@ class HasReliefClaimedOnOverseasPensionPageSpec extends PageBehaviours {
 
         val result = HasReliefClaimedOnOverseasPensionPage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/personal-allowance/2018")
+        checkNavigation(result, "/annual-allowance/do-you-know-personal-allowance/2018")
       }
 
     }

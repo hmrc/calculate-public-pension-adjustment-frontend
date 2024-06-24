@@ -21,6 +21,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case class BlindAllowancePage(period: Period) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
@@ -43,4 +45,12 @@ case class BlindAllowancePage(period: Period) extends QuestionPage[Boolean] {
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case false => userAnswers.remove(BlindPersonsAllowanceAmountPage(period))
+        case true  => super.cleanup(value, userAnswers)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

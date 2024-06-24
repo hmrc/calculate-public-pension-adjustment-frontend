@@ -47,7 +47,7 @@ class TaxReliefPageSpec extends PageBehaviours {
           .value
         val result = TaxReliefPage(Period._2016).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/personal-allowance/2016")
+        checkNavigation(result, "/annual-allowance/do-you-know-personal-allowance/2016")
       }
 
       "when not 2016 period" - {
@@ -90,7 +90,7 @@ class TaxReliefPageSpec extends PageBehaviours {
 
           val result = TaxReliefPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/annual-allowance/personal-allowance/$period")
+          checkNavigation(result, s"/annual-allowance/do-you-know-personal-allowance/$period")
 
         }
 
@@ -161,7 +161,7 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .value
               val result = TaxReliefPage(period).navigate(NormalMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/personal-allowance/$period")
+              checkNavigation(result, s"/annual-allowance/do-you-know-personal-allowance/$period")
 
             }
 
@@ -187,7 +187,7 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .value
               val result = TaxReliefPage(period).navigate(NormalMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/personal-allowance/$period")
+              checkNavigation(result, s"/annual-allowance/do-you-know-personal-allowance/$period")
 
             }
           }
@@ -253,7 +253,7 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .value
               val result = TaxReliefPage(period).navigate(NormalMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/personal-allowance/$period")
+              checkNavigation(result, s"/annual-allowance/do-you-know-personal-allowance/$period")
 
             }
           }
