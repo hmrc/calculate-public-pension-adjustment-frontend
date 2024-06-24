@@ -17,46 +17,62 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
-import play.api.data.FormError
+import models.Period
+import play.api.data.{Form, FormError}
 
 class PersonalAllowanceFormProviderSpec extends IntFieldBehaviours {
-
-  val form = new PersonalAllowanceFormProvider()()
 
   ".value" - {
 
     val fieldName = "value"
 
-    val minimum = 0
-    val maximum = 999999999
-
-    val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
-
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      validDataGenerator
+    val periods = Seq(
+      (Period._2016, 10600),
+      (Period._2017, 11000),
+      (Period._2018, 11500),
+      (Period._2019, 11850),
+      (Period._2020, 12500),
+      (Period._2021, 12500),
+      (Period._2022, 12570),
+      (Period._2023, 12570)
     )
 
-    behave like intField(
-      form,
-      fieldName,
-      nonNumericError = FormError(fieldName, "personalAllowance.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "personalAllowance.error.wholeNumber")
-    )
+    periods.foreach { case (period, maximum) =>
+      s"for period $period" - {
 
-    behave like intFieldWithRange(
-      form,
-      fieldName,
-      minimum = minimum,
-      maximum = maximum,
-      expectedError = FormError(fieldName, "personalAllowance.error.outOfRange", Seq(minimum, maximum))
-    )
+        val validDataGenerator = intsInRangeWithCommas(0, maximum)
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, "personalAllowance.error.required")
-    )
+        behave like fieldThatBindsValidData(
+          newForm(period),
+          fieldName,
+          validDataGenerator
+        )
+
+        behave like intField(
+          newForm(period),
+          fieldName,
+          nonNumericError = FormError(fieldName, "personalAllowance.error.nonNumeric"),
+          wholeNumberError = FormError(fieldName, "personalAllowance.error.wholeNumber")
+        )
+
+        behave like intFieldWithMaximum(
+          newForm(period),
+          fieldName,
+          maximum = maximum,
+          expectedError = FormError(fieldName, "personalAllowance.error.outOfRange", Seq(maximum, s"$period"))
+        )
+
+        behave like mandatoryField(
+          newForm(period),
+          fieldName,
+          requiredError = FormError(fieldName, "personalAllowance.error.required")
+        )
+      }
+    }
+  }
+
+  def newForm(period: Period): Form[BigInt] = {
+    val formProvider = new PersonalAllowanceFormProvider()
+    formProvider(period)()
   }
 }

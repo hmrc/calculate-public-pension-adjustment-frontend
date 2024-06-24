@@ -17,19 +17,37 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
+import models.Period
 import play.api.data.Form
 
 import javax.inject.Inject
 
 class PersonalAllowanceFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(period: Period)(): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "personalAllowance.error.required",
         "personalAllowance.error.wholeNumber",
         "personalAllowance.error.nonNumeric"
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "personalAllowance.error.outOfRange"))
+        .verifying(
+          maximumValue[BigInt](
+            getIndividualLimit(period),
+            "personalAllowance.error.outOfRange",
+            getIndividualLimit(period).toString()
+          )
+        )
     )
+
+  private def getIndividualLimit(period: Period): BigInt = period match {
+    case Period._2016 => BigInt(10600)
+    case Period._2017 => BigInt(11000)
+    case Period._2018 => BigInt(11500)
+    case Period._2019 => BigInt(11850)
+    case Period._2020 => BigInt(12500)
+    case Period._2021 => BigInt(12500)
+    case Period._2022 => BigInt(12570)
+    case Period._2023 => BigInt(12570)
+  }
 }
