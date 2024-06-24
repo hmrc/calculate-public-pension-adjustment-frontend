@@ -41,21 +41,23 @@ class AdjustedIncomePageSpec extends PageBehaviours {
           .value
         val result = AdjustedIncomePage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/personal-allowance/2018")
+        checkNavigation(result, "/annual-allowance/do-you-know-personal-allowance/2018")
       }
     }
 
-    "to DoYouKnowPersonalAllowance page when period not 2016 when answered" in {
-      val ua     = emptyUserAnswers
-        .set(
-          AdjustedIncomePage(Period._2018),
-          BigInt(100)
-        )
-        .success
-        .value
-      val result = AdjustedIncomePage(Period._2018).navigate(CheckMode, ua).url
+    "must Navigate correctly in check mode" - {
+      "to DoYouKnowPersonalAllowance page when period not 2016 when answered" in {
+        val ua     = emptyUserAnswers
+          .set(
+            AdjustedIncomePage(Period._2018),
+            BigInt(100)
+          )
+          .success
+          .value
+        val result = AdjustedIncomePage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/change-personal-allowance/2018")
+        checkNavigation(result, "/annual-allowance/change-do-you-know-personal-allowance/2018")
+      }
     }
   }
 }
