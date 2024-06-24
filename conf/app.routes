@@ -403,10 +403,10 @@ GET        /previous-claim-continue                        controllers.PreviousC
 POST       /previous-claim-continue                        controllers.PreviousClaimContinueController.onSubmit()
 GET        /previous-claim-navigate                         controllers.PreviousClaimContinueController.redirect()
 
-GET        /annual-allowance/:period/total-income/personal-allowance                  controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/:period/total-income/personal-allowance                  controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /annual-allowance/:period/total-income/change-personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /annual-allowance/:period/total-income/change-personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET        /annual-allowance/:period/personal-allowance-amount                 controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/personal-allowance-amount                  controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-personal-allowance-amount                        controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-personal-allowance-amount                        controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
 
 GET        /annual-allowance/:period/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = NormalMode, period:Period)
 POST       /annual-allowance/:period/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = NormalMode, period:Period)

@@ -1117,19 +1117,15 @@ previousClaimContinue.body = cy: If you start your claim from the beginning, you
 previousClaimContinue.hint = cy: Select no if you would like to start your claim from the beginning.
 previousClaimContinue.error.required = cy: Select yes if you want to continue with your previous claim
 
-personalAllowance.caption = cy: Annual allowance between 6 April {0} and 5 April {1}
-personalAllowance.title = cy: What was your personal allowance?
-personalAllowance.heading = cy: What was your personal allowance?
-personalAllowance.message1 = cy: Personal allowance means that you either:
-personalAllowance.bullet1 = cy: pay less tax to take account of money you’ve spent on specific things, like business expenses if you’re self-employed
-personalAllowance.bullet2 = cy: get tax back or get it repaid in another way, like into a personal pension
-personalAllowance.message2 = cy: Find out more about Income Tax relief (opens in a new tab)
-personalAllowance.hint = cy: Amount must be rounded down to the nearest pound, for example 2300.
-personalAllowance.checkYourAnswersLabel = cy: Personal allowance
+personalAllowance.caption = cy: Annual allowance
+personalAllowance.title = cy: What was your personal allowance from {0}?
+personalAllowance.heading = cy: What was your personal allowance from {0}?
+personalAllowance.message1 = cy: If you have filed for self-assessment you will find this information in your SA-302 document.
+personalAllowance.checkYourAnswersLabel = cy: What was your personal allowance from {0}?
 personalAllowance.error.nonNumeric = cy: Your personal allowance must only include numbers 0 to 9
 personalAllowance.error.required = cy: Enter your personal allowance
 personalAllowance.error.wholeNumber = cy: Your personal allowance must only include numbers 0 to 9
-personalAllowance.error.outOfRange = cy: Your personal allowance must be £999,999,999 or less
+personalAllowance.error.outOfRange = cy: Your personal allowance must be less than £{0}
 personalAllowance.change.hidden = cy: your personal allowance
 
 taxRelief.caption = cy: Annual allowance net income
