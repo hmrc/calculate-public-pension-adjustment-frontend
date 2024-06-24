@@ -31,7 +31,7 @@ class HowMuchTaxReliefPensionPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "to _______ page when answered" in {
+      "to AreYouNonDom when period not 2016 when answered" in {
         val ua     = emptyUserAnswers
           .set(
             HowMuchTaxReliefPensionPage(Period._2018),
@@ -41,13 +41,13 @@ class HowMuchTaxReliefPensionPageSpec extends PageBehaviours {
           .value
         val result = HowMuchTaxReliefPensionPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/non-domicile/2018")
       }
     }
 
     "must Navigate correctly in check mode" - {
 
-      "to _______ page when answered" in {
+      "to AreYouNonDom when period not 2016 when answered" in {
         val ua     = emptyUserAnswers
           .set(
             HowMuchTaxReliefPensionPage(Period._2018),
@@ -57,7 +57,7 @@ class HowMuchTaxReliefPensionPageSpec extends PageBehaviours {
           .value
         val result = HowMuchTaxReliefPensionPage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/change-non-domicile/2018")
       }
     }
 

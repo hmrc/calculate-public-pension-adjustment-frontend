@@ -31,7 +31,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
 
     "Normal mode" - {
 
-      "to HowMuchTaxReliefPension when answered true" in {
+      "to HowMuchTaxReliefPension when period not 2016, when answered true" in {
         val ua     = emptyUserAnswers
           .set(
             ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018),
@@ -44,7 +44,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/how-much-tax-relief-pension/2018")
       }
 
-      "to ________ when answered false" in {
+      "to AreYouNonDom when period not 2016, when answered false" in {
         val ua     = emptyUserAnswers
           .set(
             ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018),
@@ -54,7 +54,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
           .value
         val result = ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/non-domicile/2018")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -67,7 +67,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
 
     "Check mode" - {
 
-      "to HowMuchTaxReliefPension when answered true" in {
+      "to HowMuchTaxReliefPension when period not 2016, when answered true" in {
         val ua     = emptyUserAnswers
           .set(
             ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018),
@@ -80,7 +80,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/change-how-much-tax-relief-pension/2018")
       }
 
-      "to ________ when answered false" in {
+      "to AreYouNonDom when period not 2016, when answered false" in {
         val ua     = emptyUserAnswers
           .set(
             ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018),
@@ -90,7 +90,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
           .value
         val result = ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/change-non-domicile/2018")
       }
 
       "to JourneyRecovery when not answered" in {

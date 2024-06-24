@@ -33,15 +33,15 @@ class BlindPersonsAllowanceAmountFormProvider @Inject() extends Mappings {
         "blindPersonsAllowanceAmount.error.nonNumeric"
       )
         .verifying(
-          minimumValue[BigInt](
+          minimumValueTwoArgs[BigInt](
             getIndividualLimit(period),
             "blindPersonsAllowanceAmount.error.minimum",
-            getIndividualLimit(period).toString()
+            Seq(getIndividualLimit(period).toString(), period.toString)
           ),
-          maximumValue[BigInt](
+          maximumValueTwoArgs[BigInt](
             getIndividualLimit(period) * 2,
             "blindPersonsAllowanceAmount.error.maximum",
-            (getIndividualLimit(period) * 2).toString()
+            Seq((getIndividualLimit(period) * 2).toString(), period.toString)
           )
         )
     )

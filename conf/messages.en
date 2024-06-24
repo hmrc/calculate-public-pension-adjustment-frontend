@@ -1317,5 +1317,5 @@ blindPersonsAllowanceAmount.error.nonNumeric = Your blind persons allowance must
 blindPersonsAllowanceAmount.error.required = How much blind persons allowance did you claim?
 blindPersonsAllowanceAmount.error.wholeNumber = Your blind persons allowance must only include numbers 0 to 9
 blindPersonsAllowanceAmount.change.hidden = your blind persons allowance
-blindPersonsAllowanceAmount.error.maximum = Your blind persons allowance must be {0} or less
-blindPersonsAllowanceAmount.error.minimum = Your blind persons allowance must be {0} or more
+blindPersonsAllowanceAmount.error.maximum = Your blind persons allowance must be {0} or less for {1}
+blindPersonsAllowanceAmount.error.minimum = Your blind persons allowance must be {0} or more for {1}

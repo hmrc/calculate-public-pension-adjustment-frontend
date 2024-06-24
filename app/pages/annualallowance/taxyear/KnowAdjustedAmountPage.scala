@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -32,8 +32,16 @@ case class KnowAdjustedAmountPage(period: Period) extends QuestionPage[Boolean] 
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.AdjustedIncomeController.onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
-          .onPageLoad(NormalMode, period)
+        answers.get(ThresholdIncomePage(period)) match {
+          case Some(ThresholdIncome.IDoNotKnow) =>
+            controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
+              .onPageLoad(NormalMode, period)
+          case Some(ThresholdIncome.Yes)        =>
+            controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+              .onPageLoad(NormalMode, period)
+          case _                                =>
+            controllers.routes.JourneyRecoveryController.onPageLoad(None)
+        }
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -42,8 +50,16 @@ case class KnowAdjustedAmountPage(period: Period) extends QuestionPage[Boolean] 
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.AdjustedIncomeController.onPageLoad(CheckMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
-          .onPageLoad(CheckMode, period)
+        answers.get(ThresholdIncomePage(period)) match {
+          case Some(ThresholdIncome.IDoNotKnow) =>
+            controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
+              .onPageLoad(CheckMode, period)
+          case Some(ThresholdIncome.Yes)        =>
+            controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+              .onPageLoad(CheckMode, period)
+          case _                                =>
+            controllers.routes.JourneyRecoveryController.onPageLoad(None)
+        }
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

@@ -28,20 +28,28 @@ case class ClaimingTaxReliefPensionNotAdjustedIncomePage(period: Period) extends
   override def toString: String = "ClaimingTaxReliefPensionNotAdjustedIncome"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) match {
-      case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.HowMuchTaxReliefPensionController.onPageLoad(NormalMode, period)
-      case Some(false) =>
-        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    if (period != Period._2016) {
+      answers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) match {
+        case Some(true)  =>
+          controllers.annualallowance.taxyear.routes.HowMuchTaxReliefPensionController.onPageLoad(NormalMode, period)
+        case Some(false) =>
+          controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(NormalMode, period)
+        case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    } else {
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) match {
-      case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.HowMuchTaxReliefPensionController.onPageLoad(CheckMode, period)
-      case Some(false) =>
-        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    if (period != Period._2016) {
+      answers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) match {
+        case Some(true)  =>
+          controllers.annualallowance.taxyear.routes.HowMuchTaxReliefPensionController.onPageLoad(CheckMode, period)
+        case Some(false) =>
+          controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(CheckMode, period)
+        case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    } else {
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
