@@ -61,7 +61,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
 
         val result = KnowAdjustedAmountPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/claiming-tax-relief-pension/2018")
+        checkNavigation(result, "/annual-allowance/2018/claiming-tax-relief-pension")
       }
 
       "to AnyLumpSumDeathBenefitsController when false, when threshold income is yes" in {
@@ -144,7 +144,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
 
         val result = KnowAdjustedAmountPage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/change-claiming-tax-relief-pension/2018")
+        checkNavigation(result, "/annual-allowance/2018/change-claiming-tax-relief-pension")
       }
 
       "to AnyLumpSumDeathBenefitsController when false, when threshold income is yes" in {

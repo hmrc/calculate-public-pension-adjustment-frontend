@@ -23,8 +23,8 @@ import play.api.data.Form
 
 class ClaimingTaxReliefPensionNotAdjustedIncomeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(args: Seq[String]): Form[Boolean] =
     Form(
-      "value" -> boolean("claimingTaxReliefPensionNotAdjustedIncome.error.required")
+      "value" -> boolean("claimingTaxReliefPensionNotAdjustedIncome.error.required", "error.boolean", args)
     )
 }
