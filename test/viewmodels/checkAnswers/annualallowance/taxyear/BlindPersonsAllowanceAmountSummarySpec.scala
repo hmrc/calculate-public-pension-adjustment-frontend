@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.{BlindPersonsAllowanceAmountPage, HowMuchTaxReliefPensionPage}
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -42,7 +43,7 @@ class BlindPersonsAllowanceAmountSummarySpec extends AnyFreeSpec with Matchers {
       BlindPersonsAllowanceAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "blindPersonsAllowanceAmount.checkYourAnswersLabel",
-          value = ValueViewModel("2325"),
+          value = ValueViewModel(HtmlContent("&pound;2325")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

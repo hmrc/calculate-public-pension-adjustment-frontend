@@ -61,14 +61,14 @@ class BlindPersonsAllowanceAmountFormProviderSpec extends IntFieldBehaviours {
           newForm(period),
           fieldName,
           minimum = minimum,
-          expectedError = FormError(fieldName, "blindPersonsAllowanceAmount.error.minimum", Seq(minimum, ""))
+          expectedError = FormError(fieldName, "blindPersonsAllowanceAmount.error.minimum", Seq(minimum, s"$period"))
         )
 
         behave like intFieldWithMaximum(
           newForm(period),
           fieldName,
           maximum = maximum,
-          expectedError = FormError(fieldName, "blindPersonsAllowanceAmount.error.maximum", Seq(maximum, ""))
+          expectedError = FormError(fieldName, "blindPersonsAllowanceAmount.error.maximum", Seq(maximum, s"$period"))
         )
 
         behave like mandatoryField(

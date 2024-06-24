@@ -505,7 +505,7 @@ POST       /annual-allowance/total-income/blind-person-allowance/:period        
 GET        /annual-allowance/total-income/change-blind-person-allowance/:period                  controllers.annualallowance.taxyear.BlindAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/total-income/change-blind-person-allowance/:period                  controllers.annualallowance.taxyear.BlindAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET        /annual-allowance/blind-persons-allowance-amount/:period                controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/blind-persons-allowance-amount/:period                  controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /annual-allowance/change-blind-persons-allowance-amount/:period                        controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /annual-allowance/change-blind-persons-allowance-amount/:period                        controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET        /annual-allowance/:period/blind-persons-allowance-amount                controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/blind-persons-allowance-amount                  controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-blind-persons-allowance-amount                        controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-blind-persons-allowance-amount                        controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onSubmit(mode: Mode = CheckMode, period:Period)

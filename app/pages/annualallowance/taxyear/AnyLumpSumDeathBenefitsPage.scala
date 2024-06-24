@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import controllers.annualallowance.taxyear.routes.{CheckYourAAPeriodAnswersController, LumpSumDeathBenefitsValueController}
+import controllers.annualallowance.taxyear.routes.LumpSumDeathBenefitsValueController
 import models.{CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -40,15 +40,13 @@ case class AnyLumpSumDeathBenefitsPage(period: Period) extends QuestionPage[Bool
             case Some(ThresholdIncome.Yes)        =>
               controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
                 .onPageLoad(NormalMode, period)
-            case Some(ThresholdIncome.No)         =>
-              controllers.routes.JourneyRecoveryController.onPageLoad(None)
             case _                                =>
               controllers.routes.JourneyRecoveryController.onPageLoad(None)
           }
-        case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+        case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
@@ -63,14 +61,12 @@ case class AnyLumpSumDeathBenefitsPage(period: Period) extends QuestionPage[Bool
             case Some(ThresholdIncome.Yes)        =>
               controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
                 .onPageLoad(CheckMode, period)
-            case Some(ThresholdIncome.No)         =>
-              controllers.routes.JourneyRecoveryController.onPageLoad(None)
             case _                                =>
               controllers.routes.JourneyRecoveryController.onPageLoad(None)
           }
         case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {
-      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

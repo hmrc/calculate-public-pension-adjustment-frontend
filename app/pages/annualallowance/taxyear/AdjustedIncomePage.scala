@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -28,8 +28,16 @@ case class AdjustedIncomePage(period: Period) extends QuestionPage[BigInt] {
   override def toString: String = "adjustedIncome"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
+    if (period != Period._2016) {
+      controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
+    } else {
+      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    if (period != Period._2016) {
+      controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(CheckMode, period)
+    } else {
+      controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    }
 }
