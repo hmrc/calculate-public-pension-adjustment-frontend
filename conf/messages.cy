@@ -1219,36 +1219,6 @@ lumpSumDeathBenefitsValue.error.wholeNumber = cy: Your lump sum death benefit am
 lumpSumDeathBenefitsValue.error.outOfRange = cy: Your lump sum death benefit amount must be more than £0 and less than £999,999,999
 lumpSumDeathBenefitsValue.change.hidden = cy: the amount of pension savings your employer made from {0}
 
-claimingTaxReliefPension.title = cy: claimingTaxReliefPension
-claimingTaxReliefPension.heading = cy: claimingTaxReliefPension
-claimingTaxReliefPension.checkYourAnswersLabel = cy: claimingTaxReliefPension
-claimingTaxReliefPension.error.required = cy: Select yes if claimingTaxReliefPension
-claimingTaxReliefPension.change.hidden = cy: ClaimingTaxReliefPension
-
-interestFromSavings.title = cy: InterestFromSavings
-interestFromSavings.heading = cy: InterestFromSavings
-interestFromSavings.checkYourAnswersLabel = cy: InterestFromSavings
-interestFromSavings.error.nonNumeric = cy: Enter your interestFromSavings using numbers
-interestFromSavings.error.required = cy: Enter your interestFromSavings
-interestFromSavings.error.wholeNumber = cy: Enter your interestFromSavings using whole numbers
-interestFromSavings.error.outOfRange = cy: InterestFromSavings must be between {0} and {1}
-interestFromSavings.change.hidden = cy: InterestFromSavings
-
-knowAdjustedAmount.title = cy: Adjusted income
-knowAdjustedAmount.heading = cy: Adjusted income
-knowAdjustedAmount.checkYourAnswersLabel = cy: Adjusted income
-knowAdjustedAmount.error.required = cy: Select yes if adjusted income
-knowAdjustedAmount.change.hidden = cy: Adjusted income
-
-howMuchTaxReliefPension.title = cy: Amount of relief claimed
-howMuchTaxReliefPension.heading = cy: Amount of relief claimed
-howMuchTaxReliefPension.checkYourAnswersLabel = cy: Amount of relief claimed
-howMuchTaxReliefPension.error.nonNumeric = cy: Enter your amount of relief claimed using numbers
-howMuchTaxReliefPension.error.required = cy: Enter your amount of relief claimed
-howMuchTaxReliefPension.error.wholeNumber = cy: Enter your amount of relief claimed using whole numbers
-howMuchTaxReliefPension.error.outOfRange = cy: Amount of relief claimed must be between {0} and {1}
-howMuchTaxReliefPension.change.hidden = cy: Amount of relief claimed
-
 claimingTaxReliefPension.title = cy: Did you claim for tax relief on your pension from {0}?
 claimingTaxReliefPension.heading = cy: Claiming income tax relief
 claimingTaxReliefPension.message1 = cy: You may have claimed income tax relief if any of the following applied to you:
@@ -1259,6 +1229,52 @@ claimingTaxReliefPension.heading2 = cy: Did you claim for income tax relief from
 claimingTaxReliefPension.checkYourAnswersLabel = cy: Did you claim for tax relief on your pension from {0}?
 claimingTaxReliefPension.error.required = cy: Select yes if you claimed for tax relief on your pension
 claimingTaxReliefPension.change.hidden = cy: Claiming pension tax relief
+
+interestFromSavings.title = cy: InterestFromSavings
+interestFromSavings.heading = cy: InterestFromSavings
+interestFromSavings.checkYourAnswersLabel = cy: InterestFromSavings
+interestFromSavings.error.nonNumeric = cy: Enter your interestFromSavings using numbers
+interestFromSavings.error.required = cy: Enter your interestFromSavings
+interestFromSavings.error.wholeNumber = cy: Enter your interestFromSavings using whole numbers
+interestFromSavings.error.outOfRange = cy: InterestFromSavings must be between {0} and {1}
+interestFromSavings.change.hidden = cy: InterestFromSavings
+
+knowAdjustedAmount.title = cy: Do you know your adjusted income amount from {0}?
+knowAdjustedAmount.caption = cy: Annual allowance adjusted income
+knowAdjustedAmount.heading1 = cy: Adjusted income
+knowAdjustedAmount.message1 = cy: Adjusted income is your net income plus:
+knowAdjustedAmount.bullet1 = cy: any tax pension tax relief that you have claimed
+knowAdjustedAmount.bullet2 = cy: pension savings made to your pension schemes where tax relief was given
+knowAdjustedAmount.bullet3 = cy: the amount of pension savings your employer made for you.
+knowAdjustedAmount.message2 = cy: Minus any lump sum death benefits you received from pension schemes
+knowAdjustedAmount.heading2 = cy: Do you know your adjusted income amount?
+knowAdjustedAmount.checkYourAnswersLabel = cy: Adjusted income
+knowAdjustedAmount.error.required = cy: Select yes if you know your adjusted income from {0}
+knowAdjustedAmount.change.hidden = cy: Adjusted income
+
+howMuchTaxReliefPension.title = cy: How much tax relief did you claim on your pension from {0}?
+howMuchTaxReliefPension.caption = cy: Adjusted Income
+howMuchTaxReliefPension.heading1 = cy: How much tax relief did you claim from {0}?
+howMuchTaxReliefPension.message1 = cy: You may have claimed tax relief if any of the following applied to you
+howMuchTaxReliefPension.bullet1 = cy: your pension used a net pay arrangement
+howMuchTaxReliefPension.hint1 = cy: Amounts must be rounded down to the nearest pound, for example 2300
+howMuchTaxReliefPension.checkYourAnswersLabel = cy: Amount of relief claimed
+howMuchTaxReliefPension.error.nonNumeric = cy: Your tax relief from {0} must only include numbers 0 to 9
+howMuchTaxReliefPension.error.required = cy: How much tax relief did you claim from {0}?
+howMuchTaxReliefPension.error.wholeNumber = cy: Your tax relief from {0} must only include numbers 0 to 9
+howMuchTaxReliefPension.error.outOfRange = cy: Amount of relief claimed must be between {0} and {1}
+howMuchTaxReliefPension.change.hidden = cy: Amount of relief claimed
+
+claimingTaxReliefPensionNotAdjustedIncome.title = cy: Did you claim for tax relief on your pension from {0}?
+claimingTaxReliefPensionNotAdjustedIncome.caption = cy: Adjusted Income
+claimingTaxReliefPensionNotAdjustedIncome.heading1 = cy: Tax relief on your net pay pension contributions
+claimingTaxReliefPensionNotAdjustedIncome.message1 = cy: You may have claimed tax relief on net income pension contributions if any of the following applied to you:
+claimingTaxReliefPensionNotAdjustedIncome.bullet1 = cy: your employer takes workplace pension contributions out of your pay before deducting Income Tax
+claimingTaxReliefPensionNotAdjustedIncome.bullet2 = cy: your pension provider claims tax relief from the government at the basic 20% rate and adds it to your pension pot (‘relief at source’)
+claimingTaxReliefPensionNotAdjustedIncome.heading2 = cy: Did you claim for tax relief from {0}?
+claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel = cy: Claiming pension tax relief
+claimingTaxReliefPensionNotAdjustedIncome.error.required = cy: Select yes if you are claiming tax relief on your net pay pension contributions from {0}
+claimingTaxReliefPensionNotAdjustedIncome.change.hidden = cy: Claiming pension tax relief
 
 amountClaimedOnOverseasPension.title = cy: Amount of relief claimed on overseas pensions
 amountClaimedOnOverseasPension.heading = cy: Amount of relief claimed on overseas pensions

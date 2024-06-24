@@ -41,7 +41,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
           .value
         val result = ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/how-much-tax-relief-pension/2018")
+        checkNavigation(result, "/annual-allowance/2018/how-much-tax-relief-pension")
       }
 
       "to AreYouNonDom when period not 2016, when answered false" in {
@@ -77,7 +77,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
           .value
         val result = ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/change-how-much-tax-relief-pension/2018")
+        checkNavigation(result, "/annual-allowance/2018/change-how-much-tax-relief-pension")
       }
 
       "to AreYouNonDom when period not 2016, when answered false" in {

@@ -17,11 +17,9 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class HowMuchTaxReliefPensionFormProviderSpec extends IntFieldBehaviours {
-
-  val form = new HowMuchTaxReliefPensionFormProvider()()
 
   ".value" - {
 
@@ -33,20 +31,20 @@ class HowMuchTaxReliefPensionFormProviderSpec extends IntFieldBehaviours {
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      form,
+      newForm(),
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      newForm(),
       fieldName,
-      nonNumericError = FormError(fieldName, "howMuchTaxReliefPension.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "howMuchTaxReliefPension.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "howMuchTaxReliefPension.error.nonNumeric", Seq("")),
+      wholeNumberError = FormError(fieldName, "howMuchTaxReliefPension.error.wholeNumber", Seq(""))
     )
 
     behave like intFieldWithRange(
-      form,
+      newForm(),
       fieldName,
       minimum = minimum,
       maximum = maximum,
@@ -54,9 +52,14 @@ class HowMuchTaxReliefPensionFormProviderSpec extends IntFieldBehaviours {
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, "howMuchTaxReliefPension.error.required")
+      requiredError = FormError(fieldName, "howMuchTaxReliefPension.error.required", Seq(""))
     )
+  }
+
+  private def newForm(): Form[BigInt] = {
+    val form = new HowMuchTaxReliefPensionFormProvider()
+    form(Seq(""))
   }
 }

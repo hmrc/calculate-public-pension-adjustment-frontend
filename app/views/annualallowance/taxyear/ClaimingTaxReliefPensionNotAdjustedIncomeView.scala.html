@@ -19,12 +19,28 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("claimingTaxReliefPensionNotAdjustedIncome.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.message1")</p>
+
+    <ul class="govuk-body">
+        <li>
+        @messages("claimingTaxReliefPensionNotAdjustedIncome.bullet1")
+        </li>
+        <li>
+        @messages("claimingTaxReliefPensionNotAdjustedIncome.bullet2")
+        </li>
+    </ul>
+
+    <p class="govuk-heading-l govuk-!-padding-0">@messages("claimingTaxReliefPensionNotAdjustedIncome.heading2", startEndDate)</p>
+}
+
+@layout(pageTitle = title(form, messages("claimingTaxReliefPensionNotAdjustedIncome.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -35,12 +51,14 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("claimingTaxReliefPensionNotAdjustedIncome.heading")).asPageHeading()
-            )
+                legend = HmrcPageHeadingLegend(
+                    content = messages("claimingTaxReliefPensionNotAdjustedIncome.heading1"),
+                    caption = HmrcSectionCaption(messages("claimingTaxReliefPensionNotAdjustedIncome.caption"))
+                )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
+
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }

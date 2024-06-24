@@ -21,12 +21,26 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("howMuchTaxReliefPension.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("howMuchTaxReliefPension.message1")</p>
+
+    <ul class="govuk-body">
+        <li>
+            @messages("howMuchTaxReliefPension.bullet1")
+        </li>
+    </ul>
+
+    <p>@messages("howMuchTaxReliefPension.hint1")</p>
+
+}
+
+@layout(pageTitle = title(form, messages("howMuchTaxReliefPension.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.HowMuchTaxReliefPensionController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -37,14 +51,16 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("howMuchTaxReliefPension.heading")).asPageHeading()
+                label = HmrcPageHeadingLabel(
+                    content = messages("howMuchTaxReliefPension.heading1", startEndDate),
+                    caption = messages("howMuchTaxReliefPension.caption")
+                )
             )
             .asNumeric()
             .withWidth(Fixed10)
+            .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }
