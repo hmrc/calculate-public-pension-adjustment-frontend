@@ -41,7 +41,7 @@ class AmountClaimedOnOverseasPensionPageSpec extends PageBehaviours {
           .value
         val result = AmountClaimedOnOverseasPensionPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/do-you-know-personal-allowance/2018")
+        checkNavigation(result, "/annual-allowance/2018/do-you-know-personal-allowance")
       }
     }
 

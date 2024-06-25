@@ -41,7 +41,7 @@ class HowMuchTaxReliefPensionPageSpec extends PageBehaviours {
           .value
         val result = HowMuchTaxReliefPensionPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/non-domicile/2018")
+        checkNavigation(result, "/annual-allowance/2018/non-domicile")
       }
     }
 
@@ -57,7 +57,7 @@ class HowMuchTaxReliefPensionPageSpec extends PageBehaviours {
           .value
         val result = HowMuchTaxReliefPensionPage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/change-non-domicile/2018")
+        checkNavigation(result, "/annual-allowance/2018/change-non-domicile")
       }
     }
 

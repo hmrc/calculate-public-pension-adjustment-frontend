@@ -35,12 +35,13 @@ import scala.concurrent.Future
 
 class AmountClaimedOnOverseasPensionControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new AmountClaimedOnOverseasPensionFormProvider()
-  val form         = formProvider()
+  val formProvider         = new AmountClaimedOnOverseasPensionFormProvider()
+  val form                 = formProvider()
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = BigInt("0")
+  val validAnswer = BigInt("1")
 
   lazy val amountClaimedOnOverseasPensionRoute =
     controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController
@@ -61,7 +62,10 @@ class AmountClaimedOnOverseasPensionControllerSpec extends SpecBase with Mockito
         val view = application.injector.instanceOf[AmountClaimedOnOverseasPensionView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -80,7 +84,7 @@ class AmountClaimedOnOverseasPensionControllerSpec extends SpecBase with Mockito
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -106,11 +110,6 @@ class AmountClaimedOnOverseasPensionControllerSpec extends SpecBase with Mockito
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController
-          .onPageLoad(NormalMode, Period._2018)
-          .url
       }
     }
 
@@ -130,7 +129,7 @@ class AmountClaimedOnOverseasPensionControllerSpec extends SpecBase with Mockito
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString

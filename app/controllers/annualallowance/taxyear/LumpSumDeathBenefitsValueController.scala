@@ -18,6 +18,7 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.LumpSumDeathBenefitsValueFormProvider
+import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.LumpSumDeathBenefitsValuePage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
@@ -67,8 +68,10 @@ class LumpSumDeathBenefitsValueController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(LumpSumDeathBenefitsValuePage(period), value))
-              _              <- userDataService.set(updatedAnswers)
-            } yield Redirect(LumpSumDeathBenefitsValuePage(period).navigate(mode, updatedAnswers))
+              redirectUrl     = LumpSumDeathBenefitsValuePage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 

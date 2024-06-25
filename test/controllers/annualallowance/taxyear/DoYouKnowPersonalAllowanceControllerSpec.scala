@@ -37,8 +37,9 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new DoYouKnowPersonalAllowanceFormProvider()
-  val form         = formProvider()
+  val formProvider         = new DoYouKnowPersonalAllowanceFormProvider()
+  val form                 = formProvider()
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
 
   lazy val doYouKnowPersonalAllowanceRoute =
     controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController
@@ -59,7 +60,10 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         val view = application.injector.instanceOf[DoYouKnowPersonalAllowanceView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -77,7 +81,7 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -125,7 +129,7 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
