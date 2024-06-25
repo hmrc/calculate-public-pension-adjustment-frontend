@@ -40,7 +40,7 @@ class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matcher
           true
         )
         .get
-      AnySalarySacrificeArrangementsSummary.row(userAnswers, period, startEndDate) shouldBe Some(
+      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "anySalarySacrificeArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -63,7 +63,7 @@ class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matcher
           false
         )
         .get
-      AnySalarySacrificeArrangementsSummary.row(userAnswers, period, startEndDate) shouldBe Some(
+      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "anySalarySacrificeArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -81,7 +81,7 @@ class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matcher
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      AnySalarySacrificeArrangementsSummary.row(userAnswers, period, startEndDate) shouldBe None
+      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) shouldBe None
     }
   }
 
