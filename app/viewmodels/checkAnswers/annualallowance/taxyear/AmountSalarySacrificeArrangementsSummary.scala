@@ -20,19 +20,30 @@ import controllers.routes
 import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.AmountSalarySacrificeArrangementsPage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 object AmountSalarySacrificeArrangementsSummary {
 
-  def row(answers: UserAnswers, period: Period, startEndDate: String)(implicit
+  def row(answers: UserAnswers, period: Period)(implicit
     messages: Messages
-  ): Option[SummaryListRow] =
+  ): Option[SummaryListRow] = {
+
+    val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
+    val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+    val startEndDate: String =
+      period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
+
     answers.get(AmountSalarySacrificeArrangementsPage(period)).map { answer =>
       SummaryListRowViewModel(
         key = messages("amountSalarySacrificeArrangements.checkYourAnswersLabel", startEndDate),
-        value = ValueViewModel(answer.toString),
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
@@ -44,4 +55,5 @@ object AmountSalarySacrificeArrangementsSummary {
         )
       )
     }
+  }
 }
