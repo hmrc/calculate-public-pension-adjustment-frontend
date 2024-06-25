@@ -21,11 +21,11 @@ import config.FrontendAppConfig
 import forms.ResubmittingAdjustmentFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
-import models.{Mode, UserAnswers}
+import models.{CalculationAuditStartEvent, Mode, UserAnswers}
 import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.UserDataService
+import services.{AuditService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.ResubmittingAdjustmentView
 
@@ -39,6 +39,7 @@ class ResubmittingAdjustmentController @Inject() (
   getData: DataRetrievalAction,
   formProvider: ResubmittingAdjustmentFormProvider,
   config: FrontendAppConfig,
+  auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: ResubmittingAdjustmentView
 )(implicit ec: ExecutionContext)
@@ -47,14 +48,21 @@ class ResubmittingAdjustmentController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) { implicit request =>
-    val preparedForm =
-      request.userAnswers.getOrElse(constructUserAnswers(request)).get(ResubmittingAdjustmentPage) match {
-        case None        => form
-        case Some(value) => form.fill(value)
-      }
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
+    val userAnswers = request.userAnswers.getOrElse(constructUserAnswers(request))
 
-    Ok(view(preparedForm, mode))
+    val preparedForm = userAnswers.get(ResubmittingAdjustmentPage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
+
+    for {
+      _ <- Future {
+             auditService.auditCalculationStart(
+               CalculationAuditStartEvent(userAnswers.uniqueId, userAnswers.authenticated)
+             )
+           }
+    } yield Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
