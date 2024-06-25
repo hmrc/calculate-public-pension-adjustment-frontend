@@ -81,7 +81,7 @@ adjustedIncomeCaption.caption = Adjusted Income
 divider = or
 startEndDateAnd = and
 startEndDateTo = to
-rounding.hint = Amounts must be rounded down to the nearest pound, for example 2300
+rounding.hint = Amounts must be rounded down to the nearest pound, for example 2300.
 annualAllowance.period.caption.2016 = Annual allowance between 6 April 2015 and 5 April 2016
 annualAllowance.period.caption.2016pre = Annual allowance between 6 April 2015 and 8 July 2015
 annualAllowance.period.caption.2016post = Annual allowance between 9 July 2015 and 5 April 2016
@@ -1124,7 +1124,7 @@ personalAllowance.checkYourAnswersLabel = What was your personal allowance from 
 personalAllowance.error.nonNumeric = Your personal allowance must only include numbers 0 to 9
 personalAllowance.error.required = Enter your personal allowance
 personalAllowance.error.wholeNumber = Your personal allowance must only include numbers 0 to 9
-personalAllowance.error.outOfRange = Your personal allowance must be £{0} or less
+personalAllowance.error.outOfRange = Your personal allowance must be less than £{0}
 personalAllowance.change.hidden = your personal allowance
 
 taxRelief.caption = Annual allowance net income

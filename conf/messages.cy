@@ -1124,7 +1124,7 @@ personalAllowance.checkYourAnswersLabel = cy: What was your personal allowance f
 personalAllowance.error.nonNumeric = cy: Your personal allowance must only include numbers 0 to 9
 personalAllowance.error.required = cy: Enter your personal allowance
 personalAllowance.error.wholeNumber = cy: Your personal allowance must only include numbers 0 to 9
-personalAllowance.error.outOfRange = cy: Your personal allowance must be £{0} or less
+personalAllowance.error.outOfRange = cy: Your personal allowance must be less than £{0}
 personalAllowance.change.hidden = cy: your personal allowance
 
 taxRelief.caption = cy: Annual allowance net income
