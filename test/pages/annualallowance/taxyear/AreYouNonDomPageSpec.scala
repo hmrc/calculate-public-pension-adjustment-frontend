@@ -43,7 +43,7 @@ class AreYouNonDomPageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/any-tax-relief-overseas-pension")
       }
 
-      "must redirect to DoYouKnowPersonalAllowance page when false" in {
+      "must redirect to do you have gift aid page when false" in {
 
         val userAnswers = emptyUserAnswers
           .set(AreYouNonDomPage(Period._2018), false)
@@ -52,7 +52,7 @@ class AreYouNonDomPageSpec extends PageBehaviours {
 
         val result = AreYouNonDomPage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/do-you-know-personal-allowance")
+        checkNavigation(result, "/annual-allowance/2018/donated-via-gift-aid")
       }
 
     }

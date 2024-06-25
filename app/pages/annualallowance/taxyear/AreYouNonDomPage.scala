@@ -35,7 +35,7 @@ case class AreYouNonDomPage(period: Period) extends QuestionPage[Boolean] {
         controllers.annualallowance.taxyear.routes.HasReliefClaimedOnOverseasPensionController
           .onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

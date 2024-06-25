@@ -46,6 +46,22 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryAmountOfGiftAidUserAnswersEntry: Arbitrary[(AmountOfGiftAidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AmountOfGiftAidPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryDoYouHaveGiftAidUserAnswersEntry: Arbitrary[(DoYouHaveGiftAidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DoYouHaveGiftAidPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryBlindPersonsAllowanceAmountUserAnswersEntry
     : Arbitrary[(BlindPersonsAllowanceAmountPage.type, JsValue)] =
     Arbitrary {

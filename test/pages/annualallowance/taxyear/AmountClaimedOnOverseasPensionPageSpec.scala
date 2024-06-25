@@ -31,7 +31,7 @@ class AmountClaimedOnOverseasPensionPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "to DoYouKnowPersonalAllowance page when answered" in {
+      "to Do you have gift aid page when answered" in {
         val ua     = emptyUserAnswers
           .set(
             AmountClaimedOnOverseasPensionPage(Period._2018),
@@ -41,7 +41,7 @@ class AmountClaimedOnOverseasPensionPageSpec extends PageBehaviours {
           .value
         val result = AmountClaimedOnOverseasPensionPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/do-you-know-personal-allowance")
+        checkNavigation(result, "/annual-allowance/2018/donated-via-gift-aid")
       }
     }
 
