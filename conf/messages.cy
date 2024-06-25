@@ -1295,13 +1295,13 @@ hasReliefClaimedOnOverseasPension.message1 = cy: Find out more about non-domicil
 hasReliefClaimedOnOverseasPension.error.required = cy: Select yes if you claimed any tax relief on savings in an overseas pension scheme
 hasReliefClaimedOnOverseasPension.change.hidden = cy: if you have claimed relief on overseas pension
 
-areYouNonDom.title = Were you a non-domicile individual from {0}?
-areYouNonDom.heading =  Were you a non-domicile individual from {0}?
-areYouNonDom.message1 = UK residents who have their permanent home, ‘domicile’, outside the UK may not have to pay UK tax on foreign income
-areYouNonDom.message2 = Find out more about non-domiciled residents (opens in a new tab)
-areYouNonDom.checkYourAnswersLabel = Were you a non-domicile individual from {0}?
-areYouNonDom.error.required = Select yes if you were a non-domicile individual
-areYouNonDom.change.hidden = if you are a nom-dom
+areYouNonDom.title = cy: Were you a non-domicile individual from {0}?
+areYouNonDom.heading = cy:  Were you a non-domicile individual from {0}?
+areYouNonDom.message1 = cy: UK residents who have their permanent home, ‘domicile’, outside the UK may not have to pay UK tax on foreign income
+areYouNonDom.message2 = cy: Find out more about non-domiciled residents (opens in a new tab)
+areYouNonDom.checkYourAnswersLabel = cy: Were you a non-domicile individual from {0}?
+areYouNonDom.error.required = cy: Select yes if you were a non-domicile individual
+areYouNonDom.change.hidden = cy: if you are a nom-dom
 
 doYouKnowPersonalAllowance.title = cy: Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.heading = cy: Do you know your personal allowance from {0}?
