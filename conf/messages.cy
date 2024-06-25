@@ -73,12 +73,15 @@ unauthorised.title = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r cyfrif hwn
 unauthorised.heading = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r cyfrif hwn
 
 annualAllowance.caption = Lwfans blynyddol
+annualAllowanceThresholdIncome.caption = cy: Annual allowance threshold income
+annualAllowanceAdjustedIncome.caption = cy: Annual allowance adjusted income
 annualAllowance.thresholdIncome.caption = cy: Annual allowance threshold income
 lifetimeAllowance.caption = Lwfans oes
 adjustedIncomeCaption.caption = cy: Adjusted Income
 divider = neu
 startEndDateAnd = a
 startEndDateTo = i
+rounding.hint = Mae’n rhaid talgrynnu symiau i lawr i’r bunt agosaf, er enghraifft 2300
 annualAllowance.period.caption.2016 = Lwfans blynyddol rhwng 6 Ebrill 2015 a 5 Ebrill 2016
 annualAllowance.period.caption.2016pre = Lwfans blynyddol rhwng 6 Ebrill 2015 a 8 Gorffennaf 2015
 annualAllowance.period.caption.2016post = Lwfans blynyddol rhwng 9 Gorffennaf 2015 a 5 Ebrill 2016
@@ -1285,21 +1288,26 @@ amountClaimedOnOverseasPension.error.wholeNumber = cy:Amount of relief claimed o
 amountClaimedOnOverseasPension.error.outOfRange = cy: Amount of relief claimed on overseas pensions must be £999,999,999 or less
 amountClaimedOnOverseasPension.change.hidden = cy: amount of relief claimed on overseas pensions
 
-hasReliefClaimedOnOverseasPension.title = cy: Did you claim relief on overseas pension?
-hasReliefClaimedOnOverseasPension.heading = cy: Did you claim relief on overseas pension?
-hasReliefClaimedOnOverseasPension.checkYourAnswersLabel = cy: Did you claim relief on overseas pension?
-hasReliefClaimedOnOverseasPension.error.required = cy: Select yes if you have claimed relief on overseas pension
+hasReliefClaimedOnOverseasPension.title = cy: Did you claim any tax relief on savings in an overseas pension scheme from {0}?
+hasReliefClaimedOnOverseasPension.heading = cy: Did you claim any tax relief on savings in an overseas pension scheme from {0}?
+hasReliefClaimedOnOverseasPension.checkYourAnswersLabel = cy: Did you claim any tax relief on savings in an overseas pension scheme from {0}?
+hasReliefClaimedOnOverseasPension.message1 = cy: Find out more about non-domiciled residents (opens in a new tab)
+hasReliefClaimedOnOverseasPension.error.required = cy: Select yes if you claimed any tax relief on savings in an overseas pension scheme
 hasReliefClaimedOnOverseasPension.change.hidden = cy: if you have claimed relief on overseas pension
 
-areYouNonDom.title = cy: Are you a non-dom?
-areYouNonDom.heading = cy:  Are you a non-dom?
-areYouNonDom.checkYourAnswersLabel = cy: Are you a non-dom?
-areYouNonDom.error.required = cy: Select yes if you are a nom-dom
+areYouNonDom.title = cy: Were you a non-domicile individual from {0}?
+areYouNonDom.heading = cy:  Were you a non-domicile individual from {0}?
+areYouNonDom.message1 = cy: UK residents who have their permanent home, ‘domicile’, outside the UK may not have to pay UK tax on foreign income
+areYouNonDom.message2 = cy: Find out more about non-domiciled residents (opens in a new tab)
+areYouNonDom.checkYourAnswersLabel = cy: Were you a non-domicile individual from {0}?
+areYouNonDom.error.required = cy: Select yes if you were a non-domicile individual
 areYouNonDom.change.hidden = cy: if you are a nom-dom
 
-doYouKnowPersonalAllowance.title = cy: Do you know your personal allowance?
-doYouKnowPersonalAllowance.heading = cy: Do you know your personal allowance?
-doYouKnowPersonalAllowance.checkYourAnswersLabel = cy: Do you know your personal allowance?
+doYouKnowPersonalAllowance.title = cy: Do you know your personal allowance from {0}?
+doYouKnowPersonalAllowance.heading = cy: Do you know your personal allowance from {0}?
+doYouKnowPersonalAllowance.message1 = cy: Your personal allowance is the amount of money that you can earn without paying any income tax.
+doYouKnowPersonalAllowance.message2 = cy: If you have filed for self-assessment you will find this information in your SA-302 document.
+doYouKnowPersonalAllowance.checkYourAnswersLabel = cy: Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.error.required = cy: Select yes if you know your personal allowance
 doYouKnowPersonalAllowance.change.hidden = cy: your personal allowance
 

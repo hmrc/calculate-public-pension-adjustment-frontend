@@ -25,9 +25,13 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("amountClaimedOnOverseasPension.title"))) {
+@contentHint = {
+    <p class="govuk-hint">@messages("rounding.hint")</p>
+}
+
+@layout(pageTitle = title(form, messages("amountClaimedOnOverseasPension.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -37,13 +41,14 @@
 
         @govukInput(
             InputViewModel(
-                field = form("value"),
-                label = LabelViewModel(messages("amountClaimedOnOverseasPension.heading")).asPageHeading()
-            )
-            .withInputMode("numeric")
+            field = form("value"),
+                label = HmrcPageHeadingLabel(messages("amountClaimedOnOverseasPension.heading", startEndDate),
+                caption = messages("annualAllowanceAdjustedIncome.caption")
+                ))
+            .asNumeric()
             .withWidth(Fixed10)
+            .withHint(HintViewModel(HtmlContent(contentHint)))
             .withCssClass("govuk-currency-input__inner__input")
-            .withPrefix(PrefixOrSuffix(content = Text("£")))
         )
 
         @continueButton()
