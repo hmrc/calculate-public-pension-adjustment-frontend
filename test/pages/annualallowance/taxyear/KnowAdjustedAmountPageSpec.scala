@@ -81,7 +81,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
 
         val result = KnowAdjustedAmountPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/how-much-contribution")
+        checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
       }
 
       "to JourneyRecovery when false, when threshold income is anything else" in {

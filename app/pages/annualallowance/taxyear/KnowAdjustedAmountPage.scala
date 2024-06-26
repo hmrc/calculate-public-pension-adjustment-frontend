@@ -37,7 +37,7 @@ case class KnowAdjustedAmountPage(period: Period) extends QuestionPage[Boolean] 
             controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
               .onPageLoad(NormalMode, period)
           case Some(ThresholdIncome.Yes)        =>
-            controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+            controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
               .onPageLoad(NormalMode, period)
           case _                                =>
             controllers.routes.JourneyRecoveryController.onPageLoad(None)
