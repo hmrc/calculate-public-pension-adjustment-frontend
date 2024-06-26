@@ -57,11 +57,9 @@ class ResubmittingAdjustmentController @Inject() (
     }
 
     for {
-      _ <- Future {
-             auditService.auditCalculationStart(
+      _ <- auditService.auditCalculationStart(
                CalculationAuditStartEvent(userAnswers.uniqueId, userAnswers.authenticated)
              )
-           }
     } yield Ok(view(preparedForm, mode))
   }
 
