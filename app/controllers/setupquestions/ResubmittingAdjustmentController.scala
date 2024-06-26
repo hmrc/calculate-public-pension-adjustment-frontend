@@ -24,6 +24,7 @@ import models.tasklist.sections.SetupSection
 import models.{CalculationAuditStartEvent, Mode, UserAnswers}
 import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{AuditService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -56,11 +57,11 @@ class ResubmittingAdjustmentController @Inject() (
       case Some(value) => form.fill(value)
     }
 
-    for {
-      _ <- auditService.auditCalculationStart(
-               CalculationAuditStartEvent(userAnswers.uniqueId, userAnswers.authenticated)
-             )
-    } yield Ok(view(preparedForm, mode))
+    auditService
+      .auditCalculationStart(CalculationAuditStartEvent(userAnswers.uniqueId, userAnswers.authenticated))
+      .map { _ =>
+        Ok(view(preparedForm, mode))
+      }
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
