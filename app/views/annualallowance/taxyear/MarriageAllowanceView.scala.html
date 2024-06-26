@@ -23,9 +23,24 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("marriageAllowance.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("marriageAllowance.message1")</p>
+
+    <ul class="govuk-body">
+        <li>
+        @messages("marriageAllowance.bullet1")
+        </li>
+        <li>
+        @messages("marriageAllowance.bullet2")
+        </li>
+    </ul>
+
+    <p class="govuk-heading-l govuk-!-padding-0">@messages("marriageAllowance.heading2", startEndDate)</p>
+}
+
+@layout(pageTitle = title(form, messages("marriageAllowance.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.MarriageAllowanceController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -36,8 +51,11 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("marriageAllowance.heading")).asPageHeading()
-            )
+                legend = HmrcPageHeadingLegend(
+                    content = messages("marriageAllowance.heading1"),
+                    caption = HmrcSectionCaption(messages("marriageAllowance.caption"))
+                )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()

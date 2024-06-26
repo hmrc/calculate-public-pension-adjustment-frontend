@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 class BlindAllowanceFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(args: Seq[String]): Form[Boolean] =
     Form(
-      "value" -> boolean("blindAllowance.error.required")
+      "value" -> boolean("blindAllowance.error.required", "error.boolean", args)
     )
 }

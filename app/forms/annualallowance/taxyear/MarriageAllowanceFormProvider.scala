@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 class MarriageAllowanceFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(args: Seq[String]): Form[Boolean] =
     Form(
-      "value" -> boolean("marriageAllowance.error.required")
+      "value" -> boolean("marriageAllowance.error.required", "error.boolean", args)
     )
 }

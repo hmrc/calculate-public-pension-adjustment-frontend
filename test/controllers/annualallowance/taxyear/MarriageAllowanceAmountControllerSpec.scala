@@ -35,12 +35,15 @@ import scala.concurrent.Future
 
 class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
 
+  val startEndDate      = "6 April 2017 to 5 April 2018"
+  val marriageAllowance = "1150"
+
   val formProvider = new MarriageAllowanceAmountFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(Seq(startEndDate, marriageAllowance))
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = BigInt("0")
+  val validAnswer = BigInt("1")
 
   lazy val marriageAllowanceAmountRoute =
     routes.MarriageAllowanceAmountController.onPageLoad(NormalMode, Period._2018).url
@@ -59,7 +62,10 @@ class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[MarriageAllowanceAmountView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -78,7 +84,7 @@ class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -126,7 +132,7 @@ class MarriageAllowanceAmountControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
