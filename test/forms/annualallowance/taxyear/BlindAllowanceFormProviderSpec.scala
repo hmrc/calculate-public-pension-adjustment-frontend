@@ -17,29 +17,32 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class BlindAllowanceFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "blindAllowance.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new BlindAllowanceFormProvider()()
-
   ".value" - {
 
     val fieldName = "value"
 
     behave like booleanField(
-      form,
+      newForm(),
       fieldName,
-      invalidError = FormError(fieldName, invalidKey)
+      invalidError = FormError(fieldName, invalidKey, Seq(""))
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(""))
     )
+  }
+
+  private def newForm(): Form[Boolean] = {
+    val form = new BlindAllowanceFormProvider()
+    form(Seq(""))
   }
 }

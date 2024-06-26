@@ -34,11 +34,12 @@ import views.html.annualallowance.taxyear.BlindAllowanceView
 import scala.concurrent.Future
 
 class BlindAllowanceControllerSpec extends SpecBase with MockitoSugar {
-
   def onwardRoute = Call("GET", "/foo")
 
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
+
   val formProvider = new BlindAllowanceFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(Seq(startEndDate))
 
   lazy val blindAllowanceRoute =
     controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, Period._2018).url
@@ -57,7 +58,10 @@ class BlindAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[BlindAllowanceView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -75,7 +79,7 @@ class BlindAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -120,7 +124,7 @@ class BlindAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString

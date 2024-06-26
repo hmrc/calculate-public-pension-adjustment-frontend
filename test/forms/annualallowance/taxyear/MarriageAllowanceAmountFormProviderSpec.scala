@@ -17,38 +17,44 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class MarriageAllowanceAmountFormProviderSpec extends IntFieldBehaviours {
-
-  val form = new MarriageAllowanceAmountFormProvider()()
 
   ".value" - {
 
     val fieldName = "value"
 
-    val minimum = 0
-    val maximum = 999999999
+    val minimum = 1
+    val maximum = 1260
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      form,
+      newForm,
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      newForm,
       fieldName,
-      nonNumericError = FormError(fieldName, "marriageAllowanceAmount.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "marriageAllowanceAmount.error.wholeNumber")
+      nonNumericError =
+        FormError(fieldName, "marriageAllowanceAmount.error.nonNumeric", Seq("6 April 2022 to 5 April 2023", "1260")),
+      wholeNumberError =
+        FormError(fieldName, "marriageAllowanceAmount.error.wholeNumber", Seq("6 April 2022 to 5 April 2023", "1260"))
     )
 
     behave like mandatoryField(
-      form,
+      newForm,
       fieldName,
-      requiredError = FormError(fieldName, "marriageAllowanceAmount.error.required")
+      requiredError =
+        FormError(fieldName, "marriageAllowanceAmount.error.required", Seq("6 April 2022 to 5 April 2023", "1260"))
     )
+  }
+
+  private def newForm(): Form[BigInt] = {
+    val form = new MarriageAllowanceAmountFormProvider()
+    form(Seq("6 April 2022 to 5 April 2023", "1260"))
   }
 }
