@@ -42,7 +42,7 @@ class AmountFlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
         .value
       val result = AmountFlexibleRemunerationArrangementsPage(Period._2018).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2018/how-much-contribution")
+      checkNavigation(result, "/annual-allowance/2018/contribute-to-relief-at-source-scheme")
     }
   }
 
@@ -56,7 +56,7 @@ class AmountFlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
       .value
     val result = AmountFlexibleRemunerationArrangementsPage(Period._2018).navigate(CheckMode, ua).url
 
-    checkNavigation(result, "/annual-allowance/2018/how-much-contribution")
+    checkNavigation(result, "/annual-allowance/2018/check-answers")
   }
 
   "cleanup" - {

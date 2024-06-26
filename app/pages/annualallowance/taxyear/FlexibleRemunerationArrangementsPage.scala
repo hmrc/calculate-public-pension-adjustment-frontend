@@ -35,7 +35,7 @@ case class FlexibleRemunerationArrangementsPage(period: Period) extends Question
         controllers.annualallowance.taxyear.routes.AmountFlexibleRemunerationArrangementsController
           .onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+        controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
           .onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

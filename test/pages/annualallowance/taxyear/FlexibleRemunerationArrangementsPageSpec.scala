@@ -54,7 +54,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
         .value
       val result = FlexibleRemunerationArrangementsPage(Period._2018).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2018/how-much-contribution")
+      checkNavigation(result, "/annual-allowance/2018/contribute-to-relief-at-source-scheme")
     }
 
     "to JourneyRecovery when not answered" in {

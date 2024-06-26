@@ -514,3 +514,14 @@ GET        /annual-allowance/:period/blind-persons-allowance-amount             
 POST       /annual-allowance/:period/blind-persons-allowance-amount                  controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/:period/change-blind-persons-allowance-amount                        controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/change-blind-persons-allowance-amount                        controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+
+GET        /annual-allowance/:period/how-much-contribution-relief-at-source                  controllers.annualallowance.taxyear.RASContributionAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/how-much-contribution-relief-at-source                  controllers.annualallowance.taxyear.RASContributionAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-how-much-contribution-relief-at-source                        controllers.annualallowance.taxyear.RASContributionAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-how-much-contribution-relief-at-source                        controllers.annualallowance.taxyear.RASContributionAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/contribute-to-relief-at-source-scheme                        controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/contribute-to-relief-at-source-scheme                        controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-contribute-to-relief-at-source-scheme                  controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-contribute-to-relief-at-source-scheme                  controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onSubmit(mode: Mode = CheckMode, period:Period)

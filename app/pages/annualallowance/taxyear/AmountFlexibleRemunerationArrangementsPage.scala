@@ -30,20 +30,10 @@ case class AmountFlexibleRemunerationArrangementsPage(period: Period) extends Qu
   override def toString: String = "amountFlexibleRemunerationArrangements"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(AmountFlexibleRemunerationArrangementsPage(period)) match {
-      case Some(_) =>
-        controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
-          .onPageLoad(NormalMode, period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onPageLoad(NormalMode, period)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(AmountFlexibleRemunerationArrangementsPage(period)) match {
-      case Some(_) =>
-        controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
-          .onPageLoad(NormalMode, period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
 
   override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
     value
