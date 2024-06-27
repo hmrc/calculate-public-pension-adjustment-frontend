@@ -70,24 +70,45 @@ case class LumpSumDeathBenefitsValuePage(period: Period) extends QuestionPage[Bi
     }
 
   override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
-    value
-      .map { _ =>
-        userAnswers
-          .remove(ClaimingTaxReliefPensionPage(period))
-          .flatMap(_.remove(TaxReliefPage(period)))
-          .flatMap(_.remove(KnowAdjustedAmountPage(period)))
-          .flatMap(_.remove(AdjustedIncomePage(period)))
-          .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
-          .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
-          .flatMap(_.remove(AreYouNonDomPage(period)))
-          .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
-          .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
-          .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
-          .flatMap(_.remove(PersonalAllowancePage(period)))
-          .flatMap(_.remove(MarriageAllowancePage(period)))
-          .flatMap(_.remove(MarriageAllowanceAmountPage(period)))
-          .flatMap(_.remove(BlindAllowancePage(period)))
-          .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
-      }
-      .getOrElse(super.cleanup(value, userAnswers))
+    userAnswers.get(ThresholdIncomePage(period)) match {
+      case Some(ThresholdIncome.Yes) =>
+        value
+          .map { _ =>
+            userAnswers
+              .remove(AdjustedIncomePage(period))
+              .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
+              .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+              .flatMap(_.remove(AreYouNonDomPage(period)))
+              .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
+              .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+              .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
+              .flatMap(_.remove(PersonalAllowancePage(period)))
+              .flatMap(_.remove(MarriageAllowancePage(period)))
+              .flatMap(_.remove(MarriageAllowanceAmountPage(period)))
+              .flatMap(_.remove(BlindAllowancePage(period)))
+              .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
+          }
+          .getOrElse(super.cleanup(value, userAnswers))
+      case _                         =>
+        value
+          .map { _ =>
+            userAnswers
+              .remove(ClaimingTaxReliefPensionPage(period))
+              .flatMap(_.remove(TaxReliefPage(period)))
+              .flatMap(_.remove(KnowAdjustedAmountPage(period)))
+              .flatMap(_.remove(AdjustedIncomePage(period)))
+              .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
+              .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+              .flatMap(_.remove(AreYouNonDomPage(period)))
+              .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
+              .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+              .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
+              .flatMap(_.remove(PersonalAllowancePage(period)))
+              .flatMap(_.remove(MarriageAllowancePage(period)))
+              .flatMap(_.remove(MarriageAllowanceAmountPage(period)))
+              .flatMap(_.remove(BlindAllowancePage(period)))
+              .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
+          }
+          .getOrElse(super.cleanup(value, userAnswers))
+    }
 }
