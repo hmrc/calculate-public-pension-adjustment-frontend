@@ -27,11 +27,9 @@ case class RASContributionAmountPage(period: Period) extends QuestionPage[BigInt
 
   override def toString: String = "rASContributionAmount"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onPageLoad(NormalMode, period)
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
-  }
 }

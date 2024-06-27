@@ -41,15 +41,15 @@ class RASContributionAmountFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "rASContributionAmount.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "rASContributionAmount.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "rASContributionAmount.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
       form,
       fieldName,
-      minimum       = minimum,
-      maximum       = maximum,
+      minimum = minimum,
+      maximum = maximum,
       expectedError = FormError(fieldName, "rASContributionAmount.error.outOfRange", Seq(minimum, maximum))
     )
 

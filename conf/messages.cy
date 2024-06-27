@@ -1360,10 +1360,10 @@ rASContributionAmount.heading = cy: How much did you contribute in total to all 
 rASContributionAmount.checkYourAnswersLabel = cy: How much did you contribute in total to all of your pension schemes where relief at source was given from {0}?
 rASContributionAmount.message1 = cy: You can find this information in your P60 document for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
 rASContributionAmount.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300
-rASContributionAmount.error.nonNumeric = cy: Enter your rASContributionAmount using numbers
-rASContributionAmount.error.required = cy: Enter the amount you contributed to [pension scheme] from
-rASContributionAmount.error.wholeNumber = cy: Enter your rASContributionAmount using whole numbers
-rASContributionAmount.error.outOfRange = cy: RASContributionAmount must be between {0} and {1}
+rASContributionAmount.error.nonNumeric = cy: The amount you contributed to relief at source pension schemes must only include numbers 0 to 9
+rASContributionAmount.error.required = cy: Enter the amount you contributed to relief at source pension schemes
+rASContributionAmount.error.wholeNumber = cy: The amount you contributed to relief at source pension schemes must only include numbers 0 to 9
+rASContributionAmount.error.outOfRange = cy: The amount you contributed to relief at source pension schemes must be £999999999 or less
 rASContributionAmount.change.hidden = cy: How much did you contribute in total to all of your pension schemes where relief at source was given from {0}?
 
 didYouContributeToRASScheme.title = cy: Did you make any contributions to a relief at source pension scheme from {0}?

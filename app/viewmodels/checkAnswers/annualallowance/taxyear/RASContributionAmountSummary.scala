@@ -25,19 +25,20 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object RASContributionAmountSummary  {
+object RASContributionAmountSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(RASContributionAmountPage(period)).map {
-      answer =>
-
-        SummaryListRowViewModel(
-          key     = "rASContributionAmount.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(currencyFormat(answer))),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.RASContributionAmountController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("rASContributionAmount.change.hidden"))
+    answers.get(RASContributionAmountPage(period)).map { answer =>
+      SummaryListRowViewModel(
+        key = "rASContributionAmount.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.RASContributionAmountController.onPageLoad(CheckMode, period).url
           )
+            .withVisuallyHiddenText(messages("rASContributionAmount.change.hidden"))
         )
+      )
     }
 }

@@ -23,21 +23,24 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object DidYouContributeToRASSchemeSummary  {
+object DidYouContributeToRASSchemeSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(DidYouContributeToRASSchemePage(period)).map {
-      answer =>
+    answers.get(DidYouContributeToRASSchemePage(period)).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
-        val value = if (answer) "site.yes" else "site.no"
-
-        SummaryListRowViewModel(
-          key     = "didYouContributeToRASScheme.checkYourAnswersLabel",
-          value   = ValueViewModel(value),
-          actions = Seq(
-            ActionItemViewModel("site.change", controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onPageLoad(CheckMode, period).url)
-              .withVisuallyHiddenText(messages("didYouContributeToRASScheme.change.hidden"))
+      SummaryListRowViewModel(
+        key = "didYouContributeToRASScheme.checkYourAnswersLabel",
+        value = ValueViewModel(value),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
+              .onPageLoad(CheckMode, period)
+              .url
           )
+            .withVisuallyHiddenText(messages("didYouContributeToRASScheme.change.hidden"))
         )
+      )
     }
 }

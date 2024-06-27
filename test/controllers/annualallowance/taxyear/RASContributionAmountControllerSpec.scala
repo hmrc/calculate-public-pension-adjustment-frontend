@@ -36,13 +36,14 @@ import scala.concurrent.Future
 class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new RASContributionAmountFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = BigInt(0)
 
-  lazy val rASContributionAmountRoute = controllers.annualallowance.taxyear.routes.RASContributionAmountController.onPageLoad(NormalMode, Period._2018).url
+  lazy val rASContributionAmountRoute =
+    controllers.annualallowance.taxyear.routes.RASContributionAmountController.onPageLoad(NormalMode, Period._2018).url
 
   "RASContributionAmount Controller" - {
 
@@ -64,7 +65,8 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(RASContributionAmountPage(Period._2018), validAnswer).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(RASContributionAmountPage(Period._2018), validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -76,7 +78,10 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -99,7 +104,11 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onPageLoad(NormalMode, Period._2018).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
       }
     }
 
@@ -119,7 +128,10 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
   }

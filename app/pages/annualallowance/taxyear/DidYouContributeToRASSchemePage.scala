@@ -29,35 +29,33 @@ case class DidYouContributeToRASSchemePage(period: Period) extends QuestionPage[
 
   override def toString: String = "didYouContributeToRASScheme"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(DidYouContributeToRASSchemePage(period)) match {
-      case Some(true) =>
+      case Some(true)  =>
         controllers.annualallowance.taxyear.routes.RASContributionAmountController
           .onPageLoad(NormalMode, period)
       case Some(false) =>
         controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
           .onPageLoad(NormalMode, period)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(DidYouContributeToRASSchemePage(period)) match {
-      case Some(true) =>
+      case Some(true)  =>
         controllers.annualallowance.taxyear.routes.RASContributionAmountController
           .onPageLoad(CheckMode, period)
       case Some(false) =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
           .onPageLoad(period)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
         case false => userAnswers.remove(RASContributionAmountPage(period))
-        case true => super.cleanup(value, userAnswers)
+        case true  => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -39,9 +39,12 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new DidYouContributeToRASSchemeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val didYouContributeToRASSchemeRoute = controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onPageLoad(NormalMode, Period._2018).url
+  lazy val didYouContributeToRASSchemeRoute =
+    controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
+      .onPageLoad(NormalMode, Period._2018)
+      .url
 
   "DidYouContributeToRASScheme Controller" - {
 
@@ -63,7 +66,8 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(DidYouContributeToRASSchemePage(Period._2018), true).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(DidYouContributeToRASSchemePage(Period._2018), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -75,7 +79,10 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -98,7 +105,11 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.RASContributionAmountController.onPageLoad(NormalMode, Period._2018).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.annualallowance.taxyear.routes.RASContributionAmountController
+          .onPageLoad(NormalMode, Period._2018)
+          .url
       }
     }
 
@@ -118,7 +129,10 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -128,7 +142,7 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request = FakeRequest(GET, didYouContributeToRASSchemeRoute)
+        val request   = FakeRequest(GET, didYouContributeToRASSchemeRoute)
 
         val result = route(application, request).value
 
@@ -143,7 +157,7 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request =
+        val request   =
           FakeRequest(POST, didYouContributeToRASSchemeRoute)
             .withFormUrlEncodedBody(("value", "true"))
 

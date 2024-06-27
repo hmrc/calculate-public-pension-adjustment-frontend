@@ -25,9 +25,11 @@ class RASContributionAmountFormProvider @Inject() extends Mappings {
 
   def apply(): Form[BigInt] =
     Form(
-      "value" -> bigInt("rASContributionAmount.error.required",
+      "value" -> bigInt(
+        "rASContributionAmount.error.required",
         "rASContributionAmount.error.wholeNumber",
-        "rASContributionAmount.error.nonNumeric")
+        "rASContributionAmount.error.nonNumeric"
+      )
         .verifying(inRange[BigInt](0, BigInt("999999999"), "rASContributionAmount.error.outOfRange"))
     )
 }
