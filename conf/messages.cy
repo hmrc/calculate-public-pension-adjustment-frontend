@@ -1311,28 +1311,6 @@ doYouKnowPersonalAllowance.checkYourAnswersLabel = cy: Do you know your personal
 doYouKnowPersonalAllowance.error.required = cy: Select yes if you know your personal allowance
 doYouKnowPersonalAllowance.change.hidden = cy: your personal allowance
 
-marriageAllowance.title = cy: Did you claim marriage allowance from {0}?
-marriageAllowance.caption = cy: Annual allowance net income
-marriageAllowance.heading1 = cy: Marriage allowance
-marriageAllowance.message1 = cy: You may claim marriage allowance if:
-marriageAllowance.bullet1 = cy: you’re married or in a civil partnership
-marriageAllowance.bullet2 = cy: you partner does not pay Income Tax or your income is below your Personal Allowance (usually £12,570)
-marriageAllowance.heading2 = cy: Did you claim marriage allowance from {0}?
-marriageAllowance.checkYourAnswersLabel = cy: Did you claim marriage allowance from {0}?
-marriageAllowance.error.required = cy: Did you claim marriage allowance from {0}?
-marriageAllowance.change.hidden = cy: Did you claim marriage allowance from {0}?
-
-marriageAllowanceAmount.title = cy: What was your tax relief from {0}?
-marriageAllowanceAmount.caption = cy: Annual allowance net income
-marriageAllowanceAmount.heading = cy: How much marriage allowance did you claim from {0}?
-marriageAllowanceAmount.checkYourAnswersLabel = cy: Marriage allowance from {0}
-marriageAllowanceAmount.error.nonNumeric = cy: Your marriage allowance from {0} must only include numbers 0 to 9
-marriageAllowanceAmount.error.required = cy: How much marriage allowance did you claim from {0}?
-marriageAllowanceAmount.error.wholeNumber = cy: Your marriage allowance from {0} must only include numbers 0 to 9
-marriageAllowanceAmount.error.minimum = cy: Your marriage allowance from {1} must be £{0} or more
-marriageAllowanceAmount.error.maximum = cy: Your marriage allowance from {1} must be £{0} or less
-marriageAllowanceAmount.change.hidden = cy: Marriage allowance from {0}
-
 blindAllowance.title = cy: Did you claim blind person’s allowance from {0}?
 blindAllowance.caption = cy: Annual allowance net income
 blindAllowance.heading1 = cy: Blind person allowance

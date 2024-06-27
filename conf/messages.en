@@ -1311,28 +1311,6 @@ doYouKnowPersonalAllowance.checkYourAnswersLabel = Do you know your personal all
 doYouKnowPersonalAllowance.error.required = Select yes if you know your personal allowance
 doYouKnowPersonalAllowance.change.hidden = your personal allowance
 
-marriageAllowance.title = Did you claim marriage allowance from {0}?
-marriageAllowance.caption = Annual allowance net income
-marriageAllowance.heading1 = Marriage allowance
-marriageAllowance.message1 = You may claim marriage allowance if:
-marriageAllowance.bullet1 = you’re married or in a civil partnership
-marriageAllowance.bullet2 = you partner does not pay Income Tax or your income is below your Personal Allowance (usually £12,570)
-marriageAllowance.heading2 = Did you claim marriage allowance from {0}?
-marriageAllowance.checkYourAnswersLabel = Did you claim marriage allowance from {0}?
-marriageAllowance.error.required = Did you claim marriage allowance from {0}?
-marriageAllowance.change.hidden = Did you claim marriage allowance from {0}?
-
-marriageAllowanceAmount.title = What was your tax relief from {0}?
-marriageAllowanceAmount.caption = Annual allowance net income
-marriageAllowanceAmount.heading = How much marriage allowance did you claim from {0}?
-marriageAllowanceAmount.checkYourAnswersLabel = Marriage allowance from {0}
-marriageAllowanceAmount.error.nonNumeric = Your marriage allowance from {0} must only include numbers 0 to 9
-marriageAllowanceAmount.error.required = How much marriage allowance did you claim from {0}?
-marriageAllowanceAmount.error.wholeNumber = Your marriage allowance from {0} must only include numbers 0 to 9
-marriageAllowanceAmount.error.minimum = Your marriage allowance from {1} must be £{0} or more
-marriageAllowanceAmount.error.maximum = Your marriage allowance from {1} must be £{0} or less
-marriageAllowanceAmount.change.hidden = Marriage allowance from {0}
-
 blindAllowance.title = Did you claim blind person’s allowance from {0}?
 blindAllowance.caption = Annual allowance net income
 blindAllowance.heading1 = Blind person allowance

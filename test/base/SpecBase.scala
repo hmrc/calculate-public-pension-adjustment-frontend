@@ -24,7 +24,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountClaimedOnOverseasPensionPage, AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, AnyLumpSumDeathBenefitsPage, AnySalarySacrificeArrangementsPage, AreYouNonDomPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionNotAdjustedIncomePage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, FlexibleRemunerationArrangementsPage, HasReliefClaimedOnOverseasPensionPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, MarriageAllowanceAmountPage, MarriageAllowancePage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
+import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountClaimedOnOverseasPensionPage, AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, AnyLumpSumDeathBenefitsPage, AnySalarySacrificeArrangementsPage, AreYouNonDomPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionNotAdjustedIncomePage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, FlexibleRemunerationArrangementsPage, HasReliefClaimedOnOverseasPensionPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
 import pages.lifetimeallowance.{AnnualPaymentValuePage, ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, HadBenefitCrystallisationEventPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, MultipleBenefitCrystallisationEventPage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
 import pages.setupquestions.ReportingChangePage
 import play.api.Application
@@ -353,12 +353,6 @@ trait SpecBase
       .success
       .value
       .set(PersonalAllowancePage(_2022), BigInt(1))
-      .success
-      .value
-      .set(MarriageAllowancePage(_2022), true)
-      .success
-      .value
-      .set(MarriageAllowanceAmountPage(_2022), BigInt(1))
       .success
       .value
       .set(BlindAllowancePage(_2022), true)

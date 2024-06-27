@@ -80,16 +80,4 @@ class DoYouKnowPersonalAllowanceController @Inject() (
     val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
     period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
   }
-
-  def checkIfBasicRateCharged(period: Period): Action[AnyContent] =
-    (identify andThen getData andThen requireData).async { implicit request =>
-      calculateBackendService.findTaxRateStatus(request.userAnswers, period).map {
-        case true  =>
-          Redirect(
-            controllers.annualallowance.taxyear.routes.MarriageAllowanceController.onPageLoad(NormalMode, period)
-          )
-        case false =>
-          Redirect(controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period))
-      }
-    }
 }
