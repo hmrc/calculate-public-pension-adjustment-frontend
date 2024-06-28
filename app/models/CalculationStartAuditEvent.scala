@@ -19,12 +19,12 @@ package models
 import models.CalculationResults.{CalculationInputs, CalculationResponse}
 import play.api.libs.json._
 
-case class CalculationAuditStartEvent(
+case class CalculationStartAuditEvent(
   uniqueId: String,
   authenticated: Boolean
 )
 
-object CalculationAuditStartEvent {
+object CalculationStartAuditEvent {
 
-  implicit lazy val formats: Format[CalculationAuditStartEvent] = Json.format
+  implicit lazy val formats: Format[CalculationStartAuditEvent] = Json.format
 }

@@ -16,15 +16,14 @@
 
 package controllers.setupquestions
 
-import controllers.actions._
 import config.FrontendAppConfig
+import controllers.actions._
 import forms.ResubmittingAdjustmentFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
-import models.{CalculationAuditStartEvent, Mode, UserAnswers}
+import models.{CalculationStartAuditEvent, Mode, UserAnswers}
 import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{AuditService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -58,7 +57,7 @@ class ResubmittingAdjustmentController @Inject() (
     }
 
     auditService
-      .auditCalculationStart(CalculationAuditStartEvent(userAnswers.uniqueId, userAnswers.authenticated))
+      .auditCalculationStart(CalculationStartAuditEvent(userAnswers.uniqueId, userAnswers.authenticated))
       .map { _ =>
         Ok(view(preparedForm, mode))
       }

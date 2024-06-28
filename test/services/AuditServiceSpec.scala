@@ -20,7 +20,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationAuditStartEvent, CalculationResults, Period, TaxYear2011To2015, TaxYearScheme}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, Period, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
@@ -176,13 +176,13 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
 
         implicit val hc = HeaderCarrier()
 
-        val auditCalculationStartEvent =
-          CalculationAuditStartEvent(
+        val calculationStartAuditEvent =
+          CalculationStartAuditEvent(
             "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
             true
           )
 
-        await(service.auditCalculationStart(auditCalculationStartEvent)(hc)) mustBe ()
+        await(service.auditCalculationStart(calculationStartAuditEvent)(hc)) mustBe ()
       }
     }
 
