@@ -33,7 +33,8 @@ object FlexibleRemunerationArrangementsSummary {
     messages: Messages
   ): Option[SummaryListRow] =
     answers.get(FlexibleRemunerationArrangementsPage(period)).map { answer =>
-      val value                = if (answer) "site.yes" else "site.no"
+      val value = if (answer) "site.yes" else "site.no"
+
       val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
       val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
       val startEndDate: String =

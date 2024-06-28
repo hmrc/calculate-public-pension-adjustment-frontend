@@ -29,7 +29,7 @@ import pages.annualallowance.taxyear.{DefinedBenefit2016PostAmountPage, DefinedB
 import play.api.inject.bind
 import services.UserDataService
 import viewmodels.checkAnswers.ClaimingTaxReliefPensionSummary
-import viewmodels.checkAnswers.annualallowance.taxyear.{AdjustedIncomeSummary, AmountClaimedOnOverseasPensionSummary, AmountFlexibleRemunerationArrangementsSummary, AmountSalarySacrificeArrangementsSummary, AnyLumpSumDeathBenefitsSummary, AnySalarySacrificeArrangementsSummary, AreYouNonDomSummary, BlindAllowanceSummary, BlindPersonsAllowanceAmountSummary, ClaimingTaxReliefPensionNotAdjustedIncomeSummary, DefinedBenefit2016PostAmountSummary, DefinedBenefit2016PreAmountSummary, DefinedContribution2016PostAmountSummary, DefinedContribution2016PreAmountSummary, DefinedContributionAmountSummary, DoYouKnowPersonalAllowanceSummary, FlexiAccessDefinedContributionAmountSummary, FlexibleRemunerationArrangementsSummary, HasReliefClaimedOnOverseasPensionSummary, HowMuchContributionPensionSchemeSummary, HowMuchTaxReliefPensionSummary, KnowAdjustedAmountSummary, LumpSumDeathBenefitsValueSummary, MarriageAllowanceAmountSummary, MarriageAllowanceSummary, PersonalAllowanceSummary, TaxReliefSummary, ThresholdIncomeSummary, TotalIncomeSummary}
+import viewmodels.checkAnswers.annualallowance.taxyear.{AdjustedIncomeSummary, AmountClaimedOnOverseasPensionSummary, AmountFlexibleRemunerationArrangementsSummary, AmountSalarySacrificeArrangementsSummary, AnyLumpSumDeathBenefitsSummary, AnySalarySacrificeArrangementsSummary, AreYouNonDomSummary, BlindAllowanceSummary, BlindPersonsAllowanceAmountSummary, ClaimingTaxReliefPensionNotAdjustedIncomeSummary, DefinedBenefit2016PostAmountSummary, DefinedBenefit2016PreAmountSummary, DefinedContribution2016PostAmountSummary, DefinedContribution2016PreAmountSummary, DefinedContributionAmountSummary, DidYouContributeToRASSchemeSummary, DoYouKnowPersonalAllowanceSummary, FlexiAccessDefinedContributionAmountSummary, FlexibleRemunerationArrangementsSummary, HasReliefClaimedOnOverseasPensionSummary, HowMuchContributionPensionSchemeSummary, HowMuchTaxReliefPensionSummary, KnowAdjustedAmountSummary, LumpSumDeathBenefitsValueSummary, MarriageAllowanceAmountSummary, MarriageAllowanceSummary, PersonalAllowanceSummary, RASContributionAmountSummary, TaxReliefSummary, ThresholdIncomeSummary, TotalIncomeSummary}
 import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView
 
 import java.time.LocalDate
@@ -377,7 +377,8 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
           AmountSalarySacrificeArrangementsSummary.row(userAnswers, Period._2022)(messages(application)),
           FlexibleRemunerationArrangementsSummary.row(userAnswers, Period._2022)(messages(application)),
           AmountFlexibleRemunerationArrangementsSummary.row(userAnswers, Period._2022)(messages(application)),
-          HowMuchContributionPensionSchemeSummary.row(userAnswers, Period._2022)(messages(application)),
+          DidYouContributeToRASSchemeSummary.row(userAnswers, Period._2022)(messages(application)),
+          RASContributionAmountSummary.row(userAnswers, Period._2022)(messages(application)),
           AnyLumpSumDeathBenefitsSummary.row(userAnswers, Period._2022)(messages(application)),
           LumpSumDeathBenefitsValueSummary.row(userAnswers, Period._2022)(messages(application)),
           ClaimingTaxReliefPensionSummary.row(userAnswers, Period._2022)(messages(application)),
