@@ -107,81 +107,10 @@ class ThresholdIncomePageSpec extends PageBehaviours {
 
       "must cleanup correctly" in {
 
-        val period = Period._2017
+        val period = Period._2022
 
-        val userAnswers = emptyUserAnswers
-          .set(TotalIncomePage(period), BigInt(2000))
-          .success
-          .value
-          .set(AnySalarySacrificeArrangementsPage(period), true)
-          .success
-          .value
-          .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-          .success
-          .value
-          .set(FlexibleRemunerationArrangementsPage(period), true)
-          .success
-          .value
-          .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-          .success
-          .value
-          .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
-          .success
-          .value
-          .set(AnyLumpSumDeathBenefitsPage(period), true)
-          .success
-          .value
-          .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
-          .success
-          .value
-          .set(ClaimingTaxReliefPensionPage(period), true)
-          .success
-          .value
-          .set(TaxReliefPage(period), BigInt(1))
-          .success
-          .value
-          .set(KnowAdjustedAmountPage(period), true)
-          .success
-          .value
-          .set(AdjustedIncomePage(period), BigInt(1))
-          .success
-          .value
-          .set(ClaimingTaxReliefPensionNotAdjustedIncomePage(period), true)
-          .success
-          .value
-          .set(HowMuchTaxReliefPensionPage(period), BigInt(1))
-          .success
-          .value
-          .set(AreYouNonDomPage(period), true)
-          .success
-          .value
-          .set(HasReliefClaimedOnOverseasPensionPage(period), true)
-          .success
-          .value
-          .set(AmountClaimedOnOverseasPensionPage(period), BigInt(1))
-          .success
-          .value
-          .set(DoYouKnowPersonalAllowancePage(period), true)
-          .success
-          .value
-          .set(PersonalAllowancePage(period), BigInt(1))
-          .success
-          .value
-          .set(MarriageAllowancePage(period), true)
-          .success
-          .value
-          .set(MarriageAllowanceAmountPage(period), BigInt(1))
-          .success
-          .value
-          .set(BlindAllowancePage(period), true)
-          .success
-          .value
-          .set(BlindPersonsAllowanceAmountPage(period), BigInt(1))
-          .success
-          .value
-
-        val cleanedUserAnswers = ThresholdIncomePage(Period._2017)
-          .cleanup(Some(ThresholdIncome.Yes), userAnswers)
+        val cleanedUserAnswers = ThresholdIncomePage(Period._2022)
+          .cleanup(Some(ThresholdIncome.Yes), incomeSubJourneyData)
           .success
           .value
 

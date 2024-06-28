@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
@@ -67,7 +67,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "to amount-flexible-remuneration-arrangements when answered true" in {
+    "to amount-flexible-remuneration-arrangements in normal mode when answered true" in {
       val ua     = emptyUserAnswers
         .set(
           FlexibleRemunerationArrangementsPage(Period._2018),
@@ -79,11 +79,11 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
 
       checkNavigation(
         result,
-        "/annual-allowance/2018/change-amount-flexible-remuneration-arrangements"
+        "/annual-allowance/2018/amount-flexible-remuneration-arrangements"
       )
     }
 
-    "to how-much-contribution when answered false " in {
+    "to how-much-contribution in normal mode when answered false " in {
       val ua     = emptyUserAnswers
         .set(
           FlexibleRemunerationArrangementsPage(Period._2018),
@@ -93,7 +93,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
         .value
       val result = FlexibleRemunerationArrangementsPage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2018/change-how-much-contribution")
+      checkNavigation(result, "/annual-allowance/2018/how-much-contribution")
     }
 
     "to JourneyRecovery when not answered" in {
@@ -101,6 +101,43 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
       val result = FlexibleRemunerationArrangementsPage(Period._2018).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/there-is-a-problem")
+    }
+  }
+  "cleanup" - {
+
+    "must cleanup correctly" in {
+
+      val period = Period._2022
+
+      val cleanedUserAnswers = FlexibleRemunerationArrangementsPage(Period._2022)
+        .cleanup(Some(true), incomeSubJourneyData)
+        .success
+        .value
+
+      cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.IDoNotKnow)
+      cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
+      cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe Some(true)
+      cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
+      cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe None
+      cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe None
+      cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
+      cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
+      cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
+      cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+      cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
+      cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
+      cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
     }
   }
 }
