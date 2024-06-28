@@ -172,7 +172,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
     }
 
     "auditCalculationStart" - {
-      "should call the audit connector with the CalculationAuditStartEvent event" in {
+      "should call the audit connector with the CalculationStartAuditEvent event" in {
 
         implicit val hc = HeaderCarrier()
 
