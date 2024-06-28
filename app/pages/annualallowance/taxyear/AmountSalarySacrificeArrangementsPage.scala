@@ -51,7 +51,6 @@ case class AmountSalarySacrificeArrangementsPage(period: Period) extends Questio
         userAnswers
           .remove(FlexibleRemunerationArrangementsPage(period))
           .flatMap(_.remove(AmountFlexibleRemunerationArrangementsPage(period)))
-          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
           .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
           .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
@@ -60,6 +59,7 @@ case class AmountSalarySacrificeArrangementsPage(period: Period) extends Questio
           .flatMap(_.remove(AdjustedIncomePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
           .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
           .flatMap(_.remove(AreYouNonDomPage(period)))
           .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))

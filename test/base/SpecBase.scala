@@ -24,7 +24,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountClaimedOnOverseasPensionPage, AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, AnyLumpSumDeathBenefitsPage, AnySalarySacrificeArrangementsPage, AreYouNonDomPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionNotAdjustedIncomePage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, FlexibleRemunerationArrangementsPage, HasReliefClaimedOnOverseasPensionPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, MarriageAllowanceAmountPage, MarriageAllowancePage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
+import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountClaimedOnOverseasPensionPage, AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, AnyLumpSumDeathBenefitsPage, AnySalarySacrificeArrangementsPage, AreYouNonDomPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionNotAdjustedIncomePage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, FlexibleRemunerationArrangementsPage, HasReliefClaimedOnOverseasPensionPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, MarriageAllowanceAmountPage, MarriageAllowancePage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
 import pages.lifetimeallowance.{AnnualPaymentValuePage, ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, HadBenefitCrystallisationEventPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, MultipleBenefitCrystallisationEventPage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
 import pages.setupquestions.ReportingChangePage
 import play.api.Application
@@ -32,9 +32,8 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.{Binding, bind}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
-import viewmodels.checkAnswers.annualallowance.taxyear.BlindPersonsAllowanceAmountSummary
-
 import java.time.LocalDate
+import viewmodels.checkAnswers.annualallowance.taxyear.BlindPersonsAllowanceAmountSummary
 
 trait SpecBase
     extends AnyFreeSpec
@@ -311,7 +310,10 @@ trait SpecBase
       .set(AmountFlexibleRemunerationArrangementsPage(_2022), BigInt(1))
       .success
       .value
-      .set(HowMuchContributionPensionSchemePage(_2022), BigInt(1))
+      .set(DidYouContributeToRASSchemePage(_2022), true)
+      .success
+      .value
+      .set(RASContributionAmountPage(_2022), BigInt(1))
       .success
       .value
       .set(AnyLumpSumDeathBenefitsPage(_2022), true)

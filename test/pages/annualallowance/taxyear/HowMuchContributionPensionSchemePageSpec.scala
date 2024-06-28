@@ -72,7 +72,6 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
         cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
         cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
         cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None

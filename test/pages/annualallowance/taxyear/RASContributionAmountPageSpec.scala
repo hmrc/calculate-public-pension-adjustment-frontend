@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class RASContributionAmountPageSpec extends PageBehaviours {
@@ -55,7 +55,45 @@ class RASContributionAmountPageSpec extends PageBehaviours {
         .value
       val result = RASContributionAmountPage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2018/check-answers")
+      checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
+    }
+
+    "cleanup" - {
+
+      "must cleanup correctly" in {
+
+        val period = Period._2022
+
+        val cleanedUserAnswers = RASContributionAmountPage(Period._2022)
+          .cleanup(Some(BigInt(1)), incomeSubJourneyData)
+          .success
+          .value
+
+        cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.IDoNotKnow)
+        cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
+        cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
+        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
+        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
+      }
     }
   }
 }

@@ -33,13 +33,14 @@ case class AmountFlexibleRemunerationArrangementsPage(period: Period) extends Qu
     controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onPageLoad(NormalMode, period)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onPageLoad(NormalMode, period)
 
   override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map { _ =>
         userAnswers
-          .remove(HowMuchContributionPensionSchemePage(period))
+          .remove(DidYouContributeToRASSchemePage(period))
+          .flatMap(_.remove(RASContributionAmountPage(period)))
           .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
           .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
@@ -48,6 +49,7 @@ case class AmountFlexibleRemunerationArrangementsPage(period: Period) extends Qu
           .flatMap(_.remove(AdjustedIncomePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
           .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
           .flatMap(_.remove(AreYouNonDomPage(period)))
           .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))

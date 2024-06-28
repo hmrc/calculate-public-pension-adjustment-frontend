@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class DidYouContributeToRASSchemePageSpec extends PageBehaviours {
@@ -68,7 +68,7 @@ class DidYouContributeToRASSchemePageSpec extends PageBehaviours {
 
         val result = DidYouContributeToRASSchemePage(Period._2018).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/change-how-much-contribution-relief-at-source")
+        checkNavigation(result, "/annual-allowance/2018/how-much-contribution-relief-at-source")
       }
 
       "must redirect to CYA page when false" in {
@@ -80,21 +80,45 @@ class DidYouContributeToRASSchemePageSpec extends PageBehaviours {
 
         val result = DidYouContributeToRASSchemePage(Period._2018).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
       }
     }
 
-    "Clean up" - {
-      "must clean up correctly when user has not contributed to RAS schemes" in {
+    "cleanup" - {
 
-        val ua = emptyUserAnswers.set(RASContributionAmountPage(Period._2018), BigInt("100")).success.value
+      "must cleanup correctly" in {
 
-        val cleanedUserAnswers = DidYouContributeToRASSchemePage(Period._2018)
-          .cleanup(Some(false), ua)
+        val period = Period._2022
+
+        val cleanedUserAnswers = DidYouContributeToRASSchemePage(Period._2022)
+          .cleanup(Some(true), incomeSubJourneyData)
           .success
           .value
 
-        cleanedUserAnswers.get(RASContributionAmountPage(Period._2018)) mustBe None
+        cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.IDoNotKnow)
+        cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
+        cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
+        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
+        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
       }
     }
   }
