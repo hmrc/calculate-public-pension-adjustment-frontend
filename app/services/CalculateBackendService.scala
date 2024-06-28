@@ -18,9 +18,7 @@ package services
 
 import connectors.CalculateBackendConnector
 import logging.Logging
-import models.{Done, Period, TaxRateStatusRequest, UserAnswers}
-import pages.annualallowance.preaaquestions.WhichYearsScottishTaxpayerPage
-import pages.annualallowance.taxyear.TotalIncomePage
+import models.Done
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
