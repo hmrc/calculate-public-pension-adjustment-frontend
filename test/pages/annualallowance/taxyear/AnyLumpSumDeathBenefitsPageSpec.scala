@@ -106,7 +106,7 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "to LumpSumDeathBenefitsValue when period not 2016 and answered true" in {
+    "to LumpSumDeathBenefitsValue in normal mode when period not 2016 and answered true" in {
       val ua     = emptyUserAnswers
         .set(
           AnyLumpSumDeathBenefitsPage(Period._2017),
@@ -116,10 +116,10 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
         .value
       val result = AnyLumpSumDeathBenefitsPage(Period._2017).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2017/change-lump-sum-death-benefits-value")
+      checkNavigation(result, "/annual-allowance/2017/lump-sum-death-benefits-value")
     }
 
-    "to ClaimingTaxReliefPension when period not 2016 and answered false and threshold income is IDoNotKnow" in {
+    "to ClaimingTaxReliefPension in normal mode when period not 2016 and answered false and threshold income is IDoNotKnow" in {
       val ua = emptyUserAnswers
         .set(ThresholdIncomePage(Period._2017), ThresholdIncome.IDoNotKnow)
         .success
@@ -133,7 +133,7 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
 
       val result = AnyLumpSumDeathBenefitsPage(Period._2017).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief")
+      checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
     }
 
     "to ClaimingTaxReliefPensionNotAdjustedIncome when period not 2016 and answered false and threshold income is Yes" in {
@@ -150,7 +150,7 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
 
       val result = AnyLumpSumDeathBenefitsPage(Period._2017).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2017/change-claiming-tax-relief-pension")
+      checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief-pension")
     }
 
     "to JourneyRecovery when period not 2016 and answered false and threshold income is no" in {
@@ -174,6 +174,74 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
       val result = ThresholdIncomePage(Period._2013).navigate(CheckMode, ua).url
 
       checkNavigation(result, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "must cleanup correctly" in {
+
+      val period = Period._2022
+
+      val cleanedUserAnswers = AnyLumpSumDeathBenefitsPage(Period._2022)
+        .cleanup(Some(true), incomeSubJourneyData)
+        .success
+        .value
+
+      cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.IDoNotKnow)
+      cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
+      cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe Some(true)
+      cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
+      cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
+      cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
+      cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
+      cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+      cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
+      cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
+      cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
+    }
+
+    "if threshold income page is yes do not clean up claiming tax relief, tax relief amount and know adjusted income pages" in {
+
+      val period = Period._2022
+
+      val cleanedUserAnswers = AnyLumpSumDeathBenefitsPage(period)
+        .cleanup(Some(true), incomeSubJourneyDataThresholdIncomeYes)
+        .success
+        .value
+
+      cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.Yes)
+      cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe Some(true)
+      cleanedUserAnswers.get(TaxReliefPage(period)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe Some(false)
+      cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
+      cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+      cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+      cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
+      cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
+      cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
     }
   }
 }

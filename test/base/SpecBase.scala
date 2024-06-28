@@ -366,4 +366,61 @@ trait SpecBase
       .success
       .value
 
+  def incomeSubJourneyDataThresholdIncomeYes: UserAnswers =
+    emptyUserAnswers
+      .set(ThresholdIncomePage(_2022), ThresholdIncome.Yes)
+      .success
+      .value
+      .set(TotalIncomePage(_2022), BigInt(2000))
+      .success
+      .value
+      .set(ClaimingTaxReliefPensionPage(_2022), true)
+      .success
+      .value
+      .set(TaxReliefPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(KnowAdjustedAmountPage(_2022), false)
+      .success
+      .value
+      .set(AnyLumpSumDeathBenefitsPage(_2022), true)
+      .success
+      .value
+      .set(LumpSumDeathBenefitsValuePage(_2022), BigInt(1))
+      .success
+      .value
+      .set(ClaimingTaxReliefPensionNotAdjustedIncomePage(_2022), true)
+      .success
+      .value
+      .set(HowMuchTaxReliefPensionPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(AreYouNonDomPage(_2022), true)
+      .success
+      .value
+      .set(HasReliefClaimedOnOverseasPensionPage(_2022), true)
+      .success
+      .value
+      .set(AmountClaimedOnOverseasPensionPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DoYouKnowPersonalAllowancePage(_2022), true)
+      .success
+      .value
+      .set(PersonalAllowancePage(_2022), BigInt(1))
+      .success
+      .value
+      .set(MarriageAllowancePage(_2022), true)
+      .success
+      .value
+      .set(MarriageAllowanceAmountPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(BlindAllowancePage(_2022), true)
+      .success
+      .value
+      .set(BlindPersonsAllowanceAmountPage(_2022), BigInt(1))
+      .success
+      .value
+
 }

@@ -21,6 +21,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case class AmountSalarySacrificeArrangementsPage(period: Period) extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
@@ -39,7 +41,34 @@ case class AmountSalarySacrificeArrangementsPage(period: Period) extends Questio
     answers.get(AmountSalarySacrificeArrangementsPage(period)) match {
       case Some(_) =>
         controllers.annualallowance.taxyear.routes.FlexibleRemunerationArrangementsController
-          .onPageLoad(CheckMode, period)
+          .onPageLoad(NormalMode, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(FlexibleRemunerationArrangementsPage(period))
+          .flatMap(_.remove(AmountFlexibleRemunerationArrangementsPage(period)))
+          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
+          .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
+          .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
+          .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
+          .flatMap(_.remove(TaxReliefPage(period)))
+          .flatMap(_.remove(KnowAdjustedAmountPage(period)))
+          .flatMap(_.remove(AdjustedIncomePage(period)))
+          .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
+          .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+          .flatMap(_.remove(AreYouNonDomPage(period)))
+          .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
+          .flatMap(_.remove(PersonalAllowancePage(period)))
+          .flatMap(_.remove(MarriageAllowancePage(period)))
+          .flatMap(_.remove(MarriageAllowanceAmountPage(period)))
+          .flatMap(_.remove(BlindAllowancePage(period)))
+          .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }
