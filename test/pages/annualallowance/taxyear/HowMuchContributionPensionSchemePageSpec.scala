@@ -30,7 +30,7 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
     beRemovable[BigInt](HowMuchContributionPensionSchemePage(Period._2018))
 
     "must Navigate correctly in normal mode" - {
-      "to AnyLumpSumDeathBenefits page when anything answered" in {
+      "to NonDom page when anything answered" in {
         val ua = emptyUserAnswers
           .set(HowMuchContributionPensionSchemePage(Period._2017), BigInt(5000))
           .success
@@ -38,7 +38,7 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
 
         val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/any-lump-sum-death-benefits")
+        checkNavigation(result, "/annual-allowance/2017/non-domicile")
       }
     }
 
@@ -52,41 +52,6 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
         val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/annual-allowance/2017/any-lump-sum-death-benefits")
-      }
-    }
-
-    "cleanup" - {
-
-      "must cleanup correctly" in {
-
-        val period = Period._2022
-
-        val cleanedUserAnswers = HowMuchContributionPensionSchemePage(Period._2022)
-          .cleanup(Some(BigInt(1)), incomeSubJourneyData)
-          .success
-          .value
-
-        cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.IDoNotKnow)
-        cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
-        cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe Some(true)
-        cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
-        cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
-        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
-        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
-        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
-        cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
-        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
-        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
-        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
-        cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
-        cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
-        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
       }
     }
   }

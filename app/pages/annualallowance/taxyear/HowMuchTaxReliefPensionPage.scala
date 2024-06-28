@@ -30,7 +30,9 @@ case class HowMuchTaxReliefPensionPage(period: Period) extends QuestionPage[BigI
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     if (period != Period._2016) {
       answers.get(HowMuchTaxReliefPensionPage(period)) match {
-        case Some(_) => controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(NormalMode, period)
+        case Some(_) =>
+          controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+            .onPageLoad(NormalMode, period)
         case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {
