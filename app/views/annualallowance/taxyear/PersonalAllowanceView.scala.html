@@ -21,28 +21,22 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
     <p class="govuk-body">@messages("personalAllowance.message1")</p>
-    <ul class="govuk-body">
-        <li>@messages("personalAllowance.bullet1")</li>
-        <li>@messages("personalAllowance.bullet2")</li>
-    </ul>
-    <a class="govuk-link" href="https://https://www.gov.uk/income-tax-reliefs" rel="noreferrer noopener" target="_blank">
-        @messages("personalAllowance.message2")
-    </a>
-    <p class="govuk-hint">@messages("personalAllowance.hint")</p>
+    <p class="govuk-hint">@messages("rounding.hint")</p>
 }
 
 @captionText = {
     @messages("personalAllowance.caption", period.start.getYear.toString, period.end.getYear.toString)
 }
 
-@layout(pageTitle = title(form, messages("personalAllowance.title"))) {
+@layout(pageTitle = title(form, messages("personalAllowance.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -54,7 +48,7 @@
             InputViewModel(
                 field = form("value"),
                 label = HmrcPageHeadingLabel(
-                    content = messages("personalAllowance.heading", period.start.getYear.toString, period.end.getYear.toString),
+                    content = messages("personalAllowance.heading", startEndDate),
                     caption = HtmlContent(captionText)
                 )
             )
@@ -65,8 +59,6 @@
             .withInputMode("numeric")
         )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-        )
+        @continueButton()
     }
 }
