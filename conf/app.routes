@@ -513,3 +513,13 @@ GET        /annual-allowance/:period/contribute-to-relief-at-source-scheme      
 POST       /annual-allowance/:period/contribute-to-relief-at-source-scheme                        controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/:period/change-contribute-to-relief-at-source-scheme                  controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/change-contribute-to-relief-at-source-scheme                  controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/do-you-have-code-adjustment                        controllers.annualallowance.taxyear.DoYouHaveCodeAdjustmentController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/do-you-have-code-adjustment                        controllers.annualallowance.taxyear.DoYouHaveCodeAdjustmentController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-do-you-have-code-adjustment                   controllers.annualallowance.taxyear.DoYouHaveCodeAdjustmentController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-do-you-have-code-adjustment                   controllers.annualallowance.taxyear.DoYouHaveCodeAdjustmentController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/code-adjustment-amount                 controllers.annualallowance.taxyear.CodeAdjustmentAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/code-adjustment-amount                  controllers.annualallowance.taxyear.CodeAdjustmentAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-code-adjustment-amount                        controllers.annualallowance.taxyear.CodeAdjustmentAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-code-adjustment-amount                        controllers.annualallowance.taxyear.CodeAdjustmentAmountController.onSubmit(mode: Mode = CheckMode, period:Period)

@@ -17,37 +17,40 @@
 package controllers.annualallowance.taxyear
 
 import controllers.actions._
+import forms.annualallowance.taxyear.CodeAdjustmentAmountFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period}
+import pages.annualallowance.taxyear.CodeAdjustmentAmountPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import views.html.annualallowance.taxyear.CodeAdjustmentAmountView
 
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PayeCodeAdjustmentController @Inject()(
-                                    override val messagesApi: MessagesApi,
-                                    userDataService: UserDataService,
-                                    identify: IdentifierAction,
-                                    getData: DataRetrievalAction,
-                                    requireData: DataRequiredAction,
-                                    formProvider: PayeCodeAdjustmentFormProvider,
-                                    val controllerComponents: MessagesControllerComponents,
-                                    view: PayeCodeAdjustmentView
-                                  )(implicit ec: ExecutionContext)
-  extends FrontendBaseController
+class CodeAdjustmentAmountController @Inject()(
+  override val messagesApi: MessagesApi,
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: CodeAdjustmentAmountFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: CodeAdjustmentAmountView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.get(PayeCodeAdjustmentPage(period)) match {
-        case None => form
+      val preparedForm = request.userAnswers.get(CodeAdjustmentAmountPage(period)) match {
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -62,17 +65,18 @@ class PayeCodeAdjustmentController @Inject()(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(PayeCodeAdjustmentPage(period), value))
-              redirectUrl = PayeCodeAdjustmentPage(period).navigate(mode, updatedAnswers).url
-              answersWithNav = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-              _ <- userDataService.set(answersWithNav)
+              updatedAnswers <-
+                Future.fromTry(request.userAnswers.set(CodeAdjustmentAmountPage(period), value))
+              redirectUrl     = CodeAdjustmentAmountPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
   }
 
   private def startEndDate(period: Period)(implicit messages: Messages): String = {
     val languageTag = if (messages.lang.code == "cy") "cy" else "en"
-    val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+    val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
     period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
   }
 }

@@ -1353,3 +1353,19 @@ didYouContributeToRASScheme.message3 = Most public sector pension schemes such a
 didYouContributeToRASScheme.checkYourAnswersLabel = Did you make any contributions to a relief at source pension scheme from {0}?
 didYouContributeToRASScheme.error.required = Select yes if made any contributions to a relief at source pension scheme
 didYouContributeToRASScheme.change.hidden = if you have made any contributions to a relief at source pension scheme
+
+doYouHaveCodeAdjustment.title = Do you have code adjustment?
+doYouHaveCodeAdjustment.heading =  Do you have code adjustment?
+doYouHaveCodeAdjustment.checkYourAnswersLabel = Do you have code adjustment?
+doYouHaveCodeAdjustment.error.required = Select yes if you have code adjustment
+doYouHaveCodeAdjustment.change.hidden = if you have code adjustment
+
+codeAdjustmentAmount.title = Debit or refund code amount?
+codeAdjustmentAmount.heading = Debit or refund code amount?
+codeAdjustmentAmount.checkYourAnswersLabel = Debit or refund code amount?
+codeAdjustmentAmount.hint = Amount must be rounded down to the nearest pound, for example 2300
+codeAdjustmentAmount.error.nonNumeric = The amount of your debit or refund code amount must only include numbers 0 to 9
+codeAdjustmentAmount.error.required = Enter the amount of your debit or refund code amount
+codeAdjustmentAmount.error.wholeNumber = Enter the amount of your debit or refund code amount using whole numbers
+codeAdjustmentAmount.error.outOfRange = The amount of your debit or refund code amount must be between £0 and £999,999,999
+codeAdjustmentAmount.change.hidden = Debit or refund code amount
