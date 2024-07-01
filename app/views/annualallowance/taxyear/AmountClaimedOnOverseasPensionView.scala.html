@@ -49,6 +49,7 @@
             .withWidth(Fixed10)
             .withHint(HintViewModel(HtmlContent(contentHint)))
             .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
         )
 
         @continueButton()
