@@ -28,7 +28,7 @@
 @contentHint = {
 <p class="govuk-body">
     <a class="govuk-link" href="https://www.gov.uk/tax-foreign-income/non-domiciled-residents" rel="noreferrer noopener" target="_blank">
-        @messages("hasReliefClaimedOnOverseasPension.message1")
+        @messages("hasReliefClaimedOnOverseasPension.message1") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
     </a>
 </p>
 <h2 class="govuk-heading-m">@messages("hasReliefClaimedOnOverseasPension.heading", startEndDate)</h2>
@@ -47,7 +47,7 @@
             field = form("value"),
             legend = HmrcPageHeadingLegend(
                 content = messages("hasReliefClaimedOnOverseasPension.heading", startEndDate),
-                caption = HmrcSectionCaption(messages("annualAllowanceAdjustedIncome.caption")))
+                caption = HmrcSectionCaption(messages("annualAllowance.adjustedIncome.caption")))
 
         ).withHint(HintViewModel(HtmlContent(contentHint))
         ))

@@ -30,7 +30,11 @@
 }
 
 @contentHint = {
-<p class="govuk-inset-text"><a class="govuk-link" target="_blank" rel="noopener" href=@protectionUrl> @messages("enhancementType.hint1") </a> </p>
+<p class="govuk-inset-text">
+    <a class="govuk-link" href=@protectionUrl rel="noreferrer noopener" target="_blank">
+        @messages("enhancementType.hint1") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+    </a>
+</p>
 <p class = "govuk-body">@messages("enhancementType.hint2")</p>
 }
 

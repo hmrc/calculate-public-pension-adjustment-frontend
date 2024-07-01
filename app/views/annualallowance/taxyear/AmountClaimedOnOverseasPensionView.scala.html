@@ -43,12 +43,13 @@
             InputViewModel(
             field = form("value"),
                 label = HmrcPageHeadingLabel(messages("amountClaimedOnOverseasPension.heading", startEndDate),
-                caption = messages("annualAllowanceAdjustedIncome.caption")
+                caption = messages("annualAllowance.adjustedIncome.caption")
                 ))
             .asNumeric()
             .withWidth(Fixed10)
             .withHint(HintViewModel(HtmlContent(contentHint)))
             .withCssClass("govuk-currency-input__inner__input")
+            .withPrefix(PrefixOrSuffix(content = Text("£")))
         )
 
         @continueButton()
