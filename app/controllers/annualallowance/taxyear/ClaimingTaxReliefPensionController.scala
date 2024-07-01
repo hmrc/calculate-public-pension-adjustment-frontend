@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
 import models.tasklist.sections.AASection
-import models.{Mode, Period}
+import models.{AboveThreshold, Mode, Period}
 import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -39,6 +39,7 @@ class ClaimingTaxReliefPensionController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   formProvider: ClaimingTaxReliefPensionFormProvider,
+  aboveThresholdController: AboveThresholdController,
   val controllerComponents: MessagesControllerComponents,
   view: ClaimingTaxReliefPensionView
 )(implicit ec: ExecutionContext)
@@ -67,10 +68,15 @@ class ClaimingTaxReliefPensionController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage(period), value))
-              redirectUrl     = ClaimingTaxReliefPensionPage(period).navigate(mode, updatedAnswers).url
-              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              updatedAnswers            <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage(period), value))
+              answersWithThreshold       = AboveThreshold(period).saveThresholdStatus(
+                                             updatedAnswers,
+                                             period,
+                                             aboveThresholdController.thresholdStatus(updatedAnswers, period)
+                                           )
+              redirectUrl                = ClaimingTaxReliefPensionPage(period).navigate(mode, answersWithThreshold).url
+              answersWithNavAndThreshold = AASection(period).saveNavigation(answersWithThreshold, redirectUrl)
+              _                         <- userDataService.set(answersWithNavAndThreshold)
             } yield Redirect(redirectUrl)
         )
   }
