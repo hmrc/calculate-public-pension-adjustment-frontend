@@ -73,8 +73,7 @@ unauthorised.title = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r cyfrif hwn
 unauthorised.heading = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r cyfrif hwn
 
 annualAllowance.caption = Lwfans blynyddol
-annualAllowanceThresholdIncome.caption = cy: Annual allowance threshold income
-annualAllowanceAdjustedIncome.caption = cy: Annual allowance adjusted income
+annualAllowance.adjustedIncome.caption = cy: Annual allowance adjusted income
 annualAllowance.thresholdIncome.caption = cy: Annual allowance threshold income
 lifetimeAllowance.caption = Lwfans oes
 adjustedIncomeCaption.caption = cy: Adjusted Income

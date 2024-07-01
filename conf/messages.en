@@ -73,8 +73,7 @@ unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
 annualAllowance.caption = Annual allowance
-annualAllowanceThresholdIncome.caption = Annual allowance threshold income
-annualAllowanceAdjustedIncome.caption = Annual allowance adjusted income
+annualAllowance.adjustedIncome.caption = Annual allowance adjusted income
 annualAllowance.thresholdIncome.caption = Annual allowance threshold income
 lifetimeAllowance.caption = Lifetime allowance
 adjustedIncomeCaption.caption = Adjusted Income
