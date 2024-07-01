@@ -185,7 +185,6 @@ class LumpSumDeathBenefitsValuePageSpec extends PageBehaviours {
         cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None

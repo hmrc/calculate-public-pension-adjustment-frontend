@@ -19,40 +19,43 @@ package pages.annualallowance.taxyear
 import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
-class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
+class RASContributionAmountPageSpec extends PageBehaviours {
 
-  "HowMuchContributionPensionSchemePage" - {
+  "RASContributionAmountPage" - {
 
-    beRetrievable[BigInt](HowMuchContributionPensionSchemePage(Period._2018))
+    beRetrievable[BigInt](RASContributionAmountPage(Period._2018))
 
-    beSettable[BigInt](HowMuchContributionPensionSchemePage(Period._2018))
+    beSettable[BigInt](RASContributionAmountPage(Period._2018))
 
-    beRemovable[BigInt](HowMuchContributionPensionSchemePage(Period._2018))
+    beRemovable[BigInt](RASContributionAmountPage(Period._2018))
 
     "must Navigate correctly in normal mode" - {
-      "to AnyLumpSumDeathBenefits page when anything answered" in {
-        val ua = emptyUserAnswers
-          .set(HowMuchContributionPensionSchemePage(Period._2017), BigInt(5000))
+
+      "to AnyLumpSumDeathBenefits page when answered" in {
+        val ua     = emptyUserAnswers
+          .set(
+            RASContributionAmountPage(Period._2018),
+            BigInt(100)
+          )
           .success
           .value
+        val result = RASContributionAmountPage(Period._2018).navigate(NormalMode, ua).url
 
-        val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(NormalMode, ua).url
-
-        checkNavigation(result, "/annual-allowance/2017/any-lump-sum-death-benefits")
+        checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
       }
     }
 
-    "must Navigate correctly in check mode" - {
-      "to AnyLumpSumDeathBenefits page when anything answered" in {
-        val ua = emptyUserAnswers
-          .set(HowMuchContributionPensionSchemePage(Period._2017), BigInt(5000))
-          .success
-          .value
+    "must Navigate correctly to CYA in check mode" in {
+      val ua     = emptyUserAnswers
+        .set(
+          RASContributionAmountPage(Period._2018),
+          BigInt(100)
+        )
+        .success
+        .value
+      val result = RASContributionAmountPage(Period._2018).navigate(CheckMode, ua).url
 
-        val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(CheckMode, ua).url
-
-        checkNavigation(result, "/annual-allowance/2017/any-lump-sum-death-benefits")
-      }
+      checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
     }
 
     "cleanup" - {
@@ -61,7 +64,7 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
 
         val period = Period._2022
 
-        val cleanedUserAnswers = HowMuchContributionPensionSchemePage(Period._2022)
+        val cleanedUserAnswers = RASContributionAmountPage(Period._2022)
           .cleanup(Some(BigInt(1)), incomeSubJourneyData)
           .success
           .value
@@ -72,6 +75,7 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
         cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe Some(true)
         cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
         cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
         cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None

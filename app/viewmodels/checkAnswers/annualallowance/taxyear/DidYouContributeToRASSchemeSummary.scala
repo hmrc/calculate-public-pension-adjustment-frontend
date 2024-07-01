@@ -16,9 +16,8 @@
 
 package viewmodels.checkAnswers.annualallowance.taxyear
 
-import controllers.routes
 import models.{CheckMode, Period, UserAnswers}
-import pages.annualallowance.taxyear.FlexibleRemunerationArrangementsPage
+import pages.annualallowance.taxyear.DidYouContributeToRASSchemePage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -27,12 +26,10 @@ import viewmodels.implicits._
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-object FlexibleRemunerationArrangementsSummary {
+object DidYouContributeToRASSchemeSummary {
 
-  def row(answers: UserAnswers, period: Period)(implicit
-    messages: Messages
-  ): Option[SummaryListRow] =
-    answers.get(FlexibleRemunerationArrangementsPage(period)).map { answer =>
+  def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(DidYouContributeToRASSchemePage(period)).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
@@ -41,18 +38,17 @@ object FlexibleRemunerationArrangementsSummary {
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key = messages("flexibleRemunerationArrangements.checkYourAnswersLabel", startEndDate),
+        key = messages("didYouContributeToRASScheme.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            controllers.annualallowance.taxyear.routes.FlexibleRemunerationArrangementsController
+            controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("flexibleRemunerationArrangements.change.hidden"))
+            .withVisuallyHiddenText(messages("didYouContributeToRASScheme.change.hidden"))
         )
       )
     }
-
 }

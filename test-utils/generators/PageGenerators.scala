@@ -25,6 +25,12 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryDidYouContributeToRASSchemePage: Arbitrary[DidYouContributeToRASSchemePage.type] =
+    Arbitrary(DidYouContributeToRASSchemePage)
+
+  implicit lazy val arbitraryRASContributionAmountPage: Arbitrary[RASContributionAmountPage.type] =
+    Arbitrary(RASContributionAmountPage)
+
   implicit lazy val arbitraryBlindPersonsAllowanceAmountPage: Arbitrary[BlindPersonsAllowanceAmountPage.type] =
     Arbitrary(BlindPersonsAllowanceAmountPage)
 

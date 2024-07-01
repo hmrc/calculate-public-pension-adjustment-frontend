@@ -42,11 +42,13 @@
             @govukInput(
                 InputViewModel(
                     field = form("value"),
-                        label = HmrcPageHeadingLabel(messages("howMuchContributionPensionScheme.heading", startEndDate),
-                        caption = messages("annualAllowance.caption")
+                    label = HmrcPageHeadingLabel(messages("howMuchContributionPensionScheme.heading", startEndDate),
+                    caption = messages("annualAllowance.caption")
                     ))
-                .asNumeric()
+                .withInputMode("numeric")
                 .withWidth(Fixed10)
+                .withCssClass("govuk-currency-input__inner__input")
+                .withPrefix(PrefixOrSuffix(content = Text("£")))
                 .withHint(HintViewModel(HtmlContent(contentHint)))
             )
 

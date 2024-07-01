@@ -115,9 +115,6 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
                 .success
                 .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
-                .success
-                .value
                 .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
                 .success
                 .value
@@ -147,7 +144,7 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
                 .success
                 .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
+                .set(RASContributionAmountPage(period), BigInt(1))
                 .success
                 .value
                 .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
@@ -174,9 +171,6 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .success
                 .value
                 .set(TotalIncomePage(period), BigInt(100))
-                .success
-                .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
                 .success
                 .value
                 .set(
@@ -211,7 +205,7 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
                 .success
                 .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
+                .set(RASContributionAmountPage(period), BigInt(1))
                 .success
                 .value
                 .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
@@ -240,9 +234,6 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .success
                 .value
                 .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
                 .success
                 .value
                 .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
@@ -347,9 +338,6 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
                 .success
                 .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
-                .success
-                .value
                 .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
                 .success
                 .value
@@ -379,9 +367,6 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
                 .success
                 .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
-                .success
-                .value
                 .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
                 .success
                 .value
@@ -406,9 +391,6 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .success
                 .value
                 .set(TotalIncomePage(period), BigInt(100))
-                .success
-                .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
                 .success
                 .value
                 .set(
@@ -443,9 +425,6 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
                 .success
                 .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
-                .success
-                .value
                 .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
                 .success
                 .value
@@ -473,9 +452,6 @@ class TaxReliefPageSpec extends PageBehaviours {
                 .success
                 .value
                 .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
                 .success
                 .value
                 .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
@@ -518,7 +494,6 @@ class TaxReliefPageSpec extends PageBehaviours {
         cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe Some(true)

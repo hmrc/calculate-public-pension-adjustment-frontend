@@ -122,6 +122,8 @@ class CheckYourAAPeriodAnswersController @Inject() (
           AmountSalarySacrificeArrangementsSummary.row(request.userAnswers, period),
           FlexibleRemunerationArrangementsSummary.row(request.userAnswers, period),
           AmountFlexibleRemunerationArrangementsSummary.row(request.userAnswers, period),
+          DidYouContributeToRASSchemeSummary.row(request.userAnswers, period),
+          RASContributionAmountSummary.row(request.userAnswers, period),
           HowMuchContributionPensionSchemeSummary.row(request.userAnswers, period),
           AnyLumpSumDeathBenefitsSummary.row(request.userAnswers, period),
           LumpSumDeathBenefitsValueSummary.row(request.userAnswers, period),

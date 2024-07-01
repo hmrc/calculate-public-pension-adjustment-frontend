@@ -85,18 +85,16 @@ case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
 
   private def calculateThresholdStatus(answers: UserAnswers, period: Period): BigInt =
     answers.get(TotalIncomePage(period)).get - answers.get(TaxReliefPage(period)).get +
-      answers.get(AmountSalarySacrificeArrangementsPage(period)).getOrElse(BigInt(0)) + answers
-        .get(AmountFlexibleRemunerationArrangementsPage(period))
-        .getOrElse(BigInt(0)) -
-      answers.get(HowMuchContributionPensionSchemePage(period)).get - answers
-        .get(LumpSumDeathBenefitsValuePage(period))
-        .getOrElse(BigInt(0))
+      answers.get(AmountSalarySacrificeArrangementsPage(period)).getOrElse(BigInt(0)) +
+      answers.get(AmountFlexibleRemunerationArrangementsPage(period)).getOrElse(BigInt(0)) -
+      answers.get(LumpSumDeathBenefitsValuePage(period)).getOrElse(BigInt(0))
 
   override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map { _ =>
         userAnswers
-          .remove(KnowAdjustedAmountPage(period))
+          .remove(HowMuchContributionPensionSchemePage(period))
+          .flatMap(_.remove(KnowAdjustedAmountPage(period)))
           .flatMap(_.remove(AdjustedIncomePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
           .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
