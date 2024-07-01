@@ -25,7 +25,7 @@ import org.scalatest.concurrent.ScalaFutures
 import play.api.Application
 import play.api.http.Status.{BAD_REQUEST, NO_CONTENT, OK}
 import play.api.test.Helpers.running
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier}
 
 class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with WireMockHelper {
 
@@ -100,7 +100,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
         val connector = app.injector.instanceOf[CalculateBackendConnector]
         val result    = connector.updateUserAnswersFromCalcUA("1234").failed.futureValue
 
-        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+        result mustBe a[BadRequestException]
       }
     }
   }
