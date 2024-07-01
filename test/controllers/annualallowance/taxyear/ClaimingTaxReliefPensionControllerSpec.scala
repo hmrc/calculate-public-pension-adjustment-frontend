@@ -21,11 +21,12 @@ import config.FrontendAppConfig
 import controllers.routes
 import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
 import controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController
-import models.{ContributedToDuringRemedyPeriod, Done, NormalMode, Period, UserAnswers}
+import models.{AboveThreshold, ContributedToDuringRemedyPeriod, Done, NormalMode, Period, ThresholdIncome, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
+import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, ClaimingTaxReliefPensionPage, DefinedContribution2016PreFlexiAmountPage, HowMuchContributionPensionSchemePage, LumpSumDeathBenefitsValuePage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -91,12 +92,32 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
     "must redirect to the next page when valid data is submitted" in {
 
+      val ua = emptyUserAnswers
+        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+        .success
+        .value
+
       val mockUserDataService = mock[UserDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(ua))
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
@@ -108,6 +129,54 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+      }
+    }
+
+    "must set aboveThreshold status onSubmit" in {
+
+      val ua = emptyUserAnswers
+        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+        .success
+        .value
+
+      val mockUserDataService = mock[UserDataService]
+
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, claimingTaxReliefPensionRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(AboveThreshold(period)) mustBe Some(false)
       }
     }
 
