@@ -406,12 +406,6 @@ trait SpecBase
       .set(PersonalAllowancePage(_2022), BigInt(1))
       .success
       .value
-      .set(MarriageAllowancePage(_2022), true)
-      .success
-      .value
-      .set(MarriageAllowanceAmountPage(_2022), BigInt(1))
-      .success
-      .value
       .set(BlindAllowancePage(_2022), true)
       .success
       .value
