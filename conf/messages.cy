@@ -1354,3 +1354,24 @@ blindPersonsAllowanceAmount.error.wholeNumber = cy: Your blind persons allowance
 blindPersonsAllowanceAmount.change.hidden = cy: your blind persons allowance
 blindPersonsAllowanceAmount.error.maximum = cy: Your blind persons allowance must be {0} or less for {1}
 blindPersonsAllowanceAmount.error.minimum = cy: Your blind persons allowance must be {0} or more for {1}
+
+rASContributionAmount.title = cy: How much did you contribute in total to all of your pension schemes where relief at source was given from {0}?
+rASContributionAmount.heading = cy: How much did you contribute in total to all of your pension schemes where relief at source was given from {0}?
+rASContributionAmount.checkYourAnswersLabel = cy: How much did you contribute in total to all of your pension schemes where relief at source was given from {0}?
+rASContributionAmount.message1 = cy: You can find this information in your P60 document for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
+rASContributionAmount.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300
+rASContributionAmount.error.nonNumeric = cy: The amount you contributed to relief at source pension schemes must only include numbers 0 to 9
+rASContributionAmount.error.required = cy: Enter the amount you contributed to relief at source pension schemes
+rASContributionAmount.error.wholeNumber = cy: The amount you contributed to relief at source pension schemes must only include numbers 0 to 9
+rASContributionAmount.error.outOfRange = cy: The amount you contributed to relief at source pension schemes must be £999999999 or less
+rASContributionAmount.change.hidden = cy: How much did you contribute in total to all of your pension schemes where relief at source was given from {0}?
+
+didYouContributeToRASScheme.title = cy: Did you make any contributions to a relief at source pension scheme from {0}?
+didYouContributeToRASScheme.mainHeading = cy: Relief at source scheme contributions
+didYouContributeToRASScheme.heading = cy: Did you make any contributions to a relief at source pension scheme from {0}?
+didYouContributeToRASScheme.message1 = cy: Relief at source pensions mean that your contributions are taken from your pay after your wages are taxed.
+didYouContributeToRASScheme.message2 = This may be the case if you pay into any private pensions or pay any additional voluntary contributions (AVC’s).
+didYouContributeToRASScheme.message3 = Most public sector pension schemes such as Civil Service alpha or the NHS pension scheme are not relief at source schemes.
+didYouContributeToRASScheme.checkYourAnswersLabel = Did you make any contributions to a relief at source pension scheme from {0}?
+didYouContributeToRASScheme.error.required = Select yes if made any contributions to a relief at source pension scheme
+didYouContributeToRASScheme.change.hidden = if you have made any contributions to a relief at source pension scheme

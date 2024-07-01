@@ -23,34 +23,39 @@ import play.api.mvc.Call
 
 import scala.util.Try
 
-case class AmountSalarySacrificeArrangementsPage(period: Period) extends QuestionPage[BigInt] {
+case class DidYouContributeToRASSchemePage(period: Period) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "amountSalarySacrificeArrangements"
+  override def toString: String = "didYouContributeToRASScheme"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(AmountSalarySacrificeArrangementsPage(period)) match {
-      case Some(_) =>
-        controllers.annualallowance.taxyear.routes.FlexibleRemunerationArrangementsController
+    answers.get(DidYouContributeToRASSchemePage(period)) match {
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.RASContributionAmountController
           .onPageLoad(NormalMode, period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
+          .onPageLoad(NormalMode, period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(AmountSalarySacrificeArrangementsPage(period)) match {
-      case Some(_) =>
-        controllers.annualallowance.taxyear.routes.FlexibleRemunerationArrangementsController
+    answers.get(DidYouContributeToRASSchemePage(period)) match {
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.RASContributionAmountController
           .onPageLoad(NormalMode, period)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
+          .onPageLoad(NormalMode, period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map { _ =>
         userAnswers
-          .remove(FlexibleRemunerationArrangementsPage(period))
-          .flatMap(_.remove(AmountFlexibleRemunerationArrangementsPage(period)))
+          .remove(RASContributionAmountPage(period))
           .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
           .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))

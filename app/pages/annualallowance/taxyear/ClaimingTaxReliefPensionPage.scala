@@ -92,12 +92,9 @@ case class ClaimingTaxReliefPensionPage(period: Period) extends QuestionPage[Boo
 
   private def calculateThresholdStatus(answers: UserAnswers, period: Period): BigInt =
     answers.get(TotalIncomePage(period)).get - answers.get(TaxReliefPage(period)).getOrElse(BigInt(0)) +
-      answers.get(AmountSalarySacrificeArrangementsPage(period)).getOrElse(BigInt(0)) + answers
-        .get(AmountFlexibleRemunerationArrangementsPage(period))
-        .getOrElse(BigInt(0)) -
-      answers.get(HowMuchContributionPensionSchemePage(period)).get - answers
-        .get(LumpSumDeathBenefitsValuePage(period))
-        .getOrElse(BigInt(0))
+      answers.get(AmountSalarySacrificeArrangementsPage(period)).getOrElse(BigInt(0)) +
+      answers.get(AmountFlexibleRemunerationArrangementsPage(period)).getOrElse(BigInt(0)) -
+      answers.get(LumpSumDeathBenefitsValuePage(period)).getOrElse(BigInt(0))
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
@@ -108,6 +105,7 @@ case class ClaimingTaxReliefPensionPage(period: Period) extends QuestionPage[Boo
           .flatMap(_.remove(AdjustedIncomePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
           .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
           .flatMap(_.remove(AreYouNonDomPage(period)))
           .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
