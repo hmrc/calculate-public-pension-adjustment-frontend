@@ -114,7 +114,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
 
       running(app) {
         val connector = app.injector.instanceOf[CalculateBackendConnector]
-        val result = connector.updateUserAnswersFromCalcUA("1234").failed.futureValue
+        val result    = connector.updateUserAnswersFromCalcUA("1234").failed.futureValue
 
         result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
