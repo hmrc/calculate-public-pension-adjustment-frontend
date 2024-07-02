@@ -122,14 +122,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryAreYouNonDomUserAnswersEntry: Arbitrary[(AreYouNonDomPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[AreYouNonDomPage.type]
-        value <- arbitrary[Boolean].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
   implicit lazy val arbitraryHasReliefClaimedOnOverseasPensionUserAnswersEntry
     : Arbitrary[(HasReliefClaimedOnOverseasPensionPage.type, JsValue)] =
     Arbitrary {

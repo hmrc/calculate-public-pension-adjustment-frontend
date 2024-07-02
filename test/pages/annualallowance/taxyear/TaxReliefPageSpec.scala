@@ -376,7 +376,6 @@ class TaxReliefPageSpec extends PageBehaviours {
         cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
         cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
         cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
         cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
         cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
         cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
