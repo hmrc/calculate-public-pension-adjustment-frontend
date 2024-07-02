@@ -16,34 +16,32 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
 import scala.util.Try
 
-case class HasReliefClaimedOnOverseasPensionPage(period: Period) extends QuestionPage[Boolean] {
+case class DoYouHaveGiftAidPage(period: Period) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "hasReliefClaimedOnOverseasPension"
+  override def toString: String = "doYouHaveGiftAid"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(HasReliefClaimedOnOverseasPensionPage(period)) match {
+    answers.get(DoYouHaveGiftAidPage(period)) match {
       case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController
-          .onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.AmountOfGiftAidController.onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(HasReliefClaimedOnOverseasPensionPage(period)) match {
+    answers.get(DoYouHaveGiftAidPage(period)) match {
       case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController
-          .onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.AmountOfGiftAidController.onPageLoad(CheckMode, period)
       case Some(false) =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
@@ -52,7 +50,7 @@ case class HasReliefClaimedOnOverseasPensionPage(period: Period) extends Questio
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case false => userAnswers.remove(AmountClaimedOnOverseasPensionPage(period))
+        case false => userAnswers.remove(AmountOfGiftAidPage(period))
         case true  => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))

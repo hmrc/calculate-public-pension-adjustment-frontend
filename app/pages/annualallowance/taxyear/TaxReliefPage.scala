@@ -43,7 +43,7 @@ case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
 
   private def is2016Period(answers: UserAnswers, period: Period): Call =
     if (period == Period._2016) {
-      controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
+      controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
     } else {
       thresholdAnswer(answers, period)
     }
@@ -53,7 +53,7 @@ case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
       case Some(ThresholdIncome.Yes)        =>
         controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(NormalMode, period)
       case Some(ThresholdIncome.No)         =>
-        controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
       case Some(ThresholdIncome.IDoNotKnow) => thresholdStatus(answers, period)
       case _                                => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
@@ -70,7 +70,7 @@ case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
       case a if a > 110000 =>
         controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(NormalMode, period)
       case b if b < 110000 =>
-        controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
       case _               => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
@@ -79,7 +79,7 @@ case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
       case a if a > 200000 =>
         controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(NormalMode, period)
       case b if b < 200000 =>
-        controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
       case _               => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
@@ -101,6 +101,8 @@ case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
           .flatMap(_.remove(AreYouNonDomPage(period)))
           .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(DoYouHaveGiftAidPage(period)))
+          .flatMap(_.remove(AmountOfGiftAidPage(period)))
           .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
           .flatMap(_.remove(PersonalAllowancePage(period)))
           .flatMap(_.remove(BlindAllowancePage(period)))
