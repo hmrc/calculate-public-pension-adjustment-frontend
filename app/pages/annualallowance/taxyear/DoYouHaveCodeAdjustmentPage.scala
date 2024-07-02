@@ -23,25 +23,27 @@ import play.api.mvc.Call
 
 import scala.util.Try
 
-case class DoYouKnowPersonalAllowancePage(period: Period) extends QuestionPage[Boolean] {
+case class DoYouHaveCodeAdjustmentPage(period: Period) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "doYouKnowPersonalAllowance"
+  override def toString: String = "doYouHaveCodeAdjustment"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(DoYouKnowPersonalAllowancePage(period)) match {
+    answers.get(DoYouHaveCodeAdjustmentPage(period)) match {
       case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.CodeAdjustmentAmountController
+          .onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.DoYouHaveCodeAdjustmentController.onPageLoad(period)
+        controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(DoYouKnowPersonalAllowancePage(period)) match {
+    answers.get(DoYouHaveCodeAdjustmentPage(period)) match {
       case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(CheckMode, period)
+        controllers.annualallowance.taxyear.routes.CodeAdjustmentAmountController
+          .onPageLoad(CheckMode, period)
       case Some(false) =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
@@ -50,9 +52,11 @@ case class DoYouKnowPersonalAllowancePage(period: Period) extends QuestionPage[B
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case false => userAnswers.remove(PersonalAllowancePage(period))
+        case false =>
+          for {
+            updated <- userAnswers.remove(CodeAdjustmentAmountPage(period))
+          } yield updated
         case true  => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
-
 }
