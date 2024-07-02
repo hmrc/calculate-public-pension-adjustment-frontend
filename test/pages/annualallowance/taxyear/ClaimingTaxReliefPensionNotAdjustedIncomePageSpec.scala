@@ -101,5 +101,23 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
       }
     }
 
+    "cleanup" - {
+
+      "must cleanup correctly when user answers yes" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(HowMuchTaxReliefPensionPage(Period._2018), BigInt(1))
+          .success
+          .value
+
+        val cleanedUserAnswers = ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018)
+          .cleanup(Some(false), userAnswers)
+          .success
+          .value
+
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(Period._2018)) mustBe None
+      }
+    }
+
   }
 }

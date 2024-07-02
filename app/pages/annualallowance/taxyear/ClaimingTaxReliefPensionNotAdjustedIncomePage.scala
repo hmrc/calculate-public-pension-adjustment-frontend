@@ -21,6 +21,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case class ClaimingTaxReliefPensionNotAdjustedIncomePage(period: Period) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
@@ -41,6 +43,7 @@ case class ClaimingTaxReliefPensionNotAdjustedIncomePage(period: Period) extends
       controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
+  // TODO NEEDS NONDOM REMOVING
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     if (period != Period._2016) {
       answers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) match {
@@ -53,4 +56,12 @@ case class ClaimingTaxReliefPensionNotAdjustedIncomePage(period: Period) extends
     } else {
       controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case false => userAnswers.remove(HowMuchTaxReliefPensionPage(period))
+        case true  => super.cleanup(value, userAnswers)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }
