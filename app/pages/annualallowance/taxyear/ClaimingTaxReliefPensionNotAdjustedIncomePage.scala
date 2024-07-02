@@ -33,7 +33,8 @@ case class ClaimingTaxReliefPensionNotAdjustedIncomePage(period: Period) extends
         case Some(true)  =>
           controllers.annualallowance.taxyear.routes.HowMuchTaxReliefPensionController.onPageLoad(NormalMode, period)
         case Some(false) =>
-          controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(NormalMode, period)
+          controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
+            .onPageLoad(NormalMode, period)
         case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
       }
     } else {

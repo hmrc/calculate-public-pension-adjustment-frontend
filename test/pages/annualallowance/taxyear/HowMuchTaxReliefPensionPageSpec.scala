@@ -31,7 +31,7 @@ class HowMuchTaxReliefPensionPageSpec extends PageBehaviours {
 
     "must Navigate correctly in normal mode" - {
 
-      "to AreYouNonDom when period not 2016 when answered" in {
+      "to HowMuchContribution when period not 2016 when answered" in {
         val ua     = emptyUserAnswers
           .set(
             HowMuchTaxReliefPensionPage(Period._2018),
@@ -41,7 +41,7 @@ class HowMuchTaxReliefPensionPageSpec extends PageBehaviours {
           .value
         val result = HowMuchTaxReliefPensionPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/non-domicile")
+        checkNavigation(result, "/annual-allowance/2018/how-much-contribution")
       }
     }
 

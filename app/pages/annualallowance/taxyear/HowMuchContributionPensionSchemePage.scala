@@ -32,7 +32,7 @@ case class HowMuchContributionPensionSchemePage(period: Period) extends Question
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(HowMuchContributionPensionSchemePage(period)) match {
       case Some(_) =>
-        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(NormalMode, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -42,27 +42,4 @@ case class HowMuchContributionPensionSchemePage(period: Period) extends Question
         controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onPageLoad(NormalMode, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-
-  override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
-    value
-      .map { _ =>
-        userAnswers
-          .remove(AnyLumpSumDeathBenefitsPage(period))
-          .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
-          .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
-          .flatMap(_.remove(TaxReliefPage(period)))
-          .flatMap(_.remove(KnowAdjustedAmountPage(period)))
-          .flatMap(_.remove(AdjustedIncomePage(period)))
-          .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
-          .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
-          .flatMap(_.remove(AreYouNonDomPage(period)))
-          .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
-          .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
-          .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
-          .flatMap(_.remove(PersonalAllowancePage(period)))
-          .flatMap(_.remove(BlindAllowancePage(period)))
-          .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
-      }
-      .getOrElse(super.cleanup(value, userAnswers))
-
 }
