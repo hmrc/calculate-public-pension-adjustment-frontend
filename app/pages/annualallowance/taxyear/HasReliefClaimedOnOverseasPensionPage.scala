@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -43,7 +43,7 @@ case class HasReliefClaimedOnOverseasPensionPage(period: Period) extends Questio
     answers.get(HasReliefClaimedOnOverseasPensionPage(period)) match {
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController
-          .onPageLoad(NormalMode, period)
+          .onPageLoad(CheckMode, period)
       case Some(false) =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)

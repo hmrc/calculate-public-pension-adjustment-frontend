@@ -103,7 +103,20 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
 
     "cleanup" - {
 
-      "must cleanup correctly" in {
+      "must cleanup correctly when false" in {
+
+        val period = Period._2022
+
+        val cleanedUserAnswers = ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2022)
+          .cleanup(Some(false), incomeSubJourneyData)
+          .success
+          .value
+
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+
+      }
+
+      "must cleanup correctly when true" in {
 
         val period = Period._2022
 
@@ -112,7 +125,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe Some(BigInt(1))
 
       }
     }

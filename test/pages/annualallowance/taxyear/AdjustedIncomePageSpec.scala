@@ -46,7 +46,7 @@ class AdjustedIncomePageSpec extends PageBehaviours {
     }
 
     "must Navigate correctly in check mode" - {
-      "to do you have gift aid page in normal mode when period not 2016 when answered" in {
+      "to CYA " in {
         val ua     = emptyUserAnswers
           .set(
             AdjustedIncomePage(Period._2018),
@@ -56,7 +56,7 @@ class AdjustedIncomePageSpec extends PageBehaviours {
           .value
         val result = AdjustedIncomePage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/donated-via-gift-aid")
+        checkNavigation(result, "/annual-allowance/2018/check-answers")
       }
     }
   }
