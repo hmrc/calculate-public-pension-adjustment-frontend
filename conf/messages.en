@@ -1296,14 +1296,6 @@ hasReliefClaimedOnOverseasPension.message1 = Find out more about non-domiciled r
 hasReliefClaimedOnOverseasPension.error.required = Select yes if you claimed any tax relief on savings in an overseas pension scheme
 hasReliefClaimedOnOverseasPension.change.hidden = if you have claimed relief on overseas pension
 
-areYouNonDom.title = Were you a non-domicile individual from {0}?
-areYouNonDom.heading =  Were you a non-domicile individual from {0}?
-areYouNonDom.message1 = UK residents who have their permanent home, ‘domicile’, outside the UK may not have to pay UK tax on foreign income
-areYouNonDom.message2 = Find out more about non-domiciled residents (opens in a new tab)
-areYouNonDom.checkYourAnswersLabel = Were you a non-domicile individual from {0}?
-areYouNonDom.error.required = Select yes if you were a non-domicile individual
-areYouNonDom.change.hidden = if you are a nom-dom
-
 doYouKnowPersonalAllowance.title = Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.heading = Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.message1 = Your personal allowance is the amount of money that you can earn without paying any income tax.

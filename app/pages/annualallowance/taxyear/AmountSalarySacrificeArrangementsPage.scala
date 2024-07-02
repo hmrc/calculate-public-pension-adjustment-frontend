@@ -60,7 +60,6 @@ case class AmountSalarySacrificeArrangementsPage(period: Period) extends Questio
           .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
           .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
           .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
-          .flatMap(_.remove(AreYouNonDomPage(period)))
           .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(DoYouHaveGiftAidPage(period)))

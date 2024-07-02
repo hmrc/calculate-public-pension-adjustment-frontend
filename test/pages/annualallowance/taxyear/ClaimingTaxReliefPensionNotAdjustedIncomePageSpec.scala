@@ -80,7 +80,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/change-how-much-tax-relief-pension")
       }
 
-      "to AreYouNonDom when period not 2016, when answered false" in {
+      "to CheckAnswers when period not 2016, when answered false" in {
         val ua     = emptyUserAnswers
           .set(
             ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018),
@@ -90,7 +90,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
           .value
         val result = ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/change-non-domicile")
+        checkNavigation(result, "/annual-allowance/2018/check-answers")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -98,6 +98,22 @@ class ClaimingTaxReliefPensionNotAdjustedIncomePageSpec extends PageBehaviours {
         val result = ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018).navigate(CheckMode, ua).url
 
         checkNavigation(result, "/there-is-a-problem")
+      }
+    }
+
+    "cleanup" - {
+
+      "must cleanup correctly" in {
+
+        val period = Period._2022
+
+        val cleanedUserAnswers = ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2022)
+          .cleanup(Some(true), incomeSubJourneyData)
+          .success
+          .value
+
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+
       }
     }
 

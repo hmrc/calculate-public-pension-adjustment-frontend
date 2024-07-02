@@ -30,7 +30,7 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
     beRemovable[BigInt](HowMuchContributionPensionSchemePage(Period._2018))
 
     "must Navigate correctly in normal mode" - {
-      "to NonDom page when anything answered" in {
+      "to HasReliefClaimedOnOverseasPension page when anything answered" in {
         val ua = emptyUserAnswers
           .set(HowMuchContributionPensionSchemePage(Period._2017), BigInt(5000))
           .success
@@ -38,12 +38,12 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
 
         val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/non-domicile")
+        checkNavigation(result, "/annual-allowance/2017/any-tax-relief-overseas-pension")
       }
     }
 
     "must Navigate correctly in check mode" - {
-      "to AnyLumpSumDeathBenefits page when anything answered" in {
+      "to CheckAnswers page when anything answered" in {
         val ua = emptyUserAnswers
           .set(HowMuchContributionPensionSchemePage(Period._2017), BigInt(5000))
           .success
@@ -51,7 +51,7 @@ class HowMuchContributionPensionSchemePageSpec extends PageBehaviours {
 
         val result = HowMuchContributionPensionSchemePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2017/any-lump-sum-death-benefits")
+        checkNavigation(result, "/annual-allowance/2017/check-answers")
       }
     }
   }
