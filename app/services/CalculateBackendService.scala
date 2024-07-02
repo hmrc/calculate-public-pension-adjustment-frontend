@@ -18,9 +18,7 @@ package services
 
 import connectors.CalculateBackendConnector
 import logging.Logging
-import models.{Done, Period, TaxRateStatusRequest, UserAnswers}
-import pages.annualallowance.preaaquestions.WhichYearsScottishTaxpayerPage
-import pages.annualallowance.taxyear.TotalIncomePage
+import models.Done
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
@@ -28,38 +26,7 @@ import scala.concurrent.Future
 
 class CalculateBackendService @Inject() (connector: CalculateBackendConnector) extends Logging {
 
-  def findTaxRateStatus(userAnswers: UserAnswers, period: Period)(implicit
-    headerCarrier: HeaderCarrier
-  ): Future[Boolean] =
-    connector.findTaxRateStatus(buildTaxRateStatusRequest(userAnswers, period))
-
   def updateUserAnswersFromCalcUA(id: String)(implicit hc: HeaderCarrier): Future[Done] =
     connector.updateUserAnswersFromCalcUA(id)
 
-  def buildTaxRateStatusRequest(userAnswers: UserAnswers, period: Period): TaxRateStatusRequest = {
-
-    val income = userAnswers
-      .get(
-        TotalIncomePage(period)
-      )
-      .get
-      .toInt
-
-    val scottishTaxYears: List[Period] = userAnswers.data.fields
-      .find(_._1 == WhichYearsScottishTaxpayerPage.toString)
-      .fold {
-        List.empty[Period]
-      } {
-        _._2.as[List[String]] flatMap { sYear =>
-          Period.fromString(sYear)
-        }
-      }
-
-    TaxRateStatusRequest(
-      period,
-      income,
-      scottishTaxYears
-    )
-
-  }
 }

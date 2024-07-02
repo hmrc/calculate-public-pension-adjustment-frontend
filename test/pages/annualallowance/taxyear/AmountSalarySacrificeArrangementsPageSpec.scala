@@ -90,8 +90,6 @@ class AmountSalarySacrificeArrangementsPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
       cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
       cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
-      cleanedUserAnswers.get(MarriageAllowancePage(period)) mustBe None
-      cleanedUserAnswers.get(MarriageAllowanceAmountPage(period)) mustBe None
       cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
       cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
     }
