@@ -20,7 +20,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, Period, TaxYear2011To2015, TaxYearScheme}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, Period, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
@@ -32,7 +32,7 @@ import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
-class AuditServiceTest extends SpecBase with MockitoSugar {
+class AuditServiceSpec extends SpecBase with MockitoSugar {
 
   private val mockAuditConnector = mock[AuditConnector]
 
@@ -53,7 +53,7 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
 
   "AuditService" - {
 
-    "auditCalculationSubmissionRequest" - {
+    "auditCalculationRequest" - {
       "should call the audit connector with the CalculationSubmission event" in {
 
         implicit val hc = HeaderCarrier()
@@ -168,6 +168,21 @@ class AuditServiceTest extends SpecBase with MockitoSugar {
           )
 
         await(service.auditCalculationRequest(calculationSubmissionAuditEvent)(hc)) mustBe ()
+      }
+    }
+
+    "auditCalculationStart" - {
+      "should call the audit connector with the CalculationStartAuditEvent event" in {
+
+        implicit val hc = HeaderCarrier()
+
+        val calculationStartAuditEvent =
+          CalculationStartAuditEvent(
+            "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
+            true
+          )
+
+        await(service.auditCalculationStart(calculationStartAuditEvent)(hc)) mustBe ()
       }
     }
 
