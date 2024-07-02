@@ -138,8 +138,6 @@ class CheckYourAAPeriodAnswersController @Inject() (
           AmountClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
           DoYouKnowPersonalAllowanceSummary.row(request.userAnswers, period),
           PersonalAllowanceSummary.row(request.userAnswers, period),
-          MarriageAllowanceSummary.row(request.userAnswers, period),
-          MarriageAllowanceAmountSummary.row(request.userAnswers, period),
           BlindAllowanceSummary.row(request.userAnswers, period),
           BlindPersonsAllowanceAmountSummary.row(request.userAnswers, period)
         )

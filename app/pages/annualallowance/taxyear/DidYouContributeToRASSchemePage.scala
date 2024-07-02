@@ -70,8 +70,6 @@ case class DidYouContributeToRASSchemePage(period: Period) extends QuestionPage[
           .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
           .flatMap(_.remove(PersonalAllowancePage(period)))
-          .flatMap(_.remove(MarriageAllowancePage(period)))
-          .flatMap(_.remove(MarriageAllowanceAmountPage(period)))
           .flatMap(_.remove(BlindAllowancePage(period)))
           .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
       }

@@ -17,11 +17,9 @@
 package connectors
 
 import config.Service
-import models.{Done, TaxRateStatusRequest}
+import models.Done
 import play.api.{Configuration, Logging}
 import play.api.http.Status.{NO_CONTENT, OK}
-import play.api.libs.json.Json
-import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 
@@ -33,28 +31,6 @@ class CalculateBackendConnector @Inject() (config: Configuration, httpClient: Ht
 ) extends Logging {
 
   private val baseUrl = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
-
-  def findTaxRateStatus(
-    taxRateStatusRequest: TaxRateStatusRequest
-  )(implicit hc: HeaderCarrier): Future[Boolean] =
-    httpClient
-      .post(
-        url"$baseUrl/calculate-public-pension-adjustment/tax-rate-status"
-      )
-      .withBody(Json.toJson(taxRateStatusRequest))
-      .execute[HttpResponse]
-      .flatMap { response =>
-        response.status match {
-          case OK => Future.successful(response.body.toBoolean)
-          case _  =>
-            Future.failed(
-              UpstreamErrorResponse(
-                "Unexpected response from calculate-public-pension-adjustment/tax-rate-status",
-                response.status
-              )
-            )
-        }
-      }
 
   def updateUserAnswersFromCalcUA(id: String)(implicit hc: HeaderCarrier): Future[Done] =
     httpClient

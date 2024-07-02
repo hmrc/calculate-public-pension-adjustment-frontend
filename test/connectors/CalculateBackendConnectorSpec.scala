@@ -23,9 +23,9 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import models.Done
 import org.scalatest.concurrent.ScalaFutures
 import play.api.Application
-import play.api.http.Status.{BAD_REQUEST, NO_CONTENT, OK}
+import play.api.http.Status.{BAD_REQUEST, NO_CONTENT, OK, UNAUTHORIZED}
 import play.api.test.Helpers.running
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier}
 
 class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with WireMockHelper {
 
@@ -94,6 +94,22 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
       server.stubFor(
         get(urlEqualTo("/calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers-with-id/1234"))
           .willReturn(aResponse().withStatus(BAD_REQUEST))
+      )
+
+      running(app) {
+        val connector = app.injector.instanceOf[CalculateBackendConnector]
+        val result    = connector.updateUserAnswersFromCalcUA("1234").failed.futureValue
+
+        result mustBe a[BadRequestException]
+      }
+    }
+
+    "must return a failed future when the server responds with unauthorized" in {
+      val app = application
+
+      server.stubFor(
+        get(urlEqualTo("/calculate-public-pension-adjustment/check-and-retrieve-calc-user-answers-with-id/1234"))
+          .willReturn(aResponse().withStatus(UNAUTHORIZED))
       )
 
       running(app) {
