@@ -1,0 +1,55 @@
+/*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package controllers.annualallowance.taxyear
+
+import models.{Period, UserAnswers}
+import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, HowMuchContributionPensionSchemePage, LumpSumDeathBenefitsValuePage, RASContributionAmountPage, TaxReliefPage, TotalIncomePage}
+
+class AboveThresholdController {
+
+  def thresholdStatus(answers: UserAnswers, period: Period): Boolean =
+    if (period == Period._2016 || period == Period._2017 || period == Period._2018 || period == Period._2019) {
+      thresholdRoutingPre2020(answers, period)
+    } else {
+      thresholdRoutingPost2019(answers, period)
+    }
+
+  private def thresholdRoutingPre2020(answers: UserAnswers, period: Period) =
+    calculateThresholdStatus(answers, period) match {
+      case a if a > 110000 =>
+        true
+      case b if b < 110000 =>
+        false
+    }
+
+  private def thresholdRoutingPost2019(answers: UserAnswers, period: Period) =
+    calculateThresholdStatus(answers, period) match {
+      case a if a > 200000 =>
+        true
+      case b if b < 200000 =>
+        false
+    }
+
+  private def calculateThresholdStatus(answers: UserAnswers, period: Period): BigInt =
+    answers.get(TotalIncomePage(period)).get -
+      answers.get(TaxReliefPage(period)).getOrElse(BigInt(0)) +
+      answers.get(AmountSalarySacrificeArrangementsPage(period)).getOrElse(BigInt(0)) +
+      answers.get(AmountFlexibleRemunerationArrangementsPage(period)).getOrElse(BigInt(0)) -
+      answers.get(RASContributionAmountPage(period)).getOrElse(BigInt(0)) -
+      answers.get(LumpSumDeathBenefitsValuePage(period)).getOrElse(BigInt(0))
+
+}
