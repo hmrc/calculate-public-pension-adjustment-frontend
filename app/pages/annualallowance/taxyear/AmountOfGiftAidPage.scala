@@ -16,28 +16,27 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class AdjustedIncomePage(period: Period) extends QuestionPage[BigInt] {
+case class AmountOfGiftAidPage(period: Period) extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
-  override def toString: String = "adjustedIncome"
+  override def toString: String = "amountOfGiftAid"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(AdjustedIncomePage(period)) match {
-      case Some(_) if period != Period._2016 =>
-        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
-      case _                                 => controllers.routes.JourneyRecoveryController.onPageLoad()
+    answers.get(AmountOfGiftAidPage(period)) match {
+      case Some(_) =>
+        controllers.annualallowance.taxyear.routes.DoYouKnowPersonalAllowanceController.onPageLoad(NormalMode, period)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(AdjustedIncomePage(period)) match {
-      case Some(_) if period != Period._2016 =>
-        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
-      case _                                 => controllers.routes.JourneyRecoveryController.onPageLoad()
+    answers.get(AmountOfGiftAidPage(period)) match {
+      case Some(_) => controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

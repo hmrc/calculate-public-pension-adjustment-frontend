@@ -56,7 +56,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
     "when user answers false" - {
 
-      "to know personal allowance page when period = 2016" in {
+      "to do you have gift aid page when period = 2016" in {
         val ua     = emptyUserAnswers
           .set(
             ClaimingTaxReliefPensionPage(Period._2016),
@@ -66,7 +66,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
           .value
         val result = ClaimingTaxReliefPensionPage(Period._2016).navigate(NormalMode, ua).url
 
-        checkNavigation(result, s"/annual-allowance/2016/do-you-know-personal-allowance")
+        checkNavigation(result, s"/annual-allowance/2016/donated-via-gift-aid")
       }
 
       "when not 2016 period" - {
@@ -89,7 +89,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
         }
 
-        "to know personal allowance page when threshold income not above threshold" in {
+        "to do you have gift aid page when threshold income not above threshold" in {
 
           val period = Gen.oneOf(pre2020Periods).sample.get
 
@@ -103,7 +103,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
           val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, s"/annual-allowance/$period/do-you-know-personal-allowance")
+          checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
 
         }
 
@@ -145,7 +145,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
               checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
             }
 
-            "to know personal allowance page when threshold value calculated to be below 110000 " in {
+            "to do you have gift aid page when threshold value calculated to be below 110000 " in {
 
               val period = Gen.oneOf(pre2020Periods).sample.get
 
@@ -176,7 +176,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/$period/do-you-know-personal-allowance")
+              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
 
             }
 
@@ -199,7 +199,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/$period/do-you-know-personal-allowance")
+              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
 
             }
           }
@@ -240,7 +240,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
               checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
             }
 
-            "to know personal allowance page when threshold value calculated to be below 200000" in {
+            "to do you have gift aid page when threshold value calculated to be below 200000" in {
 
               val period = Gen.oneOf(post2019Periods).sample.get
 
@@ -271,7 +271,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/$period/do-you-know-personal-allowance")
+              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
 
             }
           }
@@ -307,7 +307,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
     "when user answers false" - {
 
-      "to know personal allowance page when period = 2016" in {
+      "to do you have gift aid page when period = 2016" in {
         val ua     = emptyUserAnswers
           .set(
             ClaimingTaxReliefPensionPage(Period._2016),
@@ -317,7 +317,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
           .value
         val result = ClaimingTaxReliefPensionPage(Period._2016).navigate(CheckMode, ua).url
 
-        checkNavigation(result, s"/annual-allowance/2016/do-you-know-personal-allowance")
+        checkNavigation(result, s"/annual-allowance/2016/donated-via-gift-aid")
       }
 
       "when not 2016 period" - {
@@ -340,7 +340,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
         }
 
-        "to know personal allowance page when threshold income not above threshold" in {
+        "to do you have gift aid page when threshold income not above threshold" in {
 
           val period = Gen.oneOf(pre2020Periods).sample.get
 
@@ -354,7 +354,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
           val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
-          checkNavigation(result, s"/annual-allowance/$period/do-you-know-personal-allowance")
+          checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
 
         }
 
@@ -396,7 +396,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
               checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
             }
 
-            "to know personal allowance page when threshold value calculated to be below 110000 " in {
+            "to do you have gift aid page when threshold value calculated to be below 110000 " in {
 
               val period = Gen.oneOf(pre2020Periods).sample.get
 
@@ -427,7 +427,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/$period/do-you-know-personal-allowance")
+              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
 
             }
 
@@ -450,7 +450,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/$period/do-you-know-personal-allowance")
+              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
 
             }
           }
@@ -491,7 +491,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
               checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
             }
 
-            "to know personal allowance page when threshold value calculated to be below 200000" in {
+            "to do you know gift aid page when threshold value calculated to be below 200000" in {
 
               val period = Gen.oneOf(post2019Periods).sample.get
 
@@ -522,7 +522,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/$period/do-you-know-personal-allowance")
+              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
 
             }
           }
@@ -566,6 +566,8 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(AreYouNonDomPage(period)) mustBe None
       cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
       cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+      cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
+      cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
       cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
       cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
       cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None

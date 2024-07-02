@@ -513,3 +513,13 @@ GET        /annual-allowance/:period/contribute-to-relief-at-source-scheme      
 POST       /annual-allowance/:period/contribute-to-relief-at-source-scheme                        controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/:period/change-contribute-to-relief-at-source-scheme                  controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/change-contribute-to-relief-at-source-scheme                  controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/donated-via-gift-aid                         controllers.annualallowance.taxyear.DoYouHaveGiftAidController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/donated-via-gift-aid                         controllers.annualallowance.taxyear.DoYouHaveGiftAidController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-donated-via-gift-aid                  controllers.annualallowance.taxyear.DoYouHaveGiftAidController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-donated-via-gift-aid                  controllers.annualallowance.taxyear.DoYouHaveGiftAidController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/donated-via-gift-aid-amount                controllers.annualallowance.taxyear.AmountOfGiftAidController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/donated-via-gift-aid-amount                controllers.annualallowance.taxyear.AmountOfGiftAidController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-donated-via-gift-aid-amount         controllers.annualallowance.taxyear.AmountOfGiftAidController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-donated-via-gift-aid-amount         controllers.annualallowance.taxyear.AmountOfGiftAidController.onSubmit(mode: Mode = CheckMode, period:Period)

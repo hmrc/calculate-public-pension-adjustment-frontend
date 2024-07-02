@@ -43,7 +43,7 @@ class HasReliefClaimedOnOverseasPensionPageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/tax-relief-overseas-pension-value")
       }
 
-      "must redirect to DoYouKnowPersonalAllowanceController page when false" in {
+      "must redirect to do you have gift aid page when false" in {
 
         val userAnswers = emptyUserAnswers
           .set(HasReliefClaimedOnOverseasPensionPage(Period._2018), false)
@@ -52,7 +52,7 @@ class HasReliefClaimedOnOverseasPensionPageSpec extends PageBehaviours {
 
         val result = HasReliefClaimedOnOverseasPensionPage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/do-you-know-personal-allowance")
+        checkNavigation(result, "/annual-allowance/2018/donated-via-gift-aid")
       }
 
     }

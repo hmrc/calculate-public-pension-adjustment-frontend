@@ -31,6 +31,12 @@ trait PageGenerators {
   implicit lazy val arbitraryRASContributionAmountPage: Arbitrary[RASContributionAmountPage.type] =
     Arbitrary(RASContributionAmountPage)
 
+  implicit lazy val arbitraryAmountOfGiftAidPage: Arbitrary[AmountOfGiftAidPage.type] =
+    Arbitrary(AmountOfGiftAidPage)
+
+  implicit lazy val arbitraryDoYouHaveGiftAidPage: Arbitrary[DoYouHaveGiftAidPage.type] =
+    Arbitrary(DoYouHaveGiftAidPage)
+
   implicit lazy val arbitraryBlindPersonsAllowanceAmountPage: Arbitrary[BlindPersonsAllowanceAmountPage.type] =
     Arbitrary(BlindPersonsAllowanceAmountPage)
 

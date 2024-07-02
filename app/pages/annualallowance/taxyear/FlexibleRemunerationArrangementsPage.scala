@@ -70,6 +70,8 @@ case class FlexibleRemunerationArrangementsPage(period: Period) extends Question
           .flatMap(_.remove(AreYouNonDomPage(period)))
           .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(DoYouHaveGiftAidPage(period)))
+          .flatMap(_.remove(AmountOfGiftAidPage(period)))
           .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
           .flatMap(_.remove(PersonalAllowancePage(period)))
           .flatMap(_.remove(BlindAllowancePage(period)))

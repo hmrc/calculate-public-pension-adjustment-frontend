@@ -136,6 +136,8 @@ class CheckYourAAPeriodAnswersController @Inject() (
           AreYouNonDomSummary.row(request.userAnswers, period),
           HasReliefClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
           AmountClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
+          DoYouHaveGiftAidSummary.row(request.userAnswers, period),
+          AmountOfGiftAidSummary.row(request.userAnswers, period),
           DoYouKnowPersonalAllowanceSummary.row(request.userAnswers, period),
           PersonalAllowanceSummary.row(request.userAnswers, period),
           BlindAllowanceSummary.row(request.userAnswers, period),
