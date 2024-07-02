@@ -32,14 +32,15 @@ case class HowMuchContributionPensionSchemePage(period: Period) extends Question
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(HowMuchContributionPensionSchemePage(period)) match {
       case Some(_) =>
-        controllers.annualallowance.taxyear.routes.AreYouNonDomController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.HasReliefClaimedOnOverseasPensionController
+          .onPageLoad(NormalMode, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(HowMuchContributionPensionSchemePage(period)) match {
       case Some(_) =>
-        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

@@ -133,7 +133,6 @@ class CheckYourAAPeriodAnswersController @Inject() (
           AdjustedIncomeSummary.row(request.userAnswers, period),
           ClaimingTaxReliefPensionNotAdjustedIncomeSummary.row(request.userAnswers, period),
           HowMuchTaxReliefPensionSummary.row(request.userAnswers, period),
-          AreYouNonDomSummary.row(request.userAnswers, period),
           HasReliefClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
           AmountClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
           DoYouHaveGiftAidSummary.row(request.userAnswers, period),
