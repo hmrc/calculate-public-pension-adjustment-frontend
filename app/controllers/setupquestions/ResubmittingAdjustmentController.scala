@@ -48,19 +48,14 @@ class ResubmittingAdjustmentController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
-    val userAnswers = request.userAnswers.getOrElse(constructUserAnswers(request))
-
-    val preparedForm = userAnswers.get(ResubmittingAdjustmentPage) match {
-      case None        => form
-      case Some(value) => form.fill(value)
-    }
-
-    auditService
-      .auditCalculationStart(CalculationStartAuditEvent(userAnswers.uniqueId, userAnswers.authenticated))
-      .map { _ =>
-        Ok(view(preparedForm, mode))
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) { implicit request =>
+    val preparedForm =
+      request.userAnswers.getOrElse(constructUserAnswers(request)).get(ResubmittingAdjustmentPage) match {
+        case None        => form
+        case Some(value) => form.fill(value)
       }
+
+    Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
@@ -80,6 +75,9 @@ class ResubmittingAdjustmentController @Inject() (
             redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
             answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
             _              <- userDataService.set(answersWithNav)
+            _              <- auditService.auditCalculationStart(
+                                CalculationStartAuditEvent(answersWithNav.uniqueId, answersWithNav.authenticated)
+                              )
           } yield Redirect(redirectUrl)
       )
   }
