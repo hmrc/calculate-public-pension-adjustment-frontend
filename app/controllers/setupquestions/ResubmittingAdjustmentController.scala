@@ -16,16 +16,16 @@
 
 package controllers.setupquestions
 
-import controllers.actions._
 import config.FrontendAppConfig
+import controllers.actions._
 import forms.ResubmittingAdjustmentFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
-import models.{Mode, UserAnswers}
+import models.{CalculationStartAuditEvent, Mode, UserAnswers}
 import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.UserDataService
+import services.{AuditService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.ResubmittingAdjustmentView
 
@@ -39,6 +39,7 @@ class ResubmittingAdjustmentController @Inject() (
   getData: DataRetrievalAction,
   formProvider: ResubmittingAdjustmentFormProvider,
   config: FrontendAppConfig,
+  auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: ResubmittingAdjustmentView
 )(implicit ec: ExecutionContext)
@@ -74,6 +75,9 @@ class ResubmittingAdjustmentController @Inject() (
             redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
             answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
             _              <- userDataService.set(answersWithNav)
+            _              <- auditService.auditCalculationStart(
+                                CalculationStartAuditEvent(answersWithNav.uniqueId, answersWithNav.authenticated)
+                              )
           } yield Redirect(redirectUrl)
       )
   }
