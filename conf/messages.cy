@@ -1375,3 +1375,27 @@ amountOfGiftAid.error.required = cy: Enter the amount you gave to charity via gi
 amountOfGiftAid.error.wholeNumber = cy: The amount you gave to charity via gift aid from {0} must be a whole number
 amountOfGiftAid.error.outOfRange = cy: The amount you have gave to charity via gift aid from {0} must be larger than £0 and smaller than £999,999,999
 amountOfGiftAid.change.hidden = cy: the amount you gave to charity via gift aid from {0}
+
+doYouHaveCodeAdjustment.title = cy: Do you have code adjustment?
+doYouHaveCodeAdjustment.heading =  cy: Do you have code adjustment?
+doYouHaveCodeAdjustment.checkYourAnswersLabel = cy: Do you have code adjustment?
+doYouHaveCodeAdjustment.error.required = cy: Select yes if you have code adjustment
+doYouHaveCodeAdjustment.change.hidden = cy: if you have code adjustment
+
+codeAdjustmentAmount.title = cy: Debit or refund code amount?
+codeAdjustmentAmount.heading = cy: Debit or refund code amount?
+codeAdjustmentAmount.checkYourAnswersLabel = cy: Debit or refund code amount?
+codeAdjustmentAmount.hint = cy: Amount must be rounded down to the nearest pound, for example 2300
+codeAdjustmentAmount.error.nonNumeric = cy: The amount of your debit or refund code amount must only include numbers 0 to 9
+codeAdjustmentAmount.error.required = cy: Enter the amount of your debit or refund code amount
+codeAdjustmentAmount.error.wholeNumber = cy: Enter the amount of your debit or refund code amount using whole numbers
+codeAdjustmentAmount.error.outOfRange = cy: The amount of your debit or refund code amount must be between £0 and £999,999,999
+codeAdjustmentAmount.change.hidden = cy: Debit or refund code amount
+
+payeCodeAdjustment.title = cy: Debit or refund coded out
+payeCodeAdjustment.heading = cy: Debit or refund coded out
+payeCodeAdjustment.increase = cy: Increase
+payeCodeAdjustment.decrease = cy: Decrease
+payeCodeAdjustment.checkYourAnswersLabel = cy: Debit or refund coded out
+payeCodeAdjustment.error.required = cy: Select payeCodeAdjustment
+payeCodeAdjustment.change.hidden = cy: PayeCodeAdjustment
