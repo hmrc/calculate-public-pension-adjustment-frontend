@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes
-import models.{CheckMode, Period, PayeCodeAdjustment, UserAnswers}
+import models.{CheckMode, PayeCodeAdjustment, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.PayeCodeAdjustmentPage
