@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package pages
+package pages.annualallowance.taxyear
 
 import models.{CheckMode, NormalMode, Period}
-import pages.annualallowance.taxyear.{AmountOfGiftAidPage, DoYouHaveGiftAidPage}
 import pages.behaviours.PageBehaviours
 
 class DoYouHaveGiftAidPageSpec extends PageBehaviours {
