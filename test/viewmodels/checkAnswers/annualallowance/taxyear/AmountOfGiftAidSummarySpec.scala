@@ -26,7 +26,7 @@ import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.all._
 
-class AmountOfGiftAidSummarySoec extends AnyFreeSpec with Matchers {
+class AmountOfGiftAidSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 

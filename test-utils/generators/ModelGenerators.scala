@@ -22,6 +22,11 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryPayeCodeAdjustment: Arbitrary[PayeCodeAdjustment] =
+    Arbitrary {
+      Gen.oneOf(PayeCodeAdjustment.values.toSeq)
+    }
+
   implicit lazy val arbitraryNewExcessLifetimeAllowancePaid: Arbitrary[NewExcessLifetimeAllowancePaid] =
     Arbitrary {
       Gen.oneOf(NewExcessLifetimeAllowancePaid.values.toSeq)
