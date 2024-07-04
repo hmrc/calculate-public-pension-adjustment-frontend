@@ -37,7 +37,7 @@ case class KnowAdjustedAmountPage(period: Period) extends QuestionPage[Boolean] 
             controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
               .onPageLoad(NormalMode, period)
           case Some(ThresholdIncome.Yes)        =>
-            controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
+            controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
               .onPageLoad(NormalMode, period)
           case _                                =>
             controllers.routes.JourneyRecoveryController.onPageLoad(None)
@@ -55,8 +55,8 @@ case class KnowAdjustedAmountPage(period: Period) extends QuestionPage[Boolean] 
             controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionNotAdjustedIncomeController
               .onPageLoad(CheckMode, period)
           case Some(ThresholdIncome.Yes)        =>
-            controllers.annualallowance.taxyear.routes.HowMuchContributionPensionSchemeController
-              .onPageLoad(CheckMode, period)
+            controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
+              .onPageLoad(NormalMode, period)
           case _                                =>
             controllers.routes.JourneyRecoveryController.onPageLoad(None)
         }

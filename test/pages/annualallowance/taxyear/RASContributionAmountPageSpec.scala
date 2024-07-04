@@ -76,6 +76,7 @@ class RASContributionAmountPageSpec extends PageBehaviours {
         cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
         cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
         cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
@@ -86,6 +87,42 @@ class RASContributionAmountPageSpec extends PageBehaviours {
         cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
         cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
         cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouHaveCodeAdjustmentPage(period)) mustBe None
+        cleanedUserAnswers.get(PayeCodeAdjustmentPage(period)) mustBe None
+        cleanedUserAnswers.get(CodeAdjustmentAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
+      }
+
+      "if threshold income page is yes do not clean up claiming tax relief, tax relief amount and know adjusted income pages" in {
+
+        val period = Period._2022
+
+        val cleanedUserAnswers = RASContributionAmountPage(period)
+          .cleanup(Some(BigInt(1)), incomeSubJourneyDataThresholdIncomeYes)
+          .success
+          .value
+
+        cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.Yes)
+        cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe Some(false)
+        cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+        cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
         cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
         cleanedUserAnswers.get(DoYouHaveCodeAdjustmentPage(period)) mustBe None
         cleanedUserAnswers.get(PayeCodeAdjustmentPage(period)) mustBe None

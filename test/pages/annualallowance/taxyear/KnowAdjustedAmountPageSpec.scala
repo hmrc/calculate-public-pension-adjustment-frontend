@@ -64,7 +64,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/claiming-tax-relief-pension")
       }
 
-      "to AnyLumpSumDeathBenefitsController when false, when threshold income is yes" in {
+      "to any RAS page when false, when threshold income is yes" in {
         val ua = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2018),
@@ -81,7 +81,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
 
         val result = KnowAdjustedAmountPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
+        checkNavigation(result, "/annual-allowance/2018/contribute-to-relief-at-source-scheme")
       }
 
       "to JourneyRecovery when false, when threshold income is anything else" in {
@@ -147,7 +147,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/change-claiming-tax-relief-pension")
       }
 
-      "to AnyLumpSumDeathBenefitsController when false, when threshold income is yes" in {
+      "to any RAS page when false, when threshold income is yes" in {
         val ua = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2018),
@@ -164,7 +164,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
 
         val result = KnowAdjustedAmountPage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/change-how-much-contribution")
+        checkNavigation(result, "/annual-allowance/2018/contribute-to-relief-at-source-scheme")
       }
 
       "to JourneyRecovery when false, when threshold income is anything else" in {

@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -51,29 +51,58 @@ case class DidYouContributeToRASSchemePage(period: Period) extends QuestionPage[
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
-    value
-      .map { _ =>
-        userAnswers
-          .remove(RASContributionAmountPage(period))
-          .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
-          .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
-          .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
-          .flatMap(_.remove(TaxReliefPage(period)))
-          .flatMap(_.remove(KnowAdjustedAmountPage(period)))
-          .flatMap(_.remove(AdjustedIncomePage(period)))
-          .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
-          .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
-          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
-          .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
-          .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
-          .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
-          .flatMap(_.remove(DoYouHaveCodeAdjustmentPage(period)))
-          .flatMap(_.remove(PayeCodeAdjustmentPage(period)))
-          .flatMap(_.remove(CodeAdjustmentAmountPage(period)))
-          .flatMap(_.remove(PersonalAllowancePage(period)))
-          .flatMap(_.remove(BlindAllowancePage(period)))
-          .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
-      }
-      .getOrElse(super.cleanup(value, userAnswers))
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    val thesholdAnswer = userAnswers.get(ThresholdIncomePage(period))
+    if (thesholdAnswer.contains(ThresholdIncome.Yes)) {
+      value
+        .map { _ =>
+          userAnswers
+            .remove(RASContributionAmountPage(period))
+            .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
+            .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
+            .flatMap(_.remove(AdjustedIncomePage(period)))
+            .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
+            .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+            .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
+            .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
+            .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+            .flatMap(_.remove(DoYouHaveGiftAidPage(period)))
+            .flatMap(_.remove(AmountOfGiftAidPage(period)))
+            .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
+            .flatMap(_.remove(DoYouHaveCodeAdjustmentPage(period)))
+            .flatMap(_.remove(PayeCodeAdjustmentPage(period)))
+            .flatMap(_.remove(CodeAdjustmentAmountPage(period)))
+            .flatMap(_.remove(PersonalAllowancePage(period)))
+            .flatMap(_.remove(BlindAllowancePage(period)))
+            .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
+        }
+        .getOrElse(super.cleanup(value, userAnswers))
+    } else {
+      value
+        .map { _ =>
+          userAnswers
+            .remove(RASContributionAmountPage(period))
+            .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
+            .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
+            .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
+            .flatMap(_.remove(TaxReliefPage(period)))
+            .flatMap(_.remove(KnowAdjustedAmountPage(period)))
+            .flatMap(_.remove(AdjustedIncomePage(period)))
+            .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
+            .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+            .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
+            .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+            .flatMap(_.remove(DoYouHaveGiftAidPage(period)))
+            .flatMap(_.remove(AmountOfGiftAidPage(period)))
+            .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
+            .flatMap(_.remove(DoYouHaveCodeAdjustmentPage(period)))
+            .flatMap(_.remove(PayeCodeAdjustmentPage(period)))
+            .flatMap(_.remove(CodeAdjustmentAmountPage(period)))
+            .flatMap(_.remove(PersonalAllowancePage(period)))
+            .flatMap(_.remove(BlindAllowancePage(period)))
+            .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
+        }
+        .getOrElse(super.cleanup(value, userAnswers))
+    }
+  }
 }

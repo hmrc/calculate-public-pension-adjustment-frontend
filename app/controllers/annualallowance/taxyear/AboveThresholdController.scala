@@ -43,7 +43,7 @@ class AboveThresholdController {
     }
 
   private def calculateThresholdStatus(answers: UserAnswers, period: Period): BigInt =
-    answers.get(TotalIncomePage(period)).get -
+    answers.get(TotalIncomePage(period)).getOrElse(BigInt(0)) -
       answers.get(TaxReliefPage(period)).getOrElse(BigInt(0)) +
       answers.get(AmountSalarySacrificeArrangementsPage(period)).getOrElse(BigInt(0)) +
       answers.get(AmountFlexibleRemunerationArrangementsPage(period)).getOrElse(BigInt(0)) -
