@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, ThresholdIncome}
+import models.{AboveThreshold, CheckMode, NormalMode, Period, ThresholdIncome}
 import org.scalacheck.Gen
 import pages.behaviours.PageBehaviours
 
@@ -115,23 +115,11 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
               val period = Gen.oneOf(pre2020Periods).sample.get
 
-              val ua     = emptyUserAnswers
+              val ua = emptyUserAnswers
                 .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
                 .success
                 .value
-                .set(TotalIncomePage(period), BigInt(1000000))
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+                .set(AboveThreshold(period), true)
                 .success
                 .value
                 .set(
@@ -140,6 +128,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 )
                 .success
                 .value
+
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
               checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
@@ -149,23 +138,11 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
               val period = Gen.oneOf(pre2020Periods).sample.get
 
-              val ua     = emptyUserAnswers
+              val ua = emptyUserAnswers
                 .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
                 .success
                 .value
-                .set(TotalIncomePage(period), BigInt(100))
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+                .set(AboveThreshold(period), false)
                 .success
                 .value
                 .set(
@@ -174,29 +151,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 )
                 .success
                 .value
-              val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
-
-            }
-
-            "must still navigate correctly when navigation logic missing user answers " in {
-
-              val period = Gen.oneOf(pre2020Periods).sample.get
-
-              val ua     = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TotalIncomePage(period), BigInt(100))
-                .success
-                .value
-                .set(
-                  ClaimingTaxReliefPensionPage(period),
-                  false
-                )
-                .success
-                .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
               checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
@@ -210,23 +165,11 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
               val period = Gen.oneOf(post2019Periods).sample.get
 
-              val ua     = emptyUserAnswers
+              val ua = emptyUserAnswers
                 .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
                 .success
                 .value
-                .set(TotalIncomePage(period), BigInt(1000000))
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+                .set(AboveThreshold(period), true)
                 .success
                 .value
                 .set(
@@ -235,6 +178,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 )
                 .success
                 .value
+
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
               checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
@@ -244,23 +188,11 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
               val period = Gen.oneOf(post2019Periods).sample.get
 
-              val ua     = emptyUserAnswers
+              val ua = emptyUserAnswers
                 .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
                 .success
                 .value
-                .set(TotalIncomePage(period), BigInt(150000))
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+                .set(AboveThreshold(period), false)
                 .success
                 .value
                 .set(
@@ -269,6 +201,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 )
                 .success
                 .value
+
               val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
 
               checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
@@ -366,23 +299,11 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
               val period = Gen.oneOf(pre2020Periods).sample.get
 
-              val ua     = emptyUserAnswers
+              val ua = emptyUserAnswers
                 .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
                 .success
                 .value
-                .set(TotalIncomePage(period), BigInt(1000000))
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+                .set(AboveThreshold(period), true)
                 .success
                 .value
                 .set(
@@ -391,6 +312,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 )
                 .success
                 .value
+
               val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
               checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
@@ -400,23 +322,11 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
               val period = Gen.oneOf(pre2020Periods).sample.get
 
-              val ua     = emptyUserAnswers
+              val ua = emptyUserAnswers
                 .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
                 .success
                 .value
-                .set(TotalIncomePage(period), BigInt(100))
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+                .set(AboveThreshold(period), false)
                 .success
                 .value
                 .set(
@@ -425,29 +335,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 )
                 .success
                 .value
-              val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
-              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
-
-            }
-
-            "must still navigate correctly when navigation logic missing user answers " in {
-
-              val period = Gen.oneOf(pre2020Periods).sample.get
-
-              val ua     = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TotalIncomePage(period), BigInt(100))
-                .success
-                .value
-                .set(
-                  ClaimingTaxReliefPensionPage(period),
-                  false
-                )
-                .success
-                .value
               val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
               checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
@@ -461,23 +349,11 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
               val period = Gen.oneOf(post2019Periods).sample.get
 
-              val ua     = emptyUserAnswers
+              val ua = emptyUserAnswers
                 .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
                 .success
                 .value
-                .set(TotalIncomePage(period), BigInt(1000000))
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+                .set(AboveThreshold(period), true)
                 .success
                 .value
                 .set(
@@ -486,6 +362,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 )
                 .success
                 .value
+
               val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
               checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
@@ -495,23 +372,11 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
 
               val period = Gen.oneOf(post2019Periods).sample.get
 
-              val ua     = emptyUserAnswers
+              val ua = emptyUserAnswers
                 .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
                 .success
                 .value
-                .set(TotalIncomePage(period), BigInt(150000))
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-                .success
-                .value
-                .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+                .set(AboveThreshold(period), false)
                 .success
                 .value
                 .set(
@@ -520,6 +385,7 @@ class ClaimingTaxReliefPensionPageSpec extends PageBehaviours {
                 )
                 .success
                 .value
+
               val result = ClaimingTaxReliefPensionPage(period).navigate(CheckMode, ua).url
 
               checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
