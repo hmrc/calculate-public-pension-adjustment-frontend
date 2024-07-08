@@ -43,9 +43,9 @@ case class DoYouHaveCodeAdjustmentPage(period: Period) extends QuestionPage[Bool
     answers.get(DoYouHaveCodeAdjustmentPage(period)) match {
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.PayeCodeAdjustmentController
-          .onPageLoad(NormalMode, period)
+          .onPageLoad(CheckMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

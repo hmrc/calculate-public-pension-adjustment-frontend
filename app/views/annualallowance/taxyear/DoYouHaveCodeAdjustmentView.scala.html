@@ -25,6 +25,15 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-body">@messages("doYouHaveCodeAdjustment.message1")</p>
+    <p class="govuk-body">@messages("doYouHaveCodeAdjustment.message2")</p>
+    <p class="govuk-body">@messages("doYouHaveCodeAdjustment.message3")</p>
+    <p class="govuk-body">@messages("doYouHaveCodeAdjustment.message4")</p>
+    <h2 class="govuk-heading-l">@messages("doYouHaveCodeAdjustment.heading2", startEndDate)</h2>
+
+}
+
 @layout(pageTitle = title(form, messages("doYouHaveCodeAdjustment.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.DoYouHaveCodeAdjustmentController.onSubmit(mode, period), 'autoComplete -> "off") {
@@ -35,13 +44,12 @@
 
         @govukRadios(
             RadiosViewModel.yesNo(
-            field = form("value"),
-            legend = HmrcPageHeadingLegend(
-                content = messages("doYouHaveCodeAdjustment.heading", startEndDate),
-                caption = HmrcSectionCaption(messages("annualAllowanceAdjustedIncome.caption")))
-
-        )
-    )
+                field = form("value"),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("doYouHaveCodeAdjustment.heading1", startEndDate),
+                    caption = HmrcSectionCaption(messages("annualAllowance.netIncome.caption")))
+                ).withHint(HintViewModel(HtmlContent(contentHint))
+        ))
 
         @continueButton()
     }

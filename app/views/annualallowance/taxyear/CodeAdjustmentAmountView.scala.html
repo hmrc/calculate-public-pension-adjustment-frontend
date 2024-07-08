@@ -28,7 +28,8 @@
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-    <p class="govuk-hint">@messages("codeAdjustmentAmount.hint")</p>
+    <p class="govuk-body">@messages("codeAdjustmentAmount.message1")</p>
+    <p class="govuk-body">@messages("codeAdjustmentAmount.message2")</p>
 }
 
 @layout(pageTitle = title(form, messages("codeAdjustmentAmount.title", startEndDate))) {
@@ -43,11 +44,13 @@
             InputViewModel(
                 field = form("value"),
                 label = HmrcPageHeadingLabel(messages("codeAdjustmentAmount.heading", startEndDate),
-                caption = messages("annualAllowance.thresholdIncome.caption")
+                caption = messages("annualAllowance.netIncome.caption")
             ))
-            .asNumeric()
-            .withWidth(Fixed10)
-            .withHint(HintViewModel(HtmlContent(contentHint)))
+                .withInputMode("numeric")
+                .withWidth(Fixed10)
+                .withCssClass("govuk-currency-input__inner__input")
+                .withPrefix(PrefixOrSuffix(content = Text("£")))
+                .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()

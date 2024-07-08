@@ -25,7 +25,12 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("payeCodeAdjustment.title"))) {
+@contentHint = {
+    <p class="govuk-body">@messages("payeCodeAdjustment.message1")</p>
+    <p class="govuk-body">@messages("payeCodeAdjustment.message2")</p>
+}
+
+@layout(pageTitle = title(form, messages("payeCodeAdjustment.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.PayeCodeAdjustmentController.onSubmit(mode, period), 'autoComplete -> "off") {
 
@@ -36,9 +41,12 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("payeCodeAdjustment.heading")).asPageHeading(),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("payeCodeAdjustment.heading", startEndDate),
+                    caption = HmrcSectionCaption(messages("annualAllowance.netIncome.caption"))
+                ),
                 items  = PayeCodeAdjustment.options
-            )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()

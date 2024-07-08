@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 class DoYouHaveCodeAdjustmentFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(startEndDate: String): Form[Boolean] =
     Form(
-      "value" -> boolean("doYouHaveCodeAdjustment.error.required")
+      "value" -> boolean("doYouHaveCodeAdjustment.error.required", "error.boolean", Seq(startEndDate))
     )
 }
