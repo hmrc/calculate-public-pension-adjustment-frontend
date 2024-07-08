@@ -18,11 +18,9 @@ package forms.annualallowance.taxyear
 
 import forms.behaviours.OptionFieldBehaviours
 import models.PayeCodeAdjustment
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class PayeCodeAdjustmentFormProviderSpec extends OptionFieldBehaviours {
-
-  val form = new PayeCodeAdjustmentFormProvider()()
 
   ".value" - {
 
@@ -30,16 +28,21 @@ class PayeCodeAdjustmentFormProviderSpec extends OptionFieldBehaviours {
     val requiredKey = "payeCodeAdjustment.error.required"
 
     behave like optionsField[PayeCodeAdjustment](
-      form,
+      newForm(),
       fieldName,
       validValues = PayeCodeAdjustment.values,
-      invalidError = FormError(fieldName, "error.invalid")
+      invalidError = FormError(fieldName, "payeCodeAdjustment.error.required", Seq(""))
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(""))
     )
+  }
+
+  private def newForm(): Form[PayeCodeAdjustment] = {
+    val form = new PayeCodeAdjustmentFormProvider()
+    form("")
   }
 }

@@ -42,8 +42,12 @@ case class DoYouHaveCodeAdjustmentPage(period: Period) extends QuestionPage[Bool
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(DoYouHaveCodeAdjustmentPage(period)) match {
       case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.PayeCodeAdjustmentController
-          .onPageLoad(CheckMode, period)
+        if (answers.get(PayeCodeAdjustmentPage(period)).isEmpty) {
+          controllers.annualallowance.taxyear.routes.PayeCodeAdjustmentController
+            .onPageLoad(CheckMode, period)
+        } else {
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+        }
       case Some(false) =>
         controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)

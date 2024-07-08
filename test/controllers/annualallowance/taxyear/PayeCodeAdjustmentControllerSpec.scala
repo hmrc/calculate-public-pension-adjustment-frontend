@@ -41,7 +41,7 @@ class PayeCodeAdjustmentControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new PayeCodeAdjustmentFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(startEndDate)
 
   lazy val payeCodeAdjustmentRoute =
     controllers.annualallowance.taxyear.routes.PayeCodeAdjustmentController

@@ -52,7 +52,7 @@ object PayeCodeAdjustmentSummary {
             "site.change",
             controllers.annualallowance.taxyear.routes.PayeCodeAdjustmentController.onPageLoad(CheckMode, period).url
           )
-            .withVisuallyHiddenText(messages("payeCodeAdjustment.change.hidden"))
+            .withVisuallyHiddenText(messages("payeCodeAdjustment.change.hidden", startEndDate))
         )
       )
     }

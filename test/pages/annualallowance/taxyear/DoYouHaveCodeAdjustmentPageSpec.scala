@@ -34,7 +34,7 @@ class DoYouHaveCodeAdjustmentPageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "when user answers true to PayeCodeAdjustment page" in {
+    "when user answers true go to PayeCodeAdjustment page" in {
 
       val ua = emptyUserAnswers
         .set(
@@ -50,7 +50,7 @@ class DoYouHaveCodeAdjustmentPageSpec extends PageBehaviours {
 
     }
 
-    "when user answers false to BlindAllowance page" in {
+    "when user answers false go to BlindAllowance page" in {
 
       val ua = emptyUserAnswers
         .set(
@@ -78,7 +78,7 @@ class DoYouHaveCodeAdjustmentPageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "when user answers true to PayeCodeAdjustment page" in {
+    "when user answers true and PayeCodeAdjustment has not already been answered go to PayeCodeAdjustment page" in {
 
       val ua = emptyUserAnswers
         .set(
@@ -90,11 +90,33 @@ class DoYouHaveCodeAdjustmentPageSpec extends PageBehaviours {
 
       val result = DoYouHaveCodeAdjustmentPage(period).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2022/paye-code-adjustment")
+      checkNavigation(result, "/annual-allowance/2022/change-paye-code-adjustment")
 
     }
 
-    "when user answers false to BlindAllowance" in {
+    "when user answers true and PayeCodeAdjustment HAS been answered go to CheckYourAAPeriodAnswers" in {
+
+      val ua = emptyUserAnswers
+        .set(
+          PayeCodeAdjustmentPage(period),
+          PayeCodeAdjustment.Increase
+        )
+        .success
+        .value
+        .set(
+          DoYouHaveCodeAdjustmentPage(period),
+          true
+        )
+        .success
+        .value
+
+      val result = DoYouHaveCodeAdjustmentPage(period).navigate(CheckMode, ua).url
+
+      checkNavigation(result, "/annual-allowance/2022/check-answers")
+
+    }
+
+    "when user answers false go to CheckYourAAPeriodAnswers" in {
 
       val ua = emptyUserAnswers
         .set(
@@ -106,7 +128,7 @@ class DoYouHaveCodeAdjustmentPageSpec extends PageBehaviours {
 
       val result = DoYouHaveCodeAdjustmentPage(period).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2022/blind-person-allowance")
+      checkNavigation(result, "/annual-allowance/2022/check-answers")
 
     }
 

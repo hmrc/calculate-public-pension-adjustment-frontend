@@ -57,7 +57,7 @@ class CodeAdjustmentAmountPageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "to blind-person-allowance" in {
+    "to CheckYourAAPeriodAnswers" in {
       val ua     = emptyUserAnswers
         .set(
           CodeAdjustmentAmountPage(Period._2018),
@@ -67,7 +67,7 @@ class CodeAdjustmentAmountPageSpec extends PageBehaviours {
         .value
       val result = CodeAdjustmentAmountPage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2018/blind-person-allowance")
+      checkNavigation(result, "/annual-allowance/2018/check-answers")
     }
 
     "to journey recovery when no answer" in {

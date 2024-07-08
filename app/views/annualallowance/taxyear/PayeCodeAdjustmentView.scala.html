@@ -28,6 +28,7 @@
 @contentHint = {
     <p class="govuk-body">@messages("payeCodeAdjustment.message1")</p>
     <p class="govuk-body">@messages("payeCodeAdjustment.message2")</p>
+    <h2 class="govuk-heading-l">@messages("payeCodeAdjustment.heading2", startEndDate)</h2>
 }
 
 @layout(pageTitle = title(form, messages("payeCodeAdjustment.title", startEndDate))) {
@@ -42,7 +43,7 @@
             RadiosViewModel(
                 field  = form("value"),
                 legend = HmrcPageHeadingLegend(
-                    content = messages("payeCodeAdjustment.heading", startEndDate),
+                    content = messages("payeCodeAdjustment.heading1"),
                     caption = HmrcSectionCaption(messages("annualAllowance.netIncome.caption"))
                 ),
                 items  = PayeCodeAdjustment.options

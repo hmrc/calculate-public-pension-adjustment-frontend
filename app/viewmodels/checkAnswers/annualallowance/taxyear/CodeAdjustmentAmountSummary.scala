@@ -50,7 +50,7 @@ object CodeAdjustmentAmountSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("codeAdjustmentAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("codeAdjustmentAmount.change.hidden", startEndDate))
         )
       )
     }
