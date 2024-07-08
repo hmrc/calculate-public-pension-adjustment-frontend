@@ -22,12 +22,13 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
 import play.api.Logging
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
@@ -205,6 +206,25 @@ class CalculationResultService @Inject() (
 
       val isFlexiAccessDateBeforeThisPeriod: Option[Boolean] = oFlexiAccessDate.map(_.isBefore(period.start))
 
+      val incomeSubJourney =
+        IncomeSubJourney(
+          userAnswers.get(AmountSalarySacrificeArrangementsPage(period)).map(_.toInt),
+          userAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)).map(_.toInt),
+          userAnswers.get(RASContributionAmountPage(period)).map(_.toInt),
+          userAnswers.get(LumpSumDeathBenefitsValuePage(period)).map(_.toInt),
+          userAnswers.get(models.AboveThreshold(period)),
+          userAnswers.get(TaxReliefPage(period)).map(_.toInt),
+          userAnswers.get(AdjustedIncomePage(period)).map(_.toInt),
+          userAnswers.get(HowMuchTaxReliefPensionPage(period)).map(_.toInt),
+          userAnswers.get(HowMuchContributionPensionSchemePage(period)).map(_.toInt),
+          userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).map(_.toInt),
+          userAnswers.get(AmountOfGiftAidPage(period)).map(_.toInt),
+          userAnswers.get(PayeCodeAdjustmentPage(period)),
+          userAnswers.get(CodeAdjustmentAmountPage(period)).map(_.toInt),
+          userAnswers.get(PersonalAllowancePage(period)).map(_.toInt),
+          userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt)
+        )
+
       (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {
         case (Some(true), Some(false)) =>
           val definedBenefitInputAmount =
@@ -253,6 +273,7 @@ class CalculationResultService @Inject() (
               totalIncome,
               chargePaidByMember,
               period,
+              incomeSubJourney,
               income,
               definedBenefitInput2016PostAmount,
               definedContributionInput2016PostAmount,
@@ -293,6 +314,7 @@ class CalculationResultService @Inject() (
               chargePaidByMember,
               taxYearSchemes,
               period,
+              incomeSubJourney,
               income,
               definedBenefitInput2016PostAmount,
               definedContributionInput2016PostAmount
@@ -339,6 +361,7 @@ class CalculationResultService @Inject() (
                   totalIncome,
                   chargePaidByMember,
                   period,
+                  incomeSubJourney,
                   income
                 )
               )
@@ -353,6 +376,7 @@ class CalculationResultService @Inject() (
                   totalIncome,
                   chargePaidByMember,
                   period,
+                  incomeSubJourney,
                   income,
                   Some(
                     definedBenefitInput2016PostAmount.getOrElse(0) +
