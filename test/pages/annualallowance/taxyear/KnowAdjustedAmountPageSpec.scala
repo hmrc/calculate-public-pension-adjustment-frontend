@@ -211,6 +211,12 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
             .set(LumpSumDeathBenefitsValuePage(Period._2018), BigInt(1))
             .success
             .value
+            .set(DidYouContributeToRASSchemePage(Period._2018), true)
+            .success
+            .value
+            .set(RASContributionAmountPage(Period._2018), BigInt(1))
+            .success
+            .value
             .set(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018), true)
             .success
             .value
@@ -234,6 +240,8 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
 
           cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(Period._2018)) mustBe None
           cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(DidYouContributeToRASSchemePage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(RASContributionAmountPage(Period._2018)) mustBe None
           cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018)) mustBe None
           cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(Period._2018)) mustBe None
           cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(Period._2018)) mustBe None
