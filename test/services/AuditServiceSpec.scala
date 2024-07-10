@@ -19,8 +19,9 @@ package services
 import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
+import models.PayeCodeAdjustment.Increase
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, Period, TaxYear2011To2015, TaxYearScheme}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, IncomeSubJourney, Period, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
@@ -76,7 +77,24 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     TaxYearScheme("Scheme 1", "00348916RT", 15000, 0, Some(25000)),
                     TaxYearScheme("Scheme 2", "00348916RG", 18000, 0, Some(25000))
                   ),
-                  Period._2016
+                  Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291)
+                  )
                 ),
                 PostFlexiblyAccessedTaxYear(
                   38000,
@@ -88,6 +106,23 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     TaxYearScheme("Scheme 2", "00348916RG", 13000, 0, None)
                   ),
                   Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(Increase),
+                    Some(2740),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -100,6 +135,23 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     TaxYearScheme("Scheme 2", "00348916RG", 25000, 0, None)
                   ),
                   Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(Increase),
+                    Some(2740),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 )
               )
