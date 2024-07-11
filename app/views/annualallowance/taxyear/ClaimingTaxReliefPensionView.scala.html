@@ -33,6 +33,7 @@
             <li class="govuk-body">@messages("claimingTaxReliefPension.bullet3")</li>
         </ul>
 
+    <p class="govuk-body">@messages("claimingTaxReliefPension.message2")</p>
     <h2 class="govuk-heading-m">@messages("claimingTaxReliefPension.heading2", startEndDate)</h2>
 }
 
@@ -49,7 +50,7 @@
                 field = form("value"),
                 legend = HmrcPageHeadingLegend(
                     content = messages("claimingTaxReliefPension.heading", startEndDate),
-                    caption = HmrcSectionCaption(messages("adjustedIncomeCaption.caption")))
+                    caption = HmrcSectionCaption(messages("annualAllowance.netIncome.caption")))
             ).withHint(HintViewModel(HtmlContent(contentHint))
         ))
 

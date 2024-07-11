@@ -29,6 +29,8 @@
 
 @contentHint = {
     <p class="govuk-body">@messages("rASContributionAmount.message1")</p>
+    <p class="govuk-body">@messages("rASContributionAmount.message2")</p>
+    <p class="govuk-body">@messages("rASContributionAmount.message3")</p>
     <p class="govuk-hint">@messages("rASContributionAmount.hint")</p>
 }
 
@@ -45,7 +47,7 @@
                 field = form("value"),
                 label = HmrcPageHeadingLabel(
                     content = messages("rASContributionAmount.heading", startEndDate),
-                    caption = messages("annualAllowance.thresholdIncome.caption")
+                    caption = messages("annualAllowance.caption")
                 )
             )
             .withInputMode("numeric")

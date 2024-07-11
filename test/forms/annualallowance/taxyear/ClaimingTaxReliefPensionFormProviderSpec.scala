@@ -18,30 +18,32 @@ package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
 import models.Period
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class ClaimingTaxReliefPensionFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "claimingTaxReliefPension.error.required"
   val invalidKey  = "error.boolean"
 
-  val period = Period._2019
-  val form   = new ClaimingTaxReliefPensionFormProvider()(period)
-
   ".value" - {
 
     val fieldName = "value"
 
     behave like booleanField(
-      form,
+      newForm(),
       fieldName,
-      invalidError = FormError(fieldName, invalidKey)
+      invalidError = FormError(fieldName, invalidKey, Seq(""))
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(""))
     )
+  }
+
+  private def newForm(): Form[Boolean] = {
+    val form = new ClaimingTaxReliefPensionFormProvider()
+    form(Seq(""))
   }
 }

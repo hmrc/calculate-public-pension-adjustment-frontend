@@ -40,10 +40,11 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
   def onwardRoute = Call("GET", "/foo")
 
-  val period               = Period._2020
-  val formProvider         = new ClaimingTaxReliefPensionFormProvider()
-  val form                 = formProvider(period)
-  val startEndDate: String = "6 April 2019 to 5 April 2020"
+  val startEndDate = "6 April 2019 to 5 April 2020"
+
+  val period       = Period._2020
+  val formProvider = new ClaimingTaxReliefPensionFormProvider()
+  val form         = formProvider(Seq(startEndDate))
 
   lazy val claimingTaxReliefPensionRoute =
     controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period).url

@@ -27,7 +27,7 @@ class RASContributionAmountFormProviderSpec extends IntFieldBehaviours {
 
     val fieldName = "value"
 
-    val minimum = 0
+    val minimum = 1
     val maximum = 999999999
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
