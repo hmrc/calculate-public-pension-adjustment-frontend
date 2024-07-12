@@ -24,9 +24,10 @@ import models.PayeCodeAdjustment.Increase
 import models.TaxYear2016To2023._
 import models.submission.Success
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, Period, ProtectionEnhancedChanged, ProtectionType, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
+import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
 import play.api.libs.json.{JsObject, JsValue, Json}
 
 import java.time.LocalDate
@@ -722,7 +723,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
            |          "thresholdIncome" : "yes",
-           |          "adjustedIncome" : 160000,
            |          "totalIncome" : 60000,
            |          "anySalarySacrificeArrangements": true,
            |          "amountSalarySacrificeArrangements": 444,
@@ -819,7 +819,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 53000,
            |          "thresholdIncome" : "yes",
-           |          "adjustedIncome" : 120000,
            |          "totalIncome" : 60000,
            |          "anySalarySacrificeArrangements": true,
            |          "amountSalarySacrificeArrangements": 444,
@@ -1518,7 +1517,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "flexibleRemunerationArrangements": true,
                 |          "amountFlexibleRemunerationArrangements": 666,
                 |          "didYouContributeToRASScheme": true,
-                |		  "rASContributionAmount": 712,
+                |		   "rASContributionAmount": 712,
                 |          "howMuchContributionPensionScheme": 1212,
                 |          "anyLumpSumDeathBenefits": true,
                 |          "lumpSumDeathBenefitsValue": 777,
@@ -1729,7 +1728,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          ],
                 |          "definedContributionAmount": 1600,
                 |          "thresholdIncome": "yes",
-                |          "adjustedIncome": 120000,
                 |          "totalIncome": 140000,
                 |          "anySalarySacrificeArrangements": true,
                 |          "amountSalarySacrificeArrangements": 444,
@@ -1974,7 +1972,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |        "flexiAccessDefinedContributionAmount": 4200,
                 |        "definedBenefitAmount": 8000,
                 |        "thresholdIncome": "yes",
-                |        "adjustedIncome": 120000,
                 |        "totalIncome": 140000,
                 |        "anySalarySacrificeArrangements": true,
                 |        "amountSalarySacrificeArrangements": 444,
@@ -2142,7 +2139,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          ],
                 |          "definedContributionAmount": 1600,
                 |          "thresholdIncome": "yes",
-                |          "adjustedIncome": 120000,
                 |          "totalIncome": 140000,
                 |          "anySalarySacrificeArrangements": true,
                 |          "amountSalarySacrificeArrangements": 444,
@@ -2559,7 +2555,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 Some(777),
                 Some(true),
                 Some(888),
-                Some(160000),
+                None,
                 Some(1111),
                 Some(1212),
                 Some(1414),
@@ -2569,7 +2565,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 None,
                 Some(2291)
               ),
-              Some(AboveThreshold(160000))
+              Some(AboveThreshold(96148))
             )
           )
       }
@@ -2625,7 +2621,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(777),
               Some(true),
               Some(888),
-              Some(120000),
+              None,
               Some(1111),
               Some(1212),
               Some(1414),
@@ -2635,7 +2631,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               Some(2291)
             ),
-            Some(AboveThreshold(120000))
+            income = Some(AboveThreshold(166148))
           )
         )
       }
@@ -2747,7 +2743,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(777),
                     Some(true),
                     Some(888),
-                    Some(120000),
+                    None,
                     Some(1111),
                     Some(1212),
                     Some(1414),
@@ -2757,7 +2753,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(2291)
                   ),
-                  Some(AboveThreshold(120000)),
+                  Some(AboveThreshold(177748)),
                   None,
                   None
                 ),
@@ -2851,7 +2847,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(777),
                     Some(true),
                     Some(888),
-                    Some(120000),
+                    None,
                     Some(1111),
                     Some(1212),
                     Some(1414),
@@ -2861,7 +2857,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(2291)
                   ),
-                  Some(AboveThreshold(120000)),
+                  Some(AboveThreshold(177748)),
                   None,
                   None
                 ),
@@ -2981,7 +2977,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(777),
                     Some(true),
                     Some(888),
-                    Some(120000),
+                    None,
                     Some(1111),
                     Some(1212),
                     Some(1414),
@@ -2991,7 +2987,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(2291)
                   ),
-                  Some(AboveThreshold(120000)),
+                  Some(AboveThreshold(209548)),
                   None,
                   None,
                   None
@@ -3635,7 +3631,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(2291)
                   ),
-                  Some(BelowThreshold)
+                  Some(AboveThreshold(243148))
                 ),
                 PostFlexiblyAccessedTaxYear(
                   0,
@@ -4040,6 +4036,61 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
+    }
+  }
+
+  "adjustedIncomeCalculation" - {
+
+    "(Using test thread data, scenario 1 2017/18, test thread v0.5) if user does not know their adjusted income, must calculate it" in {
+
+      val period: Period = Period._2022
+
+      val userAnswers = emptyUserAnswers
+        .set(PensionSchemeInputAmountsPage(period, SchemeIndex(0)), PensionSchemeInputAmounts(29997))
+        .success
+        .value
+        .set(PensionSchemeInputAmountsPage(period, SchemeIndex(1)), PensionSchemeInputAmounts(45000))
+        .success
+        .value
+        .set(DefinedContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+        .set(FlexiAccessDefinedContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+        .set(DefinedBenefitAmountPage(period), BigInt(1))
+        .success
+        .value
+        .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(160000))
+        .success
+        .value
+        .set(TaxReliefPage(period), BigInt(5000))
+        .success
+        .value
+        .set(KnowAdjustedAmountPage(period), false)
+        .success
+        .value
+        .set(RASContributionAmountPage(period), BigInt(10000))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(40000))
+        .success
+        .value
+        .set(HowMuchTaxReliefPensionPage(period), BigInt(0))
+        .success
+        .value
+        .set(HowMuchContributionPensionSchemePage(period), BigInt(30000))
+        .success
+        .value
+        .set(AmountClaimedOnOverseasPensionPage(period), BigInt(0))
+        .success
+        .value
+
+      service.adjustedIncomeCalculation(userAnswers, period) mustBe 180000
+
     }
   }
 }

@@ -391,6 +391,12 @@ trait SpecBase
       .set(KnowAdjustedAmountPage(_2022), false)
       .success
       .value
+      .set(DidYouContributeToRASSchemePage(_2022), true)
+      .success
+      .value
+      .set(RASContributionAmountPage(_2022), BigInt(1))
+      .success
+      .value
       .set(AnyLumpSumDeathBenefitsPage(_2022), true)
       .success
       .value

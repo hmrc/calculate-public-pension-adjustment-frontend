@@ -146,7 +146,25 @@ class CalculationResultService @Inject() (
       if (period == Period._2016)
         None
       else if (userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.Yes))
-        Some(userAnswers.get(AdjustedIncomePage(period)).map(v => AboveThreshold(v.toInt)).getOrElse(BelowThreshold))
+        userAnswers.get(KnowAdjustedAmountPage(period)) match {
+          case Some(true)  =>
+            Some(AboveThreshold(userAnswers.get(AdjustedIncomePage(period)).getOrElse(BigInt(0)).toInt))
+          case Some(false) =>
+            Some(AboveThreshold(adjustedIncomeCalculation(userAnswers, period).toInt))
+          case _           => None
+        }
+      else if (userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.IDoNotKnow))
+        userAnswers.get(models.AboveThreshold(period)) match {
+          case Some(true)  =>
+            userAnswers.get(KnowAdjustedAmountPage(period)) match {
+              case Some(true)  =>
+                Some(AboveThreshold(userAnswers.get(AdjustedIncomePage(period)).getOrElse(BigInt(0)).toInt))
+              case Some(false) =>
+                Some(AboveThreshold(adjustedIncomeCalculation(userAnswers, period).toInt))
+              case _           => None
+            }
+          case Some(false) => Some(BelowThreshold)
+        }
       else
         Some(BelowThreshold)
 
@@ -581,5 +599,45 @@ class CalculationResultService @Inject() (
         RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", inDate.unusedAnnualAllowance.toString())
       )
     }
+
+  def adjustedIncomeCalculation(userAnswers: UserAnswers, period: Period): BigInt = {
+
+    val netIncomeAfterDeductingTaxRelief = userAnswers.get(TotalIncomePage(period)).getOrElse(BigInt(0)) - userAnswers
+      .get(TaxReliefPage(period))
+      .getOrElse(BigInt(0))
+
+    val taxReliefClaimedOnPensionContributions =
+      userAnswers.get(HowMuchTaxReliefPensionPage(period)).getOrElse(BigInt(0))
+
+    val employeeContributions = userAnswers.get(HowMuchContributionPensionSchemePage(period)).getOrElse(BigInt(0)) -
+      userAnswers.get(RASContributionAmountPage(period)).getOrElse(BigInt(0))
+
+    val employerTotalContributions = calculateRevisedPIATotal(userAnswers, period) +
+      userAnswers.get(DefinedContributionAmountPage(period)).getOrElse(BigInt(0)) +
+      userAnswers.get(FlexiAccessDefinedContributionAmountPage(period)).getOrElse(BigInt(0)) +
+      userAnswers.get(DefinedBenefitAmountPage(period)).getOrElse(BigInt(0)) -
+      userAnswers.get(HowMuchContributionPensionSchemePage(period)).getOrElse(BigInt(0))
+
+    val reliefClaimedOnOverseasPensions =
+      userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).getOrElse(BigInt(0))
+
+    val lumpSumDeathBenefits = userAnswers.get(LumpSumDeathBenefitsValuePage(period)).getOrElse(BigInt(0))
+
+    netIncomeAfterDeductingTaxRelief +
+      taxReliefClaimedOnPensionContributions +
+      employeeContributions +
+      employerTotalContributions +
+      reliefClaimedOnOverseasPensions -
+      lumpSumDeathBenefits
+
+  }
+
+  private def calculateRevisedPIATotal(userAnswers: UserAnswers, period: Period): BigInt =
+    (0 to 4)
+      .flatMap(schemeIndexes =>
+        userAnswers.get(PensionSchemeInputAmountsPage(period, SchemeIndex.fromString(schemeIndexes.toString).get))
+      )
+      .map(_.revisedPIA)
+      .sum
 
 }
