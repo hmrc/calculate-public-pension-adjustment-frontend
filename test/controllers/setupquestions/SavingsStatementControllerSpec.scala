@@ -101,7 +101,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(SavingsStatementPage(true), true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(SavingsStatementPage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -174,7 +174,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 
@@ -219,7 +219,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 
@@ -254,7 +254,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 
@@ -294,7 +294,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 
@@ -333,7 +333,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 

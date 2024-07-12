@@ -23,7 +23,7 @@
 
 @(continueURL: Call)(implicit request: Request[_], messages: Messages)
 
-@if(frontendAppConfig.optionalAuthEnabled && request.signedIn) {
+@if(request.signedIn) {
     @govukButton(
         ButtonViewModel(messages("site.saveAndContinue"))
 

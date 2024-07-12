@@ -108,10 +108,10 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
 
     def userAnswersAfterSavingsStatementPageSubmitted(): UserAnswers = {
       val answersWithPageData = emptyUserAnswers
-        .set(SavingsStatementPage(true), true)
+        .set(SavingsStatementPage, true)
         .get
 
-      val redirectedUrl = SavingsStatementPage(true).navigate(NormalMode, answersWithPageData).url
+      val redirectedUrl = SavingsStatementPage.navigate(NormalMode, answersWithPageData).url
       SetupSection.saveNavigation(answersWithPageData, redirectedUrl)
     }
   }

@@ -68,7 +68,7 @@ class ResubmittingAdjustmentController @Inject() (
             updatedAnswers <- Future.fromTry(
                                 request.userAnswers
                                   .getOrElse(constructUserAnswers(request))
-                                  .set(SavingsStatementPage(config.optionalAuthEnabled), true)
+                                  .set(SavingsStatementPage, true)
                                   .get
                                   .set(ResubmittingAdjustmentPage, value)
                               )

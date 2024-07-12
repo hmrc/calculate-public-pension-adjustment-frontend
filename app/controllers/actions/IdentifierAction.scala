@@ -49,11 +49,7 @@ class OptionalAuthIdentifierAction @Inject() (
       Retrievals.itmpName
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] =
-    if (config.optionalAuthEnabled) {
-      invokeBlockOptionallyAuthenticated(request, block)
-    } else {
-      invokeBlockUnauthenticated(request, block)
-    }
+    invokeBlockOptionallyAuthenticated(request, block)
 
   private def invokeBlockOptionallyAuthenticated[A](
     request: Request[A],
@@ -106,20 +102,5 @@ class OptionalAuthIdentifierAction @Inject() (
         )
       )
     )
-  }
-
-  private def invokeBlockUnauthenticated[A](
-    request: Request[A],
-    block: IdentifierRequest[A] => Future[Result]
-  ): Future[Result] = {
-
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-
-    hc.sessionId match {
-      case Some(session) =>
-        block(UnauthenticatedIdentifierRequest(request, session.value))
-      case None          =>
-        Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
-    }
   }
 }

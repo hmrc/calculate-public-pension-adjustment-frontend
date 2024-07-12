@@ -50,7 +50,7 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
         )
 
       val userAnswers = UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, authenticated = true)
-        .set(SavingsStatementPage(true), true)
+        .set(SavingsStatementPage, true)
         .success
         .value
 
@@ -161,7 +161,7 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 
@@ -203,7 +203,7 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 
@@ -235,7 +235,7 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 
@@ -271,7 +271,7 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 
@@ -313,7 +313,7 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage(true), true)
+          .set(SavingsStatementPage, true)
           .success
           .value
 
