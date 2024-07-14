@@ -204,46 +204,6 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
     }
   }
 
-//  "when optional auth is disabled" - {
-//
-//    val application = buildApplication(optionalAuthEnabled = false)
-//
-//    "when there is no active session" - {
-//      "must redirect to the session expired page" in {
-//
-//        val authAction = new OptionalAuthIdentifierAction(
-//          new FakeAuthConnector(None),
-//          bodyParsers(application),
-//          config(application)
-//        )
-//        val request    = FakeRequest()
-//        val result     = authAction(a => Ok(a.userId))(request)
-//        status(result) mustBe SEE_OTHER
-//        redirectLocation(result).value must startWith(controllers.routes.JourneyRecoveryController.onPageLoad().url)
-//      }
-//    }
-//
-//    "when there is an active session" - {
-//      "must perform the action" in {
-//        val authAction =
-//          new OptionalAuthIdentifierAction(
-//            new FakeFailingAuthConnector(MissingBearerToken()),
-//            bodyParsers(application),
-//            config(application)
-//          )
-//        val request    = FakeRequest().withSession(SessionKeys.sessionId -> sessionId)
-//        val result     = authAction(a =>
-//          a match {
-//            case x: AuthenticatedIdentifierRequest[_]   => Ok(s"${x.userId}")
-//            case y: UnauthenticatedIdentifierRequest[_] => Ok(y.userId)
-//          }
-//        )(request)
-//        status(result) mustEqual OK
-//        contentAsString(result) mustEqual sessionId
-//      }
-//    }
-//  }
-
   class FakeAuthConnector[T](value: T) extends AuthConnector {
     override def authorise[A](predicate: Predicate, retrieval: Retrieval[A])(implicit
       hc: HeaderCarrier,
