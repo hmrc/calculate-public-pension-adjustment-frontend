@@ -94,5 +94,4 @@ class ClaimingTaxReliefPensionController @Inject() (
     val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
     period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
   }
-
 }
