@@ -38,7 +38,9 @@ case class PayeCodeAdjustmentPage(period: Period) extends QuestionPage[PayeCodeA
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayeCodeAdjustmentPage(period)) match {
       case Some(_) =>
-        controllers.annualallowance.taxyear.routes.CodeAdjustmentAmountController.onPageLoad(NormalMode, period)
+        if (answers.get(CodeAdjustmentAmountPage(period)).isEmpty) {
+          controllers.annualallowance.taxyear.routes.CodeAdjustmentAmountController.onPageLoad(CheckMode, period)
+        } else { controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period) }
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

@@ -40,7 +40,7 @@ class DoYouHaveCodeAdjustmentControllerSpec extends SpecBase with MockitoSugar {
   val startEndDate: String = "6 April 2021 to 5 April 2022"
 
   val formProvider = new DoYouHaveCodeAdjustmentFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(startEndDate)
   val period       = Period._2022
 
   lazy val doYouHaveCodeAdjustmentRoute =

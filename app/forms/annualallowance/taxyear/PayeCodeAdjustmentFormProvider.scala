@@ -24,8 +24,12 @@ import javax.inject.Inject
 
 class PayeCodeAdjustmentFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[PayeCodeAdjustment] =
+  def apply(startEndDate: String): Form[PayeCodeAdjustment] =
     Form(
-      "value" -> enumerable[PayeCodeAdjustment]("payeCodeAdjustment.error.required")
+      "value" -> enumerable[PayeCodeAdjustment](
+        "payeCodeAdjustment.error.required",
+        "payeCodeAdjustment.error.required",
+        Seq(startEndDate)
+      )
     )
 }

@@ -40,8 +40,7 @@ case class CodeAdjustmentAmountPage(period: Period) extends QuestionPage[BigInt]
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(CodeAdjustmentAmountPage(period)) match {
       case Some(_) =>
-        controllers.annualallowance.taxyear.routes.BlindAllowanceController
-          .onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

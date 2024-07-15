@@ -16,33 +16,42 @@
 
 package forms.annualallowance.taxyear
 
-import forms.behaviours.OptionFieldBehaviours
-import models.PayeCodeAdjustment
+import forms.behaviours.IntFieldBehaviours
 import play.api.data.{Form, FormError}
 
-class PayeCodeAdjustmentFormProviderSpec extends OptionFieldBehaviours {
+class CodeAdjustmentAmountFormProviderSpec extends IntFieldBehaviours {
 
   ".value" - {
 
-    val fieldName   = "value"
-    val requiredKey = "payeCodeAdjustment.error.required"
+    val fieldName = "value"
 
-    behave like optionsField[PayeCodeAdjustment](
+    val minimum = 1
+    val maximum = 999999999
+
+    val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
+
+    behave like fieldThatBindsValidData(
       newForm(),
       fieldName,
-      validValues = PayeCodeAdjustment.values,
-      invalidError = FormError(fieldName, "payeCodeAdjustment.error.required", Seq(""))
+      validDataGenerator
+    )
+
+    behave like intField(
+      newForm(),
+      fieldName,
+      nonNumericError = FormError(fieldName, "codeAdjustmentAmount.error.nonNumeric"),
+      wholeNumberError = FormError(fieldName, "codeAdjustmentAmount.error.wholeNumber")
     )
 
     behave like mandatoryField(
       newForm(),
       fieldName,
-      requiredError = FormError(fieldName, requiredKey, Seq(""))
+      requiredError = FormError(fieldName, "codeAdjustmentAmount.error.required")
     )
   }
 
-  private def newForm(): Form[PayeCodeAdjustment] = {
-    val form = new PayeCodeAdjustmentFormProvider()
-    form("")
+  private def newForm(): Form[BigInt] = {
+    val form = new CodeAdjustmentAmountFormProvider()
+    form()
   }
 }

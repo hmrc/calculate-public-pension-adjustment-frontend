@@ -57,7 +57,7 @@ class PayeCodeAdjustmentPageSpec extends PageBehaviours {
 
     "Check mode" - {
 
-      "to CodeAdjustmentAmount when any answer" in {
+      "to CodeAdjustmentAmount when any answer and PayeCodeAdjustment HAS NOT been answered" in {
         val ua     = emptyUserAnswers
           .set(
             PayeCodeAdjustmentPage(Period._2022),
@@ -67,7 +67,26 @@ class PayeCodeAdjustmentPageSpec extends PageBehaviours {
           .value
         val result = PayeCodeAdjustmentPage(Period._2022).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2022/code-adjustment-amount")
+        checkNavigation(result, "/annual-allowance/2022/change-code-adjustment-amount")
+      }
+
+      "to CheckYourAAPeriodAnswers when any answer and PayeCodeAdjustment HAS been answered" in {
+        val ua     = emptyUserAnswers
+          .set(
+            CodeAdjustmentAmountPage(period),
+            BigInt(100)
+          )
+          .success
+          .value
+          .set(
+            PayeCodeAdjustmentPage(Period._2022),
+            PayeCodeAdjustment.Increase
+          )
+          .success
+          .value
+        val result = PayeCodeAdjustmentPage(Period._2022).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2022/check-answers")
       }
 
       "must navigate to journey recovery when no answer" in {

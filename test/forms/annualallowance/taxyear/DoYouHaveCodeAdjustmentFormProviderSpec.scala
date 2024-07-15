@@ -16,33 +16,33 @@
 
 package forms.annualallowance.taxyear
 
-import forms.behaviours.OptionFieldBehaviours
-import models.PayeCodeAdjustment
+import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.{Form, FormError}
 
-class PayeCodeAdjustmentFormProviderSpec extends OptionFieldBehaviours {
+class DoYouHaveCodeAdjustmentFormProviderSpec extends BooleanFieldBehaviours {
+
+  val requiredKey = "doYouHaveCodeAdjustment.error.required"
+  val invalidKey  = "error.boolean"
 
   ".value" - {
 
-    val fieldName   = "value"
-    val requiredKey = "payeCodeAdjustment.error.required"
+    val fieldName = "value"
 
-    behave like optionsField[PayeCodeAdjustment](
-      newForm(),
+    behave like booleanField(
+      newForm,
       fieldName,
-      validValues = PayeCodeAdjustment.values,
-      invalidError = FormError(fieldName, "payeCodeAdjustment.error.required", Seq(""))
+      invalidError = FormError(fieldName, invalidKey, Seq(""))
     )
 
     behave like mandatoryField(
-      newForm(),
+      newForm,
       fieldName,
       requiredError = FormError(fieldName, requiredKey, Seq(""))
     )
   }
 
-  private def newForm(): Form[PayeCodeAdjustment] = {
-    val form = new PayeCodeAdjustmentFormProvider()
+  private def newForm(): Form[Boolean] = {
+    val form = new DoYouHaveCodeAdjustmentFormProvider()
     form("")
   }
 }

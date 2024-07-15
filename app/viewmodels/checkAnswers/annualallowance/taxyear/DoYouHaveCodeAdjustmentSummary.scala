@@ -47,7 +47,7 @@ object DoYouHaveCodeAdjustmentSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("doYouHaveCodeAdjustment.change.hidden"))
+            .withVisuallyHiddenText(messages("doYouHaveCodeAdjustment.change.hidden", startEndDate))
         )
       )
     }
