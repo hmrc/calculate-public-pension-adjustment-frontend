@@ -31,7 +31,11 @@
 }
 
 @contentHint = {
-        <p class="govuk-inset-text"><a class="govuk-link" target="_blank" rel="noopener" href=@protectionUrl> @messages("protectionType.hint") </a></p>
+        <p class="govuk-inset-text">
+            <a class="govuk-link" href=@protectionUrl rel="noreferrer noopener" target="_blank">
+                @messages("protectionType.hint") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+            </a>
+        </p>
 }
 
 @layout(pageTitle = title(form, messages("protectionType.title"))) {
