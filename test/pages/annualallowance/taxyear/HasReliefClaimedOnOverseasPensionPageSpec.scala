@@ -68,7 +68,7 @@ class HasReliefClaimedOnOverseasPensionPageSpec extends PageBehaviours {
 
         val result = HasReliefClaimedOnOverseasPensionPage(Period._2018).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/tax-relief-overseas-pension-value")
+        checkNavigation(result, "/annual-allowance/2018/change-tax-relief-overseas-pension-value")
       }
 
       "must redirect to CYA page when false" in {

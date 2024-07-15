@@ -58,9 +58,9 @@ case class ClaimingTaxReliefPensionNotAdjustedIncomePage(period: Period) extends
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map { _ =>
-        userAnswers
-          .remove(HowMuchTaxReliefPensionPage(period))
+      .map {
+        case false => userAnswers.remove(HowMuchTaxReliefPensionPage(period))
+        case true  => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

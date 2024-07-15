@@ -64,7 +64,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/claiming-tax-relief-pension")
       }
 
-      "to any RAS page when false, when threshold income is yes" in {
+      "to do you have RAS page when false, when threshold income is yes" in {
         val ua = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2018),
@@ -144,7 +144,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
 
         val result = KnowAdjustedAmountPage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/change-claiming-tax-relief-pension")
+        checkNavigation(result, "/annual-allowance/2018/claiming-tax-relief-pension")
       }
 
       "to any RAS page when false, when threshold income is yes" in {
@@ -195,5 +195,134 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
       }
     }
 
+    "cleanup" - {
+
+      "when user answers yes" - {
+
+        "if threshold income = yes, should clean up correctly" in {
+
+          val userAnswers = emptyUserAnswers
+            .set(ThresholdIncomePage(Period._2018), ThresholdIncome.Yes)
+            .success
+            .value
+            .set(AnyLumpSumDeathBenefitsPage(Period._2018), true)
+            .success
+            .value
+            .set(LumpSumDeathBenefitsValuePage(Period._2018), BigInt(1))
+            .success
+            .value
+            .set(DidYouContributeToRASSchemePage(Period._2018), true)
+            .success
+            .value
+            .set(RASContributionAmountPage(Period._2018), BigInt(1))
+            .success
+            .value
+            .set(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018), true)
+            .success
+            .value
+            .set(HowMuchTaxReliefPensionPage(Period._2018), BigInt(1))
+            .success
+            .value
+            .set(HowMuchContributionPensionSchemePage(Period._2018), BigInt(1))
+            .success
+            .value
+            .set(HasReliefClaimedOnOverseasPensionPage(Period._2018), true)
+            .success
+            .value
+            .set(AmountClaimedOnOverseasPensionPage(Period._2018), BigInt(1))
+            .success
+            .value
+
+          val cleanedUserAnswers = KnowAdjustedAmountPage(Period._2018)
+            .cleanup(Some(true), userAnswers)
+            .success
+            .value
+
+          cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(DidYouContributeToRASSchemePage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(RASContributionAmountPage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(Period._2018)) mustBe None
+
+        }
+
+        "if threshold income = idk, should cleanup correctly" in {
+
+          val userAnswers = emptyUserAnswers
+            .set(ThresholdIncomePage(Period._2018), ThresholdIncome.IDoNotKnow)
+            .success
+            .value
+            .set(AnyLumpSumDeathBenefitsPage(Period._2018), true)
+            .success
+            .value
+            .set(LumpSumDeathBenefitsValuePage(Period._2018), BigInt(1))
+            .success
+            .value
+            .set(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018), true)
+            .success
+            .value
+            .set(HowMuchTaxReliefPensionPage(Period._2018), BigInt(1))
+            .success
+            .value
+            .set(HowMuchContributionPensionSchemePage(Period._2018), BigInt(1))
+            .success
+            .value
+            .set(HasReliefClaimedOnOverseasPensionPage(Period._2018), true)
+            .success
+            .value
+            .set(AmountClaimedOnOverseasPensionPage(Period._2018), BigInt(1))
+            .success
+            .value
+
+          val cleanedUserAnswers = KnowAdjustedAmountPage(Period._2018)
+            .cleanup(Some(true), userAnswers)
+            .success
+            .value
+
+          cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(Period._2018)) mustBe Some(true)
+          cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(Period._2018)) mustBe Some(BigInt(1))
+          cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(Period._2018)) mustBe None
+
+        }
+      }
+
+      "when user answers no" - {
+
+        "should cleanup correctly" in {
+
+          val userAnswers = emptyUserAnswers
+            .set(ThresholdIncomePage(Period._2018), ThresholdIncome.IDoNotKnow)
+            .success
+            .value
+            .set(AnyLumpSumDeathBenefitsPage(Period._2018), true)
+            .success
+            .value
+            .set(LumpSumDeathBenefitsValuePage(Period._2018), BigInt(1))
+            .success
+            .value
+            .set(AdjustedIncomePage(Period._2018), BigInt(1))
+            .success
+            .value
+
+          val cleanedUserAnswers = KnowAdjustedAmountPage(Period._2018)
+            .cleanup(Some(false), userAnswers)
+            .success
+            .value
+
+          cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(Period._2018)) mustBe Some(true)
+          cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(Period._2018)) mustBe Some(BigInt(1))
+          cleanedUserAnswers.get(AdjustedIncomePage(Period._2018)) mustBe None
+
+        }
+      }
+    }
   }
 }

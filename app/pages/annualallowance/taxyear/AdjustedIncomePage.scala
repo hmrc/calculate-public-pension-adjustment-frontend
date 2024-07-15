@@ -37,7 +37,7 @@ case class AdjustedIncomePage(period: Period) extends QuestionPage[BigInt] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AdjustedIncomePage(period)) match {
       case Some(_) if period != Period._2016 =>
-        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
       case _                                 => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 }
