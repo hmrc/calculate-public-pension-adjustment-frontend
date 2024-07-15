@@ -31,6 +31,6 @@ class AmountOfGiftAidFormProvider @Inject() extends Mappings {
         "amountOfGiftAid.error.nonNumeric",
         Seq(startEndDate)
       )
-        .verifying(inRange(BigInt("1"), BigInt("999999999"), "amountOfGiftAid.error.outOfRange"))
+        .verifying(inRangeWithArg(BigInt("0"), BigInt("999999999"), "amountOfGiftAid.error.outOfRange", startEndDate))
     )
 }

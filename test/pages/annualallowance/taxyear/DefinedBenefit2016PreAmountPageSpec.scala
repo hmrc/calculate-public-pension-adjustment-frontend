@@ -62,7 +62,7 @@ class DefinedBenefit2016PreAmountPageSpec extends PageBehaviours {
 
       val result = DefinedBenefit2016PreAmountPage.navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2016/total-income")
+      checkNavigation(result, "/annual-allowance/2016/taxable-income")
     }
 
     "must navigate to journey recovery when no answer" in {

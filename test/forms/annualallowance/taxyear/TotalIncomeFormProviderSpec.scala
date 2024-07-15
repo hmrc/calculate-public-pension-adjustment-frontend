@@ -17,11 +17,12 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
-import play.api.data.FormError
+import models.Period
+import play.api.data.{Form, FormError}
 
 class TotalIncomeFormProviderSpec extends IntFieldBehaviours {
 
-  val form = new TotalIncomeFormProvider()()
+  val startEndDate: String = "6 April 2018 to 5 April 2019"
 
   ".value" - {
 
@@ -33,30 +34,41 @@ class TotalIncomeFormProviderSpec extends IntFieldBehaviours {
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      form,
+      newForm(startEndDate),
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      newForm(startEndDate),
       fieldName,
-      nonNumericError = FormError(fieldName, "totalIncome.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "totalIncome.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "totalIncome.error.nonNumeric", Seq(s"$startEndDate")),
+      wholeNumberError = FormError(fieldName, "totalIncome.error.wholeNumber", Seq(s"$startEndDate"))
     )
 
-//    behave like intFieldWithRange(
-//      form,
-//      fieldName,
-//      minimum = minimum,
-//      maximum = maximum,
-//      expectedError = FormError(fieldName, "totalIncome.error.outOfRange", Seq(minimum, maximum))
-//    )
+    behave like intFieldWithMaximum(
+      newForm(startEndDate),
+      fieldName,
+      maximum = maximum,
+      expectedError = FormError(fieldName, "totalIncome.error.maximum", Seq(maximum, s"$startEndDate"))
+    )
+
+    behave like intFieldWithMinimum(
+      newForm(startEndDate),
+      fieldName,
+      minimum = minimum,
+      expectedError = FormError(fieldName, "totalIncome.error.minimum", Seq(minimum, s"$startEndDate"))
+    )
 
     behave like mandatoryField(
-      form,
+      newForm(startEndDate),
       fieldName,
-      requiredError = FormError(fieldName, "totalIncome.error.required")
+      requiredError = FormError(fieldName, "totalIncome.error.required", Seq(s"$startEndDate"))
     )
+  }
+
+  def newForm(startEndDate: String): Form[BigInt] = {
+    val formProvider = new TotalIncomeFormProvider()
+    formProvider(startEndDate)
   }
 }

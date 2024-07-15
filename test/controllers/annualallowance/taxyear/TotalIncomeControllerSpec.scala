@@ -36,8 +36,9 @@ import scala.concurrent.Future
 
 class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new TotalIncomeFormProvider()
-  val form         = formProvider()
+  val formProvider         = new TotalIncomeFormProvider()
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
+  val form                 = formProvider(startEndDate)
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -59,7 +60,7 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[TotalIncomeView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -84,7 +85,8 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           form.fill(validAnswer),
           NormalMode,
-          Period._2018
+          Period._2018,
+          startEndDate
         )(request, messages(application)).toString
       }
     }
@@ -130,7 +132,8 @@ class TotalIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          Period._2018
+          Period._2018,
+          startEndDate
         )(request, messages(application)).toString
       }
     }

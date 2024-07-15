@@ -50,6 +50,32 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
     }
   }
 
+  "inRange" - {
+
+    "must return Valid for a number between the thresholds" in {
+      val result = inRange(1, 1000, "error.inRange").apply(2)
+      result mustEqual Valid
+    }
+
+    "must return Invalid for a number outside the thresholds" in {
+      val result = inRange(1, 1000, "error.inRange").apply(99999)
+      result mustEqual Invalid("error.inRange", 1, 1000)
+    }
+  }
+
+  "inRangeWithArg" - {
+
+    "must return Valid for a number between the thresholds" in {
+      val result = inRangeWithArg(1, 1000, "error.inRange", "arg").apply(2)
+      result mustEqual Valid
+    }
+
+    "must return Invalid for a number outside the thresholds" in {
+      val result = inRangeWithArg(1, 1000, "error.inRange", "arg").apply(99999)
+      result mustEqual Invalid("error.inRange", 1, 1000, "arg")
+    }
+  }
+
   "minimumValue" - {
 
     "must return Valid for a number greater than the threshold" in {

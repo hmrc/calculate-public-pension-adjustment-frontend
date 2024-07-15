@@ -104,7 +104,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/annual-allowance/2016/total-income")
+      checkNavigation(nextPageUrl, "/annual-allowance/2016/taxable-income")
     }
 
     "when did not pay charge, has entered 5 schemes and does not have DC scheme" in {
@@ -152,7 +152,7 @@ class PayAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/annual-allowance/2016/total-income")
+      checkNavigation(nextPageUrl, "/annual-allowance/2016/taxable-income")
     }
 
     "when did pay charge then check onward navigation" in {

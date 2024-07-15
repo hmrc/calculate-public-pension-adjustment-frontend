@@ -17,15 +17,36 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
+import models.Period
 import play.api.data.Form
+import play.api.i18n.Messages
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 
 class TotalIncomeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(startEndDate: String): Form[BigInt] =
     Form(
-      "value" -> bigInt("totalIncome.error.required", "totalIncome.error.wholeNumber", "totalIncome.error.nonNumeric")
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "totalIncome.error.outOfRange"))
+      "value" -> bigInt(
+        "totalIncome.error.required",
+        "totalIncome.error.wholeNumber",
+        "totalIncome.error.nonNumeric",
+        Seq(startEndDate)
+      )
+        .verifying(
+          minimumValue[BigInt](
+            BigInt("0"),
+            "totalIncome.error.minimum",
+            startEndDate
+          ),
+          maximumValue[BigInt](
+            BigInt("999999999"),
+            "totalIncome.error.maximum",
+            startEndDate
+          )
+        )
     )
+
 }
