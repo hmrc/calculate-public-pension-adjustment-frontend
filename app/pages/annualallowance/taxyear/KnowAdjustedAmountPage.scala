@@ -81,7 +81,6 @@ case class KnowAdjustedAmountPage(period: Period) extends QuestionPage[Boolean] 
               .flatMap(_.remove(RASContributionAmountPage(period)))
               .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
               .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
-
           } else {
             userAnswers
               .remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period))
