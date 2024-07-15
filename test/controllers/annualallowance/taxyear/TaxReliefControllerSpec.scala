@@ -134,7 +134,7 @@ class TaxReliefControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must set aboveThreshold status onSubmit" in {
+    "must set aboveThreshold status onSubmit when ThresholdPage == I Do Not Know" in {
 
       val ua = emptyUserAnswers
         .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
@@ -182,6 +182,54 @@ class TaxReliefControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         val capturedUserAnswers = userAnswersCaptor.getValue
         capturedUserAnswers.get(AboveThreshold(period)) mustBe Some(false)
+      }
+    }
+
+    "must not set aboveThreshold status onSubmit when ThresholdPage is not I Do Not Know" in {
+
+      val ua = emptyUserAnswers
+        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+        .success
+        .value
+        .set(TaxReliefPage(period), BigInt(1))
+        .success
+        .value
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, taxReliefRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        ua.get(AboveThreshold(period)) mustBe None
       }
     }
 
