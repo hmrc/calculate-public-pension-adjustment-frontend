@@ -90,7 +90,6 @@ case class KnowAdjustedAmountPage(period: Period) extends QuestionPage[Boolean] 
               .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
           }
         case false => userAnswers.remove(AdjustedIncomePage(period))
-
       }
       .getOrElse(super.cleanup(value, userAnswers))
   }
