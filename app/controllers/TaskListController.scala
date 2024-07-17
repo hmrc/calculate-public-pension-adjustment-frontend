@@ -17,14 +17,14 @@
 package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.Done
+import models.{CalculationStartAuditEvent, Done}
 import models.requests.{AuthenticatedIdentifierRequest, DataRequest}
 import models.tasklist.TaskListViewModel
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{TaskListService, UserDataService}
+import services.{AuditService, TaskListService, UserDataService}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.TaskListView
@@ -40,7 +40,8 @@ class TaskListController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: TaskListView,
   taskListService: TaskListService,
-  userDataService: UserDataService
+  userDataService: UserDataService,
+  auditService: AuditService,
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -50,6 +51,12 @@ class TaskListController @Inject() (
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     updateAuthFlag(request).map { _ =>
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
+
+      for {
+        _ <- auditService.auditCalculationStart(
+          CalculationStartAuditEvent(answersWithNav.uniqueId, answersWithNav.authenticated)
+      } yield Ok(view(form, taskListViewModel))
+
       Ok(view(form, taskListViewModel))
     }
 
