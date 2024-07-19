@@ -1380,37 +1380,3 @@ amountOfGiftAid.error.required = cy: Enter the amount of tax relief you claimed 
 amountOfGiftAid.error.wholeNumber = cy: The amount of tax relief you claimed via gift aid from {0} must be a whole number
 amountOfGiftAid.error.outOfRange = cy: The amount of tax relief you claimed via gift aid from {2} must be larger than £0 and smaller than £999,999,999
 amountOfGiftAid.change.hidden = cy: the amount of tax relief you claimed via gift aid from {0}
-
-doYouHaveCodeAdjustment.title = cy: Did you have a code adjustment to your personal allowance from {0}
-doYouHaveCodeAdjustment.heading1 = cy: Personal allowance code adjustment
-doYouHaveCodeAdjustment.heading2 = cy: Did you have a code adjustment to your personal allowance from {0}
-doYouHaveCodeAdjustment.message1 = cy: If you have a tax code that is not standard, such as 1257L, you will receive a notice of coding document (P2).
-doYouHaveCodeAdjustment.message2 = cy: This document will tell you how much your personal allowance will change if it has been decreased or increased. This is called a code adjustment.
-doYouHaveCodeAdjustment.message3 = cy: If you have a code adjustment, you will find it on your P2 form for that year.
-doYouHaveCodeAdjustment.message4 = cy: You can also find this information on your personal tax account or the HMRC app.
-doYouHaveCodeAdjustment.checkYourAnswersLabel = cy: Did you have a personal allowance code adjustment from {0}
-doYouHaveCodeAdjustment.error.required = cy: Select yes if you had a code adjustment to your personal allowance from {0}
-doYouHaveCodeAdjustment.change.hidden = cy: did you have a personal allowance code adjustment from {0}
-
-codeAdjustmentAmount.title = cy: What was your personal allowance code adjustment amount from {0}
-codeAdjustmentAmount.heading = cy: What was your personal allowance code adjustment amount from {0}
-codeAdjustmentAmount.message1 = cy: If you have a code adjustment, you will find it on your P2 form for that year.
-codeAdjustmentAmount.message2 = cy: You can also find this information on your personal tax account or the HMRC app.
-codeAdjustmentAmount.checkYourAnswersLabel = cy: Personal allowance code adjustment amount from {0}
-codeAdjustmentAmount.hint = cy: Amount must be rounded down to the nearest pound, for example 2300
-codeAdjustmentAmount.error.nonNumeric = cy: Your personal allowance code adjustment amount must only include numbers 0 to 9
-codeAdjustmentAmount.error.required = cy: How much was your personal allowance code adjustment amount
-codeAdjustmentAmount.error.wholeNumber = cy: Your personal allowance code adjustment amount must be a whole number
-codeAdjustmentAmount.error.outOfRange = cy: Your personal allowance code adjustment amount must be less than £999,999
-codeAdjustmentAmount.change.hidden = cy: personal allowance code adjustment amount from {0}
-
-payeCodeAdjustment.title = cy: How has your personal allowance changed due to coding from {0}
-payeCodeAdjustment.heading1 = cy: Personal allowance codes
-payeCodeAdjustment.heading2 = cy: How has your personal allowance changed due to coding from {0}
-payeCodeAdjustment.increase = cy: Increase
-payeCodeAdjustment.decrease = cy: Decrease
-payeCodeAdjustment.message1 = cy: If you are claiming tax relief on things like job expenses for clothing, your personal allowance may have increased.
-payeCodeAdjustment.message2 = cy: If you have underpaid tax, HMRC may have decreased your personal allowance.
-payeCodeAdjustment.checkYourAnswersLabel = cy: Personal allowance coding type from {0}
-payeCodeAdjustment.error.required = cy: Select increase or decrease if your tax code has been adjusted up or down from {0}
-payeCodeAdjustment.change.hidden = cy: personal allowance coding type from {0}

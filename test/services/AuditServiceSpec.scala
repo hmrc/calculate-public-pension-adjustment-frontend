@@ -19,7 +19,6 @@ package services
 import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
-import models.PayeCodeAdjustment.Increase
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
 import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, IncomeSubJourney, Period, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
@@ -91,8 +90,6 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    None,
-                    None,
                     Some(2291)
                   )
                 ),
@@ -118,8 +115,6 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    Some(Increase),
-                    Some(2740),
                     None,
                     Some(2291)
                   ),
@@ -147,8 +142,6 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    Some(Increase),
-                    Some(2740),
                     None,
                     Some(2291)
                   ),

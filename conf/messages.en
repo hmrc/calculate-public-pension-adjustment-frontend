@@ -1380,37 +1380,3 @@ amountOfGiftAid.error.required = Enter the amount of tax relief you claimed via 
 amountOfGiftAid.error.wholeNumber = The amount of tax relief you claimed via gift aid from {0} must be a whole number
 amountOfGiftAid.error.outOfRange = The amount of tax relief you claimed via gift aid from {2} must be larger than £0 and smaller than £999,999,999
 amountOfGiftAid.change.hidden = the amount of tax relief you claimed via gift aid from {0}
-
-doYouHaveCodeAdjustment.title = Did you have a code adjustment to your personal allowance from {0}
-doYouHaveCodeAdjustment.heading1 = Personal allowance code adjustment
-doYouHaveCodeAdjustment.heading2 = Did you have a code adjustment to your personal allowance from {0}
-doYouHaveCodeAdjustment.message1 = If you have a tax code that is not standard, such as 1257L, you will receive a notice of coding document (P2).
-doYouHaveCodeAdjustment.message2 = This document will tell you how much your personal allowance will change if it has been decreased or increased. This is called a code adjustment.
-doYouHaveCodeAdjustment.message3 = If you have a code adjustment, you will find it on your P2 form for that year.
-doYouHaveCodeAdjustment.message4 = You can also find this information on your personal tax account or the HMRC app.
-doYouHaveCodeAdjustment.checkYourAnswersLabel = Did you have a personal allowance code adjustment from {0}
-doYouHaveCodeAdjustment.error.required = Select yes if you had a code adjustment to your personal allowance from {0}
-doYouHaveCodeAdjustment.change.hidden = did you have a personal allowance code adjustment from {0}
-
-codeAdjustmentAmount.title = What was your personal allowance code adjustment amount from {0}
-codeAdjustmentAmount.heading = What was your personal allowance code adjustment amount from {0}
-codeAdjustmentAmount.message1 = If you have a code adjustment, you will find it on your P2 form for that year.
-codeAdjustmentAmount.message2 = You can also find this information on your personal tax account or the HMRC app.
-codeAdjustmentAmount.checkYourAnswersLabel = Personal allowance code adjustment amount from {0}
-codeAdjustmentAmount.hint = Amount must be rounded down to the nearest pound, for example 2300
-codeAdjustmentAmount.error.nonNumeric = Your personal allowance code adjustment amount must only include numbers 0 to 9
-codeAdjustmentAmount.error.required = How much was your personal allowance code adjustment amount
-codeAdjustmentAmount.error.wholeNumber = Your personal allowance code adjustment amount must be a whole number
-codeAdjustmentAmount.error.outOfRange = Your personal allowance code adjustment amount must be less than £999,999
-codeAdjustmentAmount.change.hidden = personal allowance code adjustment amount from {0}
-
-payeCodeAdjustment.title = How has your personal allowance changed due to coding from {0}
-payeCodeAdjustment.heading1 = Personal allowance codes
-payeCodeAdjustment.heading2 = How has your personal allowance changed due to coding from {0}
-payeCodeAdjustment.increase = Increase
-payeCodeAdjustment.decrease = Decrease
-payeCodeAdjustment.message1 = If you are claiming tax relief on things like job expenses for clothing, your personal allowance may have increased.
-payeCodeAdjustment.message2 = If you have underpaid tax, HMRC may have decreased your personal allowance.
-payeCodeAdjustment.checkYourAnswersLabel = Personal allowance coding type from {0}
-payeCodeAdjustment.error.required = Select increase or decrease if your tax code has been adjusted up or down from {0}
-payeCodeAdjustment.change.hidden = personal allowance coding type from {0}

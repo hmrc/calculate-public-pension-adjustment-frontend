@@ -513,18 +513,3 @@ GET        /annual-allowance/:period/donated-via-gift-aid-amount                
 POST       /annual-allowance/:period/donated-via-gift-aid-amount                controllers.annualallowance.taxyear.AmountOfGiftAidController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/:period/change-donated-via-gift-aid-amount         controllers.annualallowance.taxyear.AmountOfGiftAidController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/change-donated-via-gift-aid-amount         controllers.annualallowance.taxyear.AmountOfGiftAidController.onSubmit(mode: Mode = CheckMode, period:Period)
-
-GET        /annual-allowance/:period/do-you-have-code-adjustment                        controllers.annualallowance.taxyear.DoYouHaveCodeAdjustmentController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/:period/do-you-have-code-adjustment                        controllers.annualallowance.taxyear.DoYouHaveCodeAdjustmentController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /annual-allowance/:period/change-do-you-have-code-adjustment                   controllers.annualallowance.taxyear.DoYouHaveCodeAdjustmentController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /annual-allowance/:period/change-do-you-have-code-adjustment                   controllers.annualallowance.taxyear.DoYouHaveCodeAdjustmentController.onSubmit(mode: Mode = CheckMode, period:Period)
-
-GET        /annual-allowance/:period/code-adjustment-amount                 controllers.annualallowance.taxyear.CodeAdjustmentAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/:period/code-adjustment-amount                  controllers.annualallowance.taxyear.CodeAdjustmentAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /annual-allowance/:period/change-code-adjustment-amount                        controllers.annualallowance.taxyear.CodeAdjustmentAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /annual-allowance/:period/change-code-adjustment-amount                        controllers.annualallowance.taxyear.CodeAdjustmentAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
-
-GET        /annual-allowance/:period/paye-code-adjustment                        controllers.annualallowance.taxyear.PayeCodeAdjustmentController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/:period/paye-code-adjustment                        controllers.annualallowance.taxyear.PayeCodeAdjustmentController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /annual-allowance/:period/change-paye-code-adjustment                  controllers.annualallowance.taxyear.PayeCodeAdjustmentController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /annual-allowance/:period/change-paye-code-adjustment                  controllers.annualallowance.taxyear.PayeCodeAdjustmentController.onSubmit(mode: Mode = CheckMode, period:Period)

@@ -25,15 +25,6 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
-  implicit lazy val arbitraryPayeCodeAdjustmentPage: Arbitrary[PayeCodeAdjustmentPage.type] =
-    Arbitrary(PayeCodeAdjustmentPage)
-
-  implicit lazy val arbitraryCodeAdjustmentAmountPage: Arbitrary[CodeAdjustmentAmountPage.type] =
-    Arbitrary(CodeAdjustmentAmountPage)
-
-  implicit lazy val arbitraryDoYouHaveCodeAdjustmentPage: Arbitrary[DoYouHaveCodeAdjustmentPage.type] =
-    Arbitrary(DoYouHaveCodeAdjustmentPage)
-
   implicit lazy val arbitraryDidYouContributeToRASSchemePage: Arbitrary[DidYouContributeToRASSchemePage.type] =
     Arbitrary(DidYouContributeToRASSchemePage)
 

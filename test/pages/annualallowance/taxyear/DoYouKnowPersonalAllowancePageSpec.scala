@@ -43,7 +43,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/personal-allowance-amount")
       }
 
-      "must redirect to do-you-have-code-adjustment page when false" in {
+      "must redirect to blind-allowance page when false" in {
 
         val userAnswers = emptyUserAnswers
           .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
@@ -52,7 +52,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
 
         val result = DoYouKnowPersonalAllowancePage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/do-you-have-code-adjustment")
+        checkNavigation(result, "/annual-allowance/2018/blind-person-allowance")
       }
     }
 

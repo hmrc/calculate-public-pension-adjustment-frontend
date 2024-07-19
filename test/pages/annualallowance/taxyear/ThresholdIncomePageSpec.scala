@@ -131,9 +131,6 @@ class ThresholdIncomePageSpec extends PageBehaviours {
         cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
         cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
         cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
-        cleanedUserAnswers.get(DoYouHaveCodeAdjustmentPage(period)) mustBe None
-        cleanedUserAnswers.get(PayeCodeAdjustmentPage(period)) mustBe None
-        cleanedUserAnswers.get(CodeAdjustmentAmountPage(period)) mustBe None
         cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
         cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
         cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
