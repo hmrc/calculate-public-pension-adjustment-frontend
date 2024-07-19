@@ -124,7 +124,7 @@ class HowMuchAAChargeYouPaidPageSpec extends PageBehaviours {
       .value
     val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-    checkNavigation(nextPageUrl, "/annual-allowance/2016/total-income")
+    checkNavigation(nextPageUrl, "/annual-allowance/2016/taxable-income")
   }
 
   "must redirect to check your answers page when user submits and answers you to who paid AA charge in check mode" in {

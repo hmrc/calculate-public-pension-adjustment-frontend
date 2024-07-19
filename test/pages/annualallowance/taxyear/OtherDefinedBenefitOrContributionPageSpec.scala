@@ -49,7 +49,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
           checkNavigation(result, "/annual-allowance/2016/contributed-to-dc-or-db-scheme")
         }
 
-        "to total-income when answered false" in {
+        "to taxable-income when answered false" in {
           val ua     = emptyUserAnswers
             .set(
               OtherDefinedBenefitOrContributionPage(period),
@@ -59,7 +59,7 @@ class OtherDefinedBenefitOrContributionPageSpec extends PageBehaviours {
             .value
           val result = OtherDefinedBenefitOrContributionPage(period).navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/annual-allowance/2016/total-income")
+          checkNavigation(result, "/annual-allowance/2016/taxable-income")
         }
       }
 

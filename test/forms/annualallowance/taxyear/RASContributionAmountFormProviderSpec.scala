@@ -20,24 +20,17 @@ import forms.behaviours.IntFieldBehaviours
 import play.api.data.FormError
 
 class RASContributionAmountFormProviderSpec extends IntFieldBehaviours {
-
   val form = new RASContributionAmountFormProvider()()
-
   ".value" - {
-
-    val fieldName = "value"
-
-    val minimum = 1
-    val maximum = 999999999
-
+    val fieldName          = "value"
+    val minimum            = 1
+    val maximum            = 999999999
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
-
     behave like fieldThatBindsValidData(
       form,
       fieldName,
       validDataGenerator
     )
-
     behave like intField(
       form,
       fieldName,

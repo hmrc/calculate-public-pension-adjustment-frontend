@@ -93,6 +93,19 @@ trait Constraints {
       }
     }
 
+  protected def inRangeWithArg[A](minimum: A, maximum: A, errorKey: String, arg: String = "")(implicit
+    ev: Ordering[A]
+  ): Constraint[A] =
+    Constraint { input =>
+      import ev._
+
+      if (input >= minimum && input <= maximum) {
+        Valid
+      } else {
+        Invalid(errorKey, minimum, maximum, arg)
+      }
+    }
+
   protected def regexp(regex: String, errorKey: String): Constraint[String] =
     Constraint {
       case str if str.matches(regex) =>

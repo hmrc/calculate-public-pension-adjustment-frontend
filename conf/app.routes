@@ -248,10 +248,10 @@ POST        /annual-allowance/:period/adjusted-income                           
 GET         /annual-allowance/:period/change-adjusted-income                                                            controllers.annualallowance.taxyear.AdjustedIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST        /annual-allowance/:period/change-adjusted-income                                                            controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET         /annual-allowance/:period/total-income                                                                      controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST        /annual-allowance/:period/total-income                                                                      controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET         /annual-allowance/:period/change-total-income                                                               controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST        /annual-allowance/:period/change-total-income                                                               controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET         /annual-allowance/:period/taxable-income                                                                      controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST        /annual-allowance/:period/taxable-income                                                                      controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET         /annual-allowance/:period/change-taxable-income                                                               controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST        /annual-allowance/:period/change-taxable-income                                                               controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)
 
 GET         /annual-allowance/:period/contributed-to-dc-or-db-scheme                                                    controllers.annualallowance.taxyear.ContributedToDuringRemedyPeriodController.onPageLoad(mode: Mode = NormalMode, period:Period)
 POST        /annual-allowance/:period/contributed-to-dc-or-db-scheme                                                    controllers.annualallowance.taxyear.ContributedToDuringRemedyPeriodController.onSubmit(mode: Mode = NormalMode, period:Period)

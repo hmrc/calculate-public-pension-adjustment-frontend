@@ -56,7 +56,7 @@ class DefinedContribution2016PostAmountPageSpec extends PageBehaviours {
 
         val result = DefinedContribution2016PostAmountPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2016/total-income")
+        checkNavigation(result, "/annual-allowance/2016/taxable-income")
 
       }
 
@@ -123,7 +123,7 @@ class DefinedContribution2016PostAmountPageSpec extends PageBehaviours {
 
         val result = DefinedContribution2016PostAmountPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2016/total-income")
+        checkNavigation(result, "/annual-allowance/2016/taxable-income")
 
       }
 

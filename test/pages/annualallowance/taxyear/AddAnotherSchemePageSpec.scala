@@ -106,7 +106,7 @@ class AddAnotherSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/annual-allowance/2016/total-income")
+      checkNavigation(nextPageUrl, "/annual-allowance/2016/taxable-income")
     }
 
     "must redirect to journey recovery when no answer" in {

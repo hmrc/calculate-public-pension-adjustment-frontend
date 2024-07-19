@@ -59,7 +59,7 @@ class DefinedContribution2016PreFlexiAmountPageSpec extends PageBehaviours {
 
         val result = DefinedContribution2016PreFlexiAmountPage.navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2016/total-income")
+        checkNavigation(result, "/annual-allowance/2016/taxable-income")
 
       }
 
