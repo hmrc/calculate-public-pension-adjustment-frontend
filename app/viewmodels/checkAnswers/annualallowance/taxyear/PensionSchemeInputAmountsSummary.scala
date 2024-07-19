@@ -51,7 +51,12 @@ object PensionSchemeInputAmountsSummary {
               .onPageLoad(CheckMode, period, schemeIndex)
               .url
           )
-            .withVisuallyHiddenText(messages("pensionSchemeInputAmounts.change.hidden"))
+            .withVisuallyHiddenText(
+              messages(
+                if (period.start.getYear == 2022) "pensionSchemeInputAmounts.change.hidden"
+                else "pensionSchemeInputAmounts.change.revised.hidden"
+              )
+            )
         )
       )
     }

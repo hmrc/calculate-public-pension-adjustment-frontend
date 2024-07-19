@@ -24,8 +24,8 @@ import javax.inject.Inject
 
 class ClaimingTaxReliefPensionFormProvider @Inject() extends Mappings {
 
-  def apply(period: Period): Form[Boolean] =
+  def apply(args: Seq[String]): Form[Boolean] =
     Form(
-      "value" -> boolean("claimingTaxReliefPension.error.required")
+      "value" -> boolean("claimingTaxReliefPension.error.required", "error.boolean", args)
     )
 }

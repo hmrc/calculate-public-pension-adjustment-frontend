@@ -55,7 +55,7 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
               "site.change",
               routes.PensionSchemeInputAmountsController.onPageLoad(CheckMode, period, schemeIndex).url
             )
-              .withVisuallyHiddenText("pensionSchemeInputAmounts.change.hidden")
+              .withVisuallyHiddenText("pensionSchemeInputAmounts.change.revised.hidden")
           )
         )
       )

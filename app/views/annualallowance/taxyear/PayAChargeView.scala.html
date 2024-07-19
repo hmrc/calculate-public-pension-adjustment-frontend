@@ -25,6 +25,10 @@
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-hint">@messages("payACharge.hint")</p>
+}
+
 @layout(pageTitle = title(form, messages("payACharge.title", period, schemeIndex, schemeName, startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.PayAChargeController.onSubmit(mode, period, schemeIndex), Symbol("autoComplete") -> "off") {
@@ -39,7 +43,7 @@
                 legend = HmrcPageHeadingLegend(
                 content = messages("payACharge.heading", period, schemeIndex, schemeName, startEndDate),
                 caption = HmrcSectionCaption(messages("annualAllowance.period.caption."+{period.toString})))
-            )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()

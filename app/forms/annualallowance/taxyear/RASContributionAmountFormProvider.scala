@@ -30,6 +30,6 @@ class RASContributionAmountFormProvider @Inject() extends Mappings {
         "rASContributionAmount.error.wholeNumber",
         "rASContributionAmount.error.nonNumeric"
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "rASContributionAmount.error.outOfRange"))
+        .verifying(inRange[BigInt](1, BigInt("999999999"), "rASContributionAmount.error.outOfRange"))
     )
 }

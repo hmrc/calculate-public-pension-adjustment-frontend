@@ -30,14 +30,19 @@
 
     <ul class="govuk-body">
         <li>
-        @messages("claimingTaxReliefPensionNotAdjustedIncome.bullet1")
+            <a class="govuk-link" href="https://www.gov.uk/income-tax-rates" rel="noreferrer noopener" target="_blank">
+                @messages("claimingTaxReliefPensionNotAdjustedIncome.bullet1") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+            </a>
         </li>
         <li>
         @messages("claimingTaxReliefPensionNotAdjustedIncome.bullet2")
         </li>
     </ul>
 
-    <p class="govuk-heading-l govuk-!-padding-0">@messages("claimingTaxReliefPensionNotAdjustedIncome.heading2", startEndDate)</p>
+    <p class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.message2")</p>
+    <p class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.message3")</p>
+
+<h2 class="govuk-heading-m">@messages("claimingTaxReliefPensionNotAdjustedIncome.heading2", startEndDate)</h2>
 }
 
 @layout(pageTitle = title(form, messages("claimingTaxReliefPensionNotAdjustedIncome.title", startEndDate))) {
