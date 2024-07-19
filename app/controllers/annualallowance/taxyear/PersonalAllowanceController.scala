@@ -48,7 +48,7 @@ class PersonalAllowanceController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val form = formProvider(period)
+      val form = formProvider()
 
       val preparedForm = request.userAnswers.get(PersonalAllowancePage(period)) match {
         case None        => form
@@ -60,7 +60,7 @@ class PersonalAllowanceController @Inject() (
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      val form = formProvider(period)
+      val form = formProvider()
 
       form
         .bindFromRequest()

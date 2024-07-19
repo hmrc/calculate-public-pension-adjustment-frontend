@@ -1128,7 +1128,7 @@ personalAllowance.checkYourAnswersLabel = What was your personal allowance from 
 personalAllowance.error.nonNumeric = Your personal allowance must only include numbers 0 to 9
 personalAllowance.error.required = Enter your personal allowance
 personalAllowance.error.wholeNumber = Your personal allowance must only include numbers 0 to 9
-personalAllowance.error.outOfRange = Your personal allowance must be less than £{0}
+personalAllowance.error.outOfRange = Your personal allowance must be less than £999,999,999
 personalAllowance.change.hidden = your personal allowance
 
 taxRelief.caption = Annual allowance net income
