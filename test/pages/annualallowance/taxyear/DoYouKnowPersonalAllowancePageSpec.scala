@@ -43,7 +43,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/personal-allowance-amount")
       }
 
-      "must redirect to blind-allowance page when false" in {
+      "must redirect to trade union relief page when false" in {
 
         val userAnswers = emptyUserAnswers
           .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
@@ -52,7 +52,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
 
         val result = DoYouKnowPersonalAllowancePage(Period._2018).navigate(NormalMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/blind-person-allowance")
+        checkNavigation(result, "/annual-allowance/2018/trade-union-relief")
       }
     }
 
@@ -70,7 +70,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/change-personal-allowance-amount")
       }
 
-      "must redirect to CYA page when false" in {
+      "must redirect to trade union relief page when false" in {
 
         val userAnswers = emptyUserAnswers
           .set(DoYouKnowPersonalAllowancePage(Period._2018), false)
@@ -79,7 +79,7 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
 
         val result = DoYouKnowPersonalAllowancePage(Period._2018).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(result, "/annual-allowance/2018/check-answers")
+        checkNavigation(result, "/annual-allowance/2018/change-trade-union-relief")
       }
     }
 
@@ -94,6 +94,8 @@ class DoYouKnowPersonalAllowancePageSpec extends PageBehaviours {
           .value
 
         cleanedUserAnswers.get(PersonalAllowancePage(Period._2018)) mustBe None
+        cleanedUserAnswers.get(TradeUnionReliefPage(Period._2018)) mustBe None
+        cleanedUserAnswers.get(UnionPoliceReliefAmountPage(Period._2018)) mustBe None
       }
     }
   }

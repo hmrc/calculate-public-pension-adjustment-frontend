@@ -25,6 +25,12 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryUnionPoliceReliefAmountPage: Arbitrary[UnionPoliceReliefAmountPage.type] =
+    Arbitrary(UnionPoliceReliefAmountPage)
+
+  implicit lazy val arbitraryTradeUnionReliefPage: Arbitrary[TradeUnionReliefPage.type] =
+    Arbitrary(TradeUnionReliefPage)
+
   implicit lazy val arbitraryDidYouContributeToRASSchemePage: Arbitrary[DidYouContributeToRASSchemePage.type] =
     Arbitrary(DidYouContributeToRASSchemePage)
 

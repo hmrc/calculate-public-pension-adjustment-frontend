@@ -204,9 +204,11 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
       cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
       cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
-      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
       cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
       cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(TradeUnionReliefPage(period)) mustBe None
+      cleanedUserAnswers.get(UnionPoliceReliefAmountPage(period)) mustBe None
       cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
       cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
       cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
@@ -238,6 +240,8 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
       cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
       cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+      cleanedUserAnswers.get(TradeUnionReliefPage(period)) mustBe None
+      cleanedUserAnswers.get(UnionPoliceReliefAmountPage(period)) mustBe None
       cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
       cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
       cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None

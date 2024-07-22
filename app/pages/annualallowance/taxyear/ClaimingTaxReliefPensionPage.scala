@@ -64,6 +64,8 @@ case class ClaimingTaxReliefPensionPage(period: Period) extends QuestionPage[Boo
           .flatMap(_.remove(DoYouHaveGiftAidPage(period)))
           .flatMap(_.remove(AmountOfGiftAidPage(period)))
           .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
+          .flatMap(_.remove(TradeUnionReliefPage(period)))
+          .flatMap(_.remove(UnionPoliceReliefAmountPage(period)))
           .flatMap(_.remove(PersonalAllowancePage(period)))
           .flatMap(_.remove(BlindAllowancePage(period)))
           .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
