@@ -34,7 +34,7 @@ case class DoYouKnowPersonalAllowancePage(period: Period) extends QuestionPage[B
       case Some(true)  =>
         controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.DoYouHaveCodeAdjustmentController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.taxyear.routes.BlindAllowanceController.onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

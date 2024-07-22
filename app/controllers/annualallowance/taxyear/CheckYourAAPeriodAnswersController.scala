@@ -138,9 +138,6 @@ class CheckYourAAPeriodAnswersController @Inject() (
           DoYouHaveGiftAidSummary.row(request.userAnswers, period),
           AmountOfGiftAidSummary.row(request.userAnswers, period),
           DoYouKnowPersonalAllowanceSummary.row(request.userAnswers, period),
-          DoYouHaveCodeAdjustmentSummary.row(request.userAnswers, period),
-          PayeCodeAdjustmentSummary.row(request.userAnswers, period),
-          CodeAdjustmentAmountSummary.row(request.userAnswers, period),
           PersonalAllowanceSummary.row(request.userAnswers, period),
           BlindAllowanceSummary.row(request.userAnswers, period),
           BlindPersonsAllowanceAmountSummary.row(request.userAnswers, period)
