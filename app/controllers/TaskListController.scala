@@ -17,7 +17,7 @@
 package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{CalculationStartAuditEvent, Done}
+import models.{CalculationTaskListAuditEvent, Done}
 import models.requests.{AuthenticatedIdentifierRequest, DataRequest}
 import models.tasklist.TaskListViewModel
 import play.api.data.Form
@@ -30,6 +30,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.TaskListView
 
 import javax.inject.Inject
+import scala.Console.println
 import scala.concurrent.{ExecutionContext, Future}
 
 class TaskListController @Inject() (
@@ -41,7 +42,7 @@ class TaskListController @Inject() (
   view: TaskListView,
   taskListService: TaskListService,
   userDataService: UserDataService,
-  auditService: AuditService,
+  auditService: AuditService
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -49,17 +50,28 @@ class TaskListController @Inject() (
   val form = Form("_" -> ignored(()))
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    updateAuthFlag(request).map { _ =>
+    updateAuthFlag(request).flatMap { _ =>
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
 
-      for {
-        _ <- auditService.auditCalculationStart(
-          CalculationStartAuditEvent(answersWithNav.uniqueId, answersWithNav.authenticated)
-      } yield Ok(view(form, taskListViewModel))
+      val sectionStatusList: List[String] = taskListViewModel.allGroups.flatMap { group =>
+        group.sections.map { section =>
+          s"${section.id}: ${section.status.toString}"
+        }
+      }.toList
 
-      Ok(view(form, taskListViewModel))
+      auditService
+        .auditCalculationTaskList(
+          CalculationTaskListAuditEvent(
+            request.userAnswers.authenticated,
+            request.userAnswers.uniqueId,
+            request.userId,
+            sectionStatusList
+          )
+        )
+        .map { _ =>
+          Ok(view(form, taskListViewModel))
+        }
     }
-
   }
 
   def updateAuthFlag(request: DataRequest[AnyContent])(implicit hc: HeaderCarrier): Future[Done] =

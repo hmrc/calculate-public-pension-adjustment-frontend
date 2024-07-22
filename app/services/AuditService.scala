@@ -40,7 +40,7 @@ class AuditService @Inject() (
     Future.successful(auditConnector.sendExplicitAudit(config.calculationStartAuditEventName, event))
 
   def auditCalculationTaskList(event: CalculationTaskListAuditEvent)(implicit
-                                                               hc: HeaderCarrier
+    hc: HeaderCarrier
   ): Future[Unit] =
     Future.successful(auditConnector.sendExplicitAudit(config.calculationTaskListAuditEventName, event))
 

@@ -19,9 +19,10 @@ package models
 import play.api.libs.json._
 
 case class CalculationTaskListAuditEvent(
-  uniqueId: String,
   authenticated: Boolean,
-  userId: String
+  uniqueId: String,
+  userId: String,
+  TaskListStatus: List[String]
 )
 
 object CalculationTaskListAuditEvent {
