@@ -25,17 +25,23 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
     <p class="govuk-body">@messages("totalIncome.message1")</p>
+    <p class="govuk-body">@messages("totalIncome.message2")</p>
     <ul class="govuk-body">
         <li>@messages("totalIncome.bullet1")</li>
         <li>@messages("totalIncome.bullet2")</li>
         <li>@messages("totalIncome.bullet3")</li>
         <li>@messages("totalIncome.bullet4")</li>
         <li>@messages("totalIncome.bullet5")</li>
+        <li>@messages("totalIncome.bullet6")</li>
+        <li>@messages("totalIncome.bullet7")</li>
+        <li>@messages("totalIncome.bullet8")</li>
     </ul>
+    <p class="govuk-body">@messages("totalIncome.message3")</p>
+    <h2 class="govuk-heading-l">@messages("totalIncome.heading2", startEndDate)</h2>
     <p class="govuk-hint">@messages("totalIncome.hint1")</p>
 }
 
@@ -48,7 +54,7 @@
 }
 
 
-@layout(pageTitle = title(form, messages("totalIncome.title",period.start.getYear.toString, period.end.getYear.toString))) {
+@layout(pageTitle = title(form, messages("totalIncome.title", startEndDate))) {
 
     @formHelper(
         action = controllers.annualallowance.taxyear.routes.TotalIncomeController.onSubmit(mode, period),
@@ -63,7 +69,7 @@
             InputViewModel(
                 field = form("value"),
                 label = HmrcPageHeadingLabel(
-                content = messages("totalIncome.heading", period.start.getYear.toString, period.end.getYear.toString),
+                content = messages("totalIncome.heading1", period.start.getYear.toString, period.end.getYear.toString),
                 caption = HtmlContent(captionText)
                 )
             ).withHint(HintViewModel(HtmlContent(contentHint)))

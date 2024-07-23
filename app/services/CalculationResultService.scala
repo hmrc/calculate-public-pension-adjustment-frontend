@@ -22,12 +22,13 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
 import play.api.Logging
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
@@ -144,8 +145,26 @@ class CalculationResultService @Inject() (
     val income: Option[Income] =
       if (period == Period._2016)
         None
-      else if (userAnswers.get(ThresholdIncomePage(period)).getOrElse(false))
-        Some(userAnswers.get(AdjustedIncomePage(period)).map(v => AboveThreshold(v.toInt)).getOrElse(BelowThreshold))
+      else if (userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.Yes))
+        userAnswers.get(KnowAdjustedAmountPage(period)) match {
+          case Some(true)  =>
+            Some(AboveThreshold(userAnswers.get(AdjustedIncomePage(period)).getOrElse(BigInt(0)).toInt))
+          case Some(false) =>
+            Some(AboveThreshold(adjustedIncomeCalculation(userAnswers, period).toInt))
+          case _           => None
+        }
+      else if (userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.IDoNotKnow))
+        userAnswers.get(models.AboveThreshold(period)) match {
+          case Some(true)  =>
+            userAnswers.get(KnowAdjustedAmountPage(period)) match {
+              case Some(true)  =>
+                Some(AboveThreshold(userAnswers.get(AdjustedIncomePage(period)).getOrElse(BigInt(0)).toInt))
+              case Some(false) =>
+                Some(AboveThreshold(adjustedIncomeCalculation(userAnswers, period).toInt))
+              case _           => None
+            }
+          case Some(false) => Some(BelowThreshold)
+        }
       else
         Some(BelowThreshold)
 
@@ -205,6 +224,23 @@ class CalculationResultService @Inject() (
 
       val isFlexiAccessDateBeforeThisPeriod: Option[Boolean] = oFlexiAccessDate.map(_.isBefore(period.start))
 
+      val incomeSubJourney =
+        IncomeSubJourney(
+          userAnswers.get(AmountSalarySacrificeArrangementsPage(period)).map(_.toInt),
+          userAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)).map(_.toInt),
+          userAnswers.get(RASContributionAmountPage(period)).map(_.toInt),
+          userAnswers.get(LumpSumDeathBenefitsValuePage(period)).map(_.toInt),
+          userAnswers.get(models.AboveThreshold(period)),
+          userAnswers.get(TaxReliefPage(period)).map(_.toInt),
+          userAnswers.get(AdjustedIncomePage(period)).map(_.toInt),
+          userAnswers.get(HowMuchTaxReliefPensionPage(period)).map(_.toInt),
+          userAnswers.get(HowMuchContributionPensionSchemePage(period)).map(_.toInt),
+          userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).map(_.toInt),
+          userAnswers.get(AmountOfGiftAidPage(period)).map(_.toInt),
+          userAnswers.get(PersonalAllowancePage(period)).map(_.toInt),
+          userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt)
+        )
+
       (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {
         case (Some(true), Some(false)) =>
           val definedBenefitInputAmount =
@@ -253,6 +289,7 @@ class CalculationResultService @Inject() (
               totalIncome,
               chargePaidByMember,
               period,
+              incomeSubJourney,
               income,
               definedBenefitInput2016PostAmount,
               definedContributionInput2016PostAmount,
@@ -293,6 +330,7 @@ class CalculationResultService @Inject() (
               chargePaidByMember,
               taxYearSchemes,
               period,
+              incomeSubJourney,
               income,
               definedBenefitInput2016PostAmount,
               definedContributionInput2016PostAmount
@@ -339,6 +377,7 @@ class CalculationResultService @Inject() (
                   totalIncome,
                   chargePaidByMember,
                   period,
+                  incomeSubJourney,
                   income
                 )
               )
@@ -353,6 +392,7 @@ class CalculationResultService @Inject() (
                   totalIncome,
                   chargePaidByMember,
                   period,
+                  incomeSubJourney,
                   income,
                   Some(
                     definedBenefitInput2016PostAmount.getOrElse(0) +
@@ -557,5 +597,45 @@ class CalculationResultService @Inject() (
         RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", inDate.unusedAnnualAllowance.toString())
       )
     }
+
+  def adjustedIncomeCalculation(userAnswers: UserAnswers, period: Period): BigInt = {
+
+    val netIncomeAfterDeductingTaxRelief = userAnswers.get(TotalIncomePage(period)).getOrElse(BigInt(0)) - userAnswers
+      .get(TaxReliefPage(period))
+      .getOrElse(BigInt(0))
+
+    val taxReliefClaimedOnPensionContributions =
+      userAnswers.get(HowMuchTaxReliefPensionPage(period)).getOrElse(BigInt(0))
+
+    val employeeContributions = userAnswers.get(HowMuchContributionPensionSchemePage(period)).getOrElse(BigInt(0)) -
+      userAnswers.get(RASContributionAmountPage(period)).getOrElse(BigInt(0))
+
+    val employerTotalContributions = calculateRevisedPIATotal(userAnswers, period) +
+      userAnswers.get(DefinedContributionAmountPage(period)).getOrElse(BigInt(0)) +
+      userAnswers.get(FlexiAccessDefinedContributionAmountPage(period)).getOrElse(BigInt(0)) +
+      userAnswers.get(DefinedBenefitAmountPage(period)).getOrElse(BigInt(0)) -
+      userAnswers.get(HowMuchContributionPensionSchemePage(period)).getOrElse(BigInt(0))
+
+    val reliefClaimedOnOverseasPensions =
+      userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).getOrElse(BigInt(0))
+
+    val lumpSumDeathBenefits = userAnswers.get(LumpSumDeathBenefitsValuePage(period)).getOrElse(BigInt(0))
+
+    netIncomeAfterDeductingTaxRelief +
+      taxReliefClaimedOnPensionContributions +
+      employeeContributions +
+      employerTotalContributions +
+      reliefClaimedOnOverseasPensions -
+      lumpSumDeathBenefits
+
+  }
+
+  private def calculateRevisedPIATotal(userAnswers: UserAnswers, period: Period): BigInt =
+    (0 to 4)
+      .flatMap(schemeIndexes =>
+        userAnswers.get(PensionSchemeInputAmountsPage(period, SchemeIndex.fromString(schemeIndexes.toString).get))
+      )
+      .map(_.revisedPIA)
+      .sum
 
 }

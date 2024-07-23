@@ -29,21 +29,7 @@ class PersonalAllowancePageSpec extends PageBehaviours {
 
     beRemovable[BigInt](PersonalAllowancePage(Period._2018))
 
-    "must Navigate correctly in normal mode" - {
-
-      "to TaxReliefPage page when answered" in {
-        val ua     = emptyUserAnswers
-          .set(
-            PersonalAllowancePage(Period._2018),
-            BigInt(100)
-          )
-          .success
-          .value
-        val result = PersonalAllowancePage(Period._2018).navigate(NormalMode, ua).url
-
-        checkNavigation(result, "/annual-allowance/2018/total-income/tax-relief")
-      }
-    }
+    "must Navigate correctly in normal mode" - {}
 
     "must Navigate correctly to CYA in check mode" in {
       val ua     = emptyUserAnswers

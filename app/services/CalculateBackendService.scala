@@ -25,6 +25,7 @@ import javax.inject.Inject
 import scala.concurrent.Future
 
 class CalculateBackendService @Inject() (connector: CalculateBackendConnector) extends Logging {
+
   def updateUserAnswersFromCalcUA(id: String)(implicit hc: HeaderCarrier): Future[Done] =
     connector.updateUserAnswersFromCalcUA(id)
 

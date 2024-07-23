@@ -23,13 +23,12 @@ import javax.inject.Inject
 
 class PersonalAllowanceFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply()(): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "personalAllowance.error.required",
         "personalAllowance.error.wholeNumber",
         "personalAllowance.error.nonNumeric"
-      )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "personalAllowance.error.outOfRange"))
+      ).verifying(inRange[BigInt](0, BigInt("999999999"), "personalAllowance.error.outOfRange"))
     )
 }

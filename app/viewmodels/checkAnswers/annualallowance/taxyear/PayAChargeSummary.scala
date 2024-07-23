@@ -17,11 +17,14 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
-import pages.annualallowance.taxyear.PayAChargePage
+import pages.annualallowance.taxyear.{PayAChargePage, PensionSchemeDetailsPage}
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object PayAChargeSummary {
 
@@ -31,8 +34,17 @@ object PayAChargeSummary {
     answers.get(PayAChargePage(period, schemeIndex)).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
+      val schemeName = answers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
+        answer.schemeName
+      }
+
+      val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
+      val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+      val startEndDate: String =
+        period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
+
       SummaryListRowViewModel(
-        key = "payACharge.checkYourAnswersLabel",
+        key = messages("payACharge.checkYourAnswersLabel", schemeName.getOrElse(""), startEndDate),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(

@@ -17,7 +17,7 @@
 package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
-import models.PensionSchemeInputAmounts
+import models.{PensionSchemeInputAmounts, Period}
 import play.api.data.Form
 import play.api.data.Forms._
 
@@ -25,14 +25,23 @@ import javax.inject.Inject
 
 class PensionSchemeInputAmountsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[PensionSchemeInputAmounts] = Form(
+  def apply(period: Period): Form[PensionSchemeInputAmounts] = Form(
     mapping(
-      "revisedPIA" -> bigInt(
-        "pensionSchemeInputAmounts.error.revisedPIA.required",
-        "pensionSchemeInputAmounts.error.revisedPIA.wholeNumber",
-        "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric"
-      )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "pensionSchemeInputAmounts.error.revisedPIA.length"))
+      if (period == Period._2023) {
+        "revisedPIA" -> bigInt(
+          "pensionSchemeInputAmounts.error.originalPIA.required",
+          "pensionSchemeInputAmounts.error.originalPIA.wholeNumber",
+          "pensionSchemeInputAmounts.error.originalPIA.nonNumeric"
+        )
+          .verifying(inRange[BigInt](0, BigInt("999999999"), "pensionSchemeInputAmounts.error.originalPIA.length"))
+      } else {
+        "revisedPIA" -> bigInt(
+          "pensionSchemeInputAmounts.error.revisedPIA.required",
+          "pensionSchemeInputAmounts.error.revisedPIA.wholeNumber",
+          "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric"
+        )
+          .verifying(inRange[BigInt](0, BigInt("999999999"), "pensionSchemeInputAmounts.error.revisedPIA.length"))
+      }
     )(PensionSchemeInputAmounts.apply)(PensionSchemeInputAmounts.unapply)
   )
 }

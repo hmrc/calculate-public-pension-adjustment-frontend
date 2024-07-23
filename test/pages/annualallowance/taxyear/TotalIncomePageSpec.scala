@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class TotalIncomePageSpec extends PageBehaviours {
@@ -30,32 +30,144 @@ class TotalIncomePageSpec extends PageBehaviours {
     beRemovable[BigInt](TotalIncomePage(Period._2013))
 
     "must Navigate correctly in normal mode" - {
-
-      "to CYA page when answered" in {
-        val ua     = emptyUserAnswers
+      "to AnySalarySacrificeArrangements page when not in 15/16 and idk is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.IDoNotKnow)
+          .success
+          .value
           .set(
-            TotalIncomePage(Period._2013),
+            TotalIncomePage(Period._2017),
             BigInt(100)
           )
           .success
           .value
-        val result = TotalIncomePage(Period._2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2013/total-income/personal-allowance")
+        val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2017/any-salary-sacrifice-arrangements")
+      }
+
+      "to claiming-tax-relief-pension page when not in 15/16 and yes is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.Yes)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+
+        val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
+      }
+
+      "to claiming-tax-relief-pension page when not in 15/16 and no is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.No)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+
+        val result = TotalIncomePage(Period._2017).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
       }
     }
 
-    "must Navigate correctly to CYA in check mode" in {
-      val ua     = emptyUserAnswers
-        .set(
-          TotalIncomePage(Period._2013),
-          BigInt(100)
-        )
-        .success
-        .value
-      val result = TotalIncomePage(Period._2013).navigate(CheckMode, ua).url
+    "must Navigate correctly in check mode" - {
+      "to AnySalarySacrificeArrangements page in normal mode when not in 15/16 and idk is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.IDoNotKnow)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
 
-      checkNavigation(result, "/annual-allowance/2013/check-answers")
+        val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2017/any-salary-sacrifice-arrangements")
+      }
+
+      "to claiming-tax-relief-pension page in normal mode when not in 15/16 and yes is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.Yes)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+
+        val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
+      }
+
+      "to claiming-tax-relief-pension page in normal mode when not in 15/16 and no is selected on threshold income" in {
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(Period._2017), ThresholdIncome.No)
+          .success
+          .value
+          .set(
+            TotalIncomePage(Period._2017),
+            BigInt(100)
+          )
+          .success
+          .value
+
+        val result = TotalIncomePage(Period._2017).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/annual-allowance/2017/claiming-tax-relief")
+      }
+    }
+
+    "cleanup" - {
+
+      "must cleanup correctly" in {
+
+        val period = Period._2022
+
+        val cleanedUserAnswers = TotalIncomePage(Period._2022)
+          .cleanup(Some(BigInt(1000)), incomeSubJourneyData)
+          .success
+          .value
+
+        cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe None
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
+        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
+        cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
+      }
     }
   }
 }

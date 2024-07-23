@@ -24,6 +24,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.checkAnswers.ClaimingTaxReliefPensionSummary
 import viewmodels.checkAnswers.annualallowance.taxyear._
 import viewmodels.govuk.summarylist._
 import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView
@@ -69,12 +70,7 @@ class CheckYourAAPeriodAnswersController @Inject() (
               OtherDefinedBenefitOrContributionSummary.row(request.userAnswers, period),
               ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
               DefinedContributionAmountSummary.row(request.userAnswers, period),
-              DefinedBenefitAmountSummary.row(request.userAnswers, period),
-              ThresholdIncomeSummary.row(request.userAnswers, period),
-              AdjustedIncomeSummary.row(request.userAnswers, period),
-              TotalIncomeSummary.row(request.userAnswers, period),
-              PersonalAllowanceSummary.row(request.userAnswers, period),
-              TaxReliefSummary.row(request.userAnswers, period)
+              DefinedBenefitAmountSummary.row(request.userAnswers, period)
             )
         ).flatten
 
@@ -86,12 +82,7 @@ class CheckYourAAPeriodAnswersController @Inject() (
               ContributedToDuringRemedyPeriodSummary.row(request.userAnswers, period),
               DefinedContributionAmountSummary.row(request.userAnswers, period),
               FlexiAccessDefinedContributionAmountSummary.row(request.userAnswers, period),
-              DefinedBenefitAmountSummary.row(request.userAnswers, period),
-              ThresholdIncomeSummary.row(request.userAnswers, period),
-              AdjustedIncomeSummary.row(request.userAnswers, period),
-              TotalIncomeSummary.row(request.userAnswers, period),
-              PersonalAllowanceSummary.row(request.userAnswers, period),
-              TaxReliefSummary.row(request.userAnswers, period)
+              DefinedBenefitAmountSummary.row(request.userAnswers, period)
             )
         ).flatten
 
@@ -104,10 +95,7 @@ class CheckYourAAPeriodAnswersController @Inject() (
               DefinedContribution2016PreAmountSummary.row(request.userAnswers),
               DefinedContribution2016PostAmountSummary.row(request.userAnswers),
               DefinedBenefit2016PreAmountSummary.row(request.userAnswers),
-              DefinedBenefit2016PostAmountSummary.row(request.userAnswers),
-              TotalIncomeSummary.row(request.userAnswers, period),
-              PersonalAllowanceSummary.row(request.userAnswers, period),
-              TaxReliefSummary.row(request.userAnswers, period)
+              DefinedBenefit2016PostAmountSummary.row(request.userAnswers)
             )
         ).flatten
 
@@ -122,12 +110,38 @@ class CheckYourAAPeriodAnswersController @Inject() (
               DefinedContribution2016PostAmountSummary.row(request.userAnswers),
               DefinedContribution2016PostFlexiAmountSummary.row(request.userAnswers),
               DefinedBenefit2016PreAmountSummary.row(request.userAnswers),
-              DefinedBenefit2016PostAmountSummary.row(request.userAnswers),
-              TotalIncomeSummary.row(request.userAnswers, period),
-              PersonalAllowanceSummary.row(request.userAnswers, period),
-              TaxReliefSummary.row(request.userAnswers, period)
+              DefinedBenefit2016PostAmountSummary.row(request.userAnswers)
             )
         ).flatten
+
+      val incomeSubJourneyRows: Seq[Option[SummaryListRow]] =
+        Seq(
+          ThresholdIncomeSummary.row(request.userAnswers, period),
+          TotalIncomeSummary.row(request.userAnswers, period),
+          AnySalarySacrificeArrangementsSummary.row(request.userAnswers, period),
+          AmountSalarySacrificeArrangementsSummary.row(request.userAnswers, period),
+          FlexibleRemunerationArrangementsSummary.row(request.userAnswers, period),
+          AmountFlexibleRemunerationArrangementsSummary.row(request.userAnswers, period),
+          DidYouContributeToRASSchemeSummary.row(request.userAnswers, period),
+          RASContributionAmountSummary.row(request.userAnswers, period),
+          HowMuchContributionPensionSchemeSummary.row(request.userAnswers, period),
+          AnyLumpSumDeathBenefitsSummary.row(request.userAnswers, period),
+          LumpSumDeathBenefitsValueSummary.row(request.userAnswers, period),
+          ClaimingTaxReliefPensionSummary.row(request.userAnswers, period),
+          TaxReliefSummary.row(request.userAnswers, period),
+          KnowAdjustedAmountSummary.row(request.userAnswers, period),
+          AdjustedIncomeSummary.row(request.userAnswers, period),
+          ClaimingTaxReliefPensionNotAdjustedIncomeSummary.row(request.userAnswers, period),
+          HowMuchTaxReliefPensionSummary.row(request.userAnswers, period),
+          HasReliefClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
+          AmountClaimedOnOverseasPensionSummary.row(request.userAnswers, period),
+          DoYouHaveGiftAidSummary.row(request.userAnswers, period),
+          AmountOfGiftAidSummary.row(request.userAnswers, period),
+          DoYouKnowPersonalAllowanceSummary.row(request.userAnswers, period),
+          PersonalAllowanceSummary.row(request.userAnswers, period),
+          BlindAllowanceSummary.row(request.userAnswers, period),
+          BlindPersonsAllowanceAmountSummary.row(request.userAnswers, period)
+        )
 
       val flexibleStartDate = request.userAnswers.get(FlexibleAccessStartDatePage)
 
@@ -139,13 +153,13 @@ class CheckYourAAPeriodAnswersController @Inject() (
       def maybeFlexiPeriodEndDateRowsStatus: Seq[Option[SummaryListRow]] =
         (flexiAccessExistsForPeriod, period, flexibleStartDate) match {
           case (true, Period._2016, Some(date)) if date == Period.pre2016End || date == Period.post2016End =>
-            flexiPeriodEndateRows2016
+            flexiPeriodEndateRows2016 ++ incomeSubJourneyRows
           case (true, _, Some(date)) if date == period.end                                                 =>
-            flexiPeriodEndateRows
+            flexiPeriodEndateRows ++ incomeSubJourneyRows
           case (_, Period._2016, _)                                                                        =>
-            regularRows2016
+            regularRows2016 ++ incomeSubJourneyRows
           case _                                                                                           =>
-            regularRows
+            regularRows ++ incomeSubJourneyRows
         }
 
       Ok(

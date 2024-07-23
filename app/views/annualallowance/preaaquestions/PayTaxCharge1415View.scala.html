@@ -27,6 +27,10 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-hint">@messages("payACharge.hint")</p>
+}
+
     @layout(pageTitle = title(form, messages("payTaxCharge1415.title"))) {
 
         @formHelper(action = routes.PayTaxCharge1415Controller.onSubmit(mode), Symbol("autoComplete") -> "off") {
@@ -42,7 +46,7 @@
                         content = messages("payTaxCharge1415.heading"),
                         caption = HmrcSectionCaption(messages("annualAllowance.caption"))
                     )
-                )
+                ).withHint(HintViewModel(HtmlContent(contentHint)))
             )
 
             @continueButton()

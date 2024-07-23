@@ -23,9 +23,10 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, Period, ProtectionEnhancedChanged, ProtectionType, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
+import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
 import play.api.libs.json.{JsObject, JsValue, Json}
 
 import java.time.LocalDate
@@ -107,7 +108,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "definedContribution2016PreFlexiAmount" : 10015,
            |          "definedBenefit2016PreAmount" : 30015,
            |          "definedBenefit2016PostAmount" : 30016,
-           |          "totalIncome" : 60000
+           |          "totalIncome" : 60000,
+           |          "claimingTaxReliefPension": true,
+           |          "taxRelief": 888,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2017" : {
            |          "memberMoreThanOnePension" : false,
@@ -127,8 +132,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2018" : {
            |          "memberMoreThanOnePension" : false,
@@ -149,8 +180,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2019" : {
            |          "memberMoreThanOnePension" : false,
@@ -170,8 +227,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2020" : {
            |          "memberMoreThanOnePension" : false,
@@ -191,8 +274,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 34000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2021" : {
            |          "memberMoreThanOnePension" : false,
@@ -210,8 +319,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2022" : {
            |          "memberMoreThanOnePension" : false,
@@ -231,8 +366,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 44000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2023" : {
            |          "memberMoreThanOnePension" : false,
@@ -254,8 +415,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 53000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        }
            |      }
            |    },
@@ -323,7 +510,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "definedContribution2016PreFlexiAmount" : 10000,
            |          "definedBenefit2016PreAmount" : 30000,
            |          "definedBenefit2016PostAmount" : 40000,
-           |          "totalIncome" : 60000
+           |          "totalIncome" : 60000,
+           |          "claimingTaxReliefPension": true,
+           |          "taxRelief": 888,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2017" : {
            |          "memberMoreThanOnePension" : false,
@@ -343,8 +534,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2018" : {
            |          "memberMoreThanOnePension" : false,
@@ -365,8 +582,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2019" : {
            |          "memberMoreThanOnePension" : false,
@@ -386,8 +629,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2020" : {
            |          "memberMoreThanOnePension" : false,
@@ -407,8 +676,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 34000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2021" : {
            |          "memberMoreThanOnePension" : false,
@@ -426,9 +721,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : true,
-           |          "adjustedIncome" : 160000,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "yes",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2022" : {
            |          "memberMoreThanOnePension" : false,
@@ -448,8 +768,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 44000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2023" : {
            |          "memberMoreThanOnePension" : false,
@@ -471,9 +817,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 53000,
-           |          "thresholdIncome" : true,
-           |          "adjustedIncome" : 120000,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "yes",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        }
            |      }
            |    }
@@ -537,7 +908,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "definedContribution2016PreFlexiAmount" : 10000,
            |          "definedBenefit2016PreAmount" : 30000,
            |          "definedBenefit2016PostAmount" : 40000,
-           |          "totalIncome" : 60000
+           |          "totalIncome" : 60000,
+           |          "claimingTaxReliefPension": true,
+           |          "taxRelief": 888,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2017" : {
            |          "memberMoreThanOnePension" : false,
@@ -557,8 +932,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2018" : {
            |          "memberMoreThanOnePension" : false,
@@ -579,8 +980,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |            }
            |          },
            |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        },
            |        "2019" : {
            |          "memberMoreThanOnePension" : false,
@@ -600,8 +1027,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : false,
-           |          "totalIncome" : 60000
+           |          "thresholdIncome" : "no",
+           |          "totalIncome" : 60000,
+           |          "anySalarySacrificeArrangements": true,
+           |          "amountSalarySacrificeArrangements": 444,
+           |          "flexibleRemunerationArrangements": true,
+           |          "amountFlexibleRemunerationArrangements": 666,
+           |          "didYouContributeToRASScheme": true,
+           |		  "rASContributionAmount": 712,
+           |          "howMuchContributionPensionScheme": 1212,
+           |          "anyLumpSumDeathBenefits": true,
+           |          "lumpSumDeathBenefitsValue": 777,
+           |          "claimingTaxReliefPension": true,
+           |          "aboveThreshold": true,
+           |          "taxRelief": 888,
+           |          "knowAdjustedAmount": false,
+           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+           |          "howMuchTaxReliefPension": 1111,
+           |          "areYouNonDom": true,
+           |          "hasReliefClaimedOnOverseasPension": true,
+           |          "amountClaimedOnOverseasPension": 1414,
+           |          "doYouHaveGiftAid": true,
+           |          "amountOfGiftAid": 842,
+           |          "doYouKnowPersonalAllowance": false,
+           |          "doYouHaveCodeAdjustment": true,
+           |          "payeCodeAdjustment": "increase",
+           |          "codeAdjustmentAmount": 2740,
+           |          "blindAllowance": true,
+           |          "blindPersonsAllowanceAmount": 2291
            |        }
            |      }
            |    },
@@ -779,7 +1232,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedContribution"
                 |          ],
                 |          "definedContribution2016PostAmount": 18000,
-                |          "definedContribution2016PreAmount": 20000
+                |          "definedContribution2016PreAmount": 20000,
+                |          "claimingTaxReliefPension": true,
+                |          "taxRelief": 888,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2017": {
                 |          "memberMoreThanOnePension": false,
@@ -797,8 +1254,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": false,
-                |          "totalIncome": 60000
+                |          "thresholdIncome": "no",
+                |          "totalIncome": 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2018": {
                 |          "memberMoreThanOnePension": false,
@@ -819,8 +1302,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": false,
-                |          "totalIncome": 60000
+                |          "thresholdIncome": "no",
+                |          "totalIncome": 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2019": {
                 |          "memberMoreThanOnePension": false,
@@ -840,8 +1349,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": false,
-                |          "totalIncome": 60000
+                |          "thresholdIncome": "no",
+                |          "totalIncome": 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        }
                 |      }
                 |    }
@@ -901,7 +1436,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          ],
                 |          "definedContribution2016PreAmount": 1800,
                 |          "definedBenefit2016PreAmount": 800,
-                |          "totalIncome": 60000
+                |          "totalIncome": 60000,
+                |          "claimingTaxReliefPension": true,
+                |          "taxRelief": 888,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2017": {
                 |          "memberMoreThanOnePension": false,
@@ -925,8 +1464,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedBenefit"
                 |          ],
                 |          "definedBenefitAmount": 2000,
-                |          "thresholdIncome": false,
-                |          "totalIncome": 60000
+                |          "thresholdIncome": "no",
+                |          "totalIncome": 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2018": {
                 |          "memberMoreThanOnePension": false,
@@ -944,9 +1509,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": true,
-                |          "adjustedIncome": 160000,
-                |          "totalIncome": 200000
+                |          "thresholdIncome": "yes",
+                |          "totalIncome": 200000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		   "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2019": {
                 |          "memberMoreThanOnePension": false,
@@ -967,8 +1557,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": false,
-                |          "thresholdIncome": false,
-                |          "totalIncome": 60000
+                |          "thresholdIncome": "no",
+                |          "totalIncome": 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2020": {
                 |          "memberMoreThanOnePension": false,
@@ -986,14 +1602,40 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            }
                 |          },
                 |          "otherDefinedBenefitOrContribution": true,
-                |          "thresholdIncome": false,
+                |          "thresholdIncome": "no",
                 |          "contributedToDuringRemedyPeriod": [
                 |            "definedContribution",
                 |            "definedBenefit"
                 |          ],
                 |          "definedContributionAmount": 700,
                 |          "definedBenefitAmount": 4900,
-                |          "totalIncome": 60000
+                |          "totalIncome": 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		   "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        }
                 |      }
                 |    }
@@ -1056,7 +1698,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "definedContribution2016PostFlexiAmount": 800,
                 |          "definedBenefit2016PreAmount": 1800,
                 |          "definedBenefit2016PostAmount": 2100,
-                |          "totalIncome": 60000
+                |          "totalIncome": 60000,
+                |          "claimingTaxReliefPension": true,
+                |          "taxRelief": 888,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2017": {
                 |          "memberMoreThanOnePension": false,
@@ -1080,9 +1726,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedContribution"
                 |          ],
                 |          "definedContributionAmount": 1600,
-                |          "thresholdIncome": true,
-                |          "adjustedIncome": 120000,
-                |          "totalIncome": 140000
+                |          "thresholdIncome": "yes",
+                |          "totalIncome": 140000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2018": {
                 |          "memberMoreThanOnePension": false,
@@ -1106,8 +1777,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedBenefit"
                 |          ],
                 |          "definedBenefitAmount": 800,
-                |          "thresholdIncome": false,
-                |          "totalIncome": 80000
+                |          "thresholdIncome": "no",
+                |          "totalIncome": 80000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		   "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        }
                 |      }
                 |    }
@@ -1191,7 +1888,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |        "definedContribution2016PostAmount": 14000,
                 |        "definedBenefit2016PreAmount": 10000,
                 |        "definedBenefit2016PostAmount": 11000,
-                |        "totalIncome": 60000
+                |        "totalIncome": 60000,
+                |        "claimingTaxReliefPension": true,
+                |        "taxRelief": 888,
+                |        "blindAllowance": true,
+                |        "blindPersonsAllowanceAmount": 2291
                 |      },
                 |      "2017": {
                 |        "memberMoreThanOnePension": false,
@@ -1215,8 +1916,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "definedContribution"
                 |        ],
                 |        "definedContributionAmount": 23000,
-                |        "thresholdIncome": false,
-                |        "totalIncome": 80000
+                |        "thresholdIncome": "no",
+                |        "totalIncome": 80000,
+                |        "anySalarySacrificeArrangements": true,
+                |        "amountSalarySacrificeArrangements": 444,
+                |        "flexibleRemunerationArrangements": true,
+                |        "amountFlexibleRemunerationArrangements": 666,
+                |        "didYouContributeToRASScheme": true,
+                |		 "rASContributionAmount": 712,
+                |        "howMuchContributionPensionScheme": 1212,
+                |        "anyLumpSumDeathBenefits": true,
+                |        "lumpSumDeathBenefitsValue": 777,
+                |        "claimingTaxReliefPension": true,
+                |        "aboveThreshold": true,
+                |        "taxRelief": 888,
+                |        "knowAdjustedAmount": false,
+                |        "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |        "howMuchTaxReliefPension": 1111,
+                |        "areYouNonDom": true,
+                |        "hasReliefClaimedOnOverseasPension": true,
+                |        "amountClaimedOnOverseasPension": 1414,
+                |        "doYouHaveGiftAid": true,
+                |        "amountOfGiftAid": 842,
+                |        "doYouKnowPersonalAllowance": false,
+                |        "doYouHaveCodeAdjustment": true,
+                |        "payeCodeAdjustment": "increase",
+                |        "codeAdjustmentAmount": 2740,
+                |        "blindAllowance": true,
+                |        "blindPersonsAllowanceAmount": 2291
                 |      },
                 |      "2018": {
                 |        "memberMoreThanOnePension": false,
@@ -1243,9 +1970,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |        "definedContributionAmount": 3200,
                 |        "flexiAccessDefinedContributionAmount": 4200,
                 |        "definedBenefitAmount": 8000,
-                |        "thresholdIncome": true,
-                |        "adjustedIncome": 120000,
-                |        "totalIncome": 140000
+                |        "thresholdIncome": "yes",
+                |        "totalIncome": 140000,
+                |        "anySalarySacrificeArrangements": true,
+                |        "amountSalarySacrificeArrangements": 444,
+                |        "flexibleRemunerationArrangements": true,
+                |        "amountFlexibleRemunerationArrangements": 666,
+                |        "didYouContributeToRASScheme": true,
+                |		 "rASContributionAmount": 712,
+                |        "howMuchContributionPensionScheme": 1212,
+                |        "anyLumpSumDeathBenefits": true,
+                |        "lumpSumDeathBenefitsValue": 777,
+                |        "claimingTaxReliefPension": true,
+                |        "aboveThreshold": true,
+                |        "taxRelief": 888,
+                |        "knowAdjustedAmount": false,
+                |        "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |        "howMuchTaxReliefPension": 1111,
+                |        "areYouNonDom": true,
+                |        "hasReliefClaimedOnOverseasPension": true,
+                |        "amountClaimedOnOverseasPension": 1414,
+                |        "doYouHaveGiftAid": true,
+                |        "amountOfGiftAid": 842,
+                |        "doYouKnowPersonalAllowance": false,
+                |        "doYouHaveCodeAdjustment": true,
+                |        "payeCodeAdjustment": "increase",
+                |        "codeAdjustmentAmount": 2740,
+                |        "blindAllowance": true,
+                |        "blindPersonsAllowanceAmount": 2291
                 |      },
                 |      "2019": {
                 |        "memberMoreThanOnePension": false,
@@ -1266,8 +2018,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          }
                 |        },
                 |        "otherDefinedBenefitOrContribution": false,
-                |        "thresholdIncome": false,
-                |        "totalIncome": 90000
+                |        "thresholdIncome": "no",
+                |        "totalIncome": 90000,
+                |        "anySalarySacrificeArrangements": true,
+                |        "amountSalarySacrificeArrangements": 444,
+                |        "flexibleRemunerationArrangements": true,
+                |        "amountFlexibleRemunerationArrangements": 666,
+                |        "didYouContributeToRASScheme": true,
+                |		 "rASContributionAmount": 712,
+                |        "howMuchContributionPensionScheme": 1212,
+                |        "anyLumpSumDeathBenefits": true,
+                |        "lumpSumDeathBenefitsValue": 777,
+                |        "claimingTaxReliefPension": true,
+                |        "aboveThreshold": true,
+                |        "taxRelief": 888,
+                |        "knowAdjustedAmount": false,
+                |        "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |        "howMuchTaxReliefPension": 1111,
+                |        "areYouNonDom": true,
+                |        "hasReliefClaimedOnOverseasPension": true,
+                |        "amountClaimedOnOverseasPension": 1414,
+                |        "doYouHaveGiftAid": true,
+                |        "amountOfGiftAid": 842,
+                |        "doYouKnowPersonalAllowance": false,
+                |        "doYouHaveCodeAdjustment": true,
+                |        "payeCodeAdjustment": "increase",
+                |        "codeAdjustmentAmount": 2740,
+                |        "blindAllowance": true,
+                |        "blindPersonsAllowanceAmount": 2291
                 |      }
                 |    }
                 |  }
@@ -1330,7 +2108,12 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "definedContribution2016PostAmount": 1400,
                 |          "definedBenefit2016PreAmount": 1800,
                 |          "definedBenefit2016PostAmount": 2100,
-                |          "totalIncome": 60000
+                |          "totalIncome": 60000,
+                |          "claimingTaxReliefPension": true,
+                |          "taxRelief": 888,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |
                 |        },
                 |        "2017": {
                 |          "memberMoreThanOnePension": false,
@@ -1354,9 +2137,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedContribution"
                 |          ],
                 |          "definedContributionAmount": 1600,
-                |          "thresholdIncome": true,
-                |          "adjustedIncome": 120000,
-                |          "totalIncome": 140000
+                |          "thresholdIncome": "yes",
+                |          "totalIncome": 140000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		   "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        },
                 |        "2018": {
                 |          "memberMoreThanOnePension": false,
@@ -1380,8 +2188,34 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |            "definedBenefit"
                 |          ],
                 |          "definedBenefitAmount": 800,
-                |          "thresholdIncome": false,
-                |          "totalIncome": 80000
+                |          "thresholdIncome": "no",
+                |          "totalIncome": 80000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		   "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
                 |        }
                 |      }
                 |    }
@@ -1436,7 +2270,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |        "definedContribution2016PreAmount": 700,
                 |        "definedContribution2016PreFlexiAmount": 1200,
                 |        "definedBenefit2016PreAmount": 700,
-                |        "totalIncome": 60000
+                |        "totalIncome": 60000,
+                |        "claimingTaxReliefPension": true,
+                |        "taxRelief": 888,
+                |        "blindAllowance": true,
+                |        "blindPersonsAllowanceAmount": 2291
                 |      }
                 |    }
                 |  }
@@ -1504,6 +2342,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             60000,
             0,
             Period._2016,
+            IncomeSubJourney(
+              None,
+              None,
+              None,
+              None,
+              None,
+              Some(888),
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              Some(2291)
+            ),
             None,
             Some(30016),
             Some(6016)
@@ -1524,6 +2377,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             60000,
             0,
             Period._2016,
+            IncomeSubJourney(
+              None,
+              None,
+              None,
+              None,
+              None,
+              Some(888),
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              Some(2291)
+            ),
             None,
             Some(30016),
             Some(6016)
@@ -1542,6 +2410,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
             Period._2017,
+            IncomeSubJourney(
+              Some(444),
+              Some(666),
+              Some(712),
+              Some(777),
+              Some(true),
+              Some(888),
+              None,
+              Some(1111),
+              Some(1212),
+              Some(1414),
+              Some(842),
+              None,
+              Some(2291)
+            ),
             Some(BelowThreshold)
           )
         )
@@ -1558,6 +2441,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             1000,
             List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
             Period._2018,
+            IncomeSubJourney(
+              Some(444),
+              Some(666),
+              Some(712),
+              Some(777),
+              Some(true),
+              Some(888),
+              None,
+              Some(1111),
+              Some(1212),
+              Some(1414),
+              Some(842),
+              None,
+              Some(2291)
+            ),
             Some(BelowThreshold)
           )
         )
@@ -1574,6 +2472,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
             Period._2019,
+            IncomeSubJourney(
+              Some(444),
+              Some(666),
+              Some(712),
+              Some(777),
+              Some(true),
+              Some(888),
+              None,
+              Some(1111),
+              Some(1212),
+              Some(1414),
+              Some(842),
+              None,
+              Some(2291)
+            ),
             Some(BelowThreshold)
           )
         )
@@ -1590,6 +2503,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             List(TaxYearScheme("Scheme 1", "00348916RT", 34000, 0, None)),
             Period._2020,
+            IncomeSubJourney(
+              Some(444),
+              Some(666),
+              Some(712),
+              Some(777),
+              Some(true),
+              Some(888),
+              None,
+              Some(1111),
+              Some(1212),
+              Some(1414),
+              Some(842),
+              None,
+              Some(2291)
+            ),
             Some(BelowThreshold)
           )
         )
@@ -1607,7 +2535,22 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               0,
               List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 0, None)),
               Period._2021,
-              Some(AboveThreshold(160000))
+              IncomeSubJourney(
+                Some(444),
+                Some(666),
+                Some(712),
+                Some(777),
+                Some(true),
+                Some(888),
+                None,
+                Some(1111),
+                Some(1212),
+                Some(1414),
+                Some(842),
+                None,
+                Some(2291)
+              ),
+              Some(AboveThreshold(96148))
             )
           )
       }
@@ -1623,6 +2566,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             List(TaxYearScheme("Scheme 1", "00348916RT", 44000, 0, None)),
             Period._2022,
+            IncomeSubJourney(
+              Some(444),
+              Some(666),
+              Some(712),
+              Some(777),
+              Some(true),
+              Some(888),
+              None,
+              Some(1111),
+              Some(1212),
+              Some(1414),
+              Some(842),
+              None,
+              Some(2291)
+            ),
             Some(BelowThreshold)
           )
         )
@@ -1639,7 +2597,22 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             List(TaxYearScheme("Scheme 1", "00348916RT", 53000, 4400, None)),
             Period._2023,
-            Some(AboveThreshold(120000))
+            IncomeSubJourney(
+              Some(444),
+              Some(666),
+              Some(712),
+              Some(777),
+              Some(true),
+              Some(888),
+              None,
+              Some(1111),
+              Some(1212),
+              Some(1414),
+              Some(842),
+              None,
+              Some(2291)
+            ),
+            income = Some(AboveThreshold(166148))
           )
         )
       }
@@ -1667,6 +2640,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   800,
                   Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291)
+                  ),
                   None,
                   None,
                   None,
@@ -1698,6 +2686,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   1200,
                   Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291)
+                  ),
                   None,
                   Some(2100),
                   Some(1400),
@@ -1710,7 +2713,22 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   800,
                   List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 0, None)),
                   Period._2017,
-                  Some(AboveThreshold(120000)),
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
+                  Some(AboveThreshold(177748)),
                   None,
                   None
                 ),
@@ -1721,6 +2739,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 900, None)),
                   Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold),
                   None,
                   None
@@ -1751,6 +2784,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   1200,
                   Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291)
+                  ),
                   None,
                   Some(2100),
                   Some(1400),
@@ -1763,7 +2811,22 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   800,
                   List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 0, None)),
                   Period._2017,
-                  Some(AboveThreshold(120000)),
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
+                  Some(AboveThreshold(177748)),
                   None,
                   None
                 ),
@@ -1774,6 +2837,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 900, None)),
                   Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold),
                   None,
                   None
@@ -1804,6 +2882,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   900,
                   Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291)
+                  ),
                   None,
                   Some(61000)
                 ),
@@ -1813,6 +2906,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   80000,
                   0,
                   Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold),
                   None
                 ),
@@ -1825,7 +2933,22 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   140000,
                   2700,
                   Period._2018,
-                  Some(AboveThreshold(120000)),
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
+                  Some(AboveThreshold(209548)),
                   None,
                   None,
                   None
@@ -1837,6 +2960,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   800,
                   List(TaxYearScheme("Scheme 1", "00348916RU", 46000, 2600, None)),
                   Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold),
                   None,
                   None
@@ -1872,6 +3010,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   0,
                   Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291)
+                  ),
                   None,
                   Some(30016),
                   Some(6016)
@@ -1883,6 +3036,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
                   Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -1892,6 +3060,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   1000,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
                   Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -1901,6 +3084,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
                   Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -1910,6 +3108,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 34000, 0, None)),
                   Period._2020,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -1919,6 +3132,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 0, None)),
                   Period._2021,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -1928,6 +3156,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 44000, 0, None)),
                   Period._2022,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -1937,6 +3180,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 53000, 4400, None)),
                   Period._2023,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 )
               )
@@ -2003,6 +3261,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   2000,
                   Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291)
+                  ),
                   None,
                   Some(40000),
                   None,
@@ -2015,6 +3288,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
                   Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -2024,6 +3312,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   1000,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
                   Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -2033,6 +3336,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
                   Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 )
               )
@@ -2058,6 +3376,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   3600,
                   Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291)
+                  ),
                   None,
                   Some(40000)
                 ),
@@ -2067,6 +3400,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   0,
                   Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 NormalTaxYear(
@@ -2075,6 +3423,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   200,
                   Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 NormalTaxYear(
@@ -2083,6 +3446,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   3280,
                   Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 )
               )
@@ -2108,6 +3486,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   300,
                   Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291)
+                  ),
                   None,
                   Some(34000)
                 ),
@@ -2117,6 +3510,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   60000,
                   0,
                   Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold),
                   None
                 ),
@@ -2129,7 +3537,22 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   200000,
                   0,
                   Period._2018,
-                  Some(AboveThreshold(160000))
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
+                  Some(AboveThreshold(243148))
                 ),
                 PostFlexiblyAccessedTaxYear(
                   0,
@@ -2138,6 +3561,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   3400,
                   List(TaxYearScheme("Scheme 1", "00348916RP", 52000, 4700, None)),
                   Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -2147,6 +3585,21 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                   0,
                   List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, None)),
                   Period._2020,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(2291)
+                  ),
                   Some(BelowThreshold)
                 )
               )
@@ -2500,6 +3953,61 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
+    }
+  }
+
+  "adjustedIncomeCalculation" - {
+
+    "(Using test thread data, scenario 1 2017/18, test thread v0.5) if user does not know their adjusted income, must calculate it" in {
+
+      val period: Period = Period._2022
+
+      val userAnswers = emptyUserAnswers
+        .set(PensionSchemeInputAmountsPage(period, SchemeIndex(0)), PensionSchemeInputAmounts(29997))
+        .success
+        .value
+        .set(PensionSchemeInputAmountsPage(period, SchemeIndex(1)), PensionSchemeInputAmounts(45000))
+        .success
+        .value
+        .set(DefinedContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+        .set(FlexiAccessDefinedContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+        .set(DefinedBenefitAmountPage(period), BigInt(1))
+        .success
+        .value
+        .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(160000))
+        .success
+        .value
+        .set(TaxReliefPage(period), BigInt(5000))
+        .success
+        .value
+        .set(KnowAdjustedAmountPage(period), false)
+        .success
+        .value
+        .set(RASContributionAmountPage(period), BigInt(10000))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(40000))
+        .success
+        .value
+        .set(HowMuchTaxReliefPensionPage(period), BigInt(0))
+        .success
+        .value
+        .set(HowMuchContributionPensionSchemePage(period), BigInt(30000))
+        .success
+        .value
+        .set(AmountClaimedOnOverseasPensionPage(period), BigInt(0))
+        .success
+        .value
+
+      service.adjustedIncomeCalculation(userAnswers, period) mustBe 180000
+
     }
   }
 }

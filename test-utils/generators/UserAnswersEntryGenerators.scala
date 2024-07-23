@@ -28,6 +28,182 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryDidYouContributeToRASSchemeUserAnswersEntry
+    : Arbitrary[(DidYouContributeToRASSchemePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DidYouContributeToRASSchemePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryRASContributionAmountUserAnswersEntry
+    : Arbitrary[(RASContributionAmountPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[RASContributionAmountPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAmountOfGiftAidUserAnswersEntry: Arbitrary[(AmountOfGiftAidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AmountOfGiftAidPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryDoYouHaveGiftAidUserAnswersEntry: Arbitrary[(DoYouHaveGiftAidPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DoYouHaveGiftAidPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryBlindPersonsAllowanceAmountUserAnswersEntry
+    : Arbitrary[(BlindPersonsAllowanceAmountPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[BlindPersonsAllowanceAmountPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryBlindAllowanceUserAnswersEntry: Arbitrary[(BlindAllowancePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[BlindAllowancePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryClaimingTaxReliefPensionUserAnswersEntry
+    : Arbitrary[(ClaimingTaxReliefPensionPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ClaimingTaxReliefPensionPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryDoYouKnowPersonalAllowanceUserAnswersEntry
+    : Arbitrary[(DoYouKnowPersonalAllowancePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DoYouKnowPersonalAllowancePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHasReliefClaimedOnOverseasPensionUserAnswersEntry
+    : Arbitrary[(HasReliefClaimedOnOverseasPensionPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HasReliefClaimedOnOverseasPensionPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAmountClaimedOnOverseasPensionUserAnswersEntry
+    : Arbitrary[(AmountClaimedOnOverseasPensionPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AmountClaimedOnOverseasPensionPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryFlexibleRemunerationArrangementsUserAnswersEntry
+    : Arbitrary[(FlexibleRemunerationArrangementsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[FlexibleRemunerationArrangementsPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAnySalarySacrificeArrangementsUserAnswersEntry
+    : Arbitrary[(AnySalarySacrificeArrangementsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AnySalarySacrificeArrangementsPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAmountFlexibleRemunerationArrangementsUserAnswersEntry
+    : Arbitrary[(AmountFlexibleRemunerationArrangementsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AmountFlexibleRemunerationArrangementsPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHowMuchContributionPensionSchemeUserAnswersEntry
+    : Arbitrary[(HowMuchContributionPensionSchemePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HowMuchContributionPensionSchemePage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAmountSalarySacrificeArrangementsUserAnswersEntry
+    : Arbitrary[(AmountSalarySacrificeArrangementsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AmountSalarySacrificeArrangementsPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryLumpSumDeathBenefitsValueUserAnswersEntry
+    : Arbitrary[(LumpSumDeathBenefitsValuePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[LumpSumDeathBenefitsValuePage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAnyLumpSumDeathBenefitsUserAnswersEntry
+    : Arbitrary[(AnyLumpSumDeathBenefitsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AnyLumpSumDeathBenefitsPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryClaimingTaxReliefPensionNotAdjustedIncomeUserAnswersEntry
+    : Arbitrary[(ClaimingTaxReliefPensionNotAdjustedIncomePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ClaimingTaxReliefPensionNotAdjustedIncomePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHowMuchTaxReliefPensionUserAnswersEntry
+    : Arbitrary[(HowMuchTaxReliefPensionPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HowMuchTaxReliefPensionPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryKnowAdjustedAmountUserAnswersEntry: Arbitrary[(KnowAdjustedAmountPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[KnowAdjustedAmountPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryTaxReliefUserAnswersEntry: Arbitrary[(TaxReliefPage.type, JsValue)] =
     Arbitrary {
       for {
@@ -257,7 +433,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[ThresholdIncomePage.type]
-        value <- arbitrary[Boolean].map(Json.toJson(_))
+        value <- arbitrary[ThresholdIncome].map(Json.toJson(_))
       } yield (page, value)
     }
 

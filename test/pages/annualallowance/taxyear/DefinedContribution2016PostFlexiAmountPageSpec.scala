@@ -56,7 +56,7 @@ class DefinedContribution2016PostFlexiAmountPageSpec extends PageBehaviours {
 
       val result = DefinedContribution2016PostFlexiAmountPage.navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2016/total-income")
+      checkNavigation(result, "/annual-allowance/2016/taxable-income")
     }
 
     "must redirect to preDB2016 page when DB indicated" in {

@@ -25,6 +25,72 @@ import pages.setupquestions.ReportingChangePage
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryDidYouContributeToRASSchemePage: Arbitrary[DidYouContributeToRASSchemePage.type] =
+    Arbitrary(DidYouContributeToRASSchemePage)
+
+  implicit lazy val arbitraryRASContributionAmountPage: Arbitrary[RASContributionAmountPage.type] =
+    Arbitrary(RASContributionAmountPage)
+
+  implicit lazy val arbitraryAmountOfGiftAidPage: Arbitrary[AmountOfGiftAidPage.type] =
+    Arbitrary(AmountOfGiftAidPage)
+
+  implicit lazy val arbitraryDoYouHaveGiftAidPage: Arbitrary[DoYouHaveGiftAidPage.type] =
+    Arbitrary(DoYouHaveGiftAidPage)
+
+  implicit lazy val arbitraryBlindPersonsAllowanceAmountPage: Arbitrary[BlindPersonsAllowanceAmountPage.type] =
+    Arbitrary(BlindPersonsAllowanceAmountPage)
+
+  implicit lazy val arbitraryBlindAllowancePage: Arbitrary[BlindAllowancePage.type] =
+    Arbitrary(BlindAllowancePage)
+
+  implicit lazy val arbitraryClaimingTaxReliefPensionPage: Arbitrary[ClaimingTaxReliefPensionPage.type] =
+    Arbitrary(ClaimingTaxReliefPensionPage)
+
+  implicit lazy val arbitraryDoYouKnowPersonalAllowancePage: Arbitrary[DoYouKnowPersonalAllowancePage.type] =
+    Arbitrary(DoYouKnowPersonalAllowancePage)
+
+  implicit lazy val arbitraryHasReliefClaimedOnOverseasPensionPage
+    : Arbitrary[HasReliefClaimedOnOverseasPensionPage.type] =
+    Arbitrary(HasReliefClaimedOnOverseasPensionPage)
+
+  implicit lazy val arbitraryAmountClaimedOnOverseasPensionPage: Arbitrary[AmountClaimedOnOverseasPensionPage.type] =
+    Arbitrary(AmountClaimedOnOverseasPensionPage)
+
+  implicit lazy val arbitraryFlexibleRemunerationArrangementsPage
+    : Arbitrary[FlexibleRemunerationArrangementsPage.type] =
+    Arbitrary(FlexibleRemunerationArrangementsPage)
+
+  implicit lazy val arbitraryAnySalarySacrificeArrangementsPage: Arbitrary[AnySalarySacrificeArrangementsPage.type] =
+    Arbitrary(AnySalarySacrificeArrangementsPage)
+
+  implicit lazy val arbitraryAmountFlexibleRemunerationArrangementsPage
+    : Arbitrary[AmountFlexibleRemunerationArrangementsPage.type] =
+    Arbitrary(AmountFlexibleRemunerationArrangementsPage)
+
+  implicit lazy val arbitraryHowMuchContributionPensionSchemePage
+    : Arbitrary[HowMuchContributionPensionSchemePage.type] =
+    Arbitrary(HowMuchContributionPensionSchemePage)
+
+  implicit lazy val arbitraryAmountSalarySacrificeArrangementsPage
+    : Arbitrary[AmountSalarySacrificeArrangementsPage.type] =
+    Arbitrary(AmountSalarySacrificeArrangementsPage)
+
+  implicit lazy val arbitraryLumpSumDeathBenefitsValuePage: Arbitrary[LumpSumDeathBenefitsValuePage.type] =
+    Arbitrary(LumpSumDeathBenefitsValuePage)
+
+  implicit lazy val arbitraryAnyLumpSumDeathBenefitsPage: Arbitrary[AnyLumpSumDeathBenefitsPage.type] =
+    Arbitrary(AnyLumpSumDeathBenefitsPage)
+
+  implicit lazy val arbitraryClaimingTaxReliefPensionNotAdjustedIncomePage
+    : Arbitrary[ClaimingTaxReliefPensionNotAdjustedIncomePage.type] =
+    Arbitrary(ClaimingTaxReliefPensionNotAdjustedIncomePage)
+
+  implicit lazy val arbitraryHowMuchTaxReliefPensionPage: Arbitrary[HowMuchTaxReliefPensionPage.type] =
+    Arbitrary(HowMuchTaxReliefPensionPage)
+
+  implicit lazy val arbitraryKnowAdjustedAmountPage: Arbitrary[KnowAdjustedAmountPage.type] =
+    Arbitrary(KnowAdjustedAmountPage)
+
   implicit lazy val arbitraryTaxReliefPage: Arbitrary[TaxReliefPage.type] =
     Arbitrary(TaxReliefPage)
 

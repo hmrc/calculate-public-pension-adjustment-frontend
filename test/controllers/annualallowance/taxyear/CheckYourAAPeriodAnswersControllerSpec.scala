@@ -25,10 +25,11 @@ import play.api.test.Helpers._
 import viewmodels.govuk.SummaryListFluency
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
-import pages.annualallowance.taxyear.{DefinedBenefit2016PostAmountPage, DefinedBenefit2016PreAmountPage, DefinedContribution2016PostAmountPage, DefinedContribution2016PostFlexiAmountPage, DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage}
+import pages.annualallowance.taxyear.{DefinedBenefit2016PostAmountPage, DefinedBenefit2016PreAmountPage, DefinedContribution2016PostAmountPage, DefinedContribution2016PostFlexiAmountPage, DefinedContribution2016PreAmountPage, DefinedContribution2016PreFlexiAmountPage, DefinedContributionAmountPage, DoYouHaveGiftAidPage, FlexiAccessDefinedContributionAmountPage}
 import play.api.inject.bind
 import services.UserDataService
-import viewmodels.checkAnswers.annualallowance.taxyear.{DefinedBenefit2016PostAmountSummary, DefinedBenefit2016PreAmountSummary, DefinedContribution2016PostAmountSummary, DefinedContribution2016PreAmountSummary, DefinedContributionAmountSummary, FlexiAccessDefinedContributionAmountSummary}
+import viewmodels.checkAnswers.ClaimingTaxReliefPensionSummary
+import viewmodels.checkAnswers.annualallowance.taxyear.{AdjustedIncomeSummary, AmountClaimedOnOverseasPensionSummary, AmountFlexibleRemunerationArrangementsSummary, AmountOfGiftAidSummary, AmountSalarySacrificeArrangementsSummary, AnyLumpSumDeathBenefitsSummary, AnySalarySacrificeArrangementsSummary, BlindAllowanceSummary, BlindPersonsAllowanceAmountSummary, ClaimingTaxReliefPensionNotAdjustedIncomeSummary, DefinedBenefit2016PostAmountSummary, DefinedBenefit2016PreAmountSummary, DefinedContribution2016PostAmountSummary, DefinedContribution2016PreAmountSummary, DefinedContributionAmountSummary, DidYouContributeToRASSchemeSummary, DoYouHaveGiftAidSummary, DoYouKnowPersonalAllowanceSummary, FlexiAccessDefinedContributionAmountSummary, FlexibleRemunerationArrangementsSummary, HasReliefClaimedOnOverseasPensionSummary, HowMuchContributionPensionSchemeSummary, HowMuchTaxReliefPensionSummary, KnowAdjustedAmountSummary, LumpSumDeathBenefitsValueSummary, PersonalAllowanceSummary, RASContributionAmountSummary, TaxReliefSummary, ThresholdIncomeSummary, TotalIncomeSummary}
 import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView
 
 import java.time.LocalDate
@@ -339,6 +340,69 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         contentAsString(result) mustEqual view(
           summarySequence2016,
           "checkYourAnswers.aa.period.subHeading.2016",
+          controllers.routes.TaskListController.onPageLoad()
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must return relevant answers for income sub journey user answers" in {
+
+      val mockUserDataService = mock[UserDataService]
+
+      val userAnswers = incomeSubJourneyData
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(
+          GET,
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(Period._2022).url
+        )
+
+        val result = route(application, request).value
+        val view   = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
+
+        val expectedSeq = Seq(
+          ThresholdIncomeSummary.row(userAnswers, Period._2022)(messages(application)),
+          TotalIncomeSummary.row(userAnswers, Period._2022)(messages(application)),
+          AnySalarySacrificeArrangementsSummary.row(userAnswers, Period._2022)(messages(application)),
+          AmountSalarySacrificeArrangementsSummary.row(userAnswers, Period._2022)(messages(application)),
+          FlexibleRemunerationArrangementsSummary.row(userAnswers, Period._2022)(messages(application)),
+          AmountFlexibleRemunerationArrangementsSummary.row(userAnswers, Period._2022)(messages(application)),
+          DidYouContributeToRASSchemeSummary.row(userAnswers, Period._2022)(messages(application)),
+          RASContributionAmountSummary.row(userAnswers, Period._2022)(messages(application)),
+          AnyLumpSumDeathBenefitsSummary.row(userAnswers, Period._2022)(messages(application)),
+          LumpSumDeathBenefitsValueSummary.row(userAnswers, Period._2022)(messages(application)),
+          ClaimingTaxReliefPensionSummary.row(userAnswers, Period._2022)(messages(application)),
+          TaxReliefSummary.row(userAnswers, Period._2022)(messages(application)),
+          KnowAdjustedAmountSummary.row(userAnswers, Period._2022)(messages(application)),
+          AdjustedIncomeSummary.row(userAnswers, Period._2022)(messages(application)),
+          ClaimingTaxReliefPensionNotAdjustedIncomeSummary.row(userAnswers, Period._2022)(messages(application)),
+          HowMuchTaxReliefPensionSummary.row(userAnswers, Period._2022)(messages(application)),
+          HasReliefClaimedOnOverseasPensionSummary.row(userAnswers, Period._2022)(messages(application)),
+          AmountClaimedOnOverseasPensionSummary.row(userAnswers, Period._2022)(messages(application)),
+          DoYouHaveGiftAidSummary.row(userAnswers, Period._2022)(messages(application)),
+          AmountOfGiftAidSummary.row(userAnswers, Period._2022)(messages(application)),
+          DoYouKnowPersonalAllowanceSummary.row(userAnswers, Period._2022)(messages(application)),
+          PersonalAllowanceSummary.row(userAnswers, Period._2022)(messages(application)),
+          BlindAllowanceSummary.row(userAnswers, Period._2022)(messages(application)),
+          BlindPersonsAllowanceAmountSummary.row(userAnswers, Period._2022)(messages(application))
+        ).flatten
+
+        val incomeSubJourneySummarySequence = SummaryListViewModel(expectedSeq)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          incomeSubJourneySummarySequence,
+          "checkYourAnswers.aa.period.subHeading.2022",
           controllers.routes.TaskListController.onPageLoad()
         )(
           request,

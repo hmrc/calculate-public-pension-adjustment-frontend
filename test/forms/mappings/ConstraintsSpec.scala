@@ -50,6 +50,32 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
     }
   }
 
+  "inRange" - {
+
+    "must return Valid for a number between the thresholds" in {
+      val result = inRange(1, 1000, "error.inRange").apply(2)
+      result mustEqual Valid
+    }
+
+    "must return Invalid for a number outside the thresholds" in {
+      val result = inRange(1, 1000, "error.inRange").apply(99999)
+      result mustEqual Invalid("error.inRange", 1, 1000)
+    }
+  }
+
+  "inRangeWithArg" - {
+
+    "must return Valid for a number between the thresholds" in {
+      val result = inRangeWithArg(1, 1000, "error.inRange", "arg").apply(2)
+      result mustEqual Valid
+    }
+
+    "must return Invalid for a number outside the thresholds" in {
+      val result = inRangeWithArg(1, 1000, "error.inRange", "arg").apply(99999)
+      result mustEqual Invalid("error.inRange", 1, 1000, "arg")
+    }
+  }
+
   "minimumValue" - {
 
     "must return Valid for a number greater than the threshold" in {
@@ -68,6 +94,24 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
     }
   }
 
+  "minimumValueTwoArgs" - {
+
+    "must return Valid for a number greater than the threshold" in {
+      val result = minimumValueTwoArgs(1, "error.min").apply(2)
+      result mustEqual Valid
+    }
+
+    "must return Valid for a number equal to the threshold" in {
+      val result = minimumValueTwoArgs(1, "error.min").apply(1)
+      result mustEqual Valid
+    }
+
+    "must return Invalid for a number below the threshold with two args" in {
+      val result = minimumValueTwoArgs(1, "error.min", Seq("1", "error2")).apply(0)
+      result mustEqual Invalid("error.min", 1, "error2")
+    }
+  }
+
   "maximumValue" - {
 
     "must return Valid for a number less than the threshold" in {
@@ -83,6 +127,24 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
     "must return Invalid for a number above the threshold" in {
       val result = maximumValue(1, "error.max").apply(2)
       result mustEqual Invalid("error.max", 1, "")
+    }
+  }
+
+  "maximumValueTwoArgs" - {
+
+    "must return Valid for a number greater than the threshold" in {
+      val result = maximumValueTwoArgs(1, "error.max").apply(0)
+      result mustEqual Valid
+    }
+
+    "must return Valid for a number equal to the threshold" in {
+      val result = maximumValueTwoArgs(1, "error.max").apply(1)
+      result mustEqual Valid
+    }
+
+    "must return Invalid for a number below the threshold with two args" in {
+      val result = maximumValueTwoArgs(1, "error.max", Seq("1", "error2")).apply(2)
+      result mustEqual Invalid("error.max", 1, "error2")
     }
   }
 

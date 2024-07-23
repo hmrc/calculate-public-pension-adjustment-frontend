@@ -21,8 +21,6 @@ import play.api.data.FormError
 
 class PersonalAllowanceFormProviderSpec extends IntFieldBehaviours {
 
-  val form = new PersonalAllowanceFormProvider()()
-
   ".value" - {
 
     val fieldName = "value"
@@ -32,21 +30,23 @@ class PersonalAllowanceFormProviderSpec extends IntFieldBehaviours {
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
+    val formProvider = new PersonalAllowanceFormProvider()()
+
     behave like fieldThatBindsValidData(
-      form,
+      formProvider,
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      formProvider,
       fieldName,
       nonNumericError = FormError(fieldName, "personalAllowance.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "personalAllowance.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
-      form,
+      formProvider,
       fieldName,
       minimum = minimum,
       maximum = maximum,
@@ -54,7 +54,7 @@ class PersonalAllowanceFormProviderSpec extends IntFieldBehaviours {
     )
 
     behave like mandatoryField(
-      form,
+      formProvider,
       fieldName,
       requiredError = FormError(fieldName, "personalAllowance.error.required")
     )

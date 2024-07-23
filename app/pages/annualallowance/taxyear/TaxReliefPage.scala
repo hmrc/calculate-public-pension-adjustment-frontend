@@ -16,10 +16,12 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, UserAnswers}
+import models.{AboveThreshold, CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
 
@@ -28,8 +30,60 @@ case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
   override def toString: String = "taxRelief"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    answers.get(TaxReliefPage(period)) match {
+      case Some(_) => is2016Period(answers, period)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    answers.get(TaxReliefPage(period)) match {
+      case Some(_) => is2016Period(answers, period)
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  private def is2016Period(answers: UserAnswers, period: Period): Call =
+    if (period == Period._2016) {
+      controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
+    } else {
+      thresholdAnswer(answers, period)
+    }
+
+  private def thresholdAnswer(answers: UserAnswers, period: Period): Call =
+    answers.get(ThresholdIncomePage(period)) match {
+      case Some(ThresholdIncome.Yes)        =>
+        controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(NormalMode, period)
+      case Some(ThresholdIncome.No)         =>
+        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
+      case Some(ThresholdIncome.IDoNotKnow) => thresholdStatus(answers, period)
+      case _                                => controllers.routes.JourneyRecoveryController.onPageLoad()
+    }
+
+  private def thresholdStatus(answers: UserAnswers, period: Period): Call =
+    answers.get(AboveThreshold(period)) match {
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(NormalMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
+    }
+
+  override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(HowMuchContributionPensionSchemePage(period))
+          .flatMap(_.remove(KnowAdjustedAmountPage(period)))
+          .flatMap(_.remove(AdjustedIncomePage(period)))
+          .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
+          .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+          .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(DoYouHaveGiftAidPage(period)))
+          .flatMap(_.remove(AmountOfGiftAidPage(period)))
+          .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
+          .flatMap(_.remove(PersonalAllowancePage(period)))
+          .flatMap(_.remove(BlindAllowancePage(period)))
+          .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

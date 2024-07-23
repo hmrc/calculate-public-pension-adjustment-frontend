@@ -47,7 +47,7 @@ class DefinedContributionPensionSchemePageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = DefinedContributionPensionSchemePage.navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/annual-allowance/tax-charge-between-2014-2015")
+        check(nextPageUrl, "/annual-allowance/tax-charge-2014-2015")
       }
     }
 

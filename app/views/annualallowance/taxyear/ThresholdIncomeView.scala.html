@@ -26,68 +26,66 @@
 @(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-        <p class="govuk-body">@messages("thresholdIncome.message1")</p>
+<p class="govuk-body">@messages("thresholdIncome.message1")</p>
 
-        <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance" rel="noreferrer noopener" target="_blank">
-            @messages("thresholdIncome.message2")
-        </a>
+<a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance" rel="noreferrer noopener" target="_blank">
+    @messages("thresholdIncome.message2") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+</a>
 
-        <br>
-        <br>
+<br>
+<br>
 
-        <h2 class="govuk-heading-l">@messages("thresholdIncome.subHeading1")</h2>
+<h2 class="govuk-heading-l">@messages("thresholdIncome.subHeading1")</h2>
 
-        <ul>
-            <li class="govuk-body">
-                @messages("thresholdIncome.heading.list1")
-            </li>
-            <li class="govuk-body">
-                @messages("thresholdIncome.heading.list2")
-            </li>
-            <li class="govuk-body">
-                @messages("thresholdIncome.heading.list3")
-            </li>
-            <li class="govuk-body">
-                @messages("thresholdIncome.heading.list4")
-            </li>
-            <li class="govuk-body">
-                @messages("thresholdIncome.heading.list5")
-            </li>
-            <li class="govuk-body">
-                @messages("thresholdIncome.heading.list6")
-            </li>
-            <li class="govuk-body">
-                @messages("thresholdIncome.heading.list7")
-            </li>
-            <li class="govuk-body">
-                @messages("thresholdIncome.heading.list8")
-            </li>
-        </ul>
+<ul>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list1")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list2")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list3")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list4")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list5")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list6")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list7")
+    </li>
+    <li class="govuk-body">
+        @messages("thresholdIncome.heading.list8")
+    </li>
+</ul>
 
-        <h2 class="govuk-heading-l">@messages("thresholdIncome.subHeading2." + period)</h2>
+<h2 class="govuk-heading-l">@messages("thresholdIncome.subHeading2." + period)</h2>
 }
 
 @layout(pageTitle = title(form, messages("thresholdIncome.title"))) {
 
-    @formHelper(
-        action = controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onSubmit(
-            mode, period
-        ),
-        Symbol("autoComplete") -> "off"
-    ) {
+    @formHelper(action = controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onSubmit(mode, period), 'autoComplete -> "off") {
+
         @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
+            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
         @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                content = messages("thresholdIncome.heading"),
-                caption = HmrcSectionCaption((messages("annualAllowance.period.caption." + period)))
-                )
+            RadiosViewModel(
+                field  = form("value"),
+                    legend = HmrcPageHeadingLegend(
+                    content = messages("thresholdIncome.heading"),
+                    caption = HmrcSectionCaption((messages("annualAllowance.period.caption." + period)))
+                ),
+                items  = ThresholdIncome.options
             ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
+
         @continueButton()
     }
 }

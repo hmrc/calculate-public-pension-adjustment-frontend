@@ -26,6 +26,9 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 object TotalIncomeSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit
@@ -33,14 +36,20 @@ object TotalIncomeSummary {
   ): Option[SummaryListRow] =
     answers.get(TotalIncomePage(period)).map { answer =>
       SummaryListRowViewModel(
-        key = messages("totalIncome.checkYourAnswersLabel", period.start.getYear.toString, period.end.getYear.toString),
+        key = messages("totalIncome.checkYourAnswersLabel", startEndDate(period)),
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
             TotalIncomeController.onPageLoad(CheckMode, period).url
-          ).withVisuallyHiddenText(messages("totalIncome.change.hidden"))
+          ).withVisuallyHiddenText(messages("totalIncome.change.hidden", startEndDate(period)))
         )
       )
     }
+
+  private def startEndDate(period: Period)(implicit messages: Messages): String = {
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
+    val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+    period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
+  }
 }

@@ -82,7 +82,7 @@ class DefinedContribution2016PreAmountPageSpec extends PageBehaviours {
 
           val result = DefinedContribution2016PreAmountPage.navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/annual-allowance/2016/total-income")
+          checkNavigation(result, "/annual-allowance/2016/taxable-income")
 
         }
       }
@@ -145,7 +145,7 @@ class DefinedContribution2016PreAmountPageSpec extends PageBehaviours {
 
           val result = DefinedContribution2016PreAmountPage.navigate(NormalMode, ua).url
 
-          checkNavigation(result, "/annual-allowance/2016/total-income")
+          checkNavigation(result, "/annual-allowance/2016/taxable-income")
         }
 
         "must navigate to DB pre 2016 page when flexi access date == sub period end date & DB indicated" in {

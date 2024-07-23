@@ -19,14 +19,16 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.TaxReliefFormProvider
 import models.tasklist.sections.AASection
-import models.{Mode, Period}
-import pages.annualallowance.taxyear.TaxReliefPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import models.{AboveThreshold, Mode, Period, ThresholdIncome}
+import pages.annualallowance.taxyear.{TaxReliefPage, ThresholdIncomePage}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.TaxReliefView
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -37,6 +39,7 @@ class TaxReliefController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   formProvider: TaxReliefFormProvider,
+  aboveThresholdController: AboveThresholdController,
   val controllerComponents: MessagesControllerComponents,
   view: TaxReliefView
 )(implicit ec: ExecutionContext)
@@ -52,7 +55,7 @@ class TaxReliefController @Inject() (
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, period))
+      Ok(view(preparedForm, mode, period, startEndDate(period)))
   }
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
@@ -60,14 +63,34 @@ class TaxReliefController @Inject() (
       form
         .bindFromRequest()
         .fold(
-          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period))),
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
-            for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(TaxReliefPage(period), value))
-              redirectUrl     = TaxReliefPage(period).navigate(mode, updatedAnswers).url
-              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
-            } yield Redirect(redirectUrl)
+            if (request.userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.IDoNotKnow)) {
+              for {
+                updatedAnswers            <- Future.fromTry(request.userAnswers.set(TaxReliefPage(period), value))
+                answersWithThreshold       = AboveThreshold(period).saveThresholdStatus(
+                                               updatedAnswers,
+                                               period,
+                                               aboveThresholdController.thresholdStatus(updatedAnswers, period)
+                                             )
+                redirectUrl                = TaxReliefPage(period).navigate(mode, answersWithThreshold).url
+                answersWithNavAndThreshold = AASection(period).saveNavigation(answersWithThreshold, redirectUrl)
+                _                         <- userDataService.set(answersWithNavAndThreshold)
+              } yield Redirect(redirectUrl)
+            } else {
+              for {
+                updatedAnswers <- Future.fromTry(request.userAnswers.set(TaxReliefPage(period), value))
+                redirectUrl     = TaxReliefPage(period).navigate(mode, updatedAnswers).url
+                answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+                _              <- userDataService.set(answersWithNav)
+              } yield Redirect(redirectUrl)
+            }
         )
+  }
+
+  private def startEndDate(period: Period)(implicit messages: Messages): String = {
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
+    val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+    period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
   }
 }

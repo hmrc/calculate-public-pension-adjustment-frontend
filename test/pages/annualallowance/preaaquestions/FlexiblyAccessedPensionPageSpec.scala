@@ -47,7 +47,7 @@ class FlexiblyAccessedPensionPageSpec extends PageBehaviours {
 
         val nextPageUrl: Call = FlexiblyAccessedPensionPage.navigate(NormalMode, userAnswers)
 
-        check(nextPageUrl, "/annual-allowance/tax-charge-between-2014-2015")
+        check(nextPageUrl, "/annual-allowance/tax-charge-2014-2015")
       }
 
       "must redirect to journey recovery when no answer" in {

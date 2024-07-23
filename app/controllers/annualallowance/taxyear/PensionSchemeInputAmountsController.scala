@@ -45,10 +45,10 @@ class PensionSchemeInputAmountsController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
-
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
+      val form = formProvider(period)
+
       val startEndDate = getStartEndDate(period)
       val preparedForm = request.userAnswers.get(PensionSchemeInputAmountsPage(period, schemeIndex)) match {
         case None        => form
@@ -64,6 +64,8 @@ class PensionSchemeInputAmountsController @Inject() (
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
+      val form = formProvider(period)
+
       val startEndDate = getStartEndDate(period)
       val schemeName   = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName

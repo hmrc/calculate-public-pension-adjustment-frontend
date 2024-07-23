@@ -16,10 +16,12 @@
 
 package pages.annualallowance.taxyear
 
-import models.{NormalMode, Period, UserAnswers}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
 
@@ -28,8 +30,60 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
   override def toString: String = "totalIncome"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.PersonalAllowanceController.onPageLoad(NormalMode, period)
+    if (period != Period._2016) {
+      answers.get(ThresholdIncomePage(period)) match {
+        case Some(ThresholdIncome.IDoNotKnow) =>
+          controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
+            .onPageLoad(NormalMode, period)
+        case Some(ThresholdIncome.Yes)        =>
+          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
+        case Some(ThresholdIncome.No)         =>
+          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
+        case _                                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    } else {
+      controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+    if (period != Period._2016) {
+      answers.get(ThresholdIncomePage(period)) match {
+        case Some(ThresholdIncome.IDoNotKnow)               =>
+          controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController
+            .onPageLoad(NormalMode, period)
+        case Some(ThresholdIncome.Yes | ThresholdIncome.No) =>
+          controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
+        case _                                              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      }
+    } else {
+      controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController.onPageLoad(NormalMode, period)
+    }
+
+  override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(AnySalarySacrificeArrangementsPage(period))
+          .flatMap(_.remove(AmountSalarySacrificeArrangementsPage(period)))
+          .flatMap(_.remove(FlexibleRemunerationArrangementsPage(period)))
+          .flatMap(_.remove(AmountFlexibleRemunerationArrangementsPage(period)))
+          .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
+          .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
+          .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
+          .flatMap(_.remove(TaxReliefPage(period)))
+          .flatMap(_.remove(KnowAdjustedAmountPage(period)))
+          .flatMap(_.remove(AdjustedIncomePage(period)))
+          .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
+          .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
+          .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
+          .flatMap(_.remove(DoYouHaveGiftAidPage(period)))
+          .flatMap(_.remove(AmountOfGiftAidPage(period)))
+          .flatMap(_.remove(DoYouKnowPersonalAllowancePage(period)))
+          .flatMap(_.remove(PersonalAllowancePage(period)))
+          .flatMap(_.remove(BlindAllowancePage(period)))
+          .flatMap(_.remove(BlindPersonsAllowanceAmountPage(period)))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

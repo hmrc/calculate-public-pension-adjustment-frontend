@@ -18,13 +18,13 @@ package base
 
 import controllers.actions._
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{ChangeInTaxCharge, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{ChangeInTaxCharge, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
+import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountClaimedOnOverseasPensionPage, AmountFlexibleRemunerationArrangementsPage, AmountOfGiftAidPage, AmountSalarySacrificeArrangementsPage, AnyLumpSumDeathBenefitsPage, AnySalarySacrificeArrangementsPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionNotAdjustedIncomePage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouHaveGiftAidPage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, FlexibleRemunerationArrangementsPage, HasReliefClaimedOnOverseasPensionPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
 import pages.lifetimeallowance.{AnnualPaymentValuePage, ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, HadBenefitCrystallisationEventPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, MultipleBenefitCrystallisationEventPage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
 import pages.setupquestions.ReportingChangePage
 import play.api.Application
@@ -252,7 +252,7 @@ trait SpecBase
       .set(DefinedBenefitAmountPage(_2021), BigInt(123))
       .success
       .value
-      .set(ThresholdIncomePage(_2021), true)
+      .set(ThresholdIncomePage(_2021), ThresholdIncome.Yes)
       .success
       .value
       .set(AdjustedIncomePage(_2021), BigInt(123))
@@ -282,12 +282,147 @@ trait SpecBase
       .set(HowMuchAAChargeSchemePaidPage(_2022, SchemeIndex(0)), BigInt(123))
       .success
       .value
-      .set(ThresholdIncomePage(_2022), false)
+      .set(ThresholdIncomePage(_2022), ThresholdIncome.No)
       .success
       .value
       .set(TotalIncomePage(_2022), BigInt(123))
       .success
       .value
   }
+
+  def incomeSubJourneyData: UserAnswers =
+    emptyUserAnswers
+      .set(ThresholdIncomePage(_2022), ThresholdIncome.IDoNotKnow)
+      .success
+      .value
+      .set(TotalIncomePage(_2022), BigInt(2000))
+      .success
+      .value
+      .set(AnySalarySacrificeArrangementsPage(_2022), true)
+      .success
+      .value
+      .set(AmountSalarySacrificeArrangementsPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(FlexibleRemunerationArrangementsPage(_2022), true)
+      .success
+      .value
+      .set(AmountFlexibleRemunerationArrangementsPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DidYouContributeToRASSchemePage(_2022), true)
+      .success
+      .value
+      .set(RASContributionAmountPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(AnyLumpSumDeathBenefitsPage(_2022), true)
+      .success
+      .value
+      .set(LumpSumDeathBenefitsValuePage(_2022), BigInt(1))
+      .success
+      .value
+      .set(ClaimingTaxReliefPensionPage(_2022), true)
+      .success
+      .value
+      .set(TaxReliefPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(KnowAdjustedAmountPage(_2022), true)
+      .success
+      .value
+      .set(AdjustedIncomePage(_2022), BigInt(1))
+      .success
+      .value
+      .set(ClaimingTaxReliefPensionNotAdjustedIncomePage(_2022), true)
+      .success
+      .value
+      .set(HowMuchTaxReliefPensionPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(HasReliefClaimedOnOverseasPensionPage(_2022), true)
+      .success
+      .value
+      .set(AmountClaimedOnOverseasPensionPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DoYouHaveGiftAidPage(_2022), true)
+      .success
+      .value
+      .set(AmountOfGiftAidPage(_2022), BigInt("1"))
+      .success
+      .value
+      .set(DoYouKnowPersonalAllowancePage(_2022), true)
+      .success
+      .value
+      .set(PersonalAllowancePage(_2022), BigInt(1))
+      .success
+      .value
+      .set(BlindAllowancePage(_2022), true)
+      .success
+      .value
+      .set(BlindPersonsAllowanceAmountPage(_2022), BigInt(1))
+      .success
+      .value
+
+  def incomeSubJourneyDataThresholdIncomeYes: UserAnswers =
+    emptyUserAnswers
+      .set(ThresholdIncomePage(_2022), ThresholdIncome.Yes)
+      .success
+      .value
+      .set(TotalIncomePage(_2022), BigInt(2000))
+      .success
+      .value
+      .set(ClaimingTaxReliefPensionPage(_2022), true)
+      .success
+      .value
+      .set(TaxReliefPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(KnowAdjustedAmountPage(_2022), false)
+      .success
+      .value
+      .set(DidYouContributeToRASSchemePage(_2022), true)
+      .success
+      .value
+      .set(RASContributionAmountPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(AnyLumpSumDeathBenefitsPage(_2022), true)
+      .success
+      .value
+      .set(LumpSumDeathBenefitsValuePage(_2022), BigInt(1))
+      .success
+      .value
+      .set(ClaimingTaxReliefPensionNotAdjustedIncomePage(_2022), true)
+      .success
+      .value
+      .set(HowMuchTaxReliefPensionPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(HasReliefClaimedOnOverseasPensionPage(_2022), true)
+      .success
+      .value
+      .set(AmountClaimedOnOverseasPensionPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DoYouHaveGiftAidPage(_2022), true)
+      .success
+      .value
+      .set(AmountOfGiftAidPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DoYouKnowPersonalAllowancePage(_2022), true)
+      .success
+      .value
+      .set(PersonalAllowancePage(_2022), BigInt(1))
+      .success
+      .value
+      .set(BlindAllowancePage(_2022), true)
+      .success
+      .value
+      .set(BlindPersonsAllowanceAmountPage(_2022), BigInt(1))
+      .success
+      .value
 
 }

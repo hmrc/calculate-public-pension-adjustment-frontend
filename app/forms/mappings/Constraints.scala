@@ -43,6 +43,19 @@ trait Constraints {
       }
     }
 
+  protected def minimumValueTwoArgs[A](minimum: A, errorKey: String, arg: Seq[String] = Seq(""))(implicit
+    ev: Ordering[A]
+  ): Constraint[A] =
+    Constraint { input =>
+      import ev._
+
+      if (input >= minimum) {
+        Valid
+      } else {
+        Invalid(errorKey, minimum, arg.tail.head)
+      }
+    }
+
   protected def maximumValue[A](maximum: A, errorKey: String, arg: String = "")(implicit
     ev: Ordering[A]
   ): Constraint[A] =
@@ -56,6 +69,19 @@ trait Constraints {
       }
     }
 
+  protected def maximumValueTwoArgs[A](maximum: A, errorKey: String, arg: Seq[String] = Seq(""))(implicit
+    ev: Ordering[A]
+  ): Constraint[A] =
+    Constraint { input =>
+      import ev._
+
+      if (input <= maximum) {
+        Valid
+      } else {
+        Invalid(errorKey, maximum, arg.tail.head)
+      }
+    }
+
   protected def inRange[A](minimum: A, maximum: A, errorKey: String)(implicit ev: Ordering[A]): Constraint[A] =
     Constraint { input =>
       import ev._
@@ -64,6 +90,19 @@ trait Constraints {
         Valid
       } else {
         Invalid(errorKey, minimum, maximum)
+      }
+    }
+
+  protected def inRangeWithArg[A](minimum: A, maximum: A, errorKey: String, arg: String = "")(implicit
+    ev: Ordering[A]
+  ): Constraint[A] =
+    Constraint { input =>
+      import ev._
+
+      if (input >= minimum && input <= maximum) {
+        Valid
+      } else {
+        Invalid(errorKey, minimum, maximum, arg)
       }
     }
 

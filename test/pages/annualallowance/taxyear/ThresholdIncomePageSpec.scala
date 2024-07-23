@@ -17,18 +17,18 @@
 package pages.annualallowance.taxyear
 
 import models.Period._2013
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class ThresholdIncomePageSpec extends PageBehaviours {
 
   "ThresholdIncomePage" - {
 
-    beRetrievable[Boolean](ThresholdIncomePage(Period._2013))
+    beRetrievable[ThresholdIncome](ThresholdIncomePage(Period._2013))
 
-    beSettable[Boolean](ThresholdIncomePage(Period._2013))
+    beSettable[ThresholdIncome](ThresholdIncomePage(Period._2013))
 
-    beRemovable[Boolean](ThresholdIncomePage(Period._2013))
+    beRemovable[ThresholdIncome](ThresholdIncomePage(Period._2013))
 
     "Normal mode" - {
 
@@ -36,26 +36,26 @@ class ThresholdIncomePageSpec extends PageBehaviours {
         val ua     = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2013),
-            true
+            ThresholdIncome.Yes
           )
           .success
           .value
         val result = ThresholdIncomePage(_2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2013/adjusted-income")
+        checkNavigation(result, "/annual-allowance/2013/taxable-income")
       }
 
       "to TotalIncomePage when answered false" in {
         val ua     = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2013),
-            false
+            ThresholdIncome.No
           )
           .success
           .value
         val result = ThresholdIncomePage(_2013).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2013/total-income")
+        checkNavigation(result, "/annual-allowance/2013/taxable-income")
       }
 
       "to JourneyRecovery when not answered" in {
@@ -68,30 +68,30 @@ class ThresholdIncomePageSpec extends PageBehaviours {
 
     "Check mode" - {
 
-      "must Navigate correctly to CYA in check mode when answered no" in {
+      "must Navigate correctly to total in normal mode when answered no" in {
         val ua     = emptyUserAnswers
           .set(
-            ThresholdIncomePage(Period._2013),
-            false
+            ThresholdIncomePage(Period._2017),
+            ThresholdIncome.No
           )
           .success
           .value
-        val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
+        val result = ThresholdIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2013/check-answers")
+        checkNavigation(result, "/annual-allowance/2017/taxable-income")
       }
 
       "must Navigate correctly to CYA in check mode when answered yes" in {
         val ua     = emptyUserAnswers
           .set(
-            ThresholdIncomePage(Period._2013),
-            true
+            ThresholdIncomePage(Period._2017),
+            ThresholdIncome.Yes
           )
           .success
           .value
-        val result = ThresholdIncomePage(_2013).navigate(CheckMode, ua).url
+        val result = ThresholdIncomePage(Period._2017).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2013/change-adjusted-income")
+        checkNavigation(result, "/annual-allowance/2017/taxable-income")
       }
 
       "must navigate to journey recovery when no answer" in {
@@ -103,19 +103,39 @@ class ThresholdIncomePageSpec extends PageBehaviours {
 
     }
 
-    "clean up" - {
+    "cleanup" - {
 
-      "must cleanup correctly when answered no" in {
-        val ua = emptyUserAnswers
-          .set(
-            AdjustedIncomePage(Period._2013),
-            BigInt("100")
-          )
+      "must cleanup correctly" in {
+
+        val period = Period._2022
+
+        val cleanedUserAnswers = ThresholdIncomePage(Period._2022)
+          .cleanup(Some(ThresholdIncome.Yes), incomeSubJourneyData)
           .success
           .value
 
-        val cleanedUserAnswers = ThresholdIncomePage(_2013).cleanup(Some(false), ua).success.value
-        cleanedUserAnswers.get(AdjustedIncomePage(Period._2013)) mustBe None
+        cleanedUserAnswers.get(TotalIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe None
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
+        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
+        cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
+        cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
       }
     }
   }

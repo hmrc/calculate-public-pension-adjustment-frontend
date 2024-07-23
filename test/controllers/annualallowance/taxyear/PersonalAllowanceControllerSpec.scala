@@ -26,7 +26,7 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserDataService
+import services.{CalculateBackendService, UserDataService}
 import views.html.annualallowance.taxyear.PersonalAllowanceView
 import pages.annualallowance.taxyear.PersonalAllowancePage
 
@@ -34,8 +34,9 @@ import scala.concurrent.Future
 
 class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new PersonalAllowanceFormProvider()
-  val form         = formProvider()
+  val formProvider         = new PersonalAllowanceFormProvider()
+  val form                 = formProvider()
+  val startEndDate: String = "6 April 2017 to 5 April 2018"
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -58,7 +59,10 @@ class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[PersonalAllowanceView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -76,7 +80,7 @@ class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -121,7 +125,7 @@ class PersonalAllowanceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018)(
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString

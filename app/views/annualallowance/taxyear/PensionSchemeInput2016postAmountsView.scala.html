@@ -29,12 +29,6 @@
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
 
 
-@contentHintForRevisedPIA = {
-    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message1")</p>
-    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message2")</p>
-    @messages("pensionSchemeInputAmounts.revisedPIA.hint1")
-}
-
 @layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", schemeName))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.PensionSchemeInput2016postAmountsController.onSubmit(mode, period, schemeIndex), Symbol("autoComplete") -> "off") {
@@ -43,14 +37,22 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <span class="govuk-caption-xl">@messages("annualAllowance.period.caption.2016post")</span>
-        <h1 class="govuk-heading-xl">@messages("pensionSchemeInputAmounts.heading.2016-post", schemeName)</h1>
+        <span class="govuk-caption-xl">@messages("annualAllowance.period.caption."+{period.toString})</span>
+
+        <h1 class="govuk-heading-xl">@messages("pensionSchemeInputAmounts.revisedPIA.heading1")</h1>
+
+        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message1")</p>
+        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message2")</p>
+        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message3")</p>
+        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
+
+        <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
 
         @govukInput(
             InputViewModel(
                 field = form("revisedPIA"),
-                label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA", period, schemeIndex)).withCssClass("govuk-label--m")
-            ).withHint(HintViewModel(HtmlContent(contentHintForRevisedPIA)))
+                label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA.heading2", schemeName)).withCssClass("govuk-label--m")
+            )
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)

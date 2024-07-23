@@ -83,10 +83,10 @@ POST        /annual-allowance/flexibly-accessed                              con
 GET         /annual-allowance/change-flexibly-accessed                       controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onPageLoad(mode: Mode = CheckMode)
 POST        /annual-allowance/change-flexibly-accessed                       controllers.annualallowance.preaaquestions.FlexiblyAccessedPensionController.onSubmit(mode: Mode = CheckMode)
 
-GET         /annual-allowance/tax-charge-between-2014-2015                   controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onPageLoad(mode: Mode = NormalMode)
-POST        /annual-allowance/tax-charge-between-2014-2015                   controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onSubmit(mode: Mode = NormalMode)
-GET         /annual-allowance/change-tax-charge-between-2014-2015            controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onPageLoad(mode: Mode = CheckMode)
-POST        /annual-allowance/change-tax-charge-between-2014-2015            controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/tax-charge-2014-2015                   controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/tax-charge-2014-2015                   controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-tax-charge-2014-2015            controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-tax-charge-2014-2015            controllers.annualallowance.preaaquestions.PayTaxCharge1415Controller.onSubmit(mode: Mode = CheckMode)
 
 GET         /lifetime-allowance                                                  controllers.lifetimeallowance.WhatYouWillNeedLtaController.onPageLoad()
 
@@ -248,10 +248,10 @@ POST        /annual-allowance/:period/adjusted-income                           
 GET         /annual-allowance/:period/change-adjusted-income                                                            controllers.annualallowance.taxyear.AdjustedIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST        /annual-allowance/:period/change-adjusted-income                                                            controllers.annualallowance.taxyear.AdjustedIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET         /annual-allowance/:period/total-income                                                                      controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST        /annual-allowance/:period/total-income                                                                      controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET         /annual-allowance/:period/change-total-income                                                               controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST        /annual-allowance/:period/change-total-income                                                               controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET         /annual-allowance/:period/taxable-income                                                                      controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST        /annual-allowance/:period/taxable-income                                                                      controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET         /annual-allowance/:period/change-taxable-income                                                               controllers.annualallowance.taxyear.TotalIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST        /annual-allowance/:period/change-taxable-income                                                               controllers.annualallowance.taxyear.TotalIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)
 
 GET         /annual-allowance/:period/contributed-to-dc-or-db-scheme                                                    controllers.annualallowance.taxyear.ContributedToDuringRemedyPeriodController.onPageLoad(mode: Mode = NormalMode, period:Period)
 POST        /annual-allowance/:period/contributed-to-dc-or-db-scheme                                                    controllers.annualallowance.taxyear.ContributedToDuringRemedyPeriodController.onSubmit(mode: Mode = NormalMode, period:Period)
@@ -403,12 +403,113 @@ GET        /previous-claim-continue                        controllers.PreviousC
 POST       /previous-claim-continue                        controllers.PreviousClaimContinueController.onSubmit()
 GET        /previous-claim-navigate                         controllers.PreviousClaimContinueController.redirect()
 
-GET        /annual-allowance/:period/total-income/personal-allowance                  controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/:period/total-income/personal-allowance                  controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /change-annual-allowance/:period/total-income/personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /change-annual-allowance/:period/total-income/personal-allowance                        controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET        /annual-allowance/:period/personal-allowance-amount                 controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/personal-allowance-amount                  controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-personal-allowance-amount                        controllers.annualallowance.taxyear.PersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-personal-allowance-amount                        controllers.annualallowance.taxyear.PersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET        /annual-allowance/:period/total-income/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = NormalMode, period:Period)
-POST       /annual-allowance/:period/total-income/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = NormalMode, period:Period)
-GET        /change-annual-allowance/:period/total-income/tax-relief                        controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = CheckMode, period:Period)
-POST       /change-annual-allowance/:period/total-income/tax-relief                        controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = CheckMode, period:Period)
+GET        /annual-allowance/:period/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/tax-relief                  controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-tax-relief                        controllers.annualallowance.taxyear.TaxReliefController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-tax-relief                        controllers.annualallowance.taxyear.TaxReliefController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/amount-salary-sacrifice-arrangements                 controllers.annualallowance.taxyear.AmountSalarySacrificeArrangementsController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/amount-salary-sacrifice-arrangements                  controllers.annualallowance.taxyear.AmountSalarySacrificeArrangementsController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-amount-salary-sacrifice-arrangements                        controllers.annualallowance.taxyear.AmountSalarySacrificeArrangementsController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-amount-salary-sacrifice-arrangements                        controllers.annualallowance.taxyear.AmountSalarySacrificeArrangementsController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/amount-flexible-remuneration-arrangements                 controllers.annualallowance.taxyear.AmountFlexibleRemunerationArrangementsController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/amount-flexible-remuneration-arrangements                  controllers.annualallowance.taxyear.AmountFlexibleRemunerationArrangementsController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-amount-flexible-remuneration-arrangements                        controllers.annualallowance.taxyear.AmountFlexibleRemunerationArrangementsController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-amount-flexible-remuneration-arrangements                        controllers.annualallowance.taxyear.AmountFlexibleRemunerationArrangementsController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/how-much-contribution                 controllers.annualallowance.taxyear.HowMuchContributionPensionSchemeController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/how-much-contribution                   controllers.annualallowance.taxyear.HowMuchContributionPensionSchemeController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-how-much-contribution                        controllers.annualallowance.taxyear.HowMuchContributionPensionSchemeController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-how-much-contribution                       controllers.annualallowance.taxyear.HowMuchContributionPensionSchemeController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/any-salary-sacrifice-arrangements                      controllers.annualallowance.taxyear.AnySalarySacrificeArrangementsController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/any-salary-sacrifice-arrangements                           controllers.annualallowance.taxyear.AnySalarySacrificeArrangementsController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-any-salary-sacrifice-arrangements                     controllers.annualallowance.taxyear.AnySalarySacrificeArrangementsController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-any-salary-sacrifice-arrangements                     controllers.annualallowance.taxyear.AnySalarySacrificeArrangementsController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/flexible-remuneration-arrangements                         controllers.annualallowance.taxyear.FlexibleRemunerationArrangementsController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/flexible-remuneration-arrangements                        controllers.annualallowance.taxyear.FlexibleRemunerationArrangementsController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-flexible-remuneration-arrangements                  controllers.annualallowance.taxyear.FlexibleRemunerationArrangementsController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-flexible-remuneration-arrangements                  controllers.annualallowance.taxyear.FlexibleRemunerationArrangementsController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/any-lump-sum-death-benefits                       controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/any-lump-sum-death-benefits                     controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-any-lump-sum-death-benefits                 controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-any-lump-sum-death-benefits                  controllers.annualallowance.taxyear.AnyLumpSumDeathBenefitsController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/lump-sum-death-benefits-value                 controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/lump-sum-death-benefits-value                  controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-lump-sum-death-benefits-value                      controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-lump-sum-death-benefits-value                       controllers.annualallowance.taxyear.LumpSumDeathBenefitsValueController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/claiming-tax-relief                       controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/claiming-tax-relief                       controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-claiming-tax-relief                   controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-claiming-tax-relief                   controllers.annualallowance.taxyear.ClaimingTaxReliefPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/know-adjusted-amount                                         controllers.annualallowance.taxyear.KnowAdjustedAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/know-adjusted-amount                                         controllers.annualallowance.taxyear.KnowAdjustedAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-know-adjusted-amount                                  controllers.annualallowance.taxyear.KnowAdjustedAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-know-adjusted-amount                                  controllers.annualallowance.taxyear.KnowAdjustedAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/how-much-tax-relief-pension                               controllers.annualallowance.taxyear.HowMuchTaxReliefPensionController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/how-much-tax-relief-pension                               controllers.annualallowance.taxyear.HowMuchTaxReliefPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-how-much-tax-relief-pension                        controllers.annualallowance.taxyear.HowMuchTaxReliefPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-how-much-tax-relief-pension                        controllers.annualallowance.taxyear.HowMuchTaxReliefPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/claiming-tax-relief-pension                         controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/claiming-tax-relief-pension                         controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-claiming-tax-relief-pension                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-claiming-tax-relief-pension                  controllers.annualallowance.taxyear.ClaimingTaxReliefPensionNotAdjustedIncomeController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/tax-relief-overseas-pension-value                   controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/tax-relief-overseas-pension-value                   controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-tax-relief-overseas-pension-value                         controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-tax-relief-overseas-pension-value                         controllers.annualallowance.taxyear.AmountClaimedOnOverseasPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/any-tax-relief-overseas-pension                         controllers.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/any-tax-relief-overseas-pension                         controllers.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-any-tax-relief-overseas-pension                   controllers.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-any-tax-relief-overseas-pension                   controllers.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/do-you-know-personal-allowance                        controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/do-you-know-personal-allowance                        controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-do-you-know-personal-allowance                  controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-do-you-know-personal-allowance                  controllers.annualallowance.taxyear.DoYouKnowPersonalAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/blind-person-allowance                        controllers.annualallowance.taxyear.BlindAllowanceController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/blind-person-allowance                        controllers.annualallowance.taxyear.BlindAllowanceController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-blind-person-allowance                 controllers.annualallowance.taxyear.BlindAllowanceController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-blind-person-allowance                 controllers.annualallowance.taxyear.BlindAllowanceController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/blind-persons-allowance-amount                controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/blind-persons-allowance-amount                  controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-blind-persons-allowance-amount                        controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-blind-persons-allowance-amount                        controllers.annualallowance.taxyear.BlindPersonsAllowanceAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+
+GET        /annual-allowance/:period/how-much-contribution-relief-at-source                  controllers.annualallowance.taxyear.RASContributionAmountController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/how-much-contribution-relief-at-source                  controllers.annualallowance.taxyear.RASContributionAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-how-much-contribution-relief-at-source                        controllers.annualallowance.taxyear.RASContributionAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-how-much-contribution-relief-at-source                        controllers.annualallowance.taxyear.RASContributionAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/contribute-to-relief-at-source-scheme                        controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/contribute-to-relief-at-source-scheme                        controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-contribute-to-relief-at-source-scheme                  controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-contribute-to-relief-at-source-scheme                  controllers.annualallowance.taxyear.DidYouContributeToRASSchemeController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/donated-via-gift-aid                         controllers.annualallowance.taxyear.DoYouHaveGiftAidController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/donated-via-gift-aid                         controllers.annualallowance.taxyear.DoYouHaveGiftAidController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-donated-via-gift-aid                  controllers.annualallowance.taxyear.DoYouHaveGiftAidController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-donated-via-gift-aid                  controllers.annualallowance.taxyear.DoYouHaveGiftAidController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /annual-allowance/:period/donated-via-gift-aid-amount                controllers.annualallowance.taxyear.AmountOfGiftAidController.onPageLoad(mode: Mode = NormalMode, period:Period)
+POST       /annual-allowance/:period/donated-via-gift-aid-amount                controllers.annualallowance.taxyear.AmountOfGiftAidController.onSubmit(mode: Mode = NormalMode, period:Period)
+GET        /annual-allowance/:period/change-donated-via-gift-aid-amount         controllers.annualallowance.taxyear.AmountOfGiftAidController.onPageLoad(mode: Mode = CheckMode, period:Period)
+POST       /annual-allowance/:period/change-donated-via-gift-aid-amount         controllers.annualallowance.taxyear.AmountOfGiftAidController.onSubmit(mode: Mode = CheckMode, period:Period)
