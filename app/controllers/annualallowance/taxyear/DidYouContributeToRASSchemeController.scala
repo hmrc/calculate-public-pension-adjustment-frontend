@@ -58,22 +58,6 @@ class DidYouContributeToRASSchemeController @Inject() (
       Ok(view(preparedForm, mode, period, startEndDate(period)))
   }
 
-//  def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-//    implicit request =>
-//      form
-//        .bindFromRequest()
-//        .fold(
-//          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
-//          value =>
-//            for {
-//              updatedAnswers <- Future.fromTry(request.userAnswers.set(DidYouContributeToRASSchemePage(period), value))
-//              redirectUrl     = DidYouContributeToRASSchemePage(period).navigate(mode, updatedAnswers).url
-//              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-//              _              <- userDataService.set(answersWithNav)
-//            } yield Redirect(redirectUrl)
-//        )
-//  }
-
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form

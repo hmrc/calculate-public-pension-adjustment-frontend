@@ -18,8 +18,7 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import forms.annualallowance.taxyear.TaxReliefFormProvider
-import models.{AboveThreshold, Done, NormalMode, Period, ThresholdIncome, UserAnswers}
-import org.mockito.ArgumentCaptor
+import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -29,7 +28,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
 import views.html.annualallowance.taxyear.TaxReliefView
-import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, HowMuchContributionPensionSchemePage, LumpSumDeathBenefitsValuePage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
+import pages.annualallowance.taxyear.TaxReliefPage
 
 import scala.concurrent.Future
 

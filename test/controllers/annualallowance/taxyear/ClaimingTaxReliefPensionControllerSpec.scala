@@ -19,11 +19,11 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
-import models.{ContributedToDuringRemedyPeriod, Done, NormalMode, Period, ThresholdIncome, UserAnswers}
+import models.{ContributedToDuringRemedyPeriod, Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, ClaimingTaxReliefPensionPage, DefinedContribution2016PreFlexiAmountPage, HowMuchContributionPensionSchemePage, LumpSumDeathBenefitsValuePage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
+import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

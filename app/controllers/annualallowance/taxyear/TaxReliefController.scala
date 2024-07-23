@@ -19,8 +19,8 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.TaxReliefFormProvider
 import models.tasklist.sections.AASection
-import models.{AboveThreshold, Mode, Period, ThresholdIncome}
-import pages.annualallowance.taxyear.{TaxReliefPage, ThresholdIncomePage}
+import models.{Mode, Period}
+import pages.annualallowance.taxyear.TaxReliefPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
@@ -39,7 +39,6 @@ class TaxReliefController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   formProvider: TaxReliefFormProvider,
-  aboveThresholdController: AboveThresholdController,
   val controllerComponents: MessagesControllerComponents,
   view: TaxReliefView
 )(implicit ec: ExecutionContext)

@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{AboveThreshold, CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
+import models.{AboveThreshold, NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call

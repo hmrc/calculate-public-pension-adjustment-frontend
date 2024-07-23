@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.annualallowance.taxyear.DidYouContributeToRASSchemeFormProvider
-import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, DidYouContributeToRASSchemePage, HowMuchContributionPensionSchemePage, LumpSumDeathBenefitsValuePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
+import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, DidYouContributeToRASSchemePage, LumpSumDeathBenefitsValuePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
 import models.{AboveThreshold, Done, NormalMode, Period, ThresholdIncome, UserAnswers}
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any

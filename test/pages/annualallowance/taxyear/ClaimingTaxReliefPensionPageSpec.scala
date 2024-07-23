@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{AboveThreshold, CheckMode, NormalMode, Period, ThresholdIncome}
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import org.scalacheck.Gen
 import pages.behaviours.PageBehaviours
 
