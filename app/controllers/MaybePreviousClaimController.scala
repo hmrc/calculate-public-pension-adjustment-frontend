@@ -55,7 +55,7 @@ class MaybePreviousClaimController @Inject() (
           .fromTry(
             request.userAnswers
               .getOrElse(constructUserAnswers(request))
-              .set(SavingsStatementPage(config.optionalAuthEnabled), true)
+              .set(SavingsStatementPage, true)
           )
       redirectUrl    <- generateRedirect(request, updatedAnswers)
     } yield Redirect(redirectUrl)
@@ -94,11 +94,11 @@ class MaybePreviousClaimController @Inject() (
                 case true  =>
                   routes.PreviousClaimContinueController.onPageLoad().url
                 case false =>
-                  SavingsStatementPage(config.optionalAuthEnabled).navigate(NormalMode, userAnswers).url
+                  SavingsStatementPage.navigate(NormalMode, userAnswers).url
               }
         }
     } else {
-      Future.successful(SavingsStatementPage(config.optionalAuthEnabled).navigate(NormalMode, userAnswers).url)
+      Future.successful(SavingsStatementPage.navigate(NormalMode, userAnswers).url)
     }
 
   private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) =

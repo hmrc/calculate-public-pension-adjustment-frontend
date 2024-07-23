@@ -62,7 +62,7 @@ class SavingsStatementController @Inject() (
       val preparedForm =
         request.userAnswers
           .getOrElse(UserAnswers(request.userId))
-          .get(SavingsStatementPage(config.optionalAuthEnabled)) match {
+          .get(SavingsStatementPage) match {
           case None        => form
           case Some(value) => form.fill(value)
         }
@@ -83,7 +83,7 @@ class SavingsStatementController @Inject() (
                 .fromTry(
                   request.userAnswers
                     .getOrElse(constructUserAnswers(request))
-                    .set(SavingsStatementPage(config.optionalAuthEnabled), value)
+                    .set(SavingsStatementPage, value)
                 )
             redirectUrl    <- generateRedirect(request, mode, updatedAnswers)
             answersWithNav  = generateNav(updatedAnswers, mode, redirectUrl)
@@ -126,15 +126,15 @@ class SavingsStatementController @Inject() (
                 case true  =>
                   routes.PreviousClaimContinueController.onPageLoad().url
                 case false =>
-                  SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url
+                  SavingsStatementPage.navigate(mode, userAnswers).url
               }
         }
     } else {
-      Future.successful(SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url)
+      Future.successful(SavingsStatementPage.navigate(mode, userAnswers).url)
     }
 
   private def generateNav(userAnswers: UserAnswers, mode: Mode, redirectUrl: String): UserAnswers =
-    if (redirectUrl.equals(SavingsStatementPage(config.optionalAuthEnabled).navigate(mode, userAnswers).url)) {
+    if (redirectUrl.equals(SavingsStatementPage.navigate(mode, userAnswers).url)) {
       SetupSection.saveNavigation(userAnswers, redirectUrl)
     } else {
       userAnswers

@@ -34,11 +34,11 @@ class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
     "when Yes is selected, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          SavingsStatementPage(true),
+          SavingsStatementPage,
           true
         )
         .get
-      SavingsStatementSummary(true).row(userAnswers) shouldBe Some(
+      SavingsStatementSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "savingsStatement.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -53,11 +53,11 @@ class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
     "when No is selected, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          SavingsStatementPage(true),
+          SavingsStatementPage,
           false
         )
         .get
-      SavingsStatementSummary(true).row(userAnswers) shouldBe Some(
+      SavingsStatementSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "savingsStatement.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -71,7 +71,7 @@ class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      SavingsStatementSummary(true).row(userAnswers) shouldBe None
+      SavingsStatementSummary.row(userAnswers) shouldBe None
     }
   }
 

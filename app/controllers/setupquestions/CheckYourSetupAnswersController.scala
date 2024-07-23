@@ -43,7 +43,7 @@ class CheckYourSetupAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val rows: Seq[Option[SummaryListRow]] = Seq(
-      SavingsStatementSummary(config.optionalAuthEnabled).row(request.userAnswers),
+      SavingsStatementSummary.row(request.userAnswers),
       ResubmittingAdjustmentSummary.row(request.userAnswers),
       ReasonForResubmissionSummary.row(request.userAnswers),
       ReportingChangeSummary.row(request.userAnswers)

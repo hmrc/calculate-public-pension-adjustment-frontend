@@ -24,27 +24,24 @@ import play.api.mvc.Call
 
 import scala.util.Try
 
-case class SavingsStatementPage(optionalAuthEnabled: Boolean) extends QuestionPage[Boolean] {
+case object SavingsStatementPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "savingsStatement"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    (answers.get(SavingsStatementPage(optionalAuthEnabled)), optionalAuthEnabled, answers.authenticated) match {
-      case (Some(true), true, true) =>
+    (answers.get(SavingsStatementPage), answers.authenticated) match {
+      case (Some(true), true)  =>
         controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-
-      case (Some(true), true, false) =>
+      case (Some(true), false) =>
         controllers.routes.OptionalSignInController.onPageLoad()
-      case (Some(true), false, _)    =>
-        controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-      case (Some(false), _, _)       => controllers.setupquestions.routes.IneligibleController.onPageLoad
-      case (None, _, _)              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case (Some(false), _)    => controllers.setupquestions.routes.IneligibleController.onPageLoad
+      case (None, _)           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(SavingsStatementPage(optionalAuthEnabled)) match {
+    answers.get(SavingsStatementPage) match {
       case Some(true)  => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case Some(false) => controllers.setupquestions.routes.IneligibleController.onPageLoad
       case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
