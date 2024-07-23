@@ -18,10 +18,10 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.DidYouContributeToRASSchemeFormProvider
-import pages.annualallowance.taxyear.DidYouContributeToRASSchemePage
-import models.{Done, NormalMode, Period, UserAnswers}
+import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, DidYouContributeToRASSchemePage, HowMuchContributionPensionSchemePage, LumpSumDeathBenefitsValuePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
+import models.{AboveThreshold, Done, NormalMode, Period, ThresholdIncome, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -42,6 +42,7 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
   val formProvider = new DidYouContributeToRASSchemeFormProvider()
   val form         = formProvider()
+  val period       = Period._2018
 
   lazy val didYouContributeToRASSchemeRoute =
     controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
@@ -93,13 +94,136 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
     "must redirect to the next page when valid data is submitted" in {
 
+      val ua = emptyUserAnswers
+        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+        .success
+        .value
+        .set(TaxReliefPage(period), BigInt(1))
+        .success
+        .value
+        .set(RASContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+
       val mockUserDataService = mock[UserDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(ua))
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, didYouContributeToRASSchemeRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(
+          result
+        ).value mustEqual controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController
+          .onPageLoad(NormalMode, period)
+          .url
+      }
+    }
+
+    "must set aboveThreshold status onSubmit when ThresholdPage == I Do Not Know" in {
+
+      val ua = emptyUserAnswers
+        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+        .success
+        .value
+        .set(TaxReliefPage(period), BigInt(1))
+        .success
+        .value
+        .set(RASContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+
+      val mockUserDataService = mock[UserDataService]
+
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, didYouContributeToRASSchemeRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(AboveThreshold(period)) mustBe Some(false)
+      }
+    }
+
+    "must not set aboveThreshold status onSubmit when ThresholdPage is not I Do Not Know" in {
+
+      val ua = emptyUserAnswers
+        .set(ThresholdIncomePage(Period._2020), ThresholdIncome.Yes)
+        .success
+        .value
+        .set(TotalIncomePage(Period._2020), BigInt(1))
+        .success
+        .value
+        .set(AmountSalarySacrificeArrangementsPage(Period._2020), BigInt(1))
+        .success
+        .value
+        .set(AmountFlexibleRemunerationArrangementsPage(Period._2020), BigInt(1))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(Period._2020), BigInt(1))
+        .success
+        .value
+        .set(TaxReliefPage(Period._2020), BigInt(1))
+        .success
+        .value
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
           .build()
 
       running(application) {
@@ -110,11 +234,7 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(
-          result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.RASContributionAmountController
-          .onPageLoad(NormalMode, Period._2018)
-          .url
+        ua.get(AboveThreshold(Period._2020)) mustBe None
       }
     }
 

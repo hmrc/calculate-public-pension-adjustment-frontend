@@ -17,10 +17,10 @@
 package controllers.annualallowance.taxyear
 
 import base.SpecBase
-import controllers.routes
 import forms.annualallowance.taxyear.RASContributionAmountFormProvider
-import pages.annualallowance.taxyear.RASContributionAmountPage
-import models.{Done, NormalMode, Period, UserAnswers}
+import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, LumpSumDeathBenefitsValuePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
+import models.{AboveThreshold, Done, NormalMode, Period, ThresholdIncome, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -39,6 +39,7 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new RASContributionAmountFormProvider()
   val form         = formProvider()
+  val period       = Period._2018
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -92,12 +93,35 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
     "must redirect to the next page when valid data is submitted" in {
 
+      val ua = emptyUserAnswers
+        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+        .success
+        .value
+        .set(TaxReliefPage(period), BigInt(1))
+        .success
+        .value
+        .set(RASContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+
       val mockUserDataService = mock[UserDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(ua))
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
@@ -111,9 +135,108 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
-          .onPageLoad(NormalMode, Period._2018)
+        ).value mustEqual controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController
+          .onPageLoad(NormalMode, period)
           .url
+      }
+    }
+
+    "must set aboveThreshold status onSubmit when ThresholdPage == I Do Not Know" in {
+
+      val ua = emptyUserAnswers
+        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+        .success
+        .value
+        .set(TaxReliefPage(period), BigInt(1))
+        .success
+        .value
+        .set(RASContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+
+      val mockUserDataService = mock[UserDataService]
+
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, rASContributionAmountRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(AboveThreshold(period)) mustBe Some(false)
+      }
+    }
+
+    "must not set aboveThreshold status onSubmit when ThresholdPage is not I Do Not Know" in {
+
+      val ua = emptyUserAnswers
+        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+        .success
+        .value
+        .set(TaxReliefPage(period), BigInt(1))
+        .success
+        .value
+        .set(RASContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(ua))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, rASContributionAmountRoute)
+            .withFormUrlEncodedBody(("value", validAnswer.toString))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        ua.get(AboveThreshold(period)) mustBe None
       }
     }
 

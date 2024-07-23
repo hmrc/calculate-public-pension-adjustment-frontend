@@ -54,7 +54,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
         .value
       val result = FlexibleRemunerationArrangementsPage(Period._2018).navigate(NormalMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2018/contribute-to-relief-at-source-scheme")
+      checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
     }
 
     "to JourneyRecovery when not answered" in {
@@ -93,7 +93,7 @@ class FlexibleRemunerationArrangementsPageSpec extends PageBehaviours {
         .value
       val result = FlexibleRemunerationArrangementsPage(Period._2018).navigate(CheckMode, ua).url
 
-      checkNavigation(result, "/annual-allowance/2018/contribute-to-relief-at-source-scheme")
+      checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
     }
 
     "to JourneyRecovery when not answered" in {

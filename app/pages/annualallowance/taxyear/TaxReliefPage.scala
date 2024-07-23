@@ -31,51 +31,29 @@ case class TaxReliefPage(period: Period) extends QuestionPage[BigInt] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(TaxReliefPage(period)) match {
-      case Some(_) => is2016Period(answers, period)
+      case Some(_) =>
+        controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onPageLoad(NormalMode, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(TaxReliefPage(period)) match {
-      case Some(_) => is2016Period(answers, period)
+      case Some(_) =>
+        controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onPageLoad(NormalMode, period)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  private def is2016Period(answers: UserAnswers, period: Period): Call =
-    if (period == Period._2016) {
-      controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
-    } else {
-      thresholdAnswer(answers, period)
-    }
-
-  private def thresholdAnswer(answers: UserAnswers, period: Period): Call =
-    answers.get(ThresholdIncomePage(period)) match {
-      case Some(ThresholdIncome.Yes)        =>
-        controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(NormalMode, period)
-      case Some(ThresholdIncome.No)         =>
-        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
-      case Some(ThresholdIncome.IDoNotKnow) => thresholdStatus(answers, period)
-      case _                                => controllers.routes.JourneyRecoveryController.onPageLoad()
-    }
-
-  private def thresholdStatus(answers: UserAnswers, period: Period): Call =
-    answers.get(AboveThreshold(period)) match {
-      case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(NormalMode, period)
-      case Some(false) =>
-        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
-      case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
   override def cleanup(value: Option[BigInt], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map { _ =>
         userAnswers
-          .remove(HowMuchContributionPensionSchemePage(period))
+          .remove(DidYouContributeToRASSchemePage(period))
+          .flatMap(_.remove(RASContributionAmountPage(period)))
           .flatMap(_.remove(KnowAdjustedAmountPage(period)))
           .flatMap(_.remove(AdjustedIncomePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
           .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
           .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(DoYouHaveGiftAidPage(period)))

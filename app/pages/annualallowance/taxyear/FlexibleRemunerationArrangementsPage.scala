@@ -35,7 +35,7 @@ case class FlexibleRemunerationArrangementsPage(period: Period) extends Question
         controllers.annualallowance.taxyear.routes.AmountFlexibleRemunerationArrangementsController
           .onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
+        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
           .onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
@@ -46,7 +46,7 @@ case class FlexibleRemunerationArrangementsPage(period: Period) extends Question
         controllers.annualallowance.taxyear.routes.AmountFlexibleRemunerationArrangementsController
           .onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
+        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
           .onPageLoad(NormalMode, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
@@ -56,17 +56,17 @@ case class FlexibleRemunerationArrangementsPage(period: Period) extends Question
       .map { _ =>
         userAnswers
           .remove(AmountFlexibleRemunerationArrangementsPage(period))
-          .flatMap(_.remove(DidYouContributeToRASSchemePage(period)))
-          .flatMap(_.remove(RASContributionAmountPage(period)))
-          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
           .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
           .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
           .flatMap(_.remove(TaxReliefPage(period)))
+          .flatMap(_.remove(DidYouContributeToRASSchemePage(period)))
+          .flatMap(_.remove(RASContributionAmountPage(period)))
           .flatMap(_.remove(KnowAdjustedAmountPage(period)))
           .flatMap(_.remove(AdjustedIncomePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
           .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
+          .flatMap(_.remove(HowMuchContributionPensionSchemePage(period)))
           .flatMap(_.remove(HasReliefClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(AmountClaimedOnOverseasPensionPage(period)))
           .flatMap(_.remove(DoYouHaveGiftAidPage(period)))

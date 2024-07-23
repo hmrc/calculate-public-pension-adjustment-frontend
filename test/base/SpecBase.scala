@@ -310,12 +310,6 @@ trait SpecBase
       .set(AmountFlexibleRemunerationArrangementsPage(_2022), BigInt(1))
       .success
       .value
-      .set(DidYouContributeToRASSchemePage(_2022), true)
-      .success
-      .value
-      .set(RASContributionAmountPage(_2022), BigInt(1))
-      .success
-      .value
       .set(AnyLumpSumDeathBenefitsPage(_2022), true)
       .success
       .value
@@ -326,6 +320,12 @@ trait SpecBase
       .success
       .value
       .set(TaxReliefPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DidYouContributeToRASSchemePage(_2022), true)
+      .success
+      .value
+      .set(RASContributionAmountPage(_2022), BigInt(1))
       .success
       .value
       .set(KnowAdjustedAmountPage(_2022), true)
@@ -373,13 +373,16 @@ trait SpecBase
       .set(TotalIncomePage(_2022), BigInt(2000))
       .success
       .value
+      .set(AnyLumpSumDeathBenefitsPage(_2022), true)
+      .success
+      .value
+      .set(LumpSumDeathBenefitsValuePage(_2022), BigInt(1))
+      .success
+      .value
       .set(ClaimingTaxReliefPensionPage(_2022), true)
       .success
       .value
       .set(TaxReliefPage(_2022), BigInt(1))
-      .success
-      .value
-      .set(KnowAdjustedAmountPage(_2022), false)
       .success
       .value
       .set(DidYouContributeToRASSchemePage(_2022), true)
@@ -388,10 +391,7 @@ trait SpecBase
       .set(RASContributionAmountPage(_2022), BigInt(1))
       .success
       .value
-      .set(AnyLumpSumDeathBenefitsPage(_2022), true)
-      .success
-      .value
-      .set(LumpSumDeathBenefitsValuePage(_2022), BigInt(1))
+      .set(KnowAdjustedAmountPage(_2022), false)
       .success
       .value
       .set(ClaimingTaxReliefPensionNotAdjustedIncomePage(_2022), true)

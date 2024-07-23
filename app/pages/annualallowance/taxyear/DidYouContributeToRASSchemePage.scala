@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
+import models.{AboveThreshold, CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -35,8 +35,7 @@ case class DidYouContributeToRASSchemePage(period: Period) extends QuestionPage[
         controllers.annualallowance.taxyear.routes.RASContributionAmountController
           .onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
-          .onPageLoad(NormalMode, period)
+        is2016Period(answers, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -46,9 +45,34 @@ case class DidYouContributeToRASSchemePage(period: Period) extends QuestionPage[
         controllers.annualallowance.taxyear.routes.RASContributionAmountController
           .onPageLoad(NormalMode, period)
       case Some(false) =>
-        controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController
-          .onPageLoad(NormalMode, period)
+        is2016Period(answers, period)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  private def is2016Period(answers: UserAnswers, period: Period): Call =
+    if (period == Period._2016) {
+      controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
+    } else {
+      thresholdAnswer(answers, period)
+    }
+
+  private def thresholdAnswer(answers: UserAnswers, period: Period): Call =
+    answers.get(ThresholdIncomePage(period)) match {
+      case Some(ThresholdIncome.Yes)        =>
+        controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(NormalMode, period)
+      case Some(ThresholdIncome.No)         =>
+        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
+      case Some(ThresholdIncome.IDoNotKnow) => thresholdStatus(answers, period)
+      case _                                => controllers.routes.JourneyRecoveryController.onPageLoad()
+    }
+
+  private def thresholdStatus(answers: UserAnswers, period: Period): Call =
+    answers.get(AboveThreshold(period)) match {
+      case Some(true)  =>
+        controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(NormalMode, period)
+      case Some(false) =>
+        controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(NormalMode, period)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
@@ -57,9 +81,9 @@ case class DidYouContributeToRASSchemePage(period: Period) extends QuestionPage[
       value
         .map { _ =>
           userAnswers
-            .remove(RASContributionAmountPage(period))
-            .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
+            .remove(AnyLumpSumDeathBenefitsPage(period))
             .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
+            .flatMap(_.remove(RASContributionAmountPage(period)))
             .flatMap(_.remove(AdjustedIncomePage(period)))
             .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
             .flatMap(_.remove(HowMuchTaxReliefPensionPage(period)))
@@ -79,10 +103,6 @@ case class DidYouContributeToRASSchemePage(period: Period) extends QuestionPage[
         .map { _ =>
           userAnswers
             .remove(RASContributionAmountPage(period))
-            .flatMap(_.remove(AnyLumpSumDeathBenefitsPage(period)))
-            .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
-            .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
-            .flatMap(_.remove(TaxReliefPage(period)))
             .flatMap(_.remove(KnowAdjustedAmountPage(period)))
             .flatMap(_.remove(AdjustedIncomePage(period)))
             .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
@@ -99,4 +119,5 @@ case class DidYouContributeToRASSchemePage(period: Period) extends QuestionPage[
         .getOrElse(super.cleanup(value, userAnswers))
     }
   }
+
 }

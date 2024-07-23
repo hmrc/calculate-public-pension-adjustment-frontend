@@ -16,10 +16,16 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, ThresholdIncome}
+import models.{AboveThreshold, CheckMode, NormalMode, Period, ThresholdIncome}
+import org.scalacheck.Gen
 import pages.behaviours.PageBehaviours
 
 class DidYouContributeToRASSchemePageSpec extends PageBehaviours {
+
+  val period = Period._2019
+
+  val pre2020Periods  = List(Period._2017, Period._2018, Period._2019)
+  val post2019Periods = List(Period._2020, Period._2021, Period._2022, Period._2023)
 
   "DidYouContributeToRASSchemePage" - {
 
@@ -29,64 +35,247 @@ class DidYouContributeToRASSchemePageSpec extends PageBehaviours {
 
     beRemovable[Boolean](DidYouContributeToRASSchemePage(Period._2018))
 
-    "Normal Mode" - {
+    "Normal mode" - {
 
-      "must redirect to RASContributionAmountPage page when true" in {
+      "when user answers true" in {
 
-        val userAnswers = emptyUserAnswers
-          .set(DidYouContributeToRASSchemePage(Period._2018), true)
+        val ua = emptyUserAnswers
+          .set(
+            DidYouContributeToRASSchemePage(Period._2016),
+            true
+          )
           .success
           .value
 
-        val result = DidYouContributeToRASSchemePage(Period._2018).navigate(NormalMode, userAnswers).url
+        val result = DidYouContributeToRASSchemePage(Period._2016).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/how-much-contribution-relief-at-source")
+        checkNavigation(result, "/annual-allowance/2016/how-much-contribution-relief-at-source")
+
       }
 
-      "must redirect to AnyLumpSumDeathBenefitsController page when false" in {
+      "when user answers false" - {
 
-        val userAnswers = emptyUserAnswers
-          .set(DidYouContributeToRASSchemePage(Period._2018), false)
-          .success
-          .value
+        "to do you have gift aid page when period = 2016" in {
+          val ua     = emptyUserAnswers
+            .set(
+              DidYouContributeToRASSchemePage(Period._2016),
+              false
+            )
+            .success
+            .value
+          val result = DidYouContributeToRASSchemePage(Period._2016).navigate(NormalMode, ua).url
 
-        val result = DidYouContributeToRASSchemePage(Period._2018).navigate(NormalMode, userAnswers).url
+          checkNavigation(result, s"/annual-allowance/2016/donated-via-gift-aid")
+        }
 
-        checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
+        "when not 2016 period" - {
+
+          "to know adjusted income page when threshold income above threshold" in {
+
+            val period = Gen.oneOf(pre2020Periods).sample.get
+
+            val ua = emptyUserAnswers
+              .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
+              .success
+              .value
+              .set(DidYouContributeToRASSchemePage(period), false)
+              .success
+              .value
+
+            val result = DidYouContributeToRASSchemePage(period).navigate(NormalMode, ua).url
+
+            checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
+
+          }
+
+          "to do you have gift aid page when threshold income not above threshold" in {
+
+            val period = Gen.oneOf(pre2020Periods).sample.get
+
+            val ua = emptyUserAnswers
+              .set(ThresholdIncomePage(period), ThresholdIncome.No)
+              .success
+              .value
+              .set(DidYouContributeToRASSchemePage(period), false)
+              .success
+              .value
+
+            val result = DidYouContributeToRASSchemePage(period).navigate(NormalMode, ua).url
+
+            checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
+
+          }
+
+          "when not sure if threshold income above threshold" - {
+
+            "when pre2020 period" - {
+
+              "to know adjusted income page when threshold value calculated to be above 110000" in {
+
+                val period = Gen.oneOf(pre2020Periods).sample.get
+
+                val ua = emptyUserAnswers
+                  .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+                  .success
+                  .value
+                  .set(AboveThreshold(period), true)
+                  .success
+                  .value
+                  .set(
+                    DidYouContributeToRASSchemePage(period),
+                    false
+                  )
+                  .success
+                  .value
+
+                val result = DidYouContributeToRASSchemePage(period).navigate(NormalMode, ua).url
+
+                checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
+              }
+
+              "to do you have gift aid page when threshold value calculated to be below 110000 " in {
+
+                val period = Gen.oneOf(pre2020Periods).sample.get
+
+                val ua = emptyUserAnswers
+                  .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+                  .success
+                  .value
+                  .set(AboveThreshold(period), false)
+                  .success
+                  .value
+                  .set(
+                    DidYouContributeToRASSchemePage(period),
+                    false
+                  )
+                  .success
+                  .value
+
+                val result = DidYouContributeToRASSchemePage(period).navigate(NormalMode, ua).url
+
+                checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
+
+              }
+            }
+            "when post2019 period" - {
+
+              "to know adjusted income page when threshold value calculated to be above 200000" in {
+
+                val period = Gen.oneOf(post2019Periods).sample.get
+
+                val ua = emptyUserAnswers
+                  .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+                  .success
+                  .value
+                  .set(AboveThreshold(period), true)
+                  .success
+                  .value
+                  .set(
+                    DidYouContributeToRASSchemePage(period),
+                    false
+                  )
+                  .success
+                  .value
+
+                val result = DidYouContributeToRASSchemePage(period).navigate(NormalMode, ua).url
+
+                checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
+              }
+
+              "to do you have gift aid page when threshold value calculated to be below 200000" in {
+
+                val period = Gen.oneOf(post2019Periods).sample.get
+
+                val ua = emptyUserAnswers
+                  .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+                  .success
+                  .value
+                  .set(AboveThreshold(period), false)
+                  .success
+                  .value
+                  .set(
+                    DidYouContributeToRASSchemePage(period),
+                    false
+                  )
+                  .success
+                  .value
+
+                val result = DidYouContributeToRASSchemePage(period).navigate(NormalMode, ua).url
+
+                checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
+
+              }
+            }
+          }
+        }
+        "to JourneyRecovery when not answered" in {
+          val ua     = emptyUserAnswers
+          val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
+
+          checkNavigation(result, "/there-is-a-problem")
+        }
       }
-
     }
 
-    "Check mode" - {
+    "Check mode (returns user to next page in normal mode)" - {
 
-      "must redirect to RASContributionAmountPage page when true" in {
+      "when user answers true" in {
 
-        val userAnswers = emptyUserAnswers
-          .set(DidYouContributeToRASSchemePage(Period._2018), true)
+        val ua = emptyUserAnswers
+          .set(
+            DidYouContributeToRASSchemePage(Period._2016),
+            true
+          )
           .success
           .value
 
-        val result = DidYouContributeToRASSchemePage(Period._2018).navigate(CheckMode, userAnswers).url
+        val result = DidYouContributeToRASSchemePage(Period._2016).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/how-much-contribution-relief-at-source")
+        checkNavigation(result, "/annual-allowance/2016/how-much-contribution-relief-at-source")
+
       }
 
-      "must redirect to CYA page when false" in {
+      "when user answers false" - {
 
-        val userAnswers = emptyUserAnswers
-          .set(DidYouContributeToRASSchemePage(Period._2018), false)
-          .success
-          .value
+        "to do you have gift aid page when period = 2016" in {
+          val ua     = emptyUserAnswers
+            .set(
+              DidYouContributeToRASSchemePage(Period._2016),
+              false
+            )
+            .success
+            .value
+          val result = DidYouContributeToRASSchemePage(Period._2016).navigate(CheckMode, ua).url
 
-        val result = DidYouContributeToRASSchemePage(Period._2018).navigate(CheckMode, userAnswers).url
+          checkNavigation(result, s"/annual-allowance/2016/donated-via-gift-aid")
+        }
 
-        checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
+        "when not 2016 period" - {
+
+          "to know adjusted amount" in {
+
+            val period = Gen.oneOf(pre2020Periods).sample.get
+
+            val ua = emptyUserAnswers
+              .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
+              .success
+              .value
+              .set(DidYouContributeToRASSchemePage(period), false)
+              .success
+              .value
+
+            val result = DidYouContributeToRASSchemePage(period).navigate(CheckMode, ua).url
+
+            checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
+
+          }
+        }
       }
     }
 
     "cleanup" - {
 
-      "must cleanup correctly" in {
+      "must cleanup correctly when ThresholdIncome= IDoNOTKnow " in {
 
         val period = Period._2022
 
@@ -101,12 +290,14 @@ class DidYouContributeToRASSchemePageSpec extends PageBehaviours {
         cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe None
-        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
-        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
-        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
         cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
         cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
         cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
@@ -121,32 +312,32 @@ class DidYouContributeToRASSchemePageSpec extends PageBehaviours {
         cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
       }
 
-      "if threshold income page is yes do not clean up claiming tax relief, tax relief amount and know adjusted income pages" in {
+      "must cleanup correctly when ThresholdIncome= Yes" in {
 
         val period = Period._2022
 
-        val cleanedUserAnswers = DidYouContributeToRASSchemePage(period)
+        val cleanedUserAnswers = DidYouContributeToRASSchemePage(Period._2022)
           .cleanup(Some(true), incomeSubJourneyDataThresholdIncomeYes)
           .success
           .value
 
         cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.Yes)
         cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
-        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe Some(true)
-        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe Some(false)
-        cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe Some(true)
-        cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe None
         cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
         cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe Some(false)
         cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
         cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
         cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
         cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
         cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
+        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
         cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
         cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
-        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
         cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
         cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
         cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None

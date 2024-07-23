@@ -64,7 +64,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/claiming-tax-relief-pension")
       }
 
-      "to do you have RAS page when false, when threshold income is yes" in {
+      "to check if user has availed lump sum death benefit, when threshold income is yes" in {
         val ua = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2018),
@@ -81,7 +81,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
 
         val result = KnowAdjustedAmountPage(Period._2018).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/contribute-to-relief-at-source-scheme")
+        checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
       }
 
       "to JourneyRecovery when false, when threshold income is anything else" in {
@@ -147,7 +147,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/claiming-tax-relief-pension")
       }
 
-      "to any RAS page when false, when threshold income is yes" in {
+      "to any AnyLumpSumDeathBenefit page when false, when threshold income is yes" in {
         val ua = emptyUserAnswers
           .set(
             ThresholdIncomePage(Period._2018),
@@ -164,7 +164,7 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
 
         val result = KnowAdjustedAmountPage(Period._2018).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2018/contribute-to-relief-at-source-scheme")
+        checkNavigation(result, "/annual-allowance/2018/any-lump-sum-death-benefits")
       }
 
       "to JourneyRecovery when false, when threshold income is anything else" in {
@@ -205,10 +205,10 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
             .set(ThresholdIncomePage(Period._2018), ThresholdIncome.Yes)
             .success
             .value
-            .set(AnyLumpSumDeathBenefitsPage(Period._2018), true)
+            .set(ClaimingTaxReliefPensionPage(Period._2018), true)
             .success
             .value
-            .set(LumpSumDeathBenefitsValuePage(Period._2018), BigInt(1))
+            .set(TaxReliefPage(Period._2018), BigInt(1))
             .success
             .value
             .set(DidYouContributeToRASSchemePage(Period._2018), true)
@@ -238,10 +238,10 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
             .success
             .value
 
-          cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(DidYouContributeToRASSchemePage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(RASContributionAmountPage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(Period._2018)) mustBe Some(true)
+          cleanedUserAnswers.get(TaxReliefPage(Period._2018)) mustBe Some(BigInt(1))
+          cleanedUserAnswers.get(DidYouContributeToRASSchemePage(Period._2018)) mustBe Some(true)
+          cleanedUserAnswers.get(RASContributionAmountPage(Period._2018)) mustBe Some(BigInt(1))
           cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018)) mustBe None
           cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(Period._2018)) mustBe None
           cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(Period._2018)) mustBe None

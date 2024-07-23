@@ -71,6 +71,8 @@ case class TotalIncomePage(period: Period) extends QuestionPage[BigInt] {
           .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
           .flatMap(_.remove(TaxReliefPage(period)))
+          .flatMap(_.remove(DidYouContributeToRASSchemePage(period)))
+          .flatMap(_.remove(RASContributionAmountPage(period)))
           .flatMap(_.remove(KnowAdjustedAmountPage(period)))
           .flatMap(_.remove(AdjustedIncomePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))

@@ -66,28 +66,45 @@ class ClaimingTaxReliefPensionController @Inject() (
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
-            if (request.userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.IDoNotKnow)) {
-              for {
-                updatedAnswers            <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage(period), value))
-                answersWithThreshold       = AboveThreshold(period).saveThresholdStatus(
-                                               updatedAnswers,
-                                               period,
-                                               aboveThresholdController.thresholdStatus(updatedAnswers, period)
-                                             )
-                redirectUrl                = ClaimingTaxReliefPensionPage(period).navigate(mode, answersWithThreshold).url
-                answersWithNavAndThreshold = AASection(period).saveNavigation(answersWithThreshold, redirectUrl)
-                _                         <- userDataService.set(answersWithNavAndThreshold)
-              } yield Redirect(redirectUrl)
-            } else {
-              for {
-                updatedAnswers <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage(period), value))
-                redirectUrl     = ClaimingTaxReliefPensionPage(period).navigate(mode, updatedAnswers).url
-                answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-                _              <- userDataService.set(answersWithNav)
-              } yield Redirect(redirectUrl)
-            }
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage(period), value))
+              redirectUrl     = ClaimingTaxReliefPensionPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
+
+//  def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+//    implicit request =>
+//      val form = formProvider(period)
+//      form
+//        .bindFromRequest()
+//        .fold(
+//          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
+//          value =>
+//            if (request.userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.IDoNotKnow)) {
+//              for {
+//                updatedAnswers            <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage(period), value))
+//                answersWithThreshold       = AboveThreshold(period).saveThresholdStatus(
+//                                               updatedAnswers,
+//                                               period,
+//                                               aboveThresholdController.thresholdStatus(updatedAnswers, period)
+//                                             )
+//                redirectUrl                = ClaimingTaxReliefPensionPage(period).navigate(mode, answersWithThreshold).url
+//                answersWithNavAndThreshold = AASection(period).saveNavigation(answersWithThreshold, redirectUrl)
+//                _                         <- userDataService.set(answersWithNavAndThreshold)
+//              } yield Redirect(redirectUrl)
+//            } else {
+//              for {
+//                updatedAnswers <- Future.fromTry(request.userAnswers.set(ClaimingTaxReliefPensionPage(period), value))
+//                redirectUrl     = ClaimingTaxReliefPensionPage(period).navigate(mode, updatedAnswers).url
+//                answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+//                _              <- userDataService.set(answersWithNav)
+//              } yield Redirect(redirectUrl)
+//            }
+//        )
+//  }
 
   private def startEndDate(period: Period)(implicit messages: Messages): String = {
     val languageTag = if (messages.lang.code == "cy") "cy" else "en"

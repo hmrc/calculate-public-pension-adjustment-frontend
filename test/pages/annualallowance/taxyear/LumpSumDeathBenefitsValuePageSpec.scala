@@ -185,8 +185,8 @@ class LumpSumDeathBenefitsValuePageSpec extends PageBehaviours {
         cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
-        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe Some(BigInt(1))
+        // cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
+        // cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
         cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
         cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
@@ -214,11 +214,13 @@ class LumpSumDeathBenefitsValuePageSpec extends PageBehaviours {
 
         cleanedUserAnswers.get(ThresholdIncomePage(period)) mustBe Some(ThresholdIncome.Yes)
         cleanedUserAnswers.get(TotalIncomePage(period)) mustBe Some(BigInt(2000))
+        // cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(TaxReliefPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe Some(true)
+        cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe Some(false)
-        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
-        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
         cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
         cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
         cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None

@@ -18,11 +18,8 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.ClaimingTaxReliefPensionFormProvider
-import controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController
-import models.{AboveThreshold, ContributedToDuringRemedyPeriod, Done, NormalMode, Period, ThresholdIncome, UserAnswers}
-import org.mockito.ArgumentCaptor
+import models.{ContributedToDuringRemedyPeriod, Done, NormalMode, Period, ThresholdIncome, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -93,136 +90,28 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val ua = emptyUserAnswers
-        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-        .success
-        .value
-        .set(TotalIncomePage(period), BigInt(1))
-        .success
-        .value
-        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-        .success
-        .value
-        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-        .success
-        .value
-        .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
-        .success
-        .value
-        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
-        .success
-        .value
-
       val mockUserDataService = mock[UserDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(userAnswers = Some(ua))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
       running(application) {
         val request =
           FakeRequest(POST, claimingTaxReliefPensionRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+            .withFormUrlEncodedBody(("value", "false"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-      }
-    }
-
-    "must set aboveThreshold status onSubmit when ThresholdPage == I Do Not Know" in {
-
-      val ua = emptyUserAnswers
-        .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-        .success
-        .value
-        .set(TotalIncomePage(period), BigInt(1))
-        .success
-        .value
-        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-        .success
-        .value
-        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-        .success
-        .value
-        .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
-        .success
-        .value
-        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
-        .success
-        .value
-
-      val mockUserDataService = mock[UserDataService]
-
-      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
-
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
-
-      val application =
-        applicationBuilder(userAnswers = Some(ua))
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, claimingTaxReliefPensionRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(AboveThreshold(period)) mustBe Some(false)
-      }
-    }
-
-    "must not set aboveThreshold status onSubmit when ThresholdPage is not I Do Not Know" in {
-
-      val ua = emptyUserAnswers
-        .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
-        .success
-        .value
-        .set(TotalIncomePage(period), BigInt(1))
-        .success
-        .value
-        .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
-        .success
-        .value
-        .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
-        .success
-        .value
-        .set(HowMuchContributionPensionSchemePage(period), BigInt(1))
-        .success
-        .value
-        .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
-        .success
-        .value
-
-      val mockUserDataService = mock[UserDataService]
-
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-
-      val application =
-        applicationBuilder(userAnswers = Some(ua))
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, claimingTaxReliefPensionRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        ua.get(AboveThreshold(period)) mustBe None
+        redirectLocation(
+          result
+        ).value mustEqual controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
+          .onPageLoad(NormalMode, period)
+          .url
       }
     }
 
