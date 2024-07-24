@@ -22,7 +22,7 @@ case class CalculationTaskListAuditEvent(
   authenticated: Boolean,
   uniqueId: String,
   userId: String,
-  TaskListStatus: List[String]
+  sectionStatusList: List[String]
 )
 
 object CalculationTaskListAuditEvent {
