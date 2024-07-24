@@ -228,7 +228,7 @@ class AnyLumpSumDeathBenefitsPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe Some(true)
       cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe Some(BigInt(1))
       cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe Some(false)
-      // cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
+      cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe Some(true)
       cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
       cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
       cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
