@@ -82,4 +82,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val calculationStartAuditEventName =
     configuration.get[String]("auditing.calculation-start-event-name")
+
+  val calculationTaskListAuditEventName =
+    configuration.get[String]("auditing.calculation-task-list-event-name")
 }

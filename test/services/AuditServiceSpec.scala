@@ -20,7 +20,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, IncomeSubJourney, Period, TaxYear2011To2015, TaxYearScheme}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, IncomeSubJourney, Period, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
@@ -228,6 +228,35 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
           )
 
         await(service.auditCalculationStart(calculationStartAuditEvent)(hc)) mustBe ()
+      }
+    }
+
+    "auditCalculationTaskList" - {
+      "should call the audit connector with the CalculationTaskListAuditEvent event" in {
+
+        implicit val hc = HeaderCarrier()
+
+        val calculationTaskListAuditEvent =
+          CalculationTaskListAuditEvent(
+            true,
+            "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
+            "AA000000A",
+            List(
+              "setup-questions: Completed",
+              "annual-allowance-setup-questions: Completed",
+              "annual-allowance-details-2016: NotStarted",
+              "annual-allowance-details-2017: NotStarted",
+              "annual-allowance-details-2018: NotStarted",
+              "annual-allowance-details-2019: NotStarted",
+              "annual-allowance-details-2020: NotStarted",
+              "annual-allowance-details-2021: NotStarted",
+              "annual-allowance-details-2022: NotStarted",
+              "annual-allowance-details-2023: NotStarted",
+              "next-steps-action: CannotStartYet"
+            )
+          )
+
+        await(service.auditCalculationTaskList(calculationTaskListAuditEvent)(hc)) mustBe ()
       }
     }
 
