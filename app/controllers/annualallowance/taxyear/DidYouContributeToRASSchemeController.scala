@@ -19,8 +19,8 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.DidYouContributeToRASSchemeFormProvider
 import models.tasklist.sections.AASection
-import models.{Mode, Period}
-import pages.annualallowance.taxyear.DidYouContributeToRASSchemePage
+import models.{AboveThreshold, Mode, Period, ThresholdIncome}
+import pages.annualallowance.taxyear.{DidYouContributeToRASSchemePage, ThresholdIncomePage}
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
@@ -39,6 +39,7 @@ class DidYouContributeToRASSchemeController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   formProvider: DidYouContributeToRASSchemeFormProvider,
+  aboveThresholdController: AboveThresholdController,
   val controllerComponents: MessagesControllerComponents,
   view: DidYouContributeToRASSchemeView
 )(implicit ec: ExecutionContext)
@@ -64,12 +65,28 @@ class DidYouContributeToRASSchemeController @Inject() (
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
-            for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(DidYouContributeToRASSchemePage(period), value))
-              redirectUrl     = DidYouContributeToRASSchemePage(period).navigate(mode, updatedAnswers).url
-              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
-            } yield Redirect(redirectUrl)
+            if (request.userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.IDoNotKnow)) {
+              for {
+                updatedAnswers            <-
+                  Future.fromTry(request.userAnswers.set(DidYouContributeToRASSchemePage(period), value))
+                answersWithThreshold       = AboveThreshold(period).saveThresholdStatus(
+                                               updatedAnswers,
+                                               period,
+                                               aboveThresholdController.thresholdStatus(updatedAnswers, period)
+                                             )
+                redirectUrl                = DidYouContributeToRASSchemePage(period).navigate(mode, answersWithThreshold).url
+                answersWithNavAndThreshold = AASection(period).saveNavigation(answersWithThreshold, redirectUrl)
+                _                         <- userDataService.set(answersWithNavAndThreshold)
+              } yield Redirect(redirectUrl)
+            } else {
+              for {
+                updatedAnswers <-
+                  Future.fromTry(request.userAnswers.set(DidYouContributeToRASSchemePage(period), value))
+                redirectUrl     = DidYouContributeToRASSchemePage(period).navigate(mode, updatedAnswers).url
+                answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+                _              <- userDataService.set(answersWithNav)
+              } yield Redirect(redirectUrl)
+            }
         )
   }
 

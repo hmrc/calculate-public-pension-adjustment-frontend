@@ -16,8 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{AboveThreshold, CheckMode, NormalMode, Period, ThresholdIncome}
-import org.scalacheck.Gen
+import models.{CheckMode, NormalMode, Period, ThresholdIncome}
 import pages.behaviours.PageBehaviours
 
 class TaxReliefPageSpec extends PageBehaviours {
@@ -37,7 +36,7 @@ class TaxReliefPageSpec extends PageBehaviours {
 
     "Normal mode" - {
 
-      "to do you have gift aid page when period = 2016" in {
+      "to check if user has claimed relief at source" in {
         val ua     = emptyUserAnswers
           .set(
             TaxReliefPage(Period._2016),
@@ -47,155 +46,12 @@ class TaxReliefPageSpec extends PageBehaviours {
           .value
         val result = TaxReliefPage(Period._2016).navigate(NormalMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2016/donated-via-gift-aid")
-      }
-
-      "when not 2016 period" - {
-
-        "to know adjusted income page when threshold income above threshold" in {
-
-          val period = Gen.oneOf(pre2020Periods).sample.get
-
-          val ua = emptyUserAnswers
-            .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
-            .success
-            .value
-            .set(
-              TaxReliefPage(period),
-              BigInt(1)
-            )
-            .success
-            .value
-
-          val result = TaxReliefPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
-
-        }
-
-        "to do you have gift aid page when threshold income not above threshold" in {
-
-          val period = Gen.oneOf(pre2020Periods).sample.get
-
-          val ua = emptyUserAnswers
-            .set(ThresholdIncomePage(period), ThresholdIncome.No)
-            .success
-            .value
-            .set(
-              TaxReliefPage(period),
-              BigInt(1)
-            )
-            .success
-            .value
-
-          val result = TaxReliefPage(period).navigate(NormalMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
-
-        }
-
-        "when not sure if threshold income above threshold" - {
-
-          "when pre2020 period" - {
-
-            "to know adjusted income page when threshold value calculated to be above 110000" in {
-
-              val period = Gen.oneOf(pre2020Periods).sample.get
-
-              val ua = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AboveThreshold(period), true)
-                .success
-                .value
-
-              val result = TaxReliefPage(period).navigate(NormalMode, ua).url
-
-              checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
-            }
-
-            "to do you have gift aid page when threshold value calculated to be below 110000 " in {
-
-              val period = Gen.oneOf(pre2020Periods).sample.get
-
-              val ua = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AboveThreshold(period), false)
-                .success
-                .value
-
-              val result = TaxReliefPage(period).navigate(NormalMode, ua).url
-
-              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
-
-            }
-          }
-
-          "when post2019 period" - {
-
-            "to know adjusted income page when threshold value calculated to be above 200000" in {
-
-              val period = Gen.oneOf(post2019Periods).sample.get
-
-              val ua = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AboveThreshold(period), true)
-                .success
-                .value
-
-              val result = TaxReliefPage(period).navigate(NormalMode, ua).url
-
-              checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
-            }
-
-            "to do you have gift aid page when threshold value calculated to be below 200000" in {
-
-              val period = Gen.oneOf(post2019Periods).sample.get
-
-              val ua = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AboveThreshold(period), false)
-                .success
-                .value
-
-              val result = TaxReliefPage(period).navigate(NormalMode, ua).url
-
-              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
-
-            }
-          }
-        }
-      }
-
-      "to JourneyRecovery when not answered" in {
-        val ua     = emptyUserAnswers
-        val result = TaxReliefPage(period).navigate(NormalMode, ua).url
-
-        checkNavigation(result, "/there-is-a-problem")
+        checkNavigation(result, "/annual-allowance/2016/contribute-to-relief-at-source-scheme")
       }
     }
 
     "Check mode (return user to next page in normal mode)" - {
-      "to do you have gift aid page when period = 2016" in {
+      "to check if user has claimed relief at source" in {
         val ua     = emptyUserAnswers
           .set(
             TaxReliefPage(Period._2016),
@@ -205,150 +61,7 @@ class TaxReliefPageSpec extends PageBehaviours {
           .value
         val result = TaxReliefPage(Period._2016).navigate(CheckMode, ua).url
 
-        checkNavigation(result, "/annual-allowance/2016/donated-via-gift-aid")
-      }
-
-      "when not 2016 period" - {
-
-        "to know adjusted income page when threshold income above threshold" in {
-
-          val period = Gen.oneOf(pre2020Periods).sample.get
-
-          val ua = emptyUserAnswers
-            .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
-            .success
-            .value
-            .set(
-              TaxReliefPage(period),
-              BigInt(1)
-            )
-            .success
-            .value
-
-          val result = TaxReliefPage(period).navigate(CheckMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
-
-        }
-
-        "to do you have gift aid page when threshold income not above threshold" in {
-
-          val period = Gen.oneOf(pre2020Periods).sample.get
-
-          val ua = emptyUserAnswers
-            .set(ThresholdIncomePage(period), ThresholdIncome.No)
-            .success
-            .value
-            .set(
-              TaxReliefPage(period),
-              BigInt(1)
-            )
-            .success
-            .value
-
-          val result = TaxReliefPage(period).navigate(CheckMode, ua).url
-
-          checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
-
-        }
-
-        "when not sure if threshold income above threshold" - {
-
-          "when pre2020 period" - {
-
-            "to know adjusted income page when threshold value calculated to be above 110000" in {
-
-              val period = Gen.oneOf(pre2020Periods).sample.get
-
-              val ua = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AboveThreshold(period), true)
-                .success
-                .value
-
-              val result = TaxReliefPage(period).navigate(CheckMode, ua).url
-
-              checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
-            }
-
-            "to do you have gift aid page when threshold value calculated to be below 110000 " in {
-
-              val period = Gen.oneOf(pre2020Periods).sample.get
-
-              val ua = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AboveThreshold(period), false)
-                .success
-                .value
-
-              val result = TaxReliefPage(period).navigate(CheckMode, ua).url
-
-              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
-
-            }
-          }
-
-          "when post2019 period" - {
-
-            "to know adjusted income page when threshold value calculated to be above 200000" in {
-
-              val period = Gen.oneOf(post2019Periods).sample.get
-
-              val ua = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AboveThreshold(period), true)
-                .success
-                .value
-
-              val result = TaxReliefPage(period).navigate(CheckMode, ua).url
-
-              checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
-            }
-
-            "to do you have gift aid when threshold value calculated to be below 200000" in {
-
-              val period = Gen.oneOf(post2019Periods).sample.get
-
-              val ua = emptyUserAnswers
-                .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
-                .success
-                .value
-                .set(TaxReliefPage(period), BigInt(1))
-                .success
-                .value
-                .set(AboveThreshold(period), false)
-                .success
-                .value
-
-              val result = TaxReliefPage(period).navigate(CheckMode, ua).url
-
-              checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
-
-            }
-          }
-        }
-      }
-
-      "to JourneyRecovery when not answered" in {
-        val ua     = emptyUserAnswers
-        val result = TaxReliefPage(period).navigate(CheckMode, ua).url
-
-        checkNavigation(result, "/there-is-a-problem")
+        checkNavigation(result, "/annual-allowance/2016/contribute-to-relief-at-source-scheme")
       }
     }
     "cleanup" - {
@@ -372,7 +85,11 @@ class TaxReliefPageSpec extends PageBehaviours {
         cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe Some(BigInt(1))
         cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe Some(true)
         cleanedUserAnswers.get(TaxReliefPage(period)) mustBe Some(BigInt(1))
+        cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe None
+        cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe None
         cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(DidYouContributeToRASSchemePage(period)) mustBe None
+        cleanedUserAnswers.get(RASContributionAmountPage(period)) mustBe None
         cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
         cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
         cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None

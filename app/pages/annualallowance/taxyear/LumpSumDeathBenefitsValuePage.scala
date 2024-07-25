@@ -95,6 +95,8 @@ case class LumpSumDeathBenefitsValuePage(period: Period) extends QuestionPage[Bi
             userAnswers
               .remove(ClaimingTaxReliefPensionPage(period))
               .flatMap(_.remove(TaxReliefPage(period)))
+              .flatMap(_.remove(DidYouContributeToRASSchemePage(period)))
+              .flatMap(_.remove(RASContributionAmountPage(period)))
               .flatMap(_.remove(KnowAdjustedAmountPage(period)))
               .flatMap(_.remove(AdjustedIncomePage(period)))
               .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))

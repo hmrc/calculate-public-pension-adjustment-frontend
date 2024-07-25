@@ -19,8 +19,8 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.TaxReliefFormProvider
 import models.tasklist.sections.AASection
-import models.{AboveThreshold, Mode, Period, ThresholdIncome}
-import pages.annualallowance.taxyear.{TaxReliefPage, ThresholdIncomePage}
+import models.{Mode, Period}
+import pages.annualallowance.taxyear.TaxReliefPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
@@ -39,7 +39,6 @@ class TaxReliefController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   formProvider: TaxReliefFormProvider,
-  aboveThresholdController: AboveThresholdController,
   val controllerComponents: MessagesControllerComponents,
   view: TaxReliefView
 )(implicit ec: ExecutionContext)
@@ -65,26 +64,12 @@ class TaxReliefController @Inject() (
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, period, startEndDate(period)))),
           value =>
-            if (request.userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.IDoNotKnow)) {
-              for {
-                updatedAnswers            <- Future.fromTry(request.userAnswers.set(TaxReliefPage(period), value))
-                answersWithThreshold       = AboveThreshold(period).saveThresholdStatus(
-                                               updatedAnswers,
-                                               period,
-                                               aboveThresholdController.thresholdStatus(updatedAnswers, period)
-                                             )
-                redirectUrl                = TaxReliefPage(period).navigate(mode, answersWithThreshold).url
-                answersWithNavAndThreshold = AASection(period).saveNavigation(answersWithThreshold, redirectUrl)
-                _                         <- userDataService.set(answersWithNavAndThreshold)
-              } yield Redirect(redirectUrl)
-            } else {
-              for {
-                updatedAnswers <- Future.fromTry(request.userAnswers.set(TaxReliefPage(period), value))
-                redirectUrl     = TaxReliefPage(period).navigate(mode, updatedAnswers).url
-                answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
-                _              <- userDataService.set(answersWithNav)
-              } yield Redirect(redirectUrl)
-            }
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(TaxReliefPage(period), value))
+              redirectUrl     = TaxReliefPage(period).navigate(mode, updatedAnswers).url
+              answersWithNav  = AASection(period).saveNavigation(updatedAnswers, redirectUrl)
+              _              <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 

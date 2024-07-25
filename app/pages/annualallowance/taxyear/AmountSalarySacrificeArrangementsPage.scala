@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -55,6 +55,8 @@ case class AmountSalarySacrificeArrangementsPage(period: Period) extends Questio
           .flatMap(_.remove(LumpSumDeathBenefitsValuePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionPage(period)))
           .flatMap(_.remove(TaxReliefPage(period)))
+          .flatMap(_.remove(DidYouContributeToRASSchemePage(period)))
+          .flatMap(_.remove(RASContributionAmountPage(period)))
           .flatMap(_.remove(KnowAdjustedAmountPage(period)))
           .flatMap(_.remove(AdjustedIncomePage(period)))
           .flatMap(_.remove(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)))
