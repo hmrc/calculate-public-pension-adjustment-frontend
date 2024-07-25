@@ -55,6 +55,13 @@ class BlindAllowancePageSpec extends PageBehaviours {
         checkNavigation(result, "/annual-allowance/2018/check-answers")
       }
 
+      "to JourneyRecovery when not answered" in {
+        val ua     = emptyUserAnswers
+        val result = BlindAllowancePage(Period._2018).navigate(NormalMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
+      }
+
     }
 
     "Check mode" - {
@@ -81,6 +88,13 @@ class BlindAllowancePageSpec extends PageBehaviours {
         val result = BlindAllowancePage(Period._2018).navigate(CheckMode, userAnswers).url
 
         checkNavigation(result, "/annual-allowance/2018/check-answers")
+      }
+
+      "to JourneyRecovery when not answered" in {
+        val ua     = emptyUserAnswers
+        val result = BlindAllowancePage(Period._2018).navigate(CheckMode, ua).url
+
+        checkNavigation(result, "/there-is-a-problem")
       }
     }
 

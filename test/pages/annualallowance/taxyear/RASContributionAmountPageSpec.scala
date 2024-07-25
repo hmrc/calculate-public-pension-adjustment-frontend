@@ -182,6 +182,13 @@ class RASContributionAmountPageSpec extends PageBehaviours {
             }
           }
         }
+
+        "to JourneyRecovery when not answered" in {
+          val ua     = emptyUserAnswers
+          val result = RASContributionAmountPage(period).navigate(NormalMode, ua).url
+
+          checkNavigation(result, "/there-is-a-problem")
+        }
       }
     }
 
@@ -331,7 +338,15 @@ class RASContributionAmountPageSpec extends PageBehaviours {
               checkNavigation(result, s"/annual-allowance/$period/donated-via-gift-aid")
 
             }
+
           }
+        }
+
+        "to JourneyRecovery when not answered" in {
+          val ua     = emptyUserAnswers
+          val result = RASContributionAmountPage(period).navigate(CheckMode, ua).url
+
+          checkNavigation(result, "/there-is-a-problem")
         }
       }
     }

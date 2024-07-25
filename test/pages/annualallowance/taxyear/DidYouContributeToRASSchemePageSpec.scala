@@ -210,7 +210,7 @@ class DidYouContributeToRASSchemePageSpec extends PageBehaviours {
         }
         "to JourneyRecovery when not answered" in {
           val ua     = emptyUserAnswers
-          val result = ClaimingTaxReliefPensionPage(period).navigate(NormalMode, ua).url
+          val result = DidYouContributeToRASSchemePage(period).navigate(NormalMode, ua).url
 
           checkNavigation(result, "/there-is-a-problem")
         }
@@ -269,6 +269,13 @@ class DidYouContributeToRASSchemePageSpec extends PageBehaviours {
             checkNavigation(result, s"/annual-allowance/$period/know-adjusted-amount")
 
           }
+        }
+
+        "to JourneyRecovery when not answered" in {
+          val ua     = emptyUserAnswers
+          val result = DidYouContributeToRASSchemePage(period).navigate(CheckMode, ua).url
+
+          checkNavigation(result, "/there-is-a-problem")
         }
       }
     }
