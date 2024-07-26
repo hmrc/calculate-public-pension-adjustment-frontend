@@ -1393,7 +1393,7 @@ tradeUnionRelief.message3 = cy: If you have relief, you will find it on your P87
 tradeUnionRelief.heading2 = cy: Did you claim tax relief for payments to trade unions or police organisations from {0}?
 tradeUnionRelief.checkYourAnswersLabel = cy: Did you claim tax relief for payments to trade unions or police organisations?
 tradeUnionRelief.error.required = cy: Select yes if you claimed tax relief for payments to trade unions or police organisations
-tradeUnionRelief.change.hidden = cy: Change if you claimed tax relief for payments to trade unions or police organisations
+tradeUnionRelief.change.hidden = cy: if you claimed tax relief for payments to trade unions or police organisations
 
 unionPoliceReliefAmount.title = cy: How much tax relief are you claiming for trade union or police organisation fees from {0}?
 unionPoliceReliefAmount.heading = cy: How much tax relief are you claiming for trade union or police organisation fees from {0}?
@@ -1404,4 +1404,4 @@ unionPoliceReliefAmount.error.nonNumeric = cy: The tax relief are you claiming f
 unionPoliceReliefAmount.error.required = cy: Enter the amount of tax relief are you claiming for trade union or police organisation fees
 unionPoliceReliefAmount.error.wholeNumber = cy: The tax relief are you claiming for trade union or police organisation fees must only include numbers 0 to 9
 unionPoliceReliefAmount.error.outOfRange = cy: The tax relief are you claiming for trade union or police organisation fees must be between £0 and £100
-unionPoliceReliefAmount.change.hidden = cy: Change amount of tax relief you are claiming for trade union or police organisation fees
+unionPoliceReliefAmount.change.hidden = cy: amount of tax relief you are claiming for trade union or police organisation fees
