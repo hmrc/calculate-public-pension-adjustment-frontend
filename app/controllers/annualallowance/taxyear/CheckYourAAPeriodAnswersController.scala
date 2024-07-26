@@ -20,11 +20,12 @@ import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.{Period, SchemeIndex}
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
+import pages.annualallowance.taxyear.UnionPoliceReliefAmountPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.ClaimingTaxReliefPensionSummary
+import viewmodels.checkAnswers.{ClaimingTaxReliefPensionSummary, TradeUnionReliefSummary, UnionPoliceReliefAmountSummary}
 import viewmodels.checkAnswers.annualallowance.taxyear._
 import viewmodels.govuk.summarylist._
 import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView
@@ -139,6 +140,8 @@ class CheckYourAAPeriodAnswersController @Inject() (
           AmountOfGiftAidSummary.row(request.userAnswers, period),
           DoYouKnowPersonalAllowanceSummary.row(request.userAnswers, period),
           PersonalAllowanceSummary.row(request.userAnswers, period),
+          TradeUnionReliefSummary.row(request.userAnswers, period),
+          UnionPoliceReliefAmountSummary.row(request.userAnswers, period),
           BlindAllowanceSummary.row(request.userAnswers, period),
           BlindPersonsAllowanceAmountSummary.row(request.userAnswers, period)
         )
