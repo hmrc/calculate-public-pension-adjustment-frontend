@@ -41,13 +41,13 @@
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message3")</p>
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
 
-    <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
-
     @if(period == Period._2023){
         <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.originalPIA.heading2", schemeName)</h2>
     }else{
         <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.revisedPIA.heading2", schemeName)</h2>
     }
+
+    <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
 }
 
 @layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", schemeName, startEndDate))) {
