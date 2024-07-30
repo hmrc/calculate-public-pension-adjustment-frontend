@@ -18,12 +18,9 @@ package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
 import models.Period
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class LumpSumDeathBenefitsValueFormProviderSpec extends IntFieldBehaviours {
-
-  val period = Period._2023
-  val form   = new LumpSumDeathBenefitsValueFormProvider()()
 
   ".value" - {
 
@@ -35,30 +32,35 @@ class LumpSumDeathBenefitsValueFormProviderSpec extends IntFieldBehaviours {
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      form,
+      newForm(),
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      newForm(),
       fieldName,
-      nonNumericError = FormError(fieldName, "lumpSumDeathBenefitsValue.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "lumpSumDeathBenefitsValue.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "lumpSumDeathBenefitsValue.error.nonNumeric", Seq("")),
+      wholeNumberError = FormError(fieldName, "lumpSumDeathBenefitsValue.error.wholeNumber", Seq(""))
     )
 
     behave like intFieldWithRange(
-      form,
+      newForm(),
       fieldName,
       minimum = minimum,
       maximum = maximum,
-      expectedError = FormError(fieldName, "lumpSumDeathBenefitsValue.error.outOfRange", Seq(minimum, maximum))
+      expectedError = FormError(fieldName, "lumpSumDeathBenefitsValue.error.outOfRange", Seq(minimum, maximum, ""))
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, "lumpSumDeathBenefitsValue.error.required")
+      requiredError = FormError(fieldName, "lumpSumDeathBenefitsValue.error.required", Seq(""))
     )
   }
+  private def newForm(): Form[BigInt] = {
+    val form = new LumpSumDeathBenefitsValueFormProvider()
+    form("")
+  }
+
 }

@@ -39,7 +39,7 @@ class LumpSumDeathBenefitsValueControllerSpec extends SpecBase with MockitoSugar
   val period       = Period._2022
   val formProvider = new LumpSumDeathBenefitsValueFormProvider()
   val startEndDate = "6 April 2021 to 5 April 2022"
-  val form         = formProvider()
+  val form         = formProvider(startEndDate)
 
   def onwardRoute = Call("GET", "/foo")
 
