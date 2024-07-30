@@ -1225,7 +1225,7 @@ lumpSumDeathBenefitsValue.hint = cy: Amount must be rounded down to the nearest 
 lumpSumDeathBenefitsValue.checkYourAnswersLabel = cy: How much were the lump sum death benefits from {0}?
 lumpSumDeathBenefitsValue.error.nonNumeric = cy: Your lump sum death benefit amount must only include numbers 0 to 9
 lumpSumDeathBenefitsValue.error.required = cy: Enter your lump sum death benefit amount from {0}
-lumpSumDeathBenefitsValue.error.wholeNumber = cy: Your lump sum death benefit from {0} amount must only include numbers 0 to 9
+lumpSumDeathBenefitsValue.error.wholeNumber = cy: Your lump sum death benefit amount from {2} must be more than £0 and less than £999,999,999
 lumpSumDeathBenefitsValue.error.outOfRange = cy: Your lump sum death benefit amount from {0} must be more than £0 and less than £999,999,999
 lumpSumDeathBenefitsValue.change.hidden = cy: the amount of pension savings your employer made from {0}
 

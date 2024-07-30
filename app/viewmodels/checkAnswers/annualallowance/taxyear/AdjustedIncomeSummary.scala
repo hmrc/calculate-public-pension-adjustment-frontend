@@ -41,8 +41,7 @@ object AdjustedIncomeSummary {
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key =
-          messages("adjustedIncome.checkYourAnswersLabel", startEndDate),
+        key = messages("adjustedIncome.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(

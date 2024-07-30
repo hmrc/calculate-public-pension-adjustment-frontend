@@ -38,7 +38,7 @@ object KnowAdjustedAmountSummary {
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key = messages("knowAdjustedAmount.checkYourAnswersLabel",startEndDate),
+        key = messages("knowAdjustedAmount.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
