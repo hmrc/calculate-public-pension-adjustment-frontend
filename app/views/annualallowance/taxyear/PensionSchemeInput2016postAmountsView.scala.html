@@ -28,6 +28,22 @@
 
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
 
+@captionText = {
+    <span class="govuk-caption-xl">@messages("annualAllowance.period.caption.2016post")</span>
+}
+
+@contentHint = {
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message1")</p>
+
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message1")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message2")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message3")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
+
+    <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.revisedPIA.heading2", schemeName)</h2>
+    <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
+
+}
 
 @layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", schemeName))) {
 
@@ -37,25 +53,18 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <span class="govuk-caption-xl">@messages("annualAllowance.period.caption."+{period.toString})</span>
-
-        <h1 class="govuk-heading-xl">@messages("pensionSchemeInputAmounts.revisedPIA.heading1")</h1>
-
-        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message1")</p>
-        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message2")</p>
-        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message3")</p>
-        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
-
-        <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
-
         @govukInput(
             InputViewModel(
                 field = form("revisedPIA"),
-                label = LabelViewModel(messages("pensionSchemeInputAmounts.revisedPIA.heading2", schemeName)).withCssClass("govuk-label--m")
+                label = HmrcPageHeadingLabel(
+                    content = messages("pensionSchemeInputAmounts.revisedPIA.heading1", period.start.getYear.toString, period.end.getYear.toString),
+                    caption = HtmlContent(captionText)
+                )
             )
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
             .withWidth(Fixed10)
+            .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()
