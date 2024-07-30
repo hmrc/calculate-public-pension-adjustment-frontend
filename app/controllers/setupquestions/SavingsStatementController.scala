@@ -51,6 +51,7 @@ class SavingsStatementController @Inject() (
 
   val form = formProvider()
 
+  // TODO Logic to be removed, migrated to IndexController
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData).async { implicit request =>
     for {
       _ <- if (isAuthenticated(request) && request.userAnswers.isEmpty) {

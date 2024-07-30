@@ -37,6 +37,7 @@ import scala.concurrent.Future
 
 class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
+  // TODO to refactor, logic migrated over to IndexController
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new SavingsStatementFormProvider()
