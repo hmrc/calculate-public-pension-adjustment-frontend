@@ -16,21 +16,30 @@
 
 package pages.setupquestions
 
+import controllers.routes
 import controllers.setupquestions.{routes => setupRoutes}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object ReasonForResubmissionPage extends QuestionPage[String] {
+case object AffectedByRemedyPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
-  override def toString: String = "reasonForResubmission"
+  override def toString: String = "affectedByRemedy"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    setupRoutes.AffectedByRemedyController.onPageLoad(NormalMode)
+    answers.get(AffectedByRemedyPage) match {
+      case Some(true)  => setupRoutes.ReportingChangeController.onPageLoad(NormalMode)
+      case Some(false) => setupRoutes.IneligibleController.onPageLoad
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+    answers.get(AffectedByRemedyPage) match {
+      case Some(true)  => setupRoutes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(false) => setupRoutes.IneligibleController.onPageLoad
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

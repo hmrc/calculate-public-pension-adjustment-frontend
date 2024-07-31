@@ -34,7 +34,7 @@ case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ResubmittingAdjustmentPage) match {
       case Some(true)  => setupRoutes.ReasonForResubmissionController.onPageLoad(NormalMode)
-      case Some(false) => setupRoutes.ReportingChangeController.onPageLoad(NormalMode)
+      case Some(false) => setupRoutes.AffectedByRemedyController.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
