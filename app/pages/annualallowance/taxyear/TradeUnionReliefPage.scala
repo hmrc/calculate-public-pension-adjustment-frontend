@@ -25,7 +25,7 @@ import scala.util.Try
 
 case class TradeUnionReliefPage(period: Period) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "tradeUnionRelief"
 

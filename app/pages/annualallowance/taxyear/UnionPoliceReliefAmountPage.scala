@@ -23,7 +23,7 @@ import play.api.mvc.Call
 
 case class UnionPoliceReliefAmountPage(period: Period) extends QuestionPage[BigInt] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 
   override def toString: String = "unionPoliceReliefAmount"
 
