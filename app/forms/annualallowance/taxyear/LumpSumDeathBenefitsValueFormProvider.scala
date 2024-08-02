@@ -24,12 +24,16 @@ import javax.inject.Inject
 
 class LumpSumDeathBenefitsValueFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(startEndDate: String): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "lumpSumDeathBenefitsValue.error.required",
         "lumpSumDeathBenefitsValue.error.wholeNumber",
-        "lumpSumDeathBenefitsValue.error.nonNumeric"
-      ).verifying(inRange[BigInt](1, BigInt("999999999"), "lumpSumDeathBenefitsValue.error.outOfRange"))
+        "lumpSumDeathBenefitsValue.error.nonNumeric",
+        Seq(startEndDate)
+      )
+        .verifying(
+          inRangeWithArg(BigInt("1"), BigInt("999999999"), "lumpSumDeathBenefitsValue.error.outOfRange", startEndDate)
+        )
     )
 }

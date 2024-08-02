@@ -23,9 +23,14 @@ import javax.inject.Inject
 
 class TaxReliefFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(startEndDate: String): Form[BigInt] =
     Form(
-      "value" -> bigInt("taxRelief.error.required", "taxRelief.error.wholeNumber", "taxRelief.error.nonNumeric")
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "taxRelief.error.outOfRange"))
+      "value" -> bigInt(
+        "taxRelief.error.required",
+        "taxRelief.error.wholeNumber",
+        "taxRelief.error.nonNumeric",
+        Seq(startEndDate)
+      )
+        .verifying(inRangeWithArg(BigInt("0"), BigInt("999999999"), "taxRelief.error.outOfRange", startEndDate))
     )
 }
