@@ -86,8 +86,6 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
     "must redirect to the next page when valid data is submitted" in {
 
-      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
-
       val mockUserDataService = mock[UserDataService]
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
@@ -109,10 +107,6 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-
-//        val capturedUserAnswers = userAnswersCaptor.getValue
-//        capturedUserAnswers.get(ResubmittingAdjustmentPage).get mustBe true
-//        capturedUserAnswers.get(SavingsStatementPage(true)).get mustBe true
       }
     }
 
