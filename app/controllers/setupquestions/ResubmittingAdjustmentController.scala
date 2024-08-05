@@ -68,8 +68,6 @@ class ResubmittingAdjustmentController @Inject() (
             updatedAnswers <- Future.fromTry(
                                 request.userAnswers
                                   .getOrElse(constructUserAnswers(request))
-                                  .set(SavingsStatementPage, true)
-                                  .get
                                   .set(ResubmittingAdjustmentPage, value)
                               )
             redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
