@@ -39,7 +39,7 @@ class DateOfBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "must navigate to change in lifetime allowance page" in {
+    "must navigate to LTA protections or enhancements page" in {
 
       val userAnswers =
         emptyUserAnswers
@@ -48,13 +48,13 @@ class DateOfBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = DateOfBenefitCrystallisationEventPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-percentage-change")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-enhancements")
     }
   }
 
   "Check mode" - {
 
-    "must navigate to LTA CYA page" in {
+    "must navigate to LTA CYA page " in {
 
       val userAnswers =
         emptyUserAnswers
