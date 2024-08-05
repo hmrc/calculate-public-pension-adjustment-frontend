@@ -1411,3 +1411,9 @@ affectedByRemedy.heading = affectedByRemedy
 affectedByRemedy.checkYourAnswersLabel = affectedByRemedy
 affectedByRemedy.error.required = Select yes if affectedByRemedy
 affectedByRemedy.change.hidden = AffectedByRemedy
+
+previousLTACharge.title = previousLTACharge
+previousLTACharge.heading = previousLTACharge
+previousLTACharge.checkYourAnswersLabel = previousLTACharge
+previousLTACharge.error.required = Select yes if previousLTACharge
+previousLTACharge.change.hidden = PreviousLTACharge
