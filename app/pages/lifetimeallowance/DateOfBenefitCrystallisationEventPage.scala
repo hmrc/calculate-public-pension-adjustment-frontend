@@ -31,7 +31,7 @@ case object DateOfBenefitCrystallisationEventPage extends QuestionPage[LocalDate
   override def toString: String = "dateOfBenefitCrystallisationEvent"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode)
+    ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
