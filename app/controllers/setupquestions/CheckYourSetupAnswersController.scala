@@ -31,6 +31,9 @@ import viewmodels.checkAnswers.setupquestions.{ReasonForResubmissionSummary, Rep
 import viewmodels.checkAnswers.{AffectedByRemedySummary, Contribution4000ToDirectContributionSchemeSummary, FlexibleAccessDcSchemeSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
+import pages.setupquestions.ReportingChangePage
+import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
+import viewmodels.checkAnswers.AffectedByRemedySummary
 
 class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,

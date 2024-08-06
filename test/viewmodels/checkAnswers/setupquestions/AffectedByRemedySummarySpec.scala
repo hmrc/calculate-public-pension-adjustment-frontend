@@ -21,7 +21,6 @@ import models.{CheckMode, NormalMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.AffectedByRemedyPage
-import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.checkAnswers.AffectedByRemedySummary
