@@ -43,7 +43,7 @@ class ResubmittingAdjustmentPageSpec extends PageBehaviours {
         checkNavigation(nextPageUrl, "/change-reason")
       }
 
-      "must redirect to reporting change page when false" in {
+      "must redirect to affected by remedy page when false" in {
 
         val ua = emptyUserAnswers
           .set(ResubmittingAdjustmentPage, false)
@@ -52,7 +52,7 @@ class ResubmittingAdjustmentPageSpec extends PageBehaviours {
 
         val nextPageUrl: String = ResubmittingAdjustmentPage.navigate(NormalMode, ua).url
 
-        checkNavigation(nextPageUrl, "/charges")
+        checkNavigation(nextPageUrl, "/affected-by-remedy")
       }
 
       "must redirect to journey recovery when no answer" in {

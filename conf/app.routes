@@ -523,3 +523,8 @@ GET        /annual-allowance/:period/union-police-relief-amount                 
 POST       /annual-allowance/:period/union-police-relief-amount                 controllers.annualallowance.taxyear.UnionPoliceReliefAmountController.onSubmit(mode: Mode = NormalMode, period:Period)
 GET        /annual-allowance/:period/change-union-police-relief-amount                       controllers.annualallowance.taxyear.UnionPoliceReliefAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/change-union-police-relief-amount                       controllers.annualallowance.taxyear.UnionPoliceReliefAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
+
+GET        /affected-by-remedy                        controllers.setupquestions.AffectedByRemedyController.onPageLoad(mode: Mode = NormalMode)
+POST       /affected-by-remedy                        controllers.setupquestions.AffectedByRemedyController.onSubmit(mode: Mode = NormalMode)
+GET        /change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onSubmit(mode: Mode = CheckMode)

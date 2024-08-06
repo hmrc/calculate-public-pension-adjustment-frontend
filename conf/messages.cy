@@ -1405,3 +1405,9 @@ unionPoliceReliefAmount.error.required = cy: Enter the amount of tax relief are 
 unionPoliceReliefAmount.error.wholeNumber = cy: The tax relief are you claiming for trade union or police organisation fees must must be a whole number
 unionPoliceReliefAmount.error.outOfRange = cy: The tax relief are you claiming for trade union or police organisation fees must be between £0 and £100
 unionPoliceReliefAmount.change.hidden = cy: amount of tax relief you are claiming for trade union or police organisation fees
+
+affectedByRemedy.title = cy: affectedByRemedy
+affectedByRemedy.heading = cy: affectedByRemedy
+affectedByRemedy.checkYourAnswersLabel = cy: affectedByRemedy
+affectedByRemedy.error.required = cy: Select yes if affectedByRemedy
+affectedByRemedy.change.hidden = cy: AffectedByRemedy
