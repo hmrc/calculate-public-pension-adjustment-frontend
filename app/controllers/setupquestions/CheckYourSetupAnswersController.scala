@@ -29,6 +29,7 @@ import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 import pages.setupquestions.ReportingChangePage
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
+import viewmodels.checkAnswers.AffectedByRemedySummary
 
 class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -46,6 +47,7 @@ class CheckYourSetupAnswersController @Inject() (
       SavingsStatementSummary.row(request.userAnswers),
       ResubmittingAdjustmentSummary.row(request.userAnswers),
       ReasonForResubmissionSummary.row(request.userAnswers),
+      AffectedByRemedySummary.row(request.userAnswers),
       ReportingChangeSummary.row(request.userAnswers)
     )
 
