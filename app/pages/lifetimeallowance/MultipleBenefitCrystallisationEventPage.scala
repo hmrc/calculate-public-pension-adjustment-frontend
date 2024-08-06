@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -29,13 +29,15 @@ case object MultipleBenefitCrystallisationEventPage extends QuestionPage[Boolean
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(MultipleBenefitCrystallisationEventPage) match {
-      case Some(_) => controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
+      case Some(true) => controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController.onPageLoad(NormalMode)
+      case Some(false) => controllers.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(MultipleBenefitCrystallisationEventPage) match {
-      case Some(_) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(true) => controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController.onPageLoad(CheckMode)
+      case Some(false) => controllers.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

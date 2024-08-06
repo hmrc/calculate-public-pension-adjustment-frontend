@@ -29,14 +29,16 @@ case object OtherPensionSchemeNotifiedPage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     answers.get(OtherPensionSchemeNotifiedPage) match {
-      case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(false) => controllers.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = {
     answers.get(OtherPensionSchemeNotifiedPage) match {
-      case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(false) => controllers.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
