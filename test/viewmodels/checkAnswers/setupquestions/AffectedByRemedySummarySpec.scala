@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
-import models.{NormalMode, UserAnswers}
+import models.{CheckMode, NormalMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.{AffectedByRemedyPage, SavingsStatementPage}
@@ -28,7 +28,7 @@ import viewmodels.checkAnswers.AffectedByRemedySummary
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class AffectedByRemedySpec extends AnyFreeSpec with Matchers {
+class AffectedByRemedySummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
@@ -45,7 +45,7 @@ class AffectedByRemedySpec extends AnyFreeSpec with Matchers {
           key = "affectedByRemedy.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.AffectedByRemedyController.onPageLoad(NormalMode).url)
+            ActionItemViewModel("site.change", routes.AffectedByRemedyController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText("affectedByRemedy.change.hidden")
           )
         )
