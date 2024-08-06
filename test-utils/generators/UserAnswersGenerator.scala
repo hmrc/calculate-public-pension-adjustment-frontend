@@ -24,6 +24,7 @@ import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
+import pages.setupquestions.lifetimeallowance._
 
 import play.api.libs.json.{JsValue, Json}
 
@@ -31,7 +32,8 @@ trait UserAnswersGenerator extends TryValues {
   self: Generators =>
 
   val generators: Seq[Gen[(QuestionPage[_], JsValue)]] =
-    arbitrary[(UserSchemeDetailsPage.type, JsValue)] ::
+    arbitrary[(PreviousLTAChargePage.type, JsValue)] ::
+      arbitrary[(UserSchemeDetailsPage.type, JsValue)] ::
       arbitrary[(DefinedContribution2016PreFlexiAmountPage.type, JsValue)] ::
       arbitrary[(DefinedContribution2016PostFlexiAmountPage.type, JsValue)] ::
       arbitrary[(DefinedBenefit2016PostAmountPage.type, JsValue)] ::
