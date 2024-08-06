@@ -24,6 +24,7 @@ import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
+
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersGenerator extends TryValues {
