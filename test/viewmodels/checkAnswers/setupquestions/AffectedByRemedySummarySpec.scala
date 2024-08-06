@@ -22,7 +22,6 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.{AffectedByRemedyPage, SavingsStatementPage}
 import play.api.i18n.Messages
-//import play.api.routing.Router.empty.routes
 import play.api.test.Helpers
 import viewmodels.checkAnswers.AffectedByRemedySummary
 import viewmodels.govuk.summarylist._
