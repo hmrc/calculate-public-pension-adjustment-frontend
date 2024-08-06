@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers.lifetimeallowance
+package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
-import controllers.lifetimeallowance.routes
+import controllers.setupquestions.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.lifetimeallowance.MultipleBenefitCrystallisationEventPage
+import pages.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._

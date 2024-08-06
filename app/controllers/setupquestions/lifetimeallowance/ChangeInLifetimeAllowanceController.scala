@@ -14,31 +14,31 @@
  * limitations under the License.
  */
 
-package controllers.lifetimeallowance
+package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
-import forms.lifetimeallowance.MultipleBenefitCrystallisationEventFormProvider
+import forms.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceFormProvider
 import models.Mode
 import models.tasklist.sections.LTASection
-import pages.lifetimeallowance.MultipleBenefitCrystallisationEventPage
+import pages.setupquestions.lifetimeallowance.ChangeInLifetimeAllowancePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.lifetimeallowance.MultipleBenefitCrystallisationEventView
+import views.html.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class MultipleBenefitCrystallisationEventController @Inject() (
+class ChangeInLifetimeAllowanceController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: MultipleBenefitCrystallisationEventFormProvider,
+  formProvider: ChangeInLifetimeAllowanceFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: MultipleBenefitCrystallisationEventView
+  view: ChangeInLifetimeAllowanceView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -46,7 +46,7 @@ class MultipleBenefitCrystallisationEventController @Inject() (
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(MultipleBenefitCrystallisationEventPage) match {
+    val preparedForm = request.userAnswers.get(ChangeInLifetimeAllowancePage) match {
       case None        => form
       case Some(value) => form.fill(value)
     }
@@ -62,8 +62,8 @@ class MultipleBenefitCrystallisationEventController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(MultipleBenefitCrystallisationEventPage, value))
-              redirectUrl     = MultipleBenefitCrystallisationEventPage.navigate(mode, updatedAnswers).url
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(ChangeInLifetimeAllowancePage, value))
+              redirectUrl     = ChangeInLifetimeAllowancePage.navigate(mode, updatedAnswers).url
               answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)

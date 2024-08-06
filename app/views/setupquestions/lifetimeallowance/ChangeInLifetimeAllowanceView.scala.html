@@ -24,7 +24,6 @@
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
-@import controllers.lifetimeallowance.routes
 
 @contentHint = {
        <p class="govuk-body">@messages("changeInLifetimeAllowance.message")</p>
@@ -33,7 +32,7 @@
 
 @layout(pageTitle = title(form, messages("changeInLifetimeAllowance.title"))) {
 
-    @formHelper(action = routes.ChangeInLifetimeAllowanceController.onSubmit(mode), Symbol("autoComplete") -> "off") {
+    @formHelper(action = controllers.setupquestions.lifetimeallowance.routes.ChangeInLifetimeAllowanceController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

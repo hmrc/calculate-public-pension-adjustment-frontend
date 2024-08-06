@@ -14,47 +14,47 @@
  * limitations under the License.
  */
 
-package controllers.lifetimeallowance
+package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.lifetimeallowance.MultipleBenefitCrystallisationEventFormProvider
+import forms.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.setupquestions.lifetimeallowance.ChangeInLifetimeAllowancePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.lifetimeallowance.MultipleBenefitCrystallisationEventView
-import pages.lifetimeallowance.MultipleBenefitCrystallisationEventPage
 import services.UserDataService
+import views.html.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceView
 
 import scala.concurrent.Future
 
-class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with MockitoSugar {
+class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new MultipleBenefitCrystallisationEventFormProvider()
+  val formProvider = new ChangeInLifetimeAllowanceFormProvider()
   val form         = formProvider()
 
-  lazy val multipleBenefitCrystallisationEventRoute =
-    controllers.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode).url
+  lazy val normalRoute =
+    controllers.setupquestions.lifetimeallowance.routes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode).url
 
-  "MultipleBenefitCrystallisationEvent Controller" - {
+  "ChangeInLifetimeAllowance Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, multipleBenefitCrystallisationEventRoute)
+        val request = FakeRequest(GET, normalRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[MultipleBenefitCrystallisationEventView]
+        val view = application.injector.instanceOf[ChangeInLifetimeAllowanceView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -63,14 +63,14 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(MultipleBenefitCrystallisationEventPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(ChangeInLifetimeAllowancePage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, multipleBenefitCrystallisationEventRoute)
+        val request = FakeRequest(GET, normalRoute)
 
-        val view = application.injector.instanceOf[MultipleBenefitCrystallisationEventView]
+        val view = application.injector.instanceOf[ChangeInLifetimeAllowanceView]
 
         val result = route(application, request).value
 
@@ -79,7 +79,7 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the ChangeInTaxCharge page when valid data is submitted" in {
 
       val mockUserDataService = mock[UserDataService]
 
@@ -87,12 +87,14 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(bind[UserDataService].toInstance(mockUserDataService))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
           .build()
 
       running(application) {
         val request =
-          FakeRequest(POST, multipleBenefitCrystallisationEventRoute)
+          FakeRequest(POST, normalRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -107,12 +109,12 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
 
       running(application) {
         val request =
-          FakeRequest(POST, multipleBenefitCrystallisationEventRoute)
+          FakeRequest(POST, normalRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[MultipleBenefitCrystallisationEventView]
+        val view = application.injector.instanceOf[ChangeInLifetimeAllowanceView]
 
         val result = route(application, request).value
 
@@ -127,7 +129,7 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   = FakeRequest(GET, multipleBenefitCrystallisationEventRoute)
+        val request   = FakeRequest(GET, normalRoute)
 
         val result = route(application, request).value
 
@@ -143,7 +145,7 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val request   =
-          FakeRequest(POST, multipleBenefitCrystallisationEventRoute)
+          FakeRequest(POST, normalRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value

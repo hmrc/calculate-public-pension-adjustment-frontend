@@ -14,28 +14,32 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers.lifetimeallowance
+package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
-import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
-import pages.lifetimeallowance.ChangeInLifetimeAllowancePage
+import pages.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ChangeInLifetimeAllowanceSummary {
+object MultipleBenefitCrystallisationEventSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ChangeInLifetimeAllowancePage).map { answer =>
+    answers.get(MultipleBenefitCrystallisationEventPage).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "changeInLifetimeAllowance.checkYourAnswersLabel",
+        key = "multipleBenefitCrystallisationEvent.checkYourAnswersLabel",
         value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.ChangeInLifetimeAllowanceController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("changeInLifetimeAllowance.change.hidden"))
+          ActionItemViewModel(
+            "site.change",
+            controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
+              .onPageLoad(CheckMode)
+              .url
+          )
+            .withVisuallyHiddenText(messages("multipleBenefitCrystallisationEvent.change.hidden"))
         )
       )
     }

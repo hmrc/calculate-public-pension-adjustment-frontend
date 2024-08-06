@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package forms.lifetimeallowance
+package forms.setupquestions.lifetimeallowance
 
 import forms.mappings.Mappings
 import play.api.data.Form
 
 import javax.inject.Inject
 
-class ChangeInLifetimeAllowanceFormProvider @Inject() extends Mappings {
+class MultipleBenefitCrystallisationEventFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
     Form(
-      "value" -> boolean("changeInLifetimeAllowance.error.required")
+      "value" -> boolean("multipleBenefitCrystallisationEvent.error.required")
     )
 }

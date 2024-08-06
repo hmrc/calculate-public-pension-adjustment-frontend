@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pages.lifetimeallowance
+package pages.setupquestions.lifetimeallowance
 
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage

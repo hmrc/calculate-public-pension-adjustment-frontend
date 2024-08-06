@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package forms.lifetimeallowance
+package forms.setupquestions.lifetimeallowance
 
 import forms.mappings.Mappings
-import models.ChangeInTaxCharge
 import play.api.data.Form
 
 import javax.inject.Inject
 
-class ChangeInTaxChargeFormProvider @Inject() extends Mappings {
+class ChangeInLifetimeAllowanceFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[ChangeInTaxCharge] =
+  def apply(): Form[Boolean] =
     Form(
-      "value" -> enumerable[ChangeInTaxCharge]("changeInTaxCharge.error.required")
+      "value" -> boolean("changeInLifetimeAllowance.error.required")
     )
 }

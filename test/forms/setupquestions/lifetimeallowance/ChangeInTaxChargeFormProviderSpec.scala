@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package forms.lifetimeallowance
+package forms.setupquestions.lifetimeallowance
 
-import forms.behaviours.BooleanFieldBehaviours
+import forms.behaviours.OptionFieldBehaviours
+import models.ChangeInTaxCharge
 import play.api.data.FormError
 
-class MultipleBenefitCrystallisationEventFormProviderSpec extends BooleanFieldBehaviours {
+class ChangeInTaxChargeFormProviderSpec extends OptionFieldBehaviours {
 
-  val requiredKey = "multipleBenefitCrystallisationEvent.error.required"
-  val invalidKey  = "error.boolean"
-
-  val form = new MultipleBenefitCrystallisationEventFormProvider()()
+  val form = new ChangeInTaxChargeFormProvider()()
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
+    val requiredKey = "changeInTaxCharge.error.required"
 
-    behave like booleanField(
+    behave like optionsField[ChangeInTaxCharge](
       form,
       fieldName,
-      invalidError = FormError(fieldName, invalidKey)
+      validValues = ChangeInTaxCharge.values,
+      invalidError = FormError(fieldName, "error.invalid")
     )
 
     behave like mandatoryField(

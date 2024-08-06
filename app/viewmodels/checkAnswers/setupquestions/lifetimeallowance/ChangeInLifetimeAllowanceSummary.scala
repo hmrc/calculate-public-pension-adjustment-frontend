@@ -14,34 +14,33 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers.lifetimeallowance
+package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
 import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
-import pages.lifetimeallowance.ChangeInTaxChargePage
+import pages.setupquestions.lifetimeallowance.ChangeInLifetimeAllowancePage
 import play.api.i18n.Messages
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ChangeInTaxChargeSummary {
+object ChangeInLifetimeAllowanceSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ChangeInTaxChargePage).map { answer =>
-      val value = ValueViewModel(
-        HtmlContent(
-          HtmlFormat.escape(messages(s"changeInTaxCharge.$answer"))
-        )
-      )
+    answers.get(ChangeInLifetimeAllowancePage).map { answer =>
+      val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "changeInTaxCharge.checkYourAnswersLabel",
-        value = value,
+        key = "changeInLifetimeAllowance.checkYourAnswersLabel",
+        value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.ChangeInTaxChargeController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("changeInTaxCharge.change.hidden"))
+          ActionItemViewModel(
+            "site.change",
+            controllers.setupquestions.lifetimeallowance.routes.ChangeInLifetimeAllowanceController
+              .onPageLoad(CheckMode)
+              .url
+          )
+            .withVisuallyHiddenText(messages("changeInLifetimeAllowance.change.hidden"))
         )
       )
     }

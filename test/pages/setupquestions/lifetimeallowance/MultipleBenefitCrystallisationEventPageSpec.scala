@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pages.lifetimeallowance
+package pages.setupquestions.lifetimeallowance
 
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
