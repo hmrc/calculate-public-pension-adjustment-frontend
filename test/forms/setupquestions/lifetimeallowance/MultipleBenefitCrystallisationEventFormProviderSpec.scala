@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package forms.lifetimeallowance
+package forms.setupquestions.lifetimeallowance
 
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class ChangeInLifetimeAllowanceFormProviderSpec extends BooleanFieldBehaviours {
+class MultipleBenefitCrystallisationEventFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "changeInLifetimeAllowance.error.required"
+  val requiredKey = "multipleBenefitCrystallisationEvent.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new ChangeInLifetimeAllowanceFormProvider()()
+  val form = new MultipleBenefitCrystallisationEventFormProvider()()
 
   ".value" - {
 

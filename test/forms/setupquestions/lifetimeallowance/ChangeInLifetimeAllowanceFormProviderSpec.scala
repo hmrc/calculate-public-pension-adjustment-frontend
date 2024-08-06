@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package forms.lifetimeallowance
+package forms.setupquestions.lifetimeallowance
 
-import forms.behaviours.OptionFieldBehaviours
-import models.ChangeInTaxCharge
+import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class ChangeInTaxChargeFormProviderSpec extends OptionFieldBehaviours {
+class ChangeInLifetimeAllowanceFormProviderSpec extends BooleanFieldBehaviours {
 
-  val form = new ChangeInTaxChargeFormProvider()()
+  val requiredKey = "changeInLifetimeAllowance.error.required"
+  val invalidKey  = "error.boolean"
+
+  val form = new ChangeInLifetimeAllowanceFormProvider()()
 
   ".value" - {
 
-    val fieldName   = "value"
-    val requiredKey = "changeInTaxCharge.error.required"
+    val fieldName = "value"
 
-    behave like optionsField[ChangeInTaxCharge](
+    behave like booleanField(
       form,
       fieldName,
-      validValues = ChangeInTaxCharge.values,
-      invalidError = FormError(fieldName, "error.invalid")
+      invalidError = FormError(fieldName, invalidKey)
     )
 
     behave like mandatoryField(

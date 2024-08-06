@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package controllers.lifetimeallowance
+package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import forms.lifetimeallowance.ChangeInTaxChargeFormProvider
+import forms.setupquestions.lifetimeallowance.ChangeInTaxChargeFormProvider
 import models.{ChangeInTaxCharge, Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.ChangeInTaxChargePage
+import pages.setupquestions.lifetimeallowance.ChangeInTaxChargePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.lifetimeallowance.ChangeInTaxChargeView
+import views.html.setupquestions.lifetimeallowance.ChangeInTaxChargeView
 
 import scala.concurrent.Future
 
@@ -38,7 +37,8 @@ class ChangeInTaxChargeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val normalRoute = ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode).url
+  lazy val normalRoute =
+    controllers.setupquestions.lifetimeallowance.routes.ChangeInTaxChargeController.onPageLoad(NormalMode).url
 
   val formProvider = new ChangeInTaxChargeFormProvider()
   val form         = formProvider()

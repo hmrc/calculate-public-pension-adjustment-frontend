@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers.lifetimeallowance
+package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.{ChangeInTaxCharge, CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.lifetimeallowance.ChangeInTaxChargePage
+import pages.setupquestions.lifetimeallowance.ChangeInTaxChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
@@ -46,7 +46,7 @@ class ChangeInTaxChargeSummarySpec extends AnyFreeSpec with Matchers {
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              ltaRoutes.ChangeInTaxChargeController.onPageLoad(CheckMode).url
+              controllers.setupquestions.lifetimeallowance.routes.ChangeInTaxChargeController.onPageLoad(CheckMode).url
             )
               .withVisuallyHiddenText("changeInTaxCharge.change.hidden")
           )

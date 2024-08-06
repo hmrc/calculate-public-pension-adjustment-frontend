@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package forms.lifetimeallowance
+package forms.setupquestions.lifetimeallowance
 
 import forms.mappings.Mappings
+import models.ChangeInTaxCharge
 import play.api.data.Form
 
 import javax.inject.Inject
 
-class MultipleBenefitCrystallisationEventFormProvider @Inject() extends Mappings {
+class ChangeInTaxChargeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(): Form[ChangeInTaxCharge] =
     Form(
-      "value" -> boolean("multipleBenefitCrystallisationEvent.error.required")
+      "value" -> enumerable[ChangeInTaxCharge]("changeInTaxCharge.error.required")
     )
 }

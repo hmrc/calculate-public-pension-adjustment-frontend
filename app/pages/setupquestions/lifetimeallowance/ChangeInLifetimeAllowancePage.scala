@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package pages.lifetimeallowance
+package pages.setupquestions.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.routes
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -33,31 +32,21 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ChangeInLifetimeAllowancePage) match {
-      case Some(true)  => ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode)
-      case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+      case Some(true)  =>
+        controllers.setupquestions.lifetimeallowance.routes.ChangeInTaxChargeController.onPageLoad(NormalMode)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
+          .onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ChangeInLifetimeAllowancePage) match {
-      case Some(true)  => ltaRoutes.ChangeInTaxChargeController.onPageLoad(NormalMode)
-      case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+      case Some(true)  =>
+        controllers.setupquestions.lifetimeallowance.routes.ChangeInTaxChargeController.onPageLoad(NormalMode)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
+          .onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  override def cleanup(value: Option[Boolean], answers: UserAnswers): Try[UserAnswers] =
-    value
-      .map {
-        case false =>
-          val cleanedUserAnswers = Try(cleanUp(answers, models.LTAPageGroups.changeInLifetimeAllowancePageGroup()))
-          cleanedUserAnswers.get.set(ChangeInLifetimeAllowancePage, value = false, cleanUp = false)
-        case true  => super.cleanup(value, answers)
-      }
-      .getOrElse(super.cleanup(value, answers))
-
-  def cleanUp(answers: UserAnswers, pages: Seq[String]): UserAnswers =
-    pages.headOption match {
-      case Some(page) => cleanUp(answers.remove(models.UserAnswerLTAPageGroup(page)).get, pages.tail)
-      case None       => answers
     }
 }

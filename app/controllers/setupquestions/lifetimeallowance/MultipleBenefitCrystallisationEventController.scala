@@ -14,31 +14,31 @@
  * limitations under the License.
  */
 
-package controllers.lifetimeallowance
+package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
-import forms.lifetimeallowance.ChangeInTaxChargeFormProvider
+import forms.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventFormProvider
 import models.Mode
 import models.tasklist.sections.LTASection
-import pages.lifetimeallowance.ChangeInTaxChargePage
+import pages.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.lifetimeallowance.ChangeInTaxChargeView
+import views.html.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class ChangeInTaxChargeController @Inject() (
+class MultipleBenefitCrystallisationEventController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: ChangeInTaxChargeFormProvider,
+  formProvider: MultipleBenefitCrystallisationEventFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: ChangeInTaxChargeView
+  view: MultipleBenefitCrystallisationEventView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -46,7 +46,7 @@ class ChangeInTaxChargeController @Inject() (
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(ChangeInTaxChargePage) match {
+    val preparedForm = request.userAnswers.get(MultipleBenefitCrystallisationEventPage) match {
       case None        => form
       case Some(value) => form.fill(value)
     }
@@ -62,8 +62,8 @@ class ChangeInTaxChargeController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(ChangeInTaxChargePage, value))
-              redirectUrl     = ChangeInTaxChargePage.navigate(mode, updatedAnswers).url
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(MultipleBenefitCrystallisationEventPage, value))
+              redirectUrl     = MultipleBenefitCrystallisationEventPage.navigate(mode, updatedAnswers).url
               answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
