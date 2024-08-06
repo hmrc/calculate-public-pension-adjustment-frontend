@@ -16,6 +16,7 @@
 
 package pages.lifetimeallowance
 
+import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
 import models.tasklist.sections.LTASection
@@ -34,14 +35,14 @@ case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(HadBenefitCrystallisationEventPage) match {
-      case Some(true)  => ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode)
+      case Some(true)  => setupLTARoutes.PreviousLTAChargeController.onPageLoad(NormalMode)
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(HadBenefitCrystallisationEventPage) match {
-      case Some(true)  => ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode)
+      case Some(true)  => setupLTARoutes.PreviousLTAChargeController.onPageLoad(NormalMode)
       case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }

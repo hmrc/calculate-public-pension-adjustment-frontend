@@ -34,7 +34,7 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
   "normal mode" - {
 
-    "must navigate to date of benefit of crystallisation event page when user answers true" in {
+    "to previous LTA charge page when user answers yes" in {
 
       val ua = emptyUserAnswers
         .set(HadBenefitCrystallisationEventPage, true)
@@ -43,7 +43,7 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event-date")
+      checkNavigation(nextPageUrl, "/LTA-charge")
     }
 
     "must navigate to kickout page when user answers false" in {
@@ -71,7 +71,7 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "must navigate to date of benefit of crystallisation event page when user answers true" in {
+    "to LTA charge page when user answers true" in {
 
       val ua = emptyUserAnswers
         .set(HadBenefitCrystallisationEventPage, true)
@@ -80,7 +80,7 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event-date")
+      checkNavigation(nextPageUrl, "/LTA-charge")
     }
 
     "must navigate to kickout page when user answers false" in {
