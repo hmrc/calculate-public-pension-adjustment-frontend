@@ -19,6 +19,7 @@ package controllers.setupquestions
 import controllers.actions._
 import forms.setupquestions.AffectedByRemedyFormProvider
 import models.Mode
+import models.tasklist.sections.SetupSection
 import pages.setupquestions.AffectedByRemedyPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -27,7 +28,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.AffectedByRemedyView
 
 import javax.inject.Inject
-
 import scala.concurrent.{ExecutionContext, Future}
 
 class AffectedByRemedyController @Inject() (
@@ -63,8 +63,10 @@ class AffectedByRemedyController @Inject() (
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(AffectedByRemedyPage, value))
-              _              <- userDataService.set(updatedAnswers)
-            } yield Redirect(AffectedByRemedyPage.navigate(mode, updatedAnswers))
+              redirectUrl     = AffectedByRemedyPage.navigate(mode, updatedAnswers).url
+              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
         )
   }
 }

@@ -23,18 +23,18 @@ import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
-import pages.setupquestions.ReportingChangePage
+import pages.setupquestions._
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
-//  implicit lazy val arbitraryAffectedByRemedyUserAnswersEntry: Arbitrary[(AffectedByRemedyPage.type, JsValue)] =
-//    Arbitrary {
-//      for {
-//        page  <- arbitrary[AffectedByRemedyPage.type]
-//        value <- arbitrary[Boolean].map(Json.toJson(_))
-//      } yield (page, value)
-//    }
+  implicit lazy val arbitraryAffectedByRemedyUserAnswersEntry: Arbitrary[(AffectedByRemedyPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AffectedByRemedyPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
 
   implicit lazy val arbitraryUnionPoliceReliefAmountUserAnswersEntry
     : Arbitrary[(UnionPoliceReliefAmountPage.type, JsValue)] =
