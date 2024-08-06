@@ -528,3 +528,8 @@ GET        /affected-by-remedy                        controllers.setupquestions
 POST       /affected-by-remedy                        controllers.setupquestions.AffectedByRemedyController.onSubmit(mode: Mode = NormalMode)
 GET        /change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onSubmit(mode: Mode = CheckMode)
+
+GET        /LTA-charge                       controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /LTA-charge                        controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = CheckMode)
