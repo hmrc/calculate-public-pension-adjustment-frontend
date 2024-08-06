@@ -1417,3 +1417,9 @@ previousLTACharge.heading = cy: previousLTACharge
 previousLTACharge.checkYourAnswersLabel = cy: previousLTACharge
 previousLTACharge.error.required = cy: Select yes if previousLTACharge
 previousLTACharge.change.hidden = cy: PreviousLTACharge
+
+otherPensionSchemeNotified.title = cy: otherPensionSchemeNotified
+otherPensionSchemeNotified.heading = cy: otherPensionSchemeNotified
+otherPensionSchemeNotified.checkYourAnswersLabel = cy: otherPensionSchemeNotified
+otherPensionSchemeNotified.error.required = cy: Select yes if otherPensionSchemeNotified
+otherPensionSchemeNotified.change.hidden = cy: OtherPensionSchemeNotified

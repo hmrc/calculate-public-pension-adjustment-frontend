@@ -26,6 +26,7 @@ import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
 import pages.setupquestions.lifetimeallowance._
 
+import pages.setupquestions.lifetimeallowance.OtherPensionSchemeNotifiedPage
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersGenerator extends TryValues {
@@ -34,6 +35,8 @@ trait UserAnswersGenerator extends TryValues {
   val generators: Seq[Gen[(QuestionPage[_], JsValue)]] =
     arbitrary[(PreviousLTAChargePage.type, JsValue)] ::
       arbitrary[(UserSchemeDetailsPage.type, JsValue)] ::
+    arbitrary[(OtherPensionSchemeNotifiedPage.type, JsValue)] ::
+    arbitrary[(UserSchemeDetailsPage.type, JsValue)] ::
       arbitrary[(DefinedContribution2016PreFlexiAmountPage.type, JsValue)] ::
       arbitrary[(DefinedContribution2016PostFlexiAmountPage.type, JsValue)] ::
       arbitrary[(DefinedBenefit2016PostAmountPage.type, JsValue)] ::
