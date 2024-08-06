@@ -21,9 +21,12 @@ import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
-import pages.setupquestions.ReportingChangePage
+import pages.setupquestions._
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryAffectedByRemedyPage: Arbitrary[AffectedByRemedyPage.type] =
+    Arbitrary(AffectedByRemedyPage)
 
   implicit lazy val arbitraryUnionPoliceReliefAmountPage: Arbitrary[UnionPoliceReliefAmountPage.type] =
     Arbitrary(UnionPoliceReliefAmountPage)
