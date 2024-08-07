@@ -30,43 +30,43 @@ import views.html.setupquestions.lifetimeallowance.OtherPensionSchemeNotifiedVie
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class OtherPensionSchemeNotifiedController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         userDataService: UserDataService,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: OtherPensionSchemeNotifiedFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: OtherPensionSchemeNotifiedView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class OtherPensionSchemeNotifiedController @Inject() (
+  override val messagesApi: MessagesApi,
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: OtherPensionSchemeNotifiedFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: OtherPensionSchemeNotifiedView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val preparedForm = request.userAnswers.get(OtherPensionSchemeNotifiedPage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(OtherPensionSchemeNotifiedPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+    Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(OtherPensionSchemeNotifiedPage, value))
-            redirectUrl     = OtherPensionSchemeNotifiedPage.navigate(mode, updatedAnswers).url
-            answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-            _              <- userDataService.set(answersWithNav)
-          } yield Redirect(redirectUrl)
-      )
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(OtherPensionSchemeNotifiedPage, value))
+              redirectUrl     = OtherPensionSchemeNotifiedPage.navigate(mode, updatedAnswers).url
+              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
+              _              <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
+        )
   }
 }

@@ -29,15 +29,17 @@ case object MultipleBenefitCrystallisationEventPage extends QuestionPage[Boolean
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(MultipleBenefitCrystallisationEventPage) match {
-      case Some(true) => controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController.onPageLoad(NormalMode)
+      case Some(true)  =>
+        controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController.onPageLoad(NormalMode)
       case Some(false) => controllers.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(MultipleBenefitCrystallisationEventPage) match {
-      case Some(true) => controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController.onPageLoad(CheckMode)
+      case Some(true)  =>
+        controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController.onPageLoad(CheckMode)
       case Some(false) => controllers.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

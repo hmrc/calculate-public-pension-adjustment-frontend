@@ -16,68 +16,72 @@
 
 package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
-  import models.{CheckMode, UserAnswers}
-  import org.scalatest.freespec.AnyFreeSpec
-  import org.scalatest.matchers.should.Matchers
-  import pages.setupquestions.lifetimeallowance.OtherPensionSchemeNotifiedPage
-  import play.api.i18n.Messages
-  import play.api.test.Helpers
-  import viewmodels.govuk.summarylist._
-  import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, ValueViewModel}
-  import viewmodels.implicits._
+import models.{CheckMode, UserAnswers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import pages.setupquestions.lifetimeallowance.OtherPensionSchemeNotifiedPage
+import play.api.i18n.Messages
+import play.api.test.Helpers
+import viewmodels.govuk.summarylist._
+import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, ValueViewModel}
+import viewmodels.implicits._
 
-  class OtherPensionSchemeNotifiedSummarySpec extends AnyFreeSpec with Matchers {
+class OtherPensionSchemeNotifiedSummarySpec extends AnyFreeSpec with Matchers {
 
-    private implicit val messages: Messages = Helpers.stubMessages()
+  private implicit val messages: Messages = Helpers.stubMessages()
 
-    "row" - {
-      "when Yes is selected, return the summary row" in {
-        val userAnswers = UserAnswers("id")
-          .set(
-            OtherPensionSchemeNotifiedPage,
-            true
-          )
-          .get
-        OtherPensionSchemeNotifiedSummary.row(userAnswers) shouldBe Some(
-          SummaryListRowViewModel(
-            key = "otherPensionSchemeNotified.checkYourAnswersLabel",
-            value = ValueViewModel("site.yes"),
-            actions = Seq(
-              ActionItemViewModel(
-                "site.change",
-                controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController.onPageLoad(CheckMode).url
-              )
-                .withVisuallyHiddenText("otherPensionSchemeNotified.change.hidden")
+  "row" - {
+    "when Yes is selected, return the summary row" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          OtherPensionSchemeNotifiedPage,
+          true
+        )
+        .get
+      OtherPensionSchemeNotifiedSummary.row(userAnswers) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "otherPensionSchemeNotified.checkYourAnswersLabel",
+          value = ValueViewModel("site.yes"),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController
+                .onPageLoad(CheckMode)
+                .url
             )
+              .withVisuallyHiddenText("otherPensionSchemeNotified.change.hidden")
           )
         )
-      }
-
-      "when No is selected, return the summary row" in {
-        val userAnswers = UserAnswers("id")
-          .set(
-            OtherPensionSchemeNotifiedPage,
-            false
-          )
-          .get
-        OtherPensionSchemeNotifiedSummary.row(userAnswers) shouldBe Some(
-          SummaryListRowViewModel(
-            key = "otherPensionSchemeNotified.checkYourAnswersLabel",
-            value = ValueViewModel("site.no"),
-            actions = Seq(
-              ActionItemViewModel(
-                "site.change",
-                controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController.onPageLoad(CheckMode).url
-              )
-                .withVisuallyHiddenText("otherPensionSchemeNotified.change.hidden")
-            )
-          )
-        )
-      }
-
-      "when answer unavailable, return empty" in {
-        val userAnswers = UserAnswers("id")
-        OtherPensionSchemeNotifiedSummary.row(userAnswers) shouldBe None
-      }
+      )
     }
+
+    "when No is selected, return the summary row" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          OtherPensionSchemeNotifiedPage,
+          false
+        )
+        .get
+      OtherPensionSchemeNotifiedSummary.row(userAnswers) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "otherPensionSchemeNotified.checkYourAnswersLabel",
+          value = ValueViewModel("site.no"),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.setupquestions.lifetimeallowance.routes.OtherPensionSchemeNotifiedController
+                .onPageLoad(CheckMode)
+                .url
+            )
+              .withVisuallyHiddenText("otherPensionSchemeNotified.change.hidden")
+          )
+        )
+      )
+    }
+
+    "when answer unavailable, return empty" in {
+      val userAnswers = UserAnswers("id")
+      OtherPensionSchemeNotifiedSummary.row(userAnswers) shouldBe None
+    }
+  }
 }

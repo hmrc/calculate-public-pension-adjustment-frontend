@@ -40,9 +40,10 @@ class OtherPensionSchemeNotifiedControllerSpec extends SpecBase with MockitoSuga
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new OtherPensionSchemeNotifiedFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val otherPensionSchemeNotifiedRoute = setupLTARoutes.OtherPensionSchemeNotifiedController.onPageLoad(NormalMode).url
+  lazy val otherPensionSchemeNotifiedRoute =
+    setupLTARoutes.OtherPensionSchemeNotifiedController.onPageLoad(NormalMode).url
 
   "OtherPensionSchemeNotified Controller" - {
 
@@ -128,7 +129,7 @@ class OtherPensionSchemeNotifiedControllerSpec extends SpecBase with MockitoSuga
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request = FakeRequest(GET, otherPensionSchemeNotifiedRoute)
+        val request   = FakeRequest(GET, otherPensionSchemeNotifiedRoute)
 
         val result = route(application, request).value
 
@@ -143,7 +144,7 @@ class OtherPensionSchemeNotifiedControllerSpec extends SpecBase with MockitoSuga
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request =
+        val request   =
           FakeRequest(POST, otherPensionSchemeNotifiedRoute)
             .withFormUrlEncodedBody(("value", "true"))
 

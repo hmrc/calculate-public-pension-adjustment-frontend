@@ -27,19 +27,17 @@ case object OtherPensionSchemeNotifiedPage extends QuestionPage[Boolean] {
 
   override def toString: String = "otherPensionSchemeNotified"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(OtherPensionSchemeNotifiedPage) match {
-      case Some(true) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(true)  => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case Some(false) => controllers.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(OtherPensionSchemeNotifiedPage) match {
-      case Some(true) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(true)  => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case Some(false) => controllers.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }
