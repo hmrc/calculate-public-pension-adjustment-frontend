@@ -39,16 +39,15 @@ class ReportingChangePageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "must redirect to CYA page when user submits an answer" in {
+    "must redirect to RPSS page when user selects AA" in {
 
-      val ua = emptyUserAnswers
-        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head, ReportingChange.values.tail.head))
+      val ua                  = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
         .success
         .value
-
       val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/pension-saving-statement")
     }
 
     "must redirect to journey recovery when no answer" in {
