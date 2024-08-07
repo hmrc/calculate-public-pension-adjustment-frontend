@@ -42,7 +42,7 @@ class ReportingChangePageSpec extends PageBehaviours {
     "must redirect to RPSS page when user selects AA" in {
 
       val ua                  = emptyUserAnswers
-        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.AnnualAllowance))
         .success
         .value
       val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
