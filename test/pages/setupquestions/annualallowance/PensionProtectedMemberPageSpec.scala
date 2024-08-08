@@ -16,6 +16,7 @@
 
 package pages.setupquestions.annualallowance
 
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class PensionProtectedMemberPageSpec extends PageBehaviours {
@@ -27,5 +28,48 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
     beSettable[Boolean](PensionProtectedMemberPage)
 
     beRemovable[Boolean](PensionProtectedMemberPage)
+  }
+
+  "normal mode" - {
+
+    "must go to AA Kickout when yes and RPSS no" in {
+      // TODO
+    }
+
+    "must go to 22/23 PIA > 40K page when yes and RPSS yes" in {
+      // TODO
+    }
+
+    "must go to AA charge when no" in {
+
+      val userAnswer = emptyUserAnswers
+        .set(PensionProtectedMemberPage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = PensionProtectedMemberPage.navigate(NormalMode, userAnswer).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance-charge")
+    }
+
+    "must go to journey recovery when no answer" in {}
+  }
+
+  "check mode" - {
+
+    "when answered must go to CYA" in {
+
+      val userAnswer = emptyUserAnswers
+        .set(PensionProtectedMemberPage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = PensionProtectedMemberPage.navigate(CheckMode, userAnswer).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+
+    }
+
+    "when no answer must go to journey recovery" in {}
   }
 }

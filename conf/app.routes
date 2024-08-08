@@ -538,3 +538,8 @@ GET        /protected-member                      controllers.setupquestions.ann
 POST       /protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = NormalMode)
 GET        /change-protected-member                  controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-protected-member                 controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /annual-allowance-charge                      controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /annual-allowance-charge                        controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-annual-allowance-charge                  controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-annual-allowance-charge               controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = CheckMode)

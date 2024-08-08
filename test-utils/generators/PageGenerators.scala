@@ -27,6 +27,9 @@ import pages.setupquestions.annualallowance._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryHadAAChargePage: Arbitrary[HadAAChargePage.type] =
+    Arbitrary(HadAAChargePage)
+
   implicit lazy val arbitraryPensionProtectedMemberPage: Arbitrary[PensionProtectedMemberPage.type] =
     Arbitrary(PensionProtectedMemberPage)
 

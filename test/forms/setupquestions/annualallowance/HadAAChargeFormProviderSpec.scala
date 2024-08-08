@@ -19,12 +19,12 @@ package forms.setupquestions.annualallowance
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class PensionProtectedMemberFormProviderSpec extends BooleanFieldBehaviours {
+class HadAAChargeFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "pensionProtectedMember.error.required"
+  val requiredKey = "hadAACharge.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new PensionProtectedMemberFormProvider()()
+  val form = new HadAAChargeFormProvider()()
 
   ".value" - {
 

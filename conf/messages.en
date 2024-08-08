@@ -1423,3 +1423,9 @@ pensionProtectedMember.heading = pensionProtectedMember
 pensionProtectedMember.checkYourAnswersLabel = pensionProtectedMember
 pensionProtectedMember.error.required = Select yes if pensionProtectedMember
 pensionProtectedMember.change.hidden = PensionProtectedMember
+
+hadAACharge.title = hadAACharge
+hadAACharge.heading = hadAACharge
+hadAACharge.checkYourAnswersLabel = hadAACharge
+hadAACharge.error.required = Select yes if hadAACharge
+hadAACharge.change.hidden = HadAACharge

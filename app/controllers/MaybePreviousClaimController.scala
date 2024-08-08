@@ -45,19 +45,13 @@ class MaybePreviousClaimController @Inject() (
 
   def redirect(): Action[AnyContent] = (identify andThen getData).async { implicit request =>
     for {
-      _              <- if (isAuthenticated(request) && request.userAnswers.isEmpty) {
-                          calculateBackendService.updateUserAnswersFromCalcUA(request.userId)
-                        } else {
-                          Future.successful(Done)
-                        }
-      updatedAnswers <-
-        Future
-          .fromTry(
-            request.userAnswers
-              .getOrElse(constructUserAnswers(request))
-              .set(SavingsStatementPage, true)
-          )
-      redirectUrl    <- generateRedirect(request, updatedAnswers)
+      _             <- if (isAuthenticated(request) && request.userAnswers.isEmpty) {
+                         calculateBackendService.updateUserAnswersFromCalcUA(request.userId)
+                       } else {
+                         Future.successful(Done)
+                       }
+      updatedAnswers = request.userAnswers.getOrElse(constructUserAnswers(request))
+      redirectUrl   <- generateRedirect(request, updatedAnswers)
     } yield Redirect(redirectUrl)
   }
 
@@ -94,11 +88,11 @@ class MaybePreviousClaimController @Inject() (
                 case true  =>
                   routes.PreviousClaimContinueController.onPageLoad().url
                 case false =>
-                  SavingsStatementPage.navigate(NormalMode, userAnswers).url
+                  controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
               }
         }
     } else {
-      Future.successful(SavingsStatementPage.navigate(NormalMode, userAnswers).url)
+      Future.successful(controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url)
     }
 
   private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) =

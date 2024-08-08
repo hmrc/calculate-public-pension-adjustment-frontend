@@ -18,43 +18,43 @@ package controllers.setupquestions.annualallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.setupquestions.annualallowance.PensionProtectedMemberFormProvider
+import forms.setupquestions.annualallowance.HadAAChargeFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.annualallowance.PensionProtectedMemberPage
+import pages.setupquestions.annualallowance.HadAAChargePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.setupquestions.annualallowance.PensionProtectedMemberView
+import views.html.setupquestions.annualallowance.HadAAChargeView
 
 import scala.concurrent.Future
 
-class PensionProtectedMemberControllerSpec extends SpecBase with MockitoSugar {
+class HadAAChargeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new PensionProtectedMemberFormProvider()
+  val formProvider = new HadAAChargeFormProvider()
   val form         = formProvider()
 
-  lazy val pensionProtectedMemberRoute =
-    controllers.setupquestions.annualallowance.routes.PensionProtectedMemberController.onPageLoad(NormalMode).url
+  lazy val hadAAChargeRoute =
+    controllers.setupquestions.annualallowance.routes.HadAAChargeController.onPageLoad(NormalMode).url
 
-  "PensionProtectedMember Controller" - {
+  "HadAACharge Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, pensionProtectedMemberRoute)
+        val request = FakeRequest(GET, hadAAChargeRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[PensionProtectedMemberView]
+        val view = application.injector.instanceOf[HadAAChargeView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -63,14 +63,14 @@ class PensionProtectedMemberControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(PensionProtectedMemberPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(HadAAChargePage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, pensionProtectedMemberRoute)
+        val request = FakeRequest(GET, hadAAChargeRoute)
 
-        val view = application.injector.instanceOf[PensionProtectedMemberView]
+        val view = application.injector.instanceOf[HadAAChargeView]
 
         val result = route(application, request).value
 
@@ -92,7 +92,7 @@ class PensionProtectedMemberControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, pensionProtectedMemberRoute)
+          FakeRequest(POST, hadAAChargeRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -107,12 +107,12 @@ class PensionProtectedMemberControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, pensionProtectedMemberRoute)
+          FakeRequest(POST, hadAAChargeRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[PensionProtectedMemberView]
+        val view = application.injector.instanceOf[HadAAChargeView]
 
         val result = route(application, request).value
 
@@ -127,7 +127,7 @@ class PensionProtectedMemberControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   = FakeRequest(GET, pensionProtectedMemberRoute)
+        val request   = FakeRequest(GET, hadAAChargeRoute)
 
         val result = route(application, request).value
 
@@ -143,8 +143,8 @@ class PensionProtectedMemberControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val request   =
-          FakeRequest(POST, pensionProtectedMemberRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+          FakeRequest(POST, hadAAChargeRoute)
+            .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 

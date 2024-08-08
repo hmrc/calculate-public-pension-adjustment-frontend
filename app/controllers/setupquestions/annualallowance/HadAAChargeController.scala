@@ -17,28 +17,28 @@
 package controllers.setupquestions.annualallowance
 
 import controllers.actions._
-import forms.setupquestions.annualallowance.PensionProtectedMemberFormProvider
+import forms.setupquestions.annualallowance.HadAAChargeFormProvider
 import models.Mode
 import models.tasklist.sections.SetupSection
-import pages.setupquestions.annualallowance.PensionProtectedMemberPage
+import pages.setupquestions.annualallowance.HadAAChargePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.setupquestions.annualallowance.PensionProtectedMemberView
+import views.html.setupquestions.annualallowance.HadAAChargeView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PensionProtectedMemberController @Inject() (
+class HadAAChargeController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: PensionProtectedMemberFormProvider,
+  formProvider: HadAAChargeFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: PensionProtectedMemberView
+  view: HadAAChargeView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -46,10 +46,11 @@ class PensionProtectedMemberController @Inject() (
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(PensionProtectedMemberPage) match {
+    val preparedForm = request.userAnswers.get(HadAAChargePage) match {
       case None        => form
       case Some(value) => form.fill(value)
     }
+
     Ok(view(preparedForm, mode))
   }
 
@@ -61,8 +62,8 @@ class PensionProtectedMemberController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(PensionProtectedMemberPage, value))
-              redirectUrl     = PensionProtectedMemberPage.navigate(mode, updatedAnswers).url
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(HadAAChargePage, value))
+              redirectUrl     = HadAAChargePage.navigate(mode, updatedAnswers).url
               answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)

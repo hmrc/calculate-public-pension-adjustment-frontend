@@ -18,24 +18,24 @@ package viewmodels.checkAnswers.setupquestions.annualallowance
 
 import controllers.setupquestions.annualallowance.routes
 import models.{CheckMode, UserAnswers}
-import pages.setupquestions.annualallowance.PensionProtectedMemberPage
+import pages.setupquestions.annualallowance.HadAAChargePage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object PensionProtectedMemberSummary {
+object HadAAChargeSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(PensionProtectedMemberPage).map { answer =>
+    answers.get(HadAAChargePage).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "pensionProtectedMember.checkYourAnswersLabel",
+        key = "hadAACharge.checkYourAnswersLabel",
         value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.PensionProtectedMemberController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("pensionProtectedMember.change.hidden"))
+          ActionItemViewModel("site.change", routes.HadAAChargeController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("hadAACharge.change.hidden"))
         )
       )
     }

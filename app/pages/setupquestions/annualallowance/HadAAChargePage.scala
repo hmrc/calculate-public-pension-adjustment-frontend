@@ -16,41 +16,32 @@
 
 package pages.setupquestions.annualallowance
 
-import models.{NormalMode, UserAnswers}
+import models.UserAnswers
 import pages.QuestionPage
 import pages.setupquestions.SavingsStatementPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object PensionProtectedMemberPage extends QuestionPage[Boolean] {
+case object HadAAChargePage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
 
-  override def toString: String = "pensionProtectedMember"
+  override def toString: String = "hadAACharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(PensionProtectedMemberPage) match {
-      case Some(true)  =>
-        savingsStatementStatus(answers)
-      case Some(false) => controllers.setupquestions.annualallowance.routes.HadAAChargeController.onPageLoad(NormalMode)
-      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    (answers.get(HadAAChargePage), answers.get(SavingsStatementPage)) match {
+      case (Some(true), Some(true)) =>
+        // TODO to net income > 190k 20/21 - 21/22
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case (Some(_), Some(_))       =>
+        // TODO to refund of contributions page
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case _                        => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PensionProtectedMemberPage) match {
+    answers.get(HadAAChargePage) match {
       case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  private def savingsStatementStatus(answers: UserAnswers) =
-    answers.get(SavingsStatementPage) match {
-      case Some(true)  =>
-        // TODO  change with future scaffolds
-        // Was your 22/23 PIA > 40k
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case Some(false) =>
-        // TODO AA Kickout
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case None        => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 }

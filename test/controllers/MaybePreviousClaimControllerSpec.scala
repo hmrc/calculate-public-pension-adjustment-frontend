@@ -50,9 +50,6 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
         )
 
       val userAnswers = UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, authenticated = true)
-        .set(SavingsStatementPage, true)
-        .success
-        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers))
         .overrides(
@@ -294,7 +291,7 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to PreviousClaimContinueController when submission started is none & recordsPresentInSubmissionService is false" in {
+    "must redirect to resubmitting adjustment page when submission started is none & recordsPresentInSubmissionService is false" in {
 
       val mockUserDataService      = mock[UserDataService]
       val mockSubmitBackendService = mock[SubmitBackendService]
@@ -313,9 +310,6 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers =
         UserAnswers(userAnswersId, Json.obj(), "uniqueId", Instant.now, true)
-          .set(SavingsStatementPage, true)
-          .success
-          .value
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers), userIsAuthenticated = true)
