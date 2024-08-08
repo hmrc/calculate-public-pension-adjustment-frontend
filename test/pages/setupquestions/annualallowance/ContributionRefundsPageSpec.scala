@@ -1,0 +1,92 @@
+/*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package pages.setupquestions.annualallowance
+
+import models.{CheckMode, NormalMode}
+import pages.behaviours.PageBehaviours
+import pages.setupquestions.SavingsStatementPage
+
+class ContributionRefundsPageSpec extends PageBehaviours {
+
+  "ContributionRefundsPage" - {
+
+    beRetrievable[Boolean](ContributionRefundsPage)
+
+    beSettable[Boolean](ContributionRefundsPage)
+
+    beRemovable[Boolean](ContributionRefundsPage)
+  }
+
+  "normal mode" - {
+
+    "to aa kickout when no and RPSS no" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(SavingsStatementPage, false)
+        .success
+        .value
+        .set(ContributionRefundsPage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/not-impacted-no-RPSS")
+    }
+
+    "to Net income above 100k 16/17 - 19/20 when yes" in {
+      //TODO
+    }
+
+    "to have any PIAs increase 15/16 - 21/22 when no and RPSS yes" in {
+      //TODO
+    }
+
+    "to journey recovery when not answered" in {
+
+      val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, emptyUserAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "check mode" - {
+
+    "to cya when answered" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(SavingsStatementPage, false)
+        .success
+        .value
+        .set(ContributionRefundsPage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = ContributionRefundsPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "to journey recovery when not answered" in {
+
+      val nextPageUrl: String = ContributionRefundsPage.navigate(CheckMode, emptyUserAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+
+    }
+  }
+}

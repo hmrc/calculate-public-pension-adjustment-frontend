@@ -14,28 +14,31 @@
  * limitations under the License.
  */
 
-package pages.setupquestions.lifetimeallowance
+package pages.setupquestions.annualallowance
 
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
+import pages.setupquestions.SavingsStatementPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object PreviousLTAChargePage extends QuestionPage[Boolean] {
+case object HadAAChargePage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ "setup" \ "lta" \ toString
+  override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
 
-  override def toString: String = "previousLTACharge"
+  override def toString: String = "hadAACharge"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(PreviousLTAChargePage) match {
-      // TODO CHANGE PATH WHEN PAGE MOVED TO NEW PACKAGE
-      case Some(_) => controllers.lifetimeallowance.routes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode)
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    (answers.get(HadAAChargePage), answers.get(SavingsStatementPage)) match {
+      case (Some(true), Some(true)) =>
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case (Some(_), Some(_))       =>
+        controllers.setupquestions.annualallowance.routes.ContributionRefundsController.onPageLoad(NormalMode)
+      case _                        => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(PreviousLTAChargePage) match {
+    answers.get(HadAAChargePage) match {
       case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

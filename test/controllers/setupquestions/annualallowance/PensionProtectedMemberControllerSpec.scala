@@ -14,47 +14,47 @@
  * limitations under the License.
  */
 
-package controllers.setupquestions.lifetimeallowance
+package controllers.setupquestions.annualallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.setupquestions.lifetimeallowance.PreviousLTAChargeFormProvider
+import forms.setupquestions.annualallowance.PensionProtectedMemberFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.lifetimeallowance.PreviousLTAChargePage
+import pages.setupquestions.annualallowance.PensionProtectedMemberPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.setupquestions.lifetimeallowance.PreviousLTAChargeView
+import views.html.setupquestions.annualallowance.PensionProtectedMemberView
 
 import scala.concurrent.Future
 
-class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
+class PensionProtectedMemberControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new PreviousLTAChargeFormProvider()
+  val formProvider = new PensionProtectedMemberFormProvider()
   val form         = formProvider()
 
-  lazy val previousLTAChargeRoute =
-    controllers.setupquestions.lifetimeallowance.routes.PreviousLTAChargeController.onPageLoad(NormalMode).url
+  lazy val pensionProtectedMemberRoute =
+    controllers.setupquestions.annualallowance.routes.PensionProtectedMemberController.onPageLoad(NormalMode).url
 
-  "PreviousLTACharge Controller" - {
+  "PensionProtectedMember Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, previousLTAChargeRoute)
+        val request = FakeRequest(GET, pensionProtectedMemberRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[PreviousLTAChargeView]
+        val view = application.injector.instanceOf[PensionProtectedMemberView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -63,14 +63,14 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(PreviousLTAChargePage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(PensionProtectedMemberPage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, previousLTAChargeRoute)
+        val request = FakeRequest(GET, pensionProtectedMemberRoute)
 
-        val view = application.injector.instanceOf[PreviousLTAChargeView]
+        val view = application.injector.instanceOf[PensionProtectedMemberView]
 
         val result = route(application, request).value
 
@@ -92,7 +92,7 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, previousLTAChargeRoute)
+          FakeRequest(POST, pensionProtectedMemberRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -106,14 +106,13 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-
         val request =
-          FakeRequest(POST, previousLTAChargeRoute)
+          FakeRequest(POST, pensionProtectedMemberRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[PreviousLTAChargeView]
+        val view = application.injector.instanceOf[PensionProtectedMemberView]
 
         val result = route(application, request).value
 
@@ -128,7 +127,7 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   = FakeRequest(GET, previousLTAChargeRoute)
+        val request   = FakeRequest(GET, pensionProtectedMemberRoute)
 
         val result = route(application, request).value
 
@@ -144,8 +143,8 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val request   =
-          FakeRequest(POST, previousLTAChargeRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+          FakeRequest(POST, pensionProtectedMemberRoute)
+            .withFormUrlEncodedBody(("value", "answer"))
 
         val result = route(application, request).value
 

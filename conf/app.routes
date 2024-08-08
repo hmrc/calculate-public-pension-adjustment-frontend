@@ -533,3 +533,20 @@ GET        /LTA-charge                       controllers.setupquestions.lifetime
 POST       /LTA-charge                        controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = NormalMode)
+POST       /protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = NormalMode)
+GET        /change-protected-member                  controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-protected-member                 controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /annual-allowance-charge                      controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /annual-allowance-charge                        controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-annual-allowance-charge                  controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-annual-allowance-charge               controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = NormalMode)
+POST       /contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = NormalMode)
+GET        /contribution-refunds                 controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeContributionRefunds                  controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /not-impacted-no-RPSS                      controllers.setupquestions.annualallowance.NotAbleToUseThisServiceAAController.onPageLoad()
