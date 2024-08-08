@@ -533,3 +533,8 @@ GET        /LTA-charge                       controllers.setupquestions.lifetime
 POST       /LTA-charge                        controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = NormalMode)
+POST       /protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = NormalMode)
+GET        /change-protected-member                  controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-protected-member                 controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = CheckMode)

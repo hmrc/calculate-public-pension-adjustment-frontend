@@ -23,8 +23,12 @@ import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
 import pages.setupquestions._
 import pages.setupquestions.lifetimeallowance._
+import pages.setupquestions.annualallowance._
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryPensionProtectedMemberPage: Arbitrary[PensionProtectedMemberPage.type] =
+    Arbitrary(PensionProtectedMemberPage)
 
   implicit lazy val arbitraryAffectedByRemedyPage: Arbitrary[AffectedByRemedyPage.type] =
     Arbitrary(AffectedByRemedyPage)

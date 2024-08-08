@@ -1417,3 +1417,9 @@ previousLTACharge.heading = previousLTACharge
 previousLTACharge.checkYourAnswersLabel = previousLTACharge
 previousLTACharge.error.required = Select yes if previousLTACharge
 previousLTACharge.change.hidden = PreviousLTACharge
+
+pensionProtectedMember.title = pensionProtectedMember
+pensionProtectedMember.heading = pensionProtectedMember
+pensionProtectedMember.checkYourAnswersLabel = pensionProtectedMember
+pensionProtectedMember.error.required = Select yes if pensionProtectedMember
+pensionProtectedMember.change.hidden = PensionProtectedMember

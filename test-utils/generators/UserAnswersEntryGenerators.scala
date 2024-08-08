@@ -24,10 +24,20 @@ import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpaye
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
 import pages.setupquestions.lifetimeallowance._
+import pages.setupquestions.annualallowance._
 import pages.setupquestions._
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+
+  implicit lazy val arbitraryPensionProtectedMemberUserAnswersEntry
+    : Arbitrary[(PensionProtectedMemberPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PensionProtectedMemberPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
 
   implicit lazy val arbitraryAffectedByRemedyUserAnswersEntry: Arbitrary[(AffectedByRemedyPage.type, JsValue)] =
     Arbitrary {
