@@ -18,7 +18,7 @@ package pages.setupquestions
 
 import controllers.routes
 import models.tasklist.sections.{AASection, LTASection, PreAASection}
-import models.{ReportingChange, UserAnswers}
+import models.{NormalMode, ReportingChange, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -32,8 +32,10 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
   override def toString: String = "reportingChange"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
-    case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-    case _       => routes.JourneyRecoveryController.onPageLoad(None)
+    case Some(set) if set.contains(ReportingChange.AnnualAllowance) =>
+      controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode)
+    case Some(_)                                                    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+    case _                                                          => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
