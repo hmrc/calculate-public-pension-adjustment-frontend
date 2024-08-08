@@ -16,7 +16,7 @@
 
 package pages.setupquestions.lifetimeallowance
 
-import models.CheckMode
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {

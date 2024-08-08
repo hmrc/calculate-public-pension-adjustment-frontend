@@ -33,22 +33,30 @@ case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ChangeInTaxChargePage) match {
       case Some(ChangeInTaxCharge.NewCharge) | Some(ChangeInTaxCharge.IncreasedCharge) =>
-        controllers.routes.TaskListController.onPageLoad()
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case Some(ChangeInTaxCharge.DecreasedCharge)                                     =>
-        controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
-          .onPageLoad(NormalMode)
+        checkPreviousLTACharge(answers)
       case _                                                                           =>
         controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
           .onPageLoad(NormalMode)
     }
 
+  private def checkPreviousLTACharge(answers: UserAnswers) =
+    answers.get(PreviousLTAChargePage) match {
+      case Some(true)  =>
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
+          .onPageLoad(NormalMode)
+      case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ChangeInTaxChargePage) match {
       case Some(ChangeInTaxCharge.NewCharge) | Some(ChangeInTaxCharge.IncreasedCharge) =>
-        controllers.routes.TaskListController.onPageLoad()
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case Some(ChangeInTaxCharge.DecreasedCharge)                                     =>
-        controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
-          .onPageLoad(NormalMode)
+        checkPreviousLTACharge(answers)
       case _                                                                           =>
         controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
           .onPageLoad(NormalMode)

@@ -41,7 +41,7 @@ class ChangeInTaxChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInTaxChargePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/task-list")
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }
 
     "must navigate to kickout when user answers no charge" in {
@@ -80,7 +80,7 @@ class ChangeInTaxChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInTaxChargePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/task-list")
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }
   }
 }
