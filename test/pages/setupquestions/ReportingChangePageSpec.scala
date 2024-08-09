@@ -17,12 +17,13 @@
 package pages.setupquestions
 
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{ChangeInTaxCharge, CheckMode, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AAKickOutStatus, ChangeInTaxCharge, CheckMode, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LTAKickOutStatus, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
 import pages.behaviours.PageBehaviours
-import pages.lifetimeallowance.{AnnualPaymentValuePage, ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, HadBenefitCrystallisationEventPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, MultipleBenefitCrystallisationEventPage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
+import pages.lifetimeallowance.{AnnualPaymentValuePage, ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, MultipleBenefitCrystallisationEventPage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
+import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 
 import java.time.LocalDate
 
@@ -39,7 +40,7 @@ class ReportingChangePageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "must redirect to RPSS page when user selects AA" in {
+    "must redirect to RPSS page when user submits an answer for Annual allowance" in {
 
       val ua                  = emptyUserAnswers
         .set(ReportingChangePage, Set[ReportingChange](ReportingChange.AnnualAllowance))
@@ -48,6 +49,18 @@ class ReportingChangePageSpec extends PageBehaviours {
       val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
 
       checkNavigation(nextPageUrl, "/pension-saving-statement")
+    }
+
+    "must redirect to BCE page when user submits an answer for Lifetime allowance" in {
+
+      val ua = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.LifetimeAllowance))
+        .success
+        .value
+
+      val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
     }
 
     "must redirect to journey recovery when no answer" in {
@@ -62,16 +75,28 @@ class ReportingChangePageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "must redirect to CYA page when user submits an answer" in {
+    "must redirect to RPSS page when user submits an answer for Annual allowance" in {
 
       val ua = emptyUserAnswers
-        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head, ReportingChange.values.tail.head))
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.AnnualAllowance))
         .success
         .value
 
       val nextPageUrl: String = ReportingChangePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/pension-saving-statement")
+    }
+
+    "must redirect to BCE page when user submits an answer for Lifetime allowance" in {
+
+      val ua = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.LifetimeAllowance))
+        .success
+        .value
+
+      val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
     }
 
     "must redirect to journey recovery when no answer" in {
@@ -102,6 +127,10 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(PIAPreRemedyPage(_2013)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(PIAPreRemedyPage(_2014)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(PIAPreRemedyPage(_2015)) mustBe Some(BigInt(123))
+
+      // Kickout status
+      cleanedUserAnswers.get(AAKickOutStatus()) mustBe None
+      cleanedUserAnswers.get(LTAKickOutStatus()) mustBe None
 
       // LTA Answers
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe None
@@ -200,6 +229,10 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(PIAPreRemedyPage(_2014)) mustBe None
       cleanedUserAnswers.get(PIAPreRemedyPage(_2015)) mustBe None
 
+      // Kickout status
+      cleanedUserAnswers.get(AAKickOutStatus()) mustBe None
+      cleanedUserAnswers.get(LTAKickOutStatus()) mustBe None
+
       // LTA Answers
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe Some(LocalDate.of(2021, 1, 1))
@@ -287,6 +320,10 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(PIAPreRemedyPage(_2013)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(PIAPreRemedyPage(_2014)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(PIAPreRemedyPage(_2015)) mustBe Some(BigInt(123))
+
+      // Kickout status
+      cleanedUserAnswers.get(AAKickOutStatus()) mustBe Some(1)
+      cleanedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
 
       // LTA Answers
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)

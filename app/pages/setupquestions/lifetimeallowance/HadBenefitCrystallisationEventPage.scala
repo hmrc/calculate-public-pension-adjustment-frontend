@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pages.lifetimeallowance
+package pages.setupquestions.lifetimeallowance
 
 import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
