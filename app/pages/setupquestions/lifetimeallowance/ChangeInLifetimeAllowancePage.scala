@@ -26,27 +26,57 @@ import scala.util.Try
 
 case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ "lta" \ toString
+  override def path: JsPath = JsPath \ "setup" \ "lta" \ toString
 
   override def toString: String = "changeInLifetimeAllowance"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(ChangeInLifetimeAllowancePage) match {
-      case Some(true)  =>
-        controllers.setupquestions.lifetimeallowance.routes.ChangeInTaxChargeController.onPageLoad(NormalMode)
-      case Some(false) =>
-        controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+    val previousLTACharge = answers.get(PreviousLTAChargePage)
+    (answers.get(ChangeInLifetimeAllowancePage), previousLTACharge) match {
+      case (Some(true), Some(true))  =>
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case (Some(true), Some(false)) =>
+        controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController
           .onPageLoad(NormalMode)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+      case (Some(false), Some(_))    =>
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad() // TODO Needs to be changed
+      case _                         => routes.JourneyRecoveryController.onPageLoad(None)
     }
+  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(ChangeInLifetimeAllowancePage) match {
-      case Some(true)  =>
-        controllers.setupquestions.lifetimeallowance.routes.ChangeInTaxChargeController.onPageLoad(NormalMode)
-      case Some(false) =>
-        controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+    val previousLTACharge = answers.get(PreviousLTAChargePage)
+    (answers.get(ChangeInLifetimeAllowancePage), previousLTACharge) match {
+      case (Some(true), Some(true))  =>
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case (Some(true), Some(false)) =>
+        controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController
           .onPageLoad(NormalMode)
-      case None        => routes.JourneyRecoveryController.onPageLoad(None)
+      case (Some(false), Some(_))    =>
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad() // TODO Needs to be changed
+      case _                         => routes.JourneyRecoveryController.onPageLoad(None)
     }
+  }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    val previousLTACharge = userAnswers.get(PreviousLTAChargePage).getOrElse(false)
+    value
+      .map {
+        case true  =>
+          if (previousLTACharge) {
+            userAnswers
+              .remove(IncreaseInLTAChargePage)
+              .flatMap(_.remove(NewLTAChargePage))
+              .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
+          } else {
+            super.cleanup(value, userAnswers)
+          }
+        case false =>
+          userAnswers
+            .remove(IncreaseInLTAChargePage)
+            .flatMap(_.remove(NewLTAChargePage))
+            .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
+  }
 }

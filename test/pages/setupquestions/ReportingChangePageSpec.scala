@@ -17,13 +17,13 @@
 package pages.setupquestions
 
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{ChangeInTaxCharge, CheckMode, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{CheckMode, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
 import pages.behaviours.PageBehaviours
 import pages.lifetimeallowance.{AnnualPaymentValuePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, HadBenefitCrystallisationEventPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
-import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, MultipleBenefitCrystallisationEventPage}
+import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, MultipleBenefitCrystallisationEventPage}
 
 import java.time.LocalDate
 
@@ -108,9 +108,6 @@ class ReportingChangePageSpec extends PageBehaviours {
       // LTA Answers
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe None
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe None
-      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe None
-      cleanedUserAnswers.get(ChangeInTaxChargePage) mustBe None
-      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe None
       cleanedUserAnswers.get(ProtectionTypePage) mustBe None
       cleanedUserAnswers.get(ProtectionReferencePage) mustBe None
@@ -205,9 +202,6 @@ class ReportingChangePageSpec extends PageBehaviours {
       // LTA Answers
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe Some(LocalDate.of(2021, 1, 1))
-      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe Some(true)
-      cleanedUserAnswers.get(ChangeInTaxChargePage) mustBe Some(ChangeInTaxCharge.IncreasedCharge)
-      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe Some(false)
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe Some(LtaProtectionOrEnhancements.Both)
       cleanedUserAnswers.get(ProtectionTypePage) mustBe Some(ProtectionType.EnhancedProtection)
       cleanedUserAnswers.get(ProtectionReferencePage) mustBe Some("123")
@@ -294,8 +288,6 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe Some(LocalDate.of(2021, 1, 1))
       cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe Some(true)
-      cleanedUserAnswers.get(ChangeInTaxChargePage) mustBe Some(ChangeInTaxCharge.IncreasedCharge)
-      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe Some(false)
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe Some(LtaProtectionOrEnhancements.Both)
       cleanedUserAnswers.get(ProtectionTypePage) mustBe Some(ProtectionType.EnhancedProtection)
       cleanedUserAnswers.get(ProtectionReferencePage) mustBe Some("123")

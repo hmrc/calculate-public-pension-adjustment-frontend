@@ -32,28 +32,64 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "must navigate to change in tax charge page when user answers true" in {
+    "must navigate to change in CYA page when user answers true for PreviousLTACharge and ChangeInLTA" in {
 
       val ua = emptyUserAnswers
+        .set(ChangeInLifetimeAllowancePage, true)
+        .success
+        .value
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must navigate to change in CYA page when user answers false for PreviousLTACharge and true for ChangeInLTA" in {
+
+      val ua = emptyUserAnswers
+        .set(PreviousLTAChargePage, false)
+        .success
+        .value
         .set(ChangeInLifetimeAllowancePage, true)
         .success
         .value
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-charge-change")
+      checkNavigation(nextPageUrl, "/lifetime-allowance-percentage-increase")
     }
 
-    "must navigate to kickout when user answers false" in {
+    "must navigate to kickout when user answers false for PreviousLTACharge and ChangeInLTA" in {
 
       val ua = emptyUserAnswers
+        .set(PreviousLTAChargePage, false)
+        .success
+        .value
         .set(ChangeInLifetimeAllowancePage, false)
         .success
         .value
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/more-than-one-benefit-crystallisation-event")
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must navigate to kickout when user answers true for PreviousLTACharge and false for ChangeInLTA" in {
+
+      val ua = emptyUserAnswers
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
+        .set(ChangeInLifetimeAllowancePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }
 
     "must navigate to journey recovery when no answer" in {
@@ -68,28 +104,64 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "must navigate to change in tax charge page when user answers true" in {
+    "must navigate to change in CYA page when user answers true for PreviousLTACharge and ChangeInLTA" in {
 
       val ua = emptyUserAnswers
         .set(ChangeInLifetimeAllowancePage, true)
         .success
         .value
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
 
-      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-charge-change")
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }
 
-    "must navigate to kickout when user answers false" in {
+    "must navigate to change in CYA page when user answers false for PreviousLTACharge and true for ChangeInLTA" in {
 
       val ua = emptyUserAnswers
+        .set(PreviousLTAChargePage, false)
+        .success
+        .value
+        .set(ChangeInLifetimeAllowancePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance-percentage-increase")
+    }
+
+    "must navigate to kickout when user answers false for PreviousLTACharge and ChangeInLTA" in {
+
+      val ua = emptyUserAnswers
+        .set(PreviousLTAChargePage, false)
+        .success
+        .value
         .set(ChangeInLifetimeAllowancePage, false)
         .success
         .value
 
-      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/more-than-one-benefit-crystallisation-event")
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must navigate to kickout when user answers true for PreviousLTACharge and false for ChangeInLTA" in {
+
+      val ua = emptyUserAnswers
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
+        .set(ChangeInLifetimeAllowancePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }
 
     "must navigate to journey recovery when no answer" in {

@@ -26,6 +26,12 @@ import pages.setupquestions.lifetimeallowance._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryNewLTAChargePage: Arbitrary[NewLTAChargePage.type] =
+    Arbitrary(NewLTAChargePage)
+
+  implicit lazy val arbitraryIncreaseInLTAChargePage: Arbitrary[IncreaseInLTAChargePage.type] =
+    Arbitrary(IncreaseInLTAChargePage)
+
   implicit lazy val arbitraryAffectedByRemedyPage: Arbitrary[AffectedByRemedyPage.type] =
     Arbitrary(AffectedByRemedyPage)
 
@@ -275,8 +281,5 @@ trait PageGenerators {
 
   implicit lazy val arbitraryScottishTaxpayerFrom2016Page: Arbitrary[ScottishTaxpayerFrom2016Page.type] =
     Arbitrary(ScottishTaxpayerFrom2016Page)
-
-  implicit lazy val arbitraryChangeInTaxChargePage: Arbitrary[ChangeInTaxChargePage.type] =
-    Arbitrary(ChangeInTaxChargePage)
 
 }
