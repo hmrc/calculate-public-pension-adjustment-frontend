@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package controllers.lifetimeallowance
+package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
-import forms.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
-import models.Mode
+import forms.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
+import models.{LTAKickOutStatus, Mode}
 import models.tasklist.sections.LTASection
-import pages.lifetimeallowance.HadBenefitCrystallisationEventPage
+import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.lifetimeallowance.HadBenefitCrystallisationEventView
+import views.html.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -45,6 +45,10 @@ class HadBenefitCrystallisationEventController @Inject() (
 
   val form = formProvider()
 
+  private val lta                = "LTA"
+  private val kickOutStatusFalse = 1
+  private val kickOutStatusTrue  = 0
+
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val preparedForm = request.userAnswers.get(HadBenefitCrystallisationEventPage) match {
       case None        => form
@@ -60,13 +64,17 @@ class HadBenefitCrystallisationEventController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value =>
+          value => {
+            val ltaKickOutStatus = if (value) kickOutStatusFalse else kickOutStatusTrue
+
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(HadBenefitCrystallisationEventPage, value))
-              redirectUrl     = HadBenefitCrystallisationEventPage.navigate(mode, updatedAnswers).url
-              answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              updatedAnswers          <- Future.fromTry(request.userAnswers.set(HadBenefitCrystallisationEventPage, value))
+              updatedAnswersWithStatus = LTAKickOutStatus().saveLTAKickOutStatus(updatedAnswers, ltaKickOutStatus)
+              redirectUrl              = HadBenefitCrystallisationEventPage.navigate(mode, updatedAnswersWithStatus).url
+              answersWithNav           = LTASection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              _                       <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
+          }
         )
   }
 }

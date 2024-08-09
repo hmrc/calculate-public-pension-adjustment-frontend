@@ -18,6 +18,7 @@ package pages.lifetimeallowance
 
 import models.{ChangeInTaxCharge, CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.behaviours.PageBehaviours
+import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 
 import java.time.LocalDate
 
