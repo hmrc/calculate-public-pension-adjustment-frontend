@@ -18,7 +18,7 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.{ReportingChange, UserAnswers}
+import models.{AAKickOutStatus, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -26,13 +26,20 @@ import views.html.lifetimeallowance.NotAbleToUseThisServiceLtaView
 
 class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
 
+  val kickOutStatusFalse = 1
+
   "NotAbleToUseThisServiceLta Controller" - {
 
-    "when AnnualAllowance is included in the UserAnswers" - {
+    "when annual allowance status is 1 in the UserAnswers" - {
 
-      "must return OK and the correct view with annualAllowanceIncluded as true for a GET" in {
+      "must return show button as true and have correct url" in {
         val userAnswers =
-          UserAnswers(userAnswersId).set(ReportingChangePage, ReportingChange.values.toSet).success.value
+          UserAnswers(userAnswersId)
+            .set(ReportingChangePage, ReportingChange.values.toSet)
+            .get
+            .set(AAKickOutStatus(), 1)
+            .success
+            .value
 
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -44,19 +51,25 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true)(request, messages(application)).toString
+          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/pension-saving-statement")(
+            request,
+            messages(application)
+          ).toString
           contentAsString(result) must include("Continue")
         }
       }
     }
 
-    "when AnnualAllowance is NOT included in the UserAnswers" - {
+    "when annual allowance status is 2 in the UserAnswers" - {
 
-      "must return OK and the correct view with annualAllowanceIncluded as false for a GET" in {
-        val userAnswers = UserAnswers(userAnswersId)
-          .set(ReportingChangePage, Set[ReportingChange](ReportingChange.LifetimeAllowance))
-          .success
-          .value
+      "must return show button as true and have correct url" in {
+        val userAnswers =
+          UserAnswers(userAnswersId)
+            .set(ReportingChangePage, ReportingChange.values.toSet)
+            .get
+            .set(AAKickOutStatus(), 2)
+            .success
+            .value
 
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -68,7 +81,68 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false)(request, messages(application)).toString
+          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/task-list")(
+            request,
+            messages(application)
+          ).toString
+          contentAsString(result) must include("Continue")
+        }
+      }
+    }
+
+    "when annual allowance status is any number in the UserAnswers" - {
+
+      "must return show button as false and have correct url" in {
+        val userAnswers =
+          UserAnswers(userAnswersId)
+            .set(ReportingChangePage, ReportingChange.values.toSet)
+            .get
+            .set(AAKickOutStatus(), 0)
+            .success
+            .value
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+        running(application) {
+          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+
+          val result = route(application, request).value
+
+          val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
+
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+            request,
+            messages(application)
+          ).toString
+          contentAsString(result) must not include "Continue"
+        }
+      }
+    }
+
+    "when annual allowance status is not set in the UserAnswers" - {
+
+      "must return show button as false and have correct url" in {
+        val userAnswers =
+          UserAnswers(userAnswersId)
+            .set(ReportingChangePage, ReportingChange.values.toSet)
+            .success
+            .value
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+        running(application) {
+          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+
+          val result = route(application, request).value
+
+          val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
+
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+            request,
+            messages(application)
+          ).toString
           contentAsString(result) must not include "Continue"
         }
       }
