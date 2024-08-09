@@ -17,14 +17,19 @@
 package controllers.lifetimeallowance
 
 import controllers.actions._
-import models.ReportingChange
+import models.ProtectionType.{reads, writes}
+import models.{AAKickOutStatus, NormalMode, ReportingChange}
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json.Format.GenericFormat
+import play.api.libs.json.OFormat.oFormatFromReadsAndOWrites
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.lifetimeallowance.NotAbleToUseThisServiceLtaView
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
+import ExecutionContext.Implicits.global
 
 class NotAbleToUseThisServiceLtaController @Inject() (
   override val messagesApi: MessagesApi,
@@ -37,8 +42,30 @@ class NotAbleToUseThisServiceLtaController @Inject() (
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val annualAllowanceIncluded: Boolean =
-      request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
-    Ok(view(annualAllowanceIncluded))
+    val annualAllowanceStatus = request.userAnswers.get(AAKickOutStatus())
+
+    val shouldShowContinueButton = annualAllowanceStatus match {
+      case Some(1) =>
+        true
+      case Some(2) =>
+        true
+      case Some(_) =>
+        false
+      case None    =>
+        false
+    }
+
+    val urlFromStatus = annualAllowanceStatus match {
+      case Some(1) =>
+        controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode).url
+      case Some(2) =>
+        controllers.routes.TaskListController.onPageLoad().url
+      case Some(_) =>
+        controllers.routes.JourneyRecoveryController.onPageLoad(None).url
+      case None    =>
+        controllers.routes.JourneyRecoveryController.onPageLoad(None).url
+    }
+
+    Ok(view(shouldShowContinueButton, urlFromStatus))
   }
 }

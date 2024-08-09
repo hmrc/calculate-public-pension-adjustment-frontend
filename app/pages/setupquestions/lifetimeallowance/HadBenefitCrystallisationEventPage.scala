@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pages.lifetimeallowance
+package pages.setupquestions.lifetimeallowance
 
 import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
 import controllers.lifetimeallowance.{routes => ltaRoutes}
@@ -29,7 +29,7 @@ import scala.util.Try
 
 case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ "lta" \ toString
+  override def path: JsPath = JsPath \ "setup" \ "lta" \ toString
 
   override def toString: String = "hadBenefitCrystallisationEvent"
 

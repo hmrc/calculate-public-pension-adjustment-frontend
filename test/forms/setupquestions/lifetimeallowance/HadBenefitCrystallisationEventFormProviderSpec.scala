@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package forms.lifetimeallowance
+package forms.setupquestions.lifetimeallowance
 
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError

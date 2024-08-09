@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers.lifetimeallowance
+package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
 import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
-import pages.lifetimeallowance.HadBenefitCrystallisationEventPage
+import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -34,7 +34,12 @@ object HadBenefitCrystallisationEventSummary {
         key = "hadBenefitCrystallisationEvent.checkYourAnswersLabel",
         value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url)
+          ActionItemViewModel(
+            "site.change",
+            controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+              .onPageLoad(CheckMode)
+              .url
+          )
             .withVisuallyHiddenText(messages("hadBenefitCrystallisationEvent.change.hidden"))
         )
       )

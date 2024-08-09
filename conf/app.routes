@@ -90,10 +90,10 @@ POST        /annual-allowance/change-tax-charge-2014-2015            controllers
 
 GET         /lifetime-allowance                                                  controllers.lifetimeallowance.WhatYouWillNeedLtaController.onPageLoad()
 
-GET         /lifetime-allowance/benefit-crystallisation-event                    controllers.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
-POST        /lifetime-allowance/benefit-crystallisation-event                    controllers.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
-GET         /lifetime-allowance/change-benefit-crystallisation-event             controllers.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
-POST        /lifetime-allowance/change-benefit-crystallisation-event             controllers.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
+GET         /lifetime-allowance/benefit-crystallisation-event                    controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
+POST        /lifetime-allowance/benefit-crystallisation-event                    controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
+GET         /lifetime-allowance/change-benefit-crystallisation-event             controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
+POST        /lifetime-allowance/change-benefit-crystallisation-event             controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
 GET         /lifetime-allowance/benefit-crystallisation-event-date                               controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/benefit-crystallisation-event-date                               controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)

@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package controllers.lifetimeallowance
+package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import forms.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
+import controllers.setupquestions.lifetimeallowance.{routes => ltaSetupRoutes}
+import forms.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.lifetimeallowance.HadBenefitCrystallisationEventPage
+import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.lifetimeallowance.HadBenefitCrystallisationEventView
+import views.html.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventView
 
 import scala.concurrent.Future
 
@@ -41,7 +41,7 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
   val formProvider = new HadBenefitCrystallisationEventFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = ltaRoutes.HadBenefitCrystallisationEventController.onPageLoad(NormalMode).url
+  lazy val normalRoute = ltaSetupRoutes.HadBenefitCrystallisationEventController.onPageLoad(NormalMode).url
 
   "HadBenefitCrystallisationEvent Controller" - {
 
@@ -81,12 +81,14 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
     "must redirect to the next page when valid data is in NormalMode" in {
 
+      val userAnswers = UserAnswers(userAnswersId)
+
       val mockUserDataService = mock[UserDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService)
           )
