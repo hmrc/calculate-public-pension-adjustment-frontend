@@ -18,7 +18,7 @@ package controllers.setupquestions
 
 import controllers.actions._
 import forms.setupquestions.ReportingChangeFormProvider
-import models.Mode
+import models.{AAKickOutStatus, LTAKickOutStatus, Mode, ReportingChange, UserAnswers}
 import models.tasklist.sections.SetupSection
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -45,6 +45,8 @@ class ReportingChangeController @Inject() (
 
   val form = formProvider()
 
+  private val kickOutStatusFalse = 1
+
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val preparedForm = request.userAnswers.get(ReportingChangePage) match {
       case None        => form
@@ -62,11 +64,26 @@ class ReportingChangeController @Inject() (
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value =>
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(ReportingChangePage, value))
-              redirectUrl     = ReportingChangePage.navigate(mode, updatedAnswers).url
-              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              updatedAnswers             <- Future.fromTry(request.userAnswers.set(ReportingChangePage, value))
+              updatedAnswersWithAAStatus  = generateAAKickOutStatus(value, updatedAnswers)
+              updatedAnswersWithLTAStatus = generateLTAKickOutStatus(value, updatedAnswersWithAAStatus)
+              redirectUrl                 = ReportingChangePage.navigate(mode, updatedAnswersWithLTAStatus).url
+              answersWithNav              = SetupSection.saveNavigation(updatedAnswersWithLTAStatus, redirectUrl)
+              _                          <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )
   }
+
+  private def generateAAKickOutStatus(value: Set[ReportingChange], userAnswers: UserAnswers): UserAnswers  =
+    if (value.contains(ReportingChange.AnnualAllowance).equals(true)) {
+      AAKickOutStatus().saveAAKickOutStatus(userAnswers, kickOutStatusFalse)
+    } else {
+      userAnswers
+    }
+  private def generateLTAKickOutStatus(value: Set[ReportingChange], userAnswers: UserAnswers): UserAnswers =
+    if (value.contains(ReportingChange.LifetimeAllowance).equals(true)) {
+      LTAKickOutStatus().saveLTAKickOutStatus(userAnswers, kickOutStatusFalse)
+    } else {
+      userAnswers
+    }
 }
