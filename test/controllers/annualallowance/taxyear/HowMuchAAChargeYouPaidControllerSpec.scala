@@ -55,12 +55,13 @@ class HowMuchAAChargeYouPaidControllerSpec extends SpecBase with MockitoSugar {
       .onPageLoad(CheckMode, Period._2018, SchemeIndex(0))
       .url
 
-  private def formWithMockMessages = {
-    val messages = mock[Messages]
+  val formProvider         = new HowMuchAAChargeYouPaidFormProvider()
+  val startEndDate: String = "6 April 2017 and 5 April 2018"
+  val form                 = formProvider(startEndDate)
 
-    val formProvider = new HowMuchAAChargeYouPaidFormProvider()
-    formProvider("")(messages)
-  }
+  val startEndDate2019: String = "6 April 2017 and 5 April 2018"
+  val form2019 = formProvider(startEndDate2019)
+
 
   "HowMuchAAChargeYouPaid Controller" - {
 
@@ -77,7 +78,7 @@ class HowMuchAAChargeYouPaidControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          formWithMockMessages,
+          form,
           NormalMode,
           Period._2018,
           SchemeIndex(0),
@@ -107,7 +108,7 @@ class HowMuchAAChargeYouPaidControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          formWithMockMessages.fill(validAnswer),
+          form2019.fill(validAnswer),
           NormalMode,
           Period._2019,
           SchemeIndex(0),
@@ -152,7 +153,7 @@ class HowMuchAAChargeYouPaidControllerSpec extends SpecBase with MockitoSugar {
           FakeRequest(POST, howMuchAAChargeYouPaidRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = formWithMockMessages.bind(Map("value" -> "invalid value"))
+        val boundForm = form.bind(Map("value" -> "invalid value"))
 
         val view = application.injector.instanceOf[HowMuchAAChargeYouPaidView]
 

@@ -23,13 +23,14 @@ import javax.inject.Inject
 
 class RASContributionAmountFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(startEndDate: String): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "rASContributionAmount.error.required",
         "rASContributionAmount.error.wholeNumber",
-        "rASContributionAmount.error.nonNumeric"
+        "rASContributionAmount.error.nonNumeric",
+        Seq(startEndDate)
       )
-        .verifying(inRange[BigInt](1, BigInt("999999999"), "rASContributionAmount.error.outOfRange"))
+        .verifying(inRangeWithArg[BigInt](1, BigInt("999999999"), "rASContributionAmount.error.outOfRange", startEndDate))
     )
 }

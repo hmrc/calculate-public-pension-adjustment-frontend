@@ -25,12 +25,13 @@ import javax.inject.Inject
 
 class BlindPersonsAllowanceAmountFormProvider @Inject() extends Mappings {
 
-  def apply(period: Period)(): Form[BigInt] =
+  def apply(period: Period, startEndDate: String)(): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "blindPersonsAllowanceAmount.error.required",
         "blindPersonsAllowanceAmount.error.wholeNumber",
-        "blindPersonsAllowanceAmount.error.nonNumeric"
+        "blindPersonsAllowanceAmount.error.nonNumeric",
+        Seq(startEndDate)
       )
         .verifying(
           minimumValueTwoArgs[BigInt](

@@ -38,7 +38,7 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
   val startEndDate = "6 April 2017 to 5 April 2018"
 
   val formProvider = new RASContributionAmountFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(startEndDate)
   val period       = Period._2018
 
   def onwardRoute = Call("GET", "/foo")
