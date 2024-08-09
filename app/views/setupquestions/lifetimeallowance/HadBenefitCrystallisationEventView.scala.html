@@ -32,7 +32,7 @@
 
 @layout(pageTitle = title(form, messages("hadBenefitCrystallisationEvent.title"))) {
 
-    @formHelper(action = routes.HadBenefitCrystallisationEventController.onSubmit(mode), Symbol("autoComplete") -> "off") {
+    @formHelper(action = controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

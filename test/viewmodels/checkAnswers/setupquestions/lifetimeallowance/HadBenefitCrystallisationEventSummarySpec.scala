@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers.lifetimeallowance
+package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
-import controllers.lifetimeallowance.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.lifetimeallowance.HadBenefitCrystallisationEventPage
+import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
@@ -45,7 +44,9 @@ class HadBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matcher
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url
+              controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+                .onPageLoad(CheckMode)
+                .url
             )
               .withVisuallyHiddenText("hadBenefitCrystallisationEvent.change.hidden")
           )
@@ -67,7 +68,9 @@ class HadBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matcher
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.HadBenefitCrystallisationEventController.onPageLoad(CheckMode).url
+              controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+                .onPageLoad(CheckMode)
+                .url
             )
               .withVisuallyHiddenText("hadBenefitCrystallisationEvent.change.hidden")
           )
