@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package forms.setupquestions.lifetimeallowance
+package pages.setupquestions.lifetimeallowance
 
-import forms.mappings.Mappings
-import models.ChangeInTaxCharge
-import play.api.data.Form
+import pages.behaviours.PageBehaviours
 
-import javax.inject.Inject
+class NewLTAChargePageSpec extends PageBehaviours {
 
-class ChangeInTaxChargeFormProvider @Inject() extends Mappings {
+  "NewLTAChargePage" - {
 
-  def apply(): Form[ChangeInTaxCharge] =
-    Form(
-      "value" -> enumerable[ChangeInTaxCharge]("changeInTaxCharge.error.required")
-    )
+    beRetrievable[Boolean](NewLTAChargePage)
+
+    beSettable[Boolean](NewLTAChargePage)
+
+    beRemovable[Boolean](NewLTAChargePage)
+  }
 }

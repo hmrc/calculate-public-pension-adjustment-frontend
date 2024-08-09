@@ -16,36 +16,29 @@
 
 package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
-import controllers.lifetimeallowance.routes
+import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.setupquestions.lifetimeallowance.ChangeInTaxChargePage
+import pages.setupquestions.lifetimeallowance.IncreaseInLTAChargePage
 import play.api.i18n.Messages
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ChangeInTaxChargeSummary {
+object IncreaseInLTAChargeSummary  {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ChangeInTaxChargePage).map { answer =>
-      val value = ValueViewModel(
-        HtmlContent(
-          HtmlFormat.escape(messages(s"changeInTaxCharge.$answer"))
-        )
-      )
+    answers.get(IncreaseInLTAChargePage).map {
+      answer =>
 
-      SummaryListRowViewModel(
-        key = "changeInTaxCharge.checkYourAnswersLabel",
-        value = value,
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.setupquestions.lifetimeallowance.routes.ChangeInTaxChargeController.onPageLoad(CheckMode).url
+        val value = if (answer) "site.yes" else "site.no"
+
+        SummaryListRowViewModel(
+          key     = "increaseInLTACharge.checkYourAnswersLabel",
+          value   = ValueViewModel(value),
+          actions = Seq(
+            ActionItemViewModel("site.change", controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("increaseInLTACharge.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("changeInTaxCharge.change.hidden"))
         )
-      )
     }
 }

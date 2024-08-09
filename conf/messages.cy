@@ -217,17 +217,6 @@ changeInLifetimeAllowance.error.required = Dewiswch ‘Iawn’ os ydych wedi cae
 changeInLifetimeAllowance.checkYourAnswersLabel = A ydych wedi cael gwybod am newid yn y ganran lwfans oes?
 changeInLifetimeAllowance.change.hidden = os ydych wedi cael gwybod am newid yn y ganran lwfans oes
 
-changeInTaxCharge.title = A yw’r newid yn y lwfans oes wedi arwain at newid yn y tâl treth?
-changeInTaxCharge.heading = A yw’r newid yn y lwfans oes wedi arwain at newid yn y tâl treth?
-changeInTaxCharge.message = Mae unrhyw swm sy’n mynd dros lefel y lwfans oes sydd ar gael, yn cael ei drethu o dan y tâl lwfans oes.
-changeInTaxCharge.error.required = Dewiswch y newid i’r tâl treth
-changeInTaxCharge.checkYourAnswersLabel = A yw’r newid yn y lwfans oes wedi arwain at newid yn y tâl treth?
-changeInTaxCharge.newCharge = Tâl newydd
-changeInTaxCharge.increasedCharge = Tâl wedi’i gynyddu
-changeInTaxCharge.decreasedCharge = Tâl wedi’i leihau
-changeInTaxCharge.none = Dim tâl
-changeInTaxCharge.change.hidden = os yw’r newid mewn lwfans oes wedi arwain at newid yn y tâl treth
-
 payTaxCharge1415.title = A wnaethoch dalu tâl treth lwfans blynyddol rhwng 6 Ebrill 2014 a 5 Ebrill 2015?
 payTaxCharge1415.heading = A wnaethoch dalu tâl treth lwfans blynyddol rhwng 6 Ebrill 2014 a 5 Ebrill 2015?
 payTaxCharge1415.hint = cy: Annual allowance tax charges happen when you put more money into your pension than your annual allowance. You can find this information in your self assessment for that year. It will be the figure in box 12 under ‘Income’.
@@ -1438,3 +1427,15 @@ contributionRefunds.change.hidden = cy: ContributionRefunds
 
 notAbleToUseThisServiceAA.title = notAbleToUseThisServiceAA
 notAbleToUseThisServiceAA.heading = notAbleToUseThisServiceAA
+
+increaseInLTACharge.title = increaseInLTACharge
+increaseInLTACharge.heading = increaseInLTACharge
+increaseInLTACharge.checkYourAnswersLabel = increaseInLTACharge
+increaseInLTACharge.error.required = Select yes if increaseInLTACharge
+increaseInLTACharge.change.hidden = IncreaseInLTACharge
+
+newLTACharge.title = newLTACharge
+newLTACharge.heading = newLTACharge
+newLTACharge.checkYourAnswersLabel = newLTACharge
+newLTACharge.error.required = Select yes if newLTACharge
+newLTACharge.change.hidden = NewLTACharge

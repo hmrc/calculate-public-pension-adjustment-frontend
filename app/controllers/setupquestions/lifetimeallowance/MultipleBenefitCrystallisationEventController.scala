@@ -19,7 +19,7 @@ package controllers.setupquestions.lifetimeallowance
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventFormProvider
 import models.Mode
-import models.tasklist.sections.LTASection
+import models.tasklist.sections.{LTASection, SetupSection}
 import pages.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -64,7 +64,7 @@ class MultipleBenefitCrystallisationEventController @Inject() (
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(MultipleBenefitCrystallisationEventPage, value))
               redirectUrl     = MultipleBenefitCrystallisationEventPage.navigate(mode, updatedAnswers).url
-              answersWithNav  = LTASection.saveNavigation(updatedAnswers, redirectUrl)
+              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
               _              <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
         )

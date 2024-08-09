@@ -16,9 +16,8 @@
 
 package pages.setupquestions.lifetimeallowance
 
-import models.{ChangeInTaxCharge, CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, MultipleBenefitCrystallisationEventPage}
 import pages.lifetimeallowance._
 
 import java.time.LocalDate
@@ -118,9 +117,6 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(false)
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe None
-      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe None
-      cleanedUserAnswers.get(ChangeInTaxChargePage) mustBe None
-      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe None
       cleanedUserAnswers.get(ProtectionTypePage) mustBe None
       cleanedUserAnswers.get(ProtectionReferencePage) mustBe None
@@ -156,9 +152,6 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe Some(LocalDate.of(2021, 1, 1))
-      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe Some(true)
-      cleanedUserAnswers.get(ChangeInTaxChargePage) mustBe Some(ChangeInTaxCharge.IncreasedCharge)
-      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe Some(false)
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe Some(LtaProtectionOrEnhancements.Both)
       cleanedUserAnswers.get(ProtectionTypePage) mustBe Some(ProtectionType.EnhancedProtection)
       cleanedUserAnswers.get(ProtectionReferencePage) mustBe Some("123")

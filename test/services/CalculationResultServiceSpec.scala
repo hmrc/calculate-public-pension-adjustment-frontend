@@ -23,7 +23,7 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
@@ -450,7 +450,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |      "hadBenefitCrystallisationEvent": true,
            |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
            |      "changeInLifetimeAllowance": true,
-           |      "changeInTaxCharge": "increasedCharge",
+           |      "increaseInLTACharge": true,
+           |      "newLTACharge": true,
            |      "ltaProtectionOrEnhancements": "protection",
            |      "protectionType": "fixedProtection2014",
            |      "protectionReference": "R41AB678TR23355",
@@ -1062,7 +1063,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |      "hadBenefitCrystallisationEvent": true,
            |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
            |      "changeInLifetimeAllowance": true,
-           |      "changeInTaxCharge": "none"
+           |      "increaseInLTACharge": false
            |    }
            |  }
            |""".stripMargin)
@@ -1080,7 +1081,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         |      "hadBenefitCrystallisationEvent": true,
         |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
         |      "changeInLifetimeAllowance": true,
-        |      "changeInTaxCharge": "increasedCharge",
+        |      "increaseInLTACharge": true,
+        |      "newLTACharge": true,
         |      "ltaProtectionOrEnhancements": "protection",
         |      "protectionType": "fixedProtection2014",
         |      "protectionReference": "R41AB678TR23355",
@@ -1114,7 +1116,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                |      "hadBenefitCrystallisationEvent": true,
                |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
                |      "changeInLifetimeAllowance": true,
-               |      "changeInTaxCharge": "none"
+               |      "increaseInLTACharge": false
                |    }
                |  }
                |""".stripMargin)
@@ -1164,7 +1166,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           |      "hadBenefitCrystallisationEvent": true,
           |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
           |      "changeInLifetimeAllowance": true,
-          |      "changeInTaxCharge": "increasedCharge",
+          |      "increaseInLTACharge": true,
+          |      "newLTACharge": true,
           |      "ltaProtectionOrEnhancements": "protection",
           |      "protectionType": "fixedProtection2014",
           |      "protectionReference": "R41AB678TR23355",
@@ -3070,7 +3073,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
-                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3095,7 +3097,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
-                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3233,7 +3234,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               true,
               LocalDate.parse("2018-11-28"),
               true,
-              ChangeInTaxCharge.IncreasedCharge,
+              true,
+              true,
               LtaProtectionOrEnhancements.Protection,
               Some(ProtectionType.FixedProtection2014),
               Some("R41AB678TR23355"),
@@ -3662,7 +3664,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             true,
             LocalDate.parse("2018-11-28"),
             true,
-            ChangeInTaxCharge.IncreasedCharge,
+            true,
+            true,
             LtaProtectionOrEnhancements.Protection,
             Some(ProtectionType.FixedProtection2014),
             Some("R41AB678TR23355"),

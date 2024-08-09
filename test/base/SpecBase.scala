@@ -110,7 +110,10 @@ trait SpecBase
       .set(ChangeInLifetimeAllowancePage, true)
       .success
       .value
-      .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
+      .set(IncreaseInLTAChargePage, true)
+      .success
+      .value
+      .set(NewLTAChargePage, true)
       .success
       .value
       .set(MultipleBenefitCrystallisationEventPage, false)

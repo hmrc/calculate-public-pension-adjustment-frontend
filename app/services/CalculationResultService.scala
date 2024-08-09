@@ -22,11 +22,11 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
-import pages.setupquestions.lifetimeallowance.{ChangeInTaxChargePage, MultipleBenefitCrystallisationEventPage}
+import pages.setupquestions.lifetimeallowance._
 import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
 import play.api.Logging
 import play.api.libs.json.Json
@@ -410,12 +410,12 @@ class CalculationResultService @Inject() (
   }
 
   def buildLifeTimeAllowance(userAnswers: UserAnswers): Option[LifeTimeAllowance] = {
-    val changeInTaxCharge: Option[ChangeInTaxCharge] = userAnswers.get(ChangeInTaxChargePage)
+    val increaseInLTACharge: Option[Boolean] = userAnswers.get(IncreaseInLTAChargePage)
     (
-      changeInTaxCharge,
+      increaseInLTACharge,
       LTASection.kickoutHasBeenReached(userAnswers)
     ) match {
-      case (Some(changeInTaxChargeType), false) if changeInTaxChargeType != ChangeInTaxCharge.None =>
+      case (Some(increaseInLTACharge), false) if increaseInLTACharge =>
         val benefitCrystallisationEventDate: LocalDate =
           userAnswers.get(DateOfBenefitCrystallisationEventPage).getOrElse(LocalDate.now)
 
@@ -508,7 +508,8 @@ class CalculationResultService @Inject() (
             true,
             benefitCrystallisationEventDate,
             true,
-            changeInTaxChargeType,
+            true,
+            true,
             lifetimeAllowanceProtectionOrEnhancements,
             protectionType,
             protectionReference,

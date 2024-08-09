@@ -55,6 +55,22 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryNewLTAChargeUserAnswersEntry: Arbitrary[(NewLTAChargePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NewLTAChargePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryIncreaseInLTAChargeUserAnswersEntry: Arbitrary[(IncreaseInLTAChargePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[IncreaseInLTAChargePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryAffectedByRemedyUserAnswersEntry: Arbitrary[(AffectedByRemedyPage.type, JsValue)] =
     Arbitrary {
       for {
@@ -709,14 +725,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       for {
         page  <- arbitrary[ScottishTaxpayerFrom2016Page.type]
         value <- arbitrary[Boolean].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryChangeInTaxChargeUserAnswersEntry: Arbitrary[(ChangeInTaxChargePage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[ChangeInTaxChargePage.type]
-        value <- arbitrary[ChangeInTaxCharge].map(Json.toJson(_))
       } yield (page, value)
     }
 }

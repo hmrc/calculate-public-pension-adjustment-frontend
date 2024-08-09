@@ -136,9 +136,6 @@ class ReportingChangePageSpec extends PageBehaviours {
       // LTA Answers
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe None
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe None
-      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe None
-      cleanedUserAnswers.get(ChangeInTaxChargePage) mustBe None
-      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe None
       cleanedUserAnswers.get(ProtectionTypePage) mustBe None
       cleanedUserAnswers.get(ProtectionReferencePage) mustBe None
@@ -237,9 +234,6 @@ class ReportingChangePageSpec extends PageBehaviours {
       // LTA Answers
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe Some(LocalDate.of(2021, 1, 1))
-      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe Some(true)
-      cleanedUserAnswers.get(ChangeInTaxChargePage) mustBe Some(ChangeInTaxCharge.IncreasedCharge)
-      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe Some(false)
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe Some(LtaProtectionOrEnhancements.Both)
       cleanedUserAnswers.get(ProtectionTypePage) mustBe Some(ProtectionType.EnhancedProtection)
       cleanedUserAnswers.get(ProtectionReferencePage) mustBe Some("123")
@@ -330,8 +324,6 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe Some(LocalDate.of(2021, 1, 1))
       cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe Some(true)
-      cleanedUserAnswers.get(ChangeInTaxChargePage) mustBe Some(ChangeInTaxCharge.IncreasedCharge)
-      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe Some(false)
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe Some(LtaProtectionOrEnhancements.Both)
       cleanedUserAnswers.get(ProtectionTypePage) mustBe Some(ProtectionType.EnhancedProtection)
       cleanedUserAnswers.get(ProtectionReferencePage) mustBe Some("123")
