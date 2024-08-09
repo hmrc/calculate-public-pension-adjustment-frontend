@@ -17,7 +17,7 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class PersonalAllowanceFormProviderSpec extends IntFieldBehaviours {
 
@@ -30,33 +30,36 @@ class PersonalAllowanceFormProviderSpec extends IntFieldBehaviours {
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
-    val formProvider = new PersonalAllowanceFormProvider()()
-
     behave like fieldThatBindsValidData(
-      formProvider,
+      newForm(),
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      formProvider,
+      newForm(),
       fieldName,
-      nonNumericError = FormError(fieldName, "personalAllowance.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "personalAllowance.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "personalAllowance.error.nonNumeric", Seq("")),
+      wholeNumberError = FormError(fieldName, "personalAllowance.error.wholeNumber", Seq(""))
     )
 
     behave like intFieldWithRange(
-      formProvider,
+      newForm(),
       fieldName,
       minimum = minimum,
       maximum = maximum,
-      expectedError = FormError(fieldName, "personalAllowance.error.outOfRange", Seq(minimum, maximum))
+      expectedError = FormError(fieldName, "personalAllowance.error.outOfRange", Seq(minimum, maximum, ""))
     )
 
     behave like mandatoryField(
-      formProvider,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, "personalAllowance.error.required")
+      requiredError = FormError(fieldName, "personalAllowance.error.required", Seq(""))
     )
+
+    def newForm(): Form[BigInt] = {
+      val form = new PersonalAllowanceFormProvider()
+      form("")
+    }
   }
 }
