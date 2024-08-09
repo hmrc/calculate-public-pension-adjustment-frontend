@@ -17,7 +17,12 @@
 package pages.setupquestions.annualallowance
 
 import models.{CheckMode, NormalMode}
+import org.scalacheck.Gen
+import org.scalacheck.rng.Seed.random
 import pages.behaviours.PageBehaviours
+import pages.setupquestions.SavingsStatementPage
+
+import scala.util.Random
 
 class PensionProtectedMemberPageSpec extends PageBehaviours {
 
@@ -33,7 +38,18 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
   "normal mode" - {
 
     "must go to AA Kickout when yes and RPSS no" in {
-      // TODO
+
+      val userAnswers = emptyUserAnswers
+        .set(PensionProtectedMemberPage, true)
+        .success
+        .value
+        .set(SavingsStatementPage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = PensionProtectedMemberPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/not-impacted-no-RPSS")
     }
 
     "must go to 22/23 PIA > 40K page when yes and RPSS yes" in {
@@ -42,8 +58,12 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
 
     "must go to AA charge when no" in {
 
-      val userAnswer = emptyUserAnswers
+      val randomBoolean = Random.nextBoolean()
+      val userAnswer    = emptyUserAnswers
         .set(PensionProtectedMemberPage, false)
+        .success
+        .value
+        .set(SavingsStatementPage, randomBoolean)
         .success
         .value
 

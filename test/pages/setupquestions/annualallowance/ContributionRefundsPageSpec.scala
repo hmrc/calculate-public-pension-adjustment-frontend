@@ -20,52 +20,45 @@ import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 import pages.setupquestions.SavingsStatementPage
 
-class HadAAChargePageSpec extends PageBehaviours {
+class ContributionRefundsPageSpec extends PageBehaviours {
 
-  "HadAAChargePage" - {
+  "ContributionRefundsPage" - {
 
-    beRetrievable[Boolean](HadAAChargePage)
+    beRetrievable[Boolean](ContributionRefundsPage)
 
-    beSettable[Boolean](HadAAChargePage)
+    beSettable[Boolean](ContributionRefundsPage)
 
-    beRemovable[Boolean](HadAAChargePage)
+    beRemovable[Boolean](ContributionRefundsPage)
   }
 
   "normal mode" - {
 
-    "to cya when yes and RPSS yes" in {
-
-      val userAnswers = emptyUserAnswers
-        .set(SavingsStatementPage, true)
-        .success
-        .value
-        .set(HadAAChargePage, true)
-        .success
-        .value
-
-      val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, userAnswers).url
-
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
-    }
-
-    "to refund of contributions when all else" in {
+    "to aa kickout when no and RPSS no" in {
 
       val userAnswers = emptyUserAnswers
         .set(SavingsStatementPage, false)
         .success
         .value
-        .set(HadAAChargePage, false)
+        .set(ContributionRefundsPage, false)
         .success
         .value
 
-      val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, userAnswers).url
+      val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contribution-refunds")
+      checkNavigation(nextPageUrl, "/not-impacted-no-RPSS")
+    }
+
+    "to Net income above 100k 16/17 - 19/20 when yes" in {
+      //TODO
+    }
+
+    "to have any PIAs increase 15/16 - 21/22 when no and RPSS yes" in {
+      //TODO
     }
 
     "to journey recovery when not answered" in {
 
-      val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, emptyUserAnswers).url
+      val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, emptyUserAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
@@ -73,26 +66,27 @@ class HadAAChargePageSpec extends PageBehaviours {
 
   "check mode" - {
 
-    "to check your ansewrs when answered" in {
+    "to cya when answered" in {
 
       val userAnswers = emptyUserAnswers
         .set(SavingsStatementPage, false)
         .success
         .value
-        .set(HadAAChargePage, false)
+        .set(ContributionRefundsPage, false)
         .success
         .value
 
-      val nextPageUrl: String = HadAAChargePage.navigate(CheckMode, userAnswers).url
+      val nextPageUrl: String = ContributionRefundsPage.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }
 
     "to journey recovery when not answered" in {
 
-      val nextPageUrl: String = HadAAChargePage.navigate(CheckMode, emptyUserAnswers).url
+      val nextPageUrl: String = ContributionRefundsPage.navigate(CheckMode, emptyUserAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+
     }
   }
 }

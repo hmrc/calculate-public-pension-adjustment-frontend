@@ -86,14 +86,11 @@ class IndexController @Inject() (
               }
         }
     } else {
-      println(request.userAnswers)
       Future.successful(controllers.routes.OptionalSignInController.onPageLoad().url)
     }
 
-  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) = {
-    println(UserAnswers(request.userId, authenticated = isAuthenticated(request)))
+  private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) =
     UserAnswers(request.userId, authenticated = isAuthenticated(request))
-  }
 
   private def isAuthenticated(request: OptionalDataRequest[AnyContent]): Boolean =
     request.request match {

@@ -1429,3 +1429,12 @@ hadAACharge.heading = cy: hadAACharge
 hadAACharge.checkYourAnswersLabel = cy: hadAACharge
 hadAACharge.error.required = cy: Select yes if hadAACharge
 hadAACharge.change.hidden = cy: HadAACharge
+
+contributionRefunds.title = cy: contributionRefunds
+contributionRefunds.heading = cy: contributionRefunds
+contributionRefunds.checkYourAnswersLabel = cy: contributionRefunds
+contributionRefunds.error.required = cy: Select yes if contributionRefunds
+contributionRefunds.change.hidden = cy: ContributionRefunds
+
+notAbleToUseThisServiceAA.title = notAbleToUseThisServiceAA
+notAbleToUseThisServiceAA.heading = notAbleToUseThisServiceAA

@@ -29,28 +29,21 @@ case object PensionProtectedMemberPage extends QuestionPage[Boolean] {
   override def toString: String = "pensionProtectedMember"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(PensionProtectedMemberPage) match {
-      case Some(true)  =>
-        savingsStatementStatus(answers)
-      case Some(false) => controllers.setupquestions.annualallowance.routes.HadAAChargeController.onPageLoad(NormalMode)
-      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    (answers.get(PensionProtectedMemberPage), answers.get(SavingsStatementPage)) match {
+      case (Some(false), Some(_))    =>
+        controllers.setupquestions.annualallowance.routes.HadAAChargeController.onPageLoad(NormalMode)
+      case (Some(true), Some(false)) =>
+        // TODO to AA Kickout
+        controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad()
+      case (Some(true), Some(true))  =>
+        // TODO to 22/23 PIA > 40k
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case _                         => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PensionProtectedMemberPage) match {
       case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-
-  private def savingsStatementStatus(answers: UserAnswers) =
-    answers.get(SavingsStatementPage) match {
-      case Some(true)  =>
-        // TODO  change with future scaffolds
-        // Was your 22/23 PIA > 40k
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case Some(false) =>
-        // TODO AA Kickout
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case None        => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 }

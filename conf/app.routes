@@ -543,3 +543,10 @@ GET        /annual-allowance-charge                      controllers.setupquesti
 POST       /annual-allowance-charge                        controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = NormalMode)
 GET        /change-annual-allowance-charge                  controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-annual-allowance-charge               controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = NormalMode)
+POST       /contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = NormalMode)
+GET        /contribution-refunds                 controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeContributionRefunds                  controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /not-impacted-no-RPSS                      controllers.setupquestions.annualallowance.NotAbleToUseThisServiceAAController.onPageLoad()

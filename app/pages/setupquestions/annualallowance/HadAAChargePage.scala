@@ -16,7 +16,7 @@
 
 package pages.setupquestions.annualallowance
 
-import models.UserAnswers
+import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import pages.setupquestions.SavingsStatementPage
 import play.api.libs.json.JsPath
@@ -31,11 +31,9 @@ case object HadAAChargePage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     (answers.get(HadAAChargePage), answers.get(SavingsStatementPage)) match {
       case (Some(true), Some(true)) =>
-        // TODO to net income > 190k 20/21 - 21/22
         controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case (Some(_), Some(_))       =>
-        // TODO to refund of contributions page
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        controllers.setupquestions.annualallowance.routes.ContributionRefundsController.onPageLoad(NormalMode)
       case _                        => controllers.routes.JourneyRecoveryController.onPageLoad()
     }
 

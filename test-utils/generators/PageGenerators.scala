@@ -27,6 +27,9 @@ import pages.setupquestions.annualallowance._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryContributionRefundsPage: Arbitrary[ContributionRefundsPage.type] =
+    Arbitrary(ContributionRefundsPage)
+
   implicit lazy val arbitraryHadAAChargePage: Arbitrary[HadAAChargePage.type] =
     Arbitrary(HadAAChargePage)
 
