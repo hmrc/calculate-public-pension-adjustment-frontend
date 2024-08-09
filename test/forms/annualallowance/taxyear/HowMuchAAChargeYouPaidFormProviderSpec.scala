@@ -59,7 +59,7 @@ class HowMuchAAChargeYouPaidFormProviderSpec extends IntFieldBehaviours {
     behave like mandatoryField(
       newForm(),
       fieldName,
-      requiredError = FormError(fieldName, "error message")
+      requiredError = FormError(fieldName, "howMuchAAChargeYouPaid.error.required", Seq(""))
     )
 
     def newForm(): Form[BigInt] = {
@@ -67,12 +67,5 @@ class HowMuchAAChargeYouPaidFormProviderSpec extends IntFieldBehaviours {
       form("")
     }
 
-//    def formWithMockMessages = {
-//      val messages = mock[Messages]
-//      when(messages.apply(eqTo("howMuchAAChargeYouPaid.error.required"), any())).thenReturn("error message")
-//
-//      val formProvider = new HowMuchAAChargeYouPaidFormProvider()
-//      formProvider("")
-//    }
   }
 }
