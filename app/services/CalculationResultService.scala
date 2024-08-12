@@ -238,6 +238,7 @@ class CalculationResultService @Inject() (
           userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).map(_.toInt),
           userAnswers.get(AmountOfGiftAidPage(period)).map(_.toInt),
           userAnswers.get(PersonalAllowancePage(period)).map(_.toInt),
+          userAnswers.get(UnionPoliceReliefAmountPage(period)).map(_.toInt),
           userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt)
         )
 
