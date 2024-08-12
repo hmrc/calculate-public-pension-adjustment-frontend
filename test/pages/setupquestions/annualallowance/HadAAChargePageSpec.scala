@@ -16,7 +16,7 @@
 
 package pages.setupquestions.annualallowance
 
-import models.{CheckMode, NormalMode}
+import models.{CheckMode, LTAKickOutStatus, NormalMode}
 import pages.behaviours.PageBehaviours
 import pages.setupquestions.SavingsStatementPage
 
@@ -33,19 +33,94 @@ class HadAAChargePageSpec extends PageBehaviours {
 
   "normal mode" - {
 
-    "to cya when yes and RPSS yes" in {
+    "when yes and RPSS yes" - {
 
-      val userAnswers = emptyUserAnswers
-        .set(SavingsStatementPage, true)
-        .success
-        .value
-        .set(HadAAChargePage, true)
-        .success
-        .value
+      "when lta kickout status 0 to cya" in {
 
-      val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, userAnswers).url
+        val userAnswers = emptyUserAnswers
+          .set(SavingsStatementPage, true)
+          .success
+          .value
+          .set(HadAAChargePage, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 0)
+          .success
+          .value
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+        val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when lta kickout status 1 to had BCE page" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(SavingsStatementPage, true)
+          .success
+          .value
+          .set(HadAAChargePage, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 1)
+          .success
+          .value
+
+        val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+      }
+
+      "when lta kickout status 2 to cya" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(SavingsStatementPage, true)
+          .success
+          .value
+          .set(HadAAChargePage, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 2)
+          .success
+          .value
+
+        val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when no LTA kickout status to cya" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(SavingsStatementPage, true)
+          .success
+          .value
+          .set(HadAAChargePage, true)
+          .success
+          .value
+
+        val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when LTA kickout status anything else to journey recovery" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(SavingsStatementPage, true)
+          .success
+          .value
+          .set(HadAAChargePage, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 3)
+          .success
+          .value
+
+        val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
+      }
     }
 
     "to refund of contributions when all else" in {

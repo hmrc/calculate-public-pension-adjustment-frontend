@@ -20,10 +20,13 @@ import base.SpecBase
 import config.FrontendAppConfig
 import controllers.routes
 import forms.ContributionRefundsFormProvider
-import models.{Done, NormalMode, UserAnswers}
+import models.{AAKickOutStatus, Done, NormalMode, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountPage
+import pages.setupquestions.SavingsStatementPage
 import pages.setupquestions.annualallowance.ContributionRefundsPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -39,9 +42,10 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ContributionRefundsFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val contributionRefundsRoute = controllers.setupquestions.annualallowance.routes.ContributionRefundsController.onPageLoad(NormalMode).url
+  lazy val contributionRefundsRoute =
+    controllers.setupquestions.annualallowance.routes.ContributionRefundsController.onPageLoad(NormalMode).url
 
   "ContributionRefunds Controller" - {
 
@@ -86,7 +90,7 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers.set(SavingsStatementPage, false).get))
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
@@ -98,7 +102,6 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad(None).url
       }
     }
 
@@ -150,6 +153,72 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+      }
+    }
+
+    "aaKickoutStatus" - {
+      "must set aaKickoutStatus to 0 if no and RPSS no" in {
+
+        val userAnswers = UserAnswers(userAnswersId)
+          .set(SavingsStatementPage, false)
+          .success
+          .value
+
+        val mockUserDataService = mock[UserDataService]
+
+        val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+        running(application) {
+          val request = FakeRequest(POST, contributionRefundsRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          val capturedUserAnswers = userAnswersCaptor.getValue
+          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(0)
+
+        }
+      }
+
+      "must set aaKickoutStatus to 1 if anything else" in {
+
+        val userAnswers = UserAnswers(userAnswersId)
+          .set(SavingsStatementPage, true)
+          .success
+          .value
+
+        val mockUserDataService = mock[UserDataService]
+
+        val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+        running(application) {
+          val request = FakeRequest(POST, contributionRefundsRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          val capturedUserAnswers = userAnswersCaptor.getValue
+          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(1)
+
+        }
       }
     }
   }

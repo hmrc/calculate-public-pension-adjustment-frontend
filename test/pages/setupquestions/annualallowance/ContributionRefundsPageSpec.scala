@@ -49,11 +49,11 @@ class ContributionRefundsPageSpec extends PageBehaviours {
     }
 
     "to Net income above 100k 16/17 - 19/20 when yes" in {
-      //TODO
+      // TODO
     }
 
     "to have any PIAs increase 15/16 - 21/22 when no and RPSS yes" in {
-      //TODO
+      // TODO
     }
 
     "to journey recovery when not answered" in {

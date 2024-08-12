@@ -18,8 +18,9 @@ package controllers.setupquestions.annualallowance
 
 import controllers.actions._
 import forms.setupquestions.annualallowance.HadAAChargeFormProvider
-import models.Mode
+import models.{AAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
+import pages.setupquestions.SavingsStatementPage
 import pages.setupquestions.annualallowance.HadAAChargePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -43,7 +44,9 @@ class HadAAChargeController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
+  val form                           = formProvider()
+  private val kickOutStatusFalse     = 1
+  private val kickOutStatusCompleted = 2
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val preparedForm = request.userAnswers.get(HadAAChargePage) match {
@@ -60,13 +63,17 @@ class HadAAChargeController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value =>
+          value => {
+            val revisedPSSStatus = request.userAnswers.get(SavingsStatementPage).get
+            val aaKickOutStatus  = if (value && revisedPSSStatus) kickOutStatusCompleted else kickOutStatusFalse
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(HadAAChargePage, value))
-              redirectUrl     = HadAAChargePage.navigate(mode, updatedAnswers).url
-              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              updatedAnswers          <- Future.fromTry(request.userAnswers.set(HadAAChargePage, value))
+              updatedAnswersWithStatus = AAKickOutStatus().saveAAKickOutStatus(updatedAnswers, aaKickOutStatus)
+              redirectUrl              = HadAAChargePage.navigate(mode, updatedAnswersWithStatus).url
+              answersWithNav           = SetupSection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              _                       <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
+          }
         )
   }
 }

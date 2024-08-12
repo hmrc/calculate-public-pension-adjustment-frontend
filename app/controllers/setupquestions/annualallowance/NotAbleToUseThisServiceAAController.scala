@@ -17,7 +17,7 @@
 package controllers.setupquestions.annualallowance
 
 import controllers.actions._
-import models.ReportingChange
+import models.{LTAKickOutStatus, NormalMode, ReportingChange}
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -26,18 +26,43 @@ import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
 
 import javax.inject.Inject
 
-class NotAbleToUseThisServiceAAController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: NotAbleToUseThisServiceAAView
-                                     ) extends FrontendBaseController with I18nSupport {
+class NotAbleToUseThisServiceAAController @Inject() (
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: NotAbleToUseThisServiceAAView
+) extends FrontendBaseController
+    with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-      val ltaIncluded = request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.LifetimeAllowance))
-      Ok(view(ltaIncluded))
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
+
+    val shouldShowContinueButton = ltaKickOutStatusStatus match {
+      case Some(1) =>
+        true
+      case Some(2) =>
+        true
+      case Some(_) =>
+        false
+      case None    =>
+        false
+    }
+
+    val urlFromStatus = ltaKickOutStatusStatus match {
+      case Some(1) =>
+        controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+          .onPageLoad(NormalMode)
+          .url
+      case Some(2) =>
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url
+      case Some(_) =>
+        controllers.routes.JourneyRecoveryController.onPageLoad(None).url
+      case None    =>
+        controllers.routes.JourneyRecoveryController.onPageLoad(None).url
+    }
+
+    Ok(view(shouldShowContinueButton, urlFromStatus))
   }
 }

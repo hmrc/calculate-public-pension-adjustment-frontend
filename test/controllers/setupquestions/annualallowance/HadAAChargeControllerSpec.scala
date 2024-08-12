@@ -19,10 +19,12 @@ package controllers.setupquestions.annualallowance
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.setupquestions.annualallowance.HadAAChargeFormProvider
-import models.{Done, NormalMode, UserAnswers}
+import models.{AAKickOutStatus, Done, NormalMode, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.setupquestions.SavingsStatementPage
 import pages.setupquestions.annualallowance.HadAAChargePage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -86,7 +88,7 @@ class HadAAChargeControllerSpec extends SpecBase with MockitoSugar {
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers.set(SavingsStatementPage, false).get))
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
@@ -150,6 +152,73 @@ class HadAAChargeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+      }
+    }
+
+    "aaKickOutStatus" - {
+
+      "must set aaKickOutStatus to 2 if yes and RPSS yes" in {
+
+        val userAnswers = UserAnswers(userAnswersId)
+          .set(SavingsStatementPage, true)
+          .success
+          .value
+
+        val mockUserDataService = mock[UserDataService]
+
+        val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+        running(application) {
+          val request = FakeRequest(POST, hadAAChargeRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          val capturedUserAnswers = userAnswersCaptor.getValue
+          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(2)
+
+        }
+      }
+
+      "must set aaKickOutStatus to 1 if anything else" in {
+
+        val userAnswers = UserAnswers(userAnswersId)
+          .set(SavingsStatementPage, false)
+          .success
+          .value
+
+        val mockUserDataService = mock[UserDataService]
+
+        val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+        running(application) {
+          val request = FakeRequest(POST, hadAAChargeRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          val capturedUserAnswers = userAnswersCaptor.getValue
+          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(1)
+
+        }
       }
     }
   }

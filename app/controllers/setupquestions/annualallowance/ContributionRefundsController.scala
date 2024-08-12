@@ -18,8 +18,9 @@ package controllers.setupquestions.annualallowance
 
 import controllers.actions._
 import forms.ContributionRefundsFormProvider
-import models.Mode
+import models.{AAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
+import pages.setupquestions.SavingsStatementPage
 import pages.setupquestions.annualallowance.ContributionRefundsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -30,44 +31,49 @@ import views.html.setupquestions.annualallowance.ContributionRefundsView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class ContributionRefundsController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         userDataService: UserDataService,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: ContributionRefundsFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: ContributionRefundsView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class ContributionRefundsController @Inject() (
+  override val messagesApi: MessagesApi,
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: ContributionRefundsFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: ContributionRefundsView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
-  val form = formProvider()
+  val form                       = formProvider()
+  private val kickOutStatusFalse = 1
+  private val kickOutStatusTrue  = 0
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val preparedForm = request.userAnswers.get(ContributionRefundsPage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(ContributionRefundsPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+    Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ContributionRefundsPage, value))
-            redirectUrl     = ContributionRefundsPage.navigate(mode, updatedAnswers).url
-            answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-            _              <- userDataService.set(answersWithNav)
-          } yield Redirect(redirectUrl)
-      )
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          value => {
+            val revisedPSSStatus = request.userAnswers.get(SavingsStatementPage).get
+            val aaKickOutStatus  = if (!value && !revisedPSSStatus) kickOutStatusTrue else kickOutStatusFalse
+            for {
+              updatedAnswers          <- Future.fromTry(request.userAnswers.set(ContributionRefundsPage, value))
+              updatedAnswersWithStatus = AAKickOutStatus().saveAAKickOutStatus(updatedAnswers, aaKickOutStatus)
+              redirectUrl              = ContributionRefundsPage.navigate(mode, updatedAnswersWithStatus).url
+              answersWithNav           = SetupSection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              _                       <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
+          }
+        )
   }
 }

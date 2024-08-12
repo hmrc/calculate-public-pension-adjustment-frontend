@@ -23,7 +23,7 @@ import play.api.data.FormError
 class ContributionRefundsFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "contributionRefunds.error.required"
-  val invalidKey = "error.boolean"
+  val invalidKey  = "error.boolean"
 
   val form = new ContributionRefundsFormProvider()()
 

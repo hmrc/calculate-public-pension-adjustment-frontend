@@ -16,7 +16,7 @@
 
 package pages.setupquestions.annualallowance
 
-import models.{NormalMode, UserAnswers}
+import models.{LTAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
 import pages.setupquestions.SavingsStatementPage
 import play.api.libs.json.JsPath
@@ -31,7 +31,15 @@ case object HadAAChargePage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     (answers.get(HadAAChargePage), answers.get(SavingsStatementPage)) match {
       case (Some(true), Some(true)) =>
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        answers.get(LTAKickOutStatus()).getOrElse(None) match {
+          case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case 1    =>
+            controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+              .onPageLoad(NormalMode)
+          case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
+        }
       case (Some(_), Some(_))       =>
         controllers.setupquestions.annualallowance.routes.ContributionRefundsController.onPageLoad(NormalMode)
       case _                        => controllers.routes.JourneyRecoveryController.onPageLoad()

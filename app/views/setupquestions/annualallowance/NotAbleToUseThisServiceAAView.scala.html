@@ -19,9 +19,18 @@
         govukButton: GovukButton
 )
 
-@(ltaIncluded: Boolean)(implicit request: Request[_], messages: Messages)
+@(shouldShowContinueButton: Boolean, url: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("notAbleToUseThisServiceAA.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("notAbleToUseThisServiceAA.heading")</h1>
+
+    @if(shouldShowContinueButton) {
+     <p class="govuk-body">
+      @govukButton(
+       ButtonViewModel(messages("site.continue"))
+        .asLink(url)
+      )
+    </p>
+    }
 }

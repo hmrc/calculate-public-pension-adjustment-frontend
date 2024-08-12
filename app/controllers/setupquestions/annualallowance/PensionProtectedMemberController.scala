@@ -18,8 +18,9 @@ package controllers.setupquestions.annualallowance
 
 import controllers.actions._
 import forms.setupquestions.annualallowance.PensionProtectedMemberFormProvider
-import models.Mode
+import models.{AAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
+import pages.setupquestions.SavingsStatementPage
 import pages.setupquestions.annualallowance.PensionProtectedMemberPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -43,7 +44,9 @@ class PensionProtectedMemberController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
+  val form                       = formProvider()
+  private val kickOutStatusFalse = 1
+  private val kickOutStatusTrue  = 0
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val preparedForm = request.userAnswers.get(PensionProtectedMemberPage) match {
@@ -59,13 +62,17 @@ class PensionProtectedMemberController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value =>
+          value => {
+            val revisedPSSStatus = request.userAnswers.get(SavingsStatementPage).get
+            val aaKickOutStatus  = if (value && !revisedPSSStatus) kickOutStatusTrue else kickOutStatusFalse
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(PensionProtectedMemberPage, value))
-              redirectUrl     = PensionProtectedMemberPage.navigate(mode, updatedAnswers).url
-              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              updatedAnswers          <- Future.fromTry(request.userAnswers.set(PensionProtectedMemberPage, value))
+              updatedAnswersWithStatus = AAKickOutStatus().saveAAKickOutStatus(updatedAnswers, aaKickOutStatus)
+              redirectUrl              = PensionProtectedMemberPage.navigate(mode, updatedAnswersWithStatus).url
+              answersWithNav           = SetupSection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              _                       <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
+          }
         )
   }
 }
