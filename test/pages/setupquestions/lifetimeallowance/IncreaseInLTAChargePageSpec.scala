@@ -16,6 +16,7 @@
 
 package pages.setupquestions.lifetimeallowance
 
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class IncreaseInLTAChargePageSpec extends PageBehaviours {
@@ -27,5 +28,79 @@ class IncreaseInLTAChargePageSpec extends PageBehaviours {
     beSettable[Boolean](IncreaseInLTAChargePage)
 
     beRemovable[Boolean](IncreaseInLTAChargePage)
+  }
+
+  "Normal mode" - {
+
+    "to New LTA charge page when user answers yes" in {
+
+      val ua = emptyUserAnswers
+        .set(IncreaseInLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = IncreaseInLTAChargePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance-new-charge")
+    }
+
+    "must navigate to kickout page when user answers false" in {
+
+      val ua = emptyUserAnswers
+        .set(IncreaseInLTAChargePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = IncreaseInLTAChargePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+    }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = IncreaseInLTAChargePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+
+    }
+  }
+
+  "Check mode" - {
+
+    "to New LTA charge page when user answers true" in {
+
+      val ua = emptyUserAnswers
+        .set(IncreaseInLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = IncreaseInLTAChargePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/change-lifetime-allowance-new-charge")
+    }
+
+    "must navigate to kickout page when user answers false" in {
+
+      val ua = emptyUserAnswers
+        .set(IncreaseInLTAChargePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = IncreaseInLTAChargePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+    }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = IncreaseInLTAChargePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+
+    }
   }
 }

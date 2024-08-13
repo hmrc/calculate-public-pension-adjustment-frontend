@@ -17,6 +17,7 @@
 package models.tasklist.sections
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{SectionNavigation, UserAnswers}
@@ -33,7 +34,7 @@ case object LTASection extends Section {
 
   val initialPage: Call                     = ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
   val checkYourLTAAnswersPage: Call         = ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-  val notAbleToUseThisServicePage: Call     = ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+  val notAbleToUseThisServicePage: Call     = setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
   val cannotUseLtaServiceNoChargePage: Call = ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
 
   def status(answers: UserAnswers): SectionStatus =

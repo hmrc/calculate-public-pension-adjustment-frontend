@@ -79,7 +79,7 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
       }
     }
 
-    "must redirect to the next page when valid data is in NormalMode" in {
+    "must redirect to the next page when True is selected" in {
 
       val userAnswers = UserAnswers(userAnswersId)
 
@@ -98,6 +98,32 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
         val request =
           FakeRequest(POST, normalRoute)
             .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+      }
+    }
+
+    "must redirect to the next page when False is selected" in {
+
+      val userAnswers = UserAnswers(userAnswersId)
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", "false"))
 
         val result = route(application, request).value
 

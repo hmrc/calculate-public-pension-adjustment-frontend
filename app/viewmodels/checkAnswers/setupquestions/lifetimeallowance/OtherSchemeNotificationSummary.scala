@@ -18,28 +18,27 @@ package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.setupquestions.lifetimeallowance.IncreaseInLTAChargePage
+import pages.setupquestions.lifetimeallowance.OtherSchemeNotificationPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IncreaseInLTAChargeSummary {
+object OtherSchemeNotificationSummary  {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IncreaseInLTAChargePage).map { answer =>
-      val value = if (answer) "site.yes" else "site.no"
+    answers.get(OtherSchemeNotificationPage).map {
+      answer =>
 
-      SummaryListRowViewModel(
-        key = "increaseInLTACharge.checkYourAnswersLabel",
-        value = ValueViewModel(value),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController.onPageLoad(CheckMode).url
+        val value = if (answer) "site.yes" else "site.no"
+
+        SummaryListRowViewModel(
+          key     = "otherSchemeNotification.checkYourAnswersLabel",
+          value   = ValueViewModel(value),
+          actions = Seq(
+            ActionItemViewModel("site.change", controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("otherSchemeNotification.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("increaseInLTACharge.change.hidden"))
         )
-      )
     }
 }

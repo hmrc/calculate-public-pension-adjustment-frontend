@@ -38,9 +38,10 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new IncreaseInLTAChargeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val increaseInLTAChargeRoute = controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController.onPageLoad(NormalMode).url
+  lazy val increaseInLTAChargeRoute =
+    controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController.onPageLoad(NormalMode).url
 
   "IncreaseInLTACharge Controller" - {
 
@@ -78,7 +79,7 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when True is submitted" in {
 
       val mockUserDataService = mock[UserDataService]
 
@@ -97,7 +98,33 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onPageLoad(NormalMode).url
+        redirectLocation(
+          result
+        ).value mustEqual controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController
+          .onPageLoad(NormalMode)
+          .url
+      }
+    }
+
+    "must redirect to the next page when False is submitted" in {
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService))
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, increaseInLTAChargeRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
       }
     }
 

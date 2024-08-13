@@ -19,12 +19,12 @@ package forms.setupquestions.lifetimeallowance
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class IncreaseInLTAChargeFormProviderSpec extends BooleanFieldBehaviours {
+class OtherSchemeNotificationFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "increaseInLTACharge.error.required"
-  val invalidKey  = "error.boolean"
+  val requiredKey = "otherSchemeNotification.error.required"
+  val invalidKey = "error.boolean"
 
-  val form = new IncreaseInLTAChargeFormProvider()()
+  val form = new OtherSchemeNotificationFormProvider()()
 
   ".value" - {
 

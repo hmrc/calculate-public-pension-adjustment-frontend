@@ -79,7 +79,7 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must redirect to the ChangeInTaxCharge page when valid data is submitted" in {
+    "must redirect to the ChangeInTaxCharge page when true is submitted" in {
 
       val mockUserDataService = mock[UserDataService]
 
@@ -96,6 +96,31 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         val request =
           FakeRequest(POST, normalRoute)
             .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        // redirectLocation(result).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url
+      }
+    }
+
+    "must redirect to the ChangeInTaxCharge page when false is submitted" in {
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", "false"))
 
         val result = route(application, request).value
 

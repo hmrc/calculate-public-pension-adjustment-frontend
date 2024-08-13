@@ -18,7 +18,7 @@ package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.IncreaseInLTAChargeFormProvider
-import models.Mode
+import models.{LTAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
 import pages.setupquestions.lifetimeallowance.IncreaseInLTAChargePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -30,44 +30,50 @@ import views.html.setupquestions.lifetimeallowance.IncreaseInLTAChargeView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class IncreaseInLTAChargeController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         userDataService: UserDataService,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: IncreaseInLTAChargeFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: IncreaseInLTAChargeView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class IncreaseInLTAChargeController @Inject() (
+  override val messagesApi: MessagesApi,
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: IncreaseInLTAChargeFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: IncreaseInLTAChargeView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
+  private val kickOutStatusFalse = 1
+  private val kickOutStatusTrue  = 0
 
-      val preparedForm = request.userAnswers.get(IncreaseInLTAChargePage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val preparedForm = request.userAnswers.get(IncreaseInLTAChargePage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      Ok(view(preparedForm, mode))
+    Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          value => {
+            val ltaKickOutStatus = if (value) kickOutStatusFalse else kickOutStatusTrue
 
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(IncreaseInLTAChargePage, value))
-            redirectUrl = IncreaseInLTAChargePage.navigate(mode, updatedAnswers).url
-            answersWithNav = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-            _ <- userDataService.set(answersWithNav)
-          } yield Redirect(redirectUrl)
-      )
+            for {
+              updatedAnswers          <- Future.fromTry(request.userAnswers.set(IncreaseInLTAChargePage, value))
+              updatedAnswersWithStatus = LTAKickOutStatus().saveLTAKickOutStatus(updatedAnswers, ltaKickOutStatus)
+              redirectUrl              = IncreaseInLTAChargePage.navigate(mode, updatedAnswersWithStatus).url
+              answersWithNav           = SetupSection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              _                       <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
+          }
+        )
   }
 }

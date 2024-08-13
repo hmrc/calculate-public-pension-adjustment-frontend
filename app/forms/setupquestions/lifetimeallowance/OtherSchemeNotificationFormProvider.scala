@@ -16,30 +16,15 @@
 
 package forms.setupquestions.lifetimeallowance
 
-import forms.behaviours.BooleanFieldBehaviours
-import play.api.data.FormError
+import forms.mappings.Mappings
+import play.api.data.Form
 
-class IncreaseInLTAChargeFormProviderSpec extends BooleanFieldBehaviours {
+import javax.inject.Inject
 
-  val requiredKey = "increaseInLTACharge.error.required"
-  val invalidKey  = "error.boolean"
+class OtherSchemeNotificationFormProvider @Inject() extends Mappings {
 
-  val form = new IncreaseInLTAChargeFormProvider()()
-
-  ".value" - {
-
-    val fieldName = "value"
-
-    behave like booleanField(
-      form,
-      fieldName,
-      invalidError = FormError(fieldName, invalidKey)
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("otherSchemeNotification.error.required")
     )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
-  }
 }

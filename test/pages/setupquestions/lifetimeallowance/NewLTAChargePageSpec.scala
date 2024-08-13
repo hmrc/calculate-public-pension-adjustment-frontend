@@ -16,6 +16,7 @@
 
 package pages.setupquestions.lifetimeallowance
 
+import models.{AAKickOutStatus, CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class NewLTAChargePageSpec extends PageBehaviours {
@@ -27,5 +28,121 @@ class NewLTAChargePageSpec extends PageBehaviours {
     beSettable[Boolean](NewLTAChargePage)
 
     beRemovable[Boolean](NewLTAChargePage)
+  }
+
+  "Normal mode" - {
+
+    "must navigate to CYA page when user answers true for NewLTAChargePage and the value for AAKickOutStatus is 0" in {
+
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 0)
+
+      val ua = uaWithAAKickOutStatus
+        .set(NewLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = NewLTAChargePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must navigate to PensionSavingsStatement page when user answers true for NewLTAChargePage and the value for AAKickOutStatus is 1" in {
+
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 1)
+
+      val ua = uaWithAAKickOutStatus
+        .set(NewLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = NewLTAChargePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/pension-saving-statement")
+    }
+
+    "must navigate to CYA page when user answers true for NewLTAChargePage and the value for KickOutStatus is 2" in {
+
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 2)
+
+      val ua = uaWithAAKickOutStatus
+        .set(NewLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = NewLTAChargePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must navigate to CYA page when user answers true for NewLTAChargePage but nothing for AAKickOutStatus " in {
+
+      val ua = emptyUserAnswers
+        .set(NewLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = NewLTAChargePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must navigate to MultipleBenefitCrystallisationEvent page when user answers false for NewLTAChargePage" in {
+
+      val ua = emptyUserAnswers
+        .set(NewLTAChargePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = NewLTAChargePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/more-than-one-benefit-crystallisation-event")
+    }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = NewLTAChargePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "Check mode" - {
+
+    "must navigate to change in CYA page when user answers true for NewLTAChargePage and the value for AAKickOutStatus is 0" in {
+
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 0)
+
+      val ua = uaWithAAKickOutStatus
+        .set(NewLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = NewLTAChargePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must navigate to change in MultipleBenefitCrystallisationEvent page when user answers false for NewLTAChargePage" in {
+
+      val ua = emptyUserAnswers
+        .set(NewLTAChargePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = NewLTAChargePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-more-than-one-benefit-crystallisation-event")
+    }
+
+    "must navigate to journey recovery when no answer" in {
+
+      val ua = emptyUserAnswers
+
+      val nextPageUrl: String = NewLTAChargePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 }

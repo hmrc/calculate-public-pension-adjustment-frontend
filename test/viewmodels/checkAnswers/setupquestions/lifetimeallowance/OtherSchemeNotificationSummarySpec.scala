@@ -19,14 +19,14 @@ package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.setupquestions.lifetimeallowance.{IncreaseInLTAChargePage, NewLTAChargePage}
+import pages.setupquestions.lifetimeallowance.OtherSchemeNotificationPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, ValueViewModel}
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class IncreaseInLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
+class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
 
   private implicit val messages: Messages = Helpers.stubMessages()
 
@@ -34,22 +34,20 @@ class IncreaseInLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
     "when Yes is selected, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          IncreaseInLTAChargePage,
+          OtherSchemeNotificationPage,
           true
         )
         .get
-      IncreaseInLTAChargeSummary.row(userAnswers) shouldBe Some(
+      OtherSchemeNotificationSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "increaseInLTACharge.checkYourAnswersLabel",
+          key = "otherSchemeNotification.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController
-                .onPageLoad(CheckMode)
-                .url
+              controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("increaseInLTACharge.change.hidden")
+              .withVisuallyHiddenText("otherSchemeNotification.change.hidden")
           )
         )
       )
@@ -58,22 +56,20 @@ class IncreaseInLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
     "when No is selected, return the summary row" in {
       val userAnswers = UserAnswers("id")
         .set(
-          IncreaseInLTAChargePage,
+          OtherSchemeNotificationPage,
           false
         )
         .get
-      IncreaseInLTAChargeSummary.row(userAnswers) shouldBe Some(
+      OtherSchemeNotificationSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
-          key = "increaseInLTACharge.checkYourAnswersLabel",
+          key = "otherSchemeNotification.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController
-                .onPageLoad(CheckMode)
-                .url
+              controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(CheckMode).url
             )
-              .withVisuallyHiddenText("increaseInLTACharge.change.hidden")
+              .withVisuallyHiddenText("otherSchemeNotification.change.hidden")
           )
         )
       )
@@ -81,7 +77,7 @@ class IncreaseInLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      IncreaseInLTAChargeSummary.row(userAnswers) shouldBe None
+      OtherSchemeNotificationSummary.row(userAnswers) shouldBe None
     }
   }
 }

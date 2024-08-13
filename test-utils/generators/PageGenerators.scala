@@ -36,6 +36,9 @@ trait PageGenerators {
   implicit lazy val arbitraryPensionProtectedMemberPage: Arbitrary[PensionProtectedMemberPage.type] =
     Arbitrary(PensionProtectedMemberPage)
 
+  implicit lazy val arbitraryOtherSchemeNotificationPage: Arbitrary[OtherSchemeNotificationPage.type] =
+    Arbitrary(OtherSchemeNotificationPage)
+
   implicit lazy val arbitraryNewLTAChargePage: Arbitrary[NewLTAChargePage.type] =
     Arbitrary(NewLTAChargePage)
 

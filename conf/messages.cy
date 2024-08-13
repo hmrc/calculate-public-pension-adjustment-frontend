@@ -1439,3 +1439,9 @@ newLTACharge.heading = newLTACharge
 newLTACharge.checkYourAnswersLabel = newLTACharge
 newLTACharge.error.required = Select yes if newLTACharge
 newLTACharge.change.hidden = NewLTACharge
+
+otherSchemeNotification.title = Has your other pension scheme notified you?
+otherSchemeNotification.heading = Has your other pension scheme notified you?
+otherSchemeNotification.checkYourAnswersLabel = if your other pension scheme has notified you
+otherSchemeNotification.error.required = Select yes if your other pension scheme has notified you
+otherSchemeNotification.change.hidden = if your other pension scheme has notified you

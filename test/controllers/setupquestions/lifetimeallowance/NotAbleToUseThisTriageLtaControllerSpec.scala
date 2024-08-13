@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package controllers.lifetimeallowance
+package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
-import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.setupquestions.lifetimeallowance.{routes => ltaRoutes}
 import models.{AAKickOutStatus, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.lifetimeallowance.NotAbleToUseThisServiceLtaView
+import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaView
 
-class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
+class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
 
   val kickOutStatusFalse = 1
 
-  "NotAbleToUseThisServiceLta Controller" - {
+  "NotAbleToUseThisTriageLta Controller" - {
 
     "when annual allowance status is 1 in the UserAnswers" - {
 
@@ -44,11 +44,11 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisTriageLtaController.onPageLoad().url)
 
           val result = route(application, request).value
 
-          val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
+          val view = application.injector.instanceOf[NotAbleToUseThisTriageLtaView]
 
           status(result) mustEqual OK
           contentAsString(result) mustEqual view(true, "/public-pension-adjustment/pension-saving-statement")(
@@ -74,14 +74,14 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisTriageLtaController.onPageLoad().url)
 
           val result = route(application, request).value
 
-          val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
+          val view = application.injector.instanceOf[NotAbleToUseThisTriageLtaView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/task-list")(
+          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup")(
             request,
             messages(application)
           ).toString
@@ -104,11 +104,11 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisTriageLtaController.onPageLoad().url)
 
           val result = route(application, request).value
 
-          val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
+          val view = application.injector.instanceOf[NotAbleToUseThisTriageLtaView]
 
           status(result) mustEqual OK
           contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
@@ -132,11 +132,11 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisTriageLtaController.onPageLoad().url)
 
           val result = route(application, request).value
 
-          val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
+          val view = application.injector.instanceOf[NotAbleToUseThisTriageLtaView]
 
           status(result) mustEqual OK
           contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(

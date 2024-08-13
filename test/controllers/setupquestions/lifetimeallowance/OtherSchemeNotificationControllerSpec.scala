@@ -17,46 +17,42 @@
 package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
-import config.FrontendAppConfig
-import forms.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventFormProvider
+import forms.setupquestions.lifetimeallowance.OtherSchemeNotificationFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventPage
+import pages.setupquestions.lifetimeallowance.OtherSchemeNotificationPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventView
+import views.html.setupquestions.lifetimeallowance.OtherSchemeNotificationView
 
 import scala.concurrent.Future
 
-class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with MockitoSugar {
+class OtherSchemeNotificationControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new MultipleBenefitCrystallisationEventFormProvider()
-  val form         = formProvider()
+  val formProvider = new OtherSchemeNotificationFormProvider()
+  val form = formProvider()
 
-  lazy val multipleBenefitCrystallisationEventRoute =
-    controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
-      .onPageLoad(NormalMode)
-      .url
+  lazy val otherSchemeNotificationRoute = controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(NormalMode).url
 
-  "MultipleBenefitCrystallisationEvent Controller" - {
+  "OtherSchemeNotification Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, multipleBenefitCrystallisationEventRoute)
+        val request = FakeRequest(GET, otherSchemeNotificationRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[MultipleBenefitCrystallisationEventView]
+        val view = application.injector.instanceOf[OtherSchemeNotificationView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -65,14 +61,14 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(MultipleBenefitCrystallisationEventPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(OtherSchemeNotificationPage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, multipleBenefitCrystallisationEventRoute)
+        val request = FakeRequest(GET, otherSchemeNotificationRoute)
 
-        val view = application.injector.instanceOf[MultipleBenefitCrystallisationEventView]
+        val view = application.injector.instanceOf[OtherSchemeNotificationView]
 
         val result = route(application, request).value
 
@@ -94,7 +90,7 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
 
       running(application) {
         val request =
-          FakeRequest(POST, multipleBenefitCrystallisationEventRoute)
+          FakeRequest(POST, otherSchemeNotificationRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -116,7 +112,7 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
 
       running(application) {
         val request =
-          FakeRequest(POST, multipleBenefitCrystallisationEventRoute)
+          FakeRequest(POST, otherSchemeNotificationRoute)
             .withFormUrlEncodedBody(("value", "false"))
 
         val result = route(application, request).value
@@ -131,49 +127,17 @@ class MultipleBenefitCrystallisationEventControllerSpec extends SpecBase with Mo
 
       running(application) {
         val request =
-          FakeRequest(POST, multipleBenefitCrystallisationEventRoute)
+          FakeRequest(POST, otherSchemeNotificationRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[MultipleBenefitCrystallisationEventView]
+        val view = application.injector.instanceOf[OtherSchemeNotificationView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
         contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must redirect to start of the service for a GET if no existing data is found" in {
-
-      val application = applicationBuilder(userAnswers = None).build()
-
-      running(application) {
-        val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   = FakeRequest(GET, multipleBenefitCrystallisationEventRoute)
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
-      }
-    }
-
-    "must redirect to start of the service for a POST if no existing data is found" in {
-
-      val application = applicationBuilder(userAnswers = None).build()
-
-      running(application) {
-        val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   =
-          FakeRequest(POST, multipleBenefitCrystallisationEventRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
       }
     }
   }

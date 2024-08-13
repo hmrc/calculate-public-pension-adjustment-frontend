@@ -16,7 +16,8 @@
 
 package pages.setupquestions.lifetimeallowance
 
-import models.{NormalMode, UserAnswers, CheckMode}
+import controllers.routes
+import models.{AAKickOutStatus, CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -27,26 +28,37 @@ case object NewLTAChargePage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "lta" \ toString
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(NewLTAChargePage) match {
-      case Some(true) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case Some(false) => controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController.onPageLoad(NormalMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  => redirectToNext(answers)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
+          .onPageLoad(NormalMode)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(NewLTAChargePage) match {
-      case Some(true) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case Some(false) => controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController.onPageLoad(CheckMode)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  => redirectToNext(answers)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
+          .onPageLoad(CheckMode)
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
+
+  private def redirectToNext(answers: UserAnswers): Call =
+    answers.get(AAKickOutStatus()).getOrElse(None) match {
+      case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case 1    => controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode)
+      case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case _    => routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true => userAnswers.remove(MultipleBenefitCrystallisationEventPage)
+        case true  => userAnswers.remove(MultipleBenefitCrystallisationEventPage)
         case false => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))

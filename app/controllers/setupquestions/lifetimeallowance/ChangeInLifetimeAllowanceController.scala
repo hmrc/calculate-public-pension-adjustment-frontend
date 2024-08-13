@@ -18,8 +18,8 @@ package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceFormProvider
-import models.Mode
-import models.tasklist.sections.SetupSection
+import models.{LTAKickOutStatus, Mode}
+import models.tasklist.sections.{LTASection, SetupSection}
 import pages.setupquestions.lifetimeallowance.ChangeInLifetimeAllowancePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -45,6 +45,9 @@ class ChangeInLifetimeAllowanceController @Inject() (
 
   val form = formProvider()
 
+  private val kickOutStatusFalse     = 1
+  private val kickOutStatusCompleted = 2
+
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val preparedForm = request.userAnswers.get(ChangeInLifetimeAllowancePage) match {
       case None        => form
@@ -60,13 +63,17 @@ class ChangeInLifetimeAllowanceController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value =>
+          value => {
+            val ltaKickOutStatus = if (value) kickOutStatusFalse else kickOutStatusCompleted
+
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(ChangeInLifetimeAllowancePage, value))
-              redirectUrl     = ChangeInLifetimeAllowancePage.navigate(mode, updatedAnswers).url
-              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              updatedAnswers          <- Future.fromTry(request.userAnswers.set(ChangeInLifetimeAllowancePage, value))
+              updatedAnswersWithStatus = LTAKickOutStatus().saveLTAKickOutStatus(updatedAnswers, ltaKickOutStatus)
+              redirectUrl              = ChangeInLifetimeAllowancePage.navigate(mode, updatedAnswersWithStatus).url
+              answersWithNav           = LTASection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              _                       <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
+          }
         )
   }
 }

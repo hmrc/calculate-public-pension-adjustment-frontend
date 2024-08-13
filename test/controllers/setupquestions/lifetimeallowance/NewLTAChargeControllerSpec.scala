@@ -38,9 +38,10 @@ class NewLTAChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new NewLTAChargeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val newLTAChargeRoute = controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onPageLoad(NormalMode).url
+  lazy val newLTAChargeRoute =
+    controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onPageLoad(NormalMode).url
 
   "NewLTACharge Controller" - {
 
@@ -78,7 +79,7 @@ class NewLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when True is selected" in {
 
       val mockUserDataService = mock[UserDataService]
 
@@ -97,7 +98,31 @@ class NewLTAChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url
+        redirectLocation(result).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController
+          .onPageLoad()
+          .url
+      }
+    }
+
+    "must redirect to the next page when False is selected" in {
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService))
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, newLTAChargeRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
       }
     }
 

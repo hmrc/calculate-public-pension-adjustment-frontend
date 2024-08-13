@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.lifetimeallowance
+package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
 import models.{AAKickOutStatus, NormalMode}
@@ -22,7 +22,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.Format.GenericFormat
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.lifetimeallowance.NotAbleToUseThisServiceLtaView
+import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaView
 
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ class NotAbleToUseThisServiceLtaController @Inject() (
       case Some(1) =>
         controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode).url
       case Some(2) =>
-        controllers.routes.TaskListController.onPageLoad().url
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url
       case Some(_) =>
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
       case None    =>

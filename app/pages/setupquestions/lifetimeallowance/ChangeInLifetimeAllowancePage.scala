@@ -17,7 +17,7 @@
 package pages.setupquestions.lifetimeallowance
 
 import controllers.routes
-import models.{NormalMode, UserAnswers}
+import models.{AAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -30,33 +30,38 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
 
   override def toString: String = "changeInLifetimeAllowance"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    val previousLTACharge = answers.get(PreviousLTAChargePage)
-    (answers.get(ChangeInLifetimeAllowancePage), previousLTACharge) match {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
+    (answers.get(ChangeInLifetimeAllowancePage), answers.get(PreviousLTAChargePage)) match {
       case (Some(true), Some(true))  =>
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        redirectToNext(answers)
       case (Some(true), Some(false)) =>
         controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController
           .onPageLoad(NormalMode)
       case (Some(false), Some(_))    =>
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad() // TODO Needs to be changed
+        controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
       case _                         => routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
-    val previousLTACharge = answers.get(PreviousLTAChargePage)
-    (answers.get(ChangeInLifetimeAllowancePage), previousLTACharge) match {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
+    (answers.get(ChangeInLifetimeAllowancePage), answers.get(PreviousLTAChargePage)) match {
       case (Some(true), Some(true))  =>
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        redirectToNext(answers)
       case (Some(true), Some(false)) =>
         controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController
           .onPageLoad(NormalMode)
       case (Some(false), Some(_))    =>
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad() // TODO Needs to be changed
+        controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
       case _                         => routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
+
+  private def redirectToNext(answers: UserAnswers): Call =
+    answers.get(AAKickOutStatus()).getOrElse(None) match {
+      case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case 1    => controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode)
+      case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case _    => routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
     val previousLTACharge = userAnswers.get(PreviousLTAChargePage).getOrElse(false)

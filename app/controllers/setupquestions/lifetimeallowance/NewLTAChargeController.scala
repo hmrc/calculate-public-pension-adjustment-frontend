@@ -18,8 +18,8 @@ package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.NewLTAChargeFormProvider
-import models.Mode
-import models.tasklist.sections.SetupSection
+import models.{LTAKickOutStatus, Mode}
+import models.tasklist.sections.LTASection
 import pages.setupquestions.lifetimeallowance.NewLTAChargePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -30,44 +30,50 @@ import views.html.setupquestions.lifetimeallowance.NewLTAChargeView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class NewLTAChargeController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         userDataService: UserDataService,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: NewLTAChargeFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: NewLTAChargeView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class NewLTAChargeController @Inject() (
+  override val messagesApi: MessagesApi,
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: NewLTAChargeFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: NewLTAChargeView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
+  private val kickOutStatusFalse     = 1
+  private val kickOutStatusCompleted = 2
 
-      val preparedForm = request.userAnswers.get(NewLTAChargePage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val preparedForm = request.userAnswers.get(NewLTAChargePage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      Ok(view(preparedForm, mode))
+    Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          value => {
+            val ltaKickOutStatus = if (value) kickOutStatusCompleted else kickOutStatusFalse
 
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(NewLTAChargePage, value))
-            redirectUrl = NewLTAChargePage.navigate(mode, updatedAnswers).url
-            answersWithNav = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-            _ <- userDataService.set(answersWithNav)
-          } yield Redirect(redirectUrl)
-      )
+            for {
+              updatedAnswers          <- Future.fromTry(request.userAnswers.set(NewLTAChargePage, value))
+              updatedAnswersWithStatus = LTAKickOutStatus().saveLTAKickOutStatus(updatedAnswers, ltaKickOutStatus)
+              redirectUrl              = NewLTAChargePage.navigate(mode, updatedAnswersWithStatus).url
+              answersWithNav           = LTASection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              _                       <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
+          }
+        )
   }
 }

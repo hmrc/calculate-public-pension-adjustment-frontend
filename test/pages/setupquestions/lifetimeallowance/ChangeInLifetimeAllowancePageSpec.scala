@@ -16,7 +16,7 @@
 
 package pages.setupquestions.lifetimeallowance
 
-import models.{CheckMode, NormalMode}
+import models.{AAKickOutStatus, CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
 class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
@@ -32,9 +32,11 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "must navigate to change in CYA page when user answers true for PreviousLTACharge and ChangeInLTA" in {
+    "must navigate to CYA page when user answers true for PreviousLTACharge and ChangeInLTA and the value for AAKickOutStatus is 0" in {
 
-      val ua = emptyUserAnswers
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 0)
+
+      val ua = uaWithAAKickOutStatus
         .set(ChangeInLifetimeAllowancePage, true)
         .success
         .value
@@ -47,7 +49,41 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }
 
-    "must navigate to change in CYA page when user answers false for PreviousLTACharge and true for ChangeInLTA" in {
+    "must navigate to PensionSavingsStatement when user answers true for PreviousLTACharge,true for ChangeInLTA and the value for AAKickOutStatus is 1" in {
+
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 1)
+
+      val ua = uaWithAAKickOutStatus
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
+        .set(ChangeInLifetimeAllowancePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/pension-saving-statement")
+    }
+
+    "must navigate to CYA page when user answers true for PreviousLTACharge and ChangeInLTA and the value for KickOutStatus is 2" in {
+
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 2)
+
+      val ua = uaWithAAKickOutStatus
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
+        .set(ChangeInLifetimeAllowancePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must navigate to IncreaseInLTACharge page when user answers false for PreviousLTACharge and true for ChangeInLTA" in {
 
       val ua = emptyUserAnswers
         .set(PreviousLTAChargePage, false)
@@ -74,7 +110,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
     }
 
     "must navigate to kickout when user answers true for PreviousLTACharge and false for ChangeInLTA" in {
@@ -89,7 +125,22 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+    }
+
+    "must navigate to CYA page when user answers true for PreviousLTACharge and false for ChangeInLTA but nothing for AAKickOutStatus " in {
+
+      val ua = emptyUserAnswers
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
+        .set(ChangeInLifetimeAllowancePage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
     }
 
     "must navigate to journey recovery when no answer" in {
@@ -104,9 +155,11 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "must navigate to change in CYA page when user answers true for PreviousLTACharge and ChangeInLTA" in {
+    "must navigate to change in CYA page when user answers true for PreviousLTACharge and ChangeInLTA and the value for AAKickOutStatus is 0" in {
 
-      val ua = emptyUserAnswers
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 0)
+
+      val ua = uaWithAAKickOutStatus
         .set(ChangeInLifetimeAllowancePage, true)
         .success
         .value
@@ -114,12 +167,46 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
         .success
         .value
 
-      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }
 
-    "must navigate to change in CYA page when user answers false for PreviousLTACharge and true for ChangeInLTA" in {
+    "must navigate to change in PensionSavingsStatement when user answers true for PreviousLTACharge, ChangeInLTA and the value for AAKickOutStatus is 1" in {
+
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 1)
+
+      val ua = uaWithAAKickOutStatus
+        .set(ChangeInLifetimeAllowancePage, true)
+        .success
+        .value
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/pension-saving-statement")
+    }
+
+    "must navigate to change in CYA page when user answers true for PreviousLTACharge and ChangeInLTA and the value for AAKickOutStatus is 2" in {
+
+      val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 2)
+
+      val ua = uaWithAAKickOutStatus
+        .set(ChangeInLifetimeAllowancePage, true)
+        .success
+        .value
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+    }
+
+    "must navigate to change in IncreaseInLTACharge page when user answers false for PreviousLTACharge and true for ChangeInLTA" in {
 
       val ua = emptyUserAnswers
         .set(PreviousLTAChargePage, false)
@@ -129,7 +216,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
         .success
         .value
 
-      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/lifetime-allowance-percentage-increase")
     }
@@ -144,9 +231,9 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
         .success
         .value
 
-      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
     }
 
     "must navigate to kickout when user answers true for PreviousLTACharge and false for ChangeInLTA" in {
@@ -159,7 +246,22 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
         .success
         .value
 
-      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
+
+      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+    }
+
+    "must navigate to CYA page when user answers true for PreviousLTACharge and true for ChangeInLTA but nothing for AAKickOutStatus " in {
+
+      val ua = emptyUserAnswers
+        .set(PreviousLTAChargePage, true)
+        .success
+        .value
+        .set(ChangeInLifetimeAllowancePage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/check-your-answers-setup")
     }

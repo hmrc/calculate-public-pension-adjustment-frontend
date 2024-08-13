@@ -37,6 +37,8 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(PensionProtectedMemberPage.type, JsValue)] ::
       arbitrary[(PreviousLTAChargePage.type, JsValue)] ::
     arbitrary[(NewLTAChargePage.type, JsValue)] ::
+    arbitrary[(OtherSchemeNotificationPage.type, JsValue)] ::
+      arbitrary[(NewLTAChargePage.type, JsValue)] ::
       arbitrary[(IncreaseInLTAChargePage.type, JsValue)] ::
       arbitrary[(PreviousLTAChargePage.type, JsValue)] ::
       arbitrary[(UserSchemeDetailsPage.type, JsValue)] ::

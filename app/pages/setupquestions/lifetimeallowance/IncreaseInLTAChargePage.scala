@@ -29,28 +29,32 @@ case object IncreaseInLTAChargePage extends QuestionPage[Boolean] {
 
   override def toString: String = "increaseInLTACharge"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(IncreaseInLTAChargePage) match {
-      case Some(true) => controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onPageLoad(NormalMode)
-      case Some(false) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad() // TODO Needs to be changed
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onPageLoad(NormalMode)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(IncreaseInLTAChargePage) match {
-      case Some(true) => controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onPageLoad(CheckMode)
-      case Some(false) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad() // TODO Needs to be changed
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onPageLoad(CheckMode)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map {
-        case true => super.cleanup(value, userAnswers)
-        case false => userAnswers.remove(NewLTAChargePage)
-          .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
+        case true  => super.cleanup(value, userAnswers)
+        case false =>
+          userAnswers
+            .remove(NewLTAChargePage)
+            .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

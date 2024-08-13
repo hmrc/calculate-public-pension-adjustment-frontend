@@ -32,6 +32,16 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
   "normal mode navigation" - {
 
+    "when user has multiple public sector BCE " in {
+      val page = MultipleBenefitCrystallisationEventPage
+
+      val userAnswers = emptyUserAnswers.set(page, true).get
+
+      val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/other-scheme-LTA-notification")
+    }
+
     "when user doesn't have multiple public sector BCE " in {
       val page = MultipleBenefitCrystallisationEventPage
 
@@ -39,7 +49,7 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/protection-enhancements")
+      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
     }
 
     "when user hasn't answered multiple public sector BCE " in {
@@ -55,6 +65,16 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
   "check mode navigation" - {
 
+    "when user has multiple public sector BCE in CheckMode" in {
+      val page = MultipleBenefitCrystallisationEventPage
+
+      val userAnswers = emptyUserAnswers.set(page, true).get
+
+      val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/change-other-scheme-LTA-notification")
+    }
+
     "when user has multiple public sector BCE in check mode" in {
       val page = MultipleBenefitCrystallisationEventPage
 
@@ -62,7 +82,7 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/check-answers")
+      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
     }
 
     "when user hasn't answered multiple public sector BCE in check mode " in {

@@ -100,7 +100,8 @@ POST        /lifetime-allowance/benefit-crystallisation-event-date              
 GET         /lifetime-allowance/change-benefit-crystallisation-event-date                        controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-benefit-crystallisation-event-date                        controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
-GET         /cannot-use-lta-service                                    controllers.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
+GET         /cannot-use-lta-service                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
+GET         /cannot-use-triage-lta-service                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaController.onPageLoad()
 
 GET         /lifetime-allowance/lifetime-allowance-percentage-change                                      controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/lifetime-allowance-percentage-change                                       controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onSubmit(mode: Mode = NormalMode)
@@ -555,3 +556,8 @@ GET        /contribution-refunds                 controllers.setupquestions.annu
 POST       /changeContributionRefunds                  controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /not-impacted-no-RPSS                      controllers.setupquestions.annualallowance.NotAbleToUseThisServiceAAController.onPageLoad()
+
+GET        /other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = NormalMode)
+POST       /other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = NormalMode)
+GET        /change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = CheckMode)

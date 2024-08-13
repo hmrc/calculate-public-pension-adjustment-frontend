@@ -36,14 +36,14 @@ case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(HadBenefitCrystallisationEventPage) match {
       case Some(true)  => setupLTARoutes.PreviousLTAChargeController.onPageLoad(NormalMode)
-      case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+      case Some(false) => setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(HadBenefitCrystallisationEventPage) match {
       case Some(true)  => setupLTARoutes.PreviousLTAChargeController.onPageLoad(NormalMode)
-      case Some(false) => ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+      case Some(false) => setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
 
