@@ -156,8 +156,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        },
@@ -204,8 +204,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        },
@@ -251,8 +251,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        },
@@ -298,8 +298,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        },
@@ -343,8 +343,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        },
@@ -390,8 +390,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        },
@@ -439,8 +439,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        }
@@ -745,8 +745,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        },
@@ -841,8 +841,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        }
@@ -956,8 +956,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        },
@@ -1004,8 +1004,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        },
@@ -1051,8 +1051,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "amountOfGiftAid": 842,
            |          "doYouKnowPersonalAllowance": false,
            |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
+           |          "tradeUnionRelief": true,
+           |          "unionPoliceReliefAmount": 90,
            |          "blindAllowance": true,
            |          "blindPersonsAllowanceAmount": 2291
            |        }
@@ -1278,8 +1278,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        },
@@ -1326,8 +1326,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        },
@@ -1373,8 +1373,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        }
@@ -1488,8 +1488,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        },
@@ -1533,8 +1533,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        },
@@ -1581,8 +1581,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        },
@@ -1632,8 +1632,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        }
@@ -1733,7 +1733,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "flexibleRemunerationArrangements": true,
                 |          "amountFlexibleRemunerationArrangements": 666,
                 |          "didYouContributeToRASScheme": true,
-                |		  "rASContributionAmount": 712,
+                |		   "rASContributionAmount": 712,
                 |          "howMuchContributionPensionScheme": 1212,
                 |          "anyLumpSumDeathBenefits": true,
                 |          "lumpSumDeathBenefitsValue": 777,
@@ -1750,8 +1750,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        },
@@ -1801,8 +1801,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        }
@@ -1940,8 +1940,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |        "amountOfGiftAid": 842,
                 |        "doYouKnowPersonalAllowance": false,
                 |        "doYouHaveCodeAdjustment": true,
-                |        "payeCodeAdjustment": "increase",
-                |        "codeAdjustmentAmount": 2740,
+                |        "tradeUnionRelief": true,
+                |        "unionPoliceReliefAmount": 90,
                 |        "blindAllowance": true,
                 |        "blindPersonsAllowanceAmount": 2291
                 |      },
@@ -1994,8 +1994,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |        "amountOfGiftAid": 842,
                 |        "doYouKnowPersonalAllowance": false,
                 |        "doYouHaveCodeAdjustment": true,
-                |        "payeCodeAdjustment": "increase",
-                |        "codeAdjustmentAmount": 2740,
+                |        "tradeUnionRelief": true,
+                |        "unionPoliceReliefAmount": 90,
                 |        "blindAllowance": true,
                 |        "blindPersonsAllowanceAmount": 2291
                 |      },
@@ -2042,8 +2042,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |        "amountOfGiftAid": 842,
                 |        "doYouKnowPersonalAllowance": false,
                 |        "doYouHaveCodeAdjustment": true,
-                |        "payeCodeAdjustment": "increase",
-                |        "codeAdjustmentAmount": 2740,
+                |        "tradeUnionRelief": true,
+                |        "unionPoliceReliefAmount": 90,
                 |        "blindAllowance": true,
                 |        "blindPersonsAllowanceAmount": 2291
                 |      }
@@ -2161,8 +2161,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        },
@@ -2212,8 +2212,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "amountOfGiftAid": 842,
                 |          "doYouKnowPersonalAllowance": false,
                 |          "doYouHaveCodeAdjustment": true,
-                |          "payeCodeAdjustment": "increase",
-                |          "codeAdjustmentAmount": 2740,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
                 |          "blindAllowance": true,
                 |          "blindPersonsAllowanceAmount": 2291
                 |        }
@@ -2355,6 +2355,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               None,
+              None,
               Some(2291)
             ),
             None,
@@ -2384,6 +2385,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               Some(888),
+              None,
               None,
               None,
               None,
@@ -2423,6 +2425,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1414),
               Some(842),
               None,
+              Some(90),
               Some(2291)
             ),
             Some(BelowThreshold)
@@ -2454,6 +2457,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1414),
               Some(842),
               None,
+              Some(90),
               Some(2291)
             ),
             Some(BelowThreshold)
@@ -2485,6 +2489,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1414),
               Some(842),
               None,
+              Some(90),
               Some(2291)
             ),
             Some(BelowThreshold)
@@ -2516,6 +2521,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1414),
               Some(842),
               None,
+              Some(90),
               Some(2291)
             ),
             Some(BelowThreshold)
@@ -2548,6 +2554,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 Some(1414),
                 Some(842),
                 None,
+                Some(90),
                 Some(2291)
               ),
               Some(AboveThreshold(96148))
@@ -2579,6 +2586,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1414),
               Some(842),
               None,
+              Some(90),
               Some(2291)
             ),
             Some(BelowThreshold)
@@ -2610,6 +2618,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1414),
               Some(842),
               None,
+              Some(90),
               Some(2291)
             ),
             income = Some(AboveThreshold(166148))
@@ -2647,6 +2656,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(888),
+                    None,
                     None,
                     None,
                     None,
@@ -2699,6 +2709,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
+                    None,
                     Some(2291)
                   ),
                   None,
@@ -2726,6 +2737,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(AboveThreshold(177748)),
@@ -2752,6 +2764,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold),
@@ -2797,6 +2810,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
+                    None,
                     Some(2291)
                   ),
                   None,
@@ -2824,6 +2838,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(AboveThreshold(177748)),
@@ -2850,6 +2865,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold),
@@ -2895,6 +2911,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
+                    None,
                     Some(2291)
                   ),
                   None,
@@ -2919,6 +2936,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold),
@@ -2946,6 +2964,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(AboveThreshold(209548)),
@@ -2973,6 +2992,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold),
@@ -3023,6 +3043,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
+                    None,
                     Some(2291)
                   ),
                   None,
@@ -3049,6 +3070,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3073,6 +3095,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3097,6 +3120,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3121,6 +3145,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3145,6 +3170,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3169,6 +3195,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3193,6 +3220,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3274,6 +3302,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
+                    None,
                     Some(2291)
                   ),
                   None,
@@ -3301,6 +3330,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3325,6 +3355,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3349,6 +3380,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3389,6 +3421,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
+                    None,
                     Some(2291)
                   ),
                   None,
@@ -3413,6 +3446,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3436,6 +3470,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3459,6 +3494,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3499,6 +3535,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
+                    None,
                     Some(2291)
                   ),
                   None,
@@ -3523,6 +3560,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold),
@@ -3550,6 +3588,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(AboveThreshold(243148))
@@ -3574,6 +3613,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
@@ -3598,6 +3638,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1414),
                     Some(842),
                     None,
+                    Some(90),
                     Some(2291)
                   ),
                   Some(BelowThreshold)
