@@ -1377,7 +1377,7 @@ amountOfGiftAid.title = cy: How much did you donate to charity via gift aid from
 amountOfGiftAid.heading = cy: How much tax relief did you claim from gift aid from {0}?
 amountOfGiftAid.message1 = cy: To work out how much tax relief you have claimed, you must multiply your donation by 1.25.
 amountOfGiftAid.message2 = cy: For example, if you made £100 of gift aid donations, you claimed £125 in tax relief.
-amountOfGiftAid.message3 = cy: If you have filed for self-assessment you will find the amount that you donated in your SA100 document under charitable giving
+amountOfGiftAid.message3 = cy: If you have filed fmessaor self-assessment you will find the amount that you donated in your SA100 document under charitable giving
 amountOfGiftAid.checkYourAnswersLabel = cy: How much tax relief did you claim from gift aid from {0}?
 amountOfGiftAid.error.nonNumeric = cy: The amount of tax relief you claimed via gift aid from {0} must only include numbers 0 to 9
 amountOfGiftAid.error.required = cy: Enter the amount of tax relief you claimed via gift aid from {0}
@@ -1421,3 +1421,24 @@ previousLTACharge.heading = cy: previousLTACharge
 previousLTACharge.checkYourAnswersLabel = cy: previousLTACharge
 previousLTACharge.error.required = cy: Select yes if previousLTACharge
 previousLTACharge.change.hidden = cy: PreviousLTACharge
+
+pensionProtectedMember.title = cy: pensionProtectedMember
+pensionProtectedMember.heading = cy: pensionProtectedMember
+pensionProtectedMember.checkYourAnswersLabel = cy: pensionProtectedMember
+pensionProtectedMember.error.required = cy: Select yes if pensionProtectedMember
+pensionProtectedMember.change.hidden = cy: PensionProtectedMember
+
+hadAACharge.title = cy: hadAACharge
+hadAACharge.heading = cy: hadAACharge
+hadAACharge.checkYourAnswersLabel = cy: hadAACharge
+hadAACharge.error.required = cy: Select yes if hadAACharge
+hadAACharge.change.hidden = cy: HadAACharge
+
+contributionRefunds.title = cy: contributionRefunds
+contributionRefunds.heading = cy: contributionRefunds
+contributionRefunds.checkYourAnswersLabel = cy: contributionRefunds
+contributionRefunds.error.required = cy: Select yes if contributionRefunds
+contributionRefunds.change.hidden = cy: ContributionRefunds
+
+notAbleToUseThisServiceAA.title = notAbleToUseThisServiceAA
+notAbleToUseThisServiceAA.heading = notAbleToUseThisServiceAA

@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +12,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package models
+@this(
+        layout: templates.Layout,
+        govukButton: GovukButton
+)
 
-import base.SpecBase
-import org.scalatest.freespec.AnyFreeSpec
+@(shouldShowContinueButton: Boolean, url: String)(implicit request: Request[_], messages: Messages)
 
-class LTAKickOutStatusSpec extends AnyFreeSpec with SpecBase {
+@layout(pageTitle = titleNoForm(messages("notAbleToUseThisServiceAA.title"))) {
 
-  "LTAKickOutStatus" - {
+    <h1 class="govuk-heading-xl">@messages("notAbleToUseThisServiceAA.heading")</h1>
 
-    "should save status" in {
-
-      val userAnswers = emptyUserAnswers
-
-      val updatedUserAnswers = LTAKickOutStatus().saveLTAKickOutStatus(userAnswers, 1)
-
-      updatedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
+    @if(shouldShowContinueButton) {
+     <p class="govuk-body">
+      @govukButton(
+       ButtonViewModel(messages("site.continue"))
+        .asLink(url)
+      )
+    </p>
     }
-  }
-
 }

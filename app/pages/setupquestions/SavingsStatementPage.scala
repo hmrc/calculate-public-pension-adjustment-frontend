@@ -31,19 +31,15 @@ case object SavingsStatementPage extends QuestionPage[Boolean] {
   override def toString: String = "savingsStatement"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    (answers.get(SavingsStatementPage), answers.authenticated) match {
-      case (Some(true), true)  =>
-        controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-      case (Some(true), false) =>
-        controllers.routes.OptionalSignInController.onPageLoad()
-      case (Some(false), _)    => controllers.setupquestions.routes.IneligibleController.onPageLoad
-      case (None, _)           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(SavingsStatementPage) match {
+      case Some(_) =>
+        controllers.setupquestions.annualallowance.routes.PensionProtectedMemberController.onPageLoad(NormalMode)
+      case None    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(SavingsStatementPage) match {
-      case Some(true)  => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case Some(false) => controllers.setupquestions.routes.IneligibleController.onPageLoad
-      case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case None    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }
