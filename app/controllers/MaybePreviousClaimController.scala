@@ -20,7 +20,7 @@ import config.FrontendAppConfig
 import controllers.actions._
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.{Done, NormalMode, SubmissionStatusResponse, UserAnswers}
-import pages.setupquestions.SavingsStatementPage
+import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{CalculateBackendService, SubmitBackendService, UserDataService}

@@ -52,7 +52,7 @@ class NotAbleToUseThisServiceLtaController @Inject() (
 
     val urlFromStatus = annualAllowanceStatus match {
       case Some(1) =>
-        controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode).url
+        controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode).url
       case Some(2) =>
         controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url
       case Some(_) =>

@@ -18,7 +18,6 @@ package pages.setupquestions.annualallowance
 
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.SavingsStatementPage
 
 class ContributionRefundsPageSpec extends PageBehaviours {
 
@@ -49,7 +48,17 @@ class ContributionRefundsPageSpec extends PageBehaviours {
     }
 
     "to Net income above 100k 16/17 - 19/20 when yes" in {
-      // TODO
+      val userAnswers = emptyUserAnswers
+        .set(SavingsStatementPage, false)
+        .success
+        .value
+        .set(ContributionRefundsPage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/income-over-100")
     }
 
     "to have any PIAs increase 15/16 - 21/22 when no and RPSS yes" in {

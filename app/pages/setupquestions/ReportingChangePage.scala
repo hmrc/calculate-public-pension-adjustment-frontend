@@ -36,7 +36,7 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
     case Some(reportingChange) if reportingChange.contains(AnnualAllowance)   =>
-      controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode)
+      controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode)
     case Some(reportingChange) if reportingChange.contains(LifetimeAllowance) =>
       controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
         .onPageLoad(NormalMode)
@@ -46,7 +46,7 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
     case Some(reportingChange) if reportingChange.contains(AnnualAllowance)   =>
-      controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode)
+      controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode)
     case Some(reportingChange) if reportingChange.contains(LifetimeAllowance) =>
       controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
         .onPageLoad(NormalMode)
