@@ -29,7 +29,9 @@ import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 import pages.setupquestions.ReportingChangePage
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
+import pages.setupquestions.annualallowance.HadAAChargePage
 import viewmodels.checkAnswers.AffectedByRemedySummary
+import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, PensionProtectedMemberSummary}
 
 class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -44,12 +46,20 @@ class CheckYourSetupAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val rows: Seq[Option[SummaryListRow]] = Seq(
-      SavingsStatementSummary.row(request.userAnswers),
       ResubmittingAdjustmentSummary.row(request.userAnswers),
       ReasonForResubmissionSummary.row(request.userAnswers),
       AffectedByRemedySummary.row(request.userAnswers),
       ReportingChangeSummary.row(request.userAnswers)
     )
+
+    val aaRows: Seq[Option[SummaryListRow]] = Seq(
+      SavingsStatementSummary.row(request.userAnswers),
+      PensionProtectedMemberSummary.row(request.userAnswers),
+      HadAAChargeSummary.row(request.userAnswers),
+      ContributionRefundsSummary.row(request.userAnswers)
+    )
+
+    val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows
 
     val continueURL = request.userAnswers.get(ReportingChangePage) match {
       case Some(set) if set.contains(ReportingChange.AnnualAllowance) =>
@@ -60,6 +70,6 @@ class CheckYourSetupAnswersController @Inject() (
         }
       case _                                                          => controllers.routes.TaskListController.onPageLoad()
     }
-    Ok(view("checkYourAnswers.setup.subHeading", continueURL, SummaryListViewModel(rows.flatten)))
+    Ok(view("checkYourAnswers.setup.subHeading", continueURL, SummaryListViewModel(finalRows.flatten)))
   }
 }
