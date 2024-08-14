@@ -1421,3 +1421,24 @@ previousLTACharge.heading = previousLTACharge
 previousLTACharge.checkYourAnswersLabel = previousLTACharge
 previousLTACharge.error.required = Select yes if previousLTACharge
 previousLTACharge.change.hidden = PreviousLTACharge
+
+pensionProtectedMember.title = pensionProtectedMember
+pensionProtectedMember.heading = pensionProtectedMember
+pensionProtectedMember.checkYourAnswersLabel = pensionProtectedMember
+pensionProtectedMember.error.required = Select yes if pensionProtectedMember
+pensionProtectedMember.change.hidden = PensionProtectedMember
+
+hadAACharge.title = hadAACharge
+hadAACharge.heading = hadAACharge
+hadAACharge.checkYourAnswersLabel = hadAACharge
+hadAACharge.error.required = Select yes if hadAACharge
+hadAACharge.change.hidden = HadAACharge
+
+contributionRefunds.title = contributionRefunds
+contributionRefunds.heading = contributionRefunds
+contributionRefunds.checkYourAnswersLabel = contributionRefunds
+contributionRefunds.error.required = Select yes if contributionRefunds
+contributionRefunds.change.hidden = ContributionRefunds
+
+notAbleToUseThisServiceAA.title = notAbleToUseThisServiceAA
+notAbleToUseThisServiceAA.heading = notAbleToUseThisServiceAA

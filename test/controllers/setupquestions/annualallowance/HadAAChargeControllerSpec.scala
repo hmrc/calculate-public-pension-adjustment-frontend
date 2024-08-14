@@ -14,47 +14,49 @@
  * limitations under the License.
  */
 
-package controllers.setupquestions.lifetimeallowance
+package controllers.setupquestions.annualallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.setupquestions.lifetimeallowance.PreviousLTAChargeFormProvider
-import models.{Done, NormalMode, UserAnswers}
+import forms.setupquestions.annualallowance.HadAAChargeFormProvider
+import models.{AAKickOutStatus, Done, NormalMode, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.lifetimeallowance.PreviousLTAChargePage
+import pages.setupquestions.SavingsStatementPage
+import pages.setupquestions.annualallowance.HadAAChargePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.setupquestions.lifetimeallowance.PreviousLTAChargeView
+import views.html.setupquestions.annualallowance.HadAAChargeView
 
 import scala.concurrent.Future
 
-class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
+class HadAAChargeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new PreviousLTAChargeFormProvider()
+  val formProvider = new HadAAChargeFormProvider()
   val form         = formProvider()
 
-  lazy val previousLTAChargeRoute =
-    controllers.setupquestions.lifetimeallowance.routes.PreviousLTAChargeController.onPageLoad(NormalMode).url
+  lazy val hadAAChargeRoute =
+    controllers.setupquestions.annualallowance.routes.HadAAChargeController.onPageLoad(NormalMode).url
 
-  "PreviousLTACharge Controller" - {
+  "HadAACharge Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, previousLTAChargeRoute)
+        val request = FakeRequest(GET, hadAAChargeRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[PreviousLTAChargeView]
+        val view = application.injector.instanceOf[HadAAChargeView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -63,14 +65,14 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(PreviousLTAChargePage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(HadAAChargePage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, previousLTAChargeRoute)
+        val request = FakeRequest(GET, hadAAChargeRoute)
 
-        val view = application.injector.instanceOf[PreviousLTAChargeView]
+        val view = application.injector.instanceOf[HadAAChargeView]
 
         val result = route(application, request).value
 
@@ -86,13 +88,13 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers.set(SavingsStatementPage, false).get))
           .overrides(bind[UserDataService].toInstance(mockUserDataService))
           .build()
 
       running(application) {
         val request =
-          FakeRequest(POST, previousLTAChargeRoute)
+          FakeRequest(POST, hadAAChargeRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -106,14 +108,13 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-
         val request =
-          FakeRequest(POST, previousLTAChargeRoute)
+          FakeRequest(POST, hadAAChargeRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[PreviousLTAChargeView]
+        val view = application.injector.instanceOf[HadAAChargeView]
 
         val result = route(application, request).value
 
@@ -128,7 +129,7 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   = FakeRequest(GET, previousLTAChargeRoute)
+        val request   = FakeRequest(GET, hadAAChargeRoute)
 
         val result = route(application, request).value
 
@@ -144,13 +145,80 @@ class PreviousLTAChargeControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val request   =
-          FakeRequest(POST, previousLTAChargeRoute)
+          FakeRequest(POST, hadAAChargeRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+      }
+    }
+
+    "aaKickOutStatus" - {
+
+      "must set aaKickOutStatus to 2 if yes and RPSS yes" in {
+
+        val userAnswers = UserAnswers(userAnswersId)
+          .set(SavingsStatementPage, true)
+          .success
+          .value
+
+        val mockUserDataService = mock[UserDataService]
+
+        val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+        running(application) {
+          val request = FakeRequest(POST, hadAAChargeRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          val capturedUserAnswers = userAnswersCaptor.getValue
+          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(2)
+
+        }
+      }
+
+      "must set aaKickOutStatus to 1 if anything else" in {
+
+        val userAnswers = UserAnswers(userAnswersId)
+          .set(SavingsStatementPage, false)
+          .success
+          .value
+
+        val mockUserDataService = mock[UserDataService]
+
+        val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+        running(application) {
+          val request = FakeRequest(POST, hadAAChargeRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          val capturedUserAnswers = userAnswersCaptor.getValue
+          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(1)
+
+        }
       }
     }
   }
