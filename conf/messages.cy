@@ -1445,3 +1445,11 @@ otherSchemeNotification.heading = Has your other pension scheme notified you?
 otherSchemeNotification.checkYourAnswersLabel = if your other pension scheme has notified you
 otherSchemeNotification.error.required = Select yes if your other pension scheme has notified you
 otherSchemeNotification.change.hidden = if your other pension scheme has notified you
+
+notAbleToUseThisTriageLta.title = You cannot make a lifetime allowance adjustment
+notAbleToUseThisTriageLta.heading = You cannot make a lifetime allowance adjustment
+notAbleToUseThisTriageLta.message1 = If you have not had a benefit crystallisation event, you have not accessed your pension. This means that you will not have paid a lifetime allowance charge.
+notAbleToUseThisTriageLta.message2 = You cannot make an adjustment unless you have been contacted by your pension scheme administrator (PSA).
+notAbleToUseThisTriageLta.list = You can:
+notAbleToUseThisTriageLta.listItem1 = contact your PSA for more information about your pension scheme
+notAbleToUseThisTriageLta.listItem2 = contact the pension schemes helpline for more information about pension schemes

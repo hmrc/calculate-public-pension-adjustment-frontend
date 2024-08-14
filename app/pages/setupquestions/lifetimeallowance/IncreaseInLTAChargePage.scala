@@ -46,15 +46,4 @@ case object IncreaseInLTAChargePage extends QuestionPage[Boolean] {
         controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
-    value
-      .map {
-        case true  => super.cleanup(value, userAnswers)
-        case false =>
-          userAnswers
-            .remove(NewLTAChargePage)
-            .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
-      }
-      .getOrElse(super.cleanup(value, userAnswers))
 }

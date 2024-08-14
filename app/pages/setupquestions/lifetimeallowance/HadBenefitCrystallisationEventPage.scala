@@ -46,12 +46,4 @@ case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
       case Some(false) => setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
-
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
-    value match {
-      case Some(false) =>
-        val updatedAnswers = LTASection.removeAllUserAnswers(userAnswers)
-        updatedAnswers.set(HadBenefitCrystallisationEventPage, value = false, cleanUp = false)
-      case _           => super.cleanup(value, userAnswers)
-    }
 }

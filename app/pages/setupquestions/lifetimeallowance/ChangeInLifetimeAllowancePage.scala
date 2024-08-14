@@ -62,26 +62,4 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
       case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case _    => routes.JourneyRecoveryController.onPageLoad(None)
     }
-
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
-    val previousLTACharge = userAnswers.get(PreviousLTAChargePage).getOrElse(false)
-    value
-      .map {
-        case true  =>
-          if (previousLTACharge) {
-            userAnswers
-              .remove(IncreaseInLTAChargePage)
-              .flatMap(_.remove(NewLTAChargePage))
-              .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
-          } else {
-            super.cleanup(value, userAnswers)
-          }
-        case false =>
-          userAnswers
-            .remove(IncreaseInLTAChargePage)
-            .flatMap(_.remove(NewLTAChargePage))
-            .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
-      }
-      .getOrElse(super.cleanup(value, userAnswers))
-  }
 }
