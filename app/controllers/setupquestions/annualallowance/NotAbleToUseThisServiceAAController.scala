@@ -14,32 +14,32 @@
  * limitations under the License.
  */
 
-package controllers.lifetimeallowance
+package controllers.setupquestions.annualallowance
 
 import controllers.actions._
-import models.{AAKickOutStatus, NormalMode}
+import models.{LTAKickOutStatus, NormalMode, ReportingChange}
+import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.Format.GenericFormat
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.lifetimeallowance.NotAbleToUseThisServiceLtaView
+import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
 
 import javax.inject.Inject
 
-class NotAbleToUseThisServiceLtaController @Inject() (
+class NotAbleToUseThisServiceAAController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: NotAbleToUseThisServiceLtaView
+  view: NotAbleToUseThisServiceAAView
 ) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val annualAllowanceStatus = request.userAnswers.get(AAKickOutStatus())
+    val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
 
-    val shouldShowContinueButton = annualAllowanceStatus match {
+    val shouldShowContinueButton = ltaKickOutStatusStatus match {
       case Some(1) =>
         true
       case Some(2) =>
@@ -50,11 +50,13 @@ class NotAbleToUseThisServiceLtaController @Inject() (
         false
     }
 
-    val urlFromStatus = annualAllowanceStatus match {
+    val urlFromStatus = ltaKickOutStatusStatus match {
       case Some(1) =>
-        controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode).url
+        controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+          .onPageLoad(NormalMode)
+          .url
       case Some(2) =>
-        controllers.routes.TaskListController.onPageLoad().url
+        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url
       case Some(_) =>
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
       case None    =>

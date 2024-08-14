@@ -14,23 +14,17 @@
  * limitations under the License.
  */
 
-package models
+package forms
 
-import base.SpecBase
-import org.scalatest.freespec.AnyFreeSpec
+import javax.inject.Inject
 
-class LTAKickOutStatusSpec extends AnyFreeSpec with SpecBase {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  "LTAKickOutStatus" - {
+class ContributionRefundsFormProvider @Inject() extends Mappings {
 
-    "should save status" in {
-
-      val userAnswers = emptyUserAnswers
-
-      val updatedUserAnswers = LTAKickOutStatus().saveLTAKickOutStatus(userAnswers, 1)
-
-      updatedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
-    }
-  }
-
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("contributionRefunds.error.required")
+    )
 }

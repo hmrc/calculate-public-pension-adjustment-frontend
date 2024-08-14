@@ -14,23 +14,17 @@
  * limitations under the License.
  */
 
-package models
+package forms.setupquestions.annualallowance
 
-import base.SpecBase
-import org.scalatest.freespec.AnyFreeSpec
+import forms.mappings.Mappings
+import play.api.data.Form
 
-class LTAKickOutStatusSpec extends AnyFreeSpec with SpecBase {
+import javax.inject.Inject
 
-  "LTAKickOutStatus" - {
+class PensionProtectedMemberFormProvider @Inject() extends Mappings {
 
-    "should save status" in {
-
-      val userAnswers = emptyUserAnswers
-
-      val updatedUserAnswers = LTAKickOutStatus().saveLTAKickOutStatus(userAnswers, 1)
-
-      updatedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
-    }
-  }
-
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("pensionProtectedMember.error.required")
+    )
 }

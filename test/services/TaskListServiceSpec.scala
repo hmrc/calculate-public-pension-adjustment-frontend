@@ -23,7 +23,7 @@ import models.tasklist.{SectionGroupViewModel, SectionStatus, TaskListViewModel}
 import models.{NormalMode, ReportingChange, UserAnswers}
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.{ReportingChangePage, SavingsStatementPage}
+import pages.setupquestions.{ReportingChangePage, ResubmittingAdjustmentPage, SavingsStatementPage}
 
 import java.time.LocalDate
 import scala.util.Try
@@ -74,7 +74,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
 
     "the setupGroup must be well formed" in {
       val taskListViewModel: TaskListViewModel =
-        taskListService.taskListViewModel(userAnswersAfterSavingsStatementPageSubmitted())
+        taskListService.taskListViewModel(userAnswersAferResubmittingAdjustmentSubmitted())
       val setupGroup: SectionGroupViewModel    = taskListViewModel.setupGroup
 
       setupGroup.heading       must be("taskList.setup.groupHeading")
@@ -83,12 +83,12 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
 
       val setupSection = setupGroup.sections(0)
       setupSection.status                must be(SectionStatus.InProgress)
-      urlWithNoContext(setupSection.url) must be("/sign-in-government-gateway")
+      urlWithNoContext(setupSection.url) must be("/change-reason")
     }
 
     "the nextStepsGroup must be well formed" in {
       val taskListViewModel: TaskListViewModel  =
-        taskListService.taskListViewModel(userAnswersAfterSavingsStatementPageSubmitted())
+        taskListService.taskListViewModel(userAnswersAferResubmittingAdjustmentSubmitted())
       val nextStepsGroup: SectionGroupViewModel = taskListViewModel.nextStepsGroup
 
       nextStepsGroup.heading       must be("taskList.nextSteps.groupHeading")
@@ -101,17 +101,17 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
 
     "the ltaGroup and aaGroup must not be defined" in {
       val taskListViewModel: TaskListViewModel =
-        taskListService.taskListViewModel(userAnswersAfterSavingsStatementPageSubmitted())
+        taskListService.taskListViewModel(userAnswersAferResubmittingAdjustmentSubmitted())
       taskListViewModel.aaGroup.isDefined  must be(false)
       taskListViewModel.ltaGroup.isDefined must be(false)
     }
 
-    def userAnswersAfterSavingsStatementPageSubmitted(): UserAnswers = {
+    def userAnswersAferResubmittingAdjustmentSubmitted(): UserAnswers = {
       val answersWithPageData = emptyUserAnswers
-        .set(SavingsStatementPage, true)
+        .set(ResubmittingAdjustmentPage, true)
         .get
 
-      val redirectedUrl = SavingsStatementPage.navigate(NormalMode, answersWithPageData).url
+      val redirectedUrl = ResubmittingAdjustmentPage.navigate(NormalMode, answersWithPageData).url
       SetupSection.saveNavigation(answersWithPageData, redirectedUrl)
     }
   }
