@@ -14,23 +14,32 @@
  * limitations under the License.
  */
 
-package models
+package forms.setupquestions.annualallowance
 
-import base.SpecBase
-import org.scalatest.freespec.AnyFreeSpec
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
 
-class LTAKickOutStatusSpec extends AnyFreeSpec with SpecBase {
+class HadAAChargeFormProviderSpec extends BooleanFieldBehaviours {
 
-  "LTAKickOutStatus" - {
+  val requiredKey = "hadAACharge.error.required"
+  val invalidKey  = "error.boolean"
 
-    "should save status" in {
+  val form = new HadAAChargeFormProvider()()
 
-      val userAnswers = emptyUserAnswers
+  ".value" - {
 
-      val updatedUserAnswers = LTAKickOutStatus().saveLTAKickOutStatus(userAnswers, 1)
+    val fieldName = "value"
 
-      updatedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
-    }
+    behave like booleanField(
+      form,
+      fieldName,
+      invalidError = FormError(fieldName, invalidKey)
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
   }
-
 }
