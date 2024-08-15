@@ -18,7 +18,8 @@ package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
 import forms.setupquestions.lifetimeallowance.OtherSchemeNotificationFormProvider
-import models.{Done, NormalMode, UserAnswers}
+import models.{Done, LTAKickOutStatus, NormalMode, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -82,21 +83,25 @@ class OtherSchemeNotificationControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(bind[UserDataService].toInstance(mockUserDataService))
-          .build()
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(
+          bind[UserDataService].toInstance(mockUserDataService)
+        )
+        .build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, otherSchemeNotificationRoute)
-            .withFormUrlEncodedBody(("value", "true"))
+        val request = FakeRequest(POST, otherSchemeNotificationRoute)
+          .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(2)
       }
     }
 
@@ -104,21 +109,25 @@ class OtherSchemeNotificationControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(bind[UserDataService].toInstance(mockUserDataService))
-          .build()
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(
+          bind[UserDataService].toInstance(mockUserDataService)
+        )
+        .build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, otherSchemeNotificationRoute)
-            .withFormUrlEncodedBody(("value", "false"))
+        val request = FakeRequest(POST, otherSchemeNotificationRoute)
+          .withFormUrlEncodedBody(("value", "false"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(0)
       }
     }
 

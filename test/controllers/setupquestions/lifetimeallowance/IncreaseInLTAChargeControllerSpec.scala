@@ -19,7 +19,8 @@ package controllers.setupquestions.lifetimeallowance
 import base.SpecBase
 import controllers.routes
 import forms.setupquestions.lifetimeallowance.IncreaseInLTAChargeFormProvider
-import models.{Done, NormalMode, UserAnswers}
+import models.{Done, LTAKickOutStatus, NormalMode, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -83,7 +84,9 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -103,6 +106,8 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
         ).value mustEqual controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController
           .onPageLoad(NormalMode)
           .url
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
       }
     }
 
@@ -110,7 +115,9 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -125,6 +132,8 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(0)
       }
     }
 

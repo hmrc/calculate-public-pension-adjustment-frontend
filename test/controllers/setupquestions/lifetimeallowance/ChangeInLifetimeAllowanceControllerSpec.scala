@@ -19,7 +19,8 @@ package controllers.setupquestions.lifetimeallowance
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceFormProvider
-import models.{Done, NormalMode, UserAnswers}
+import models.{Done, LTAKickOutStatus, NormalMode, UserAnswers}
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -79,11 +80,13 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must redirect to the ChangeInTaxCharge page when true is submitted" in {
+    "must redirect to the Next page when true is submitted" in {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -100,15 +103,18 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        // redirectLocation(result).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
       }
     }
 
-    "must redirect to the ChangeInTaxCharge page when false is submitted" in {
+    "must redirect to the Next page when false is submitted" in {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -125,6 +131,8 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(2)
       }
     }
 

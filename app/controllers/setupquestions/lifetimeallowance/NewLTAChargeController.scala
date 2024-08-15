@@ -19,7 +19,7 @@ package controllers.setupquestions.lifetimeallowance
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.NewLTAChargeFormProvider
 import models.{LTAKickOutStatus, Mode}
-import models.tasklist.sections.LTASection
+import models.tasklist.sections.SetupSection
 import pages.setupquestions.lifetimeallowance.NewLTAChargePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -70,7 +70,7 @@ class NewLTAChargeController @Inject() (
               updatedAnswers          <- Future.fromTry(request.userAnswers.set(NewLTAChargePage, value))
               updatedAnswersWithStatus = LTAKickOutStatus().saveLTAKickOutStatus(updatedAnswers, ltaKickOutStatus)
               redirectUrl              = NewLTAChargePage.navigate(mode, updatedAnswersWithStatus).url
-              answersWithNav           = LTASection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              answersWithNav           = SetupSection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
               _                       <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
           }

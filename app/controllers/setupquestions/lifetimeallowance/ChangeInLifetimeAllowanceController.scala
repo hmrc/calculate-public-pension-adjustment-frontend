@@ -19,7 +19,7 @@ package controllers.setupquestions.lifetimeallowance
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceFormProvider
 import models.{LTAKickOutStatus, Mode}
-import models.tasklist.sections.{LTASection, SetupSection}
+import models.tasklist.sections.SetupSection
 import pages.setupquestions.lifetimeallowance.ChangeInLifetimeAllowancePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -70,7 +70,7 @@ class ChangeInLifetimeAllowanceController @Inject() (
               updatedAnswers          <- Future.fromTry(request.userAnswers.set(ChangeInLifetimeAllowancePage, value))
               updatedAnswersWithStatus = LTAKickOutStatus().saveLTAKickOutStatus(updatedAnswers, ltaKickOutStatus)
               redirectUrl              = ChangeInLifetimeAllowancePage.navigate(mode, updatedAnswersWithStatus).url
-              answersWithNav           = LTASection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              answersWithNav           = SetupSection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
               _                       <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
           }
