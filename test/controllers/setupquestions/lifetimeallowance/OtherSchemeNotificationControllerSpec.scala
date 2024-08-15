@@ -37,9 +37,10 @@ class OtherSchemeNotificationControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new OtherSchemeNotificationFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val otherSchemeNotificationRoute = controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(NormalMode).url
+  lazy val otherSchemeNotificationRoute =
+    controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(NormalMode).url
 
   "OtherSchemeNotification Controller" - {
 

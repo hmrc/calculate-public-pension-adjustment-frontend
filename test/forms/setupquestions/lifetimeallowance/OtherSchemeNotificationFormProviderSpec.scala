@@ -22,7 +22,7 @@ import play.api.data.FormError
 class OtherSchemeNotificationFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "otherSchemeNotification.error.required"
-  val invalidKey = "error.boolean"
+  val invalidKey  = "error.boolean"
 
   val form = new OtherSchemeNotificationFormProvider()()
 

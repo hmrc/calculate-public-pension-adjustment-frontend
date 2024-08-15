@@ -45,7 +45,9 @@ class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(CheckMode).url
+              controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController
+                .onPageLoad(CheckMode)
+                .url
             )
               .withVisuallyHiddenText("otherSchemeNotification.change.hidden")
           )
@@ -67,7 +69,9 @@ class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(CheckMode).url
+              controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController
+                .onPageLoad(CheckMode)
+                .url
             )
               .withVisuallyHiddenText("otherSchemeNotification.change.hidden")
           )

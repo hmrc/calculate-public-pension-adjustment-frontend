@@ -30,7 +30,6 @@ class OtherSchemeNotificationPageSpec extends PageBehaviours {
     beRemovable[Boolean](OtherSchemeNotificationPage)
   }
 
-
   "Normal mode" - {
 
     "must navigate to CYA page when user answers true for OtherSchemeNotificationPage and the value for AAKickOutStatus is 0" in {

@@ -26,7 +26,7 @@ import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaVie
 
 import javax.inject.Inject
 
-class NotAbleToUseThisTriageLtaController @Inject()(
+class NotAbleToUseThisTriageLtaController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,

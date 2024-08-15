@@ -30,51 +30,50 @@ import views.html.setupquestions.lifetimeallowance.OtherSchemeNotificationView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class OtherSchemeNotificationController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         userDataService: UserDataService,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: OtherSchemeNotificationFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: OtherSchemeNotificationView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class OtherSchemeNotificationController @Inject() (
+  override val messagesApi: MessagesApi,
+  userDataService: UserDataService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: OtherSchemeNotificationFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: OtherSchemeNotificationView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = formProvider()
 
-  private val kickOutStatusTrue = 0
+  private val kickOutStatusTrue      = 0
   private val kickOutStatusCompleted = 2
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val preparedForm = request.userAnswers.get(OtherSchemeNotificationPage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(OtherSchemeNotificationPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+    Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+          value => {
+            val ltaKickOutStatus = if (value) kickOutStatusCompleted else kickOutStatusTrue
 
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value => {
-          val ltaKickOutStatus = if (value) kickOutStatusCompleted else kickOutStatusTrue
-
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(OtherSchemeNotificationPage, value))
-            updatedAnswersWithStatus = LTAKickOutStatus().saveLTAKickOutStatus(updatedAnswers, ltaKickOutStatus)
-            redirectUrl = OtherSchemeNotificationPage.navigate(mode, updatedAnswersWithStatus).url
-            answersWithNav = LTASection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
-            _ <- userDataService.set(answersWithNav)
-          } yield Redirect(redirectUrl)
-        }
-      )
+            for {
+              updatedAnswers          <- Future.fromTry(request.userAnswers.set(OtherSchemeNotificationPage, value))
+              updatedAnswersWithStatus = LTAKickOutStatus().saveLTAKickOutStatus(updatedAnswers, ltaKickOutStatus)
+              redirectUrl              = OtherSchemeNotificationPage.navigate(mode, updatedAnswersWithStatus).url
+              answersWithNav           = LTASection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              _                       <- userDataService.set(answersWithNav)
+            } yield Redirect(redirectUrl)
+          }
+        )
   }
 }

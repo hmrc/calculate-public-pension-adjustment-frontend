@@ -28,29 +28,28 @@ case object OtherSchemeNotificationPage extends QuestionPage[Boolean] {
 
   override def toString: String = "otherSchemeNotification"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
+  override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(OtherSchemeNotificationPage) match {
-      case Some(true) => redirectToNext(answers)
-      case Some(false) => controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  => redirectToNext(answers)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(OtherSchemeNotificationPage) match {
-      case Some(true) => redirectToNext(answers)
-      case Some(false) => controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  => redirectToNext(answers)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 
-  private def redirectToNext(answers: UserAnswers): Call = {
+  private def redirectToNext(answers: UserAnswers): Call =
     answers.get(AAKickOutStatus()).getOrElse(None) match {
-      case 0 => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case 1 => controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode)
-      case 2 => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case 1    => controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode)
+      case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case _ => routes.JourneyRecoveryController.onPageLoad(None)
+      case _    => routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }
