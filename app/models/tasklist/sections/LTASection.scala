@@ -34,7 +34,6 @@ case object LTASection extends Section {
 
   val initialPage: Call                     = ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
   val checkYourLTAAnswersPage: Call         = ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-  val notAbleToUseThisServicePage: Call     = setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
   val cannotUseLtaServiceNoChargePage: Call = ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
 
   def status(answers: UserAnswers): SectionStatus =
@@ -49,7 +48,6 @@ case object LTASection extends Section {
   def navigateTo(answers: UserAnswers): String = {
     val taskListNavLink = answers.get(sectionNavigation).getOrElse(initialPage.url)
     taskListNavLink match {
-      case notAbleToUseThisServicePage.url     => checkYourLTAAnswersPage.url
       case cannotUseLtaServiceNoChargePage.url => checkYourLTAAnswersPage.url
       case _                                   => taskListNavLink
     }
@@ -58,7 +56,6 @@ case object LTASection extends Section {
   def kickoutHasBeenReached(answers: UserAnswers): Boolean = {
     val taskListNavLink: Option[String] = answers.get(sectionNavigation)
     taskListNavLink match {
-      case Some(notAbleToUseThisServicePage.url)     => true
       case Some(cannotUseLtaServiceNoChargePage.url) => true
       case _                                         => false
     }
