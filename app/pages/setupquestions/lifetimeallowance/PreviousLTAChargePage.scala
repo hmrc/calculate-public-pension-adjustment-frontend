@@ -29,8 +29,8 @@ case object PreviousLTAChargePage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PreviousLTAChargePage) match {
-      // TODO CHANGE PATH WHEN PAGE MOVED TO NEW PACKAGE
-      case Some(_) => controllers.lifetimeallowance.routes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode)
+      case Some(_) =>
+        controllers.setupquestions.lifetimeallowance.routes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
