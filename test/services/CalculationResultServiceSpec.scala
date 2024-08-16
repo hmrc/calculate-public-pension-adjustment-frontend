@@ -23,7 +23,7 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationResults, ChangeInTaxCharge, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
@@ -455,7 +455,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |      "hadBenefitCrystallisationEvent": true,
            |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
            |      "changeInLifetimeAllowance": true,
-           |      "changeInTaxCharge": "increasedCharge",
+           |      "increaseInLTACharge": true,
+           |      "newLTACharge": true,
            |      "ltaProtectionOrEnhancements": "protection",
            |      "protectionType": "fixedProtection2014",
            |      "protectionReference": "R41AB678TR23355",
@@ -1072,7 +1073,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |      "hadBenefitCrystallisationEvent": true,
            |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
            |      "changeInLifetimeAllowance": true,
-           |      "changeInTaxCharge": "none"
+           |      "increaseInLTACharge": false
            |    }
            |  }
            |""".stripMargin)
@@ -1090,7 +1091,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         |      "hadBenefitCrystallisationEvent": true,
         |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
         |      "changeInLifetimeAllowance": true,
-        |      "changeInTaxCharge": "increasedCharge",
+        |      "increaseInLTACharge": true,
+        |      "newLTACharge": true,
         |      "ltaProtectionOrEnhancements": "protection",
         |      "protectionType": "fixedProtection2014",
         |      "protectionReference": "R41AB678TR23355",
@@ -1124,7 +1126,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                |      "hadBenefitCrystallisationEvent": true,
                |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
                |      "changeInLifetimeAllowance": true,
-               |      "changeInTaxCharge": "none"
+               |      "increaseInLTACharge": false
                |    }
                |  }
                |""".stripMargin)
@@ -1174,7 +1176,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           |      "hadBenefitCrystallisationEvent": true,
           |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
           |      "changeInLifetimeAllowance": true,
-          |      "changeInTaxCharge": "increasedCharge",
+          |      "increaseInLTACharge": true,
+          |      "newLTACharge": true,
           |      "ltaProtectionOrEnhancements": "protection",
           |      "protectionType": "fixedProtection2014",
           |      "protectionReference": "R41AB678TR23355",
@@ -3290,7 +3293,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           Some(
             LifeTimeAllowance(
               LocalDate.parse("2018-11-28"),
-              ChangeInTaxCharge.IncreasedCharge,
               LtaProtectionOrEnhancements.Protection,
               Some(ProtectionType.FixedProtection2014),
               Some("R41AB678TR23355"),
@@ -3728,7 +3730,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe Some(
           LifeTimeAllowance(
             LocalDate.parse("2018-11-28"),
-            ChangeInTaxCharge.IncreasedCharge,
             LtaProtectionOrEnhancements.Protection,
             Some(ProtectionType.FixedProtection2014),
             Some("R41AB678TR23355"),
@@ -3761,31 +3762,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         )
       }
 
-      "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input changeInTaxCharge as none" in {
-
-        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data5))
-
-        result mustBe None
-      }
-
-      "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input changeInLifetimeAllowance as false" in {
-
-        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data6))
-
-        result mustBe None
-      }
-
-      "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input hadBenefitCrystallisationEvent as false" in {
-
-        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data7))
-
-        result mustBe None
-      }
-
       "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input when an LTA kick out has been reached" in {
 
         val userAnswers    = userAnswers1.copy(data = data8)
-        val answersWithNav = LTASection.saveNavigation(userAnswers, LTASection.notAbleToUseThisServicePage.url)
+        val answersWithNav = LTASection.saveNavigation(userAnswers, LTASection.cannotUseLtaServiceNoChargePage.url)
         val result         = service.buildLifeTimeAllowance(answersWithNav)
 
         result mustBe None
