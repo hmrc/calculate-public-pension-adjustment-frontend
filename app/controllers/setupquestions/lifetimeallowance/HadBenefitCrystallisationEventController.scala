@@ -19,7 +19,7 @@ package controllers.setupquestions.lifetimeallowance
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
 import models.{LTAKickOutStatus, Mode}
-import models.tasklist.sections.LTASection
+import models.tasklist.sections.SetupSection
 import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -71,7 +71,7 @@ class HadBenefitCrystallisationEventController @Inject() (
               updatedAnswers          <- Future.fromTry(request.userAnswers.set(HadBenefitCrystallisationEventPage, value))
               updatedAnswersWithStatus = LTAKickOutStatus().saveLTAKickOutStatus(updatedAnswers, ltaKickOutStatus)
               redirectUrl              = HadBenefitCrystallisationEventPage.navigate(mode, updatedAnswersWithStatus).url
-              answersWithNav           = LTASection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              answersWithNav           = SetupSection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
               _                       <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
           }

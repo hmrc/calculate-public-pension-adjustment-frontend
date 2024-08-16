@@ -24,7 +24,6 @@ case class LifeTimeAllowance(
   benefitCrystallisationEventFlag: Boolean,
   benefitCrystallisationEventDate: LocalDate,
   changeInLifetimeAllowancePercentageInformedFlag: Boolean,
-  changeInTaxCharge: ChangeInTaxCharge,
   lifetimeAllowanceProtectionOrEnhancements: LtaProtectionOrEnhancements,
   protectionType: Option[ProtectionType],
   protectionReference: Option[String],
