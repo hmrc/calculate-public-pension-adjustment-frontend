@@ -41,9 +41,6 @@ class CheckYourLTAAnswersController @Inject() (
     val rows: Seq[Option[SummaryListRow]] = Seq(
       HadBenefitCrystallisationEventSummary.row(request.userAnswers),
       DateOfBenefitCrystallisationEventSummary.row(request.userAnswers),
-      ChangeInLifetimeAllowanceSummary.row(request.userAnswers),
-      ChangeInTaxChargeSummary.row(request.userAnswers),
-      MultipleBenefitCrystallisationEventSummary.row(request.userAnswers),
       LtaProtectionOrEnhancementsSummary.row(request.userAnswers),
       ProtectionReferenceSummary.row(request.userAnswers),
       EnhancementTypeSummary.row(request.userAnswers),

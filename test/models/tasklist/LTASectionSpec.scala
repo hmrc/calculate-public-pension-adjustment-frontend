@@ -30,7 +30,7 @@ class LTASectionSpec extends SpecBase {
   }
 
   "When user has navigated to the not able to use this service kick out" in {
-    val answersWithNav = LTASection.saveNavigation(emptyUserAnswers, LTASection.notAbleToUseThisServicePage.url)
+    val answersWithNav = LTASection.saveNavigation(emptyUserAnswers, LTASection.cannotUseLtaServiceNoChargePage.url)
 
     val status = LTASection.status(answersWithNav)
 
