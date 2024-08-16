@@ -78,7 +78,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
         .set(ReportingChangePage, reportingChanges)
         .get
 
-      val answersWithNav = LTASection.saveNavigation(answers, LTASection.notAbleToUseThisServicePage.url)
+      val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
 
       val sectionNameOverride = NextStepsSection.sectionNameOverride(answersWithNav)
 
@@ -140,7 +140,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
         .set(ReportingChangePage, reportingChanges)
         .get
 
-      val answersWithNav = LTASection.saveNavigation(answers, LTASection.notAbleToUseThisServicePage.url)
+      val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
 
       val dataCaptureSections = List(
         Some(
