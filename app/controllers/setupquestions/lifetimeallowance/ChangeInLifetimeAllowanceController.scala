@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceFormProvider
 import models.{LTAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
-import pages.setupquestions.lifetimeallowance.ChangeInLifetimeAllowancePage
+import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, PreviousLTAChargePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
@@ -45,6 +45,7 @@ class ChangeInLifetimeAllowanceController @Inject() (
 
   val form = formProvider()
 
+  private val kickOutStatusTrue      = 0
   private val kickOutStatusFalse     = 1
   private val kickOutStatusCompleted = 2
 
@@ -64,7 +65,13 @@ class ChangeInLifetimeAllowanceController @Inject() (
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value => {
-            val ltaKickOutStatus = if (value) kickOutStatusFalse else kickOutStatusCompleted
+            val ltaCharge        = request.userAnswers.get(PreviousLTAChargePage).get
+            val ltaKickOutStatus =
+              (value, ltaCharge) match {
+                case (true, true)  => kickOutStatusCompleted
+                case (true, false) => kickOutStatusFalse
+                case (false, _)    => kickOutStatusTrue
+              }
 
             for {
               updatedAnswers          <- Future.fromTry(request.userAnswers.set(ChangeInLifetimeAllowancePage, value))

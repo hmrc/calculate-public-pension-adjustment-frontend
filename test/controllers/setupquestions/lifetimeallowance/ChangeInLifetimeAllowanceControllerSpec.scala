@@ -24,7 +24,7 @@ import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.lifetimeallowance.ChangeInLifetimeAllowancePage
+import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, PreviousLTAChargePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -80,7 +80,7 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
       }
     }
 
-    "must redirect to the Next page when true is submitted" in {
+    "must redirect to the Next page when true is submitted and PreviousLTACharge is true" in {
 
       val mockUserDataService = mock[UserDataService]
 
@@ -89,7 +89,63 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
       when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers.set(PreviousLTAChargePage, true).success.value))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(2)
+      }
+    }
+
+    "must redirect to the Next page when false is submitted and PreviousLTACharge is true" in {
+
+      val mockUserDataService = mock[UserDataService]
+
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers.set(PreviousLTAChargePage, true).success.value))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, normalRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(0)
+      }
+    }
+
+    "must redirect to the Next page when true is submitted and PreviousLTACharge is false" in {
+
+      val mockUserDataService = mock[UserDataService]
+
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers.set(PreviousLTAChargePage, false).success.value))
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService)
           )
@@ -105,34 +161,6 @@ class ChangeInLifetimeAllowanceControllerSpec extends SpecBase with MockitoSugar
         status(result) mustEqual SEE_OTHER
         val capturedUserAnswers = userAnswersCaptor.getValue
         capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
-      }
-    }
-
-    "must redirect to the Next page when false is submitted" in {
-
-      val mockUserDataService = mock[UserDataService]
-
-      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
-
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, normalRoute)
-            .withFormUrlEncodedBody(("value", "false"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(2)
       }
     }
 
