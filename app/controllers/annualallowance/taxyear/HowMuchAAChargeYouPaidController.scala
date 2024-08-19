@@ -47,7 +47,7 @@ class HowMuchAAChargeYouPaidController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val form = formProvider(startEndDate(period))
+      val form         = formProvider(startEndDate(period))
       val preparedForm = request.userAnswers.get(HowMuchAAChargeYouPaidPage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)

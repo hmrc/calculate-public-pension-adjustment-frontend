@@ -31,6 +31,8 @@ class RASContributionAmountFormProvider @Inject() extends Mappings {
         "rASContributionAmount.error.nonNumeric",
         Seq(startEndDate)
       )
-        .verifying(inRangeWithArg[BigInt](1, BigInt("999999999"), "rASContributionAmount.error.outOfRange", startEndDate))
+        .verifying(
+          inRangeWithArg[BigInt](1, BigInt("999999999"), "rASContributionAmount.error.outOfRange", startEndDate)
+        )
     )
 }

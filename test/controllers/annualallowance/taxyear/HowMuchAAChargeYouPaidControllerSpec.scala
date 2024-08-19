@@ -60,8 +60,7 @@ class HowMuchAAChargeYouPaidControllerSpec extends SpecBase with MockitoSugar {
   val form                 = formProvider(startEndDate)
 
   val startEndDate2019: String = "6 April 2017 and 5 April 2018"
-  val form2019 = formProvider(startEndDate2019)
-
+  val form2019                 = formProvider(startEndDate2019)
 
   "HowMuchAAChargeYouPaid Controller" - {
 

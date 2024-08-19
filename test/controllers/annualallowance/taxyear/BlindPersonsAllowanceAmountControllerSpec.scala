@@ -43,7 +43,6 @@ class BlindPersonsAllowanceAmountControllerSpec extends SpecBase with MockitoSug
 
   val startEndDate = "6 April 2016 to 5 April 2017"
 
-
   lazy val blindPersonsAllowanceAmountRoute =
     controllers.annualallowance.taxyear.routes.BlindPersonsAllowanceAmountController
       .onPageLoad(NormalMode, Period._2017)

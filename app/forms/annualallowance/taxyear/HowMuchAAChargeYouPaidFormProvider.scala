@@ -32,6 +32,8 @@ class HowMuchAAChargeYouPaidFormProvider @Inject() extends Mappings {
         "howMuchAAChargeYouPaid.error.nonNumeric",
         Seq(startEndDate)
       )
-        .verifying(inRangeWithArg[BigInt](1, BigInt("999999999"), "howMuchAAChargeYouPaid.error.outOfRange", startEndDate))
+        .verifying(
+          inRangeWithArg[BigInt](1, BigInt("999999999"), "howMuchAAChargeYouPaid.error.outOfRange", startEndDate)
+        )
     )
 }
