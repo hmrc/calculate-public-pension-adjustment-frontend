@@ -40,8 +40,7 @@ case object NetIncomeAbove190KPage extends QuestionPage[Boolean] {
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
       case (Some(false), Some(true)) =>
-        // TODO to PIA increase 15/16 - 21/22
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        controllers.setupquestions.annualallowance.routes.MaybePIAIncreaseController.onPageLoad(NormalMode)
       case (Some(_), Some(_))        =>
         controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad()
       case _                         => controllers.routes.JourneyRecoveryController.onPageLoad(None)

@@ -124,7 +124,17 @@ class NetIncomeAbove190KPageSpec extends PageBehaviours {
 
     "to PIA increase 15/16 - 21/22 when false and RPSS true" in {
 
-      // TODO
+      val userAnswers = emptyUserAnswers
+        .set(SavingsStatementPage, true)
+        .success
+        .value
+        .set(NetIncomeAbove190KPage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = NetIncomeAbove190KPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/PIA-amount-increased")
     }
 
     "to aa kickout when anything else" in {
