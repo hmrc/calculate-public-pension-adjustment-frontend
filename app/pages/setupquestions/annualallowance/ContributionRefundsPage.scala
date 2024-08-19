@@ -32,8 +32,7 @@ case object ContributionRefundsPage extends QuestionPage[Boolean] {
       case (Some(true), Some(_))      =>
         controllers.setupquestions.annualallowance.routes.NetIncomeAbove100KController.onPageLoad(NormalMode)
       case (Some(false), Some(true))  =>
-        // TODO to have any PIAs increase 15/16 - 21/22
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        controllers.setupquestions.annualallowance.routes.MaybePIAIncreaseController.onPageLoad(NormalMode)
       case (Some(false), Some(false)) =>
         controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad()
       case _                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)

@@ -62,7 +62,17 @@ class ContributionRefundsPageSpec extends PageBehaviours {
     }
 
     "to have any PIAs increase 15/16 - 21/22 when no and RPSS yes" in {
-      // TODO
+      val userAnswers = emptyUserAnswers
+        .set(SavingsStatementPage, true)
+        .success
+        .value
+        .set(ContributionRefundsPage, false)
+        .success
+        .value
+
+      val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/PIA-amount-increased")
     }
 
     "to journey recovery when not answered" in {
