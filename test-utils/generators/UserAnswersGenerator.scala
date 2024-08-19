@@ -36,6 +36,8 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(MaybePIAIncreasePage.type, JsValue)] ::
       arbitrary[(NetIncomeAbove190KPage.type, JsValue)] ::
       arbitrary[(NetIncomeAbove100KPage.type, JsValue)] ::
+      arbitrary[(PIAAboveAnnualAllowanceIn2023Page.type, JsValue)] ::
+      arbitrary[(NetIncomeAbove190KIn2023Page.type, JsValue)] ::
       arbitrary[(ContributionRefundsPage.type, JsValue)] ::
       arbitrary[(HadAAChargePage.type, JsValue)] ::
       arbitrary[(PensionProtectedMemberPage.type, JsValue)] ::

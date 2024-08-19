@@ -16,22 +16,20 @@
 
 package pages.setupquestions.annualallowance
 
-import models.{LTAKickOutStatus, MaybePIAUnchangedOrDecreased, NormalMode, UserAnswers}
+import models.{LTAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object MaybePIAUnchangedOrDecreasedPage extends QuestionPage[MaybePIAUnchangedOrDecreased] {
+case object NetIncomeAbove190KIn2023Page extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
 
-  override def toString: String = "maybePIAUnchangedOrDecreased"
+  override def toString: String = "netIncomeAbove190KIn2023"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(MaybePIAUnchangedOrDecreasedPage) match {
-      case Some(MaybePIAUnchangedOrDecreased.Yes)                                                =>
-        controllers.setupquestions.annualallowance.routes.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(NormalMode)
-      case Some(MaybePIAUnchangedOrDecreased.No) | Some(MaybePIAUnchangedOrDecreased.IDoNotKnow) =>
+    answers.get(NetIncomeAbove190KIn2023Page) match {
+      case Some(true)  =>
         answers.get(LTAKickOutStatus()).getOrElse(None) match {
           case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case 1    =>
@@ -41,12 +39,14 @@ case object MaybePIAUnchangedOrDecreasedPage extends QuestionPage[MaybePIAUnchan
           case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
-      case _                                                                                     => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false) =>
+        // TODO Wire up to part 4
+        controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case _           =>
+        controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(MaybePIAUnchangedOrDecreasedPage) match {
-      case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+
 }

@@ -40,8 +40,7 @@ case object MaybePIAIncreasePage extends QuestionPage[MaybePIAIncrease] {
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
       case Some(MaybePIAIncrease.No)         =>
-        // TODO to 22/23 PIA > 40k
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        controllers.setupquestions.annualallowance.routes.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(NormalMode)
       case Some(MaybePIAIncrease.IDoNotKnow) =>
         controllers.setupquestions.annualallowance.routes.MaybePIAUnchangedOrDecreasedController.onPageLoad(NormalMode)
       case _                                 => controllers.routes.JourneyRecoveryController.onPageLoad(None)
