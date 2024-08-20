@@ -24,7 +24,7 @@ import play.api.mvc.Call
 
 case object SetupSection extends Section {
 
-  val initialPage: Call               = setupRoutes.SavingsStatementController.onPageLoad(NormalMode)
+  val initialPage: Call               = setupRoutes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
   val checkYourSetupAnswersPage: Call = setupRoutes.CheckYourSetupAnswersController.onPageLoad()
   val ineligiblePage: Call            = setupRoutes.IneligibleController.onPageLoad
 

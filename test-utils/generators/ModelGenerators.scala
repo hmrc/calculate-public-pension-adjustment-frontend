@@ -22,6 +22,16 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryMaybePIAUnchangedOrDecreased: Arbitrary[MaybePIAUnchangedOrDecreased] =
+    Arbitrary {
+      Gen.oneOf(MaybePIAUnchangedOrDecreased.values.toSeq)
+    }
+
+  implicit lazy val arbitraryMaybePIAIncrease: Arbitrary[MaybePIAIncrease] =
+    Arbitrary {
+      Gen.oneOf(MaybePIAIncrease.values.toSeq)
+    }
+
   implicit lazy val arbitraryNewExcessLifetimeAllowancePaid: Arbitrary[NewExcessLifetimeAllowancePaid] =
     Arbitrary {
       Gen.oneOf(NewExcessLifetimeAllowancePaid.values.toSeq)

@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package forms
+package forms.setupquestions.annualallowance
 
 import forms.mappings.Mappings
+import models.MaybePIAIncrease
 import play.api.data.Form
 
 import javax.inject.Inject
 
-class SavingsStatementFormProvider @Inject() extends Mappings {
+class MaybePIAIncreaseFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(): Form[MaybePIAIncrease] =
     Form(
-      "value" -> boolean("savingsStatement.error.required")
+      "value" -> enumerable[MaybePIAIncrease]("maybePIAIncrease.error.required")
     )
 }

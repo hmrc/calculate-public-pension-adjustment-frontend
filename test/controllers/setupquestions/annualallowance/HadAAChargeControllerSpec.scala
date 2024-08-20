@@ -24,8 +24,7 @@ import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.SavingsStatementPage
-import pages.setupquestions.annualallowance.HadAAChargePage
+import pages.setupquestions.annualallowance.{HadAAChargePage, SavingsStatementPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

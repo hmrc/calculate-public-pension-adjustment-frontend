@@ -14,46 +14,47 @@
  * limitations under the License.
  */
 
-package controllers.setupquestions
+package controllers.setupquestions.annualallowance
 
-import config.FrontendAppConfig
 import controllers.actions._
-import controllers.routes
-import forms.SavingsStatementFormProvider
-import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
+import forms.setupquestions.annualallowance.MaybePIAIncreaseFormProvider
+import models.MaybePIAIncrease.Yes
 import models.tasklist.sections.SetupSection
-import models.{Done, Mode, SubmissionStatusResponse, UserAnswers}
-import pages.setupquestions.SavingsStatementPage
+import models.{AAKickOutStatus, MaybePIAIncrease, Mode}
+import pages.setupquestions.annualallowance.MaybePIAIncreasePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{CalculateBackendService, SubmitBackendService, UserDataService}
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
-import views.html.setupquestions.SavingsStatementView
+import views.html.setupquestions.annualallowance.MaybePIAIncreaseView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class SavingsStatementController @Inject() (
+class MaybePIAIncreaseController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  formProvider: SavingsStatementFormProvider,
   requireData: DataRequiredAction,
+  formProvider: MaybePIAIncreaseFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: SavingsStatementView
+  view: MaybePIAIncreaseView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
   val form = formProvider()
 
+  private val kickOutStatusFalse     = 1
+  private val kickOutStatusCompleted = 2
+
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    val preparedForm = request.userAnswers.get(SavingsStatementPage) match {
+    val preparedForm = request.userAnswers.get(MaybePIAIncreasePage) match {
       case None        => form
       case Some(value) => form.fill(value)
     }
+
     Ok(view(preparedForm, mode))
   }
 
@@ -63,13 +64,16 @@ class SavingsStatementController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-          value =>
+          value => {
+            val aaKickOutStatus = if (value == MaybePIAIncrease.Yes) kickOutStatusCompleted else kickOutStatusFalse
             for {
-              updatedAnswers <- Future.fromTry(request.userAnswers.set(SavingsStatementPage, value))
-              redirectUrl     = SavingsStatementPage.navigate(mode, updatedAnswers).url
-              answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-              _              <- userDataService.set(answersWithNav)
+              updatedAnswers          <- Future.fromTry(request.userAnswers.set(MaybePIAIncreasePage, value))
+              updatedAnswersWithStatus = AAKickOutStatus().saveAAKickOutStatus(updatedAnswers, aaKickOutStatus)
+              redirectUrl              = MaybePIAIncreasePage.navigate(mode, updatedAnswersWithStatus).url
+              answersWithNav           = SetupSection.saveNavigation(updatedAnswersWithStatus, redirectUrl)
+              _                       <- userDataService.set(answersWithNav)
             } yield Redirect(redirectUrl)
+          }
         )
   }
 }

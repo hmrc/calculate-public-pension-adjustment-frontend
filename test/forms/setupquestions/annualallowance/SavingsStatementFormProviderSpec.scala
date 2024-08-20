@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package forms.setupquestions
+package forms.setupquestions.annualallowance
 
-import forms.SavingsStatementFormProvider
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 

@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers.setupquestions
+package viewmodels.checkAnswers.setupquestions.annualallowance
 
-import controllers.setupquestions.routes
-import models.{NormalMode, UserAnswers}
-import pages.setupquestions.SavingsStatementPage
+import controllers.setupquestions.annualallowance.routes
+import models.{CheckMode, UserAnswers}
+import pages.setupquestions.annualallowance.NetIncomeAbove100KPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object SavingsStatementSummary {
+object NetIncomeAbove100KSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(SavingsStatementPage).map { answer =>
+    answers.get(NetIncomeAbove100KPage).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "savingsStatement.checkYourAnswersLabel",
+        key = "netIncomeAbove100K.checkYourAnswersLabel",
         value = ValueViewModel(value),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.SavingsStatementController.onPageLoad(NormalMode).url)
-            .withVisuallyHiddenText(messages("savingsStatement.change.hidden"))
+          ActionItemViewModel("site.change", routes.NetIncomeAbove100KController.onPageLoad(CheckMode).url)
+            .withVisuallyHiddenText(messages("netIncomeAbove100K.change.hidden"))
         )
       )
     }

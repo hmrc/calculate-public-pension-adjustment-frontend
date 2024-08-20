@@ -18,7 +18,8 @@ package models
 
 import base.SpecBase
 import pages.annualallowance.taxyear.{AddAnotherSchemePage, WhatYouWillNeedPage}
-import pages.setupquestions.{ReasonForResubmissionPage, SavingsStatementPage}
+import pages.setupquestions.ReasonForResubmissionPage
+import pages.setupquestions.annualallowance.SavingsStatementPage
 
 class UserAnswersSpec extends SpecBase {
 
