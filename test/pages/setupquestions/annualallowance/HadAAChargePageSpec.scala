@@ -18,7 +18,6 @@ package pages.setupquestions.annualallowance
 
 import models.{CheckMode, LTAKickOutStatus, NormalMode}
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.SavingsStatementPage
 
 class HadAAChargePageSpec extends PageBehaviours {
 

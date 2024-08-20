@@ -21,7 +21,7 @@ import models.{Done, SubmissionStatusResponse, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.SavingsStatementPage
+import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Call

@@ -16,7 +16,6 @@
 
 package forms.setupquestions.annualallowance
 
-import forms.ContributionRefundsFormProvider
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 

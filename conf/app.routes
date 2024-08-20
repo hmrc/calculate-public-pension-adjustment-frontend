@@ -24,10 +24,10 @@ GET         /account/sign-out-unauthorised                                   con
 
 GET         /unauthorised                                                    controllers.UnauthorisedController.onPageLoad()
 
-GET         /pension-saving-statement                                        controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
-POST        /pension-saving-statement                                        controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
-GET         /change-pension-saving-statement                                 controllers.setupquestions.SavingsStatementController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-pension-saving-statement                                 controllers.setupquestions.SavingsStatementController.onSubmit(mode: Mode = CheckMode)
+GET         /pension-saving-statement                                        controllers.setupquestions.annualallowance.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
+POST        /pension-saving-statement                                        controllers.setupquestions.annualallowance.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
+GET         /change-pension-saving-statement                                 controllers.setupquestions.annualallowance.SavingsStatementController.onPageLoad(mode: Mode = CheckMode)
+POST        /change-pension-saving-statement                                 controllers.setupquestions.annualallowance.SavingsStatementController.onSubmit(mode: Mode = CheckMode)
 
 GET         /change-previous-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = NormalMode)
 POST        /change-previous-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = NormalMode)
@@ -561,3 +561,23 @@ GET        /other-scheme-LTA-notification                        controllers.set
 POST       /other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = NormalMode)
 GET        /change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = CheckMode)
+
+GET        /income-over-100                        controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onPageLoad(mode: Mode = NormalMode)
+POST       /income-over-100                        controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onSubmit(mode: Mode = NormalMode)
+GET        /change-income-over-100                  controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-income-over-100                  controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onSubmit(mode: Mode = CheckMode)
+
+GET        /income-over-190                         controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onPageLoad(mode: Mode = NormalMode)
+POST       /income-over-190                         controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onSubmit(mode: Mode = NormalMode)
+GET        /change-income-over-100                   controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-income-over-100                   controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onSubmit(mode: Mode = CheckMode)
+
+GET        /PIA-amount-increased                        controllers.setupquestions.annualallowance.MaybePIAIncreaseController.onPageLoad(mode: Mode = NormalMode)
+POST       /PIA-amount-increased                        controllers.setupquestions.annualallowance.MaybePIAIncreaseController.onSubmit(mode: Mode = NormalMode)
+GET        /change-PIA-amount-increased                  controllers.setupquestions.annualallowance.MaybePIAIncreaseController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-PIA-amount-increased                  controllers.setupquestions.annualallowance.MaybePIAIncreaseController.onSubmit(mode: Mode = CheckMode)
+
+GET        /PIA-amount-decrease-or-no-change                        controllers.setupquestions.annualallowance.MaybePIAUnchangedOrDecreasedController.onPageLoad(mode: Mode = NormalMode)
+POST       /PIA-amount-decrease-or-no-change                        controllers.setupquestions.annualallowance.MaybePIAUnchangedOrDecreasedController.onSubmit(mode: Mode = NormalMode)
+GET        /change-PIA-amount-decrease-or-no-change                  controllers.setupquestions.annualallowance.MaybePIAUnchangedOrDecreasedController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-PIA-amount-decrease-or-no-change                  controllers.setupquestions.annualallowance.MaybePIAUnchangedOrDecreasedController.onSubmit(mode: Mode = CheckMode)

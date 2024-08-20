@@ -24,14 +24,13 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.setupquestions.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary}
+import viewmodels.checkAnswers.setupquestions.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 import pages.setupquestions.ReportingChangePage
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
-import pages.setupquestions.annualallowance.HadAAChargePage
 import viewmodels.checkAnswers.AffectedByRemedySummary
-import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, PensionProtectedMemberSummary}
+import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, NetIncomeAbove100KSummary, PensionProtectedMemberSummary, SavingsStatementSummary}
 
 class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -56,7 +55,8 @@ class CheckYourSetupAnswersController @Inject() (
       SavingsStatementSummary.row(request.userAnswers),
       PensionProtectedMemberSummary.row(request.userAnswers),
       HadAAChargeSummary.row(request.userAnswers),
-      ContributionRefundsSummary.row(request.userAnswers)
+      ContributionRefundsSummary.row(request.userAnswers),
+      NetIncomeAbove100KSummary.row(request.userAnswers)
     )
 
     val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows

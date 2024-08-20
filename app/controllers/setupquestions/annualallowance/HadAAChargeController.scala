@@ -20,8 +20,7 @@ import controllers.actions._
 import forms.setupquestions.annualallowance.HadAAChargeFormProvider
 import models.{AAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
-import pages.setupquestions.SavingsStatementPage
-import pages.setupquestions.annualallowance.HadAAChargePage
+import pages.setupquestions.annualallowance.{HadAAChargePage, SavingsStatementPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
