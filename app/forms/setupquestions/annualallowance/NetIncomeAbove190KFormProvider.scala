@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package forms
-
-import javax.inject.Inject
+package forms.setupquestions.annualallowance
 
 import forms.mappings.Mappings
 import play.api.data.Form
 
-class ContributionRefundsFormProvider @Inject() extends Mappings {
+import javax.inject.Inject
+
+class NetIncomeAbove190KFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
     Form(
-      "value" -> boolean("contributionRefunds.error.required")
+      "value" -> boolean("netIncomeAbove190K.error.required")
     )
 }

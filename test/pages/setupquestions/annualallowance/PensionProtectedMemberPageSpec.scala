@@ -20,7 +20,6 @@ import models.{CheckMode, NormalMode}
 import org.scalacheck.Gen
 import org.scalacheck.rng.Seed.random
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.SavingsStatementPage
 
 import scala.util.Random
 

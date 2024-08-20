@@ -23,7 +23,8 @@ import models.tasklist.{SectionGroupViewModel, SectionStatus, TaskListViewModel}
 import models.{NormalMode, ReportingChange, UserAnswers}
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.{ReportingChangePage, ResubmittingAdjustmentPage, SavingsStatementPage}
+import pages.setupquestions.annualallowance.SavingsStatementPage
+import pages.setupquestions.{ReportingChangePage, ResubmittingAdjustmentPage}
 
 import java.time.LocalDate
 import scala.util.Try
