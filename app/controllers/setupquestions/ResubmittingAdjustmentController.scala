@@ -22,7 +22,8 @@ import forms.ResubmittingAdjustmentFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
 import models.{CalculationStartAuditEvent, Mode, UserAnswers}
-import pages.setupquestions.{ResubmittingAdjustmentPage, SavingsStatementPage}
+import pages.setupquestions.ResubmittingAdjustmentPage
+import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{AuditService, UserDataService}

@@ -14,47 +14,33 @@
  * limitations under the License.
  *@
 
-@import controllers.setupquestions.routes
+@import controllers.setupquestions.annualallowance.routes
 
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton,
     continueButton: components.ContinueButton
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@layout(pageTitle = title(form, messages("maybePIAIncrease.title"))) {
 
-    <p class="govuk-body">@messages("savingsStatement.paragraph")</p>
-
-    <ul class="govuk-body">
-        <li>@messages("savingsStatement.bullet.1")</li>
-        <li>@messages("savingsStatement.bullet.2")</li>
-        <li>@messages("savingsStatement.bullet.3")</li>
-    </ul>
-
-}
-
-@layout(pageTitle = title(form, messages("savingsStatement.title"))) {
-
-    @formHelper(action = routes.SavingsStatementController.onSubmit(mode), Symbol("autoComplete") -> "off") {
+    @formHelper(action = routes.MaybePIAIncreaseController.onSubmit(mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
+            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
         @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("savingsStatement.heading")
+            RadiosViewModel(
+                field  = form("value"),
+                legend = LegendViewModel(messages("maybePIAIncrease.heading")).asPageHeading(),
+                items  = MaybePIAIncrease.options
             )
-        ).withHint(HintViewModel(HtmlContent(contentHint)))
-    )
+        )
 
         @continueButton()
     }

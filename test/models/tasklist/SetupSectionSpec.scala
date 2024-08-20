@@ -29,7 +29,7 @@ class SetupSectionSpec extends SpecBase with PageBehaviours {
     "Must link to first page url when no section navigation has been saved" in {
       val navUrl = SetupSection.navigateTo(emptyUserAnswers)
 
-      checkNavigation(navUrl, "/pension-saving-statement")
+      checkNavigation(navUrl, "/change-previous-adjustment")
     }
 
     "Must link to check answers url when a kick out url has been saved" in {

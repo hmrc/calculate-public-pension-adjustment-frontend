@@ -1457,3 +1457,33 @@ notAbleToUseThisTriageLta.message2 = You cannot make an adjustment unless you ha
 notAbleToUseThisTriageLta.list = You can:
 notAbleToUseThisTriageLta.listItem1 = contact your PSA for more information about your pension scheme
 notAbleToUseThisTriageLta.listItem2 = contact the pension schemes helpline for more information about pension schemes
+
+netIncomeAbove100K.title = netIncomeAbove100K
+netIncomeAbove100K.heading = netIncomeAbove100K
+netIncomeAbove100K.checkYourAnswersLabel = netIncomeAbove100K
+netIncomeAbove100K.error.required = Select yes if netIncomeAbove100K
+netIncomeAbove100K.change.hidden = NetIncomeAbove100K
+
+netIncomeAbove190K.title = netIncomeAbove190K
+netIncomeAbove190K.heading = netIncomeAbove190K
+netIncomeAbove190K.checkYourAnswersLabel = netIncomeAbove190K
+netIncomeAbove190K.error.required = Select yes if netIncomeAbove190K
+netIncomeAbove190K.change.hidden = NetIncomeAbove190K
+
+maybePIAIncrease.title = Maybe PIA Increase?
+maybePIAIncrease.heading = Maybe PIA Increase?
+maybePIAIncrease.yes = Yes
+maybePIAIncrease.no = No
+maybePIAIncrease.idk = I do not know
+maybePIAIncrease.checkYourAnswersLabel = Maybe PIA Increase?
+maybePIAIncrease.error.required = Select maybePIAIncrease
+maybePIAIncrease.change.hidden = MaybePIAIncrease
+
+maybePIAUnchangedOrDecreased.title = PIAs unchanged or decreased?
+maybePIAUnchangedOrDecreased.heading = PIAs unchanged or decreased?
+maybePIAUnchangedOrDecreased.yes = Yes
+maybePIAUnchangedOrDecreased.no = No
+maybePIAUnchangedOrDecreased.idk = I do not know
+maybePIAUnchangedOrDecreased.checkYourAnswersLabel = PIAs unchanged or decreased?
+maybePIAUnchangedOrDecreased.error.required = Select maybePIAUnchangedOrDecreased
+maybePIAUnchangedOrDecreased.change.hidden = MaybePIAUnchangedOrDecreased

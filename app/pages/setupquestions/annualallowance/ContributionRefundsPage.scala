@@ -16,9 +16,8 @@
 
 package pages.setupquestions.annualallowance
 
-import models.UserAnswers
+import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
-import pages.setupquestions.SavingsStatementPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -31,11 +30,9 @@ case object ContributionRefundsPage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     (answers.get(ContributionRefundsPage), answers.get(SavingsStatementPage)) match {
       case (Some(true), Some(_))      =>
-        // TODO to Net income above 100k 16/17 - 19/20
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        controllers.setupquestions.annualallowance.routes.NetIncomeAbove100KController.onPageLoad(NormalMode)
       case (Some(false), Some(true))  =>
-        // TODO to have any PIAs increase 15/16 - 21/22
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        controllers.setupquestions.annualallowance.routes.MaybePIAIncreaseController.onPageLoad(NormalMode)
       case (Some(false), Some(false)) =>
         controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad()
       case _                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)

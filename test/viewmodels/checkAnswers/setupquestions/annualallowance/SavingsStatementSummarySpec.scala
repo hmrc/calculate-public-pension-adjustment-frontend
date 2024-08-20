@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers.setupquestions
+package viewmodels.checkAnswers.setupquestions.annualallowance
 
-import controllers.setupquestions.routes
+import controllers.setupquestions.annualallowance.routes
 import models.{NormalMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pages.setupquestions.SavingsStatementPage
+import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._

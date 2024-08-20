@@ -18,7 +18,6 @@ package pages.setupquestions.annualallowance
 
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
-import pages.setupquestions.SavingsStatementPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
