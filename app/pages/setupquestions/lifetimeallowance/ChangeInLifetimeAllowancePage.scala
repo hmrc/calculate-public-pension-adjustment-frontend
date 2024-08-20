@@ -57,7 +57,7 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
   private def redirectToNext(answers: UserAnswers): Call =
     answers.get(AAKickOutStatus()).getOrElse(None) match {
       case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case 1    => controllers.setupquestions.routes.SavingsStatementController.onPageLoad(NormalMode)
+      case 1    => controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode)
       case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case _    => routes.JourneyRecoveryController.onPageLoad(None)

@@ -30,6 +30,39 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryMaybePIAUnchangedOrDecreasedUserAnswersEntry
+    : Arbitrary[(MaybePIAUnchangedOrDecreasedPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MaybePIAUnchangedOrDecreasedPage.type]
+        value <- arbitrary[MaybePIAUnchangedOrDecreased].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryMaybePIAIncreaseUserAnswersEntry: Arbitrary[(MaybePIAIncreasePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MaybePIAIncreasePage.type]
+        value <- arbitrary[MaybePIAIncrease].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNetIncomeAbove190KUserAnswersEntry: Arbitrary[(NetIncomeAbove190KPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NetIncomeAbove190KPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNetIncomeAbove100KUserAnswersEntry: Arbitrary[(NetIncomeAbove100KPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NetIncomeAbove100KPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryContributionRefundsUserAnswersEntry: Arbitrary[(ContributionRefundsPage.type, JsValue)] =
     Arbitrary {
       for {

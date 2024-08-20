@@ -1426,8 +1426,8 @@ contributionRefunds.checkYourAnswersLabel = cy: contributionRefunds
 contributionRefunds.error.required = cy: Select yes if contributionRefunds
 contributionRefunds.change.hidden = cy: ContributionRefunds
 
-notAbleToUseThisServiceAA.title = notAbleToUseThisServiceAA
-notAbleToUseThisServiceAA.heading = notAbleToUseThisServiceAA
+notAbleToUseThisServiceAA.title = cy: notAbleToUseThisServiceAA
+notAbleToUseThisServiceAA.heading = cy:notAbleToUseThisServiceAA
 
 increaseInLTACharge.title = increaseInLTACharge
 increaseInLTACharge.heading = increaseInLTACharge
@@ -1454,3 +1454,33 @@ notAbleToUseThisTriageLta.message2 = You cannot make an adjustment unless you ha
 notAbleToUseThisTriageLta.list = You can:
 notAbleToUseThisTriageLta.listItem1 = contact your PSA for more information about your pension scheme
 notAbleToUseThisTriageLta.listItem2 = contact the pension schemes helpline for more information about pension schemes
+
+netIncomeAbove100K.title = cy: netIncomeAbove100K
+netIncomeAbove100K.heading = cy: netIncomeAbove100K
+netIncomeAbove100K.checkYourAnswersLabel = cy: netIncomeAbove100K
+netIncomeAbove100K.error.required = cy: Select yes if netIncomeAbove100K
+netIncomeAbove100K.change.hidden = cy: NetIncomeAbove100K
+
+netIncomeAbove190K.title = cy: netIncomeAbove190K
+netIncomeAbove190K.heading = cy: netIncomeAbove190K
+netIncomeAbove190K.checkYourAnswersLabel = cy: netIncomeAbove190K
+netIncomeAbove190K.error.required = cy: Select yes if netIncomeAbove190K
+netIncomeAbove190K.change.hidden = cy: NetIncomeAbove190K
+
+maybePIAIncrease.title = cy: Maybe PIA Increase?
+maybePIAIncrease.heading = cy: Maybe PIA Increase?
+maybePIAIncrease.yes = cy: Yes
+maybePIAIncrease.no = cy: No
+maybePIAIncrease.idk = cy: I do not know
+maybePIAIncrease.checkYourAnswersLabel = cy: Maybe PIA Increase?
+maybePIAIncrease.error.required = cy: Select maybePIAIncrease
+maybePIAIncrease.change.hidden = cy: MaybePIAIncrease
+
+maybePIAUnchangedOrDecreased.title = cy: PIAs unchanged or decreased?
+maybePIAUnchangedOrDecreased.heading = cy: PIAs unchanged or decreased?
+maybePIAUnchangedOrDecreased.yes = cy: Yes
+maybePIAUnchangedOrDecreased.no = cy: No
+maybePIAUnchangedOrDecreased.idk = cy: I do not know
+maybePIAUnchangedOrDecreased.checkYourAnswersLabel = cy: PIAs unchanged or decreased?
+maybePIAUnchangedOrDecreased.error.required = cy: Select maybePIAUnchangedOrDecreased
+maybePIAUnchangedOrDecreased.change.hidden = cy: MaybePIAUnchangedOrDecreased

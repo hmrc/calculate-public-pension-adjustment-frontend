@@ -27,6 +27,18 @@ import pages.setupquestions.annualallowance._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryMaybePIAUnchangedOrDecreasedPage: Arbitrary[MaybePIAUnchangedOrDecreasedPage.type] =
+    Arbitrary(MaybePIAUnchangedOrDecreasedPage)
+
+  implicit lazy val arbitraryMaybePIAIncreasePage: Arbitrary[MaybePIAIncreasePage.type] =
+    Arbitrary(MaybePIAIncreasePage)
+
+  implicit lazy val arbitraryNetIncomeAbove190KPage: Arbitrary[NetIncomeAbove190KPage.type] =
+    Arbitrary(NetIncomeAbove190KPage)
+
+  implicit lazy val arbitraryNetIncomeAbove100KPage: Arbitrary[NetIncomeAbove100KPage.type] =
+    Arbitrary(NetIncomeAbove100KPage)
+
   implicit lazy val arbitraryContributionRefundsPage: Arbitrary[ContributionRefundsPage.type] =
     Arbitrary(ContributionRefundsPage)
 

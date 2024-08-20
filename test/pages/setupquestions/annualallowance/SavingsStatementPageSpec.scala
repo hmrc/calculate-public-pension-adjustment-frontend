@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pages.setupquestions
+package pages.setupquestions.annualallowance
 
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours

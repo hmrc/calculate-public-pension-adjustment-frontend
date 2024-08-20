@@ -48,7 +48,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
     "Must route to a page in the Setup Section when reporting change details have not been captured" in {
       val nextStepsTaskUrl = NextStepsSection.navigateTo(emptyUserAnswers)
 
-      checkNavigation(nextStepsTaskUrl, "/pension-saving-statement")
+      checkNavigation(nextStepsTaskUrl, "/change-previous-adjustment")
     }
   }
 
