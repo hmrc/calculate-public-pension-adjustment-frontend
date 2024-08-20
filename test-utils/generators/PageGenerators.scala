@@ -45,6 +45,12 @@ trait PageGenerators {
   implicit lazy val arbitraryNetIncomeAbove190KIn2023Page: Arbitrary[NetIncomeAbove190KIn2023Page.type] =
     Arbitrary(NetIncomeAbove190KIn2023Page)
 
+  implicit lazy val arbitraryContribution4000ToDirectContributionSchemePage: Arbitrary[Contribution4000ToDirectContributionSchemePage.type] =
+    Arbitrary(Contribution4000ToDirectContributionSchemePage)
+
+  implicit lazy val arbitraryFlexibleAccessDcSchemePage: Arbitrary[FlexibleAccessDcSchemePage.type] =
+    Arbitrary(FlexibleAccessDcSchemePage)
+
   implicit lazy val arbitraryContributionRefundsPage: Arbitrary[ContributionRefundsPage.type] =
     Arbitrary(ContributionRefundsPage)
 

@@ -14,3 +14,18 @@
  * limitations under the License.
  */
 
+package pages
+
+import pages.behaviours.PageBehaviours
+
+class Contribution4000ToDirectContributionSchemePageSpec extends PageBehaviours {
+
+  "Contribution4000ToDirectContributionSchemePage" - {
+
+    beRetrievable[Boolean](Contribution4000ToDirectContributionSchemePage)
+
+    beSettable[Boolean](Contribution4000ToDirectContributionSchemePage)
+
+    beRemovable[Boolean](Contribution4000ToDirectContributionSchemePage)
+  }
+}

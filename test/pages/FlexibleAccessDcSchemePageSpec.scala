@@ -14,3 +14,18 @@
  * limitations under the License.
  */
 
+package pages
+
+import pages.behaviours.PageBehaviours
+
+class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
+
+  "FlexibleAccessDcSchemePage" - {
+
+    beRetrievable[Boolean](FlexibleAccessDcSchemePage)
+
+    beSettable[Boolean](FlexibleAccessDcSchemePage)
+
+    beRemovable[Boolean](FlexibleAccessDcSchemePage)
+  }
+}

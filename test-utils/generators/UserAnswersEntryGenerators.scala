@@ -81,6 +81,23 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryContribution4000ToDirectContributionSchemeUserAnswersEntry: Arbitrary[(Contribution4000ToDirectContributionSchemePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[Contribution4000ToDirectContributionSchemePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryFlexibleAccessDcSchemeUserAnswersEntry
+    : Arbitrary[(FlexibleAccessDcSchemePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[FlexibleAccessDcSchemePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryContributionRefundsUserAnswersEntry: Arbitrary[(ContributionRefundsPage.type, JsValue)] =
     Arbitrary {
       for {
