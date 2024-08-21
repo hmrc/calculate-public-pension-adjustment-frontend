@@ -44,7 +44,7 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/LTA-charge")
+      checkNavigation(nextPageUrl, "/triage-journey/LTA-charge")
     }
 
     "must navigate to kickout page when user answers false" in {
@@ -56,7 +56,7 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-BCE")
     }
 
     "must navigate to journey recovery when no answer" in {
@@ -81,7 +81,7 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/LTA-charge")
+      checkNavigation(nextPageUrl, "/triage-journey/LTA-charge")
     }
 
     "must navigate to kickout page when user answers false" in {
@@ -93,7 +93,7 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = HadBenefitCrystallisationEventPage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-BCE")
     }
 
     "must navigate to journey recovery when no answer" in {
