@@ -31,6 +31,8 @@ import viewmodels.checkAnswers.setupquestions.{ReasonForResubmissionSummary, Rep
 import viewmodels.checkAnswers.{AffectedByRemedySummary, Contribution4000ToDirectContributionSchemeSummary, FlexibleAccessDcSchemeSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
+import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, NetIncomeAbove100KSummary, NetIncomeAbove190KIn2023Summary, PIAAboveAnnualAllowanceIn2023Summary, PensionProtectedMemberSummary, SavingsStatementSummary}
+import viewmodels.checkAnswers.setupquestions.lifetimeallowance._
 
 class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -66,7 +68,17 @@ class CheckYourSetupAnswersController @Inject() (
       Contribution4000ToDirectContributionSchemeSummary.row(request.userAnswers)
     )
 
-    val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows
+    val ltaRows: Seq[Option[SummaryListRow]] = Seq(
+      HadBenefitCrystallisationEventSummary.row(request.userAnswers),
+      PreviousLTAChargeSummary.row(request.userAnswers),
+      ChangeInLifetimeAllowanceSummary.row(request.userAnswers),
+      IncreaseInLTAChargeSummary.row(request.userAnswers),
+      NewLTAChargeSummary.row(request.userAnswers),
+      MultipleBenefitCrystallisationEventSummary.row(request.userAnswers),
+      OtherSchemeNotificationSummary.row(request.userAnswers)
+    )
+
+    val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows ++ ltaRows
 
     val continueURL = request.userAnswers.get(ReportingChangePage) match {
       case Some(set) if set.contains(ReportingChange.AnnualAllowance) =>
