@@ -31,6 +31,7 @@ import pages.setupquestions.ReportingChangePage
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import viewmodels.checkAnswers.AffectedByRemedySummary
 import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, NetIncomeAbove100KSummary, NetIncomeAbove190KIn2023Summary, PIAAboveAnnualAllowanceIn2023Summary, PensionProtectedMemberSummary, SavingsStatementSummary}
+import viewmodels.checkAnswers.setupquestions.lifetimeallowance._
 
 class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -61,7 +62,17 @@ class CheckYourSetupAnswersController @Inject() (
       NetIncomeAbove190KIn2023Summary.row(request.userAnswers)
     )
 
-    val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows
+    val ltaRows: Seq[Option[SummaryListRow]] = Seq(
+      HadBenefitCrystallisationEventSummary.row(request.userAnswers),
+      PreviousLTAChargeSummary.row(request.userAnswers),
+      ChangeInLifetimeAllowanceSummary.row(request.userAnswers),
+      IncreaseInLTAChargeSummary.row(request.userAnswers),
+      NewLTAChargeSummary.row(request.userAnswers),
+      MultipleBenefitCrystallisationEventSummary.row(request.userAnswers),
+      OtherSchemeNotificationSummary.row(request.userAnswers)
+    )
+
+    val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows ++ ltaRows
 
     val continueURL = request.userAnswers.get(ReportingChangePage) match {
       case Some(set) if set.contains(ReportingChange.AnnualAllowance) =>

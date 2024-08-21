@@ -24,6 +24,11 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-body">@messages("increaseInLTACharge.message1")</p>
+    <p class="govuk-body">@messages("increaseInLTACharge.message2")</p>
+}
+
 @layout(pageTitle = title(form, messages("increaseInLTACharge.title"))) {
 
     @formHelper(action = controllers.setupquestions.lifetimeallowance.routes.IncreaseInLTAChargeController.onSubmit(mode), 'autoComplete -> "off") {
@@ -35,8 +40,11 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("increaseInLTACharge.heading")).asPageHeading()
-            )
+                    legend = HmrcPageHeadingLegend(
+                    content = messages("increaseInLTACharge.heading"),
+                    caption = HmrcSectionCaption(messages("lifetimeAllowance.caption"))
+                )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()
