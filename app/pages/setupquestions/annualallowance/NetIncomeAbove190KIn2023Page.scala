@@ -21,6 +21,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object NetIncomeAbove190KIn2023Page extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
@@ -46,6 +48,29 @@ case object NetIncomeAbove190KIn2023Page extends QuestionPage[Boolean] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+    answers.get(NetIncomeAbove190KIn2023Page) match {
+      case Some(true)  =>
+        answers.get(LTAKickOutStatus()).getOrElse(None) match {
+          case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case 1    =>
+            controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+              .onPageLoad(NormalMode)
+          case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
+        }
+      case Some(false) =>
+        controllers.setupquestions.annualallowance.routes.FlexibleAccessDcSchemeController.onPageLoad(NormalMode)
+      case _           =>
+        controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(FlexibleAccessDcSchemePage)
+          .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

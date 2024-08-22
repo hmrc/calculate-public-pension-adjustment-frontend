@@ -21,6 +21,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object MaybePIAIncreasePage extends QuestionPage[MaybePIAIncrease] {
 
   override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
@@ -48,7 +50,32 @@ case object MaybePIAIncreasePage extends QuestionPage[MaybePIAIncrease] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(MaybePIAIncreasePage) match {
-      case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(MaybePIAIncrease.Yes)        =>
+        answers.get(LTAKickOutStatus()).getOrElse(None) match {
+          case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case 1    =>
+            controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+              .onPageLoad(NormalMode)
+          case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
+        }
+      case Some(MaybePIAIncrease.No)         =>
+        controllers.setupquestions.annualallowance.routes.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(NormalMode)
+      case Some(MaybePIAIncrease.IDoNotKnow) =>
+        controllers.setupquestions.annualallowance.routes.MaybePIAUnchangedOrDecreasedController.onPageLoad(NormalMode)
+      case _                                 => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[MaybePIAIncrease], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(MaybePIAUnchangedOrDecreasedPage)
+          .flatMap(_.remove(PIAAboveAnnualAllowanceIn2023Page))
+          .flatMap(_.remove(NetIncomeAbove190KIn2023Page))
+          .flatMap(_.remove(FlexibleAccessDcSchemePage))
+          .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

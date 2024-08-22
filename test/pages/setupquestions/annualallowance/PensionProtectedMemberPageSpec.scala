@@ -39,10 +39,10 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
     "must go to AA Kickout when yes and RPSS no" in {
 
       val userAnswers = emptyUserAnswers
-        .set(PensionProtectedMemberPage, true)
+        .set(SavingsStatementPage, false)
         .success
         .value
-        .set(SavingsStatementPage, false)
+        .set(PensionProtectedMemberPage, true)
         .success
         .value
 
@@ -54,10 +54,10 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
     "must go to 22/23 PIA > 40K page when yes and RPSS yes" in {
 
       val userAnswers = emptyUserAnswers
-        .set(PensionProtectedMemberPage, true)
+        .set(SavingsStatementPage, true)
         .success
         .value
-        .set(SavingsStatementPage, true)
+        .set(PensionProtectedMemberPage, true)
         .success
         .value
 
@@ -70,10 +70,10 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
 
       val randomBoolean = Random.nextBoolean()
       val userAnswer    = emptyUserAnswers
-        .set(PensionProtectedMemberPage, false)
+        .set(SavingsStatementPage, randomBoolean)
         .success
         .value
-        .set(SavingsStatementPage, randomBoolean)
+        .set(PensionProtectedMemberPage, false)
         .success
         .value
 
@@ -82,24 +82,90 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/annual-allowance-charge")
     }
 
-    "must go to journey recovery when no answer" in {}
+    "must go to journey recovery when no answer" in {
+
+      val nextPageUrl: String = PensionProtectedMemberPage.navigate(NormalMode, emptyUserAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
   }
 
   "check mode" - {
 
-    "when answered must go to CYA" in {
+    "when answered no must go to AA charge page" in {
 
       val userAnswer = emptyUserAnswers
+        .set(SavingsStatementPage, false)
+        .success
+        .value
         .set(PensionProtectedMemberPage, false)
         .success
         .value
 
       val nextPageUrl: String = PensionProtectedMemberPage.navigate(CheckMode, userAnswer).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/annual-allowance-charge")
 
     }
 
-    "when no answer must go to journey recovery" in {}
+    "must go to 22/23 PIA > 40K page when yes and RPSS yes" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(SavingsStatementPage, true)
+        .success
+        .value
+        .set(PensionProtectedMemberPage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = PensionProtectedMemberPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/PIA-above-annual-allowance-limit-22-23")
+
+    }
+
+    "must go to AA Kickout when yes and RPSS no" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(SavingsStatementPage, false)
+        .success
+        .value
+        .set(PensionProtectedMemberPage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = PensionProtectedMemberPage.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/not-impacted-no-RPSS")
+    }
+
+    "when no answer must go to journey recovery" in {
+
+      val nextPageUrl: String = PensionProtectedMemberPage.navigate(CheckMode, emptyUserAnswers).url
+
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = PensionProtectedMemberPage
+        .cleanup(Some(Random.nextBoolean()), userAnswersAATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(HadAAChargePage) mustBe None
+      cleanedUserAnswers.get(ContributionRefundsPage) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove100KPage) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KPage) mustBe None
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe None
+      cleanedUserAnswers.get(MaybePIAUnchangedOrDecreasedPage) mustBe None
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe None
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe None
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
+    }
   }
 }
