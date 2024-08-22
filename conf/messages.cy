@@ -558,8 +558,8 @@ howMuchAAChargeSchemePaid.heading = Faint o dâl treth lwfans blynyddol a dalodd
 howMuchAAChargeSchemePaid.checkYourAnswersLabel = Faint o dâl treth lwfans blynyddol a dalodd eich cynllun pensiwn?
 howMuchAAChargeSchemePaid.error.nonNumeric = Mae’n rhaid i swm y tâl treth lwfans blynyddol a dalodd eich cynllun pensiwn gynnwys y rhifau 0 i 9 yn unig
 howMuchAAChargeSchemePaid.error.required = Nodwch faint o dâl treth lwfans blynyddol a dalodd eich cynllun pensiwn rhwng {0}
-howMuchAAChargeSchemePaid.error.wholeNumber = cy: The amount of annual allowance tax charge your pension scheme paid must be a whole number
-howMuchAAChargeSchemePaid.error.outOfRange = Mae’n rhaid i swm y tâl treth lwfans blynyddol a dalodd eich cynllun pensiwn fod yn £999,999,999 neu lai
+howMuchAAChargeYouPaid.error.wholeNumber = cy: The amount of annual allowance tax charge your pension scheme paid between {0} must be a whole number
+howMuchAAChargeYouPaid.error.outOfRange = cy: The amount of annual allowance tax charge your pension scheme paid between {0} must be more than £0 and less than £999,999,999
 howMuchAAChargeSchemePaid.change.hidden = Faint o dâl treth lwfans blynyddol a dalodd eich cynllun pensiwn?
 howMuchAAChargeSchemePaid.hint = Mae’n rhaid talgrynnu symiau i lawr i’r bunt agosaf, er enghraifft 2300.
 
@@ -568,9 +568,8 @@ howMuchAAChargeYouPaid.heading = Faint o dâl treth lwfans blynyddol a dalodd ei
 howMuchAAChargeYouPaid.checkYourAnswersLabel = Faint o dâl treth lwfans blynyddol wnaethoch chi ei dalu?
 howMuchAAChargeYouPaid.error.nonNumeric = Mae’n rhaid i swm y tâl treth lwfans blynyddol a dalwyd gennych gynnwys rhifau 0 i 9 yn unig
 howMuchAAChargeYouPaid.error.required = Nodwch swm y tâl treth lwfans blynyddol a dalwyd gennych rhwng {0}
-howMuchAAChargeSchemePaid.error.required = Enter the amount of annual allowance tax charge your pension scheme paid between {0}
-howMuchAAChargeSchemePaid.error.wholeNumber = cy: The amount of annual allowance tax charge your pension scheme paid between {0} must be a whole number
-howMuchAAChargeSchemePaid.error.outOfRange = cy: The amount of annual allowance tax charge your pension scheme paid between {0} must be more than £0 and less than £999,999,999
+howMuchAAChargeYouPaid.error.wholeNumber = cy: The amount of annual allowance tax charge you paid between {0} must be a whole number
+howMuchAAChargeYouPaid.error.outOfRange = cy: The amount of annual allowance tax charge you paid between {2} must be more than £0 and less than £999,999,9990 and less than £999,999,999
 howMuchAAChargeYouPaid.change.hidden = Faint o dâl treth lwfans blynyddol wnaethoch chi ei dalu?
 howMuchAAChargeYouPaid.hint = Mae’n rhaid talgrynnu symiau i lawr i’r bunt agosaf, er enghraifft 2300.
 

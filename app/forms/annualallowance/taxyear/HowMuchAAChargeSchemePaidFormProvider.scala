@@ -24,13 +24,16 @@ import javax.inject.Inject
 
 class HowMuchAAChargeSchemePaidFormProvider @Inject() extends Mappings {
 
-  def apply(startEndDate: String)(implicit messages: Messages): Form[BigInt] =
+  def apply(startEndDate: String): Form[BigInt] =
     Form(
       "value" -> bigInt(
-        messages("howMuchAAChargeSchemePaid.error.required", startEndDate),
+        "howMuchAAChargeSchemePaid.error.required",
         "howMuchAAChargeSchemePaid.error.wholeNumber",
-        "howMuchAAChargeSchemePaid.error.nonNumeric"
+        "howMuchAAChargeSchemePaid.error.nonNumeric",
+        Seq(startEndDate)
       )
-        .verifying(inRange[BigInt](1, BigInt("999999999"), "howMuchAAChargeSchemePaid.error.outOfRange"))
+        .verifying(
+          inRangeWithArg[BigInt](1, BigInt("999999999"), "howMuchAAChargeSchemePaid.error.outOfRange", startEndDate)
+        )
     )
 }

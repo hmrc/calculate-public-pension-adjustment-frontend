@@ -559,7 +559,7 @@ howMuchAAChargeSchemePaid.checkYourAnswersLabel = How much tax charge your pensi
 howMuchAAChargeSchemePaid.error.nonNumeric = The amount of annual allowance tax charge your pension scheme paid must only include numbers 0 to 9
 howMuchAAChargeSchemePaid.error.required = Enter the amount of annual allowance tax charge your pension scheme paid between {0}
 howMuchAAChargeSchemePaid.error.wholeNumber = The amount of annual allowance tax charge your pension scheme paid between {0} must be a whole number
-howMuchAAChargeSchemePaid.error.outOfRange = The amount of annual allowance tax charge your pension scheme paid between {0} must be more than £0 and less than £999,999,999
+howMuchAAChargeSchemePaid.error.outOfRange = The amount of annual allowance tax charge your pension scheme paid between {2} must be more than £0 and less than £999,999,999
 howMuchAAChargeSchemePaid.change.hidden = how much tax charge your pension scheme paid
 howMuchAAChargeSchemePaid.hint = Amounts must be rounded down to the nearest pound, for example 2300.
 

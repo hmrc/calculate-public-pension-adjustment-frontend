@@ -29,7 +29,7 @@ class HowMuchAAChargeSchemePaidFormProviderSpec extends IntFieldBehaviours {
   val messages             = mock[Messages]
   val startEndDate: String = "Between 6th April 2018 to 5th April 2019"
   val formProvider         = new HowMuchAAChargeSchemePaidFormProvider()
-  val form                 = formProvider(startEndDate)(messages)
+  val form                 = formProvider(startEndDate)("")
 
   ".value" - {
 
@@ -41,38 +41,35 @@ class HowMuchAAChargeSchemePaidFormProviderSpec extends IntFieldBehaviours {
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      form,
+      newForm(),
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      newForm(),
       fieldName,
-      nonNumericError = FormError(fieldName, "howMuchAAChargeSchemePaid.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "howMuchAAChargeSchemePaid.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "howMuchAAChargeSchemePaid.error.nonNumeric", Seq("")),
+      wholeNumberError = FormError(fieldName, "howMuchAAChargeSchemePaid.error.wholeNumber", Seq(""))
     )
 
     behave like intFieldWithRange(
-      form,
+      newForm(),
       fieldName,
       minimum = minimum,
       maximum = maximum,
-      expectedError = FormError(fieldName, "howMuchAAChargeSchemePaid.error.outOfRange", Seq(minimum, maximum))
+      expectedError = FormError(fieldName, "howMuchAAChargeSchemePaid.error.outOfRange", Seq(minimum, maximum, ""))
     )
 
     behave like mandatoryField(
-      formWithMockMessages,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, "error message")
+      requiredError = FormError(fieldName, "howMuchAAChargeSchemePaid.error.required", Seq(""))
     )
 
-    def formWithMockMessages = {
-      val messages = mock[Messages]
-      when(messages.apply(eqTo("howMuchAAChargeSchemePaid.error.required"), any())).thenReturn("error message")
-
+    def newForm() = {
       val formProvider = new HowMuchAAChargeSchemePaidFormProvider()
-      formProvider("")(messages)
+      formProvider("")
     }
   }
 }
