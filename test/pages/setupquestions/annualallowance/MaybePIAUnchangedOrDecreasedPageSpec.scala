@@ -108,7 +108,14 @@ class MaybePIAUnchangedOrDecreasedPageSpec extends PageBehaviours {
     }
 
     "when yes to 22/23 PIA >40k page" in {
-      // TODO
+      val userAnswers = emptyUserAnswers
+        .set(MaybePIAUnchangedOrDecreasedPage, MaybePIAUnchangedOrDecreased.Yes)
+        .success
+        .value
+
+      val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/PIA-above-annual-allowance-limit-22-23")
     }
 
     "to journey recovery when not answered" in {

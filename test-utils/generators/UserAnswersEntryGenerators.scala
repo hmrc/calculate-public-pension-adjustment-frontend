@@ -63,6 +63,24 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryPIAAboveAnnualAllowanceIn2023UserAnswersEntry
+    : Arbitrary[(PIAAboveAnnualAllowanceIn2023Page.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PIAAboveAnnualAllowanceIn2023Page.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNetIncomeAbove190KIn2023UserAnswersEntry
+    : Arbitrary[(NetIncomeAbove190KIn2023Page.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NetIncomeAbove190KIn2023Page.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryContributionRefundsUserAnswersEntry: Arbitrary[(ContributionRefundsPage.type, JsValue)] =
     Arbitrary {
       for {

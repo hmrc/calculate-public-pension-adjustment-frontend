@@ -35,8 +35,7 @@ case object PensionProtectedMemberPage extends QuestionPage[Boolean] {
         // TODO to AA Kickout
         controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad()
       case (Some(true), Some(true))  =>
-        // TODO to 22/23 PIA > 40k
-        controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+        controllers.setupquestions.annualallowance.routes.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(NormalMode)
       case _                         => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

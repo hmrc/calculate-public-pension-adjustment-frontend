@@ -1483,3 +1483,15 @@ maybePIAUnchangedOrDecreased.idk = I do not know
 maybePIAUnchangedOrDecreased.checkYourAnswersLabel = PIAs unchanged or decreased?
 maybePIAUnchangedOrDecreased.error.required = Select maybePIAUnchangedOrDecreased
 maybePIAUnchangedOrDecreased.change.hidden = MaybePIAUnchangedOrDecreased
+
+pIAAboveAnnualAllowanceIn2023.title = pIAAboveAnnualAllowanceIn2023
+pIAAboveAnnualAllowanceIn2023.heading = pIAAboveAnnualAllowanceIn2023
+pIAAboveAnnualAllowanceIn2023.checkYourAnswersLabel = pIAAboveAnnualAllowanceIn2023
+pIAAboveAnnualAllowanceIn2023.error.required = Select yes if pIAAboveAnnualAllowanceIn2023
+pIAAboveAnnualAllowanceIn2023.change.hidden = PIAAboveAnnualAllowanceIn2023
+
+netIncomeAbove190KIn2023.title = netIncomeAbove190KIn2023
+netIncomeAbove190KIn2023.heading = netIncomeAbove190KIn2023
+netIncomeAbove190KIn2023.checkYourAnswersLabel = netIncomeAbove190KIn2023
+netIncomeAbove190KIn2023.error.required = Select yes if netIncomeAbove190KIn2023
+netIncomeAbove190KIn2023.change.hidden = NetIncomeAbove190KIn2023
