@@ -39,6 +39,12 @@ trait PageGenerators {
   implicit lazy val arbitraryNetIncomeAbove100KPage: Arbitrary[NetIncomeAbove100KPage.type] =
     Arbitrary(NetIncomeAbove100KPage)
 
+  implicit lazy val arbitraryPIAAboveAnnualAllowanceIn2023Page: Arbitrary[PIAAboveAnnualAllowanceIn2023Page.type] =
+    Arbitrary(PIAAboveAnnualAllowanceIn2023Page)
+
+  implicit lazy val arbitraryNetIncomeAbove190KIn2023Page: Arbitrary[NetIncomeAbove190KIn2023Page.type] =
+    Arbitrary(NetIncomeAbove190KIn2023Page)
+
   implicit lazy val arbitraryContributionRefundsPage: Arbitrary[ContributionRefundsPage.type] =
     Arbitrary(ContributionRefundsPage)
 
