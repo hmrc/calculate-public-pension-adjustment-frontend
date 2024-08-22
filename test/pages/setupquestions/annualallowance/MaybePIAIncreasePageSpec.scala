@@ -124,7 +124,14 @@ class MaybePIAIncreasePageSpec extends PageBehaviours {
 
     "to 22/23 PIA >40k when  no" in {
 
-      // TODO
+      val userAnswers = emptyUserAnswers
+        .set(MaybePIAIncreasePage, MaybePIAIncrease.No)
+        .success
+        .value
+
+      val nextPageUrl: String = MaybePIAIncreasePage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/PIA-above-annual-allowance-limit-22-23")
     }
 
     "to journey recovery when not answered" in {

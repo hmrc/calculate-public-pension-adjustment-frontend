@@ -30,7 +30,7 @@ import views.html.CheckYourAnswersView
 import pages.setupquestions.ReportingChangePage
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import viewmodels.checkAnswers.AffectedByRemedySummary
-import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, NetIncomeAbove100KSummary, PensionProtectedMemberSummary, SavingsStatementSummary}
+import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, NetIncomeAbove100KSummary, NetIncomeAbove190KIn2023Summary, PIAAboveAnnualAllowanceIn2023Summary, PensionProtectedMemberSummary, SavingsStatementSummary}
 
 class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -56,7 +56,9 @@ class CheckYourSetupAnswersController @Inject() (
       PensionProtectedMemberSummary.row(request.userAnswers),
       HadAAChargeSummary.row(request.userAnswers),
       ContributionRefundsSummary.row(request.userAnswers),
-      NetIncomeAbove100KSummary.row(request.userAnswers)
+      NetIncomeAbove100KSummary.row(request.userAnswers),
+      PIAAboveAnnualAllowanceIn2023Summary.row(request.userAnswers),
+      NetIncomeAbove190KIn2023Summary.row(request.userAnswers)
     )
 
     val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows
