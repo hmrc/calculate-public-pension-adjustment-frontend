@@ -1326,10 +1326,10 @@ blindAllowance.change.hidden = cy: your blind person’s allowance from {0}
 
 blindPersonsAllowanceAmount.title = cy: How much blind persons allowance did you claim from {0}?
 blindPersonsAllowanceAmount.heading = cy: How much blind persons allowance did you claim from {0}?
-blindPersonsAllowanceAmount.checkYourAnswersLabel = cy: How much blind persons allowance did you claim from {0}
+blindPersonsAllowanceAmount.checkYourAnswersLabel = cy: How much blind persons allowance did you claim from {0}?
 blindPersonsAllowanceAmount.caption = cy: Annual allowance net income
 blindPersonsAllowanceAmount.error.nonNumeric = cy: Your blind persons allowance from {0} must only include numbers 0 to 9
-blindPersonsAllowanceAmount.error.required = cy: How much blind persons allowance did you claim?
+blindPersonsAllowanceAmount.error.required = cy: How much blind persons allowance from {0} did you claim?
 blindPersonsAllowanceAmount.error.wholeNumber = cy: Your blind persons allowance from {0} must must be a whole number
 blindPersonsAllowanceAmount.change.hidden = cy: your blind persons allowance
 blindPersonsAllowanceAmount.error.maximum = cy: Your blind persons allowance must be £{0} or less for {1}
