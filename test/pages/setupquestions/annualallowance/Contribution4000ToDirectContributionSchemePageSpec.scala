@@ -132,7 +132,85 @@ class Contribution4000ToDirectContributionSchemePageSpec extends PageBehaviours 
     }
     "check mode" - {
 
-      "to check your answers when answered" in {
+      "when yes" - {
+
+        "when lta kickout status 0 to cya" in {
+
+          val userAnswers = emptyUserAnswers
+            .set(Contribution4000ToDirectContributionSchemePage, true)
+            .success
+            .value
+            .set(LTAKickOutStatus(), 0)
+            .success
+            .value
+
+          val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(CheckMode, userAnswers).url
+
+          checkNavigation(nextPageUrl, "/check-your-answers-setup")
+        }
+
+        "when lta kickout status 1 to had BCE page" in {
+
+          val userAnswers = emptyUserAnswers
+            .set(Contribution4000ToDirectContributionSchemePage, true)
+            .success
+            .value
+            .set(LTAKickOutStatus(), 1)
+            .success
+            .value
+
+          val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(CheckMode, userAnswers).url
+
+          checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+        }
+
+        "when lta kickout status 2 to cya" in {
+
+          val userAnswers = emptyUserAnswers
+            .set(Contribution4000ToDirectContributionSchemePage, true)
+            .success
+            .value
+            .set(LTAKickOutStatus(), 2)
+            .success
+            .value
+
+          val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(CheckMode, userAnswers).url
+
+          checkNavigation(nextPageUrl, "/check-your-answers-setup")
+        }
+
+        "when no LTA kickout status to cya" in {
+
+          val userAnswers = emptyUserAnswers
+            .set(Contribution4000ToDirectContributionSchemePage, true)
+            .success
+            .value
+            .set(LTAKickOutStatus(), 2)
+            .success
+            .value
+
+          val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(CheckMode, userAnswers).url
+
+          checkNavigation(nextPageUrl, "/check-your-answers-setup")
+        }
+
+        "when LTA kickout status anything else to journey recovery" in {
+
+          val userAnswers = emptyUserAnswers
+            .set(Contribution4000ToDirectContributionSchemePage, true)
+            .success
+            .value
+            .set(LTAKickOutStatus(), 3)
+            .success
+            .value
+
+          val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(CheckMode, userAnswers).url
+
+          checkNavigation(nextPageUrl, "/there-is-a-problem")
+        }
+      }
+
+      "to TriageJourneyNotImpactedPIADecrease kickout when false" in {
 
         val userAnswers = emptyUserAnswers
           .set(Contribution4000ToDirectContributionSchemePage, false)
@@ -141,18 +219,16 @@ class Contribution4000ToDirectContributionSchemePageSpec extends PageBehaviours 
 
         val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+        checkNavigation(nextPageUrl, "/triage-journey-not-impacted-PIA-decrease")
       }
 
       "to journey recovery when not answered" in {
 
         val nextPageUrl: String =
-          Contribution4000ToDirectContributionSchemePage.navigate(CheckMode, emptyUserAnswers).url
+          Contribution4000ToDirectContributionSchemePage.navigate(NormalMode, emptyUserAnswers).url
 
         checkNavigation(nextPageUrl, "/there-is-a-problem")
       }
     }
-
   }
-
 }

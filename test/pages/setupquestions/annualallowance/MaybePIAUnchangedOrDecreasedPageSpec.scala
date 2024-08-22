@@ -17,6 +17,7 @@
 package pages.setupquestions.annualallowance
 
 import models.{CheckMode, LTAKickOutStatus, MaybePIAUnchangedOrDecreased, NormalMode}
+import org.scalacheck.Gen
 import pages.behaviours.PageBehaviours
 
 class MaybePIAUnchangedOrDecreasedPageSpec extends PageBehaviours {
@@ -128,16 +129,90 @@ class MaybePIAUnchangedOrDecreasedPageSpec extends PageBehaviours {
 
   "check mode" - {
 
-    "to check your ansewrs when answered" in {
+    "when no or I do not know" - {
 
+      "when lta kickout status 0 to cya" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(MaybePIAUnchangedOrDecreasedPage, MaybePIAUnchangedOrDecreased.No)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 0)
+          .success
+          .value
+
+        val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when lta kickout status 1 to had BCE page" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(MaybePIAUnchangedOrDecreasedPage, MaybePIAUnchangedOrDecreased.IDoNotKnow)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 1)
+          .success
+          .value
+
+        val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+      }
+
+      "when lta kickout status 2 to cya" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(MaybePIAUnchangedOrDecreasedPage, MaybePIAUnchangedOrDecreased.IDoNotKnow)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 2)
+          .success
+          .value
+
+        val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when no LTA kickout status to cya" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(MaybePIAUnchangedOrDecreasedPage, MaybePIAUnchangedOrDecreased.IDoNotKnow)
+          .success
+          .value
+
+        val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when LTA kickout status anything else to journey recovery" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(MaybePIAUnchangedOrDecreasedPage, MaybePIAUnchangedOrDecreased.IDoNotKnow)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 3)
+          .success
+          .value
+
+        val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
+      }
+    }
+
+    "when yes to 22/23 PIA >40k page" in {
       val userAnswers = emptyUserAnswers
-        .set(MaybePIAUnchangedOrDecreasedPage, MaybePIAUnchangedOrDecreased.IDoNotKnow)
+        .set(MaybePIAUnchangedOrDecreasedPage, MaybePIAUnchangedOrDecreased.Yes)
         .success
         .value
 
       val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/PIA-above-annual-allowance-limit-22-23")
     }
 
     "to journey recovery when not answered" in {
@@ -145,6 +220,36 @@ class MaybePIAUnchangedOrDecreasedPageSpec extends PageBehaviours {
       val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(CheckMode, emptyUserAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = MaybePIAUnchangedOrDecreasedPage
+        .cleanup(
+          Some(
+            Gen
+              .oneOf(
+                List(
+                  MaybePIAUnchangedOrDecreased.Yes,
+                  MaybePIAUnchangedOrDecreased.No,
+                  MaybePIAUnchangedOrDecreased.IDoNotKnow
+                )
+              )
+              .sample
+              .get
+          ),
+          userAnswersAATriage
+        )
+        .success
+        .value
+
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe None
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe None
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
     }
   }
 }

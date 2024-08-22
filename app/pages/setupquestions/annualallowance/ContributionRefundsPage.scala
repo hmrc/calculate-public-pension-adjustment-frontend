@@ -21,6 +21,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object ContributionRefundsPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
@@ -39,8 +41,28 @@ case object ContributionRefundsPage extends QuestionPage[Boolean] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(ContributionRefundsPage) match {
-      case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    (answers.get(ContributionRefundsPage), answers.get(SavingsStatementPage)) match {
+      case (Some(true), Some(_))      =>
+        controllers.setupquestions.annualallowance.routes.NetIncomeAbove100KController.onPageLoad(NormalMode)
+      case (Some(false), Some(true))  =>
+        controllers.setupquestions.annualallowance.routes.MaybePIAIncreaseController.onPageLoad(NormalMode)
+      case (Some(false), Some(false)) =>
+        controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad()
+      case _                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(NetIncomeAbove100KPage)
+          .flatMap(_.remove(NetIncomeAbove190KPage))
+          .flatMap(_.remove(MaybePIAIncreasePage))
+          .flatMap(_.remove(MaybePIAUnchangedOrDecreasedPage))
+          .flatMap(_.remove(PIAAboveAnnualAllowanceIn2023Page))
+          .flatMap(_.remove(NetIncomeAbove190KIn2023Page))
+          .flatMap(_.remove(FlexibleAccessDcSchemePage))
+          .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }
