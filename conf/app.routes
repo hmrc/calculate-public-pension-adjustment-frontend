@@ -581,3 +581,13 @@ GET        /PIA-amount-decrease-or-no-change                        controllers.
 POST       /PIA-amount-decrease-or-no-change                        controllers.setupquestions.annualallowance.MaybePIAUnchangedOrDecreasedController.onSubmit(mode: Mode = NormalMode)
 GET        /change-PIA-amount-decrease-or-no-change                  controllers.setupquestions.annualallowance.MaybePIAUnchangedOrDecreasedController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-PIA-amount-decrease-or-no-change                  controllers.setupquestions.annualallowance.MaybePIAUnchangedOrDecreasedController.onSubmit(mode: Mode = CheckMode)
+
+GET        /PIA-above-annual-allowance-limit-22-23           controllers.setupquestions.annualallowance.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(mode: Mode = NormalMode)
+POST       /PIA-above-annual-allowance-limit-22-23           controllers.setupquestions.annualallowance.PIAAboveAnnualAllowanceIn2023Controller.onSubmit(mode: Mode = NormalMode)
+GET        /change-PIA-above-annual-allowance-limit-22-23    controllers.setupquestions.annualallowance.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(mode: Mode = CheckMode)
+POST       /change-PIA-above-annual-allowance-limit-22-23    controllers.setupquestions.annualallowance.PIAAboveAnnualAllowanceIn2023Controller.onSubmit(mode: Mode = CheckMode)
+
+GET        /income-over-190-22-23                            controllers.setupquestions.annualallowance.NetIncomeAbove190KIn2023Controller.onPageLoad(mode: Mode = NormalMode)
+POST       /income-over-190-22-23                            controllers.setupquestions.annualallowance.NetIncomeAbove190KIn2023Controller.onSubmit(mode: Mode = NormalMode)
+GET        /change-income-over-190-22-23                     controllers.setupquestions.annualallowance.NetIncomeAbove190KIn2023Controller.onPageLoad(mode: Mode = CheckMode)
+POST       /chnage-income-over-190-22-23                     controllers.setupquestions.annualallowance.NetIncomeAbove190KIn2023Controller.onSubmit(mode: Mode = CheckMode)

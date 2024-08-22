@@ -1,0 +1,111 @@
+package controllers.setupquestions.annualallowance
+
+import base.SpecBase
+import controllers.routes
+import forms.setupquestions.annualallowance.PIAAboveAnnualAllowanceIn2023FormProvider
+import models.{Done, NormalMode, UserAnswers}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar
+import pages.setupquestions.annualallowance.PIAAboveAnnualAllowanceIn2023Page
+import play.api.inject.bind
+import play.api.mvc.Call
+import play.api.test.FakeRequest
+import play.api.test.Helpers._
+import services.UserDataService
+import views.html.setupquestions.annualallowance.PIAAboveAnnualAllowanceIn2023View
+
+import scala.concurrent.Future
+
+class PIAAboveAnnualAllowanceIn2023ControllerSpec extends SpecBase with MockitoSugar {
+
+  def onwardRoute = Call("GET", "/foo")
+
+  val formProvider = new PIAAboveAnnualAllowanceIn2023FormProvider()
+  val form         = formProvider()
+
+  lazy val pIAAboveAnnualAllowanceIn2023Route =
+    controllers.setupquestions.annualallowance.routes.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(NormalMode).url
+
+  "PIAAboveAnnualAllowanceIn2023 Controller" - {
+
+    "must return OK and the correct view for a GET" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, pIAAboveAnnualAllowanceIn2023Route)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[PIAAboveAnnualAllowanceIn2023View]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+      }
+    }
+
+    "must populate the view correctly on a GET when the question has previously been answered" in {
+
+      val userAnswers = UserAnswers(userAnswersId).set(PIAAboveAnnualAllowanceIn2023Page, true).success.value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, pIAAboveAnnualAllowanceIn2023Route)
+
+        val view = application.injector.instanceOf[PIAAboveAnnualAllowanceIn2023View]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+      }
+    }
+
+    "must redirect to the next page when valid data is submitted" in {
+
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[UserDataService].toInstance(mockUserDataService))
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, pIAAboveAnnualAllowanceIn2023Route)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController
+          .onPageLoad()
+          .url
+      }
+    }
+
+    "must return a Bad Request and errors when invalid data is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, pIAAboveAnnualAllowanceIn2023Route)
+            .withFormUrlEncodedBody(("value", ""))
+
+        val boundForm = form.bind(Map("value" -> ""))
+
+        val view = application.injector.instanceOf[PIAAboveAnnualAllowanceIn2023View]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+      }
+    }
+  }
+}

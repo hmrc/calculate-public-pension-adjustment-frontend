@@ -16,22 +16,24 @@
 
 package pages.setupquestions.annualallowance
 
-import models.{LTAKickOutStatus, MaybePIAUnchangedOrDecreased, NormalMode, UserAnswers}
+import models.{CheckMode, LTAKickOutStatus, NormalMode, UserAnswers}
+import org.apache.pekko.actor.FSM.Normal
 import pages.QuestionPage
+import pages.annualallowance.taxyear.AmountOfGiftAidPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object MaybePIAUnchangedOrDecreasedPage extends QuestionPage[MaybePIAUnchangedOrDecreased] {
+import scala.util.Try
+
+case object PIAAboveAnnualAllowanceIn2023Page extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
 
-  override def toString: String = "maybePIAUnchangedOrDecreased"
+  override def toString: String = "pIAAboveAnnualAllowanceIn2023"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(MaybePIAUnchangedOrDecreasedPage) match {
-      case Some(MaybePIAUnchangedOrDecreased.Yes)                                                =>
-        controllers.setupquestions.annualallowance.routes.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(NormalMode)
-      case Some(MaybePIAUnchangedOrDecreased.No) | Some(MaybePIAUnchangedOrDecreased.IDoNotKnow) =>
+    answers.get(PIAAboveAnnualAllowanceIn2023Page) match {
+      case Some(true)  =>
         answers.get(LTAKickOutStatus()).getOrElse(None) match {
           case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case 1    =>
@@ -41,12 +43,20 @@ case object MaybePIAUnchangedOrDecreasedPage extends QuestionPage[MaybePIAUnchan
           case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
-      case _                                                                                     => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(false) =>
+        controllers.setupquestions.annualallowance.routes.NetIncomeAbove190KIn2023Controller.onPageLoad(NormalMode)
+      case _           =>
+        controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(MaybePIAUnchangedOrDecreasedPage) match {
-      case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
+    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case false => super.cleanup(value, userAnswers)
+        case true  => userAnswers.remove(NetIncomeAbove190KIn2023Page)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }
