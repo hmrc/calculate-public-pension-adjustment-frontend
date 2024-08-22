@@ -117,12 +117,14 @@ reasonForResubmission.error.required = Enter the reason you want to overwrite a 
 reasonForResubmission.error.length = The reason you want to overwrite a previous submission must be 500 characters or fewer
 reasonForResubmission.change.hidden = reason for overwriting a previous submission
 
-ineligible.title = You cannot use this service
-ineligible.heading = You cannot use this service
-ineligible.message1 = You cannot make an adjustment unless you have been contacted by your pension scheme administrator (PSA).
-ineligible.message2 = You can:
-ineligible.list = contact your PSA for more information about your pension scheme
-ineligible.list1 = contact the pension schemes helpline for more information about pension schemes
+ineligible.title = You are not impacted
+ineligible.heading = You are not impacted by the McCloud remedy
+ineligible.message1 = There are multiple possible reasons why you are not eligible to use this service:
+ineligible.bullet1 = you were not part of a public service pension scheme on or before 31 March 2012
+ineligible.bullet2 = you did not work in public service between 1 April 2015 and the 31 March 2022
+ineligible.bullet3 = you left service after 31 March 2012 but did not return within 5 years
+ineligible.bullet4 = you were not part of any legacy public service pension scheme
+ineligible.message2 = These reasons mean that your pension contributions will not be affected by the McCloud remedy and you do not need to use this service.
 
 reportingChange.title = Which tax charges would you like adjusted?
 reportingChange.heading = Which tax charges would you like adjusted?
@@ -1397,11 +1399,17 @@ unionPoliceReliefAmount.error.wholeNumber = The tax relief are you claiming for 
 unionPoliceReliefAmount.error.outOfRange = The tax relief are you claiming for trade union or police organisation fees must be between £0 and £100
 unionPoliceReliefAmount.change.hidden = amount of tax relief you are claiming for trade union or police organisation fees
 
-affectedByRemedy.title = affectedByRemedy
-affectedByRemedy.heading = affectedByRemedy
-affectedByRemedy.checkYourAnswersLabel = affectedByRemedy
-affectedByRemedy.error.required = Select yes if affectedByRemedy
-affectedByRemedy.change.hidden = AffectedByRemedy
+affectedByRemedy.title = Are you affected by the Public Service Pensions remedy?
+affectedByRemedy.heading1 = McCloud Remedy
+affectedByRemedy.message1 = You are impacted by the Public Service Pensions remedy if you joined a public service pension scheme on or before 31 March 2012 and:
+affectedByRemedy.bullet1 = you worked in public service between 1 April 2015 and the 31 March 2022
+affectedByRemedy.message2 = Or
+affectedByRemedy.bullet2 = you left service after 31 March 2012 and returned within 5 years
+affectedByRemedy.message3 = Find our more about the Public Service Pensions remedy
+affectedByRemedy.heading2 = Are you affected by the Public Service Pensions remedy?
+affectedByRemedy.checkYourAnswersLabel = Are you affected by the Public Service Pensions remedy?
+affectedByRemedy.error.required = Select yes if you were affected by the Public Service Pensions Remedy
+affectedByRemedy.change.hidden = if you were affected by the Public Service Pensions Remedy
 
 previousLTACharge.title = Have you paid an LTA charge?
 previousLTACharge.heading = Lifetime allowance charge
