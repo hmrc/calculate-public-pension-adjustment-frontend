@@ -52,7 +52,18 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
     }
 
     "must go to 22/23 PIA > 40K page when yes and RPSS yes" in {
-      // TODO
+
+      val userAnswers = emptyUserAnswers
+        .set(PensionProtectedMemberPage, true)
+        .success
+        .value
+        .set(SavingsStatementPage, true)
+        .success
+        .value
+
+      val nextPageUrl: String = PensionProtectedMemberPage.navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/PIA-above-annual-allowance-limit-22-23")
     }
 
     "must go to AA charge when no" in {
