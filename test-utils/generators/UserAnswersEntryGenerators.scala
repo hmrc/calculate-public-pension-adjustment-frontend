@@ -81,7 +81,8 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryContribution4000ToDirectContributionSchemeUserAnswersEntry: Arbitrary[(Contribution4000ToDirectContributionSchemePage.type, JsValue)] =
+  implicit lazy val arbitraryContribution4000ToDirectContributionSchemeUserAnswersEntry
+    : Arbitrary[(Contribution4000ToDirectContributionSchemePage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[Contribution4000ToDirectContributionSchemePage.type]

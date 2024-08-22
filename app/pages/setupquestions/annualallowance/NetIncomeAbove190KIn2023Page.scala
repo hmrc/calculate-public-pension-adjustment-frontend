@@ -40,8 +40,7 @@ case object NetIncomeAbove190KIn2023Page extends QuestionPage[Boolean] {
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
       case Some(false) =>
-        // TODO Wire up to part 4
-        controllers.routes.JourneyRecoveryController.onPageLoad(None)
+        controllers.setupquestions.annualallowance.routes.FlexibleAccessDcSchemeController.onPageLoad(NormalMode)
       case _           =>
         controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

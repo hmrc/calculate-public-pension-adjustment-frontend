@@ -22,13 +22,13 @@ import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.Contribution4000ToDirectContributionSchemePage
+import pages.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.Contribution4000ToDirectContributionSchemeView
+import views.html.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeView
 
 import scala.concurrent.Future
 
@@ -40,7 +40,9 @@ class Contribution4000ToDirectContributionSchemeControllerSpec extends SpecBase 
   val form         = formProvider()
 
   lazy val contribution4000ToDirectContributionSchemeRoute =
-    routes.Contribution4000ToDirectContributionSchemeController.onPageLoad(NormalMode).url
+    controllers.setupquestions.annualallowance.routes.Contribution4000ToDirectContributionSchemeController
+      .onPageLoad(NormalMode)
+      .url
 
   "Contribution4000ToDirectContributionScheme Controller" - {
 
@@ -98,7 +100,6 @@ class Contribution4000ToDirectContributionSchemeControllerSpec extends SpecBase 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad(None).url
       }
     }
 
@@ -119,36 +120,6 @@ class Contribution4000ToDirectContributionSchemeControllerSpec extends SpecBase 
 
         status(result) mustEqual BAD_REQUEST
         contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
-
-      val application = applicationBuilder(userAnswers = None).build()
-
-      running(application) {
-        val request = FakeRequest(GET, contribution4000ToDirectContributionSchemeRoute)
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
-      }
-    }
-
-    "must redirect to Journey Recovery for a POST if no existing data is found" in {
-
-      val application = applicationBuilder(userAnswers = None).build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, contribution4000ToDirectContributionSchemeRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }
   }

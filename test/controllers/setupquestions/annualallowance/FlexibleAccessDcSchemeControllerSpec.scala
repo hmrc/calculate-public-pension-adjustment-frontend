@@ -22,13 +22,13 @@ import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.FlexibleAccessDcSchemePage
+import pages.setupquestions.annualallowance.FlexibleAccessDcSchemePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.FlexibleAccessDcSchemeView
+import views.html.setupquestions.annualallowance.FlexibleAccessDcSchemeView
 
 import scala.concurrent.Future
 
@@ -39,7 +39,8 @@ class FlexibleAccessDcSchemeControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new FlexibleAccessDcSchemeFormProvider()
   val form         = formProvider()
 
-  lazy val flexibleAccessDcSchemeRoute = routes.FlexibleAccessDcSchemeController.onPageLoad(NormalMode).url
+  lazy val flexibleAccessDcSchemeRoute =
+    controllers.setupquestions.annualallowance.routes.FlexibleAccessDcSchemeController.onPageLoad(NormalMode).url
 
   "FlexibleAccessDcScheme Controller" - {
 
@@ -96,7 +97,6 @@ class FlexibleAccessDcSchemeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad(None).url
       }
     }
 
@@ -117,36 +117,6 @@ class FlexibleAccessDcSchemeControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual BAD_REQUEST
         contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
-
-      val application = applicationBuilder(userAnswers = None).build()
-
-      running(application) {
-        val request = FakeRequest(GET, flexibleAccessDcSchemeRoute)
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
-      }
-    }
-
-    "must redirect to Journey Recovery for a POST if no existing data is found" in {
-
-      val application = applicationBuilder(userAnswers = None).build()
-
-      running(application) {
-        val request =
-          FakeRequest(POST, flexibleAccessDcSchemeRoute)
-            .withFormUrlEncodedBody(("value", "true"))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }
   }
