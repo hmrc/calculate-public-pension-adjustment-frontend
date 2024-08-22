@@ -27,6 +27,22 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-body">@messages("affectedByRemedy.message1")</p>
+
+    <ul class="govuk-body">
+        <li>@messages("affectedByRemedy.bullet1")</li>
+        <p >@messages("affectedByRemedy.message2")</p>
+        <li>@messages("affectedByRemedy.bullet2")</li>
+    </ul>
+
+    <a class="govuk-body govuk-link" href="https://www.nhsbsa.nhs.uk/public-service-pensions-remedy-mccloud" rel="noreferrer noopener" target="_blank">
+        @messages("affectedByRemedy.message3") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+    </a>
+
+    <h1 class="govuk-heading-m govuk-!-padding-top-5">@messages("affectedByRemedy.heading2")</h1>
+}
+
 @layout(pageTitle = title(form, messages("affectedByRemedy.title"))) {
 
     @formHelper(action = routes.AffectedByRemedyController.onSubmit(mode), 'autoComplete -> "off") {
@@ -38,8 +54,8 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("affectedByRemedy.heading")).asPageHeading()
-            )
+                legend = LegendViewModel(messages("affectedByRemedy.heading1")).asPageHeading()
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()

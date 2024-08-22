@@ -52,7 +52,7 @@ class AffectedByRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl: String = AffectedByRemedyPage.navigate(NormalMode, ua).url
 
-        checkNavigation(nextPageUrl, "/cannot-use-service")
+        checkNavigation(nextPageUrl, "/triage-journey-not-impacted")
       }
 
       "must redirect to journey recovery when no answer" in {
@@ -88,7 +88,7 @@ class AffectedByRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl: String = AffectedByRemedyPage.navigate(CheckMode, ua).url
 
-        checkNavigation(nextPageUrl, "/cannot-use-service")
+        checkNavigation(nextPageUrl, "/triage-journey-not-impacted")
       }
 
       "must redirect to journey recovery when no answer" in {
