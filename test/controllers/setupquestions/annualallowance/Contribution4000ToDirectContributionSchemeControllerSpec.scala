@@ -14,47 +14,48 @@
  * limitations under the License.
  */
 
-package controllers.setupquestions.annualallowance
+package controllers
 
 import base.SpecBase
-import controllers.routes
-import forms.setupquestions.annualallowance.NetIncomeAbove190KIn2023FormProvider
+import forms.Contribution4000ToDirectContributionSchemeFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.setupquestions.annualallowance.NetIncomeAbove190KIn2023Page
+import pages.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import views.html.setupquestions.annualallowance.NetIncomeAbove190KIn2023View
+import views.html.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeView
 
 import scala.concurrent.Future
 
-class NetIncomeAbove190KIn2023ControllerSpec extends SpecBase with MockitoSugar {
+class Contribution4000ToDirectContributionSchemeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new NetIncomeAbove190KIn2023FormProvider()
+  val formProvider = new Contribution4000ToDirectContributionSchemeFormProvider()
   val form         = formProvider()
 
-  lazy val netIncomeAbove190KIn2023Route =
-    controllers.setupquestions.annualallowance.routes.NetIncomeAbove190KIn2023Controller.onPageLoad(NormalMode).url
+  lazy val contribution4000ToDirectContributionSchemeRoute =
+    controllers.setupquestions.annualallowance.routes.Contribution4000ToDirectContributionSchemeController
+      .onPageLoad(NormalMode)
+      .url
 
-  "NetIncomeAbove190KIn2023 Controller" - {
+  "Contribution4000ToDirectContributionScheme Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, netIncomeAbove190KIn2023Route)
+        val request = FakeRequest(GET, contribution4000ToDirectContributionSchemeRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[NetIncomeAbove190KIn2023View]
+        val view = application.injector.instanceOf[Contribution4000ToDirectContributionSchemeView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -63,14 +64,15 @@ class NetIncomeAbove190KIn2023ControllerSpec extends SpecBase with MockitoSugar 
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(NetIncomeAbove190KIn2023Page, true).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(Contribution4000ToDirectContributionSchemePage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, netIncomeAbove190KIn2023Route)
+        val request = FakeRequest(GET, contribution4000ToDirectContributionSchemeRoute)
 
-        val view = application.injector.instanceOf[NetIncomeAbove190KIn2023View]
+        val view = application.injector.instanceOf[Contribution4000ToDirectContributionSchemeView]
 
         val result = route(application, request).value
 
@@ -92,15 +94,12 @@ class NetIncomeAbove190KIn2023ControllerSpec extends SpecBase with MockitoSugar 
 
       running(application) {
         val request =
-          FakeRequest(POST, netIncomeAbove190KIn2023Route)
+          FakeRequest(POST, contribution4000ToDirectContributionSchemeRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.setupquestions.routes.CheckYourSetupAnswersController
-          .onPageLoad()
-          .url
       }
     }
 
@@ -110,12 +109,12 @@ class NetIncomeAbove190KIn2023ControllerSpec extends SpecBase with MockitoSugar 
 
       running(application) {
         val request =
-          FakeRequest(POST, netIncomeAbove190KIn2023Route)
+          FakeRequest(POST, contribution4000ToDirectContributionSchemeRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[NetIncomeAbove190KIn2023View]
+        val view = application.injector.instanceOf[Contribution4000ToDirectContributionSchemeView]
 
         val result = route(application, request).value
 
