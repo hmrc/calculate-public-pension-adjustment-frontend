@@ -1496,3 +1496,18 @@ netIncomeAbove190KIn2023.heading = cy: netIncomeAbove190KIn2023
 netIncomeAbove190KIn2023.checkYourAnswersLabel = cy: netIncomeAbove190KIn2023
 netIncomeAbove190KIn2023.error.required = cy: Select yes if netIncomeAbove190KIn2023
 netIncomeAbove190KIn2023.change.hidden = cy: NetIncomeAbove190KIn2023
+
+flexibleAccessDcScheme.title = cy: flexibleAccessDcScheme
+flexibleAccessDcScheme.heading = cy: flexibleAccessDcScheme
+flexibleAccessDcScheme.checkYourAnswersLabel = cy: flexibleAccessDcScheme
+flexibleAccessDcScheme.error.required = cy: Select yes if flexibleAccessDcScheme
+flexibleAccessDcScheme.change.hidden = cy: FlexibleAccessDcScheme
+
+triageJourneyNotImpactedPIADecrease.title = cy: triageJourneyNotImpactedPIADecrease
+triageJourneyNotImpactedPIADecrease.heading = cy: triageJourneyNotImpactedPIADecrease
+
+contribution4000ToDirectContributionScheme.title = cy: contribution4000ToDirectContributionScheme
+contribution4000ToDirectContributionScheme.heading = cy: contribution4000ToDirectContributionScheme
+contribution4000ToDirectContributionScheme.checkYourAnswersLabel = cy: contribution4000ToDirectContributionScheme
+contribution4000ToDirectContributionScheme.error.required = cy: Select yes if contribution4000ToDirectContributionScheme
+contribution4000ToDirectContributionScheme.change.hidden = cy: Contribution4000ToDirectContributionScheme

@@ -591,3 +591,15 @@ GET        /income-over-190-22-23                            controllers.setupqu
 POST       /income-over-190-22-23                            controllers.setupquestions.annualallowance.NetIncomeAbove190KIn2023Controller.onSubmit(mode: Mode = NormalMode)
 GET        /change-income-over-190-22-23                     controllers.setupquestions.annualallowance.NetIncomeAbove190KIn2023Controller.onPageLoad(mode: Mode = CheckMode)
 POST       /chnage-income-over-190-22-23                     controllers.setupquestions.annualallowance.NetIncomeAbove190KIn2023Controller.onSubmit(mode: Mode = CheckMode)
+
+GET        /flexible-access-dc-scheme                        controllers.setupquestions.annualallowance.FlexibleAccessDcSchemeController.onPageLoad(mode: Mode = NormalMode)
+POST       /flexible-access-dc-scheme                        controllers.setupquestions.annualallowance.FlexibleAccessDcSchemeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-flexible-access-dc-scheme                  controllers.setupquestions.annualallowance.FlexibleAccessDcSchemeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-flexible-access-dc-scheme         controllers.setupquestions.annualallowance.FlexibleAccessDcSchemeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /triage-journey-not-impacted-PIA-decrease                       controllers.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseController.onPageLoad()
+
+GET        /4000-contribution-to-direct-contribution-scheme                        controllers.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeController.onPageLoad(mode: Mode = NormalMode)
+POST       /4000-contribution-to-direct-contribution-scheme                        controllers.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-4000-contribution-to-direct-contribution-scheme                  controllers.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-4000-contribution-to-direct-contribution-scheme                  controllers.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeController.onSubmit(mode: Mode = CheckMode)
