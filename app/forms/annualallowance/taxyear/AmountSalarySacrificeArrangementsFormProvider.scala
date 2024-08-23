@@ -23,13 +23,21 @@ import javax.inject.Inject
 
 class AmountSalarySacrificeArrangementsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(startEndDate: String): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "amountSalarySacrificeArrangements.error.required",
         "amountSalarySacrificeArrangements.error.wholeNumber",
-        "amountSalarySacrificeArrangements.error.nonNumeric"
+        "amountSalarySacrificeArrangements.error.nonNumeric",
+        Seq(startEndDate)
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "amountSalarySacrificeArrangements.error.outOfRange"))
+        .verifying(
+          inRangeWithArg[BigInt](
+            1,
+            BigInt("999999999"),
+            "amountSalarySacrificeArrangements.error.outOfRange",
+            startEndDate
+          )
+        )
     )
 }

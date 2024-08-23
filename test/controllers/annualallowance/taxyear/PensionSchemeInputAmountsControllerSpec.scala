@@ -39,8 +39,8 @@ class PensionSchemeInputAmountsControllerSpec extends SpecBase with MockitoSugar
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new PensionSchemeInputAmountsFormProvider()
-  val form         = formProvider(Period._2016)
-  val dateString   = "6 April 2017 and 5 April 2018"
+  val dateString   = "6 April 2017 to 5 April 2018"
+  val form         = formProvider(Period._2018, dateString)
 
   lazy val pensionSchemeInputAmountsRoute =
     controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController

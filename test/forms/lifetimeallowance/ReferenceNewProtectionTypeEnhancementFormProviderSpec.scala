@@ -23,6 +23,7 @@ class ReferenceNewProtectionTypeEnhancementFormProviderSpec extends StringFieldB
 
   val requiredKey = "referenceNewProtectionTypeEnhancement.error.required"
   val lengthKey   = "referenceNewProtectionTypeEnhancement.error.length"
+  val invalidKey  = "referenceNewProtectionTypeEnhancement.error.invalid"
   val maxLength   = 15
 
   val form = new ReferenceNewProtectionTypeEnhancementFormProvider()()
@@ -34,7 +35,15 @@ class ReferenceNewProtectionTypeEnhancementFormProviderSpec extends StringFieldB
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      stringsWithMaxLength(maxLength)
+      alphanumericStringWithMaxLength(maxLength)
+    )
+
+    behave like fieldThatDoesNotBindInvalidStrings(
+      form = form,
+      fieldName = fieldName,
+      regex = """^[a-z0-9A-Z]*$""",
+      gen = stringsOfLength(maxLength),
+      invalidKey = invalidKey
     )
 
     behave like fieldWithMaxLength(

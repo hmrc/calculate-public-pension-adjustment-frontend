@@ -31,6 +31,6 @@ class TaxReliefFormProvider @Inject() extends Mappings {
         "taxRelief.error.nonNumeric",
         Seq(startEndDate)
       )
-        .verifying(inRangeWithArg(BigInt("0"), BigInt("999999999"), "taxRelief.error.outOfRange", startEndDate))
+        .verifying(inRangeWithArg(BigInt("1"), BigInt("999999999"), "taxRelief.error.outOfRange", startEndDate))
     )
 }

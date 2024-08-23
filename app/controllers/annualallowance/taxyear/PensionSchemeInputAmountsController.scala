@@ -47,9 +47,9 @@ class PensionSchemeInputAmountsController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val form = formProvider(period)
-
       val startEndDate = getStartEndDate(period)
+      val form         = formProvider(period, startEndDate)
+
       val preparedForm = request.userAnswers.get(PensionSchemeInputAmountsPage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -64,10 +64,10 @@ class PensionSchemeInputAmountsController @Inject() (
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
-      val form = formProvider(period)
-
       val startEndDate = getStartEndDate(period)
-      val schemeName   = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
+      val form         = formProvider(period, startEndDate)
+
+      val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName
       }
       form
@@ -91,6 +91,6 @@ class PensionSchemeInputAmountsController @Inject() (
   private def getStartEndDate(period: Period)(implicit messages: Messages): String = {
     val languageTag = if (messages.lang.code == "cy") "cy" else "en"
     val formatter   = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
-    period.start.format(formatter) + " " + messages("startEndDateAnd") + " " + period.end.format(formatter)
+    period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
   }
 }

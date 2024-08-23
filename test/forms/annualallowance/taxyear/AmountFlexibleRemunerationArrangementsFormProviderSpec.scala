@@ -17,11 +17,9 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class AmountFlexibleRemunerationArrangementsFormProviderSpec extends IntFieldBehaviours {
-
-  val form = new AmountSalarySacrificeArrangementsFormProvider()()
 
   ".value" - {
 
@@ -33,30 +31,35 @@ class AmountFlexibleRemunerationArrangementsFormProviderSpec extends IntFieldBeh
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      form,
+      newForm(),
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      form,
+      newForm(),
       fieldName,
-      nonNumericError = FormError(fieldName, "amountSalarySacrificeArrangements.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "amountSalarySacrificeArrangements.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "amountFlexibleRemunerationArrangements.error.nonNumeric", Seq("")),
+      wholeNumberError = FormError(fieldName, "amountFlexibleRemunerationArrangements.error.wholeNumber", Seq(""))
     )
 
     behave like intFieldWithRange(
-      form,
+      newForm(),
       fieldName,
       minimum = minimum,
       maximum = maximum,
-      expectedError = FormError(fieldName, "amountSalarySacrificeArrangements.error.outOfRange", Seq(minimum, maximum))
+      expectedError =
+        FormError(fieldName, "amountFlexibleRemunerationArrangements.error.outOfRange", Seq(minimum, maximum, ""))
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, "amountSalarySacrificeArrangements.error.required")
+      requiredError = FormError(fieldName, "amountFlexibleRemunerationArrangements.error.required", Seq(""))
     )
+  }
+  def newForm(): Form[BigInt] = {
+    val formProvider = new AmountFlexibleRemunerationArrangementsFormProvider()
+    formProvider("")
   }
 }

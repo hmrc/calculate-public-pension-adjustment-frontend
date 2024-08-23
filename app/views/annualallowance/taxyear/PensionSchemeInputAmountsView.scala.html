@@ -42,9 +42,9 @@
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
 
     @if(period == Period._2023){
-        <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.originalPIA.heading2", schemeName)</h2>
+        <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.originalPIA.heading2", schemeName, startEndDate)</h2>
     }else{
-        <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.revisedPIA.heading2", schemeName)</h2>
+        <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.revisedPIA.heading2", schemeName, startEndDate)</h2>
     }
 
     <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>

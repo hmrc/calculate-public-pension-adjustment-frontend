@@ -40,7 +40,7 @@
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message3")</p>
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
 
-    <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.revisedPIA.heading2", schemeName)</h2>
+    <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.heading2.2016-post", schemeName)</h2>
     <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
 
 }
@@ -57,7 +57,7 @@
             InputViewModel(
                 field = form("revisedPIA"),
                 label = HmrcPageHeadingLabel(
-                    content = messages("pensionSchemeInputAmounts.revisedPIA.heading1", period.start.getYear.toString, period.end.getYear.toString),
+                    content = messages("pensionSchemeInputAmounts.revisedPIA.heading1"),
                     caption = HtmlContent(captionText)
                 )
             )

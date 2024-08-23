@@ -26,6 +26,11 @@ class ProtectionReferenceFormProvider @Inject() extends Mappings {
   def apply(): Form[String] =
     Form(
       "value" -> text("protectionReference.error.required")
-        .verifying(maxLength(15, "protectionReference.error.length"))
+        .verifying(
+          firstError(
+            maxLength(15, "protectionReference.error.length"),
+            regexp("""^[a-z0-9A-Z]*$""", "protectionReference.error.invalid")
+          )
+        )
     )
 }
