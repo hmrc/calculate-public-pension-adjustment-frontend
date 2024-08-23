@@ -17,39 +17,44 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class RASContributionAmountFormProviderSpec extends IntFieldBehaviours {
-  val form = new RASContributionAmountFormProvider()()
+
   ".value" - {
     val fieldName          = "value"
     val minimum            = 1
     val maximum            = 999999999
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
     behave like fieldThatBindsValidData(
-      form,
+      newForm(),
       fieldName,
       validDataGenerator
     )
     behave like intField(
-      form,
+      newForm(),
       fieldName,
-      nonNumericError = FormError(fieldName, "rASContributionAmount.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "rASContributionAmount.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "rASContributionAmount.error.nonNumeric", Seq("")),
+      wholeNumberError = FormError(fieldName, "rASContributionAmount.error.wholeNumber", Seq(""))
     )
 
     behave like intFieldWithRange(
-      form,
+      newForm(),
       fieldName,
       minimum = minimum,
       maximum = maximum,
-      expectedError = FormError(fieldName, "rASContributionAmount.error.outOfRange", Seq(minimum, maximum))
+      expectedError = FormError(fieldName, "rASContributionAmount.error.outOfRange", Seq(minimum, maximum, ""))
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, "rASContributionAmount.error.required")
+      requiredError = FormError(fieldName, "rASContributionAmount.error.required", Seq(""))
     )
+  }
+
+  private def newForm(): Form[BigInt] = {
+    val formProvider = new RASContributionAmountFormProvider()
+    formProvider("")
   }
 }

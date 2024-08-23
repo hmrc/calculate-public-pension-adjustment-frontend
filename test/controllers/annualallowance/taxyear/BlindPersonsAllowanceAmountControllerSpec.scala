@@ -51,7 +51,7 @@ class BlindPersonsAllowanceAmountControllerSpec extends SpecBase with MockitoSug
   private def formWithMockMessages = {
 
     val formProvider = new BlindPersonsAllowanceAmountFormProvider()
-    formProvider(Period._2017)()
+    formProvider(Period._2017, startEndDate)()
   }
 
   "BlindPersonsAllowanceAmount Controller" - {

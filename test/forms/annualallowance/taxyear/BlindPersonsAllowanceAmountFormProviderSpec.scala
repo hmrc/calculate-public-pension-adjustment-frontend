@@ -53,8 +53,8 @@ class BlindPersonsAllowanceAmountFormProviderSpec extends IntFieldBehaviours {
         behave like intField(
           newForm(period),
           fieldName,
-          nonNumericError = FormError(fieldName, "blindPersonsAllowanceAmount.error.nonNumeric"),
-          wholeNumberError = FormError(fieldName, "blindPersonsAllowanceAmount.error.wholeNumber")
+          nonNumericError = FormError(fieldName, "blindPersonsAllowanceAmount.error.nonNumeric", Seq("")),
+          wholeNumberError = FormError(fieldName, "blindPersonsAllowanceAmount.error.wholeNumber", Seq(""))
         )
 
         behave like intFieldWithMinimum(
@@ -74,7 +74,7 @@ class BlindPersonsAllowanceAmountFormProviderSpec extends IntFieldBehaviours {
         behave like mandatoryField(
           newForm(period),
           fieldName,
-          requiredError = FormError(fieldName, "blindPersonsAllowanceAmount.error.required")
+          requiredError = FormError(fieldName, "blindPersonsAllowanceAmount.error.required", Seq(""))
         )
       }
     }
@@ -82,6 +82,6 @@ class BlindPersonsAllowanceAmountFormProviderSpec extends IntFieldBehaviours {
 
   def newForm(period: Period): Form[BigInt] = {
     val formProvider = new BlindPersonsAllowanceAmountFormProvider()
-    formProvider(period)()
+    formProvider(period, "")()
   }
 }

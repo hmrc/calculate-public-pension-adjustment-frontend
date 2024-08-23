@@ -27,6 +27,10 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-hint">@messages("rounding.hint")</p>
+}
+
 @layout(pageTitle = title(form, messages("blindPersonsAllowanceAmount.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.BlindPersonsAllowanceAmountController.onSubmit(mode, period), 'autoComplete -> "off") {
@@ -45,6 +49,7 @@
             )
             .withInputMode("numeric")
             .withWidth(Fixed10)
+            .withHint(HintViewModel(HtmlContent(contentHint)))
             .withCssClass("govuk-currency-input__inner__input")
             .withPrefix(PrefixOrSuffix(content = Text("£")))
         )

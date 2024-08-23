@@ -21,7 +21,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchersSugar.eqTo
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar.mock
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 import play.api.i18n.Messages
 
 class HowMuchAAChargeYouPaidFormProviderSpec extends IntFieldBehaviours {
@@ -36,38 +36,36 @@ class HowMuchAAChargeYouPaidFormProviderSpec extends IntFieldBehaviours {
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
     behave like fieldThatBindsValidData(
-      formWithMockMessages,
+      newForm(),
       fieldName,
       validDataGenerator
     )
 
     behave like intField(
-      formWithMockMessages,
+      newForm(),
       fieldName,
-      nonNumericError = FormError(fieldName, "howMuchAAChargeYouPaid.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "howMuchAAChargeYouPaid.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "howMuchAAChargeYouPaid.error.nonNumeric", Seq("")),
+      wholeNumberError = FormError(fieldName, "howMuchAAChargeYouPaid.error.wholeNumber", Seq(""))
     )
 
     behave like intFieldWithRange(
-      formWithMockMessages,
+      newForm(),
       fieldName,
       minimum = minimum,
       maximum = maximum,
-      expectedError = FormError(fieldName, "howMuchAAChargeYouPaid.error.outOfRange", Seq(minimum, maximum))
+      expectedError = FormError(fieldName, "howMuchAAChargeYouPaid.error.outOfRange", Seq(minimum, maximum, ""))
     )
 
     behave like mandatoryField(
-      formWithMockMessages,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, "error message")
+      requiredError = FormError(fieldName, "howMuchAAChargeYouPaid.error.required", Seq(""))
     )
 
-    def formWithMockMessages = {
-      val messages = mock[Messages]
-      when(messages.apply(eqTo("howMuchAAChargeYouPaid.error.required"), any())).thenReturn("error message")
-
-      val formProvider = new HowMuchAAChargeYouPaidFormProvider()
-      formProvider("")(messages)
+    def newForm(): Form[BigInt] = {
+      val form = new HowMuchAAChargeYouPaidFormProvider()
+      form("")
     }
+
   }
 }
