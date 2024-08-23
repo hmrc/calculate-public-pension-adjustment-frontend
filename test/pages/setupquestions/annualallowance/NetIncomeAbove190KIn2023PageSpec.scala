@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package pages.setupquestions.annualallowance
 
 import models.{CheckMode, LTAKickOutStatus, NormalMode}
@@ -86,8 +102,7 @@ class NetIncomeAbove190KIn2023PageSpec extends PageBehaviours {
       }
     }
 
-    // TODO Wire up to part 4 and change test
-    "when no is selected for page redirect to recovery " in {
+    "when no is selected for page redirect to FlexibleAccessDcScheme " in {
       val userAnswers = emptyUserAnswers
         .set(NetIncomeAbove190KIn2023Page, false)
         .success
@@ -95,7 +110,7 @@ class NetIncomeAbove190KIn2023PageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/there-is-a-problem")
+      checkNavigation(nextPageUrl, "/flexible-access-dc-scheme")
 
     }
 

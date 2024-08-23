@@ -21,14 +21,14 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object NetIncomeAbove190KIn2023Page extends QuestionPage[Boolean] {
+case object Contribution4000ToDirectContributionSchemePage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
 
-  override def toString: String = "netIncomeAbove190KIn2023"
+  override def toString: String = "contribution4000ToDirectContributionScheme"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(NetIncomeAbove190KIn2023Page) match {
+    answers.get(Contribution4000ToDirectContributionSchemePage) match {
       case Some(true)  =>
         answers.get(LTAKickOutStatus()).getOrElse(None) match {
           case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
@@ -40,12 +40,14 @@ case object NetIncomeAbove190KIn2023Page extends QuestionPage[Boolean] {
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
       case Some(false) =>
-        controllers.setupquestions.annualallowance.routes.FlexibleAccessDcSchemeController.onPageLoad(NormalMode)
+        controllers.setupquestions.annualallowance.routes.TriageJourneyNotImpactedPIADecreaseController.onPageLoad()
       case _           =>
         controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-
+    answers.get(Contribution4000ToDirectContributionSchemePage) match {
+      case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 }

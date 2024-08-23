@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package forms.setupquestions.annualallowance
+package forms
 
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class NetIncomeAbove190KIn2023FormProviderSpec extends BooleanFieldBehaviours {
+class FlexibleAccessDcSchemeFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "netIncomeAbove190KIn2023.error.required"
+  val requiredKey = "flexibleAccessDcScheme.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new NetIncomeAbove190KIn2023FormProvider()()
+  val form = new FlexibleAccessDcSchemeFormProvider()()
 
   ".value" - {
 
