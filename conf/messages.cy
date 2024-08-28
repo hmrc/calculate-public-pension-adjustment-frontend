@@ -1442,25 +1442,26 @@ increaseInLTACharge.message2 = cy: You can find this on a revised benefit crysta
 increaseInLTACharge.error.required = cy: Select yes if you have been told about an increase in your lifetime allowance percentage
 increaseInLTACharge.change.hidden = cy: if you have been told about an increase in your lifetime allowance percentage
 
-newLTACharge.title = newLTACharge
-newLTACharge.heading = newLTACharge
-newLTACharge.checkYourAnswersLabel = newLTACharge
-newLTACharge.error.required = Select yes if newLTACharge
-newLTACharge.change.hidden = NewLTACharge
+newLTACharge.title = cy: Has the increase in lifetime allowance percentage led to a change in the tax charge?
+newLTACharge.heading = cy: Has the change in lifetime allowance led to a change in the tax charge?
+newLTACharge.message1 = cy: Any amount that goes over the level of lifetime allowance available, is taxed under the lifetime allowance charge.
+newLTACharge.checkYourAnswersLabel = cy: Has the change in lifetime allowance led to a change in the tax charge?
+newLTACharge.error.required = cy: newLTACharge.error.required = Select yes if a change in your lifetime allowance led to a change in the tax charge
+newLTACharge.change.hidden = cy: if the change in lifetime allowance has led to a change in the tax charge
 
-otherSchemeNotification.title = Has your other pension scheme notified you?
-otherSchemeNotification.heading = Has your other pension scheme notified you?
-otherSchemeNotification.checkYourAnswersLabel = if your other pension scheme has notified you
-otherSchemeNotification.error.required = Select yes if your other pension scheme has notified you
-otherSchemeNotification.change.hidden = if your other pension scheme has notified you
+otherSchemeNotification.title = cy: Have you been notified by any other pension scheme that you have a new LTA charge?
+otherSchemeNotification.heading = cy: Have you been notified by any other pension scheme that you have a new LTA charge?
+otherSchemeNotification.checkYourAnswersLabel = cy: Select yes if you have been notified by any other pension scheme that you have a new LTA charge
+otherSchemeNotification.error.required = cy: Select yes if you have been notified by any other pension scheme that you have a new LTA charge
+otherSchemeNotification.change.hidden = cy: if you been notified by any other pension scheme that you have a new LTA charge
 
-notAbleToUseThisTriageLta.title = You cannot make a lifetime allowance adjustment
-notAbleToUseThisTriageLta.heading = You cannot make a lifetime allowance adjustment
-notAbleToUseThisTriageLta.message1 = If you have not had a benefit crystallisation event, you have not accessed your pension. This means that you will not have paid a lifetime allowance charge.
-notAbleToUseThisTriageLta.message2 = You cannot make an adjustment unless you have been contacted by your pension scheme administrator (PSA).
-notAbleToUseThisTriageLta.list = You can:
-notAbleToUseThisTriageLta.listItem1 = contact your PSA for more information about your pension scheme
-notAbleToUseThisTriageLta.listItem2 = contact the pension schemes helpline for more information about pension schemes
+notAbleToUseThisTriageLta.title = cy: You are not impacted
+notAbleToUseThisTriageLta.heading = cy: You are not impacted by the McCloud remedy
+notAbleToUseThisTriageLta.message1 = cy: You are not eligible to use this service
+notAbleToUseThisTriageLta.message2 = cy: You selected that you would like to use this service to calculate your lifetime allowance (LTA) adjustment.
+notAbleToUseThisTriageLta.message3 = cy: Although you paid an LTA charge, this charge has not changed as a result of the McCloud remedy.
+notAbleToUseThisTriageLta.message4 = cy: These reasons mean that your pension contributions will not be affected by the McCloud remedy and you do not need to use this service for your lifetime allowance.
+notAbleToUseThisTriageLta.message5 = cy: You are still able to use this service to calculate your annual allowance tax charges.
 
 netIncomeAbove100K.title = cy: netIncomeAbove100K
 netIncomeAbove100K.heading = cy: netIncomeAbove100K

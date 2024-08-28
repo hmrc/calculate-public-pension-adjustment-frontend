@@ -41,7 +41,7 @@ class IncreaseInLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = IncreaseInLTAChargePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance-new-charge")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-new-charge")
     }
 
     "must navigate to kickout page when user answers false" in {
@@ -53,7 +53,7 @@ class IncreaseInLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = IncreaseInLTAChargePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "must navigate to journey recovery when no answer" in {
@@ -78,7 +78,7 @@ class IncreaseInLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = IncreaseInLTAChargePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/change-lifetime-allowance-new-charge")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/change-lifetime-allowance-new-charge")
     }
 
     "must navigate to kickout page when user answers false" in {
@@ -90,7 +90,7 @@ class IncreaseInLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = IncreaseInLTAChargePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "must navigate to journey recovery when no answer" in {

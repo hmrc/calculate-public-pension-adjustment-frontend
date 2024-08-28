@@ -100,8 +100,8 @@ POST        /lifetime-allowance/benefit-crystallisation-event-date              
 GET         /lifetime-allowance/change-benefit-crystallisation-event-date                        controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-benefit-crystallisation-event-date                        controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
-GET         /triage-journey-not-impacted-no-BCE                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
-GET         /cannot-use-triage-lta-service                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaController.onPageLoad()
+GET         //triage-journey-not-impacted-no-BCE                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
+GET         /triage-journey-not-impacted-no-change                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaController.onPageLoad()
 
 GET         /lifetime-allowance/lifetime-allowance-percentage-change                                      controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/lifetime-allowance-percentage-change                                       controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onSubmit(mode: Mode = NormalMode)
@@ -113,10 +113,10 @@ POST        /lifetime-allowance/lifetime-allowance-percentage-increase          
 GET         /lifetime-allowance/change-lifetime-allowance-percentage-increase                           controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-lifetime-allowance-percentage-increase                           controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /lifetime-allowance-new-charge                        controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onPageLoad(mode: Mode = NormalMode)
-POST       /lifetime-allowance-new-charge                        controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-lifetime-allowance-new-charge                  controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-lifetime-allowance-new-charge                  controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onSubmit(mode: Mode = CheckMode)
+GET        /lifetime-allowance/lifetime-allowance-new-charge                        controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /lifetime-allowance/lifetime-allowance-new-charge                        controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /lifetime-allowance/change-lifetime-allowance-new-charge                  controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /lifetime-allowance/change-lifetime-allowance-new-charge                  controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onSubmit(mode: Mode = CheckMode)
 
 GET         /annual-allowance/pension-input-amount/:period                   controllers.annualallowance.preaaquestions.PIAPreRemedyController.onPageLoad(mode: Mode = NormalMode, period: Period)
 POST        /annual-allowance/pension-input-amount/:period                   controllers.annualallowance.preaaquestions.PIAPreRemedyController.onSubmit(mode: Mode = NormalMode, period: Period)
@@ -557,10 +557,10 @@ POST       /changeContributionRefunds                  controllers.setupquestion
 
 GET        /not-impacted-no-RPSS                      controllers.setupquestions.annualallowance.NotAbleToUseThisServiceAAController.onPageLoad()
 
-GET        /other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = NormalMode)
-POST       /other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = NormalMode)
-GET        /change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = CheckMode)
+GET        /triage-journey/other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = NormalMode)
+POST       /triage-journey/other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = NormalMode)
+GET        /triage-journey/change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = CheckMode)
+POST       /triage-journey/change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = CheckMode)
 
 GET        /income-over-100                        controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onPageLoad(mode: Mode = NormalMode)
 POST       /income-over-100                        controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onSubmit(mode: Mode = NormalMode)
