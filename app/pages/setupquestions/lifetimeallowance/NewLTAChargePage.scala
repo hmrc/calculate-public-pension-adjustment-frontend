@@ -42,7 +42,7 @@ case object NewLTAChargePage extends QuestionPage[Boolean] {
       case Some(true)  => redirectToNext(answers)
       case Some(false) =>
         controllers.setupquestions.lifetimeallowance.routes.MultipleBenefitCrystallisationEventController
-          .onPageLoad(CheckMode)
+          .onPageLoad(NormalMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
@@ -54,4 +54,13 @@ case object NewLTAChargePage extends QuestionPage[Boolean] {
       case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case _    => routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(MultipleBenefitCrystallisationEventPage)
+          .flatMap(_.remove(OtherSchemeNotificationPage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

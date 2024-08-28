@@ -41,9 +41,19 @@ case object IncreaseInLTAChargePage extends QuestionPage[Boolean] {
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(IncreaseInLTAChargePage) match {
       case Some(true)  =>
-        controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onPageLoad(CheckMode)
+        controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onPageLoad(NormalMode)
       case Some(false) =>
         controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(NewLTAChargePage)
+          .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
+          .flatMap(_.remove(OtherSchemeNotificationPage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

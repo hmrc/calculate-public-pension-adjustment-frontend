@@ -21,6 +21,7 @@ import pages.behaviours.PageBehaviours
 import pages.lifetimeallowance._
 
 import java.time.LocalDate
+import scala.util.Random
 
 class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
@@ -104,6 +105,24 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
 
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = HadBenefitCrystallisationEventPage
+        .cleanup(Some(Random.nextBoolean()), userAnswersLTATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(PreviousLTAChargePage) mustBe None
+      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe None
+      cleanedUserAnswers.get(IncreaseInLTAChargePage) mustBe None
+      cleanedUserAnswers.get(NewLTAChargePage) mustBe None
+      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
     }
   }
 }

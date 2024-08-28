@@ -46,4 +46,17 @@ case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
       case Some(false) => setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
       case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(PreviousLTAChargePage)
+          .flatMap(_.remove(ChangeInLifetimeAllowancePage))
+          .flatMap(_.remove(IncreaseInLTAChargePage))
+          .flatMap(_.remove(NewLTAChargePage))
+          .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
+          .flatMap(_.remove(OtherSchemeNotificationPage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -27,7 +27,7 @@ import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePag
 import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountClaimedOnOverseasPensionPage, AmountFlexibleRemunerationArrangementsPage, AmountOfGiftAidPage, AmountSalarySacrificeArrangementsPage, AnyLumpSumDeathBenefitsPage, AnySalarySacrificeArrangementsPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionNotAdjustedIncomePage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouHaveGiftAidPage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, FlexibleRemunerationArrangementsPage, HasReliefClaimedOnOverseasPensionPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
 import pages.lifetimeallowance.{AnnualPaymentValuePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
 import pages.setupquestions.ReportingChangePage
-import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, HadBenefitCrystallisationEventPage, IncreaseInLTAChargePage, MultipleBenefitCrystallisationEventPage, NewLTAChargePage}
+import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, HadBenefitCrystallisationEventPage, IncreaseInLTAChargePage, MultipleBenefitCrystallisationEventPage, NewLTAChargePage, OtherSchemeNotificationPage, PreviousLTAChargePage}
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.{Binding, bind}
@@ -435,4 +435,26 @@ trait SpecBase
       .success
       .value
 
+  def userAnswersLTATriage: UserAnswers = emptyUserAnswers
+    .set(HadBenefitCrystallisationEventPage, true)
+    .success
+    .value
+    .set(PreviousLTAChargePage, false)
+    .success
+    .value
+    .set(ChangeInLifetimeAllowancePage, true)
+    .success
+    .value
+    .set(IncreaseInLTAChargePage, true)
+    .success
+    .value
+    .set(NewLTAChargePage, true)
+    .success
+    .value
+    .set(MultipleBenefitCrystallisationEventPage, true)
+    .success
+    .value
+    .set(OtherSchemeNotificationPage, true)
+    .success
+    .value
 }
