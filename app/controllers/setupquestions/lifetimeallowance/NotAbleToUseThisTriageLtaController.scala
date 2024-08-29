@@ -22,7 +22,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.Format.GenericFormat
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaView
+import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaView
 
 import javax.inject.Inject
 
@@ -32,7 +32,7 @@ class NotAbleToUseThisTriageLtaController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: NotAbleToUseThisServiceLtaView
+  view: NotAbleToUseThisTriageLtaView
 ) extends FrontendBaseController
     with I18nSupport {
 
