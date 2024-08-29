@@ -1336,8 +1336,8 @@ blindPersonsAllowanceAmount.error.nonNumeric = cy: Your blind persons allowance 
 blindPersonsAllowanceAmount.error.required = cy: How much blind persons allowance from {0} did you claim?
 blindPersonsAllowanceAmount.error.wholeNumber = cy: Your blind persons allowance from {0} must must be a whole number
 blindPersonsAllowanceAmount.change.hidden = cy: your blind persons allowance
-blindPersonsAllowanceAmount.error.maximum = cy: Your blind persons allowance must be £{0} or less for {1}
-blindPersonsAllowanceAmount.error.minimum = cy: Your blind persons allowance must be £{0} or more for {1}
+blindPersonsAllowanceAmount.error.maximum = cy: Your blind persons allowance must be £{0} or less from {1}
+blindPersonsAllowanceAmount.error.minimum = cy: Your blind persons allowance must be £{0} or more from {1}
 
 rASContributionAmount.title = cy: What was your gross contribution in total to all of your pension schemes where relief at source was given from {0}?
 rASContributionAmount.heading = cy: What was your gross contribution in total to all of your pension schemes where relief at source was given from {0}?

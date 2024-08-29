@@ -37,12 +37,12 @@ class BlindPersonsAllowanceAmountFormProvider @Inject() extends Mappings {
           minimumValueTwoArgs[BigInt](
             getIndividualLimit(period),
             "blindPersonsAllowanceAmount.error.minimum",
-            Seq(getIndividualLimit(period).toString(), period.toString)
+            Seq(getIndividualLimit(period).toString(), startEndDate)
           ),
           maximumValueTwoArgs[BigInt](
             getIndividualLimit(period) * 2,
             "blindPersonsAllowanceAmount.error.maximum",
-            Seq((getIndividualLimit(period) * 2).toString(), period.toString)
+            Seq((getIndividualLimit(period) * 2).toString(), startEndDate)
           )
         )
     )
