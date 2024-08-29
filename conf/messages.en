@@ -1451,8 +1451,8 @@ newLTACharge.change.hidden = if the change in lifetime allowance has led to a ch
 
 otherSchemeNotification.title = Have you been notified by any other pension scheme that you have a new LTA charge?
 otherSchemeNotification.heading = Have you been notified by any other pension scheme that you have a new LTA charge?
-otherSchemeNotification.checkYourAnswersLabel = Select yes if you have been notified by any other pension scheme that you have a new LTA charge
-otherSchemeNotification.error.required = Have you been notified by any other pension scheme that you have a new LTA charge?
+otherSchemeNotification.checkYourAnswersLabel = Have you been notified by any other pension scheme that you have a new LTA charge?
+otherSchemeNotification.error.required = Select yes if you have been notified by any other pension scheme that you have a new LTA charge
 otherSchemeNotification.change.hidden = if you been notified by any other pension scheme that you have a new LTA charge
 
 notAbleToUseThisTriageLta.title = You are not impacted
