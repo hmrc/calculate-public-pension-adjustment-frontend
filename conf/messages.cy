@@ -212,9 +212,9 @@ flexibleAccessStartDate.error.max = Mae’n rhaid i’r dyddiad pan wnaethoch gy
 changeInLifetimeAllowance.title = A ydych wedi cael gwybod am newid yn y ganran lwfans oes?
 changeInLifetimeAllowance.heading = A ydych wedi cael gwybod am newid yn y ganran lwfans oes?
 changeInLifetimeAllowance.message = Dyma’r ganran o’r lwfans oes a ddefnyddir ar adeg eich digwyddiad crisialu buddiannau.
-changeInLifetimeAllowance.hint = Gallwch ddod o hyd i hyn ar ddatganiad diwygiedig o ran digwyddiad crisialu buddiannau.
-changeInLifetimeAllowance.error.required = Dewiswch ‘Iawn’ os ydych wedi cael gwybod am newid yn y ganran lwfans oes
-changeInLifetimeAllowance.checkYourAnswersLabel = A ydych wedi cael gwybod am newid yn y ganran lwfans oes?
+changeInLifetimeAllowance.hint = cy: Your revised benefit crystallisation event statement will tell you of any changes to your lifetime allowance percentage.
+changeInLifetimeAllowance.error.required = cy: Select yes if you were told about a change in your lifetime allowance percentage
+changeInLifetimeAllowance.checkYourAnswersLabel = cy: Have you been told about a change in your lifetime allowance percentage?
 changeInLifetimeAllowance.change.hidden = os ydych wedi cael gwybod am newid yn y ganran lwfans oes
 
 payTaxCharge1415.title = A wnaethoch dalu tâl treth lwfans blynyddol rhwng 6 Ebrill 2014 a 5 Ebrill 2015?
@@ -272,8 +272,9 @@ hadBenefitCrystallisationEvent.heading = A ydych chi wedi cael digwyddiad crisia
 hadBenefitCrystallisationEvent.checkYourAnswersLabel = A ydych chi wedi cael digwyddiad crisialu buddiannau yn eich pensiwn ar ôl 1 Ebrill 2015?
 hadBenefitCrystallisationEvent.error.required = Dewiswch ‘Iawn’ os ydych wedi cael digwyddiad crisialu buddiannau yn eich pensiwn ar ôl 1 Ebrill 2015
 hadBenefitCrystallisationEvent.change.hidden = if you have had a benefit crystallisation event in your pension after 1 April 2015
-hadBenefitCrystallisationEvent.hint = ‘Digwyddiadau crisialu buddiannau’ yw pan fydd gweinyddwr eich cynllun pensiwn yn cymharu gwerth eich buddiannau pensiwn â’ch lwfans oes sy’n dal i fod ar gael.
-hadBenefitCrystallisationEvent.hint2 = Mae hyn yn sicrhau bod tâl treth yn cael ei godi os yw’r swm a gymerir allan yn fwy na’r lwfans oes.
+hadBenefitCrystallisationEvent.message1 = cy: A benefit crystallisation event is when the value of your pension is tested against the lifetime allowance.
+hadBenefitCrystallisationEvent.message2 = cy: Benefit crystallisation events can happen when you start receiving benefits from your pension, or take a lump sum from your scheme.
+hadBenefitCrystallisationEvent.message3 = cy: This makes sure a tax charge is applied if the amount taken out is more than the lifetime allowance.
 
 dateOfBenefitCrystallisationEvent.title = Beth oedd dyddiad y digwyddiad crisialu buddiannau?
 dateOfBenefitCrystallisationEvent.heading = Beth oedd dyddiad y digwyddiad crisialu buddiannau?
@@ -288,13 +289,13 @@ dateOfBenefitCrystallisationEvent.change.hidden = dyddiad y digwyddiad crisialu 
 dateOfBenefitCrystallisationEvent.error.min = Mae’n rhaid i’r dyddiad crisialu buddiannau fod ar ôl {0}
 dateOfBenefitCrystallisationEvent.error.max = Mae’n rhaid i ddyddiad y digwyddiad crisialu buddiannau fod cyn 6 Ebrill 2023
 
-notAbleToUseThisServiceLta.title = Ni allwch wneud addasiad o ran lwfans oes
-notAbleToUseThisServiceLta.heading = Ni allwch wneud addasiad o ran lwfans oes
-notAbleToUseThisServiceLta.message1 = Os nad ydych wedi cael digwyddiad crisialu buddiannau, nid ydych wedi cyrchu eich pensiwn. Mae hyn yn golygu na fyddwch wedi talu tâl lwfans oes.
-notAbleToUseThisServiceLta.message2 = Ni allwch wneud addasiad oni bai bod gweinyddwr eich cynllun pensiwn (PSA) wedi cysylltu â chi.
-notAbleToUseThisServiceLta.list = Gallwch wneud y canlynol:
-notAbleToUseThisServiceLta.listItem1 = cysylltu â’ch PSA i gael rhagor o wybodaeth am eich cynllun pensiwn
-notAbleToUseThisServiceLta.listItem2 = cysylltu â llinell gymorth y cynlluniau pensiwn i gael rhagor o wybodaeth am gynlluniau pensiwn
+notAbleToUseThisServiceLta.title = cy: You are not impacted
+notAbleToUseThisServiceLta.heading = cy: You are not impacted by the McCloud remedy
+notAbleToUseThisServiceLta.message1 = cy: You are not eligible to use this service
+notAbleToUseThisServiceLta.message2 = cy: You selected that you would like to use this service to calculate your lifetime allowance (LTA) adjustment
+notAbleToUseThisServiceLta.message3 = cy: If you have not had a benefit crystallisation event, you have not accessed your pension. This means that you will not have paid a lifetime allowance charge.
+notAbleToUseThisServiceLta.message4 = cy: These reasons mean that your pension contributions will not be affected by the McCloud remedy and you do not need to use this service for your lifetime allowance.
+notAbleToUseThisServiceLta.message5 = cy: You are still able to use this service to calculate your annual allowance tax charges.
 
 taskList.title = Cyfrifwch eich addasiad i bensiwn gwasanaeth cyhoeddus
 taskList.heading = Cyfrifwch eich addasiad i bensiwn gwasanaeth cyhoeddus
@@ -1405,11 +1406,15 @@ affectedByRemedy.checkYourAnswersLabel = cy: affectedByRemedy
 affectedByRemedy.error.required = cy: Select yes if affectedByRemedy
 affectedByRemedy.change.hidden = cy: AffectedByRemedy
 
-previousLTACharge.title = cy: previousLTACharge
-previousLTACharge.heading = cy: previousLTACharge
-previousLTACharge.checkYourAnswersLabel = cy: previousLTACharge
-previousLTACharge.error.required = cy: Select yes if previousLTACharge
-previousLTACharge.change.hidden = cy: PreviousLTACharge
+previousLTACharge.title = cy: Have you paid an LTA charge?
+previousLTACharge.heading = cy: Lifetime allowance charge
+previousLTACharge.message1 = cy: The Lifetime allowance (LTA) is the total amount of money that you can put into UK registered pension schemes before receiving a tax charge.
+previousLTACharge.message2 = cy: The standard lifetime allowance was £1,073,100. This was abolished from 6 April 2023.
+previousLTACharge.message3 = cy: You will find if you have breached the lifetime allowance limit on your revised benefit crystallisation event (BCE) statement.
+previousLTACharge.heading2 = cy: Have you paid a lifetime allowance charge?
+previousLTACharge.checkYourAnswersLabel = cy: Have you paid a lifetime allowance charge?
+previousLTACharge.error.required = cy: Select yes if you have paid a lifetime allowance charge
+previousLTACharge.change.hidden = cy: if you paid a lifetime allowance charge
 
 pensionProtectedMember.title = cy: pensionProtectedMember
 pensionProtectedMember.heading = cy: pensionProtectedMember
@@ -1432,11 +1437,13 @@ contributionRefunds.change.hidden = cy: ContributionRefunds
 notAbleToUseThisServiceAA.title = cy: notAbleToUseThisServiceAA
 notAbleToUseThisServiceAA.heading = cy:notAbleToUseThisServiceAA
 
-increaseInLTACharge.title = increaseInLTACharge
-increaseInLTACharge.heading = increaseInLTACharge
-increaseInLTACharge.checkYourAnswersLabel = increaseInLTACharge
-increaseInLTACharge.error.required = Select yes if increaseInLTACharge
-increaseInLTACharge.change.hidden = IncreaseInLTACharge
+increaseInLTACharge.title = cy: Have you been told about an increase in your lifetime allowance percentage?
+increaseInLTACharge.heading = cy: Have you been told about an increase in your lifetime allowance percentage?
+increaseInLTACharge.checkYourAnswersLabel = cy: Have you been told about an increase in your lifetime allowance percentage?
+increaseInLTACharge.message1 = cy: This is the percentage of lifetime allowance used at your benefit crystallisation event.
+increaseInLTACharge.message2 = cy: You can find this on a revised benefit crystallisation event statement.
+increaseInLTACharge.error.required = cy: Select yes if you have been told about an increase in your lifetime allowance percentage
+increaseInLTACharge.change.hidden = cy: if you have been told about an increase in your lifetime allowance percentage
 
 newLTACharge.title = newLTACharge
 newLTACharge.heading = newLTACharge

@@ -95,7 +95,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance-percentage-increase")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-percentage-increase")
     }
 
     "must navigate to kickout when user answers false for PreviousLTACharge and ChangeInLTA" in {
@@ -218,7 +218,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance-percentage-increase")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-percentage-increase")
     }
 
     "must navigate to kickout when user answers false for PreviousLTACharge and ChangeInLTA" in {
