@@ -39,7 +39,7 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/other-scheme-LTA-notification")
+      checkNavigation(nextPageUrl, "/triage-journey/other-scheme-LTA-notification")
     }
 
     "when user doesn't have multiple public sector BCE " in {
@@ -49,7 +49,7 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "when user hasn't answered multiple public sector BCE " in {
@@ -72,7 +72,7 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/change-other-scheme-LTA-notification")
+      checkNavigation(nextPageUrl, "/triage-journey/change-other-scheme-LTA-notification")
     }
 
     "when user has multiple public sector BCE in check mode" in {
@@ -82,7 +82,7 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "when user hasn't answered multiple public sector BCE in check mode " in {
