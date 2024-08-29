@@ -95,7 +95,7 @@ class OtherSchemeNotificationPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = OtherSchemeNotificationPage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "must navigate to journey recovery when no answer" in {
@@ -133,7 +133,7 @@ class OtherSchemeNotificationPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = OtherSchemeNotificationPage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "must navigate to journey recovery when no answer" in {

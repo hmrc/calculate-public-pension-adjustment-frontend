@@ -110,7 +110,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "must navigate to kickout when user answers true for PreviousLTACharge and false for ChangeInLTA" in {
@@ -125,7 +125,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "must navigate to CYA page when user answers true for PreviousLTACharge and false for ChangeInLTA but nothing for AAKickOutStatus " in {
@@ -140,7 +140,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "must navigate to journey recovery when no answer" in {
@@ -233,7 +233,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "must navigate to kickout when user answers true for PreviousLTACharge and false for ChangeInLTA" in {
@@ -248,7 +248,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/cannot-use-triage-lta-service")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-change")
     }
 
     "must navigate to CYA page when user answers true for PreviousLTACharge and true for ChangeInLTA but nothing for AAKickOutStatus " in {
