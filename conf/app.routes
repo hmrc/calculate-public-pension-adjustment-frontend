@@ -100,7 +100,7 @@ POST        /lifetime-allowance/benefit-crystallisation-event-date              
 GET         /lifetime-allowance/change-benefit-crystallisation-event-date                        controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-benefit-crystallisation-event-date                        controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
-GET         //triage-journey-not-impacted-no-BCE                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
+GET         /triage-journey-not-impacted-no-BCE                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
 GET         /triage-journey-not-impacted-no-change                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaController.onPageLoad()
 
 GET         /lifetime-allowance/lifetime-allowance-percentage-change                                      controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = NormalMode)
