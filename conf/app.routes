@@ -100,7 +100,7 @@ POST        /lifetime-allowance/benefit-crystallisation-event-date              
 GET         /lifetime-allowance/change-benefit-crystallisation-event-date                        controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-benefit-crystallisation-event-date                        controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
-GET         /cannot-use-lta-service                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
+GET         /triage-journey-not-impacted-no-BCE                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
 GET         /cannot-use-triage-lta-service                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaController.onPageLoad()
 
 GET         /lifetime-allowance/lifetime-allowance-percentage-change                                      controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = NormalMode)
@@ -108,10 +108,10 @@ POST        /lifetime-allowance/lifetime-allowance-percentage-change            
 GET         /lifetime-allowance/change-lifetime-allowance-percentage-change                                controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-lifetime-allowance-percentage-change                                controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onSubmit(mode: Mode = CheckMode)
 
-GET         /lifetime-allowance-percentage-increase                                  controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onPageLoad(mode: Mode = NormalMode)
-POST        /lifetime-allowance-percentage-increase                                  controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onSubmit(mode: Mode = NormalMode)
-GET         /change-lifetime-allowance-percentage-increase                           controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-lifetime-allowance-percentage-increase                           controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onSubmit(mode: Mode = CheckMode)
+GET         /lifetime-allowance/lifetime-allowance-percentage-increase                                  controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onPageLoad(mode: Mode = NormalMode)
+POST        /lifetime-allowance/lifetime-allowance-percentage-increase                                  controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onSubmit(mode: Mode = NormalMode)
+GET         /lifetime-allowance/change-lifetime-allowance-percentage-increase                           controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onPageLoad(mode: Mode = CheckMode)
+POST        /lifetime-allowance/change-lifetime-allowance-percentage-increase                           controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onSubmit(mode: Mode = CheckMode)
 
 GET        /lifetime-allowance-new-charge                        controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onPageLoad(mode: Mode = NormalMode)
 POST       /lifetime-allowance-new-charge                        controllers.setupquestions.lifetimeallowance.NewLTAChargeController.onSubmit(mode: Mode = NormalMode)
@@ -535,10 +535,10 @@ POST       /affected-by-remedy                        controllers.setupquestions
 GET        /change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onSubmit(mode: Mode = CheckMode)
 
-GET        /LTA-charge                       controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = NormalMode)
-POST       /LTA-charge                        controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = CheckMode)
+GET        /triage-journey/LTA-charge                       controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /triage-journey/LTA-charge                        controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /triage-journey/change-LTA-charge                controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /triage-journey/change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = CheckMode)
 
 GET        /protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = NormalMode)
 POST       /protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = NormalMode)
