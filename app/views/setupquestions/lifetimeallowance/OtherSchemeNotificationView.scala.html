@@ -32,12 +32,14 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @govukRadios(
+            @govukRadios(
             RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = LegendViewModel(messages("otherSchemeNotification.heading")).asPageHeading()
-            )
-        )
+            field = form("value"),
+                legend = HmrcPageHeadingLegend(
+                    content = messages("otherSchemeNotification.heading"),
+                    caption = HmrcSectionCaption(messages("lifetimeAllowance.caption"))
+                )
+            ))
 
         @continueButton()
     }
