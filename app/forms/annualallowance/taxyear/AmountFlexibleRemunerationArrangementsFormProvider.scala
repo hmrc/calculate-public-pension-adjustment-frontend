@@ -33,7 +33,7 @@ class AmountFlexibleRemunerationArrangementsFormProvider @Inject() extends Mappi
       )
         .verifying(
           inRangeWithArg[BigInt](
-            0,
+            1,
             BigInt("999999999"),
             "amountFlexibleRemunerationArrangements.error.outOfRange",
             startEndDate
