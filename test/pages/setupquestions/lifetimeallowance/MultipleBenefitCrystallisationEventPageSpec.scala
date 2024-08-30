@@ -19,6 +19,8 @@ package pages.setupquestions.lifetimeallowance
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
+import scala.util.Random
+
 class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
   "MultipleBenefitCrystallisationEventPage" - {
@@ -72,7 +74,7 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/triage-journey/change-other-scheme-LTA-notification")
+      checkNavigation(nextPageUrl, "/triage-journey/other-scheme-LTA-notification")
     }
 
     "when user has multiple public sector BCE in check mode" in {
@@ -93,6 +95,19 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
       val nextPageUrl: String = page.navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = MultipleBenefitCrystallisationEventPage
+        .cleanup(Some(Random.nextBoolean()), userAnswersLTATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
     }
   }
 }

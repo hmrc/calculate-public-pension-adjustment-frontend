@@ -19,6 +19,8 @@ package pages.setupquestions.lifetimeallowance
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
+import scala.util.Random
+
 class IncreaseInLTAChargePageSpec extends PageBehaviours {
 
   "IncreaseInLTAChargePage" - {
@@ -78,7 +80,7 @@ class IncreaseInLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = IncreaseInLTAChargePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/change-lifetime-allowance-new-charge")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-new-charge")
     }
 
     "must navigate to kickout page when user answers false" in {
@@ -101,6 +103,21 @@ class IncreaseInLTAChargePageSpec extends PageBehaviours {
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
 
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = IncreaseInLTAChargePage
+        .cleanup(Some(Random.nextBoolean()), userAnswersLTATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(NewLTAChargePage) mustBe None
+      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
     }
   }
 }
