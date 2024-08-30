@@ -24,7 +24,7 @@ import play.api.mvc.Call
 
 case object OtherSchemeNotificationPage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "setup" \ "lta" \ toString
 
   override def toString: String = "otherSchemeNotification"
 
