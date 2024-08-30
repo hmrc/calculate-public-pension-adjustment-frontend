@@ -26,7 +26,7 @@ import scala.util.Try
 
 case object SavingsStatementPage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
 
   override def toString: String = "savingsStatement"
 

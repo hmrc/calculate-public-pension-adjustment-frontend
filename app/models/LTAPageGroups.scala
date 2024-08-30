@@ -20,7 +20,6 @@ case object LTAPageGroups {
 
   def changeInTaxChargePageGroup(): Seq[String] =
     Seq(
-      "multipleBenefitCrystallisationEvent",
       "ltaProtectionOrEnhancements",
       "protectionType",
       "protectionReference",

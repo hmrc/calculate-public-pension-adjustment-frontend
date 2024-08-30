@@ -26,10 +26,18 @@ import play.api.mvc.Call
 case object LTASection extends Section {
 
   def removeAllUserAnswers(userAnswers: UserAnswers): UserAnswers =
-    userAnswers.removePath(JsPath \ "lta").get
+    userAnswers.removePath(JsPath \ "lta").get.removePath(JsPath \ "setup" \ "lta").get
 
   def removeAllUserAnswersAndNavigation(userAnswers: UserAnswers): UserAnswers =
-    userAnswers.removePath(JsPath \ "lta").get.remove(sectionNavigation).get
+    userAnswers
+      .removePath(JsPath \ "lta")
+      .get
+      .remove(sectionNavigation)
+      .get
+      .removePath(JsPath \ "setup" \ "lta")
+      .get
+      .remove(sectionNavigation)
+      .get
 
   val initialPage: Call                     = ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
   val checkYourLTAAnswersPage: Call         = ltaRoutes.CheckYourLTAAnswersController.onPageLoad()

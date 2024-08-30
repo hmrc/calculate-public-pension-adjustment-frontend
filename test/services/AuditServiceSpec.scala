@@ -60,6 +60,10 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
 
         val calculationInputs = CalculationResults.CalculationInputs(
           Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+          ),
           Some(
             AnnualAllowance(
               List(Period._2021, Period._2019, Period._2017),

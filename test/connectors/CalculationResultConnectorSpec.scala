@@ -19,7 +19,7 @@ package connectors
 import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
 import generators.Generators
-import models.CalculationResults.{CalculationInputs, CalculationResponse, Resubmission, TotalAmounts}
+import models.CalculationResults.{AnnualAllowanceSetup, CalculationInputs, CalculationResponse, LifetimeAllowanceSetup, Resubmission, Setup, TotalAmounts}
 import models.submission.Failure
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.Application
@@ -52,7 +52,15 @@ class CalculationResultConnectorSpec
         val url = s"/calculate-public-pension-adjustment/show-calculation"
         val app = application
 
-        val calcInputs = CalculationInputs(Resubmission(false, None), None, None)
+        val calcInputs = CalculationInputs(
+          Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+          ),
+          None,
+          None
+        )
 
         running(app) {
           val connector = app.injector.instanceOf[CalculationResultConnector]
@@ -82,7 +90,15 @@ class CalculationResultConnectorSpec
         val url = s"/calculate-public-pension-adjustment/show-calculation"
         val app = application
 
-        val calcInputs = CalculationInputs(Resubmission(false, None), None, None)
+        val calcInputs = CalculationInputs(
+          Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+          ),
+          None,
+          None
+        )
 
         running(app) {
           val connector = app.injector.instanceOf[CalculationResultConnector]

@@ -16,17 +16,11 @@
 
 package models.CalculationResults
 
-import models.{AnnualAllowance, LifeTimeAllowance}
 import play.api.libs.json._
 
-case class CalculationInputs(
-  resubmission: Resubmission,
-  setup: Setup,
-  annualAllowance: Option[AnnualAllowance],
-  lifeTimeAllowance: Option[LifeTimeAllowance]
-)
+case class AnnualAllowanceSetup(savingsStatement: Option[Boolean])
 
-object CalculationInputs {
+object AnnualAllowanceSetup {
 
-  implicit lazy val formats: Format[CalculationInputs] = Json.format
+  implicit lazy val formats: Format[AnnualAllowanceSetup] = Json.format
 }

@@ -19,7 +19,7 @@ package connectors
 import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
 import generators.Generators
-import models.CalculationResults.{CalculationInputs, Resubmission}
+import models.CalculationResults.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Resubmission, Setup}
 import models.Done
 import models.submission.{Failure, SubmissionRequest, SubmissionResponse, Success}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
@@ -52,7 +52,20 @@ class SubmissionsConnectorSpec extends SpecBase with WireMockHelper with ScalaCh
         running(app) {
           val connector         = app.injector.instanceOf[SubmissionsConnector]
           val submissionRequest =
-            SubmissionRequest(CalculationInputs(Resubmission(false, None), None, None), None, "", "")
+            SubmissionRequest(
+              CalculationInputs(
+                Resubmission(false, None),
+                Setup(
+                  Some(AnnualAllowanceSetup(Some(true))),
+                  Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+                ),
+                None,
+                None
+              ),
+              None,
+              "",
+              ""
+            )
 
           val responseBody = Json.toJson(Success("uniqueId")).toString
 
@@ -72,7 +85,20 @@ class SubmissionsConnectorSpec extends SpecBase with WireMockHelper with ScalaCh
         running(app) {
           val connector         = app.injector.instanceOf[SubmissionsConnector]
           val submissionRequest =
-            SubmissionRequest(CalculationInputs(Resubmission(false, None), None, None), None, "", "")
+            SubmissionRequest(
+              CalculationInputs(
+                Resubmission(false, None),
+                Setup(
+                  Some(AnnualAllowanceSetup(Some(true))),
+                  Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+                ),
+                None,
+                None
+              ),
+              None,
+              "",
+              ""
+            )
 
           val responseBody = Json.toJson(Failure(Seq("someError"))).toString
 
