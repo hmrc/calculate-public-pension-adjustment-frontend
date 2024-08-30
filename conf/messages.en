@@ -93,15 +93,15 @@ annualAllowance.period.caption.2021 = Annual allowance between 6 April 2020 and 
 annualAllowance.period.caption.2022 = Annual allowance between 6 April 2021 and 5 April 2022
 annualAllowance.period.caption.2023 = Annual allowance between 6 April 2022 and 5 April 2023
 
-savingsStatement.title = Have you been informed about using the calculate your public service pension adjustment?
-savingsStatement.heading = Have you been informed about using the calculate your public service pension adjustment?
-savingsStatement.paragraph = Your public service pension administrator may have informed you by using a:
-savingsStatement.bullet.1 = pension saving statement
+savingsStatement.title = Have you received any of the following?
+savingsStatement.heading = Have you received any of the following?
+savingsStatement.paragraph = Your public service pension administrator may have sent you any of these documents:
+savingsStatement.bullet.1 = revised pension saving statement
 savingsStatement.bullet.2 = remediable service statement
 savingsStatement.bullet.3 = revised retirement statement
-savingsStatement.error.required = Select yes if you have been told about the calculate your public service pension adjustment
-savingsStatement.checkYourAnswersLabel = Have you been informed about using the calculate your public service pension adjustment?
-savingsStatement.change.hidden = if you have been informed about Calculate your public service pension adjustment
+savingsStatement.error.required = Select yes if you have received a pension saving statement, remedial service statement or a revised retirement statement
+savingsStatement.checkYourAnswersLabel = Have you received a pension saving statement, remedial service statement or a revised retirement statement?
+savingsStatement.change.hidden = if you have received a pension saving statement, remedial service statement or a revised retirement statement
 
 resubmittingAdjustment.title = Do you want to overwrite a previous submission?
 resubmittingAdjustment.heading = Do you want to overwrite a previous submission?
@@ -1421,17 +1421,23 @@ previousLTACharge.checkYourAnswersLabel = Have you paid a lifetime allowance cha
 previousLTACharge.error.required = Select yes if you have paid a lifetime allowance charge
 previousLTACharge.change.hidden = if you paid a lifetime allowance charge
 
-pensionProtectedMember.title = pensionProtectedMember
-pensionProtectedMember.heading = pensionProtectedMember
-pensionProtectedMember.checkYourAnswersLabel = pensionProtectedMember
-pensionProtectedMember.error.required = Select yes if pensionProtectedMember
-pensionProtectedMember.change.hidden = PensionProtectedMember
+pensionProtectedMember.title = Are you a protected member
+pensionProtectedMember.heading = Protected members
+pensionProtectedMember.message1 = Protected members did not move from their old (legacy) pension schemes to the new (reform) scheme during the remedy period.
+pensionProtectedMember.message2 = You could only join the reform scheme on 1 April 2022.
+pensionProtectedMember.link = Find out more information about protected members
+pensionProtectedMember.heading2 = Are you a protected member of your public service pension scheme?
+pensionProtectedMember.checkYourAnswersLabel = Are you a protected member?
+pensionProtectedMember.error.required = Select yes if you were a protected member of your public service pension scheme
+pensionProtectedMember.change.hidden = if you are a protected member
 
-hadAACharge.title = hadAACharge
-hadAACharge.heading = hadAACharge
-hadAACharge.checkYourAnswersLabel = hadAACharge
-hadAACharge.error.required = Select yes if hadAACharge
-hadAACharge.change.hidden = HadAACharge
+hadAACharge.title = Did you pay an annual allowance tax charge from 6 April 2015 to 5 April 2022
+hadAACharge.heading = Did you pay an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
+hadAACharge.message1 = Annual allowance is the maximum amount that you can put into your pension without being charged extra tax.
+hadAACharge.hint = If you reported an annual allowance tax charge, you will find this information in your self assessment for that year.
+hadAACharge.checkYourAnswersLabel = Did you pay an annual allowance charge from 6 April 2015 to 5 April 22?
+hadAACharge.error.required = Select yes if you paid an annual allowance tax charge between 6 April 2015 and 5 April 2022
+hadAACharge.change.hidden = if you paid an annual allowance tax charge from 6 April 2015 to 5 April 2022
 
 contributionRefunds.title = contributionRefunds
 contributionRefunds.heading = contributionRefunds

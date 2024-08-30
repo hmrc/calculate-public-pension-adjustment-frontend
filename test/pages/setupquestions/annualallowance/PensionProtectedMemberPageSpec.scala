@@ -79,7 +79,7 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PensionProtectedMemberPage.navigate(NormalMode, userAnswer).url
 
-      checkNavigation(nextPageUrl, "/annual-allowance-charge")
+      checkNavigation(nextPageUrl, "/triage-journey/annual-allowance-charge")
     }
 
     "must go to journey recovery when no answer" in {
@@ -104,7 +104,7 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PensionProtectedMemberPage.navigate(CheckMode, userAnswer).url
 
-      checkNavigation(nextPageUrl, "/annual-allowance-charge")
+      checkNavigation(nextPageUrl, "/triage-journey/annual-allowance-charge")
 
     }
 
