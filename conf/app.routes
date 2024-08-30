@@ -51,7 +51,7 @@ POST        /annual-allowance/stopped-paying-into-public-service-pension        
 GET         /annual-allowance/change-stopped-paying-into-public-service-pension   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onPageLoad(mode: Mode = CheckMode)
 POST        /annual-allowance/change-stopped-paying-into-public-service-pension   controllers.annualallowance.preaaquestions.StopPayingPublicPensionController.onSubmit(mode: Mode = CheckMode)
 
-GET         /cannot-use-service                                              controllers.setupquestions.IneligibleController.onPageLoad
+GET         /triage-journey-not-impacted                                     controllers.setupquestions.IneligibleController.onPageLoad
 
 GET         /charges                                                         controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = NormalMode)
 POST        /charges                                                         controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = NormalMode)
@@ -530,10 +530,10 @@ POST       /annual-allowance/:period/union-police-relief-amount                 
 GET        /annual-allowance/:period/change-union-police-relief-amount                       controllers.annualallowance.taxyear.UnionPoliceReliefAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST       /annual-allowance/:period/change-union-police-relief-amount                       controllers.annualallowance.taxyear.UnionPoliceReliefAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET        /affected-by-remedy                        controllers.setupquestions.AffectedByRemedyController.onPageLoad(mode: Mode = NormalMode)
-POST       /affected-by-remedy                        controllers.setupquestions.AffectedByRemedyController.onSubmit(mode: Mode = NormalMode)
-GET        /change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onSubmit(mode: Mode = CheckMode)
+GET        /triage-journey/affected-by-remedy                         controllers.setupquestions.AffectedByRemedyController.onPageLoad(mode: Mode = NormalMode)
+POST       /triage-journey/affected-by-remedy                         controllers.setupquestions.AffectedByRemedyController.onSubmit(mode: Mode = NormalMode)
+GET        /triage-journey/change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onPageLoad(mode: Mode = CheckMode)
+POST       /triage-journey/change-affected-by-remedy                  controllers.setupquestions.AffectedByRemedyController.onSubmit(mode: Mode = CheckMode)
 
 GET        /triage-journey/LTA-charge                       controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = NormalMode)
 POST       /triage-journey/LTA-charge                        controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = NormalMode)

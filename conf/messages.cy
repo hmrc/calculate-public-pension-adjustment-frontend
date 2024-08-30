@@ -117,12 +117,14 @@ reasonForResubmission.error.required = Nodwch y rheswm rydych am drosysgrifo cyf
 reasonForResubmission.error.length = Mae’n rhaid i’r rheswm rydych wedi’i nodi ar gyfer trosysgrifo cyflwyniad blaenorol fod yn 500 o gymeriadau neu lai
 reasonForResubmission.change.hidden = Y rheswm am drosysgrifo cyflwyniad blaenorol
 
-ineligible.title = Ni allwch ddefnyddio’r gwasanaeth hwn
-ineligible.heading = Ni allwch ddefnyddio’r gwasanaeth hwn
-ineligible.message1 = Ni allwch wneud addasiad oni bai bod gweinyddwr eich cynllun pensiwn (PSA) wedi cysylltu â chi.
-ineligible.message2 = Gallwch wneud y canlynol:
-ineligible.list = cysylltu â’ch PSA i gael rhagor o wybodaeth am eich cynllun pensiwn
-ineligible.list1 = cysylltu â llinell gymorth y cynlluniau pensiwn i gael rhagor o wybodaeth am gynlluniau pensiwn
+ineligible.title = cy: You are not impacted
+ineligible.heading = cy: You are not impacted by the McCloud remedy
+ineligible.message1 = cy: There are multiple possible reasons why you are not eligible to use this service:
+ineligible.bullet1 = cy: you were not part of a public service pension scheme on or before 31 March 2012
+ineligible.bullet2 = cy: you did not work in public service between 1 April 2015 and the 31 March 2022
+ineligible.bullet3 = cy: you left service after 31 March 2012 but did not return within 5 years
+ineligible.bullet4 = cy: you were not part of any legacy public service pension scheme
+ineligible.message2 = cy: These reasons mean that your pension contributions will not be affected by the McCloud remedy and you do not need to use this service.
 
 reportingChange.title = Pa daliadau treth yr hoffech chi eu haddasu?
 reportingChange.heading = Pa daliadau treth yr hoffech chi eu haddasu?
@@ -1400,11 +1402,17 @@ unionPoliceReliefAmount.error.wholeNumber = cy: The tax relief you are claiming 
 unionPoliceReliefAmount.error.outOfRange = cy: The tax relief you are claiming for trade union or police organisation fees from {2} must be between £1 and £100
 unionPoliceReliefAmount.change.hidden = cy: amount of tax relief you are claiming for trade union or police organisation fees
 
-affectedByRemedy.title = cy: affectedByRemedy
-affectedByRemedy.heading = cy: affectedByRemedy
-affectedByRemedy.checkYourAnswersLabel = cy: affectedByRemedy
-affectedByRemedy.error.required = cy: Select yes if affectedByRemedy
-affectedByRemedy.change.hidden = cy: AffectedByRemedy
+affectedByRemedy.title = cy: Are you affected by the Public Service Pensions remedy?
+affectedByRemedy.heading1 = cy: McCloud Remedy
+affectedByRemedy.message1 = cy: You are impacted by the Public Service Pensions remedy if you joined a public service pension scheme on or before 31 March 2012 and:
+affectedByRemedy.bullet1 = cy: you worked in public service between 1 April 2015 and the 31 March 2022
+affectedByRemedy.message2 = cy: Or
+affectedByRemedy.bullet2 = cy: you left service after 31 March 2012 and returned within 5 years
+affectedByRemedy.message3 = cy: Find our more about the Public Service Pensions remedy
+affectedByRemedy.heading2 = cy: Are you affected by the Public Service Pensions remedy?
+affectedByRemedy.checkYourAnswersLabel = cy: Are you affected by the Public Service Pensions remedy?
+affectedByRemedy.error.required = cy: Select yes if you were affected by the Public Service Pensions Remedy
+affectedByRemedy.change.hidden = cy: if you were affected by the Public Service Pensions Remedy
 
 previousLTACharge.title = cy: Have you paid an LTA charge?
 previousLTACharge.heading = cy: Lifetime allowance charge

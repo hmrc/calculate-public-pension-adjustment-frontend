@@ -41,7 +41,7 @@ class ReasonForResubmissionPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ReasonForResubmissionPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/affected-by-remedy")
+      checkNavigation(nextPageUrl, "/triage-journey/affected-by-remedy")
     }
   }
 
