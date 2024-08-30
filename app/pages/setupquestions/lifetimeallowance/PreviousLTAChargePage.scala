@@ -21,6 +21,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object PreviousLTAChargePage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "lta" \ toString
@@ -36,7 +38,20 @@ case object PreviousLTAChargePage extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PreviousLTAChargePage) match {
-      case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(_) =>
+        controllers.setupquestions.lifetimeallowance.routes.ChangeInLifetimeAllowanceController.onPageLoad(NormalMode)
       case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(ChangeInLifetimeAllowancePage)
+          .flatMap(_.remove(IncreaseInLTAChargePage))
+          .flatMap(_.remove(NewLTAChargePage))
+          .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
+          .flatMap(_.remove(OtherSchemeNotificationPage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

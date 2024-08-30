@@ -41,9 +41,17 @@ case object MultipleBenefitCrystallisationEventPage extends QuestionPage[Boolean
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(MultipleBenefitCrystallisationEventPage) match {
       case Some(true)  =>
-        controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(CheckMode)
+        controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onPageLoad(NormalMode)
       case Some(false) =>
         controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(OtherSchemeNotificationPage)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

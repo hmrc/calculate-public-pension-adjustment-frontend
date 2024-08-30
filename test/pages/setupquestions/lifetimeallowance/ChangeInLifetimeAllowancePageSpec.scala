@@ -19,6 +19,8 @@ package pages.setupquestions.lifetimeallowance
 import models.{AAKickOutStatus, CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
+import scala.util.Random
+
 class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
   "ChangeInLifetimeAllowancePage" - {
@@ -37,10 +39,10 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
       val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 0)
 
       val ua = uaWithAAKickOutStatus
-        .set(ChangeInLifetimeAllowancePage, true)
+        .set(PreviousLTAChargePage, true)
         .success
         .value
-        .set(PreviousLTAChargePage, true)
+        .set(ChangeInLifetimeAllowancePage, true)
         .success
         .value
 
@@ -160,10 +162,10 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
       val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 0)
 
       val ua = uaWithAAKickOutStatus
-        .set(ChangeInLifetimeAllowancePage, true)
+        .set(PreviousLTAChargePage, true)
         .success
         .value
-        .set(PreviousLTAChargePage, true)
+        .set(ChangeInLifetimeAllowancePage, true)
         .success
         .value
 
@@ -177,10 +179,10 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
       val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 1)
 
       val ua = uaWithAAKickOutStatus
-        .set(ChangeInLifetimeAllowancePage, true)
+        .set(PreviousLTAChargePage, true)
         .success
         .value
-        .set(PreviousLTAChargePage, true)
+        .set(ChangeInLifetimeAllowancePage, true)
         .success
         .value
 
@@ -194,10 +196,10 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
       val uaWithAAKickOutStatus = AAKickOutStatus().saveAAKickOutStatus(emptyUserAnswers, 2)
 
       val ua = uaWithAAKickOutStatus
-        .set(ChangeInLifetimeAllowancePage, true)
+        .set(PreviousLTAChargePage, true)
         .success
         .value
-        .set(PreviousLTAChargePage, true)
+        .set(ChangeInLifetimeAllowancePage, true)
         .success
         .value
 
@@ -273,6 +275,22 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = ChangeInLifetimeAllowancePage
+        .cleanup(Some(Random.nextBoolean()), userAnswersLTATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(IncreaseInLTAChargePage) mustBe None
+      cleanedUserAnswers.get(NewLTAChargePage) mustBe None
+      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
     }
   }
 }
