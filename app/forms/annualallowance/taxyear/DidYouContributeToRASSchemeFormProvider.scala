@@ -18,13 +18,14 @@ package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
 import play.api.data.Form
+import play.api.i18n.Messages
 
 import javax.inject.Inject
 
 class DidYouContributeToRASSchemeFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(startEndDate: String): Form[Boolean] =
     Form(
-      "value" -> boolean("didYouContributeToRASScheme.error.required")
+      "value" -> boolean("didYouContributeToRASScheme.error.required", "error.boolean", Seq(startEndDate))
     )
 }

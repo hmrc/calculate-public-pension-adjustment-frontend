@@ -41,7 +41,7 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new DidYouContributeToRASSchemeFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(startEndDate)
   val period       = Period._2018
 
   lazy val didYouContributeToRASSchemeRoute =

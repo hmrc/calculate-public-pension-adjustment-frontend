@@ -27,7 +27,7 @@ class UnionPoliceReliefAmountFormProviderSpec extends IntFieldBehaviours {
 
     val fieldName = "value"
 
-    val minimum = 0
+    val minimum = 1
     val maximum = 100
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)

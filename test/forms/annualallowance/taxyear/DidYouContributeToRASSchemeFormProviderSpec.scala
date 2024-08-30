@@ -17,29 +17,31 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class DidYouContributeToRASSchemeFormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "didYouContributeToRASScheme.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new DidYouContributeToRASSchemeFormProvider()()
-
   ".value" - {
 
     val fieldName = "value"
 
     behave like booleanField(
-      form,
+      newForm(),
       fieldName,
-      invalidError = FormError(fieldName, invalidKey)
+      invalidError = FormError(fieldName, invalidKey, Seq(""))
     )
 
     behave like mandatoryField(
-      form,
+      newForm(),
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(""))
     )
+  }
+  private def newForm(): Form[Boolean] = {
+    val form = new DidYouContributeToRASSchemeFormProvider()
+    form("")
   }
 }

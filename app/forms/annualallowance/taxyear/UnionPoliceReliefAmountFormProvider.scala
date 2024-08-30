@@ -29,6 +29,6 @@ class UnionPoliceReliefAmountFormProvider @Inject() extends Mappings {
         "unionPoliceReliefAmount.error.wholeNumber",
         "unionPoliceReliefAmount.error.nonNumeric"
       )
-        .verifying(inRange[BigInt](0, 100, "unionPoliceReliefAmount.error.outOfRange"))
+        .verifying(inRange[BigInt](1, 100, "unionPoliceReliefAmount.error.outOfRange"))
     )
 }

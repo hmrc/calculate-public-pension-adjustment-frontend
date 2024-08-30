@@ -1359,7 +1359,7 @@ didYouContributeToRASScheme.message1 = Relief at source pensions mean that your 
 didYouContributeToRASScheme.message2 = This may be the case if you pay into any private pensions or pay any additional voluntary contributions (AVC’s).
 didYouContributeToRASScheme.message3 = Most public sector pension schemes such as Civil Service alpha or the NHS pension scheme are not relief at source schemes.
 didYouContributeToRASScheme.checkYourAnswersLabel = Did you make any contributions to a relief at source pension scheme from {0}?
-didYouContributeToRASScheme.error.required = Select yes if made any contributions to a relief at source pension scheme
+didYouContributeToRASScheme.error.required = Select yes if made any contributions to a relief at source pension scheme from {0}
 didYouContributeToRASScheme.change.hidden = if you have made any contributions to a relief at source pension scheme
 
 doYouHaveGiftAid.title = Did you make any contributions to charity via gift aid from {0}?
@@ -1407,5 +1407,5 @@ unionPoliceReliefAmount.message2 = If you claimed tax relief but you did not fil
 unionPoliceReliefAmount.error.nonNumeric = The tax relief are you claiming for trade union or police organisation fees must only include numbers 0 to 9
 unionPoliceReliefAmount.error.required = Enter the amount of tax relief are you claiming for trade union or police organisation fees
 unionPoliceReliefAmount.error.wholeNumber = The tax relief are you claiming for trade union or police organisation fees must be a whole number
-unionPoliceReliefAmount.error.outOfRange = The tax relief are you claiming for trade union or police organisation fees must be between £0 and £100
+unionPoliceReliefAmount.error.outOfRange = The tax relief are you claiming for trade union or police organisation fees must be between £1 and £100
 unionPoliceReliefAmount.change.hidden = amount of tax relief you are claiming for trade union or police organisation fees
