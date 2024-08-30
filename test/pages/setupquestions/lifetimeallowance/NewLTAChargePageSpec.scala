@@ -19,6 +19,8 @@ package pages.setupquestions.lifetimeallowance
 import models.{AAKickOutStatus, CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
+import scala.util.Random
+
 class NewLTAChargePageSpec extends PageBehaviours {
 
   "NewLTAChargePage" - {
@@ -133,7 +135,7 @@ class NewLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewLTAChargePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/change-more-than-one-benefit-crystallisation-event")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/more-than-one-benefit-crystallisation-event")
     }
 
     "must navigate to journey recovery when no answer" in {
@@ -143,6 +145,20 @@ class NewLTAChargePageSpec extends PageBehaviours {
       val nextPageUrl: String = NewLTAChargePage.navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = NewLTAChargePage
+        .cleanup(Some(Random.nextBoolean()), userAnswersLTATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
     }
   }
 }

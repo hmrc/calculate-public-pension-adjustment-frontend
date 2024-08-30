@@ -19,6 +19,8 @@ package pages.setupquestions.lifetimeallowance
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
+import scala.util.Random
+
 class PreviousLTAChargePageSpec extends PageBehaviours {
 
   "PreviousLTAChargePage" - {
@@ -52,7 +54,7 @@ class PreviousLTAChargePageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "to check your setup answers when answered" in {
+    "to change in life time allowance page when answered" in {
 
       val userAnswers =
         emptyUserAnswers
@@ -61,7 +63,7 @@ class PreviousLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PreviousLTAChargePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-percentage-change")
 
     }
 
@@ -71,4 +73,22 @@ class PreviousLTAChargePageSpec extends PageBehaviours {
       checkNavigation(nextPageUrl, "/there-is-a-problem")
     }
   }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = PreviousLTAChargePage
+        .cleanup(Some(Random.nextBoolean()), userAnswersLTATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe None
+      cleanedUserAnswers.get(IncreaseInLTAChargePage) mustBe None
+      cleanedUserAnswers.get(NewLTAChargePage) mustBe None
+      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
+    }
+  }
+
 }
