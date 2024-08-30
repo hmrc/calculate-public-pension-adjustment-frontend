@@ -52,7 +52,7 @@ class ResubmittingAdjustmentPageSpec extends PageBehaviours {
 
         val nextPageUrl: String = ResubmittingAdjustmentPage.navigate(NormalMode, ua).url
 
-        checkNavigation(nextPageUrl, "/affected-by-remedy")
+        checkNavigation(nextPageUrl, "/triage-journey/affected-by-remedy")
       }
 
       "must redirect to journey recovery when no answer" in {
