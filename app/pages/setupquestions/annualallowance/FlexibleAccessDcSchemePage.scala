@@ -21,6 +21,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object FlexibleAccessDcSchemePage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
@@ -39,7 +41,19 @@ case object FlexibleAccessDcSchemePage extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(FlexibleAccessDcSchemePage) match {
-      case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.setupquestions.annualallowance.routes.Contribution4000ToDirectContributionSchemeController
+          .onPageLoad(NormalMode)
+      case Some(false) =>
+        controllers.setupquestions.annualallowance.routes.TriageJourneyNotImpactedPIADecreaseController.onPageLoad()
+      case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(Contribution4000ToDirectContributionSchemePage)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

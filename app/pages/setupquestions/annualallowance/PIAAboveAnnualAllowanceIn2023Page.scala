@@ -16,10 +16,8 @@
 
 package pages.setupquestions.annualallowance
 
-import models.{CheckMode, LTAKickOutStatus, NormalMode, UserAnswers}
-import org.apache.pekko.actor.FSM.Normal
+import models.{LTAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
-import pages.annualallowance.taxyear.AmountOfGiftAidPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -50,13 +48,30 @@ case object PIAAboveAnnualAllowanceIn2023Page extends QuestionPage[Boolean] {
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+    answers.get(PIAAboveAnnualAllowanceIn2023Page) match {
+      case Some(true)  =>
+        answers.get(LTAKickOutStatus()).getOrElse(None) match {
+          case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case 1    =>
+            controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+              .onPageLoad(NormalMode)
+          case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
+        }
+      case Some(false) =>
+        controllers.setupquestions.annualallowance.routes.NetIncomeAbove190KIn2023Controller.onPageLoad(NormalMode)
+      case _           =>
+        controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map {
-        case false => super.cleanup(value, userAnswers)
-        case true  => userAnswers.remove(NetIncomeAbove190KIn2023Page)
+      .map { _ =>
+        userAnswers
+          .remove(NetIncomeAbove190KIn2023Page)
+          .flatMap(_.remove(FlexibleAccessDcSchemePage))
+          .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

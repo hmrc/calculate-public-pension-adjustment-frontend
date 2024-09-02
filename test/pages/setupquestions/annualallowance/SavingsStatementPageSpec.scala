@@ -16,10 +16,13 @@
 
 package pages.setupquestions.annualallowance
 
+import base.SpecBase
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 
-class SavingsStatementPageSpec extends PageBehaviours {
+import scala.util.Random
+
+class SavingsStatementPageSpec extends PageBehaviours with SpecBase {
 
   "SavingsStatementPage" - {
 
@@ -66,7 +69,7 @@ class SavingsStatementPageSpec extends PageBehaviours {
 
   "Check mode" - {
 
-    "must redirect to CYA page when true" in {
+    "must redirect to pension protected member page when true" in {
 
       val ua = emptyUserAnswers
         .set(SavingsStatementPage, true)
@@ -75,7 +78,7 @@ class SavingsStatementPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = SavingsStatementPage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/protected-member")
     }
 
     "must redirect to CYA page when false" in {
@@ -87,7 +90,7 @@ class SavingsStatementPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = SavingsStatementPage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/protected-member")
     }
 
     "must redirect to journey recovery when no answer" in {
@@ -97,6 +100,29 @@ class SavingsStatementPageSpec extends PageBehaviours {
       val nextPageUrl: String = SavingsStatementPage.navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = SavingsStatementPage
+        .cleanup(Some(Random.nextBoolean()), userAnswersAATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(PensionProtectedMemberPage) mustBe None
+      cleanedUserAnswers.get(HadAAChargePage) mustBe None
+      cleanedUserAnswers.get(ContributionRefundsPage) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove100KPage) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KPage) mustBe None
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe None
+      cleanedUserAnswers.get(MaybePIAUnchangedOrDecreasedPage) mustBe None
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe None
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe None
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
     }
   }
 }
