@@ -21,7 +21,7 @@ import play.api.data.FormError
 
 class HowMuchContributionPensionSchemeFormProviderSpec extends IntFieldBehaviours {
 
-  val form = new AmountSalarySacrificeArrangementsFormProvider()()
+  val form = new HowMuchContributionPensionSchemeFormProvider()()
 
   ".value" - {
 
@@ -41,8 +41,8 @@ class HowMuchContributionPensionSchemeFormProviderSpec extends IntFieldBehaviour
     behave like intField(
       form,
       fieldName,
-      nonNumericError = FormError(fieldName, "amountSalarySacrificeArrangements.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "amountSalarySacrificeArrangements.error.wholeNumber")
+      nonNumericError = FormError(fieldName, "howMuchContributionPensionScheme.error.nonNumeric"),
+      wholeNumberError = FormError(fieldName, "howMuchContributionPensionScheme.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
@@ -50,13 +50,13 @@ class HowMuchContributionPensionSchemeFormProviderSpec extends IntFieldBehaviour
       fieldName,
       minimum = minimum,
       maximum = maximum,
-      expectedError = FormError(fieldName, "amountSalarySacrificeArrangements.error.outOfRange", Seq(minimum, maximum))
+      expectedError = FormError(fieldName, "howMuchContributionPensionScheme.error.outOfRange", Seq(minimum, maximum))
     )
 
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, "amountSalarySacrificeArrangements.error.required")
+      requiredError = FormError(fieldName, "howMuchContributionPensionScheme.error.required")
     )
   }
 }

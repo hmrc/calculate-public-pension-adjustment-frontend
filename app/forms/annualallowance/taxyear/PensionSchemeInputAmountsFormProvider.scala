@@ -25,22 +25,38 @@ import javax.inject.Inject
 
 class PensionSchemeInputAmountsFormProvider @Inject() extends Mappings {
 
-  def apply(period: Period): Form[PensionSchemeInputAmounts] = Form(
+  def apply(period: Period, startEndDate: String): Form[PensionSchemeInputAmounts] = Form(
     mapping(
       if (period == Period._2023) {
         "revisedPIA" -> bigInt(
           "pensionSchemeInputAmounts.error.originalPIA.required",
           "pensionSchemeInputAmounts.error.originalPIA.wholeNumber",
-          "pensionSchemeInputAmounts.error.originalPIA.nonNumeric"
+          "pensionSchemeInputAmounts.error.originalPIA.nonNumeric",
+          Seq(startEndDate)
         )
-          .verifying(inRange[BigInt](0, BigInt("999999999"), "pensionSchemeInputAmounts.error.originalPIA.length"))
+          .verifying(
+            inRangeWithArg[BigInt](
+              0,
+              BigInt("999999999"),
+              "pensionSchemeInputAmounts.error.originalPIA.length",
+              startEndDate
+            )
+          )
       } else {
         "revisedPIA" -> bigInt(
           "pensionSchemeInputAmounts.error.revisedPIA.required",
           "pensionSchemeInputAmounts.error.revisedPIA.wholeNumber",
-          "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric"
+          "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric",
+          Seq(startEndDate)
         )
-          .verifying(inRange[BigInt](0, BigInt("999999999"), "pensionSchemeInputAmounts.error.revisedPIA.length"))
+          .verifying(
+            inRangeWithArg[BigInt](
+              0,
+              BigInt("999999999"),
+              "pensionSchemeInputAmounts.error.revisedPIA.length",
+              startEndDate
+            )
+          )
       }
     )(PensionSchemeInputAmounts.apply)(PensionSchemeInputAmounts.unapply)
   )

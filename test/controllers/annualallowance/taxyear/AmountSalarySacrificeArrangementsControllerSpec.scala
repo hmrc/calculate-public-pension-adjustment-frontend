@@ -35,10 +35,9 @@ import scala.concurrent.Future
 
 class AmountSalarySacrificeArrangementsControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new AmountSalarySacrificeArrangementsFormProvider()
-  val form         = formProvider()
-
+  val formProvider         = new AmountSalarySacrificeArrangementsFormProvider()
   val startEndDate: String = "6 April 2017 to 5 April 2018"
+  val form                 = formProvider(startEndDate)
 
   def onwardRoute = Call("GET", "/foo")
 

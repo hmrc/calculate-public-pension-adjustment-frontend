@@ -30,9 +30,17 @@ class PensionSchemeInput2016postAmountsFormProvider @Inject() extends Mappings {
       "revisedPIA" -> bigInt(
         "pensionSchemeInputAmounts.error.revisedPIA.required",
         "pensionSchemeInputAmounts.error.revisedPIA.wholeNumber",
-        "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric"
+        "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric",
+        Seq("9 July 2015 to 5 April 2016")
       )
-        .verifying(inRange[BigInt](0, BigInt("999999999"), "pensionSchemeInputAmounts.error.revisedPIA.length"))
+        .verifying(
+          inRangeWithArg[BigInt](
+            0,
+            BigInt("999999999"),
+            "pensionSchemeInputAmounts.error.revisedPIA.length",
+            "9 July 2015 to 5 April 2016"
+          )
+        )
     )(PensionSchemeInput2016postAmounts.apply)(PensionSchemeInput2016postAmounts.unapply)
   )
 }

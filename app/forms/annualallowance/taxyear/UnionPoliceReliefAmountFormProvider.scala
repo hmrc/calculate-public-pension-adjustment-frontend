@@ -22,13 +22,14 @@ import play.api.data.Form
 
 class UnionPoliceReliefAmountFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BigInt] =
+  def apply(startEndDate: String): Form[BigInt] =
     Form(
       "value" -> bigInt(
         "unionPoliceReliefAmount.error.required",
         "unionPoliceReliefAmount.error.wholeNumber",
-        "unionPoliceReliefAmount.error.nonNumeric"
+        "unionPoliceReliefAmount.error.nonNumeric",
+        Seq(startEndDate)
       )
-        .verifying(inRange[BigInt](0, 100, "unionPoliceReliefAmount.error.outOfRange"))
+        .verifying(inRangeWithArg[BigInt](1, 100, "unionPoliceReliefAmount.error.outOfRange", startEndDate))
     )
 }

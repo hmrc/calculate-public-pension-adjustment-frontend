@@ -26,6 +26,11 @@ class ReferenceNewProtectionTypeEnhancementFormProvider @Inject() extends Mappin
   def apply(): Form[String] =
     Form(
       "value" -> text("referenceNewProtectionTypeEnhancement.error.required")
-        .verifying(maxLength(15, "referenceNewProtectionTypeEnhancement.error.length"))
+        .verifying(
+          firstError(
+            maxLength(15, "referenceNewProtectionTypeEnhancement.error.length"),
+            regexp("""^[a-z0-9A-Z]*$""", "referenceNewProtectionTypeEnhancement.error.invalid")
+          )
+        )
     )
 }
