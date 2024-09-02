@@ -26,10 +26,19 @@ import play.api.mvc.Call
 case object LTASection extends Section {
 
   def removeAllUserAnswers(userAnswers: UserAnswers): UserAnswers =
-    userAnswers.removePath(JsPath \ "lta").get
+    userAnswers.removePath(JsPath \ "lta").get.removePath(JsPath \ "setup" \ "lta").get
 
   def removeAllUserAnswersAndNavigation(userAnswers: UserAnswers): UserAnswers =
-    userAnswers.removePath(JsPath \ "lta").get.remove(sectionNavigation).get
+    userAnswers
+      .removePath(JsPath \ "lta")
+      .get
+      // TODO remove below path upon triage implementation. Method should only delete paths relating to LTA task data items.
+      // Currently included to allow for data model changes whilst pages remain in situ inside of the LTA task
+      // ReportingChangePageSpec cleanup unit tests will also need moved pages from LTA task to LTA triage removing from associated unit tests.
+      .removePath(JsPath \ "setup" \ "lta")
+      .get
+      .remove(sectionNavigation)
+      .get
 
   val initialPage: Call                     = ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
   val checkYourLTAAnswersPage: Call         = ltaRoutes.CheckYourLTAAnswersController.onPageLoad()

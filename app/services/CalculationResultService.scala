@@ -22,11 +22,11 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, ChangeInTaxCharge, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
-import pages.setupquestions.{ReasonForResubmissionPage, ResubmittingAdjustmentPage}
+import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, ResubmittingAdjustmentPage, SavingsStatementPage}
 import play.api.Logging
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
@@ -127,9 +127,42 @@ class CalculationResultService @Inject() (
 
     CalculationResults.CalculationInputs(
       resubmission,
+      buildSetup(userAnswers),
       Some(AnnualAllowance(scottishTaxYears, tYears)),
       buildLifeTimeAllowance(userAnswers)
     )
+  }
+
+  def buildSetup(userAnswers: UserAnswers): Setup = {
+
+    val annualAllowanceSetup: Option[AnnualAllowanceSetup] =
+      if (userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))) {
+        val savingsStatement: Option[Boolean] = userAnswers.get(SavingsStatementPage).orElse(None)
+
+        Some(AnnualAllowanceSetup(savingsStatement))
+      } else None
+
+    val lifetimeAllowanceSetup: Option[LifetimeAllowanceSetup] =
+      if (userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.LifetimeAllowance))) {
+        val benefitCrystallisationEventFlag: Option[Boolean] =
+          userAnswers.get(HadBenefitCrystallisationEventPage).orElse(None)
+
+        val changeInLifetimeAllowancePercentageInformedFlag: Option[Boolean] =
+          userAnswers.get(ChangeInLifetimeAllowancePage).orElse(None)
+
+        val multipleBenefitCrystallisationEventFlag: Option[Boolean] =
+          userAnswers.get(MultipleBenefitCrystallisationEventPage).orElse(None)
+
+        Some(
+          LifetimeAllowanceSetup(
+            benefitCrystallisationEventFlag,
+            changeInLifetimeAllowancePercentageInformedFlag,
+            multipleBenefitCrystallisationEventFlag
+          )
+        )
+      } else None
+
+    Setup(annualAllowanceSetup, lifetimeAllowanceSetup)
   }
 
   def toTaxYear2011To2015(userAnswers: UserAnswers, period: Period): Option[TaxYear2011To2015] =
@@ -450,9 +483,6 @@ class CalculationResultService @Inject() (
         val newLifetimeAllowanceChargeSchemeNameAndTaxRef: Option[LtaPensionSchemeDetails] =
           userAnswers.get(LtaPensionSchemeDetailsPage)
 
-        val multipleBenefitCrystallisationEventFlag: Boolean =
-          userAnswers.get(MultipleBenefitCrystallisationEventPage).getOrElse(false)
-
         val enhancementType: Option[EnhancementType] = userAnswers.get(EnhancementTypePage)
 
         val internationalEnhancementReference: Option[String] = userAnswers.get(InternationalEnhancementReferencePage)
@@ -485,7 +515,6 @@ class CalculationResultService @Inject() (
 
         val newLifeTimeAllowanceAdditions: NewLifeTimeAllowanceAdditions =
           NewLifeTimeAllowanceAdditions(
-            multipleBenefitCrystallisationEventFlag,
             enhancementType,
             internationalEnhancementReference,
             pensionCreditReference,
@@ -504,9 +533,7 @@ class CalculationResultService @Inject() (
 
         Some(
           LifeTimeAllowance(
-            true,
             benefitCrystallisationEventDate,
-            true,
             changeInTaxChargeType,
             lifetimeAllowanceProtectionOrEnhancements,
             protectionType,

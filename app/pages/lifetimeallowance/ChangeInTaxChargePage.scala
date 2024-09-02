@@ -56,6 +56,7 @@ case object ChangeInTaxChargePage extends QuestionPage[ChangeInTaxCharge] {
       .map {
         case ChangeInTaxCharge.None                        =>
           val cleanedUserAnswers = Try(cleanUp(answers, models.LTAPageGroups.changeInTaxChargePageGroup()))
+            .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
           cleanedUserAnswers.get.set(ChangeInTaxChargePage, value = ChangeInTaxCharge.None, cleanUp = false)
         case NewCharge | DecreasedCharge | IncreasedCharge =>
           super.cleanup(value, answers)

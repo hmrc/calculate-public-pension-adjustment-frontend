@@ -27,7 +27,7 @@ import scala.util.Try
 
 case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ "lta" \ toString
+  override def path: JsPath = JsPath \ "setup" \ "lta" \ toString
 
   override def toString: String = "changeInLifetimeAllowance"
 
@@ -50,6 +50,7 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
       .map {
         case false =>
           val cleanedUserAnswers = Try(cleanUp(answers, models.LTAPageGroups.changeInLifetimeAllowancePageGroup()))
+            .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
           cleanedUserAnswers.get.set(ChangeInLifetimeAllowancePage, value = false, cleanUp = false)
         case true  => super.cleanup(value, answers)
       }

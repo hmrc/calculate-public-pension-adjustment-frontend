@@ -18,7 +18,7 @@ package services
 
 import base.SpecBase
 import connectors.{CalculationResultConnector, SubmissionsConnector}
-import models.CalculationResults.{CalculationResponse, CalculationResultsViewModel, Resubmission, RowViewModel}
+import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, LifetimeAllowanceSetup, Resubmission, RowViewModel, Setup}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
@@ -57,6 +57,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "resubmittingAdjustment" : true,
            |    "reasonForResubmission" : "Change in amounts",
            |    "reportingChange" : [ "annualAllowance" ],
+           |    "setup": {
+           |      "aa": {
+           |        "savingsStatement": true
+           |      }
+           |    },
            |    "scottishTaxpayerFrom2016" : false,
            |    "payingPublicPensionScheme" : true,
            |    "definedContributionPensionScheme" : true,
@@ -858,6 +863,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "savingsStatement" : true,
            |    "resubmittingAdjustment" : false,
            |    "reportingChange" : [ "annualAllowance" ],
+           |    "setup": {
+           |      "aa": {
+           |        "savingsStatement": true
+           |      }
+           |    },
            |    "scottishTaxpayerFrom2016" : false,
            |    "payingPublicPensionScheme" : true,
            |    "definedContributionPensionScheme" : true,
@@ -1195,6 +1205,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "reportingChange": [
                 |      "annualAllowance"
                 |    ],
+                |    "setup": {
+                |      "aa": {
+                |        "savingsStatement": true
+                |      }
+                |    },
                 |    "scottishTaxpayerFrom2016": true,
                 |    "whichYearsScottishTaxpayer": [
                 |      "2019"
@@ -1356,7 +1371,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |          "flexibleRemunerationArrangements": true,
                 |          "amountFlexibleRemunerationArrangements": 666,
                 |          "didYouContributeToRASScheme": true,
-                |		  "rASContributionAmount": 712,
+                |		   "rASContributionAmount": 712,
                 |          "howMuchContributionPensionScheme": 1212,
                 |          "anyLumpSumDeathBenefits": true,
                 |          "lumpSumDeathBenefitsValue": 777,
@@ -1401,6 +1416,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "reportingChange": [
                 |      "annualAllowance"
                 |    ],
+                |    "setup": {
+                |      "aa": {
+                |        "savingsStatement": true
+                |      }
+                |    },
                 |    "scottishTaxpayerFrom2016": false,
                 |    "payingPublicPensionScheme": false,
                 |    "definedContributionPensionScheme": true,
@@ -1658,6 +1678,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "reportingChange": [
                 |      "annualAllowance"
                 |    ],
+                |    "setup": {
+                |      "aa": {
+                |        "savingsStatement": true
+                |      }
+                |    },
                 |    "scottishTaxpayerFrom2016": false,
                 |    "payingPublicPensionScheme": false,
                 |    "stopPayingPublicPension": "2017-10-12",
@@ -1847,6 +1872,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |  "reportingChange": [
                 |    "annualAllowance"
                 |  ],
+                |  "setup": {
+                |    "aa": {
+                |      "savingsStatement": true
+                |    }
+                |  },
                 |  "scottishTaxpayerFrom2016": true,
                 |  "whichYearsScottishTaxpayer": [
                 |    "2018"
@@ -2068,6 +2098,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "reportingChange": [
                 |      "annualAllowance"
                 |    ],
+                |    "setup": {
+                |      "aa": {
+                |        "savingsStatement": true
+                |      }
+                |    },
                 |    "scottishTaxpayerFrom2016": false,
                 |    "payingPublicPensionScheme": false,
                 |    "stopPayingPublicPension": "2017-10-12",
@@ -2226,7 +2261,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     val data14 = Json
       .parse(s"""
                 |{
-                |  "savingsStatement": true,
                 |  "navigation": {
                 |    "setupSection": "/public-pension-adjustment/check-your-answers-setup",
                 |    "preAASection": "/public-pension-adjustment/annual-allowance/setup-check-answers",
@@ -2236,6 +2270,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |  "reportingChange": [
                 |    "annualAllowance"
                 |  ],
+                |  "setup": {
+                |    "aa": {
+                |      "savingsStatement": true
+                |    }
+                |  },
                 |  "scottishTaxpayerFrom2016": false,
                 |  "payingPublicPensionScheme": false,
                 |  "stopPayingPublicPension": "2015-07-01",
@@ -2636,6 +2675,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            None
+          ),
           Some(
             AnnualAllowance(
               List(),
@@ -2683,6 +2726,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            None
+          ),
           Some(
             AnnualAllowance(
               List(),
@@ -2784,6 +2831,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            None
+          ),
           Some(
             AnnualAllowance(
               List(),
@@ -2885,6 +2936,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Incorrect data")),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            None
+          ),
           Some(
             AnnualAllowance(
               List(Period._2018),
@@ -3013,6 +3068,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Change in amounts")),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            None
+          ),
           Some(
             AnnualAllowance(
               List.empty,
@@ -3230,9 +3289,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           ),
           Some(
             LifeTimeAllowance(
-              true,
               LocalDate.parse("2018-11-28"),
-              true,
               ChangeInTaxCharge.IncreasedCharge,
               LtaProtectionOrEnhancements.Protection,
               Some(ProtectionType.FixedProtection2014),
@@ -3247,7 +3304,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(WhoPayingExtraLtaCharge.You),
               None,
               NewLifeTimeAllowanceAdditions(
-                false,
                 None,
                 None,
                 None,
@@ -3274,6 +3330,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            None
+          ),
           Some(
             AnnualAllowance(
               List.empty,
@@ -3398,6 +3458,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            None
+          ),
           Some(
             AnnualAllowance(
               List(Period._2019),
@@ -3512,6 +3576,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true))),
+            None
+          ),
           Some(
             AnnualAllowance(
               List(),
@@ -3659,9 +3727,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         result mustBe Some(
           LifeTimeAllowance(
-            true,
             LocalDate.parse("2018-11-28"),
-            true,
             ChangeInTaxCharge.IncreasedCharge,
             LtaProtectionOrEnhancements.Protection,
             Some(ProtectionType.FixedProtection2014),
@@ -3676,7 +3742,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             Some(WhoPayingExtraLtaCharge.You),
             None,
             NewLifeTimeAllowanceAdditions(
-              false,
               None,
               None,
               None,
