@@ -21,6 +21,8 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import scala.util.Try
+
 case object NetIncomeAbove190KPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "aa" \ toString
@@ -44,12 +46,37 @@ case object NetIncomeAbove190KPage extends QuestionPage[Boolean] {
       case (Some(_), Some(_))        =>
         controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad()
       case _                         => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    answers.get(NetIncomeAbove190KPage) match {
-      case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case _       => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    (answers.get(NetIncomeAbove190KPage), answers.get(SavingsStatementPage)) match {
+      case (Some(true), Some(true))  =>
+        answers.get(LTAKickOutStatus()).getOrElse(None) match {
+          case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case 1    =>
+            controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+              .onPageLoad(NormalMode)
+          case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
+        }
+      case (Some(false), Some(true)) =>
+        controllers.setupquestions.annualallowance.routes.MaybePIAIncreaseController.onPageLoad(NormalMode)
+      case (Some(_), Some(_))        =>
+        controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad()
+      case _                         => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map { _ =>
+        userAnswers
+          .remove(MaybePIAIncreasePage)
+          .flatMap(_.remove(MaybePIAUnchangedOrDecreasedPage))
+          .flatMap(_.remove(PIAAboveAnnualAllowanceIn2023Page))
+          .flatMap(_.remove(NetIncomeAbove190KIn2023Page))
+          .flatMap(_.remove(FlexibleAccessDcSchemePage))
+          .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

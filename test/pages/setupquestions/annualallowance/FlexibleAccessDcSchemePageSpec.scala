@@ -18,7 +18,9 @@ package pages
 
 import models.{CheckMode, LTAKickOutStatus, NormalMode}
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.annualallowance.FlexibleAccessDcSchemePage
+import pages.setupquestions.annualallowance.{Contribution4000ToDirectContributionSchemePage, FlexibleAccessDcSchemePage}
+
+import scala.util.Random
 
 class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
@@ -66,7 +68,19 @@ class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
     "check mode" - {
 
-      "to check your answers when answered" in {
+      "to Contribution4000ToDirectContributionSchemeController when true" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(FlexibleAccessDcSchemePage, true)
+          .success
+          .value
+
+        val nextPageUrl: String = FlexibleAccessDcSchemePage.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/4000-contribution-to-direct-contribution-scheme")
+      }
+
+      "to TriageJourneyNotImpactedPIADecrease kickout when false" in {
 
         val userAnswers = emptyUserAnswers
           .set(FlexibleAccessDcSchemePage, false)
@@ -75,7 +89,7 @@ class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
         val nextPageUrl: String = FlexibleAccessDcSchemePage.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+        checkNavigation(nextPageUrl, "/triage-journey-not-impacted-PIA-decrease")
       }
 
       "to journey recovery when not answered" in {
@@ -84,6 +98,19 @@ class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
         checkNavigation(nextPageUrl, "/there-is-a-problem")
       }
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = FlexibleAccessDcSchemePage
+        .cleanup(Some(Random.nextBoolean()), userAnswersAATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
     }
   }
 }
