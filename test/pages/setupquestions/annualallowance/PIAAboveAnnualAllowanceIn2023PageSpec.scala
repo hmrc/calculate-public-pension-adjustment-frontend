@@ -20,6 +20,8 @@ import models.{CheckMode, LTAKickOutStatus, NormalMode, Period}
 import pages.annualallowance.taxyear.{BlindAllowancePage, BlindPersonsAllowanceAmountPage, PersonalAllowancePage}
 import pages.behaviours.PageBehaviours
 
+import scala.util.Random
+
 class PIAAboveAnnualAllowanceIn2023PageSpec extends PageBehaviours {
 
   "PIAAboveAnnualAllowanceIn2023Page" - {
@@ -124,24 +126,108 @@ class PIAAboveAnnualAllowanceIn2023PageSpec extends PageBehaviours {
   }
 
   "check mode" - {
-    "Redirect to cya" in {
+    "when yes is selected for page" - {
+
+      "when lta kickout status 0 to cya" in {
+        val userAnswers = emptyUserAnswers
+          .set(PIAAboveAnnualAllowanceIn2023Page, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 0)
+          .success
+          .value
+
+        val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when lta kickout status 1 to bce" in {
+        val userAnswers = emptyUserAnswers
+          .set(PIAAboveAnnualAllowanceIn2023Page, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 1)
+          .success
+          .value
+
+        val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+      }
+
+      "when lta kickout status 2 to cya" in {
+        val userAnswers = emptyUserAnswers
+          .set(PIAAboveAnnualAllowanceIn2023Page, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 2)
+          .success
+          .value
+
+        val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when lta kickout status any other number to recovery" in {
+        val userAnswers = emptyUserAnswers
+          .set(PIAAboveAnnualAllowanceIn2023Page, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 3)
+          .success
+          .value
+
+        val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
+      }
+
+      "when lta kickout status None to cya" in {
+        val userAnswers = emptyUserAnswers
+          .set(PIAAboveAnnualAllowanceIn2023Page, true)
+          .success
+          .value
+
+        val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+    }
+
+    "when no is selected for page redirect to NetIncomeAbove190 " in {
+      val userAnswers = emptyUserAnswers
+        .set(PIAAboveAnnualAllowanceIn2023Page, false)
+        .success
+        .value
+
+      val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/income-over-190-22-23")
+
+    }
+
+    "when nothing is selected for page redirect to recovery " in {
       val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(CheckMode, emptyUserAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+
     }
   }
 
-  "Clean up" - {
-    "must clean up correctly when PIAAboveAnnualAllowanceIn2023 is Yes" in {
+  "cleanup" - {
 
-      val ua = emptyUserAnswers.set(NetIncomeAbove190KIn2023Page, true).success.value
+    "when user answers yes or no" in {
 
       val cleanedUserAnswers = PIAAboveAnnualAllowanceIn2023Page
-        .cleanup(Some(true), ua)
+        .cleanup(Some(Random.nextBoolean()), userAnswersAATriage)
         .success
         .value
 
       cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe None
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe None
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
     }
   }
 }

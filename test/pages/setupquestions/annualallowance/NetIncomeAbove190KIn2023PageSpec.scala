@@ -19,6 +19,8 @@ package pages.setupquestions.annualallowance
 import models.{CheckMode, LTAKickOutStatus, NormalMode}
 import pages.behaviours.PageBehaviours
 
+import scala.util.Random
+
 class NetIncomeAbove190KIn2023PageSpec extends PageBehaviours {
 
   "NetIncomeAbove190KIn2023Page" - {
@@ -123,10 +125,108 @@ class NetIncomeAbove190KIn2023PageSpec extends PageBehaviours {
   }
 
   "check mode" - {
-    "Redirect to cya" in {
+
+    "when yes is selected for page" - {
+
+      "when lta kickout status 0 to cya" in {
+        val userAnswers = emptyUserAnswers
+          .set(NetIncomeAbove190KIn2023Page, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 0)
+          .success
+          .value
+
+        val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when lta kickout status 1 to bce" in {
+        val userAnswers = emptyUserAnswers
+          .set(NetIncomeAbove190KIn2023Page, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 1)
+          .success
+          .value
+
+        val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+      }
+
+      "when lta kickout status 2 to cya" in {
+        val userAnswers = emptyUserAnswers
+          .set(NetIncomeAbove190KIn2023Page, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 2)
+          .success
+          .value
+
+        val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+
+      "when lta kickout status any other number to recovery" in {
+        val userAnswers = emptyUserAnswers
+          .set(NetIncomeAbove190KIn2023Page, true)
+          .success
+          .value
+          .set(LTAKickOutStatus(), 3)
+          .success
+          .value
+
+        val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/there-is-a-problem")
+      }
+
+      "when lta kickout status None to cya" in {
+        val userAnswers = emptyUserAnswers
+          .set(NetIncomeAbove190KIn2023Page, true)
+          .success
+          .value
+
+        val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      }
+    }
+
+    "when no is selected for page redirect to FlexibleAccessDcScheme " in {
+      val userAnswers = emptyUserAnswers
+        .set(NetIncomeAbove190KIn2023Page, false)
+        .success
+        .value
+
+      val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/flexible-access-dc-scheme")
+
+    }
+
+    "when nothing is selected for page redirect to recovery " in {
       val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(CheckMode, emptyUserAnswers).url
 
-      checkNavigation(nextPageUrl, "/check-your-answers-setup")
+      checkNavigation(nextPageUrl, "/there-is-a-problem")
+
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers yes or no" in {
+
+      val cleanedUserAnswers = NetIncomeAbove190KIn2023Page
+        .cleanup(Some(Random.nextBoolean()), userAnswersAATriage)
+        .success
+        .value
+
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe None
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
     }
   }
 }
