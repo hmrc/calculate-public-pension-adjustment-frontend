@@ -3,7 +3,7 @@ import sbt._
 object AppDependencies {
   import play.core.PlayVersion
 
-  private val bootstrapPlay30Version = "8.6.0"
+  private val bootstrapPlay30Version = "9.4.0"
   private val mongoPlay30Version     = "1.9.0"
 
   val compile = Seq(
@@ -12,7 +12,7 @@ object AppDependencies {
     "uk.gov.hmrc"       %% "play-conditional-form-mapping-play-30" % "2.0.0",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-30"    % bootstrapPlay30Version,
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-30"            % mongoPlay30Version,
-    "uk.gov.hmrc"       %% "crypto-json-play-30"           % "8.0.0"
+    "uk.gov.hmrc"       %% "crypto-json-play-30"           % "8.0.0",
   )
 
   val test = Seq(
