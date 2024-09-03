@@ -14,25 +14,16 @@
  * limitations under the License.
  */
 
-package models
+package utils
 
-import play.api.libs.json._
+object ToCamelCase {
 
-case class CalculationTaskListAuditEvent(
-  authenticated: Boolean,
-  uniqueId: String,
-  userId: String,
-  sectionStatusList: List[SectionStatus]
-)
+  def toCamelCase(str: String, splitterChar: Char): String =
+    str.split(splitterChar).map(_.toLowerCase.capitalize).mkString("").uncapitalize
 
-object CalculationTaskListAuditEvent {
-
-  implicit lazy val formats: Format[CalculationTaskListAuditEvent] = Json.format
-}
-
-case class SectionStatus(taskId: String, status: String)
-
-object SectionStatus {
-
-  implicit lazy val formats: Format[SectionStatus] = Json.format
+  implicit class StringOps(val str: String) extends AnyVal {
+    def uncapitalize: String =
+      if (str.isEmpty) str
+      else str.charAt(0).toString.toLowerCase + str.substring(1)
+  }
 }

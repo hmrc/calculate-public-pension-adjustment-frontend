@@ -17,7 +17,7 @@
 package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{CalculationTaskListAuditEvent, Done}
+import models.{CalculationTaskListAuditEvent, Done, SectionStatus}
 import models.requests.{AuthenticatedIdentifierRequest, DataRequest}
 import models.tasklist.TaskListViewModel
 import play.api.data.Form
@@ -28,6 +28,7 @@ import services.{AuditService, TaskListService, UserDataService}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.TaskListView
+import utils.ToCamelCase._
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -52,9 +53,9 @@ class TaskListController @Inject() (
     updateAuthFlag(request).flatMap { _ =>
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
 
-      val sectionStatusList: List[String] = taskListViewModel.allGroups.flatMap { group =>
+      val sectionStatusList = taskListViewModel.allGroups.flatMap { group =>
         group.sections.map { section =>
-          s"${section.id}: ${section.status.toString}"
+          SectionStatus(toCamelCase(section.id, '-'), section.status.toString)
         }
       }.toList
 
