@@ -48,7 +48,7 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PensionProtectedMemberPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/not-impacted-no-RPSS")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-RPSS")
     }
 
     "must go to 22/23 PIA > 40K page when yes and RPSS yes" in {
@@ -136,7 +136,7 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PensionProtectedMemberPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/not-impacted-no-RPSS")
+      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-RPSS")
     }
 
     "when no answer must go to journey recovery" in {
