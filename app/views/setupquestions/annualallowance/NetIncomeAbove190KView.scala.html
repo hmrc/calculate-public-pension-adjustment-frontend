@@ -27,6 +27,38 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-body">@messages("netIncomeAbove190K.message1")</p>
+    <p class="govuk-body">@messages("netIncomeAbove190K.message2")</p>
+
+    <p class="govuk-body">@messages("netIncomeAbove190K.message3")</p>
+    <ul class="govuk-body">
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet1")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet2")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet3")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet4")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet5")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet6")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet7")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet8")</li>
+    </ul>
+
+    <p class="govuk-body">@messages("netIncomeAbove190K.message4")</p>
+    <ul class="govuk-body">
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet9")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190K.bullet10")</li>
+    </ul>
+
+    <p class="govuk-body">@messages("netIncomeAbove190K.message5")
+        <a class="govuk-link" href="https://www.gov.uk/sa302-tax-calculation" rel="noreferrer noopener" target="_blank">
+            @messages("netIncomeAbove190K.link") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+        </a>
+        @messages("netIncomeAbove190K.message6")
+    </p>
+
+    <h2 class="govuk-heading-m">@messages("netIncomeAbove190K.heading2")</h2>
+}
+
 @layout(pageTitle = title(form, messages("netIncomeAbove190K.title"))) {
 
     @formHelper(action = routes.NetIncomeAbove190KController.onSubmit(mode), 'autoComplete -> "off") {
@@ -38,8 +70,12 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("netIncomeAbove190K.heading")).asPageHeading()
-            )
+                    legend = HmrcPageHeadingLegend(
+                        content = messages("netIncomeAbove190K.heading"),
+                        caption = messages("annualAllowance.caption"),
+                    )
+                )
+            .withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()

@@ -136,7 +136,7 @@ class HadAAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = HadAAChargePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contribution-refunds")
+      checkNavigation(nextPageUrl, "/triage-journey/contribution-refunds")
     }
 
     "to journey recovery when not answered" in {
@@ -251,7 +251,7 @@ class HadAAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = HadAAChargePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/contribution-refunds")
+      checkNavigation(nextPageUrl, "/triage-journey/contribution-refunds")
     }
 
     "to journey recovery when not answered" in {
