@@ -26,8 +26,9 @@ import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, Enhan
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
+import pages.setupquestions.annualallowance.SavingsStatementPage
 import pages.setupquestions.lifetimeallowance._
-import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, ResubmittingAdjustmentPage, SavingsStatementPage}
+import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, ResubmittingAdjustmentPage}
 import play.api.Logging
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
