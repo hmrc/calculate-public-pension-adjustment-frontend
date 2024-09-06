@@ -116,7 +116,7 @@ class MaybePIAUnchangedOrDecreasedPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/PIA-above-annual-allowance-limit-22-23")
+      checkNavigation(nextPageUrl, "/triage-journey/PIA-above-annual-allowance-limit")
     }
 
     "to journey recovery when not answered" in {
@@ -212,7 +212,7 @@ class MaybePIAUnchangedOrDecreasedPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = MaybePIAUnchangedOrDecreasedPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/PIA-above-annual-allowance-limit-22-23")
+      checkNavigation(nextPageUrl, "/triage-journey/PIA-above-annual-allowance-limit")
     }
 
     "to journey recovery when not answered" in {

@@ -74,7 +74,7 @@ class ContributionRefundsPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/PIA-amount-increased")
+      checkNavigation(nextPageUrl, "/triage-journey/PIA-amount-increased")
     }
 
     "to journey recovery when not answered" in {
@@ -127,7 +127,7 @@ class ContributionRefundsPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ContributionRefundsPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/PIA-amount-increased")
+      checkNavigation(nextPageUrl, "/triage-journey/PIA-amount-increased")
     }
 
     "to journey recovery when not answered" in {

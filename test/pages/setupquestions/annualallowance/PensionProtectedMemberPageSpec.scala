@@ -63,7 +63,7 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PensionProtectedMemberPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/PIA-above-annual-allowance-limit-22-23")
+      checkNavigation(nextPageUrl, "/triage-journey/PIA-above-annual-allowance-limit")
     }
 
     "must go to AA charge when no" in {
@@ -120,7 +120,7 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PensionProtectedMemberPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/PIA-above-annual-allowance-limit-22-23")
+      checkNavigation(nextPageUrl, "/triage-journey/PIA-above-annual-allowance-limit")
 
     }
 
