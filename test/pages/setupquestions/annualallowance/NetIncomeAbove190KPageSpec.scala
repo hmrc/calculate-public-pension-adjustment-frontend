@@ -136,7 +136,7 @@ class NetIncomeAbove190KPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NetIncomeAbove190KPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/PIA-amount-increased")
+      checkNavigation(nextPageUrl, "/triage-journey/PIA-amount-increased")
     }
 
     "to aa kickout when anything else" in {
@@ -266,7 +266,7 @@ class NetIncomeAbove190KPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NetIncomeAbove190KPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/PIA-amount-increased")
+      checkNavigation(nextPageUrl, "/triage-journey/PIA-amount-increased")
     }
 
     "to aa kickout when anything else" in {
