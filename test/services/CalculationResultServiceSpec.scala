@@ -53,13 +53,17 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     val data1 = Json
       .parse(s"""
            |{
-           |    "savingsStatement" : true,
            |    "resubmittingAdjustment" : true,
            |    "reasonForResubmission" : "Change in amounts",
-           |    "reportingChange" : [ "annualAllowance" ],
+           |    "reportingChange" : [ "annualAllowance", "lifetimeAllowance" ],
            |    "setup": {
            |      "aa": {
            |        "savingsStatement": true
+           |      },
+           |      "lta": {
+           |        "hadBenefitCrystallisationEvent": true,
+           |        "changeInLifetimeAllowance": true,
+           |        "multipleBenefitCrystallisationEvent": false
            |      }
            |    },
            |    "scottishTaxpayerFrom2016" : false,
@@ -452,9 +456,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |      }
            |    },
            |    "lta": {
-           |      "hadBenefitCrystallisationEvent": true,
            |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
-           |      "changeInLifetimeAllowance": true,
            |      "increaseInLTACharge": true,
            |      "newLTACharge": true,
            |      "ltaProtectionOrEnhancements": "protection",
@@ -1861,7 +1863,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "registeredYear": true,
                 |    "pIAPreRemedy": 18000
                 |  },
-                |  "savingsStatement": true,
                 |  "navigation": {
                 |    "setupSection": "/public-pension-adjustment/check-your-answers-setup",
                 |    "preAASection": "/public-pension-adjustment/annual-allowance/setup-check-answers",
@@ -2089,7 +2090,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     val data13 = Json
       .parse(s"""
                 |{
-                |    "savingsStatement": true,
                 |    "navigation": {
                 |      "setupSection": "/public-pension-adjustment/check-your-answers-setup",
                 |      "preAASection": "/public-pension-adjustment/annual-allowance/setup-check-answers",
@@ -3073,7 +3073,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           Resubmission(true, Some("Change in amounts")),
           Setup(
             Some(AnnualAllowanceSetup(Some(true))),
-            None
+            Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
           ),
           Some(
             AnnualAllowance(
