@@ -151,7 +151,7 @@ class NetIncomeAbove190KPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NetIncomeAbove190KPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-RPSS")
+      checkNavigation(nextPageUrl, "/triage-journey-not-eligible-no-RPSS")
     }
 
     "to journey recovery when not answered" in {
@@ -281,7 +281,7 @@ class NetIncomeAbove190KPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NetIncomeAbove190KPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-RPSS")
+      checkNavigation(nextPageUrl, "/triage-journey-not-eligible-no-RPSS")
     }
 
     "to journey recovery when not answered" in {

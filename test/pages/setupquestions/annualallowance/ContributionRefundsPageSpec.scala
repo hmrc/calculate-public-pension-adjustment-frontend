@@ -46,7 +46,7 @@ class ContributionRefundsPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-RPSS")
+      checkNavigation(nextPageUrl, "/triage-journey-not-eligible-no-RPSS")
     }
 
     "to Net income above 100k 16/17 - 19/20 when yes" in {
@@ -99,7 +99,7 @@ class ContributionRefundsPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ContributionRefundsPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/triage-journey-not-impacted-no-RPSS")
+      checkNavigation(nextPageUrl, "/triage-journey-not-eligible-no-RPSS")
     }
 
     "to Net income above 100k 16/17 - 19/20 when yes" in {

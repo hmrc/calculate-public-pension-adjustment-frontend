@@ -555,7 +555,7 @@ POST       /triage-journey/contribution-refunds                       controller
 GET        /triage-journey/change-contribution-refunds                 controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = CheckMode)
 POST       /triage-journey/change-contribution-refunds                  controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /triage-journey-not-impacted-no-RPSS                      controllers.setupquestions.annualallowance.NotAbleToUseThisServiceAAController.onPageLoad()
+GET        /triage-journey-not-eligible-no-RPSS                      controllers.setupquestions.annualallowance.NotAbleToUseThisServiceAAController.onPageLoad()
 
 GET        /triage-journey/other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = NormalMode)
 POST       /triage-journey/other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = NormalMode)
