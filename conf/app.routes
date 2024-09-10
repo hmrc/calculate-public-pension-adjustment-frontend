@@ -550,27 +550,27 @@ POST       /triage-journey/annual-allowance-charge                        contro
 GET        /triage-journey/change-annual-allowance-charge                  controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = CheckMode)
 POST       /triage-journey/change-annual-allowance-charge               controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = NormalMode)
-POST       /contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = NormalMode)
-GET        /contribution-refunds                 controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeContributionRefunds                  controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = CheckMode)
+GET        /triage-journey/contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = NormalMode)
+POST       /triage-journey/contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = NormalMode)
+GET        /triage-journey/change-contribution-refunds                 controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = CheckMode)
+POST       /triage-journey/change-contribution-refunds                  controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /not-impacted-no-RPSS                      controllers.setupquestions.annualallowance.NotAbleToUseThisServiceAAController.onPageLoad()
+GET        /triage-journey-not-eligible-no-RPSS                      controllers.setupquestions.annualallowance.NotAbleToUseThisServiceAAController.onPageLoad()
 
 GET        /triage-journey/other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = NormalMode)
 POST       /triage-journey/other-scheme-LTA-notification                        controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = NormalMode)
 GET        /triage-journey/change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onPageLoad(mode: Mode = CheckMode)
 POST       /triage-journey/change-other-scheme-LTA-notification                  controllers.setupquestions.lifetimeallowance.OtherSchemeNotificationController.onSubmit(mode: Mode = CheckMode)
 
-GET        /income-over-100                        controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onPageLoad(mode: Mode = NormalMode)
-POST       /income-over-100                        controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onSubmit(mode: Mode = NormalMode)
-GET        /change-income-over-100                  controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-income-over-100                  controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onSubmit(mode: Mode = CheckMode)
+GET        /triage-journey/income-over-100                        controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onPageLoad(mode: Mode = NormalMode)
+POST       /triage-journey/income-over-100                        controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onSubmit(mode: Mode = NormalMode)
+GET        /triage-journey/change-income-over-100                  controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onPageLoad(mode: Mode = CheckMode)
+POST       /triage-journey/change-income-over-100                  controllers.setupquestions.annualallowance.NetIncomeAbove100KController.onSubmit(mode: Mode = CheckMode)
 
-GET        /income-over-190                         controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onPageLoad(mode: Mode = NormalMode)
-POST       /income-over-190                         controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onSubmit(mode: Mode = NormalMode)
-GET        /change-income-over-100                   controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-income-over-100                   controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onSubmit(mode: Mode = CheckMode)
+GET        /triage-journey/income-over-190-22                         controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onPageLoad(mode: Mode = NormalMode)
+POST       /triage-journey/income-over-190-22                         controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onSubmit(mode: Mode = NormalMode)
+GET        /triage-journey/change-income-over-190-22                   controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onPageLoad(mode: Mode = CheckMode)
+POST       /triage-journey/change-income-over-190-22                   controllers.setupquestions.annualallowance.NetIncomeAbove190KController.onSubmit(mode: Mode = CheckMode)
 
 GET        /PIA-amount-increased                        controllers.setupquestions.annualallowance.MaybePIAIncreaseController.onPageLoad(mode: Mode = NormalMode)
 POST       /PIA-amount-increased                        controllers.setupquestions.annualallowance.MaybePIAIncreaseController.onSubmit(mode: Mode = NormalMode)
@@ -597,7 +597,7 @@ POST       /flexible-access-dc-scheme                        controllers.setupqu
 GET        /change-flexible-access-dc-scheme                  controllers.setupquestions.annualallowance.FlexibleAccessDcSchemeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-flexible-access-dc-scheme         controllers.setupquestions.annualallowance.FlexibleAccessDcSchemeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /triage-journey-not-impacted-PIA-decrease                       controllers.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseController.onPageLoad()
+GET        /triage-journey-not-eligible-PIA-decrease                       controllers.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseController.onPageLoad()
 
 GET        /4000-contribution-to-direct-contribution-scheme                        controllers.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeController.onPageLoad(mode: Mode = NormalMode)
 POST       /4000-contribution-to-direct-contribution-scheme                        controllers.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeController.onSubmit(mode: Mode = NormalMode)

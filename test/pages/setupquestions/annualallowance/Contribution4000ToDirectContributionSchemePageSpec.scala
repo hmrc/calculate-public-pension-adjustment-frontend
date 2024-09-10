@@ -119,7 +119,7 @@ class Contribution4000ToDirectContributionSchemePageSpec extends PageBehaviours 
 
         val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/triage-journey-not-impacted-PIA-decrease")
+        checkNavigation(nextPageUrl, "/triage-journey-not-eligible-PIA-decrease")
       }
 
       "to journey recovery when not answered" in {
@@ -219,7 +219,7 @@ class Contribution4000ToDirectContributionSchemePageSpec extends PageBehaviours 
 
         val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/triage-journey-not-impacted-PIA-decrease")
+        checkNavigation(nextPageUrl, "/triage-journey-not-eligible-PIA-decrease")
       }
 
       "to journey recovery when not answered" in {

@@ -55,7 +55,7 @@ class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
         val nextPageUrl: String = FlexibleAccessDcSchemePage.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/triage-journey-not-impacted-PIA-decrease")
+        checkNavigation(nextPageUrl, "/triage-journey-not-eligible-PIA-decrease")
       }
 
       "to journey recovery when not answered" in {
@@ -89,7 +89,7 @@ class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
         val nextPageUrl: String = FlexibleAccessDcSchemePage.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/triage-journey-not-impacted-PIA-decrease")
+        checkNavigation(nextPageUrl, "/triage-journey-not-eligible-PIA-decrease")
       }
 
       "to journey recovery when not answered" in {
