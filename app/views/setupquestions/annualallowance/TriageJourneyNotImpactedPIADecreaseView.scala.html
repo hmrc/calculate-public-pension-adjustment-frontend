@@ -27,12 +27,20 @@
 
     <h1 class="govuk-heading-xl">@messages("triageJourneyNotImpactedPIADecrease.heading")</h1>
 
+    <p class="govuk-body">@messages("triageJourneyNotImpactedPIADecrease.message1")</p>
+    <p class="govuk-body">@messages("triageJourneyNotImpactedPIADecrease.message2")</p>
+    <p class="govuk-body">@messages("triageJourneyNotImpactedPIADecrease.message3")</p>
+    <p class="govuk-body">@messages("triageJourneyNotImpactedPIADecrease.message4")</p>
+    <p class="govuk-body">@messages("triageJourneyNotImpactedPIADecrease.message5")</p>
+    <p class="govuk-body">@messages("triageJourneyNotImpactedPIADecrease.message6")</p>
+
     @if(shouldShowContinueButton) {
-    <p class="govuk-body">
-        @govukButton(
-        ButtonViewModel(messages("site.continue"))
-        .asLink(url)
-        )
-    </p>
+    <p class="govuk-body">@messages("triageJourneyNotImpactedPIADecrease.message7")</p>
+        <p class="govuk-body">
+            @govukButton(
+            ButtonViewModel(messages("site.continue"))
+            .asLink(url)
+            )
+        </p>
     }
 }

@@ -26,6 +26,16 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-body">@messages("flexibleAccessDcScheme.message1")</p>
+    <p class="govuk-body">@messages("flexibleAccessDcScheme.message2")</p>
+        <ul class="govuk-body">
+            <li class="govuk-body">@messages("flexibleAccessDcScheme.bullet1")</li>
+            <li class="govuk-body">@messages("flexibleAccessDcScheme.bullet2")</li>
+        </ul>
+    <h2 class="govuk-heading-m">@messages("flexibleAccessDcScheme.heading2")</h2>
+}
+
 @layout(pageTitle = title(form, messages("flexibleAccessDcScheme.title"))) {
 
     @formHelper(action = routes.FlexibleAccessDcSchemeController.onSubmit(mode), 'autoComplete -> "off") {
@@ -34,12 +44,15 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = LegendViewModel(messages("flexibleAccessDcScheme.heading")).asPageHeading()
+                @govukRadios(
+                    RadiosViewModel.yesNo(
+                    field = form("value"),
+                        legend = HmrcPageHeadingLegend(
+                            content = messages("flexibleAccessDcScheme.heading1"),
+                            caption = HmrcSectionCaption(messages("annualAllowance.caption")))
+                    ).withHint(HintViewModel(HtmlContent(contentHint))
+                )
             )
-        )
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

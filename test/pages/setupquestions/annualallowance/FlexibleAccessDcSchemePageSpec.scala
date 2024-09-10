@@ -43,7 +43,7 @@ class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
         val nextPageUrl: String = FlexibleAccessDcSchemePage.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/4000-contribution-to-direct-contribution-scheme")
+        checkNavigation(nextPageUrl, "/triage-journey/4000-contribution-to-defined-contribution-scheme")
       }
 
       "to TriageJourneyNotImpactedPIADecrease kickout when false" in {
@@ -77,7 +77,7 @@ class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
         val nextPageUrl: String = FlexibleAccessDcSchemePage.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/4000-contribution-to-direct-contribution-scheme")
+        checkNavigation(nextPageUrl, "/triage-journey/4000-contribution-to-defined-contribution-scheme")
       }
 
       "to TriageJourneyNotImpactedPIADecrease kickout when false" in {
