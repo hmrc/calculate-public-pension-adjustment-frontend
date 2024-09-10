@@ -24,10 +24,10 @@ GET         /account/sign-out-unauthorised                                   con
 
 GET         /unauthorised                                                    controllers.UnauthorisedController.onPageLoad()
 
-GET         /pension-saving-statement                                        controllers.setupquestions.annualallowance.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
-POST        /pension-saving-statement                                        controllers.setupquestions.annualallowance.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
-GET         /change-pension-saving-statement                                 controllers.setupquestions.annualallowance.SavingsStatementController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-pension-saving-statement                                 controllers.setupquestions.annualallowance.SavingsStatementController.onSubmit(mode: Mode = CheckMode)
+GET         /triage-journey/received-letter                                        controllers.setupquestions.annualallowance.SavingsStatementController.onPageLoad(mode: Mode = NormalMode)
+POST        /triage-journey/received-letter                                        controllers.setupquestions.annualallowance.SavingsStatementController.onSubmit(mode: Mode = NormalMode)
+GET         /triage-journey/change-received-letter                                controllers.setupquestions.annualallowance.SavingsStatementController.onPageLoad(mode: Mode = CheckMode)
+POST        /triage-journey/change-received-letter                                 controllers.setupquestions.annualallowance.SavingsStatementController.onSubmit(mode: Mode = CheckMode)
 
 GET         /change-previous-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onPageLoad(mode: Mode = NormalMode)
 POST        /change-previous-adjustment                                      controllers.setupquestions.ResubmittingAdjustmentController.onSubmit(mode: Mode = NormalMode)
@@ -540,15 +540,15 @@ POST       /triage-journey/LTA-charge                        controllers.setupqu
 GET        /triage-journey/change-LTA-charge                controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onPageLoad(mode: Mode = CheckMode)
 POST       /triage-journey/change-LTA-charge                 controllers.setupquestions.lifetimeallowance.PreviousLTAChargeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = NormalMode)
-POST       /protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = NormalMode)
-GET        /change-protected-member                  controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-protected-member                 controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = CheckMode)
+GET        /triage-journey/protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = NormalMode)
+POST       /triage-journey/protected-member                      controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = NormalMode)
+GET        /triage-journey/change-protected-member                  controllers.setupquestions.annualallowance.PensionProtectedMemberController.onPageLoad(mode: Mode = CheckMode)
+POST       /triage-journey/change-protected-member                 controllers.setupquestions.annualallowance.PensionProtectedMemberController.onSubmit(mode: Mode = CheckMode)
 
-GET        /annual-allowance-charge                      controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = NormalMode)
-POST       /annual-allowance-charge                        controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = NormalMode)
-GET        /change-annual-allowance-charge                  controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-annual-allowance-charge               controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = CheckMode)
+GET        /triage-journey/annual-allowance-charge                      controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = NormalMode)
+POST       /triage-journey/annual-allowance-charge                        controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = NormalMode)
+GET        /triage-journey/change-annual-allowance-charge                  controllers.setupquestions.annualallowance.HadAAChargeController.onPageLoad(mode: Mode = CheckMode)
+POST       /triage-journey/change-annual-allowance-charge               controllers.setupquestions.annualallowance.HadAAChargeController.onSubmit(mode: Mode = CheckMode)
 
 GET        /contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onPageLoad(mode: Mode = NormalMode)
 POST       /contribution-refunds                       controllers.setupquestions.annualallowance.ContributionRefundsController.onSubmit(mode: Mode = NormalMode)

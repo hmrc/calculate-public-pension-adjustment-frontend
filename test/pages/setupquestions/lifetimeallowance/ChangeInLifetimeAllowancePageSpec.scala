@@ -65,7 +65,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/pension-saving-statement")
+      checkNavigation(nextPageUrl, "/triage-journey/received-letter")
     }
 
     "must navigate to CYA page when user answers true for PreviousLTACharge and ChangeInLTA and the value for KickOutStatus is 2" in {
@@ -188,7 +188,7 @@ class ChangeInLifetimeAllowancePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ChangeInLifetimeAllowancePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/pension-saving-statement")
+      checkNavigation(nextPageUrl, "/triage-journey/received-letter")
     }
 
     "must navigate to change in CYA page when user answers true for PreviousLTACharge and ChangeInLTA and the value for AAKickOutStatus is 2" in {

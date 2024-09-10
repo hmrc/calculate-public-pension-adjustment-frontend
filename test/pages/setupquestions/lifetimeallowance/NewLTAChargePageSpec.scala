@@ -59,7 +59,7 @@ class NewLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewLTAChargePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/pension-saving-statement")
+      checkNavigation(nextPageUrl, "/triage-journey/received-letter")
     }
 
     "must navigate to CYA page when user answers true for NewLTAChargePage and the value for KickOutStatus is 2" in {

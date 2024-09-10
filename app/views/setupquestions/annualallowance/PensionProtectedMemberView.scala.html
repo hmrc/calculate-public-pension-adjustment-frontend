@@ -26,6 +26,19 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+
+    <p class="govuk-body">@messages("pensionProtectedMember.message1")</p>
+    <p class="govuk-body">@messages("pensionProtectedMember.message2")</p>
+
+    <a class="govuk-link" href="https://www.civilservicepensionscheme.org.uk/your-pension/2015-remedy/2015-remedy-mccloud-faqs/#protection" rel="noreferrer noopener" target="_blank">
+        @messages("pensionProtectedMember.link") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+    </a>
+
+    <h2 class="govuk-heading-m">@messages("pensionProtectedMember.heading2")</h2>
+
+}
+
 @layout(pageTitle = title(form, messages("pensionProtectedMember.title"))) {
 
     @formHelper(action = routes.PensionProtectedMemberController.onSubmit(mode), 'autoComplete -> "off") {
@@ -37,8 +50,11 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("pensionProtectedMember.heading")).asPageHeading()
-            )
+                    legend = HmrcPageHeadingLegend(
+                        content = messages("pensionProtectedMember.heading"),
+                        caption = messages("annualAllowance.caption")
+                )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()
