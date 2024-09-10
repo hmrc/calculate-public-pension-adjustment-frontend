@@ -51,7 +51,7 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/pension-saving-statement")(
+          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/triage-journey/received-letter")(
             request,
             messages(application)
           ).toString

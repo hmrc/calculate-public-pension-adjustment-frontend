@@ -44,7 +44,7 @@ class SavingsStatementPageSpec extends PageBehaviours with SpecBase {
 
       val nextPageUrl: String = SavingsStatementPage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/protected-member")
+      checkNavigation(nextPageUrl, "/triage-journey/protected-member")
     }
 
     "must redirect to pension protected member page when answered when no" in {
@@ -56,7 +56,7 @@ class SavingsStatementPageSpec extends PageBehaviours with SpecBase {
 
       val nextPageUrl: String = SavingsStatementPage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/protected-member")
+      checkNavigation(nextPageUrl, "/triage-journey/protected-member")
     }
 
     "must redirect to ResubmittingAdjustment page when user is authenticated and selected Yes on the page" in {
@@ -78,7 +78,7 @@ class SavingsStatementPageSpec extends PageBehaviours with SpecBase {
 
       val nextPageUrl: String = SavingsStatementPage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/protected-member")
+      checkNavigation(nextPageUrl, "/triage-journey/protected-member")
     }
 
     "must redirect to CYA page when false" in {
@@ -90,7 +90,7 @@ class SavingsStatementPageSpec extends PageBehaviours with SpecBase {
 
       val nextPageUrl: String = SavingsStatementPage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/protected-member")
+      checkNavigation(nextPageUrl, "/triage-journey/protected-member")
     }
 
     "must redirect to journey recovery when no answer" in {

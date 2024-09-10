@@ -49,7 +49,7 @@ class ReportingChangePageSpec extends PageBehaviours {
         .value
       val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/pension-saving-statement")
+      checkNavigation(nextPageUrl, "/triage-journey/received-letter")
     }
 
     "must redirect to BCE page when user submits an answer for Lifetime allowance" in {
@@ -85,7 +85,7 @@ class ReportingChangePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ReportingChangePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/pension-saving-statement")
+      checkNavigation(nextPageUrl, "/triage-journey/received-letter")
     }
 
     "must redirect to BCE page when user submits an answer for Lifetime allowance" in {

@@ -57,7 +57,7 @@ class OtherSchemeNotificationPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = OtherSchemeNotificationPage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/pension-saving-statement")
+      checkNavigation(nextPageUrl, "/triage-journey/received-letter")
     }
 
     "must navigate to CYA page when user answers true for OtherSchemeNotificationPage and the value for KickOutStatus is 2" in {
