@@ -16,6 +16,7 @@
 
 package pages.setupquestions.annualallowance
 
+import models.tasklist.sections.{AASection, PreAASection}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -51,9 +52,15 @@ case object FlexibleAccessDcSchemePage extends QuestionPage[Boolean] {
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map { _ =>
-        userAnswers
-          .remove(Contribution4000ToDirectContributionSchemePage)
+      .map {
+        case true  =>
+          userAnswers
+            .remove(Contribution4000ToDirectContributionSchemePage)
+        case false =>
+          for {
+            answersNoAASetup <- Try(PreAASection.removeAllUserAnswersAndNavigation(userAnswers))
+            answersNoAATask  <- Try(AASection.removeAllAAPeriodAnswersAndNavigation(answersNoAASetup))
+          } yield answersNoAATask.remove(Contribution4000ToDirectContributionSchemePage).get
       }
       .getOrElse(super.cleanup(value, userAnswers))
 }

@@ -16,11 +16,14 @@
 
 package pages
 
-import models.{CheckMode, LTAKickOutStatus, NormalMode}
+import models.Period.{_2013, _2014, _2015, _2021, _2022}
+import models.{CheckMode, ContributedToDuringRemedyPeriod, MaybePIAIncrease, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, SchemeIndex, ThresholdIncome, WhichYearsScottishTaxpayer, WhoPaidAACharge}
+import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
+import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountOfGiftAidPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouHaveGiftAidPage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, KnowAdjustedAmountPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.annualallowance.{Contribution4000ToDirectContributionSchemePage, FlexibleAccessDcSchemePage}
+import pages.setupquestions.annualallowance.{Contribution4000ToDirectContributionSchemePage, FlexibleAccessDcSchemePage, MaybePIAIncreasePage, NetIncomeAbove190KIn2023Page, PIAAboveAnnualAllowanceIn2023Page, PensionProtectedMemberPage, SavingsStatementPage}
 
-import scala.util.Random
+import java.time.LocalDate
 
 class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
@@ -103,14 +106,50 @@ class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 
   "cleanup" - {
 
-    "when user answers yes or no" in {
+    "when user answers yes cleanup triage pages only" in {
 
       val cleanedUserAnswers = FlexibleAccessDcSchemePage
-        .cleanup(Some(Random.nextBoolean()), userAnswersAATriage)
+        .cleanup(Some(true), testCalulationServiceData)
         .success
         .value
 
+      // AA Triage Answers
+      cleanedUserAnswers.get(SavingsStatementPage) mustBe Some(true)
+      cleanedUserAnswers.get(PensionProtectedMemberPage) mustBe Some(true)
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe Some(MaybePIAIncrease.No)
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe Some(true)
       cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
+
+      // AA Setup Answers
+      cleanedUserAnswers.get(ScottishTaxpayerFrom2016Page) mustBe Some(true)
+
+      // AALoop Answers
+      cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2021)) mustBe Some(true)
+    }
+
+    "when false cleanup triage page and AA tasks" in {
+
+      val cleanedUserAnswers = FlexibleAccessDcSchemePage
+        .cleanup(Some(false), testCalulationServiceData)
+        .success
+        .value
+
+      // AA Triage Answers
+      cleanedUserAnswers.get(SavingsStatementPage) mustBe Some(true)
+      cleanedUserAnswers.get(PensionProtectedMemberPage) mustBe Some(true)
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe Some(MaybePIAIncrease.No)
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe Some(true)
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
+
+      // AA Setup Answers
+      cleanedUserAnswers.get(ScottishTaxpayerFrom2016Page) mustBe None
+
+      // AALoop Answers
+      cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2021)) mustBe None
     }
   }
 }
