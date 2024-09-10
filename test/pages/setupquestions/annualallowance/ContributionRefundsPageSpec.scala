@@ -46,7 +46,7 @@ class ContributionRefundsPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/not-impacted-no-RPSS")
+      checkNavigation(nextPageUrl, "/triage-journey-not-eligible-no-RPSS")
     }
 
     "to Net income above 100k 16/17 - 19/20 when yes" in {
@@ -60,7 +60,7 @@ class ContributionRefundsPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ContributionRefundsPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/income-over-100")
+      checkNavigation(nextPageUrl, "/triage-journey/income-over-100")
     }
 
     "to have any PIAs increase 15/16 - 21/22 when no and RPSS yes" in {
@@ -99,7 +99,7 @@ class ContributionRefundsPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ContributionRefundsPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/not-impacted-no-RPSS")
+      checkNavigation(nextPageUrl, "/triage-journey-not-eligible-no-RPSS")
     }
 
     "to Net income above 100k 16/17 - 19/20 when yes" in {
@@ -113,7 +113,7 @@ class ContributionRefundsPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ContributionRefundsPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/income-over-100")
+      checkNavigation(nextPageUrl, "/triage-journey/income-over-100")
     }
 
     "to have any PIAs increase 15/16 - 21/22 when no and RPSS yes" in {

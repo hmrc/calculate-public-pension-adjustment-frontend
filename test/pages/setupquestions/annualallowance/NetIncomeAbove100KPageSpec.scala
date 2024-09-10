@@ -136,7 +136,7 @@ class NetIncomeAbove100KPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NetIncomeAbove100KPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/income-over-190")
+      checkNavigation(nextPageUrl, "/triage-journey/income-over-190-22")
     }
 
     "to journey recovery when not answered" in {
@@ -251,7 +251,7 @@ class NetIncomeAbove100KPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NetIncomeAbove100KPage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/income-over-190")
+      checkNavigation(nextPageUrl, "/triage-journey/income-over-190-22")
     }
 
     "to journey recovery when not answered" in {
