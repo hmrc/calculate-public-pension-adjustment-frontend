@@ -112,7 +112,7 @@ class NetIncomeAbove190KIn2023PageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/flexible-access-dc-scheme")
+      checkNavigation(nextPageUrl, "/triage-journey/flexible-access-dc-scheme")
 
     }
 
@@ -204,7 +204,7 @@ class NetIncomeAbove190KIn2023PageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NetIncomeAbove190KIn2023Page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/flexible-access-dc-scheme")
+      checkNavigation(nextPageUrl, "/triage-journey/flexible-access-dc-scheme")
 
     }
 

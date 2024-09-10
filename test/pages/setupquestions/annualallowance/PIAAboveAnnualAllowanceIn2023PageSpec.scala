@@ -113,7 +113,7 @@ class PIAAboveAnnualAllowanceIn2023PageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/income-over-190-22-23")
+      checkNavigation(nextPageUrl, "/triage-journey/income-over-190-23")
 
     }
 
@@ -204,7 +204,7 @@ class PIAAboveAnnualAllowanceIn2023PageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/income-over-190-22-23")
+      checkNavigation(nextPageUrl, "/triage-journey/income-over-190-23")
 
     }
 

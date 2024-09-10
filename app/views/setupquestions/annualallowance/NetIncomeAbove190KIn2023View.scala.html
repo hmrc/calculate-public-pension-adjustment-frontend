@@ -24,6 +24,38 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-body">@messages("netIncomeAbove190KIn2023.message1")</p>
+    <p class="govuk-body">@messages("netIncomeAbove190KIn2023.message2")</p>
+
+    <p class="govuk-body">@messages("netIncomeAbove190KIn2023.message3")</p>
+    <ul class="govuk-body">
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet1")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet2")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet3")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet4")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet5")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet6")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet7")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet8")</li>
+    </ul>
+
+    <p class="govuk-body">@messages("netIncomeAbove190KIn2023.message4")</p>
+    <ul class="govuk-body">
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet9")</li>
+        <li class="govuk-body">@messages("netIncomeAbove190KIn2023.bullet10")</li>
+    </ul>
+
+    <p class="govuk-body">@messages("netIncomeAbove190KIn2023.message5")
+        <a class="govuk-link" href="https://www.gov.uk/sa302-tax-calculation" rel="noreferrer noopener" target="_blank">
+            @messages("netIncomeAbove190KIn2023.link") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+        </a>
+        @messages("netIncomeAbove190KIn2023.message6")
+    </p>
+
+    <h2 class="govuk-heading-m">@messages("netIncomeAbove190KIn2023.heading2")</h2>
+}
+
 @layout(pageTitle = title(form, messages("netIncomeAbove190KIn2023.title"))) {
 
     @formHelper(action = controllers.setupquestions.annualallowance.routes.NetIncomeAbove190KIn2023Controller.onSubmit(mode), 'autoComplete -> "off") {
@@ -32,12 +64,15 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @govukRadios(
-            RadiosViewModel.yesNo(
+            @govukRadios(
+                RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("netIncomeAbove190KIn2023.heading")).asPageHeading()
+                    legend = HmrcPageHeadingLegend(
+                        content = messages("netIncomeAbove190KIn2023.heading1"),
+                        caption = HmrcSectionCaption(messages("annualAllowance.caption")))
+                    ).withHint(HintViewModel(HtmlContent(contentHint))
+                )
             )
-        )
 
         @continueButton()
     }
