@@ -16,6 +16,7 @@
 
 package pages.setupquestions.annualallowance
 
+import models.tasklist.sections.{AASection, PreAASection}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -53,16 +54,31 @@ case object ContributionRefundsPage extends QuestionPage[Boolean] {
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map { _ =>
-        userAnswers
-          .remove(NetIncomeAbove100KPage)
-          .flatMap(_.remove(NetIncomeAbove190KPage))
-          .flatMap(_.remove(MaybePIAIncreasePage))
-          .flatMap(_.remove(MaybePIAUnchangedOrDecreasedPage))
-          .flatMap(_.remove(PIAAboveAnnualAllowanceIn2023Page))
-          .flatMap(_.remove(NetIncomeAbove190KIn2023Page))
-          .flatMap(_.remove(FlexibleAccessDcSchemePage))
-          .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
+      .map {
+        case false =>
+          userAnswers
+            .get(SavingsStatementPage)
+            .map {
+              case false =>
+                for {
+                  answersNoAASetup <- Try(PreAASection.removeAllUserAnswersAndNavigation(userAnswers))
+                  answersNoAATask  <- Try(AASection.removeAllAAPeriodAnswersAndNavigation(answersNoAASetup))
+                } yield triageAAPages(answersNoAATask).get
+              case _     => triageAAPages(userAnswers)
+            }
+            .getOrElse(super.cleanup(value, userAnswers))
+        case true  => triageAAPages(userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
+
+  private def triageAAPages(userAnswers: UserAnswers): Try[UserAnswers] =
+    userAnswers
+      .remove(NetIncomeAbove100KPage)
+      .flatMap(_.remove(NetIncomeAbove190KPage))
+      .flatMap(_.remove(MaybePIAIncreasePage))
+      .flatMap(_.remove(MaybePIAUnchangedOrDecreasedPage))
+      .flatMap(_.remove(PIAAboveAnnualAllowanceIn2023Page))
+      .flatMap(_.remove(NetIncomeAbove190KIn2023Page))
+      .flatMap(_.remove(FlexibleAccessDcSchemePage))
+      .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
 }
