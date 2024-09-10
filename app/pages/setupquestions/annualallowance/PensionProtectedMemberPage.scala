@@ -16,7 +16,8 @@
 
 package pages.setupquestions.annualallowance
 
-import models.{NormalMode, UserAnswers}
+import models.tasklist.sections.{AASection, PreAASection}
+import models.{AAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -53,18 +54,33 @@ case object PensionProtectedMemberPage extends QuestionPage[Boolean] {
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map { _ =>
-        userAnswers
-          .remove(HadAAChargePage)
-          .flatMap(_.remove(ContributionRefundsPage))
-          .flatMap(_.remove(NetIncomeAbove100KPage))
-          .flatMap(_.remove(NetIncomeAbove190KPage))
-          .flatMap(_.remove(MaybePIAIncreasePage))
-          .flatMap(_.remove(MaybePIAUnchangedOrDecreasedPage))
-          .flatMap(_.remove(PIAAboveAnnualAllowanceIn2023Page))
-          .flatMap(_.remove(NetIncomeAbove190KIn2023Page))
-          .flatMap(_.remove(FlexibleAccessDcSchemePage))
-          .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
+      .map {
+        case true  =>
+          userAnswers
+            .get(SavingsStatementPage)
+            .map {
+              case false =>
+                for {
+                  answersNoAASetup <- Try(PreAASection.removeAllUserAnswersAndNavigation(userAnswers))
+                  answersNoAATask  <- Try(AASection.removeAllAAPeriodAnswersAndNavigation(answersNoAASetup))
+                } yield triageAAPages(answersNoAATask).get
+              case _     => triageAAPages(userAnswers)
+            }
+            .getOrElse(super.cleanup(value, userAnswers))
+        case false => triageAAPages(userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
+
+  private def triageAAPages(userAnswers: UserAnswers): Try[UserAnswers] =
+    userAnswers
+      .remove(HadAAChargePage)
+      .flatMap(_.remove(ContributionRefundsPage))
+      .flatMap(_.remove(NetIncomeAbove100KPage))
+      .flatMap(_.remove(NetIncomeAbove190KPage))
+      .flatMap(_.remove(MaybePIAIncreasePage))
+      .flatMap(_.remove(MaybePIAUnchangedOrDecreasedPage))
+      .flatMap(_.remove(PIAAboveAnnualAllowanceIn2023Page))
+      .flatMap(_.remove(NetIncomeAbove190KIn2023Page))
+      .flatMap(_.remove(FlexibleAccessDcSchemePage))
+      .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
 }

@@ -16,9 +16,10 @@
 
 package services
 
+import models.tasklist.SectionStatus.Completed
 import models.tasklist._
 import models.tasklist.sections._
-import models.{Period, ReportingChange, UserAnswers}
+import models.{AAKickOutStatus, Period, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 
 import javax.inject.Inject

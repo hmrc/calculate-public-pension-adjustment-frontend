@@ -16,10 +16,13 @@
 
 package pages.setupquestions.annualallowance
 
+import models.tasklist.sections.{AASection, PreAASection}
 import models.{LTAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object Contribution4000ToDirectContributionSchemePage extends QuestionPage[Boolean] {
 
@@ -62,4 +65,17 @@ case object Contribution4000ToDirectContributionSchemePage extends QuestionPage[
       case _           =>
         controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case true  =>
+          super.cleanup(value, userAnswers)
+        case false =>
+          for {
+            answersNoAASetup <- Try(PreAASection.removeAllUserAnswersAndNavigation(userAnswers))
+            answersNoAATask  <- Try(AASection.removeAllAAPeriodAnswersAndNavigation(answersNoAASetup))
+          } yield answersNoAATask
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }
