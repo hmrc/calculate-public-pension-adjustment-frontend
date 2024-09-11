@@ -16,10 +16,9 @@
 
 package services
 
-import models.tasklist.SectionStatus.Completed
 import models.tasklist._
 import models.tasklist.sections._
-import models.{AAKickOutStatus, Period, ReportingChange, UserAnswers}
+import models.{AAKickOutStatus, LTAKickOutStatus, Period, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 
 import javax.inject.Inject
@@ -32,13 +31,16 @@ class TaskListService @Inject() (
     val setupGroup: SectionGroupViewModel = setupGroupSeq(answers)
 
     val aaGroup: Option[SectionGroupViewModel] =
-      if (isRequired(answers, ReportingChange.AnnualAllowance)) {
+      if (isRequired(answers, ReportingChange.AnnualAllowance) && answers.get(AAKickOutStatus()).contains(2)) {
         val aaPeriods: Seq[Period]                  = PeriodService.relevantPeriods(answers)
         val aaPeriodSections: Seq[SectionViewModel] = aaPeriodSectionsSeq(answers, aaPeriods)
         Some(aaGroupSeq(answers, aaPeriodSections))
       } else { None }
 
-    val ltaGroup: Option[SectionGroupViewModel] = ltaGroupSeq(answers)
+    val ltaGroup: Option[SectionGroupViewModel] =
+      if (answers.get(LTAKickOutStatus()).contains(2)) {
+        ltaGroupSeq(answers)
+      } else { None }
 
     val nextStepsGroup: SectionGroupViewModel = nextStepsGroupSeq(answers, List(Some(setupGroup), aaGroup, ltaGroup))
 

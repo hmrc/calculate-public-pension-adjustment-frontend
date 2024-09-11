@@ -20,10 +20,10 @@ import base.SpecBase
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.sections.{LTASection, PreAASection, SetupSection}
 import models.tasklist.{SectionGroupViewModel, SectionStatus, TaskListViewModel}
-import models.{NormalMode, ReportingChange, UserAnswers}
+import models.{AAKickOutStatus, LTAKickOutStatus, NormalMode, ReportingChange, UserAnswers}
+import org.scalacheck.Gen
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.annualallowance.SavingsStatementPage
 import pages.setupquestions.{ReportingChangePage, ResubmittingAdjustmentPage}
 
 import java.time.LocalDate
@@ -35,13 +35,28 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
 
   def urlWithNoContext(url: String): String = url.replace("/public-pension-adjustment", "")
 
-  "the aa group must be defined if it is included in the changes being reported" in {
+  "the aa group must be defined if it is included in the changes being reported and AAKickoutStatus = 2" in {
     val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance)
-    val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
+    val answers: Try[UserAnswers]              = emptyUserAnswers
+      .set(ReportingChangePage, reportingChanges)
+      .get
+      .set(AAKickOutStatus(), 2)
 
     val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
 
     taskListViewModel.aaGroup.isDefined must be(true)
+  }
+
+  "the aa group must not be defined if it is included in the changes being reported and AAKickoutStatus = 1 or 0" in {
+    val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance)
+    val answers: Try[UserAnswers]              = emptyUserAnswers
+      .set(ReportingChangePage, reportingChanges)
+      .get
+      .set(AAKickOutStatus(), Gen.oneOf(Seq(0, 1)).sample.get)
+
+    val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
+
+    taskListViewModel.aaGroup.isDefined must be(false)
   }
 
   "the aa group must not be defined if it is not included in the changes being reported" in {
@@ -53,13 +68,28 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
     taskListViewModel.aaGroup.isDefined must be(false)
   }
 
-  "the lta group must be defined if it is included in the changes being reported" in {
+  "the lta group must be defined if it is included in the changes being reported and LTAKickoutStatus = 2 " in {
     val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
-    val answers: Try[UserAnswers]              = emptyUserAnswers.set(ReportingChangePage, reportingChanges)
+    val answers: Try[UserAnswers]              = emptyUserAnswers
+      .set(ReportingChangePage, reportingChanges)
+      .get
+      .set(LTAKickOutStatus(), 2)
 
     val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
 
     taskListViewModel.ltaGroup.isDefined must be(true)
+  }
+
+  "the lta group must not be defined if it is included in the changes being reported and LTAKickoutStatus = 1 or 2 " in {
+    val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
+    val answers: Try[UserAnswers]              = emptyUserAnswers
+      .set(ReportingChangePage, reportingChanges)
+      .get
+      .set(LTAKickOutStatus(), Gen.oneOf(Seq(0, 1)).sample.get)
+
+    val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(answers.get)
+
+    taskListViewModel.ltaGroup.isDefined must be(false)
   }
 
   "the lta group must not be defined if it is not included in the changes being reported" in {
@@ -153,6 +183,8 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
         .get
         .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 1))
         .get
+        .set(AAKickOutStatus(), 2)
+        .get
 
       val answersWithSetupNav   =
         SetupSection.saveNavigation(answersWithPageData, SetupSection.checkYourSetupAnswersPage.url)
@@ -168,6 +200,8 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
     val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
     val answers                                = emptyUserAnswers
       .set(ReportingChangePage, reportingChanges)
+      .get
+      .set(LTAKickOutStatus(), 2)
       .get
 
     val answersWithNav = LTASection.saveNavigation(answers, "some-url")

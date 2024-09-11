@@ -333,6 +333,7 @@ taskList.nextSteps.groupHeading = Next steps
 taskList.nextSteps.calculate = Calculate
 taskList.nextSteps.hidden = Public Service Pension Adjustment
 taskList.nextSteps.continueToSignIn = Continue to sign in
+taskList.nextSteps.continue = Continue
 taskList.nextSteps.setupRequired = You must first complete the setup questions
 taskList.nextSteps.noFurtherAction = No further action required
 

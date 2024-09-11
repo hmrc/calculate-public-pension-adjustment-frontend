@@ -39,7 +39,6 @@ class CheckYourLTAAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val rows: Seq[Option[SummaryListRow]] = Seq(
-      HadBenefitCrystallisationEventSummary.row(request.userAnswers),
       DateOfBenefitCrystallisationEventSummary.row(request.userAnswers),
       LtaProtectionOrEnhancementsSummary.row(request.userAnswers),
       ProtectionReferenceSummary.row(request.userAnswers),

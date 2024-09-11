@@ -82,5 +82,19 @@ class SetupSectionSpec extends SpecBase with PageBehaviours {
 
       SetupSection.status(answers) mustBe InProgress
     }
+
+    "Must be Completed when NotAbleToUseThisServiceLtaController reached" in {
+      val answers: UserAnswers =
+        SetupSection.saveNavigation(emptyUserAnswers, SetupSection.kickoutLTAService.url)
+
+      SetupSection.status(answers) mustBe Completed
+    }
+
+    "Must be Completed when NotAbleToUseThisTriageLtaController reached" in {
+      val answers: UserAnswers =
+        SetupSection.saveNavigation(emptyUserAnswers, SetupSection.kickoutLTATriage.url)
+
+      SetupSection.status(answers) mustBe Completed
+    }
   }
 }
