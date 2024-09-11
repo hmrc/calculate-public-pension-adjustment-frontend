@@ -49,6 +49,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val redirectToStartPage: String = configuration.get[String]("urls.redirectToStartPage")
 
   val confidenceUpliftUrl: String = configuration.get[String]("urls.confidenceUplift")
+  val upliftCompletionUrl         = configuration.get[String]("urls.upliftCompletion")
   val upliftFailureUrl            = configuration.get[String]("urls.upliftFailure")
   val requiredAuthConfidenceLevel = configuration.get[String]("required-auth-confidence-level")
   val upliftOrigin                = configuration.get[String]("uplift-origin")
