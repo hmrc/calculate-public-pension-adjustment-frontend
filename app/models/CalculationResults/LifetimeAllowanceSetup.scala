@@ -20,8 +20,12 @@ import play.api.libs.json._
 
 case class LifetimeAllowanceSetup(
   benefitCrystallisationEventFlag: Option[Boolean],
+  previousLTACharge: Option[Boolean],
   changeInLifetimeAllowancePercentageInformedFlag: Option[Boolean],
-  multipleBenefitCrystallisationEventFlag: Option[Boolean]
+  increaseInLTACharge: Option[Boolean],
+  newLTACharge: Option[Boolean],
+  multipleBenefitCrystallisationEventFlag: Option[Boolean],
+  otherSchemeNotification: Option[Boolean]
 )
 
 object LifetimeAllowanceSetup {
