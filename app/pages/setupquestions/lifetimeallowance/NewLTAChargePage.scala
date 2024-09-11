@@ -28,6 +28,8 @@ case object NewLTAChargePage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ "setup" \ "lta" \ toString
 
+  override def toString: String = "newLTACharge"
+
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(NewLTAChargePage) match {
       case Some(true)  => redirectToNext(answers)

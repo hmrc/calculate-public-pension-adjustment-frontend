@@ -22,11 +22,11 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
-import pages.setupquestions.annualallowance.SavingsStatementPage
+import pages.setupquestions.annualallowance.{Contribution4000ToDirectContributionSchemePage, ContributionRefundsPage, FlexibleAccessDcSchemePage, HadAAChargePage, MaybePIAIncreasePage, MaybePIAUnchangedOrDecreasedPage, NetIncomeAbove100KPage, NetIncomeAbove190KIn2023Page, NetIncomeAbove190KPage, PIAAboveAnnualAllowanceIn2023Page, PensionProtectedMemberPage, SavingsStatementPage}
 import pages.setupquestions.lifetimeallowance._
 import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, ResubmittingAdjustmentPage}
 import play.api.Logging
@@ -145,9 +145,38 @@ class CalculationResultService @Inject() (
 
     val annualAllowanceSetup: Option[AnnualAllowanceSetup] =
       if (userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))) {
-        val savingsStatement: Option[Boolean] = userAnswers.get(SavingsStatementPage).orElse(None)
+        val savingsStatement: Option[Boolean]                                  = userAnswers.get(SavingsStatementPage).orElse(None)
+        val pensionProtectedMember: Option[Boolean]                            = userAnswers.get(PensionProtectedMemberPage).orElse(None)
+        val hadAACharge: Option[Boolean]                                       = userAnswers.get(HadAAChargePage).orElse(None)
+        val contributionRefunds: Option[Boolean]                               = userAnswers.get(ContributionRefundsPage).orElse(None)
+        val netIncomeAbove100K: Option[Boolean]                                = userAnswers.get(NetIncomeAbove100KPage).orElse(None)
+        val netIncomeAbove190K: Option[Boolean]                                = userAnswers.get(NetIncomeAbove190KPage).orElse(None)
+        val maybePIAIncrease: Option[MaybePIAIncrease]                         = userAnswers.get(MaybePIAIncreasePage).orElse(None)
+        val maybePIAUnchangedOrDecreased: Option[MaybePIAUnchangedOrDecreased] =
+          userAnswers.get(MaybePIAUnchangedOrDecreasedPage).orElse(None)
+        val pIAAboveAnnualAllowanceIn2023: Option[Boolean]                     =
+          userAnswers.get(PIAAboveAnnualAllowanceIn2023Page).orElse(None)
+        val netIncomeAbove190KIn2023: Option[Boolean]                          = userAnswers.get(NetIncomeAbove190KIn2023Page).orElse(None)
+        val flexibleAccessDcScheme: Option[Boolean]                            = userAnswers.get(FlexibleAccessDcSchemePage).orElse(None)
+        val contribution4000ToDirectContributionScheme: Option[Boolean]        =
+          userAnswers.get(Contribution4000ToDirectContributionSchemePage).orElse(None)
 
-        Some(AnnualAllowanceSetup(savingsStatement))
+        Some(
+          AnnualAllowanceSetup(
+            savingsStatement,
+            pensionProtectedMember,
+            hadAACharge,
+            contributionRefunds,
+            netIncomeAbove100K,
+            netIncomeAbove190K,
+            maybePIAIncrease,
+            maybePIAUnchangedOrDecreased,
+            pIAAboveAnnualAllowanceIn2023,
+            netIncomeAbove190KIn2023,
+            flexibleAccessDcScheme,
+            contribution4000ToDirectContributionScheme
+          )
+        )
       } else None
 
     val lifetimeAllowanceSetup: Option[LifetimeAllowanceSetup] =
@@ -155,17 +184,33 @@ class CalculationResultService @Inject() (
         val benefitCrystallisationEventFlag: Option[Boolean] =
           userAnswers.get(HadBenefitCrystallisationEventPage).orElse(None)
 
+        val previousLTACharge: Option[Boolean] =
+          userAnswers.get(PreviousLTAChargePage).orElse(None)
+
         val changeInLifetimeAllowancePercentageInformedFlag: Option[Boolean] =
           userAnswers.get(ChangeInLifetimeAllowancePage).orElse(None)
+
+        val increaseInLTACharge: Option[Boolean] =
+          userAnswers.get(IncreaseInLTAChargePage).orElse(None)
+
+        val newLTACharge: Option[Boolean] =
+          userAnswers.get(NewLTAChargePage).orElse(None)
 
         val multipleBenefitCrystallisationEventFlag: Option[Boolean] =
           userAnswers.get(MultipleBenefitCrystallisationEventPage).orElse(None)
 
+        val otherSchemeNotification: Option[Boolean] =
+          userAnswers.get(OtherSchemeNotificationPage).orElse(None)
+
         Some(
           LifetimeAllowanceSetup(
             benefitCrystallisationEventFlag,
+            previousLTACharge,
             changeInLifetimeAllowancePercentageInformedFlag,
-            multipleBenefitCrystallisationEventFlag
+            increaseInLTACharge,
+            newLTACharge,
+            multipleBenefitCrystallisationEventFlag,
+            otherSchemeNotification
           )
         )
       } else None

@@ -23,7 +23,7 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
@@ -58,12 +58,27 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "reportingChange" : [ "annualAllowance", "lifetimeAllowance" ],
            |    "setup": {
            |      "aa": {
-           |        "savingsStatement": true
+           |        "savingsStatement": true,
+           |        "pensionProtectedMember": false,
+           |        "hadAACharge": false,
+           |        "contributionRefunds": false,
+           |        "netIncomeAbove100K": false,
+           |        "netIncomeAbove190K": false,
+           |        "maybePIAIncrease": "no",
+           |        "maybePIAUnchangedOrDecreased": "no",
+           |        "pIAAboveAnnualAllowanceIn2023": false,
+           |        "netIncomeAbove190KIn2023": false,
+           |        "flexibleAccessDcScheme": false,
+           |        "contribution4000ToDirectContributionScheme": false
            |      },
            |      "lta": {
            |        "hadBenefitCrystallisationEvent": true,
+           |        "previousLTACharge": false,
            |        "changeInLifetimeAllowance": true,
-           |        "multipleBenefitCrystallisationEvent": false
+           |        "increaseInLTACharge": false,
+           |        "newLTACharge": false,
+           |        "multipleBenefitCrystallisationEvent": false,
+           |        "otherSchemeNotification": false
            |      }
            |    },
            |    "scottishTaxpayerFrom2016" : false,
@@ -2679,7 +2694,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
-            Some(AnnualAllowanceSetup(Some(true))),
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
             None
           ),
           Some(
@@ -2730,7 +2745,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
-            Some(AnnualAllowanceSetup(Some(true))),
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
             None
           ),
           Some(
@@ -2835,7 +2850,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
-            Some(AnnualAllowanceSetup(Some(true))),
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
             None
           ),
           Some(
@@ -2940,7 +2955,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Incorrect data")),
           Setup(
-            Some(AnnualAllowanceSetup(Some(true))),
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
             None
           ),
           Some(
@@ -3072,8 +3087,33 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Change in amounts")),
           Setup(
-            Some(AnnualAllowanceSetup(Some(true))),
-            Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+            Some(
+              AnnualAllowanceSetup(
+                Some(true),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(MaybePIAIncrease.No),
+                Some(MaybePIAUnchangedOrDecreased.No),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false)
+              )
+            ),
+            Some(
+              LifetimeAllowanceSetup(
+                Some(true),
+                Some(false),
+                Some(true),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false)
+              )
+            )
           ),
           Some(
             AnnualAllowance(
@@ -3333,7 +3373,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
-            Some(AnnualAllowanceSetup(Some(true))),
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
             None
           ),
           Some(
@@ -3461,7 +3501,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
-            Some(AnnualAllowanceSetup(Some(true))),
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
             None
           ),
           Some(
@@ -3579,7 +3619,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
-            Some(AnnualAllowanceSetup(Some(true))),
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
             None
           ),
           Some(

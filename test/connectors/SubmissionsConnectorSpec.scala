@@ -20,7 +20,7 @@ import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
 import generators.Generators
 import models.CalculationResults.{AnnualAllowanceSetup, CalculationInputs, LifetimeAllowanceSetup, Resubmission, Setup}
-import models.Done
+import models.{Done, MaybePIAIncrease, MaybePIAUnchangedOrDecreased}
 import models.submission.{Failure, SubmissionRequest, SubmissionResponse, Success}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.Application
@@ -56,8 +56,33 @@ class SubmissionsConnectorSpec extends SpecBase with WireMockHelper with ScalaCh
               CalculationInputs(
                 Resubmission(false, None),
                 Setup(
-                  Some(AnnualAllowanceSetup(Some(true))),
-                  Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+                  Some(
+                    AnnualAllowanceSetup(
+                      Some(true),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(MaybePIAIncrease.No),
+                      Some(MaybePIAUnchangedOrDecreased.No),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(false)
+                    )
+                  ),
+                  Some(
+                    LifetimeAllowanceSetup(
+                      Some(true),
+                      Some(false),
+                      Some(true),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(true)
+                    )
+                  )
                 ),
                 None,
                 None
@@ -89,8 +114,33 @@ class SubmissionsConnectorSpec extends SpecBase with WireMockHelper with ScalaCh
               CalculationInputs(
                 Resubmission(false, None),
                 Setup(
-                  Some(AnnualAllowanceSetup(Some(true))),
-                  Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+                  Some(
+                    AnnualAllowanceSetup(
+                      Some(true),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(MaybePIAIncrease.No),
+                      Some(MaybePIAUnchangedOrDecreased.No),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(false)
+                    )
+                  ),
+                  Some(
+                    LifetimeAllowanceSetup(
+                      Some(true),
+                      Some(false),
+                      Some(true),
+                      Some(false),
+                      Some(false),
+                      Some(false),
+                      Some(true)
+                    )
+                  )
                 ),
                 None,
                 None

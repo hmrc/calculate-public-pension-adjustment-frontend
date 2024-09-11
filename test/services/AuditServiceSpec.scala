@@ -20,7 +20,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, IncomeSubJourney, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, IncomeSubJourney, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
@@ -61,8 +61,33 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
         val calculationInputs = CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
-            Some(AnnualAllowanceSetup(Some(true))),
-            Some(LifetimeAllowanceSetup(Some(true), Some(true), Some(false)))
+            Some(
+              AnnualAllowanceSetup(
+                Some(true),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(MaybePIAIncrease.No),
+                Some(MaybePIAUnchangedOrDecreased.No),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false)
+              )
+            ),
+            Some(
+              LifetimeAllowanceSetup(
+                Some(true),
+                Some(false),
+                Some(true),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(true)
+              )
+            )
           ),
           Some(
             AnnualAllowance(
