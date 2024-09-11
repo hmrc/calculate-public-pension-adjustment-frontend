@@ -95,7 +95,7 @@ class ReportingChangePageSpec extends PageBehaviours {
         .success
         .value
 
-      val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
+      val nextPageUrl: String = ReportingChangePage.navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
     }

@@ -124,5 +124,16 @@ class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
       cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
     }
+
+    "when user answers no" in {
+
+      val cleanedUserAnswers = HadBenefitCrystallisationEventPage
+        .cleanup(Some(false), testCalulationServiceData)
+        .success
+        .value
+
+      cleanedUserAnswers.get(PreviousLTAChargePage) mustBe None
+      cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe None
+    }
   }
 }
