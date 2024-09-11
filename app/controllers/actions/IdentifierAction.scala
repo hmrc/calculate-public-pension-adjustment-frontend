@@ -86,21 +86,17 @@ class OptionalAuthIdentifierAction @Inject() (
     }
   }
 
-  private def insufficientConfidence[A](request: Request[A]) = {
-    val upliftUrl           = s"${config.confidenceUpliftUrl}"
-    val upliftCompletionUrl = config.baseUrl + request.path
-    val upliftFailureUrl    = config.upliftFailureUrl
-
+  private def insufficientConfidence[A](request: Request[A]) =
     Future.successful(
       Redirect(
-        upliftUrl,
+        config.confidenceUpliftUrl,
         Map(
           "origin"          -> Seq(config.upliftOrigin),
           "confidenceLevel" -> Seq(config.requiredAuthConfidenceLevel),
-          "completionURL"   -> Seq(upliftCompletionUrl),
-          "failureURL"      -> Seq(upliftFailureUrl)
+          "completionURL"   -> Seq(config.upliftCompletionUrl),
+          "failureURL"      -> Seq(config.upliftFailureUrl)
         )
       )
     )
-  }
+
 }

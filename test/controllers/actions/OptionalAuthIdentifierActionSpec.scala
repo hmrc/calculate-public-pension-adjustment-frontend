@@ -109,7 +109,7 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
             status(result) mustEqual SEE_OTHER
             redirectLocation(
               result
-            ).value mustEqual "http://localhost:9948/iv-stub/uplift?origin=PPA&confidenceLevel=250&completionURL=http%3A%2F%2Flocalhost%3A12804%2Fsome-path&failureURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fuplift-failure"
+            ).value mustEqual "http://localhost:9948/iv-stub/uplift?origin=PPA&confidenceLevel=250&completionURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fmaybe-previous-claim-continue&failureURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fuplift-failure"
           }
 
         }
