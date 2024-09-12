@@ -1461,12 +1461,12 @@ increaseInLTACharge.message2 = cy: You can find this on a revised benefit crysta
 increaseInLTACharge.error.required = cy: Select yes if you have been told about an increase in your lifetime allowance percentage
 increaseInLTACharge.change.hidden = cy: if you have been told about an increase in your lifetime allowance percentage
 
-newLTACharge.title = cy: Has the increase in lifetime allowance percentage led to a change in the tax charge?
-newLTACharge.heading = cy: Has the change in lifetime allowance led to a change in the tax charge?
+newLTACharge.title = cy: Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.heading = cy: Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
 newLTACharge.message1 = cy: Any amount that goes over the level of lifetime allowance available, is taxed under the lifetime allowance charge.
-newLTACharge.checkYourAnswersLabel = cy: Has the change in lifetime allowance led to a change in the tax charge?
-newLTACharge.error.required = cy: newLTACharge.error.required = Select yes if a change in your lifetime allowance led to a change in the tax charge
-newLTACharge.change.hidden = cy: if the change in lifetime allowance has led to a change in the tax charge
+newLTACharge.checkYourAnswersLabel = cy: Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.error.required = cy: Select yes if you have received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.change.hidden = cy: if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy
 
 otherSchemeNotification.title = cy: Have you been notified by any other pension scheme that you have a new LTA charge?
 otherSchemeNotification.heading = cy: Have you been notified by any other pension scheme that you have a new LTA charge?
