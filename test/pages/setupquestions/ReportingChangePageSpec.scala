@@ -17,14 +17,14 @@
 package pages.setupquestions
 
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{AAKickOutStatus, CheckMode, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LTAKickOutStatus, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AAKickOutStatus, CheckMode, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LTAKickOutStatus, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, ThresholdIncome, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
+import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountOfGiftAidPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouHaveGiftAidPage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, KnowAdjustedAmountPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
 import pages.behaviours.PageBehaviours
 import pages.lifetimeallowance.{AnnualPaymentValuePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
-import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, MultipleBenefitCrystallisationEventPage}
-import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
+import pages.setupquestions.annualallowance.{Contribution4000ToDirectContributionSchemePage, ContributionRefundsPage, FlexibleAccessDcSchemePage, HadAAChargePage, MaybePIAIncreasePage, MaybePIAUnchangedOrDecreasedPage, NetIncomeAbove100KPage, NetIncomeAbove190KIn2023Page, NetIncomeAbove190KPage, PIAAboveAnnualAllowanceIn2023Page, PensionProtectedMemberPage, SavingsStatementPage}
+import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, HadBenefitCrystallisationEventPage, IncreaseInLTAChargePage, MultipleBenefitCrystallisationEventPage, NewLTAChargePage, OtherSchemeNotificationPage, PreviousLTAChargePage}
 
 import java.time.LocalDate
 
@@ -95,7 +95,7 @@ class ReportingChangePageSpec extends PageBehaviours {
         .success
         .value
 
-      val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
+      val nextPageUrl: String = ReportingChangePage.navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
     }
@@ -118,7 +118,16 @@ class ReportingChangePageSpec extends PageBehaviours {
 
       val cleanedUserAnswers = ReportingChangePage.cleanup(Some(Set(AnnualAllowance)), ua).success.value
 
-//      AA Setup Answers
+      // AA Triage Answers
+      cleanedUserAnswers.get(SavingsStatementPage) mustBe Some(true)
+      cleanedUserAnswers.get(PensionProtectedMemberPage) mustBe Some(true)
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe Some(MaybePIAIncrease.No)
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe Some(true)
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe Some(false)
+
+      // AA Setup Answers
       cleanedUserAnswers.get(ScottishTaxpayerFrom2016Page) mustBe Some(true)
       cleanedUserAnswers.get(WhichYearsScottishTaxpayerPage) mustBe Some(Set(WhichYearsScottishTaxpayer._2017))
       cleanedUserAnswers.get(PayingPublicPensionSchemePage) mustBe Some(false)
@@ -133,8 +142,16 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(AAKickOutStatus()) mustBe None
       cleanedUserAnswers.get(LTAKickOutStatus()) mustBe None
 
-      // LTA Answers
+      // LTA Triage Answers
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe None
+      cleanedUserAnswers.get(PreviousLTAChargePage) mustBe None
+      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe None
+      cleanedUserAnswers.get(IncreaseInLTAChargePage) mustBe None
+      cleanedUserAnswers.get(NewLTAChargePage) mustBe None
+      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
+
+      // LTA Answers
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe None
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe None
       cleanedUserAnswers.get(ProtectionTypePage) mustBe None
@@ -149,6 +166,7 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(NewInternationalEnhancementReferencePage) mustBe None
       cleanedUserAnswers.get(NewPensionCreditReferencePage) mustBe None
       cleanedUserAnswers.get(LifetimeAllowanceChargePage) mustBe None
+      cleanedUserAnswers.get(ExcessLifetimeAllowancePaidPage) mustBe None
       cleanedUserAnswers.get(LumpSumValuePage) mustBe None
       cleanedUserAnswers.get(AnnualPaymentValuePage) mustBe None
       cleanedUserAnswers.get(WhoPaidLTAChargePage) mustBe None
@@ -190,9 +208,21 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(DefinedContributionAmountPage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(DefinedBenefitAmountPage(_2021)) mustBe Some(BigInt(123))
-      // cleanedUserAnswers.get(ThresholdIncomePage(_2021)) mustBe Some(true)
-//      cleanedUserAnswers.get(AdjustedIncomePage(_2021)) mustBe Some(BigInt(123))
-      cleanedUserAnswers.get(TotalIncomePage(_2021)) mustBe Some(BigInt(123))
+      cleanedUserAnswers.get(ThresholdIncomePage(_2021)) mustBe Some(ThresholdIncome.Yes)
+      cleanedUserAnswers.get(TotalIncomePage(_2021)) mustBe Some(BigInt(220000))
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(TaxReliefPage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DidYouContributeToRASSchemePage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(RASContributionAmountPage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(KnowAdjustedAmountPage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(AdjustedIncomePage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DoYouHaveGiftAidPage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(AmountOfGiftAidPage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(PersonalAllowancePage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(BlindAllowancePage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(_2021)) mustBe Some(BigInt(1))
+
       cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2022)) mustBe Some(false)
       cleanedUserAnswers.get(PensionSchemeDetailsPage(_2022, SchemeIndex(0))) mustBe Some(
         PensionSchemeDetails("schemeName", "schemeRef")
@@ -204,8 +234,18 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2022, SchemeIndex(0))) mustBe Some(WhoPaidAACharge.Both)
       cleanedUserAnswers.get(HowMuchAAChargeYouPaidPage(_2022, SchemeIndex(0))) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(HowMuchAAChargeSchemePaidPage(_2022, SchemeIndex(0))) mustBe Some(BigInt(123))
-      // cleanedUserAnswers.get(ThresholdIncomePage(_2022)) mustBe Some(false)
+      cleanedUserAnswers.get(ThresholdIncomePage(_2022)) mustBe Some(ThresholdIncome.No)
       cleanedUserAnswers.get(TotalIncomePage(_2022)) mustBe Some(BigInt(123))
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(TaxReliefPage(_2022)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DidYouContributeToRASSchemePage(_2022)) mustBe Some(true)
+      cleanedUserAnswers.get(RASContributionAmountPage(_2022)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DoYouHaveGiftAidPage(_2022)) mustBe Some(true)
+      cleanedUserAnswers.get(AmountOfGiftAidPage(_2022)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(_2022)) mustBe Some(true)
+      cleanedUserAnswers.get(PersonalAllowancePage(_2022)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(BlindAllowancePage(_2022)) mustBe Some(true)
+      cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(_2022)) mustBe Some(BigInt(1))
 
     }
 
@@ -215,6 +255,24 @@ class ReportingChangePageSpec extends PageBehaviours {
 
       val cleanedUserAnswers =
         ReportingChangePage.cleanup(Some(Set(ReportingChange.LifetimeAllowance)), ua).success.value
+
+      // AA Triage Answers
+      cleanedUserAnswers.get(SavingsStatementPage) mustBe Some(true)
+      cleanedUserAnswers.get(PensionProtectedMemberPage) mustBe Some(true)
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe Some(MaybePIAIncrease.No)
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe Some(true)
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe Some(false)
+
+      // LTA Triage Answers
+      cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
+      cleanedUserAnswers.get(PreviousLTAChargePage) mustBe Some(false)
+      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe Some(true)
+      cleanedUserAnswers.get(IncreaseInLTAChargePage) mustBe Some(true)
+      cleanedUserAnswers.get(NewLTAChargePage) mustBe Some(false)
+      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe Some(true)
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe Some(true)
 
       // AA Setup Answers
       cleanedUserAnswers.get(ScottishTaxpayerFrom2016Page) mustBe None
@@ -232,7 +290,6 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(LTAKickOutStatus()) mustBe None
 
       // LTA Answers
-      cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe Some(LocalDate.of(2021, 1, 1))
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe Some(LtaProtectionOrEnhancements.Both)
       cleanedUserAnswers.get(ProtectionTypePage) mustBe Some(ProtectionType.EnhancedProtection)
@@ -284,8 +341,20 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(_2021)) mustBe None
       cleanedUserAnswers.get(DefinedBenefitAmountPage(_2021)) mustBe None
       cleanedUserAnswers.get(ThresholdIncomePage(_2021)) mustBe None
-      cleanedUserAnswers.get(AdjustedIncomePage(_2021)) mustBe None
       cleanedUserAnswers.get(TotalIncomePage(_2021)) mustBe None
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(_2021)) mustBe None
+      cleanedUserAnswers.get(TaxReliefPage(_2021)) mustBe None
+      cleanedUserAnswers.get(DidYouContributeToRASSchemePage(_2021)) mustBe None
+      cleanedUserAnswers.get(RASContributionAmountPage(_2021)) mustBe None
+      cleanedUserAnswers.get(KnowAdjustedAmountPage(_2021)) mustBe None
+      cleanedUserAnswers.get(AdjustedIncomePage(_2021)) mustBe None
+      cleanedUserAnswers.get(DoYouHaveGiftAidPage(_2021)) mustBe None
+      cleanedUserAnswers.get(AmountOfGiftAidPage(_2021)) mustBe None
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(_2021)) mustBe None
+      cleanedUserAnswers.get(PersonalAllowancePage(_2021)) mustBe None
+      cleanedUserAnswers.get(BlindAllowancePage(_2021)) mustBe None
+      cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(_2021)) mustBe None
+
       cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2022)) mustBe None
       cleanedUserAnswers.get(PensionSchemeDetailsPage(_2022, SchemeIndex(0))) mustBe None
       cleanedUserAnswers.get(PensionSchemeInputAmountsPage(_2022, SchemeIndex(0))) mustBe None
@@ -295,7 +364,16 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(HowMuchAAChargeSchemePaidPage(_2022, SchemeIndex(0))) mustBe None
       cleanedUserAnswers.get(ThresholdIncomePage(_2022)) mustBe None
       cleanedUserAnswers.get(TotalIncomePage(_2022)) mustBe None
-
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(_2021)) mustBe None
+      cleanedUserAnswers.get(TaxReliefPage(_2022)) mustBe None
+      cleanedUserAnswers.get(DidYouContributeToRASSchemePage(_2022)) mustBe None
+      cleanedUserAnswers.get(RASContributionAmountPage(_2022)) mustBe None
+      cleanedUserAnswers.get(DoYouHaveGiftAidPage(_2022)) mustBe None
+      cleanedUserAnswers.get(AmountOfGiftAidPage(_2022)) mustBe None
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(_2022)) mustBe None
+      cleanedUserAnswers.get(PersonalAllowancePage(_2022)) mustBe None
+      cleanedUserAnswers.get(BlindAllowancePage(_2022)) mustBe None
+      cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(_2022)) mustBe None
     }
 
     "When user selects both, must clean up appropriately" in {
@@ -304,6 +382,24 @@ class ReportingChangePageSpec extends PageBehaviours {
 
       val cleanedUserAnswers =
         ReportingChangePage.cleanup(Some(Set(AnnualAllowance, LifetimeAllowance)), ua).success.value
+
+      // AA Triage Answers
+      cleanedUserAnswers.get(SavingsStatementPage) mustBe Some(true)
+      cleanedUserAnswers.get(PensionProtectedMemberPage) mustBe Some(true)
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe Some(MaybePIAIncrease.No)
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe Some(false)
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe Some(true)
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe Some(false)
+
+      // LTA Triage Answers
+      cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
+      cleanedUserAnswers.get(PreviousLTAChargePage) mustBe Some(false)
+      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe Some(true)
+      cleanedUserAnswers.get(IncreaseInLTAChargePage) mustBe Some(true)
+      cleanedUserAnswers.get(NewLTAChargePage) mustBe Some(false)
+      cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe Some(true)
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe Some(true)
 
       // AA Setup Answers
       cleanedUserAnswers.get(ScottishTaxpayerFrom2016Page) mustBe Some(true)
@@ -321,9 +417,7 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
 
       // LTA Answers
-      cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)
       cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe Some(LocalDate.of(2021, 1, 1))
-      cleanedUserAnswers.get(ChangeInLifetimeAllowancePage) mustBe Some(true)
       cleanedUserAnswers.get(LtaProtectionOrEnhancementsPage) mustBe Some(LtaProtectionOrEnhancements.Both)
       cleanedUserAnswers.get(ProtectionTypePage) mustBe Some(ProtectionType.EnhancedProtection)
       cleanedUserAnswers.get(ProtectionReferencePage) mustBe Some("123")
@@ -381,9 +475,21 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(DefinedContributionAmountPage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(_2021)) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(DefinedBenefitAmountPage(_2021)) mustBe Some(BigInt(123))
-      // cleanedUserAnswers.get(ThresholdIncomePage(_2021)) mustBe Some(true)
-//      cleanedUserAnswers.get(AdjustedIncomePage(_2021)) mustBe Some(BigInt(123))
-      cleanedUserAnswers.get(TotalIncomePage(_2021)) mustBe Some(BigInt(123))
+      cleanedUserAnswers.get(ThresholdIncomePage(_2021)) mustBe Some(ThresholdIncome.Yes)
+      cleanedUserAnswers.get(TotalIncomePage(_2021)) mustBe Some(BigInt(220000))
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(TaxReliefPage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DidYouContributeToRASSchemePage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(RASContributionAmountPage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(KnowAdjustedAmountPage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(AdjustedIncomePage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DoYouHaveGiftAidPage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(AmountOfGiftAidPage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(PersonalAllowancePage(_2021)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(BlindAllowancePage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(_2021)) mustBe Some(BigInt(1))
+
       cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2022)) mustBe Some(false)
       cleanedUserAnswers.get(PensionSchemeDetailsPage(_2022, SchemeIndex(0))) mustBe Some(
         PensionSchemeDetails("schemeName", "schemeRef")
@@ -395,9 +501,18 @@ class ReportingChangePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(WhoPaidAAChargePage(_2022, SchemeIndex(0))) mustBe Some(WhoPaidAACharge.Both)
       cleanedUserAnswers.get(HowMuchAAChargeYouPaidPage(_2022, SchemeIndex(0))) mustBe Some(BigInt(123))
       cleanedUserAnswers.get(HowMuchAAChargeSchemePaidPage(_2022, SchemeIndex(0))) mustBe Some(BigInt(123))
-      // cleanedUserAnswers.get(ThresholdIncomePage(_2022)) mustBe Some(false)
+      cleanedUserAnswers.get(ThresholdIncomePage(_2022)) mustBe Some(ThresholdIncome.No)
       cleanedUserAnswers.get(TotalIncomePage(_2022)) mustBe Some(BigInt(123))
-
+      cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(_2021)) mustBe Some(true)
+      cleanedUserAnswers.get(TaxReliefPage(_2022)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DidYouContributeToRASSchemePage(_2022)) mustBe Some(true)
+      cleanedUserAnswers.get(RASContributionAmountPage(_2022)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DoYouHaveGiftAidPage(_2022)) mustBe Some(true)
+      cleanedUserAnswers.get(AmountOfGiftAidPage(_2022)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(_2022)) mustBe Some(true)
+      cleanedUserAnswers.get(PersonalAllowancePage(_2022)) mustBe Some(BigInt(1))
+      cleanedUserAnswers.get(BlindAllowancePage(_2022)) mustBe Some(true)
+      cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(_2022)) mustBe Some(BigInt(1))
     }
   }
 }

@@ -18,6 +18,7 @@ package pages.setupquestions.lifetimeallowance
 
 import models.{AAKickOutStatus, CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
+import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
 
 class OtherSchemeNotificationPageSpec extends PageBehaviours {
 
@@ -143,6 +144,19 @@ class OtherSchemeNotificationPageSpec extends PageBehaviours {
       val nextPageUrl: String = OtherSchemeNotificationPage.navigate(CheckMode, ua).url
 
       checkNavigation(nextPageUrl, "/there-is-a-problem")
+    }
+  }
+
+  "cleanup" - {
+
+    "when user answers no" in {
+
+      val cleanedUserAnswers = OtherSchemeNotificationPage
+        .cleanup(Some(false), testCalulationServiceData)
+        .success
+        .value
+
+      cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe None
     }
   }
 }

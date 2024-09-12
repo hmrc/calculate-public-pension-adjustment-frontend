@@ -18,6 +18,7 @@ package pages.setupquestions.lifetimeallowance
 
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
+import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
 
 import scala.util.Random
 
@@ -118,6 +119,17 @@ class IncreaseInLTAChargePageSpec extends PageBehaviours {
       cleanedUserAnswers.get(NewLTAChargePage) mustBe None
       cleanedUserAnswers.get(MultipleBenefitCrystallisationEventPage) mustBe None
       cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
+    }
+
+    "when user answers no" in {
+
+      val cleanedUserAnswers = IncreaseInLTAChargePage
+        .cleanup(Some(false), testCalulationServiceData)
+        .success
+        .value
+
+      cleanedUserAnswers.get(NewLTAChargePage) mustBe None
+      cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe None
     }
   }
 }

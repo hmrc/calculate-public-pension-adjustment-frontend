@@ -17,10 +17,13 @@
 package pages.setupquestions.lifetimeallowance
 
 import controllers.routes
+import models.tasklist.sections.LTASection
 import models.{AAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object OtherSchemeNotificationPage extends QuestionPage[Boolean] {
 
@@ -52,4 +55,14 @@ case object OtherSchemeNotificationPage extends QuestionPage[Boolean] {
       case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case _    => routes.JourneyRecoveryController.onPageLoad(None)
     }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case false =>
+          Try(LTASection.removeAllUserAnswersAndNavigation(userAnswers))
+        case _     =>
+          super.cleanup(value, userAnswers)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
 }

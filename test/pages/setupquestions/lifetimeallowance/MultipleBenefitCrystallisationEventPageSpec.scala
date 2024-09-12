@@ -18,6 +18,7 @@ package pages.setupquestions.lifetimeallowance
 
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
+import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
 
 import scala.util.Random
 
@@ -108,6 +109,17 @@ class MultipleBenefitCrystallisationEventPageSpec extends PageBehaviours {
         .value
 
       cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
+    }
+
+    "when user answers no" in {
+
+      val cleanedUserAnswers = MultipleBenefitCrystallisationEventPage
+        .cleanup(Some(false), testCalulationServiceData)
+        .success
+        .value
+
+      cleanedUserAnswers.get(OtherSchemeNotificationPage) mustBe None
+      cleanedUserAnswers.get(DateOfBenefitCrystallisationEventPage) mustBe None
     }
   }
 }

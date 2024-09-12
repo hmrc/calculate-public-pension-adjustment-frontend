@@ -17,6 +17,7 @@
 package pages.setupquestions.lifetimeallowance
 
 import controllers.routes
+import models.tasklist.sections.LTASection
 import models.{AAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -65,12 +66,25 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map { _ =>
-        userAnswers
-          .remove(IncreaseInLTAChargePage)
-          .flatMap(_.remove(NewLTAChargePage))
-          .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
-          .flatMap(_.remove(OtherSchemeNotificationPage))
+      .map {
+        case true  =>
+          triageLTAPages(userAnswers)
+        case false =>
+          removeLTAData(triageLTAPages(userAnswers).get)
+        case _     =>
+          super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
+
+  private def removeLTAData(userAnswers: UserAnswers) =
+    for {
+      answersNoLTATask <- Try(LTASection.removeAllUserAnswersAndNavigation(userAnswers))
+    } yield answersNoLTATask
+
+  private def triageLTAPages(userAnswers: UserAnswers): Try[UserAnswers] =
+    userAnswers
+      .remove(IncreaseInLTAChargePage)
+      .flatMap(_.remove(NewLTAChargePage))
+      .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
+      .flatMap(_.remove(OtherSchemeNotificationPage))
 }

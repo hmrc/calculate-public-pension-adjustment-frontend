@@ -74,6 +74,48 @@ trait SpecBase
       .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head, ReportingChange.values.tail.head))
       .success
       .value
+      .set(SavingsStatementPage, true)
+      .success
+      .value
+      .set(PensionProtectedMemberPage, true)
+      .success
+      .value
+      .set(MaybePIAIncreasePage, MaybePIAIncrease.No)
+      .success
+      .value
+      .set(PIAAboveAnnualAllowanceIn2023Page, false)
+      .success
+      .value
+      .set(NetIncomeAbove190KIn2023Page, false)
+      .success
+      .value
+      .set(FlexibleAccessDcSchemePage, true)
+      .success
+      .value
+      .set(Contribution4000ToDirectContributionSchemePage, false)
+      .success
+      .value
+      .set(HadBenefitCrystallisationEventPage, true)
+      .success
+      .value
+      .set(PreviousLTAChargePage, false)
+      .success
+      .value
+      .set(ChangeInLifetimeAllowancePage, true)
+      .success
+      .value
+      .set(IncreaseInLTAChargePage, true)
+      .success
+      .value
+      .set(NewLTAChargePage, false)
+      .success
+      .value
+      .set(MultipleBenefitCrystallisationEventPage, true)
+      .success
+      .value
+      .set(OtherSchemeNotificationPage, true)
+      .success
+      .value
       .set(ScottishTaxpayerFrom2016Page, true)
       .success
       .value
@@ -101,22 +143,7 @@ trait SpecBase
       .set(PIAPreRemedyPage(_2015), BigInt(123))
       .success
       .value
-      .set(HadBenefitCrystallisationEventPage, true)
-      .success
-      .value
       .set(DateOfBenefitCrystallisationEventPage, LocalDate.of(2021, 1, 1))
-      .success
-      .value
-      .set(ChangeInLifetimeAllowancePage, true)
-      .success
-      .value
-      .set(IncreaseInLTAChargePage, true)
-      .success
-      .value
-      .set(NewLTAChargePage, true)
-      .success
-      .value
-      .set(MultipleBenefitCrystallisationEventPage, false)
       .success
       .value
       .set(LtaProtectionOrEnhancementsPage, LtaProtectionOrEnhancements.Both)
@@ -260,10 +287,43 @@ trait SpecBase
       .set(ThresholdIncomePage(_2021), ThresholdIncome.Yes)
       .success
       .value
-      .set(AdjustedIncomePage(_2021), BigInt(123))
+      .set(TotalIncomePage(_2021), BigInt(220000))
       .success
       .value
-      .set(TotalIncomePage(_2021), BigInt(123))
+      .set(ClaimingTaxReliefPensionPage(_2021), true)
+      .success
+      .value
+      .set(TaxReliefPage(_2021), BigInt(1))
+      .success
+      .value
+      .set(DidYouContributeToRASSchemePage(_2021), true)
+      .success
+      .value
+      .set(RASContributionAmountPage(_2021), BigInt(1))
+      .success
+      .value
+      .set(KnowAdjustedAmountPage(_2021), true)
+      .success
+      .value
+      .set(AdjustedIncomePage(_2021), BigInt("1"))
+      .success
+      .value
+      .set(DoYouHaveGiftAidPage(_2021), true)
+      .success
+      .value
+      .set(AmountOfGiftAidPage(_2021), BigInt("1"))
+      .success
+      .value
+      .set(DoYouKnowPersonalAllowancePage(_2021), true)
+      .success
+      .value
+      .set(PersonalAllowancePage(_2021), BigInt(1))
+      .success
+      .value
+      .set(BlindAllowancePage(_2021), true)
+      .success
+      .value
+      .set(BlindPersonsAllowanceAmountPage(_2021), BigInt(1))
       .success
       .value
       .set(MemberMoreThanOnePensionPage(_2022), false)
@@ -291,6 +351,36 @@ trait SpecBase
       .success
       .value
       .set(TotalIncomePage(_2022), BigInt(123))
+      .success
+      .value
+      .set(ClaimingTaxReliefPensionPage(_2022), true)
+      .success
+      .value
+      .set(TaxReliefPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DidYouContributeToRASSchemePage(_2022), true)
+      .success
+      .value
+      .set(RASContributionAmountPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DoYouHaveGiftAidPage(_2022), true)
+      .success
+      .value
+      .set(AmountOfGiftAidPage(_2022), BigInt("1"))
+      .success
+      .value
+      .set(DoYouKnowPersonalAllowancePage(_2022), true)
+      .success
+      .value
+      .set(PersonalAllowancePage(_2022), BigInt(1))
+      .success
+      .value
+      .set(BlindAllowancePage(_2022), true)
+      .success
+      .value
+      .set(BlindPersonsAllowanceAmountPage(_2022), BigInt(1))
       .success
       .value
       .set(AAKickOutStatus(), 1)

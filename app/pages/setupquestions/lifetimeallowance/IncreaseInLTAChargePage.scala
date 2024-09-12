@@ -16,6 +16,7 @@
 
 package pages.setupquestions.lifetimeallowance
 
+import models.tasklist.sections.LTASection
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -49,11 +50,25 @@ case object IncreaseInLTAChargePage extends QuestionPage[Boolean] {
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
-      .map { _ =>
-        userAnswers
-          .remove(NewLTAChargePage)
-          .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
-          .flatMap(_.remove(OtherSchemeNotificationPage))
+      .map {
+        case true  =>
+          triageLTAPages(userAnswers)
+        case false =>
+          removeLTAData(triageLTAPages(userAnswers).get)
+        case _     =>
+          super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
+
+  private def removeLTAData(userAnswers: UserAnswers) =
+    for {
+      answersNoLTATask <- Try(LTASection.removeAllUserAnswersAndNavigation(userAnswers))
+    } yield answersNoLTATask
+
+  private def triageLTAPages(userAnswers: UserAnswers): Try[UserAnswers] =
+    userAnswers
+      .remove(NewLTAChargePage)
+      .flatMap(_.remove(MultipleBenefitCrystallisationEventPage))
+      .flatMap(_.remove(OtherSchemeNotificationPage))
+
 }
