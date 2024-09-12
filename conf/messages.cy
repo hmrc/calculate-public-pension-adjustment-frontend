@@ -118,25 +118,24 @@ reasonForResubmission.error.length = Mae’n rhaid i’r rheswm rydych wedi’i 
 reasonForResubmission.change.hidden = Y rheswm am drosysgrifo cyflwyniad blaenorol
 
 ineligible.title = cy: You are not impacted
-ineligible.heading = cy: You are not impacted by the McCloud remedy
+ineligible.heading = cy: You are not impacted by the Public Service Pensions Remedy
 ineligible.message1 = cy: There are multiple possible reasons why you are not eligible to use this service:
 ineligible.bullet1 = cy: you were not part of a public service pension scheme on or before 31 March 2012
 ineligible.bullet2 = cy: you did not work in public service between 1 April 2015 and the 31 March 2022
 ineligible.bullet3 = cy: you left service after 31 March 2012 but did not return within 5 years
 ineligible.bullet4 = cy: you were not part of any legacy public service pension scheme
-ineligible.message2 = cy: These reasons mean that your pension contributions will not be affected by the McCloud remedy and you do not need to use this service.
+ineligible.message2 = cy: These reasons mean that your pension benefits will not be affected by the Public Service Pensions Remedy and you do not need to use this service.
 
 reportingChange.title = Pa daliadau treth yr hoffech chi eu haddasu?
-reportingChange.heading = Pa daliadau treth yr hoffech chi eu haddasu?
-reportingChange.error.required = Dewiswch pa daliadau yr hoffech eu haddasu
-reportingChange.annualAllowance = Taliadau treth lwfans blynyddol
-reportingChange.lifetimeAllowance = Taliadau treth lwfans oes
+reportingChange.heading = cy: Which tax charges do you think may have been affected by the Public Service Pension Remedy?
+reportingChange.error.required = cy: Select the tax charges you think may have been affected by the Public Service Pension Remedy
+reportingChange.annualAllowance = cy: Annual allowance
+reportingChange.lifetimeAllowance = cy: Lifetime allowance
 reportingChange.annualAllowance.hint = Lwfans blynyddol (AA) yw’r swm o arian y gallwch ei gyfrannu tuag at eich pensiwn bob blwyddyn heb dalu treth.
-reportingChange.lifetimeAllowance.hint = Lwfans oes (LTA) yw cyfanswm yr arian y gallwch ei roi yn eich pensiwn dros eich oes.
+reportingChange.lifetimeAllowance.hint = cy: Lifetime allowance (LTA) is the total amount of money you can save in your pension over your lifetime without paying tax.
 reportingChange.hint = Dewiswch bob un sy’n berthnasol.
-reportingChange.paragraph = Mae’n bosib y byddwch yn gallu hawlio treth yn ôl os gwnaethoch dalu unrhyw un o’r taliadau hyn yn ystod y cyfnod cywiro.
-reportingChange.checkYourAnswersLabel = Taliadau i’w haddasu
-reportingChange.change.hidden = taliadau i’w haddasu
+reportingChange.checkYourAnswersLabel = cy: Which tax charges do you think may have been affected by the Public Service Pension Remedy?
+reportingChange.change.hidden = cy: the tax charges you think may have been affected by the Public Service Pension Remedy
 
 scottishTaxpayerFrom2016.title = A ydych chi wedi bod yn drethdalwr yn yr Alban ar unrhyw adeg o 6 Ebrill 2016 ymlaen?
 scottishTaxpayerFrom2016.heading = A ydych chi wedi bod yn drethdalwr yn yr Alban ar unrhyw adeg o 6 Ebrill 2016 ymlaen?
@@ -215,7 +214,7 @@ changeInLifetimeAllowance.title = A ydych wedi cael gwybod am newid yn y ganran 
 changeInLifetimeAllowance.heading = A ydych wedi cael gwybod am newid yn y ganran lwfans oes?
 changeInLifetimeAllowance.message = Dyma’r ganran o’r lwfans oes a ddefnyddir ar adeg eich digwyddiad crisialu buddiannau.
 changeInLifetimeAllowance.hint = cy: Your revised benefit crystallisation event statement will tell you of any changes to your lifetime allowance percentage.
-changeInLifetimeAllowance.error.required = cy: Select yes if you were told about a change in your lifetime allowance percentage
+changeInLifetimeAllowance.error.required = cy: Select yes if you have been told about a change in your lifetime allowance percentage
 changeInLifetimeAllowance.checkYourAnswersLabel = cy: Have you been told about a change in your lifetime allowance percentage?
 changeInLifetimeAllowance.change.hidden = os ydych wedi cael gwybod am newid yn y ganran lwfans oes
 
@@ -291,13 +290,12 @@ dateOfBenefitCrystallisationEvent.change.hidden = dyddiad y digwyddiad crisialu 
 dateOfBenefitCrystallisationEvent.error.min = Mae’n rhaid i’r dyddiad crisialu buddiannau fod ar ôl {0}
 dateOfBenefitCrystallisationEvent.error.max = Mae’n rhaid i ddyddiad y digwyddiad crisialu buddiannau fod cyn 6 Ebrill 2023
 
-notAbleToUseThisServiceLta.title = cy: You are not impacted
-notAbleToUseThisServiceLta.heading = cy: You are not impacted by the McCloud remedy
-notAbleToUseThisServiceLta.message1 = cy: You are not eligible to use this service
-notAbleToUseThisServiceLta.message2 = cy: You selected that you would like to use this service to calculate your lifetime allowance (LTA) adjustment
-notAbleToUseThisServiceLta.message3 = cy: If you have not had a benefit crystallisation event, you have not accessed your pension. This means that you will not have paid a lifetime allowance charge.
-notAbleToUseThisServiceLta.message4 = cy: These reasons mean that your pension contributions will not be affected by the McCloud remedy and you do not need to use this service for your lifetime allowance.
-notAbleToUseThisServiceLta.message5 = cy: You are still able to use this service to calculate your annual allowance tax charges.
+notAbleToUseThisServiceLta.title = cy: You are not eligible
+notAbleToUseThisServiceLta.heading = cy: You are not eligible to use this service
+notAbleToUseThisServiceLta.message1 = cy: You selected that you would like to use this service to calculate your lifetime allowance (LTA) adjustment
+notAbleToUseThisServiceLta.message2 = cy: If you have not had a benefit crystallisation event, you have not accessed your pension. This means that you will not have paid a lifetime allowance charge.
+notAbleToUseThisServiceLta.message3 = cy: Although your pension contributions may be affected by the Public Service Pensions Remedy, you do not need to use this service for your lifetime allowance.
+notAbleToUseThisServiceLta.message4 = cy: You are still able to use this service to calculate your annual allowance tax charges.
 
 taskList.title = Cyfrifwch eich addasiad i bensiwn gwasanaeth cyhoeddus
 taskList.heading = Cyfrifwch eich addasiad i bensiwn gwasanaeth cyhoeddus
@@ -832,12 +830,11 @@ calculationResults.whatHappensNext.hint.compensation.list1 = talu, yn uniongyrch
 calculationResults.whatHappensNext.hint.compensation.list2 = cynyddu buddiannau’ch pensiwn i gwmpasu’r iawndal am daliadau treth a dalodd eich cynllun ar eich rhan o 6 Ebrill 2015 i 5 Ebrill 2019
 calculationResults.whatHappensNext.hint5 = Os na fyddwch yn mewngofnodi i’ch Porth y Llywodraeth, ni fydd eich canlyniadau’n cael eu cadw a bydd angen i chi lenwi’r gyfrifiannell eto.
 
-multipleBenefitCrystallisationEvent.title = A ydych chi wedi cael mwy nag un digwyddiad crisialu buddiannau yn eich pensiynau?
-multipleBenefitCrystallisationEvent.heading = A ydych chi wedi cael mwy nag un digwyddiad crisialu buddiannau yn eich pensiynau?
-multipleBenefitCrystallisationEvent.hint = Dim ond un digwyddiad crisialu buddiannau y gallwch ei gael ym mhob cynllun cyhoeddus.
-multipleBenefitCrystallisationEvent.checkYourAnswersLabel = A ydych chi wedi cael mwy nag un digwyddiad crisialu buddiannau yn eich pensiynau?
-multipleBenefitCrystallisationEvent.error.required = Dewiswch ‘Iawn’ os ydych wedi cael mwy nag un digwyddiad crisialu buddiannau yn eich pensiynau
-multipleBenefitCrystallisationEvent.change.hidden = os ydych wedi cael mwy nag un digwyddiad crisialu buddiannau yn eich pensiynau
+multipleBenefitCrystallisationEvent.title = cy: Have you had any other benefit crystallisation events after the one in your public service pension scheme?
+multipleBenefitCrystallisationEvent.heading = cy: Have you had any other benefit crystallisation events after the one in your public service pension scheme?
+multipleBenefitCrystallisationEvent.checkYourAnswersLabel = cy:  Have you had any other benefit crystallisation events after the one in your public service pension scheme?
+multipleBenefitCrystallisationEvent.error.required = cy: Select yes if you had any other benefit crystallisation events after the one in your public service pension scheme
+multipleBenefitCrystallisationEvent.change.hidden = cy: if you had any other benefit crystallisation events after the one in your public service pension scheme
 
 quarterChargePaid.title = Ym mha chwarter o’r flwyddyn honno cafodd eich lwfans oes ei dalu?
 quarterChargePaid.heading = Ym mha chwarter o’r flwyddyn honno cafodd eich lwfans oes ei dalu?
@@ -1403,14 +1400,14 @@ unionPoliceReliefAmount.error.outOfRange = cy: The tax relief you are claiming f
 unionPoliceReliefAmount.change.hidden = cy: amount of tax relief you are claiming for trade union or police organisation fees
 
 affectedByRemedy.title = cy: Are you affected by the Public Service Pensions remedy?
-affectedByRemedy.heading1 = cy: McCloud Remedy
+affectedByRemedy.heading1 = cy: Public Service Pensions Remedy
 affectedByRemedy.message1 = cy: You are impacted by the Public Service Pensions remedy if you joined a public service pension scheme on or before 31 March 2012 and:
 affectedByRemedy.bullet1 = cy: you worked in public service between 1 April 2015 and the 31 March 2022
-affectedByRemedy.message2 = cy: Or
+affectedByRemedy.message2 = cy: or
 affectedByRemedy.bullet2 = cy: you left service after 31 March 2012 and returned within 5 years
 affectedByRemedy.message3 = cy: Find our more about the Public Service Pensions remedy
 affectedByRemedy.heading2 = cy: Are you affected by the Public Service Pensions remedy?
-affectedByRemedy.checkYourAnswersLabel = cy: Are you affected by the Public Service Pensions remedy?
+affectedByRemedy.checkYourAnswersLabel = cy: Were you affected by the Public Service Pensions Remedy?
 affectedByRemedy.error.required = cy: Select yes if you were affected by the Public Service Pensions Remedy
 affectedByRemedy.change.hidden = cy: if you were affected by the Public Service Pensions Remedy
 
@@ -1419,9 +1416,9 @@ previousLTACharge.heading = cy: Lifetime allowance charge
 previousLTACharge.message1 = cy: The Lifetime allowance (LTA) is the total amount of money that you can put into UK registered pension schemes before receiving a tax charge.
 previousLTACharge.message2 = cy: The standard lifetime allowance was £1,073,100. This was abolished from 6 April 2023.
 previousLTACharge.message3 = cy: You will find if you have breached the lifetime allowance limit on your revised benefit crystallisation event (BCE) statement.
-previousLTACharge.heading2 = cy: Have you paid a lifetime allowance charge?
-previousLTACharge.checkYourAnswersLabel = cy: Have you paid a lifetime allowance charge?
-previousLTACharge.error.required = cy: Select yes if you have paid a lifetime allowance charge
+previousLTACharge.heading2 = cy: Have you paid a lifetime allowance charge in any tax year from 6 April 2015 to 5 April 2023?
+previousLTACharge.checkYourAnswersLabel = cy: Have you paid a lifetime allowance charge in any tax year from 6 April 2015 to 5 April 2023?
+previousLTACharge.error.required = cy: Select yes if you paid a lifetime allowance charge in any tax year from 6 April 2015 to 5 April 2023?
 previousLTACharge.change.hidden = cy: if you paid a lifetime allowance charge
 
 pensionProtectedMember.title = cy: Are you a protected member
@@ -1449,9 +1446,16 @@ contributionRefunds.checkYourAnswersLabel = cy: Is the amount of contributions y
 contributionRefunds.error.required = cy:  Select yes if the amount of contributions you paid into the reform scheme is more than the amount of contributions you would have paid into the legacy scheme during the remedy
 contributionRefunds.change.hidden = cy: if the amount of contributions you paid into the reform scheme is more than the amount of contributions you would have paid into the legacy scheme during the remedy
 
-
-notAbleToUseThisServiceAA.title = cy: notAbleToUseThisServiceAA
-notAbleToUseThisServiceAA.heading = cy:notAbleToUseThisServiceAA
+notAbleToUseThisServiceAA.title = cy: You are not eligible
+notAbleToUseThisServiceAA.heading = cy: You are not eligible to use this part of the service
+notAbleToUseThisServiceAA.message1 = cy: You are not eligible to use this service
+notAbleToUseThisServiceAA.message2 = cy: You selected that you would like to use this service to calculate your annual allowance (AA) adjustment.
+notAbleToUseThisServiceAA.message3 = cy: You have not received any of the following:
+notAbleToUseThisServiceAA.bullet1 = cy: a revised pension savings statement
+notAbleToUseThisServiceAA.bullet2 = cy: a remediable service statement
+notAbleToUseThisServiceAA.bullet3 = cy: a pension savings statement as a result of the Public Service Pensions Remedy
+notAbleToUseThisServiceAA.message4 = cy: You cannot provide the information required to use the annual allowance part of our service.
+notAbleToUseThisServiceAA.message5 = cy: You are still able to use this service to calculate your lifetime allowance tax charges.
 
 increaseInLTACharge.title = cy: Have you been told about an increase in your lifetime allowance percentage?
 increaseInLTACharge.heading = cy: Have you been told about an increase in your lifetime allowance percentage?
@@ -1461,26 +1465,27 @@ increaseInLTACharge.message2 = cy: You can find this on a revised benefit crysta
 increaseInLTACharge.error.required = cy: Select yes if you have been told about an increase in your lifetime allowance percentage
 increaseInLTACharge.change.hidden = cy: if you have been told about an increase in your lifetime allowance percentage
 
-newLTACharge.title = cy: Has the increase in lifetime allowance percentage led to a change in the tax charge?
-newLTACharge.heading = cy: Has the change in lifetime allowance led to a change in the tax charge?
-newLTACharge.message1 = cy: Any amount that goes over the level of lifetime allowance available, is taxed under the lifetime allowance charge.
-newLTACharge.checkYourAnswersLabel = cy: Has the change in lifetime allowance led to a change in the tax charge?
-newLTACharge.error.required = cy: newLTACharge.error.required = Select yes if a change in your lifetime allowance led to a change in the tax charge
-newLTACharge.change.hidden = cy: if the change in lifetime allowance has led to a change in the tax charge
+newLTACharge.title = cy: Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.heading = cy: Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.message1 = cy: Any amount that goes over the level of lifetime allowance available, is liable to a lifetime allowance charge.
+newLTACharge.checkYourAnswersLabel = cy:  Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.error.required = cy: Select yes if you have received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.change.hidden = cy: if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
 
-otherSchemeNotification.title = cy: Have you been notified by any other pension scheme that you have a new LTA charge?
-otherSchemeNotification.heading = cy: Have you been notified by any other pension scheme that you have a new LTA charge?
+otherSchemeNotification.title = cy: Have you been notified by any other pension scheme that you have a new lifetime allowance charge?
+otherSchemeNotification.heading = cy: Lifetime allowance charge from your other scheme
 otherSchemeNotification.checkYourAnswersLabel = cy: Have you been notified by any other pension scheme that you have a new LTA charge?
-otherSchemeNotification.error.required = cy: Select yes if you have been notified by any other pension scheme that you have a new LTA charge
+otherSchemeNotification.message1 = cy: If you have had new or increased lifetime allowance charges in multiple schemes, you may have been told to report them.
+otherSchemeNotification.heading2 = cy: Have you been notified by your other scheme that you have a new or increased LTA charge in respect of any tax year from 2019/20 to 2022/23 that must be reported to HMRC?
+otherSchemeNotification.error.required = cy:  Select yes if you have been notified by any other pension scheme that you have a new LTA charge
 otherSchemeNotification.change.hidden = cy: if you been notified by any other pension scheme that you have a new LTA charge
 
 notAbleToUseThisTriageLta.title = cy: You are not impacted
-notAbleToUseThisTriageLta.heading = cy: You are not impacted by the McCloud remedy
-notAbleToUseThisTriageLta.message1 = cy: You are not eligible to use this service
-notAbleToUseThisTriageLta.message2 = cy: You selected that you would like to use this service to calculate your lifetime allowance (LTA) adjustment.
-notAbleToUseThisTriageLta.message3 = cy: Although you paid an LTA charge, this charge has not changed as a result of the McCloud remedy.
-notAbleToUseThisTriageLta.message4 = cy: These reasons mean that your pension contributions will not be affected by the McCloud remedy and you do not need to use this service for your lifetime allowance.
-notAbleToUseThisTriageLta.message5 = cy: You are still able to use this service to calculate your annual allowance tax charges.
+notAbleToUseThisTriageLta.heading = cy: You are not eligible to use this service
+notAbleToUseThisTriageLta.message1 = cy: You selected that you would like to use this service to calculate your lifetime allowance (LTA) adjustment.
+notAbleToUseThisTriageLta.message2 = cy: Although you paid an LTA charge, this charge has not changed as a result of the Public Service Pensions remedy.
+notAbleToUseThisTriageLta.message3 = cy: Although your pension contributions may be affected by the Public Service Pensions remedy, you do not need to use this service for your lifetime allowance.
+notAbleToUseThisTriageLta.message4 = cy: You are still able to use this service to calculate your annual allowance tax charges.
 
 netIncomeAbove100K.title = cy: Net income for any period from 6 April 2016 to 5 April 2020
 netIncomeAbove100K.heading = cy: Net income for any period from 6 April 2016 to 5 April 2020
@@ -1559,6 +1564,7 @@ maybePIAUnchangedOrDecreased.error.required = cy: Select yes if any of your pens
 maybePIAUnchangedOrDecreased.change.hidden = cy: if any of your pension input amounts remained unchanged or decreased for the tax years ending 5 April 2016 to 5 April 2022
 
 pIAAboveAnnualAllowanceIn2023.title = cy: Did you have a pension input amount above £40000?
+pIAAboveAnnualAllowanceIn2023.caption = cy: Annual allowance
 pIAAboveAnnualAllowanceIn2023.heading1 = cy: Pension input amount
 pIAAboveAnnualAllowanceIn2023.message1 = cy: Your pension input amount is the amount that your pension has increased in a tax year.
 pIAAboveAnnualAllowanceIn2023.message2 = cy: You will find the figures for your public service pension schemes in your revised pension savings statement.

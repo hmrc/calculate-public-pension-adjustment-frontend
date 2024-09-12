@@ -31,14 +31,14 @@ class PensionSchemeInput2016preAmountsFormProvider @Inject() extends Mappings {
         "pensionSchemeInputAmounts.error.revisedPIA.required",
         "pensionSchemeInputAmounts.error.revisedPIA.wholeNumber",
         "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric",
-        Seq("from 6 April 2015 and 8 July 2015")
+        Seq("6 April 2015 and 8 July 2015")
       )
         .verifying(
           inRangeWithArg[BigInt](
             0,
             BigInt("999999999"),
             "pensionSchemeInputAmounts.error.revisedPIA.length",
-            "from 6 April 2015 and 8 July 2015"
+            "6 April 2015 and 8 July 2015"
           )
         )
     )(PensionSchemeInput2016preAmounts.apply)(PensionSchemeInput2016preAmounts.unapply)

@@ -24,6 +24,11 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+    <p class="govuk-body">@messages("otherSchemeNotification.message1")</p>
+    <h2 class="govuk-heading-m">@messages("otherSchemeNotification.heading2")</h2>
+}
+
 @layout(pageTitle = title(form, messages("otherSchemeNotification.title"))) {
 
     @formHelper(action = controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onSubmit(mode), 'autoComplete -> "off") {
@@ -33,13 +38,14 @@
         }
 
             @govukRadios(
-            RadiosViewModel.yesNo(
-            field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("otherSchemeNotification.heading"),
-                    caption = HmrcSectionCaption(messages("lifetimeAllowance.caption"))
-                )
-            ))
+                RadiosViewModel.yesNo(
+                    field = form("value"),
+                    legend = HmrcPageHeadingLegend(
+                        content = messages("otherSchemeNotification.heading"),
+                        caption = HmrcSectionCaption(messages("lifetimeAllowance.caption"))
+                    )
+                ).withHint(HintViewModel(HtmlContent(contentHint)))
+            )
 
         @continueButton()
     }
