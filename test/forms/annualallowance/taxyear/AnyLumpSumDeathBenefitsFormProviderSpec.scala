@@ -17,7 +17,6 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
-import models.Period
 import play.api.data.FormError
 
 class AnyLumpSumDeathBenefitsFormProviderSpec extends BooleanFieldBehaviours {
@@ -25,8 +24,7 @@ class AnyLumpSumDeathBenefitsFormProviderSpec extends BooleanFieldBehaviours {
   val requiredKey = "anyLumpSumDeathBenefits.error.required"
   val invalidKey  = "error.boolean"
 
-  val period = Period._2020
-  val form   = new AnyLumpSumDeathBenefitsFormProvider()()
+  val form = new AnyLumpSumDeathBenefitsFormProvider()("")
 
   ".value" - {
 
@@ -35,13 +33,13 @@ class AnyLumpSumDeathBenefitsFormProviderSpec extends BooleanFieldBehaviours {
     behave like booleanField(
       form,
       fieldName,
-      invalidError = FormError(fieldName, invalidKey)
+      invalidError = FormError(fieldName, invalidKey, Seq(""))
     )
 
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(""))
     )
   }
 }
