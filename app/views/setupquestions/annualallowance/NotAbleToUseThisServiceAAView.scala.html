@@ -27,14 +27,18 @@
     <p class="govuk-body">@messages("notAbleToUseThisServiceAA.message1")</p>
     <p class="govuk-body">@messages("notAbleToUseThisServiceAA.message2")</p>
     <p class="govuk-body">@messages("notAbleToUseThisServiceAA.message3")</p>
+        <ul class="govuk-body">
+            <li>@messages("notAbleToUseThisServiceAA.bullet1")</li>
+            <li>@messages("notAbleToUseThisServiceAA.bullet2")</li>
+            <li>@messages("notAbleToUseThisServiceAA.bullet3")</li>
+        </ul>
+
     <p class="govuk-body">@messages("notAbleToUseThisServiceAA.message4")</p>
-    <p class="govuk-body">@messages("notAbleToUseThisServiceAA.message5")</p>
-    <p class="govuk-body">@messages("notAbleToUseThisServiceAA.message6")</p>
 
 
 
     @if(shouldShowContinueButton) {
-    <p class="govuk-body">@messages("notAbleToUseThisServiceAA.message7")</p>
+    <p class="govuk-body">@messages("notAbleToUseThisServiceAA.message5")</p>
      <p class="govuk-body">
       @govukButton(
        ButtonViewModel(messages("site.continue"))
