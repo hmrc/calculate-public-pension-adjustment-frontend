@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 class AnyLumpSumDeathBenefitsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(startEndDate: String): Form[Boolean] =
     Form(
-      "value" -> boolean("anyLumpSumDeathBenefits.error.required")
+      "value" -> boolean("anyLumpSumDeathBenefits.error.required", "error.boolean", Seq(startEndDate))
     )
 }

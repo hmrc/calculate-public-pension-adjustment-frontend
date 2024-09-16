@@ -31,9 +31,8 @@
     <p class="govuk-body">@messages("taxRelief.message1")</p>
     <ul class="govuk-body">
         <li>@messages("taxRelief.bullet1")</li>
-        <li>@messages("taxRelief.bullet2")</li>
         @if(period.start.getYear == 2020 || period.start.getYear == 2021){
-        <li>@messages("taxRelief.bullet3")</li>
+        <li>@messages("taxRelief.bullet2")</li>
         }
     </ul>
     <a class="govuk-link" href="https://www.gov.uk/tax-relief-for-employees" rel="noreferrer noopener" target="_blank">

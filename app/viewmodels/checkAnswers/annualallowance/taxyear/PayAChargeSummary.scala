@@ -53,7 +53,7 @@ object PayAChargeSummary {
               .onPageLoad(CheckMode, period, schemeIndex)
               .url
           )
-            .withVisuallyHiddenText(messages("payACharge.change.hidden"))
+            .withVisuallyHiddenText(messages("payACharge.change.hidden", schemeName.getOrElse(""), startEndDate))
         )
       )
     }

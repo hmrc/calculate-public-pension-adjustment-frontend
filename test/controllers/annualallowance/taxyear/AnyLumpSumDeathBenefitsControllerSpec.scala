@@ -41,7 +41,7 @@ class AnyLumpSumDeathBenefitsControllerSpec extends SpecBase with MockitoSugar {
   val period       = Period._2020
   val startEndDate = "6 April 2019 to 5 April 2020"
   val formProvider = new AnyLumpSumDeathBenefitsFormProvider()
-  val form         = formProvider()
+  val form         = formProvider(startEndDate)
 
   lazy val anyLumpSumDeathBenefitsRoute =
     controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onPageLoad(NormalMode, period).url
