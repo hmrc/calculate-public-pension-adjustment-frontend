@@ -19,7 +19,7 @@ package controllers.setupquestions
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{NormalMode, ReportingChange}
+import models.{AAKickOutStatus, NormalMode, ReportingChange}
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -81,13 +81,14 @@ class CheckYourSetupAnswersController @Inject() (
     val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows ++ ltaRows
 
     val continueURL = request.userAnswers.get(ReportingChangePage) match {
-      case Some(set) if set.contains(ReportingChange.AnnualAllowance) =>
+      case Some(set)
+          if set.contains(ReportingChange.AnnualAllowance) && request.userAnswers.get(AAKickOutStatus()).contains(2) =>
         request.userAnswers.get(ScottishTaxpayerFrom2016Page) match {
           case None    =>
             controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
           case Some(_) => controllers.routes.TaskListController.onPageLoad()
         }
-      case _                                                          => controllers.routes.TaskListController.onPageLoad()
+      case _ => controllers.routes.TaskListController.onPageLoad()
     }
     Ok(view("checkYourAnswers.setup.subHeading", continueURL, SummaryListViewModel(finalRows.flatten)))
   }

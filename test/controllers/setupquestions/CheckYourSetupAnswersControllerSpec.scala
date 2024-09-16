@@ -18,7 +18,7 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import models.{Done, NormalMode, ReportingChange}
+import models.{AAKickOutStatus, Done, NormalMode, ReportingChange}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar.mock
@@ -79,13 +79,16 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
       }
     }
 
-    "must redirect to ScottishTaxpayerFrom2016Controller if reporting page has indicated AA and Scottsih tax payer page has not been answered" in {
+    "must redirect to ScottishTaxpayerFrom2016Controller if reporting page has indicated AA and Scottsih tax payer page has not been answered and AA eligible" in {
       val mockUserDataService = mock[UserDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val userAnswers = emptyUserAnswers
         .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
+        .success
+        .value
+        .set(AAKickOutStatus(), 2)
         .success
         .value
 
@@ -117,13 +120,16 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
       }
     }
 
-    "must redirect to task list controller if reporting page has indicated AA and Scottsih tax payer page has been answered" in {
+    "must redirect to task list controller if reporting page has indicated AA and Scottsih tax payer page has been answered and AA eligible " in {
       val mockUserDataService = mock[UserDataService]
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
       val userAnswers = emptyUserAnswers
         .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
+        .success
+        .value
+        .set(AAKickOutStatus(), 2)
         .success
         .value
         .set(ScottishTaxpayerFrom2016Page, false)

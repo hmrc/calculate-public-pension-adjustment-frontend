@@ -17,6 +17,7 @@
 package models.tasklist.sections
 
 import controllers.setupquestions.{routes => setupRoutes}
+import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{NormalMode, SectionNavigation, UserAnswers}
@@ -27,11 +28,15 @@ case object SetupSection extends Section {
   val initialPage: Call               = setupRoutes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
   val checkYourSetupAnswersPage: Call = setupRoutes.CheckYourSetupAnswersController.onPageLoad()
   val ineligiblePage: Call            = setupRoutes.IneligibleController.onPageLoad
+  val kickoutLTAService: Call         = setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
+  val kickoutLTATriage: Call          = setupLTARoutes.NotAbleToUseThisTriageLtaController.onPageLoad()
 
   def status(answers: UserAnswers): SectionStatus =
     navigateTo(answers) match {
       case initialPage.url               => NotStarted
       case checkYourSetupAnswersPage.url => Completed
+      case kickoutLTAService.url         => Completed
+      case kickoutLTATriage.url          => Completed
       case _                             => InProgress
     }
 

@@ -19,7 +19,7 @@ package models.tasklist
 import base.SpecBase
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.sections.{LTASection, NextStepsSection}
-import models.{ReportingChange, UserAnswers}
+import models.{AAKickOutStatus, LTAKickOutStatus, ReportingChange, SectionNavigation, UserAnswers}
 import pages.behaviours.PageBehaviours
 import pages.setupquestions.ReportingChangePage
 
@@ -29,7 +29,11 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
     "Must route to calculation result page when reporting a change that includes Annual Allowance details" in {
       val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
-      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(AAKickOutStatus(), 2)
+        .get
 
       val nextStepsTaskUrl = NextStepsSection.navigateTo(answers)
 
@@ -45,6 +49,21 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
       checkNavigation(nextStepsTaskUrl, "/lta-submission")
     }
 
+    "Must route to LTA submission when reporting a change for AA and LTA but only LTA eligible" in {
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(AAKickOutStatus(), 0)
+        .get
+        .set(LTAKickOutStatus(), 1)
+        .get
+
+      val nextStepsTaskUrl = NextStepsSection.navigateTo(answers)
+
+      checkNavigation(nextStepsTaskUrl, "/lta-submission")
+    }
+
     "Must route to a page in the Setup Section when reporting change details have not been captured" in {
       val nextStepsTaskUrl = NextStepsSection.navigateTo(emptyUserAnswers)
 
@@ -54,28 +73,123 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
   "Next steps section name" - {
 
-    "Must be 'Calculate' when reporting a change that includes Annual Allowance details" in {
-      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
-      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+    "Must be 'Calculate' when AA eligible for AA" in {
+      val answers: UserAnswers = emptyUserAnswers.set(AAKickOutStatus(), 2).get
 
       val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
 
       sectionNameOverride mustBe "taskList.nextSteps.calculate"
     }
 
-    "Must be 'Continue to sign in' when reporting a change that does not include Annual Allowance details & no kickout reached" in {
-      val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
-      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+    "Must be 'Continue' when not eligible for AA, eligible for LTA and authenticated" in {
+      val answers: UserAnswers = emptyUserAnswers
+        .copy(authenticated = true)
+        .set(AAKickOutStatus(), 0)
+        .get
+        .set(LTAKickOutStatus(), 2)
+        .get
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.continue"
+    }
+
+    "Must be 'Continue' when AA not reported, eligible for LTA and authenticated" in {
+      val answers: UserAnswers = emptyUserAnswers
+        .copy(authenticated = true)
+        .set(LTAKickOutStatus(), 2)
+        .get
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.continue"
+    }
+
+    "Must be 'Continue to sign in' when not eligible for AA, eligible for LTA and not authenticated" in {
+      val answers: UserAnswers = emptyUserAnswers
+        .set(AAKickOutStatus(), 0)
+        .get
+        .set(LTAKickOutStatus(), 2)
+        .get
 
       val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
 
       sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
     }
 
-    "Must be 'No further action required' when reporting a change that does not include Annual Allowance details & kickout was reached" in {
+    "Must be 'Continue to sign in' AA not reported, eligible for LTA and not authenticated" in {
+      val answers: UserAnswers = emptyUserAnswers
+        .set(LTAKickOutStatus(), 2)
+        .get
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
+    }
+
+    "Must be 'No further action required' when not eligible for LTA or AA" in {
+      val answers: UserAnswers = emptyUserAnswers
+        .set(AAKickOutStatus(), 0)
+        .get
+        .set(LTAKickOutStatus(), 0)
+        .get
+
+      val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answersWithNav)
+
+      sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+    }
+
+    "Must be 'No further action required' when when not eligible for AA and only AA indicated" in {
+      val reportingChanges: Set[ReportingChange] = Set(ReportingChange.AnnualAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(AAKickOutStatus(), 0)
+        .get
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+    }
+
+    "Must be 'No further action required' when when not eligible for LTA and only LTA indicated" in {
+      val reportingChanges: Set[ReportingChange] = Set(ReportingChange.LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(LTAKickOutStatus(), 0)
+        .get
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+    }
+
+    "Must be 'No further action required' when not eligible for AA and LTA kickout has been reached " in {
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(AAKickOutStatus(), 0)
+        .get
+        .set(LTAKickOutStatus(), 2)
+        .get
+
+      val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
+
+      val sectionNameOverride = NextStepsSection.sectionNameOverride(answersWithNav)
+
+      sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+    }
+
+    "Must be 'No further action required' when only LTA and LTA kickout has been reached " in {
       val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
       val answers: UserAnswers                   = emptyUserAnswers
         .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(LTAKickOutStatus(), 2)
         .get
 
       val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
@@ -87,6 +201,20 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
     "Must be 'Complete setup questions' when reporting change details have not been captured" in {
       val sectionNameOverride = NextStepsSection.sectionNameOverride(emptyUserAnswers)
+
+      sectionNameOverride mustBe "taskList.nextSteps.setupRequired"
+    }
+
+    "Must be 'Complete setup questions' when AA or LTA Triage in progress" in {
+      val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(AAKickOutStatus(), 1)
+        .get
+        .set(LTAKickOutStatus(), 1)
+        .get
+      val sectionNameOverride                    = NextStepsSection.sectionNameOverride(answers)
 
       sectionNameOverride mustBe "taskList.nextSteps.setupRequired"
     }
@@ -119,7 +247,11 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
     "Must be 'Not started' if all specified data capture sections are complete and only LTA is selected" in {
       val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
-      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(LTAKickOutStatus(), 2)
+        .get
       val dataCaptureSections                    = List(
         Some(
           SectionGroupViewModel(
@@ -134,7 +266,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
       sectionStatus mustBe SectionStatus.NotStarted
     }
 
-    "Must be 'CannotStartYet' if all specified data capture sections are complete, only LTA is selected & a kickout page has been entered" in {
+    "Must be 'CannotStartYet' if all specified data capture sections are complete, only LTA is selected & a LTA task kickout page has been entered" in {
       val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
       val answers: UserAnswers                   = emptyUserAnswers
         .set(ReportingChangePage, reportingChanges)
@@ -156,10 +288,39 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
       sectionStatus mustBe SectionStatus.CannotStartYet
     }
 
+    "Must be 'CannotStartYet' if all specified data capture sections are complete, only LTA is selected & LTA triage kickout page has been entered" in {
+      val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(LTAKickOutStatus(), 0)
+        .get
+
+      val dataCaptureSections = List(
+        Some(
+          SectionGroupViewModel(
+            "heading",
+            Seq(SectionViewModel("name", "url", SectionStatus.Completed, "id"))
+          )
+        ),
+        None
+      )
+
+      val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+      sectionStatus mustBe SectionStatus.CannotStartYet
+    }
+
     "Must be 'Not started' if all specified data capture sections are complete and annual allowance is not selected and no kickout has been reached" in {
       val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
-      val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
-      val dataCaptureSections                    = List(
+      val answers: UserAnswers                   = emptyUserAnswers
+        .set(ReportingChangePage, reportingChanges)
+        .get
+        .set(AAKickOutStatus(), 2)
+        .get
+        .set(LTAKickOutStatus(), 2)
+        .get
+
+      val dataCaptureSections = List(
         Some(
           SectionGroupViewModel(
             "heading",

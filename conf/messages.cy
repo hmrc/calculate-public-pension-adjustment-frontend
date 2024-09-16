@@ -333,6 +333,7 @@ taskList.nextSteps.groupHeading = Camau nesaf
 taskList.nextSteps.calculate = Cyfrifo
 taskList.nextSteps.hidden = cy: Public Service Pension Adjustment
 taskList.nextSteps.continueToSignIn = Yn eich blaen i fewngofnodi
+taskList.nextSteps.continue = Yn eich blaen
 taskList.nextSteps.setupRequired = cy: You must first complete the setup questions
 taskList.nextSteps.noFurtherAction = Nid oes angen gweithredu ymhellach
 

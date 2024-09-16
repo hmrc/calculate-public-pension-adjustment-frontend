@@ -56,6 +56,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "resubmittingAdjustment" : true,
            |    "reasonForResubmission" : "Change in amounts",
            |    "reportingChange" : [ "annualAllowance", "lifetimeAllowance" ],
+           |    "kickoutStatus": {
+           |      "annualAllowance": 2,
+           |      "lifetimeAllowance": 2
+           |    },
            |    "setup": {
            |      "aa": {
            |        "savingsStatement": true,
@@ -881,6 +885,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |    "savingsStatement" : true,
            |    "resubmittingAdjustment" : false,
            |    "reportingChange" : [ "annualAllowance" ],
+           |    "kickoutStatus": {
+           |      "annualAllowance": 2
+           |    },
            |    "setup": {
            |      "aa": {
            |        "savingsStatement": true
@@ -1225,6 +1232,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "reportingChange": [
                 |      "annualAllowance"
                 |    ],
+                |    "kickoutStatus": {
+                |      "annualAllowance": 2
+                |    },
                 |    "setup": {
                 |      "aa": {
                 |        "savingsStatement": true
@@ -1436,6 +1446,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "reportingChange": [
                 |      "annualAllowance"
                 |    ],
+                |    "kickoutStatus": {
+                |      "annualAllowance": 2
+                |    },
                 |    "setup": {
                 |      "aa": {
                 |        "savingsStatement": true
@@ -1698,6 +1711,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "reportingChange": [
                 |      "annualAllowance"
                 |    ],
+                |    "kickoutStatus": {
+                |      "annualAllowance": 2
+                |    },
                 |    "setup": {
                 |      "aa": {
                 |        "savingsStatement": true
@@ -1891,6 +1907,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |  "reportingChange": [
                 |    "annualAllowance"
                 |  ],
+                |  "kickoutStatus": {
+                |      "annualAllowance": 2
+                |    },
                 |  "setup": {
                 |    "aa": {
                 |      "savingsStatement": true
@@ -2116,6 +2135,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |    "reportingChange": [
                 |      "annualAllowance"
                 |    ],
+                |    "kickoutStatus": {
+                |      "annualAllowance": 2
+                |    },
                 |    "setup": {
                 |      "aa": {
                 |        "savingsStatement": true
@@ -2288,6 +2310,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |  "reportingChange": [
                 |    "annualAllowance"
                 |  ],
+                |  "kickoutStatus": {
+                |      "annualAllowance": 2
+                |    },
                 |  "setup": {
                 |    "aa": {
                 |      "savingsStatement": true
