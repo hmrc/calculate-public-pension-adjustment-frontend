@@ -16,11 +16,13 @@
 
 package pages.setupquestions.annualallowance
 
-import models.{CheckMode, NormalMode}
-import org.scalacheck.Gen
-import org.scalacheck.rng.Seed.random
+import models.Period.{_2013, _2014, _2015, _2021, _2022}
+import models.{CheckMode, ContributedToDuringRemedyPeriod, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, SchemeIndex, ThresholdIncome, WhichYearsScottishTaxpayer, WhoPaidAACharge}
+import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
+import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountOfGiftAidPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouHaveGiftAidPage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, KnowAdjustedAmountPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
 import pages.behaviours.PageBehaviours
 
+import java.time.LocalDate
 import scala.util.Random
 
 class PensionProtectedMemberPageSpec extends PageBehaviours {
@@ -149,13 +151,14 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
 
   "cleanup" - {
 
-    "when user answers yes or no" in {
+    "must clean up AA triage only when false" in {
 
       val cleanedUserAnswers = PensionProtectedMemberPage
-        .cleanup(Some(Random.nextBoolean()), userAnswersAATriage)
+        .cleanup(Some(false), testCalulationServiceData)
         .success
         .value
 
+      // AA Triage Answers
       cleanedUserAnswers.get(HadAAChargePage) mustBe None
       cleanedUserAnswers.get(ContributionRefundsPage) mustBe None
       cleanedUserAnswers.get(NetIncomeAbove100KPage) mustBe None
@@ -166,6 +169,70 @@ class PensionProtectedMemberPageSpec extends PageBehaviours {
       cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe None
       cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe None
       cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
+
+      // AA Setup Answers
+      cleanedUserAnswers.get(ScottishTaxpayerFrom2016Page) mustBe Some(true)
+
+      // AALoop Answers
+      cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2021)) mustBe Some(true)
+    }
+
+    "must cleanup AA task when true and RPSS false" in {
+
+      val userAnswers = testCalulationServiceData
+        .set(SavingsStatementPage, false)
+        .success
+        .value
+
+      val cleanedUserAnswers = PensionProtectedMemberPage
+        .cleanup(Some(true), userAnswers)
+        .success
+        .value
+
+      // AA Triage Answers
+      cleanedUserAnswers.get(HadAAChargePage) mustBe None
+      cleanedUserAnswers.get(ContributionRefundsPage) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove100KPage) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KPage) mustBe None
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe None
+      cleanedUserAnswers.get(MaybePIAUnchangedOrDecreasedPage) mustBe None
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe None
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe None
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
+
+      // AA Setup Answers
+      cleanedUserAnswers.get(ScottishTaxpayerFrom2016Page) mustBe None
+
+      // AALoop Answers
+      cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2021)) mustBe None
+    }
+
+    "must clean up AA triage only when true and RPSS true" in {
+
+      val cleanedUserAnswers = PensionProtectedMemberPage
+        .cleanup(Some(true), testCalulationServiceData)
+        .success
+        .value
+
+      // AA Triage Answers
+      cleanedUserAnswers.get(HadAAChargePage) mustBe None
+      cleanedUserAnswers.get(ContributionRefundsPage) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove100KPage) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KPage) mustBe None
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe None
+      cleanedUserAnswers.get(MaybePIAUnchangedOrDecreasedPage) mustBe None
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe None
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe None
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
+
+      // AA Setup Answers
+      cleanedUserAnswers.get(ScottishTaxpayerFrom2016Page) mustBe Some(true)
+
+      // AALoop Answers
+      cleanedUserAnswers.get(MemberMoreThanOnePensionPage(_2021)) mustBe Some(true)
+
     }
   }
 }

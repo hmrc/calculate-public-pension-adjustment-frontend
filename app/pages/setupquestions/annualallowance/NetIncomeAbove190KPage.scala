@@ -16,6 +16,7 @@
 
 package pages.setupquestions.annualallowance
 
+import models.tasklist.sections.{AASection, PreAASection}
 import models.{LTAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -71,12 +72,31 @@ case object NetIncomeAbove190KPage extends QuestionPage[Boolean] {
     value
       .map { _ =>
         userAnswers
-          .remove(MaybePIAIncreasePage)
-          .flatMap(_.remove(MaybePIAUnchangedOrDecreasedPage))
-          .flatMap(_.remove(PIAAboveAnnualAllowanceIn2023Page))
-          .flatMap(_.remove(NetIncomeAbove190KIn2023Page))
-          .flatMap(_.remove(FlexibleAccessDcSchemePage))
-          .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
+          .get(SavingsStatementPage)
+          .map {
+            case true  =>
+              triageAAPages(userAnswers)
+            case false =>
+              removeAAData(triageAAPages(userAnswers).get)
+            case _     =>
+              super.cleanup(value, userAnswers)
+          }
+          .getOrElse(super.cleanup(value, userAnswers))
       }
       .getOrElse(super.cleanup(value, userAnswers))
+
+  private def removeAAData(userAnswers: UserAnswers) =
+    for {
+      answersNoAASetup <- Try(PreAASection.removeAllUserAnswersAndNavigation(userAnswers))
+      answersNoAATask  <- Try(AASection.removeAllAAPeriodAnswersAndNavigation(answersNoAASetup))
+    } yield answersNoAATask
+
+  private def triageAAPages(userAnswers: UserAnswers): Try[UserAnswers] =
+    userAnswers
+      .remove(MaybePIAIncreasePage)
+      .flatMap(_.remove(MaybePIAUnchangedOrDecreasedPage))
+      .flatMap(_.remove(PIAAboveAnnualAllowanceIn2023Page))
+      .flatMap(_.remove(NetIncomeAbove190KIn2023Page))
+      .flatMap(_.remove(FlexibleAccessDcSchemePage))
+      .flatMap(_.remove(Contribution4000ToDirectContributionSchemePage))
 }
