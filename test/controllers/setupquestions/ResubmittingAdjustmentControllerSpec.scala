@@ -19,7 +19,7 @@ package controllers.setupquestions
 import base.SpecBase
 import controllers.setupquestions.{routes => setupRoutes}
 import forms.ResubmittingAdjustmentFormProvider
-import models.{Done, NormalMode, UserAnswers}
+import models.{CheckMode, Done, NormalMode, PostTriageFlag, UserAnswers}
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -127,6 +127,66 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual BAD_REQUEST
         contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+      }
+    }
+
+    "must set PostTriageFlag when submitted in Normal mode" in {
+
+      val mockUserDataService                            = mock[UserDataService]
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val fakeAuthConnector = new FakeAuthConnector(Some("userId"))
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService),
+            bind[AuthConnector].toInstance(fakeAuthConnector)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, resubmittingNormalRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(PostTriageFlag) mustBe Some(true)
+      }
+    }
+
+    "must not set PostTriageFlag when submitted in Check mode" in {
+
+      val mockUserDataService                            = mock[UserDataService]
+      val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+
+      val fakeAuthConnector = new FakeAuthConnector(Some("userId"))
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService),
+            bind[AuthConnector].toInstance(fakeAuthConnector)
+          )
+          .build()
+
+      lazy val resubmittingCheckRoute = setupRoutes.ResubmittingAdjustmentController.onPageLoad(CheckMode).url
+
+      running(application) {
+        val request =
+          FakeRequest(POST, resubmittingCheckRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        val capturedUserAnswers = userAnswersCaptor.getValue
+        capturedUserAnswers.get(PostTriageFlag) mustBe None
       }
     }
 
