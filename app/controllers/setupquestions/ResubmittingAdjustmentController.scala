@@ -21,12 +21,12 @@ import controllers.actions._
 import forms.ResubmittingAdjustmentFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
-import models.{CalculationStartAuditEvent, Mode, UserAnswers}
+import models.{CalculationStartAuditEvent, Mode, NormalMode, PostTriageFlag, UserAnswers}
 import pages.setupquestions.ResubmittingAdjustmentPage
-import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{AuditService, UserDataService}
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.ResubmittingAdjustmentView
 
@@ -65,21 +65,48 @@ class ResubmittingAdjustmentController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value =>
-          for {
-            updatedAnswers <- Future.fromTry(
-                                request.userAnswers
-                                  .getOrElse(constructUserAnswers(request))
-                                  .set(ResubmittingAdjustmentPage, value)
-                              )
-            redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
-            answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
-            _              <- userDataService.set(answersWithNav)
-            _              <- auditService.auditCalculationStart(
-                                CalculationStartAuditEvent(answersWithNav.uniqueId, answersWithNav.authenticated)
-                              )
-          } yield Redirect(redirectUrl)
+          if (mode == NormalMode) {
+            normalModeRedirectGenerator(mode, request, value)
+          } else {
+            checkModeRedirectGenerator(mode, request, value)
+          }
       )
   }
+
+  private def normalModeRedirectGenerator(mode: Mode, request: OptionalDataRequest[AnyContent], value: Boolean)(implicit
+    hc: HeaderCarrier
+  ) =
+    for {
+      updatedAnswers <- Future.fromTry(
+                          request.userAnswers
+                            .getOrElse(constructUserAnswers(request))
+                            .set(ResubmittingAdjustmentPage, value)
+                        )
+      redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
+      answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
+      answersWithFlag = PostTriageFlag.setStatusTrue(answersWithNav)
+      _              <- userDataService.set(answersWithFlag)
+      _              <- auditService.auditCalculationStart(
+                          CalculationStartAuditEvent(answersWithFlag.uniqueId, answersWithFlag.authenticated)
+                        )
+    } yield Redirect(redirectUrl)
+
+  private def checkModeRedirectGenerator(mode: Mode, request: OptionalDataRequest[AnyContent], value: Boolean)(implicit
+    hc: HeaderCarrier
+  ) =
+    for {
+      updatedAnswers <- Future.fromTry(
+                          request.userAnswers
+                            .getOrElse(constructUserAnswers(request))
+                            .set(ResubmittingAdjustmentPage, value)
+                        )
+      redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
+      answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
+      _              <- userDataService.set(answersWithNav)
+      _              <- auditService.auditCalculationStart(
+                          CalculationStartAuditEvent(answersWithNav.uniqueId, answersWithNav.authenticated)
+                        )
+    } yield Redirect(redirectUrl)
 
   private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) = {
     val authenticated = request.request match {

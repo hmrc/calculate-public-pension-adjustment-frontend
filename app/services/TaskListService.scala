@@ -18,7 +18,7 @@ package services
 
 import models.tasklist._
 import models.tasklist.sections._
-import models.{AAKickOutStatus, LTAKickOutStatus, Period, ReportingChange, UserAnswers}
+import models.{AAKickOutStatus, LTAKickOutStatus, Period, PostTriageFlag, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 
 import javax.inject.Inject
@@ -31,21 +31,51 @@ class TaskListService @Inject() (
     val setupGroup: SectionGroupViewModel = setupGroupSeq(answers)
 
     val aaGroup: Option[SectionGroupViewModel] =
-      if (isRequired(answers, ReportingChange.AnnualAllowance) && answers.get(AAKickOutStatus()).contains(2)) {
-        val aaPeriods: Seq[Period]                  = PeriodService.relevantPeriods(answers)
-        val aaPeriodSections: Seq[SectionViewModel] = aaPeriodSectionsSeq(answers, aaPeriods)
-        Some(aaGroupSeq(answers, aaPeriodSections))
-      } else { None }
+      if (answers.get(PostTriageFlag).isDefined) {
+        aaGroupPostTriageGroupGenerator(answers)
+      } else {
+        aaGroupPreTriageGroupGenerator(answers)
+      }
 
     val ltaGroup: Option[SectionGroupViewModel] =
-      if (answers.get(LTAKickOutStatus()).contains(2)) {
-        ltaGroupSeq(answers)
-      } else { None }
+      if (answers.get(PostTriageFlag).isDefined) {
+        postTriageLTAGroupGenerator(answers)
+      } else {
+        preTriageLTAGroupGenerator(answers)
+      }
 
     val nextStepsGroup: SectionGroupViewModel = nextStepsGroupSeq(answers, List(Some(setupGroup), aaGroup, ltaGroup))
 
     TaskListViewModel(setupGroup, aaGroup, ltaGroup, nextStepsGroup)
   }
+
+  private def postTriageLTAGroupGenerator(answers: UserAnswers) =
+    if (answers.get(LTAKickOutStatus()).contains(2)) {
+      ltaGroupSeq(answers)
+    } else {
+      None
+    }
+
+  private def preTriageLTAGroupGenerator(answers: UserAnswers) =
+    ltaGroupSeq(answers)
+
+  private def aaGroupPostTriageGroupGenerator(answers: UserAnswers) =
+    if (isRequired(answers, ReportingChange.AnnualAllowance) && answers.get(AAKickOutStatus()).contains(2)) {
+      val aaPeriods: Seq[Period]                  = PeriodService.relevantPeriods(answers)
+      val aaPeriodSections: Seq[SectionViewModel] = aaPeriodSectionsSeq(answers, aaPeriods)
+      Some(aaGroupSeq(answers, aaPeriodSections))
+    } else {
+      None
+    }
+
+  private def aaGroupPreTriageGroupGenerator(answers: UserAnswers) =
+    if (isRequired(answers, ReportingChange.AnnualAllowance)) {
+      val aaPeriods: Seq[Period]                  = PeriodService.relevantPeriods(answers)
+      val aaPeriodSections: Seq[SectionViewModel] = aaPeriodSectionsSeq(answers, aaPeriods)
+      Some(aaGroupSeq(answers, aaPeriodSections))
+    } else {
+      None
+    }
 
   def isRequired(answers: UserAnswers, reportingChange: ReportingChange): Boolean =
     answers.get(ReportingChangePage) match {

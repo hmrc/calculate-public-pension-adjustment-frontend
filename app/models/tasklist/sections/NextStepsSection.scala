@@ -18,7 +18,7 @@ package models.tasklist.sections
 
 import controllers.routes
 import models.tasklist.{Section, SectionGroupViewModel, SectionStatus}
-import models.{AAKickOutStatus, LTAKickOutStatus, ReportingChange, UserAnswers}
+import models.{AAKickOutStatus, LTAKickOutStatus, PostTriageFlag, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 
 case object NextStepsSection extends Section {
@@ -27,20 +27,37 @@ case object NextStepsSection extends Section {
     val allDataCaptureComplete: Boolean = dataCaptureSections.flatten.forall(_.isComplete)
 
     if (allDataCaptureComplete) {
-      answers.get(ReportingChangePage) match {
-        case Some(rcs) if calculationRequired(rcs, answers)                                                => SectionStatus.NotStarted
-        case Some(rcs)
-            if !calculationRequired(rcs, answers) && (LTASection
-              .kickoutHasBeenReached(answers) || !answers.get(LTAKickOutStatus()).contains(2)) =>
-          SectionStatus.CannotStartYet
-        case Some(rcs) if !calculationRequired(rcs, answers) && !LTASection.kickoutHasBeenReached(answers) =>
-          SectionStatus.NotStarted
-        case _                                                                                             => SectionStatus.CannotStartYet
+      if (answers.get(PostTriageFlag).isDefined) {
+        postTriageSectionStatus(answers)
+      } else {
+        preTriageSectionStatus(answers)
       }
     } else {
       SectionStatus.CannotStartYet
     }
   }
+
+  private def postTriageSectionStatus(answers: UserAnswers) =
+    answers.get(ReportingChangePage) match {
+      case Some(rcs) if calculationRequired(rcs, answers)                                                => SectionStatus.NotStarted
+      case Some(rcs)
+          if !calculationRequired(rcs, answers) && (LTASection
+            .kickoutHasBeenReached(answers) || !answers.get(LTAKickOutStatus()).contains(2)) =>
+        SectionStatus.CannotStartYet
+      case Some(rcs) if !calculationRequired(rcs, answers) && !LTASection.kickoutHasBeenReached(answers) =>
+        SectionStatus.NotStarted
+      case _                                                                                             => SectionStatus.CannotStartYet
+    }
+
+  private def preTriageSectionStatus(answers: UserAnswers) =
+    answers.get(ReportingChangePage) match {
+      case Some(rcs) if calculationRequired(rcs, answers)                                                => SectionStatus.NotStarted
+      case Some(rcs) if !calculationRequired(rcs, answers) && LTASection.kickoutHasBeenReached(answers)  =>
+        SectionStatus.CannotStartYet
+      case Some(rcs) if !calculationRequired(rcs, answers) && !LTASection.kickoutHasBeenReached(answers) =>
+        SectionStatus.NotStarted
+      case _                                                                                             => SectionStatus.CannotStartYet
+    }
 
   def navigateTo(answers: UserAnswers): String =
     answers.get(ReportingChangePage) match {
@@ -50,7 +67,31 @@ case object NextStepsSection extends Section {
       case _                                               => SetupSection.navigateTo(answers)
     }
 
-  def sectionNameOverride(answers: UserAnswers) =
+  def sectionNameOverride(answers: UserAnswers): String =
+    if (answers.get(PostTriageFlag).isDefined) {
+      postTriageSectionNameOverride(answers)
+    } else {
+      preTriageSectionNameOverride(answers)
+    }
+
+  private def preTriageSectionNameOverride(answers: UserAnswers): String  =
+    answers.get(ReportingChangePage) match {
+      case Some(rcs) if calculationRequired(rcs, answers)                                               => "taskList.nextSteps.calculate"
+      case Some(rcs)
+          if !calculationRequired(rcs, answers) && !LTASection.kickoutHasBeenReached(
+            answers
+          ) && answers.authenticated =>
+        "taskList.nextSteps.continue"
+      case Some(rcs)
+          if !calculationRequired(rcs, answers) && !LTASection.kickoutHasBeenReached(
+            answers
+          ) && !answers.authenticated =>
+        "taskList.nextSteps.continueToSignIn"
+      case Some(rcs) if !calculationRequired(rcs, answers) && LTASection.kickoutHasBeenReached(answers) =>
+        "taskList.nextSteps.noFurtherAction"
+      case _                                                                                            => "taskList.nextSteps.setupRequired"
+    }
+  private def postTriageSectionNameOverride(answers: UserAnswers): String =
     (
       answers.get(AAKickOutStatus()),
       answers.get(LTAKickOutStatus()),
@@ -71,6 +112,9 @@ case object NextStepsSection extends Section {
     }
 
   private def calculationRequired(reportingChangeSet: Set[ReportingChange], answers: UserAnswers): Boolean =
-    reportingChangeSet.contains(ReportingChange.AnnualAllowance) && answers.get(AAKickOutStatus()).contains(2)
-
+    if (answers.get(PostTriageFlag).isDefined) {
+      reportingChangeSet.contains(ReportingChange.AnnualAllowance) && answers.get(AAKickOutStatus()).contains(2)
+    } else {
+      reportingChangeSet.contains(ReportingChange.AnnualAllowance)
+    }
 }

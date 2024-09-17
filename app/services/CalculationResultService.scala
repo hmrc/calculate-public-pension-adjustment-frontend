@@ -22,7 +22,7 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AAKickOutStatus, AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AAKickOutStatus, AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -129,23 +129,65 @@ class CalculationResultService @Inject() (
 
     val reportingChange: Option[Set[ReportingChange]] = userAnswers.get(ReportingChangePage)
 
+    val postTriageFlagStatus = userAnswers.get(PostTriageFlag).isDefined
+
     CalculationResults.CalculationInputs(
       resubmission,
       buildSetup(userAnswers),
-      if (
-        reportingChange
-          .exists(_.contains(models.ReportingChange.AnnualAllowance)) && userAnswers.get(AAKickOutStatus()).get == 2
-      ) {
-        Some(AnnualAllowance(scottishTaxYears, tYears))
-      } else None,
-      if (
-        reportingChange
-          .exists(_.contains(models.ReportingChange.LifetimeAllowance)) && userAnswers.get(LTAKickOutStatus()).get == 2
-      ) {
-        buildLifeTimeAllowance(userAnswers)
-      } else None
+      if (postTriageFlagStatus) {
+        buildSetupAAPostTriage(userAnswers, scottishTaxYears, tYears, reportingChange)
+      } else {
+        buildSetupAAPreTriage(userAnswers, scottishTaxYears, tYears, reportingChange)
+      },
+      if (postTriageFlagStatus) {
+        buildSetupLTAPostTriage(userAnswers, reportingChange)
+      } else {
+        buildSetupLTAPreTriage(userAnswers, reportingChange)
+      }
     )
   }
+
+  private def buildSetupLTAPostTriage(userAnswers: UserAnswers, reportingChange: Option[Set[ReportingChange]]) =
+    if (
+      reportingChange
+        .exists(_.contains(models.ReportingChange.LifetimeAllowance)) && userAnswers.get(LTAKickOutStatus()).get == 2
+    ) {
+      buildLifeTimeAllowance(userAnswers)
+    } else None
+
+  private def buildSetupLTAPreTriage(userAnswers: UserAnswers, reportingChange: Option[Set[ReportingChange]]) =
+    if (
+      reportingChange
+        .exists(_.contains(models.ReportingChange.LifetimeAllowance))
+    ) {
+      buildLifeTimeAllowance(userAnswers)
+    } else None
+
+  private def buildSetupAAPostTriage(
+    userAnswers: UserAnswers,
+    scottishTaxYears: List[Period],
+    tYears: List[TaxYear],
+    reportingChange: Option[Set[ReportingChange]]
+  ) =
+    if (
+      reportingChange
+        .exists(_.contains(models.ReportingChange.AnnualAllowance)) && userAnswers.get(AAKickOutStatus()).get == 2
+    ) {
+      Some(AnnualAllowance(scottishTaxYears, tYears))
+    } else None
+
+  private def buildSetupAAPreTriage(
+    userAnswers: UserAnswers,
+    scottishTaxYears: List[Period],
+    tYears: List[TaxYear],
+    reportingChange: Option[Set[ReportingChange]]
+  ) =
+    if (
+      reportingChange
+        .exists(_.contains(models.ReportingChange.AnnualAllowance))
+    ) {
+      Some(AnnualAllowance(scottishTaxYears, tYears))
+    } else None
 
   def buildSetup(userAnswers: UserAnswers): Setup = {
 
