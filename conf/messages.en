@@ -1197,7 +1197,7 @@ flexibleRemunerationArrangements.error.required = Select yes if you had any flex
 flexibleRemunerationArrangements.change.hidden = Flexible remuneration
 
 anyLumpSumDeathBenefits.title = Did you have any taxable lump sum death benefits from {0}?
-anyLumpSumDeathBenefits.heading = Taxable Lump sum death benefits
+anyLumpSumDeathBenefits.heading = Taxable lump sum death benefits
 anyLumpSumDeathBenefits.heading2 = Did you have any taxable lump sum death benefits from {0}?
 anyLumpSumDeathBenefits.checkYourAnswersLabel = Did you have any taxable lump sum death benefits from {0}?
 anyLumpSumDeathBenefits.error.required = Select yes if you received any taxable lump sum death benefits from a pension scheme from {0}
@@ -1213,15 +1213,15 @@ anyLumpSumDeathBenefits.list5 = pension protection
 anyLumpSumDeathBenefits.list6 = annuity protection
 anyLumpSumDeathBenefits.change.hidden = if you received any taxable lump sum death benefits from a pension scheme from {0}
 
-lumpSumDeathBenefitsValue.title = How much were the lump sum death benefits from {0}?
-lumpSumDeathBenefitsValue.heading = How much were the lump sum death benefits from {0}?
+lumpSumDeathBenefitsValue.title = How much were your taxable lump sum death benefits from {0}?
+lumpSumDeathBenefitsValue.heading = How much were your taxable lump sum death benefits from {0}?
 lumpSumDeathBenefitsValue.hint = Amount must be rounded down to the nearest pound, for example 2300.
-lumpSumDeathBenefitsValue.checkYourAnswersLabel = How much were the lump sum death benefits from {0}?
-lumpSumDeathBenefitsValue.error.nonNumeric = Your lump sum death benefit amount from {0} must only include numbers 0 to 9
-lumpSumDeathBenefitsValue.error.required = Enter your lump sum death benefit amount from {0}
-lumpSumDeathBenefitsValue.error.wholeNumber = Your lump sum death benefit amount from {0} must be a whole number
-lumpSumDeathBenefitsValue.error.outOfRange = Your lump sum death benefit amount from {2} must be more than £0 and less than £999,999,999
-lumpSumDeathBenefitsValue.change.hidden = the amount of pension savings your employer made from {0}
+lumpSumDeathBenefitsValue.checkYourAnswersLabel = How much were your taxable lump sum death benefits from {0}?
+lumpSumDeathBenefitsValue.error.nonNumeric = Your taxable lump sum death benefit amount from {0} must only include numbers 0 to 9
+lumpSumDeathBenefitsValue.error.required = Enter your taxable lump sum death benefit amount from {0}
+lumpSumDeathBenefitsValue.error.wholeNumber = Your taxable lump sum death benefit amount from {0} must be a whole number
+lumpSumDeathBenefitsValue.error.outOfRange = Your taxable lump sum death benefit amount from {2} must be between £0 and £999,999,999
+lumpSumDeathBenefitsValue.change.hidden = your taxable lump sum death benefits from {0}
 
 claimingTaxReliefPension.title = Did you claim for tax relief on your pension from {0}?
 claimingTaxReliefPension.heading = Claiming income tax relief
