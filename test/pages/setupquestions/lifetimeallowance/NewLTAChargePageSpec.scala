@@ -97,7 +97,7 @@ class NewLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewLTAChargePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/more-than-one-benefit-crystallisation-event")
+      checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/more-than-one-benefit-crystallisation-event")
     }
 
     "must navigate to journey recovery when no answer" in {
@@ -135,7 +135,7 @@ class NewLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewLTAChargePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/more-than-one-benefit-crystallisation-event")
+      checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/more-than-one-benefit-crystallisation-event")
     }
 
     "must navigate to journey recovery when no answer" in {

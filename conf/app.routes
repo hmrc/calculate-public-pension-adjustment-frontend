@@ -53,10 +53,10 @@ POST        /annual-allowance/change-stopped-paying-into-public-service-pension 
 
 GET         /triage-journey-not-impacted                                     controllers.setupquestions.IneligibleController.onPageLoad
 
-GET         /charges                                                         controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = NormalMode)
-POST        /charges                                                         controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = NormalMode)
-GET         /change-charges                                                  controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = CheckMode)
-POST        /change-charges                                                  controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = CheckMode)
+GET         /triage-journey/AA-or-LTA-charges                                                         controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = NormalMode)
+POST        /triage-journey/AA-or-LTA-charges                                                         controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = NormalMode)
+GET         /triage-journey/change-AA-or-LTA-charges                                                  controllers.setupquestions.ReportingChangeController.onPageLoad(mode: Mode = CheckMode)
+POST        /triage-journey/change-AA-or-LTA-charges                                                  controllers.setupquestions.ReportingChangeController.onSubmit(mode: Mode = CheckMode)
 
 GET         /annual-allowance/scottish-taxpayer                              controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onPageLoad(mode: Mode = NormalMode)
 POST        /annual-allowance/scottish-taxpayer                              controllers.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Controller.onSubmit(mode: Mode = NormalMode)
@@ -90,10 +90,10 @@ POST        /annual-allowance/change-tax-charge-2014-2015            controllers
 
 GET         /lifetime-allowance                                                  controllers.lifetimeallowance.WhatYouWillNeedLtaController.onPageLoad()
 
-GET         /lifetime-allowance/benefit-crystallisation-event                    controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
-POST        /lifetime-allowance/benefit-crystallisation-event                    controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
-GET         /lifetime-allowance/change-benefit-crystallisation-event             controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
-POST        /lifetime-allowance/change-benefit-crystallisation-event             controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
+GET         /triage-journey/lifetime-allowance/benefit-crystallisation-event                    controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
+POST        /triage-journey/lifetime-allowance/benefit-crystallisation-event                    controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
+GET         /triage-journey/lifetime-allowance/change-benefit-crystallisation-event             controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
+POST        /triage-journey/lifetime-allowance/change-benefit-crystallisation-event             controllers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
 GET         /lifetime-allowance/benefit-crystallisation-event-date                               controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/benefit-crystallisation-event-date                               controllers.lifetimeallowance.DateOfBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
@@ -103,10 +103,10 @@ POST        /lifetime-allowance/change-benefit-crystallisation-event-date       
 GET         /triage-journey-not-impacted-no-BCE                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaController.onPageLoad()
 GET         /triage-journey-not-impacted-no-change                                    controllers.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaController.onPageLoad()
 
-GET         /lifetime-allowance/lifetime-allowance-percentage-change                                      controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = NormalMode)
-POST        /lifetime-allowance/lifetime-allowance-percentage-change                                       controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onSubmit(mode: Mode = NormalMode)
-GET         /lifetime-allowance/change-lifetime-allowance-percentage-change                                controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = CheckMode)
-POST        /lifetime-allowance/change-lifetime-allowance-percentage-change                                controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onSubmit(mode: Mode = CheckMode)
+GET         /triage-journey/lifetime-allowance/lifetime-allowance-percentage-change                                      controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = NormalMode)
+POST        /triage-journey/lifetime-allowance/lifetime-allowance-percentage-change                                       controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onSubmit(mode: Mode = NormalMode)
+GET         /triage-journey/lifetime-allowance/change-lifetime-allowance-percentage-change                                controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onPageLoad(mode: Mode = CheckMode)
+POST        /triage-journey/lifetime-allowance/change-lifetime-allowance-percentage-change                                controllers.setupquestions.lifetimeallowance.ChangeInLifetimeAllowanceController.onSubmit(mode: Mode = CheckMode)
 
 GET         /lifetime-allowance/lifetime-allowance-percentage-increase                                  controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/lifetime-allowance-percentage-increase                                  controllers.setupquestions.lifetimeallowance.IncreaseInLTAChargeController.onSubmit(mode: Mode = NormalMode)
@@ -315,10 +315,10 @@ POST        /lifetime-allowance/pension-credit-reference                        
 GET         /lifetime-allowance/change-pension-credit-reference                  controllers.lifetimeallowance.PensionCreditReferenceController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-pension-credit-reference                  controllers.lifetimeallowance.PensionCreditReferenceController.onSubmit(mode: Mode = CheckMode)
 
-GET         /lifetime-allowance/more-than-one-benefit-crystallisation-event                         controllers.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
-POST        /lifetime-allowance/more-than-one-benefit-crystallisation-event                         controllers.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
-GET         /lifetime-allowance/change-more-than-one-benefit-crystallisation-event                  controllers.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
-POST        /lifetime-allowance/change-more-than-one-benefit-crystallisation-event                  controllers.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
+GET         /triage-journey/lifetime-allowance/more-than-one-benefit-crystallisation-event                         controllers.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = NormalMode)
+POST        /triage-journey/lifetime-allowance/more-than-one-benefit-crystallisation-event                         controllers.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = NormalMode)
+GET         /triage-journey/lifetime-allowance/change-more-than-one-benefit-crystallisation-event                  controllers.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventController.onPageLoad(mode: Mode = CheckMode)
+POST        /triage-journey/lifetime-allowance/change-more-than-one-benefit-crystallisation-event                  controllers.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventController.onSubmit(mode: Mode = CheckMode)
 
 GET        /lifetime-allowance/quarter-charge-was-paid                                              controllers.lifetimeallowance.QuarterChargePaidController.onPageLoad(mode: Mode = NormalMode)
 POST       /lifetime-allowance/quarter-charge-was-paid                                              controllers.lifetimeallowance.QuarterChargePaidController.onSubmit(mode: Mode = NormalMode)

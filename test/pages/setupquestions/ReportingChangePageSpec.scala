@@ -61,7 +61,7 @@ class ReportingChangePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ReportingChangePage.navigate(NormalMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+      checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
     }
 
     "must redirect to journey recovery when no answer" in {
@@ -97,7 +97,7 @@ class ReportingChangePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ReportingChangePage.navigate(CheckMode, ua).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+      checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
     }
 
     "must redirect to journey recovery when no answer" in {

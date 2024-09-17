@@ -64,7 +64,7 @@ class MaybePIAIncreasePageSpec extends PageBehaviours {
 
         val nextPageUrl: String = MaybePIAIncreasePage.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+        checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
       }
 
       "when lta kickout status 2 to cya" in {
@@ -173,7 +173,7 @@ class MaybePIAIncreasePageSpec extends PageBehaviours {
 
         val nextPageUrl: String = MaybePIAIncreasePage.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+        checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
       }
 
       "when lta kickout status 2 to cya" in {
