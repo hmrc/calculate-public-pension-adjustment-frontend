@@ -19,16 +19,20 @@ package controllers.setupquestions
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{NormalMode, ReportingChange}
+import models.{AAKickOutStatus, NormalMode, ReportingChange}
+import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
+import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.setupquestions.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary, SavingsStatementSummary}
+import viewmodels.checkAnswers.setupquestions.annualallowance._
+import viewmodels.checkAnswers.setupquestions.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary}
+import viewmodels.checkAnswers.{AffectedByRemedySummary, Contribution4000ToDirectContributionSchemeSummary, FlexibleAccessDcSchemeSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
-import pages.setupquestions.ReportingChangePage
-import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
+import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, NetIncomeAbove100KSummary, NetIncomeAbove190KIn2023Summary, PIAAboveAnnualAllowanceIn2023Summary, PensionProtectedMemberSummary, SavingsStatementSummary}
+import viewmodels.checkAnswers.setupquestions.lifetimeallowance._
 
 class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,
@@ -43,21 +47,49 @@ class CheckYourSetupAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val rows: Seq[Option[SummaryListRow]] = Seq(
-      SavingsStatementSummary.row(request.userAnswers),
       ResubmittingAdjustmentSummary.row(request.userAnswers),
       ReasonForResubmissionSummary.row(request.userAnswers),
+      AffectedByRemedySummary.row(request.userAnswers),
       ReportingChangeSummary.row(request.userAnswers)
     )
 
+    val aaRows: Seq[Option[SummaryListRow]] = Seq(
+      SavingsStatementSummary.row(request.userAnswers),
+      PensionProtectedMemberSummary.row(request.userAnswers),
+      HadAAChargeSummary.row(request.userAnswers),
+      ContributionRefundsSummary.row(request.userAnswers),
+      NetIncomeAbove100KSummary.row(request.userAnswers),
+      NetIncomeAbove190KSummary.row(request.userAnswers),
+      MaybePIAIncreaseSummary.row(request.userAnswers),
+      MaybePIAUnchangedOrDecreasedSummary.row(request.userAnswers),
+      PIAAboveAnnualAllowanceIn2023Summary.row(request.userAnswers),
+      NetIncomeAbove190KIn2023Summary.row(request.userAnswers),
+      FlexibleAccessDcSchemeSummary.row(request.userAnswers),
+      Contribution4000ToDirectContributionSchemeSummary.row(request.userAnswers)
+    )
+
+    val ltaRows: Seq[Option[SummaryListRow]] = Seq(
+      HadBenefitCrystallisationEventSummary.row(request.userAnswers),
+      PreviousLTAChargeSummary.row(request.userAnswers),
+      ChangeInLifetimeAllowanceSummary.row(request.userAnswers),
+      IncreaseInLTAChargeSummary.row(request.userAnswers),
+      NewLTAChargeSummary.row(request.userAnswers),
+      MultipleBenefitCrystallisationEventSummary.row(request.userAnswers),
+      OtherSchemeNotificationSummary.row(request.userAnswers)
+    )
+
+    val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows ++ ltaRows
+
     val continueURL = request.userAnswers.get(ReportingChangePage) match {
-      case Some(set) if set.contains(ReportingChange.AnnualAllowance) =>
+      case Some(set)
+          if set.contains(ReportingChange.AnnualAllowance) && request.userAnswers.get(AAKickOutStatus()).contains(2) =>
         request.userAnswers.get(ScottishTaxpayerFrom2016Page) match {
           case None    =>
             controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
           case Some(_) => controllers.routes.TaskListController.onPageLoad()
         }
-      case _                                                          => controllers.routes.TaskListController.onPageLoad()
+      case _ => controllers.routes.TaskListController.onPageLoad()
     }
-    Ok(view("checkYourAnswers.setup.subHeading", continueURL, SummaryListViewModel(rows.flatten)))
+    Ok(view("checkYourAnswers.setup.subHeading", continueURL, SummaryListViewModel(finalRows.flatten)))
   }
 }

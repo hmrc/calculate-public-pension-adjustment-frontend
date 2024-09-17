@@ -17,9 +17,12 @@
 package pages.setupquestions
 
 import controllers.routes
-import models.tasklist.sections.{AASection, LTASection, PreAASection}
-import models.{ReportingChange, UserAnswers}
+import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
+import models.tasklist.sections.{AASection, LTASection, PreAASection, TriageSection}
+import models.{NormalMode, ReportingChange, UserAnswers}
 import pages.QuestionPage
+import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
+import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
@@ -32,13 +35,22 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
   override def toString: String = "reportingChange"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
-    case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-    case _       => routes.JourneyRecoveryController.onPageLoad(None)
+    case Some(reportingChange) if reportingChange.contains(AnnualAllowance)   =>
+      controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode)
+    case Some(reportingChange) if reportingChange.contains(LifetimeAllowance) =>
+      controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+        .onPageLoad(NormalMode)
+    case _                                                                    =>
+      routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = answers.get(ReportingChangePage) match {
-    case Some(_) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-    case _       => routes.JourneyRecoveryController.onPageLoad(None)
+    case Some(reportingChange) if reportingChange.contains(AnnualAllowance)   =>
+      controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode)
+    case Some(reportingChange) if reportingChange.contains(LifetimeAllowance) =>
+      controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+        .onPageLoad(NormalMode)
+    case _                                                                    => routes.JourneyRecoveryController.onPageLoad(None)
   }
 
   override def cleanup(
@@ -48,9 +60,12 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
     value
       .map { set =>
         if (!set.contains(ReportingChange.LifetimeAllowance) && set.contains(ReportingChange.AnnualAllowance)) {
-          Try(LTASection.removeAllUserAnswersAndNavigation(userAnswers))
+          val answersWithNoKickOutStatus = TriageSection.removeAllKickOutStatusUserAnswers(userAnswers)
+          val answersWithNoTriageLTA     = TriageSection.removeAllLTAUserAnswers(answersWithNoKickOutStatus)
+          Try(LTASection.removeAllUserAnswersAndNavigation(answersWithNoTriageLTA))
         } else if (!set.contains(ReportingChange.AnnualAllowance) && set.contains(ReportingChange.LifetimeAllowance)) {
-          val answersWithNoPreAA = PreAASection.removeAllUserAnswersAndNavigation(userAnswers)
+          val answersWithNoKickOutStatus = TriageSection.removeAllKickOutStatusUserAnswers(userAnswers)
+          val answersWithNoPreAA         = PreAASection.removeAllUserAnswersAndNavigation(answersWithNoKickOutStatus)
           Try(AASection.removeAllAAPeriodAnswersAndNavigation(answersWithNoPreAA))
         } else {
           super.cleanup(value, userAnswers)

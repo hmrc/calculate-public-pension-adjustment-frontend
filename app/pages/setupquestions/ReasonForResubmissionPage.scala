@@ -29,7 +29,7 @@ case object ReasonForResubmissionPage extends QuestionPage[String] {
   override def toString: String = "reasonForResubmission"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    setupRoutes.ReportingChangeController.onPageLoad(NormalMode)
+    setupRoutes.AffectedByRemedyController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()

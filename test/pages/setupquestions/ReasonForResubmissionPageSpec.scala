@@ -32,7 +32,7 @@ class ReasonForResubmissionPageSpec extends PageBehaviours {
 
   "Normal mode" - {
 
-    "must navigate new enhancement/protection page" in {
+    "must navigate to affected by remedy page" in {
 
       val userAnswers =
         emptyUserAnswers
@@ -41,7 +41,7 @@ class ReasonForResubmissionPageSpec extends PageBehaviours {
 
       val nextPageUrl: String = ReasonForResubmissionPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/charges")
+      checkNavigation(nextPageUrl, "/triage-journey/affected-by-remedy")
     }
   }
 

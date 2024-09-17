@@ -24,13 +24,33 @@ import pages._
 import pages.annualallowance.preaaquestions.{ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
+import pages.setupquestions.annualallowance._
+import pages.setupquestions.lifetimeallowance._
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersGenerator extends TryValues {
   self: Generators =>
 
   val generators: Seq[Gen[(QuestionPage[_], JsValue)]] =
-    arbitrary[(UserSchemeDetailsPage.type, JsValue)] ::
+    arbitrary[(MaybePIAUnchangedOrDecreasedPage.type, JsValue)] ::
+      arbitrary[(MaybePIAIncreasePage.type, JsValue)] ::
+      arbitrary[(NetIncomeAbove190KPage.type, JsValue)] ::
+      arbitrary[(NetIncomeAbove100KPage.type, JsValue)] ::
+      arbitrary[(PIAAboveAnnualAllowanceIn2023Page.type, JsValue)] ::
+      arbitrary[(NetIncomeAbove190KIn2023Page.type, JsValue)] ::
+      arbitrary[(ContributionRefundsPage.type, JsValue)] ::
+      arbitrary[(Contribution4000ToDirectContributionSchemePage.type, JsValue)] ::
+      arbitrary[(FlexibleAccessDcSchemePage.type, JsValue)] ::
+      arbitrary[(ContributionRefundsPage.type, JsValue)] ::
+      arbitrary[(HadAAChargePage.type, JsValue)] ::
+      arbitrary[(PensionProtectedMemberPage.type, JsValue)] ::
+      arbitrary[(PreviousLTAChargePage.type, JsValue)] ::
+      arbitrary[(NewLTAChargePage.type, JsValue)] ::
+      arbitrary[(OtherSchemeNotificationPage.type, JsValue)] ::
+      arbitrary[(NewLTAChargePage.type, JsValue)] ::
+      arbitrary[(IncreaseInLTAChargePage.type, JsValue)] ::
+      arbitrary[(PreviousLTAChargePage.type, JsValue)] ::
+      arbitrary[(UserSchemeDetailsPage.type, JsValue)] ::
       arbitrary[(DefinedContribution2016PreFlexiAmountPage.type, JsValue)] ::
       arbitrary[(DefinedContribution2016PostFlexiAmountPage.type, JsValue)] ::
       arbitrary[(DefinedBenefit2016PostAmountPage.type, JsValue)] ::
@@ -65,7 +85,6 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(HadBenefitCrystallisationEventPage.type, JsValue)] ::
       arbitrary[(WhichYearsScottishTaxpayerPage.type, JsValue)] ::
       arbitrary[(ScottishTaxpayerFrom2016Page.type, JsValue)] ::
-      arbitrary[(ChangeInTaxChargePage.type, JsValue)] ::
       arbitrary[(ExcessLifetimeAllowancePaidPage.type, JsValue)] ::
       arbitrary[(LifetimeAllowanceChargePage.type, JsValue)] ::
       arbitrary[(SchemeNameAndTaxRefPage.type, JsValue)] ::

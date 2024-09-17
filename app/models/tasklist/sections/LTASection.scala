@@ -17,6 +17,7 @@
 package models.tasklist.sections
 
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{SectionNavigation, UserAnswers}
@@ -32,17 +33,11 @@ case object LTASection extends Section {
     userAnswers
       .removePath(JsPath \ "lta")
       .get
-      // TODO remove below path upon triage implementation. Method should only delete paths relating to LTA task data items.
-      // Currently included to allow for data model changes whilst pages remain in situ inside of the LTA task
-      // ReportingChangePageSpec cleanup unit tests will also need moved pages from LTA task to LTA triage removing from associated unit tests.
-      .removePath(JsPath \ "setup" \ "lta")
-      .get
       .remove(sectionNavigation)
       .get
 
   val initialPage: Call                     = ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
   val checkYourLTAAnswersPage: Call         = ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-  val notAbleToUseThisServicePage: Call     = ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
   val cannotUseLtaServiceNoChargePage: Call = ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
 
   def status(answers: UserAnswers): SectionStatus =
@@ -57,7 +52,6 @@ case object LTASection extends Section {
   def navigateTo(answers: UserAnswers): String = {
     val taskListNavLink = answers.get(sectionNavigation).getOrElse(initialPage.url)
     taskListNavLink match {
-      case notAbleToUseThisServicePage.url     => checkYourLTAAnswersPage.url
       case cannotUseLtaServiceNoChargePage.url => checkYourLTAAnswersPage.url
       case _                                   => taskListNavLink
     }
@@ -66,7 +60,6 @@ case object LTASection extends Section {
   def kickoutHasBeenReached(answers: UserAnswers): Boolean = {
     val taskListNavLink: Option[String] = answers.get(sectionNavigation)
     taskListNavLink match {
-      case Some(notAbleToUseThisServicePage.url)     => true
       case Some(cannotUseLtaServiceNoChargePage.url) => true
       case _                                         => false
     }

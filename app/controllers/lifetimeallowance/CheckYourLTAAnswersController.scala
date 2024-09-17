@@ -23,6 +23,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers.lifetimeallowance._
+import viewmodels.checkAnswers.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventSummary
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -38,11 +39,7 @@ class CheckYourLTAAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val rows: Seq[Option[SummaryListRow]] = Seq(
-      HadBenefitCrystallisationEventSummary.row(request.userAnswers),
       DateOfBenefitCrystallisationEventSummary.row(request.userAnswers),
-      ChangeInLifetimeAllowanceSummary.row(request.userAnswers),
-      ChangeInTaxChargeSummary.row(request.userAnswers),
-      MultipleBenefitCrystallisationEventSummary.row(request.userAnswers),
       LtaProtectionOrEnhancementsSummary.row(request.userAnswers),
       ProtectionReferenceSummary.row(request.userAnswers),
       EnhancementTypeSummary.row(request.userAnswers),

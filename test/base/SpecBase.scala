@@ -18,15 +18,17 @@ package base
 
 import controllers.actions._
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{ChangeInTaxCharge, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AAKickOutStatus, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LTAKickOutStatus, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
 import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountClaimedOnOverseasPensionPage, AmountFlexibleRemunerationArrangementsPage, AmountOfGiftAidPage, AmountSalarySacrificeArrangementsPage, AnyLumpSumDeathBenefitsPage, AnySalarySacrificeArrangementsPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionNotAdjustedIncomePage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouHaveGiftAidPage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, FlexibleRemunerationArrangementsPage, HasReliefClaimedOnOverseasPensionPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
-import pages.lifetimeallowance.{AnnualPaymentValuePage, ChangeInLifetimeAllowancePage, ChangeInTaxChargePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, HadBenefitCrystallisationEventPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, MultipleBenefitCrystallisationEventPage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
+import pages.lifetimeallowance.{AnnualPaymentValuePage, DateOfBenefitCrystallisationEventPage, EnhancementTypePage, ExcessLifetimeAllowancePaidPage, InternationalEnhancementReferencePage, LifetimeAllowanceChargePage, LtaPensionSchemeDetailsPage, LtaProtectionOrEnhancementsPage, LumpSumValuePage, NewAnnualPaymentValuePage, NewEnhancementTypePage, NewExcessLifetimeAllowancePaidPage, NewInternationalEnhancementReferencePage, NewLumpSumValuePage, NewPensionCreditReferencePage, PensionCreditReferencePage, ProtectionEnhancedChangedPage, ProtectionReferencePage, ProtectionTypePage, QuarterChargePaidPage, ReferenceNewProtectionTypeEnhancementPage, SchemeNameAndTaxRefPage, UserSchemeDetailsPage, WhatNewProtectionTypeEnhancementPage, WhoPaidLTAChargePage, WhoPayingExtraLtaChargePage, YearChargePaidPage}
 import pages.setupquestions.ReportingChangePage
+import pages.setupquestions.annualallowance.{Contribution4000ToDirectContributionSchemePage, ContributionRefundsPage, FlexibleAccessDcSchemePage, HadAAChargePage, MaybePIAIncreasePage, MaybePIAUnchangedOrDecreasedPage, NetIncomeAbove100KPage, NetIncomeAbove190KIn2023Page, NetIncomeAbove190KPage, PIAAboveAnnualAllowanceIn2023Page, PensionProtectedMemberPage, SavingsStatementPage}
+import pages.setupquestions.lifetimeallowance.{ChangeInLifetimeAllowancePage, HadBenefitCrystallisationEventPage, IncreaseInLTAChargePage, MultipleBenefitCrystallisationEventPage, NewLTAChargePage, OtherSchemeNotificationPage, PreviousLTAChargePage}
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.{Binding, bind}
@@ -72,6 +74,48 @@ trait SpecBase
       .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head, ReportingChange.values.tail.head))
       .success
       .value
+      .set(SavingsStatementPage, true)
+      .success
+      .value
+      .set(PensionProtectedMemberPage, true)
+      .success
+      .value
+      .set(MaybePIAIncreasePage, MaybePIAIncrease.No)
+      .success
+      .value
+      .set(PIAAboveAnnualAllowanceIn2023Page, false)
+      .success
+      .value
+      .set(NetIncomeAbove190KIn2023Page, false)
+      .success
+      .value
+      .set(FlexibleAccessDcSchemePage, true)
+      .success
+      .value
+      .set(Contribution4000ToDirectContributionSchemePage, false)
+      .success
+      .value
+      .set(HadBenefitCrystallisationEventPage, true)
+      .success
+      .value
+      .set(PreviousLTAChargePage, false)
+      .success
+      .value
+      .set(ChangeInLifetimeAllowancePage, true)
+      .success
+      .value
+      .set(IncreaseInLTAChargePage, true)
+      .success
+      .value
+      .set(NewLTAChargePage, false)
+      .success
+      .value
+      .set(MultipleBenefitCrystallisationEventPage, true)
+      .success
+      .value
+      .set(OtherSchemeNotificationPage, true)
+      .success
+      .value
       .set(ScottishTaxpayerFrom2016Page, true)
       .success
       .value
@@ -99,19 +143,7 @@ trait SpecBase
       .set(PIAPreRemedyPage(_2015), BigInt(123))
       .success
       .value
-      .set(HadBenefitCrystallisationEventPage, true)
-      .success
-      .value
       .set(DateOfBenefitCrystallisationEventPage, LocalDate.of(2021, 1, 1))
-      .success
-      .value
-      .set(ChangeInLifetimeAllowancePage, true)
-      .success
-      .value
-      .set(ChangeInTaxChargePage, ChangeInTaxCharge.IncreasedCharge)
-      .success
-      .value
-      .set(MultipleBenefitCrystallisationEventPage, false)
       .success
       .value
       .set(LtaProtectionOrEnhancementsPage, LtaProtectionOrEnhancements.Both)
@@ -255,10 +287,43 @@ trait SpecBase
       .set(ThresholdIncomePage(_2021), ThresholdIncome.Yes)
       .success
       .value
-      .set(AdjustedIncomePage(_2021), BigInt(123))
+      .set(TotalIncomePage(_2021), BigInt(220000))
       .success
       .value
-      .set(TotalIncomePage(_2021), BigInt(123))
+      .set(ClaimingTaxReliefPensionPage(_2021), true)
+      .success
+      .value
+      .set(TaxReliefPage(_2021), BigInt(1))
+      .success
+      .value
+      .set(DidYouContributeToRASSchemePage(_2021), true)
+      .success
+      .value
+      .set(RASContributionAmountPage(_2021), BigInt(1))
+      .success
+      .value
+      .set(KnowAdjustedAmountPage(_2021), true)
+      .success
+      .value
+      .set(AdjustedIncomePage(_2021), BigInt("1"))
+      .success
+      .value
+      .set(DoYouHaveGiftAidPage(_2021), true)
+      .success
+      .value
+      .set(AmountOfGiftAidPage(_2021), BigInt("1"))
+      .success
+      .value
+      .set(DoYouKnowPersonalAllowancePage(_2021), true)
+      .success
+      .value
+      .set(PersonalAllowancePage(_2021), BigInt(1))
+      .success
+      .value
+      .set(BlindAllowancePage(_2021), true)
+      .success
+      .value
+      .set(BlindPersonsAllowanceAmountPage(_2021), BigInt(1))
       .success
       .value
       .set(MemberMoreThanOnePensionPage(_2022), false)
@@ -286,6 +351,42 @@ trait SpecBase
       .success
       .value
       .set(TotalIncomePage(_2022), BigInt(123))
+      .success
+      .value
+      .set(ClaimingTaxReliefPensionPage(_2022), true)
+      .success
+      .value
+      .set(TaxReliefPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DidYouContributeToRASSchemePage(_2022), true)
+      .success
+      .value
+      .set(RASContributionAmountPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(DoYouHaveGiftAidPage(_2022), true)
+      .success
+      .value
+      .set(AmountOfGiftAidPage(_2022), BigInt("1"))
+      .success
+      .value
+      .set(DoYouKnowPersonalAllowancePage(_2022), true)
+      .success
+      .value
+      .set(PersonalAllowancePage(_2022), BigInt(1))
+      .success
+      .value
+      .set(BlindAllowancePage(_2022), true)
+      .success
+      .value
+      .set(BlindPersonsAllowanceAmountPage(_2022), BigInt(1))
+      .success
+      .value
+      .set(AAKickOutStatus(), 1)
+      .success
+      .value
+      .set(LTAKickOutStatus(), 1)
       .success
       .value
   }
@@ -425,4 +526,64 @@ trait SpecBase
       .success
       .value
 
+  def userAnswersLTATriage: UserAnswers = emptyUserAnswers
+    .set(HadBenefitCrystallisationEventPage, true)
+    .success
+    .value
+    .set(PreviousLTAChargePage, false)
+    .success
+    .value
+    .set(ChangeInLifetimeAllowancePage, true)
+    .success
+    .value
+    .set(IncreaseInLTAChargePage, true)
+    .success
+    .value
+    .set(NewLTAChargePage, true)
+    .success
+    .value
+    .set(MultipleBenefitCrystallisationEventPage, true)
+    .success
+    .value
+    .set(OtherSchemeNotificationPage, true)
+    .success
+    .value
+
+  def userAnswersAATriage: UserAnswers = emptyUserAnswers
+    .set(SavingsStatementPage, true)
+    .success
+    .value
+    .set(PensionProtectedMemberPage, false)
+    .success
+    .value
+    .set(HadAAChargePage, false)
+    .success
+    .value
+    .set(ContributionRefundsPage, true)
+    .success
+    .value
+    .set(NetIncomeAbove100KPage, false)
+    .success
+    .value
+    .set(NetIncomeAbove190KPage, false)
+    .success
+    .value
+    .set(MaybePIAIncreasePage, MaybePIAIncrease.IDoNotKnow)
+    .success
+    .value
+    .set(MaybePIAUnchangedOrDecreasedPage, MaybePIAUnchangedOrDecreased.Yes)
+    .success
+    .value
+    .set(PIAAboveAnnualAllowanceIn2023Page, false)
+    .success
+    .value
+    .set(NetIncomeAbove190KIn2023Page, false)
+    .success
+    .value
+    .set(FlexibleAccessDcSchemePage, true)
+    .success
+    .value
+    .set(Contribution4000ToDirectContributionSchemePage, true)
+    .success
+    .value
 }

@@ -23,10 +23,147 @@ import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
-import pages.setupquestions.ReportingChangePage
+import pages.setupquestions.lifetimeallowance._
+import pages.setupquestions.annualallowance._
+import pages.setupquestions._
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+
+  implicit lazy val arbitraryMaybePIAUnchangedOrDecreasedUserAnswersEntry
+    : Arbitrary[(MaybePIAUnchangedOrDecreasedPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MaybePIAUnchangedOrDecreasedPage.type]
+        value <- arbitrary[MaybePIAUnchangedOrDecreased].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryMaybePIAIncreaseUserAnswersEntry: Arbitrary[(MaybePIAIncreasePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MaybePIAIncreasePage.type]
+        value <- arbitrary[MaybePIAIncrease].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNetIncomeAbove190KUserAnswersEntry: Arbitrary[(NetIncomeAbove190KPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NetIncomeAbove190KPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNetIncomeAbove100KUserAnswersEntry: Arbitrary[(NetIncomeAbove100KPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NetIncomeAbove100KPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryPIAAboveAnnualAllowanceIn2023UserAnswersEntry
+    : Arbitrary[(PIAAboveAnnualAllowanceIn2023Page.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PIAAboveAnnualAllowanceIn2023Page.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNetIncomeAbove190KIn2023UserAnswersEntry
+    : Arbitrary[(NetIncomeAbove190KIn2023Page.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NetIncomeAbove190KIn2023Page.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryContribution4000ToDirectContributionSchemeUserAnswersEntry
+    : Arbitrary[(Contribution4000ToDirectContributionSchemePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[Contribution4000ToDirectContributionSchemePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryFlexibleAccessDcSchemeUserAnswersEntry
+    : Arbitrary[(FlexibleAccessDcSchemePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[FlexibleAccessDcSchemePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryContributionRefundsUserAnswersEntry: Arbitrary[(ContributionRefundsPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ContributionRefundsPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryHadAAChargeUserAnswersEntry: Arbitrary[(HadAAChargePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[HadAAChargePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryPensionProtectedMemberUserAnswersEntry
+    : Arbitrary[(PensionProtectedMemberPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PensionProtectedMemberPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryOtherSchemeNotificationUserAnswersEntry
+    : Arbitrary[(OtherSchemeNotificationPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[OtherSchemeNotificationPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryNewLTAChargeUserAnswersEntry: Arbitrary[(NewLTAChargePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[NewLTAChargePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryIncreaseInLTAChargeUserAnswersEntry: Arbitrary[(IncreaseInLTAChargePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[IncreaseInLTAChargePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAffectedByRemedyUserAnswersEntry: Arbitrary[(AffectedByRemedyPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AffectedByRemedyPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryPreviousLTAChargeUserAnswersEntry: Arbitrary[(PreviousLTAChargePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PreviousLTAChargePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
 
   implicit lazy val arbitraryUnionPoliceReliefAmountUserAnswersEntry
     : Arbitrary[(UnionPoliceReliefAmountPage.type, JsValue)] =
@@ -666,14 +803,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       for {
         page  <- arbitrary[ScottishTaxpayerFrom2016Page.type]
         value <- arbitrary[Boolean].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryChangeInTaxChargeUserAnswersEntry: Arbitrary[(ChangeInTaxChargePage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[ChangeInTaxChargePage.type]
-        value <- arbitrary[ChangeInTaxCharge].map(Json.toJson(_))
       } yield (page, value)
     }
 }

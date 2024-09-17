@@ -87,7 +87,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
           Period._2018,
           SchemeIndex(0),
           "schemeName",
-          "6 April 2017 and 5 April 2018"
+          "6 April 2017 to 5 April 2018"
         )(
           request,
           messages(application)
@@ -121,7 +121,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
           Period._2019,
           SchemeIndex(0),
           "schemeName",
-          "6 April 2018 and 5 April 2019"
+          "6 April 2018 to 5 April 2019"
         )(
           request,
           messages(application)
@@ -175,7 +175,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
           Period._2018,
           SchemeIndex(0),
           "",
-          startEndDate = "6 April 2017 and 5 April 2018"
+          startEndDate = "6 April 2017 to 5 April 2018"
         )(
           request,
           messages(application)

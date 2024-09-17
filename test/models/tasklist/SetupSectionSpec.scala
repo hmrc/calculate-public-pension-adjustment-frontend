@@ -29,7 +29,7 @@ class SetupSectionSpec extends SpecBase with PageBehaviours {
     "Must link to first page url when no section navigation has been saved" in {
       val navUrl = SetupSection.navigateTo(emptyUserAnswers)
 
-      checkNavigation(navUrl, "/pension-saving-statement")
+      checkNavigation(navUrl, "/change-previous-adjustment")
     }
 
     "Must link to check answers url when a kick out url has been saved" in {
@@ -81,6 +81,20 @@ class SetupSectionSpec extends SpecBase with PageBehaviours {
       val answers: UserAnswers = SetupSection.saveNavigation(emptyUserAnswers, "/some-page-url")
 
       SetupSection.status(answers) mustBe InProgress
+    }
+
+    "Must be Completed when NotAbleToUseThisServiceLtaController reached" in {
+      val answers: UserAnswers =
+        SetupSection.saveNavigation(emptyUserAnswers, SetupSection.kickoutLTAService.url)
+
+      SetupSection.status(answers) mustBe Completed
+    }
+
+    "Must be Completed when NotAbleToUseThisTriageLtaController reached" in {
+      val answers: UserAnswers =
+        SetupSection.saveNavigation(emptyUserAnswers, SetupSection.kickoutLTATriage.url)
+
+      SetupSection.status(answers) mustBe Completed
     }
   }
 }

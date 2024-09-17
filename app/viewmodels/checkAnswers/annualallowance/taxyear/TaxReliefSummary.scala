@@ -43,7 +43,7 @@ object TaxReliefSummary {
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel("site.change", routes.TaxReliefController.onPageLoad(CheckMode, period).url)
-            .withVisuallyHiddenText(messages("taxRelief.change.hidden"))
+            .withVisuallyHiddenText(messages("taxRelief.change.hidden", startEndDate))
         )
       )
     }

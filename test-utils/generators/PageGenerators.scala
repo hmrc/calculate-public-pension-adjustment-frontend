@@ -21,9 +21,60 @@ import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
-import pages.setupquestions.ReportingChangePage
+import pages.setupquestions._
+import pages.setupquestions.lifetimeallowance._
+import pages.setupquestions.annualallowance._
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryMaybePIAUnchangedOrDecreasedPage: Arbitrary[MaybePIAUnchangedOrDecreasedPage.type] =
+    Arbitrary(MaybePIAUnchangedOrDecreasedPage)
+
+  implicit lazy val arbitraryMaybePIAIncreasePage: Arbitrary[MaybePIAIncreasePage.type] =
+    Arbitrary(MaybePIAIncreasePage)
+
+  implicit lazy val arbitraryNetIncomeAbove190KPage: Arbitrary[NetIncomeAbove190KPage.type] =
+    Arbitrary(NetIncomeAbove190KPage)
+
+  implicit lazy val arbitraryNetIncomeAbove100KPage: Arbitrary[NetIncomeAbove100KPage.type] =
+    Arbitrary(NetIncomeAbove100KPage)
+
+  implicit lazy val arbitraryPIAAboveAnnualAllowanceIn2023Page: Arbitrary[PIAAboveAnnualAllowanceIn2023Page.type] =
+    Arbitrary(PIAAboveAnnualAllowanceIn2023Page)
+
+  implicit lazy val arbitraryNetIncomeAbove190KIn2023Page: Arbitrary[NetIncomeAbove190KIn2023Page.type] =
+    Arbitrary(NetIncomeAbove190KIn2023Page)
+
+  implicit lazy val arbitraryContribution4000ToDirectContributionSchemePage
+    : Arbitrary[Contribution4000ToDirectContributionSchemePage.type] =
+    Arbitrary(Contribution4000ToDirectContributionSchemePage)
+
+  implicit lazy val arbitraryFlexibleAccessDcSchemePage: Arbitrary[FlexibleAccessDcSchemePage.type] =
+    Arbitrary(FlexibleAccessDcSchemePage)
+
+  implicit lazy val arbitraryContributionRefundsPage: Arbitrary[ContributionRefundsPage.type] =
+    Arbitrary(ContributionRefundsPage)
+
+  implicit lazy val arbitraryHadAAChargePage: Arbitrary[HadAAChargePage.type] =
+    Arbitrary(HadAAChargePage)
+
+  implicit lazy val arbitraryPensionProtectedMemberPage: Arbitrary[PensionProtectedMemberPage.type] =
+    Arbitrary(PensionProtectedMemberPage)
+
+  implicit lazy val arbitraryOtherSchemeNotificationPage: Arbitrary[OtherSchemeNotificationPage.type] =
+    Arbitrary(OtherSchemeNotificationPage)
+
+  implicit lazy val arbitraryNewLTAChargePage: Arbitrary[NewLTAChargePage.type] =
+    Arbitrary(NewLTAChargePage)
+
+  implicit lazy val arbitraryIncreaseInLTAChargePage: Arbitrary[IncreaseInLTAChargePage.type] =
+    Arbitrary(IncreaseInLTAChargePage)
+
+  implicit lazy val arbitraryAffectedByRemedyPage: Arbitrary[AffectedByRemedyPage.type] =
+    Arbitrary(AffectedByRemedyPage)
+
+  implicit lazy val arbitraryPreviousLTAChargePage: Arbitrary[PreviousLTAChargePage.type] =
+    Arbitrary(PreviousLTAChargePage)
 
   implicit lazy val arbitraryUnionPoliceReliefAmountPage: Arbitrary[UnionPoliceReliefAmountPage.type] =
     Arbitrary(UnionPoliceReliefAmountPage)
@@ -268,8 +319,5 @@ trait PageGenerators {
 
   implicit lazy val arbitraryScottishTaxpayerFrom2016Page: Arbitrary[ScottishTaxpayerFrom2016Page.type] =
     Arbitrary(ScottishTaxpayerFrom2016Page)
-
-  implicit lazy val arbitraryChangeInTaxChargePage: Arbitrary[ChangeInTaxChargePage.type] =
-    Arbitrary(ChangeInTaxChargePage)
 
 }
