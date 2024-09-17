@@ -76,12 +76,20 @@ case object NextStepsSection extends Section {
 
   private def preTriageSectionNameOverride(answers: UserAnswers): String  =
     answers.get(ReportingChangePage) match {
-      case Some(rcs) if calculationRequired(rcs, answers)                                                => "taskList.nextSteps.calculate"
-      case Some(rcs) if !calculationRequired(rcs, answers) && !LTASection.kickoutHasBeenReached(answers) =>
+      case Some(rcs) if calculationRequired(rcs, answers)                                               => "taskList.nextSteps.calculate"
+      case Some(rcs)
+          if !calculationRequired(rcs, answers) && !LTASection.kickoutHasBeenReached(
+            answers
+          ) && answers.authenticated =>
+        "taskList.nextSteps.continue"
+      case Some(rcs)
+          if !calculationRequired(rcs, answers) && !LTASection.kickoutHasBeenReached(
+            answers
+          ) && !answers.authenticated =>
         "taskList.nextSteps.continueToSignIn"
-      case Some(rcs) if !calculationRequired(rcs, answers) && LTASection.kickoutHasBeenReached(answers)  =>
+      case Some(rcs) if !calculationRequired(rcs, answers) && LTASection.kickoutHasBeenReached(answers) =>
         "taskList.nextSteps.noFurtherAction"
-      case _                                                                                             => "taskList.nextSteps.setupRequired"
+      case _                                                                                            => "taskList.nextSteps.setupRequired"
     }
   private def postTriageSectionNameOverride(answers: UserAnswers): String =
     (
