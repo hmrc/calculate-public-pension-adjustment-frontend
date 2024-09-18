@@ -52,7 +52,7 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
           status(result) mustEqual OK
           contentAsString(result) mustEqual view(
             true,
-            "/public-pension-adjustment/lifetime-allowance/benefit-crystallisation-event"
+            "/public-pension-adjustment/triage-journey/lifetime-allowance/benefit-crystallisation-event"
           )(
             request,
             messages(application)

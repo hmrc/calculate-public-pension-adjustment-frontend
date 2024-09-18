@@ -42,7 +42,7 @@ class PreviousLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PreviousLTAChargePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-percentage-change")
+      checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/lifetime-allowance-percentage-change")
     }
 
     "to journey recovery when not answered" in {
@@ -63,7 +63,7 @@ class PreviousLTAChargePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = PreviousLTAChargePage.navigate(CheckMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/lifetime-allowance-percentage-change")
+      checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/lifetime-allowance-percentage-change")
 
     }
 

@@ -69,7 +69,7 @@ class NetIncomeAbove100KPageSpec extends PageBehaviours {
 
         val nextPageUrl: String = NetIncomeAbove100KPage.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+        checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
       }
 
       "when lta kickout status 2 to cya" in {
@@ -184,7 +184,7 @@ class NetIncomeAbove100KPageSpec extends PageBehaviours {
 
         val nextPageUrl: String = NetIncomeAbove100KPage.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+        checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
       }
 
       "when lta kickout status 2 to cya" in {

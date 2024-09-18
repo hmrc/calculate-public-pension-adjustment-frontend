@@ -62,7 +62,7 @@ class PIAAboveAnnualAllowanceIn2023PageSpec extends PageBehaviours {
 
         val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(NormalMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+        checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
       }
 
       "when lta kickout status 2 to cya" in {
@@ -153,7 +153,7 @@ class PIAAboveAnnualAllowanceIn2023PageSpec extends PageBehaviours {
 
         val nextPageUrl: String = PIAAboveAnnualAllowanceIn2023Page.navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+        checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
       }
 
       "when lta kickout status 2 to cya" in {

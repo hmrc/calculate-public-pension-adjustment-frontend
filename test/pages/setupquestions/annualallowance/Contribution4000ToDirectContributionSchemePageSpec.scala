@@ -66,7 +66,7 @@ class Contribution4000ToDirectContributionSchemePageSpec extends PageBehaviours 
 
           val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(NormalMode, userAnswers).url
 
-          checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+          checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
         }
 
         "when lta kickout status 2 to cya" in {
@@ -166,7 +166,7 @@ class Contribution4000ToDirectContributionSchemePageSpec extends PageBehaviours 
 
           val nextPageUrl: String = Contribution4000ToDirectContributionSchemePage.navigate(CheckMode, userAnswers).url
 
-          checkNavigation(nextPageUrl, "/lifetime-allowance/benefit-crystallisation-event")
+          checkNavigation(nextPageUrl, "/triage-journey/lifetime-allowance/benefit-crystallisation-event")
         }
 
         "when lta kickout status 2 to cya" in {
