@@ -1197,7 +1197,7 @@ flexibleRemunerationArrangements.error.required = cy: Select yes if you had any 
 flexibleRemunerationArrangements.change.hidden = cy: Flexible remuneration
 
 anyLumpSumDeathBenefits.title = cy: Did you have any taxable lump sum death benefits from {0}?
-anyLumpSumDeathBenefits.heading = cy: Taxable Lump sum death benefits
+anyLumpSumDeathBenefits.heading = cy: Taxable lump sum death benefits
 anyLumpSumDeathBenefits.heading2 = cy: Did you have any taxable lump sum death benefits from {0}?
 anyLumpSumDeathBenefits.checkYourAnswersLabel = cy: Did you have any taxable lump sum death benefits from {0}?
 anyLumpSumDeathBenefits.error.required = cy: Select yes if you received any taxable lump sum death benefits from a pension scheme from {0}
@@ -1213,15 +1213,15 @@ anyLumpSumDeathBenefits.list5 = cy: pension protection
 anyLumpSumDeathBenefits.list6 = cy: annuity protection
 anyLumpSumDeathBenefits.change.hidden = cy: if you received any taxable lump sum death benefits from a pension scheme from {0}
 
-lumpSumDeathBenefitsValue.title = cy: How much were the lump sum death benefits from {0}?
-lumpSumDeathBenefitsValue.heading = cy: How much were the lump sum death benefits from {0}?
+lumpSumDeathBenefitsValue.title = cy: How much were your taxable lump sum death benefits from {0}?
+lumpSumDeathBenefitsValue.heading = cy: How much were your taxable lump sum death benefits from {0}?
 lumpSumDeathBenefitsValue.hint = cy: Amount must be rounded down to the nearest pound, for example 2300.
-lumpSumDeathBenefitsValue.checkYourAnswersLabel = cy: How much were the lump sum death benefits from {0}?
-lumpSumDeathBenefitsValue.error.nonNumeric = cy: Your lump sum death benefit amount must only include numbers 0 to 9
-lumpSumDeathBenefitsValue.error.required = cy: Enter your lump sum death benefit amount from {0}
-lumpSumDeathBenefitsValue.error.wholeNumber = cy: Your lump sum death benefit amount from {0} must be a whole number
-lumpSumDeathBenefitsValue.error.outOfRange = cy: Your lump sum death benefit amount from {2} must be more than £0 and less than £999,999,999
-lumpSumDeathBenefitsValue.change.hidden = cy: the amount of pension savings your employer made from {0}
+lumpSumDeathBenefitsValue.checkYourAnswersLabel = cy: How much were your taxable lump sum death benefits from {0}?
+lumpSumDeathBenefitsValue.error.nonNumeric = cy: Your taxable lump sum death benefit amount from {0} must only include numbers 0 to 9
+lumpSumDeathBenefitsValue.error.required = cy: Enter your taxable lump sum death benefit amount from {0}
+lumpSumDeathBenefitsValue.error.wholeNumber = cy: Your taxable lump sum death benefit amount from {0} must be a whole number
+lumpSumDeathBenefitsValue.error.outOfRange = cy: Your taxable lump sum death benefit amount from {2} must be between £0 and £999,999,999
+lumpSumDeathBenefitsValue.change.hidden = cy: your taxable lump sum death benefits from {0}
 
 claimingTaxReliefPension.title = cy: Did you claim for tax relief on your pension from {0}?
 claimingTaxReliefPension.heading = cy: Claiming income tax relief
