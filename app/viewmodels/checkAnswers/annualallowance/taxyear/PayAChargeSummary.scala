@@ -34,17 +34,13 @@ object PayAChargeSummary {
     answers.get(PayAChargePage(period, schemeIndex)).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
-      val schemeName = answers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
-        answer.schemeName
-      }
-
       val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
       val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
       val startEndDate: String =
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key = messages("payACharge.checkYourAnswersLabel", schemeName.getOrElse(""), startEndDate),
+        key = messages("payACharge.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
@@ -53,7 +49,7 @@ object PayAChargeSummary {
               .onPageLoad(CheckMode, period, schemeIndex)
               .url
           )
-            .withVisuallyHiddenText(messages("payACharge.change.hidden", schemeName.getOrElse(""), startEndDate))
+            .withVisuallyHiddenText(messages("payACharge.change.hidden", startEndDate))
         )
       )
     }

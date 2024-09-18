@@ -47,30 +47,24 @@ class PayAChargeController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      val schemeName   = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
-        answer.schemeName
-      }
-      val form         = formProvider(schemeName.getOrElse(""), startEndDate(period))
+      val form         = formProvider(startEndDate(period))
       val preparedForm = request.userAnswers.get(PayAChargePage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
-      Ok(view(preparedForm, mode, period, schemeIndex, schemeName.getOrElse(""), startEndDate(period)))
+      Ok(view(preparedForm, mode, period, schemeIndex, startEndDate(period)))
     }
 
   def onSubmit(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData).async { implicit request =>
-      val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
-        answer.schemeName
-      }
-      val form       = formProvider(schemeName.getOrElse(""), startEndDate(period))
+      val form = formProvider(startEndDate(period))
       form
         .bindFromRequest()
         .fold(
           formWithErrors =>
             Future.successful(
               BadRequest(
-                view(formWithErrors, mode, period, schemeIndex, schemeName.getOrElse(""), startEndDate(period))
+                view(formWithErrors, mode, period, schemeIndex, startEndDate(period))
               )
             ),
           value =>

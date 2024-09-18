@@ -59,7 +59,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
     val messages = mock[Messages]
 
     val formProvider = new PayAChargeFormProvider()
-    formProvider("", "")(messages)
+    formProvider("")(messages)
   }
 
   "PayACharge Controller" - {
@@ -86,7 +86,6 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
           NormalMode,
           Period._2018,
           SchemeIndex(0),
-          "schemeName",
           "6 April 2017 to 5 April 2018"
         )(
           request,
@@ -120,7 +119,6 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
           NormalMode,
           Period._2019,
           SchemeIndex(0),
-          "schemeName",
           "6 April 2018 to 5 April 2019"
         )(
           request,
@@ -174,7 +172,6 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
           NormalMode,
           Period._2018,
           SchemeIndex(0),
-          "",
           startEndDate = "6 April 2017 to 5 April 2018"
         )(
           request,

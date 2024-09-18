@@ -480,13 +480,13 @@ addAnotherScheme.heading = A oes angen i chi ychwanegu cynllun pensiwn arall?
 addAnotherScheme.hint = Gallwch ychwanegu hyd at bum cynllun pensiwn gwahanol mewn un flwyddyn dreth.
 addAnotherScheme.error.required = Dewiswch ‘Iawn’ os oes angen i chi ychwanegu cynllun pensiwn arall
 
-payACharge.title = cy: Did you pay an annual allowance tax charge for {2} from {3}?
-payACharge.heading = cy: Did you pay an annual allowance tax charge for {2} from {3}?
+payACharge.title = cy: Did you have an annual allowance tax charge for the tax year from {2}?
+payACharge.heading = cy: Did you have an annual allowance tax charge for the tax year from {2}?
 payACharge.message = cy: Annual allowance is the maximum amount that you can put into your pension without being charged extra tax.
 payACharge.hint = cy: If you reported an annual allowance tax charge, you will find this information in your self assessment for that year.
-payACharge.checkYourAnswersLabel = cy: Did you pay an annual allowance tax charge for {0} from {1}?
-payACharge.error.required = cy: Select yes if you paid an annual allowance tax charge for {0} from {1}
-payACharge.change.hidden = cy: if you paid an annual allowance tax charge for {0} for any tax year from {1}
+payACharge.checkYourAnswersLabel = cy: Did you have an annual allowance tax charge for the tax year from {0}?
+payACharge.error.required = cy: Select yes if you had an annual allowance tax charge for the tax year from {0}
+payACharge.change.hidden = cy: if you had an annual allowance tax charge for the tax year from {0}
 
 pensionSchemeDetails.title = Beth yw enw a chyfeirnod treth y cynllun pensiwn?
 pensionSchemeDetails.heading = Beth yw enw a chyfeirnod treth y cynllun pensiwn?

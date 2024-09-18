@@ -23,14 +23,14 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String, startEndDate: String)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
     <p class="govuk-body"> @messages("payACharge.message")</p>
     <p class="govuk-hint">@messages("payACharge.hint")</p>
 }
 
-@layout(pageTitle = title(form, messages("payACharge.title", period, schemeIndex, schemeName, startEndDate))) {
+@layout(pageTitle = title(form, messages("payACharge.title", period, schemeIndex, startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.PayAChargeController.onSubmit(mode, period, schemeIndex), Symbol("autoComplete") -> "off") {
 
@@ -42,7 +42,7 @@
             RadiosViewModel.yesNo(
                 field = form("value"),
                 legend = HmrcPageHeadingLegend(
-                content = messages("payACharge.heading", period, schemeIndex, schemeName, startEndDate),
+                content = messages("payACharge.heading", period, schemeIndex, startEndDate),
                 caption = HmrcSectionCaption(messages("annualAllowance.period.caption."+{period.toString})))
             ).withHint(HintViewModel(HtmlContent(contentHint)))
         )

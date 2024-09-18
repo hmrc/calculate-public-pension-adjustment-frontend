@@ -24,8 +24,8 @@ import javax.inject.Inject
 
 class PayAChargeFormProvider @Inject() extends Mappings {
 
-  def apply(schemeName: String, startEndDate: String)(implicit messages: Messages): Form[Boolean] =
+  def apply(startEndDate: String)(implicit messages: Messages): Form[Boolean] =
     Form(
-      "value" -> boolean(messages("payACharge.error.required", schemeName, startEndDate))
+      "value" -> boolean(messages("payACharge.error.required", startEndDate))
     )
 }
