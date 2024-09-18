@@ -480,13 +480,13 @@ addAnotherScheme.heading = Do you need to add another pension scheme?
 addAnotherScheme.hint = You can add a maximum of five different pension schemes in a single tax year.
 addAnotherScheme.error.required = Select yes if you need to add another pension scheme
 
-payACharge.title = Did you pay an annual allowance tax charge for {2} from {3}?
-payACharge.heading = Did you pay an annual allowance tax charge for {2} from {3}?
+payACharge.title = Did you have an annual allowance tax charge for the tax year from {2}?
+payACharge.heading = Did you have an annual allowance tax charge for the tax year from {2}?
 payACharge.message = Annual allowance is the maximum amount that you can put into your pension without being charged extra tax.
 payACharge.hint = If you reported an annual allowance tax charge, you will find this information in your self assessment for that year.
-payACharge.checkYourAnswersLabel = Did you pay an annual allowance tax charge for {0} from {1}?
-payACharge.error.required = Select yes if you paid an annual allowance tax charge for {0} from {1}
-payACharge.change.hidden = if you paid an annual allowance tax charge for {0} for any tax year from {1}
+payACharge.checkYourAnswersLabel = Did you have an annual allowance tax charge for the tax year from {0}?
+payACharge.error.required = Select yes if you had an annual allowance tax charge from {0}
+payACharge.change.hidden = if you had an annual allowance tax charge for the tax year from {0}
 
 pensionSchemeDetails.title = What is the name and tax reference of the pension scheme?
 pensionSchemeDetails.heading = What is the name and tax reference of the pension scheme?

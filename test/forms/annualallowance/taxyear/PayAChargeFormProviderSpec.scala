@@ -49,7 +49,7 @@ class PayAChargeFormProviderSpec extends BooleanFieldBehaviours {
       when(messages.apply(eqTo("payACharge.error.required"), any())).thenReturn("error message")
 
       val formProvider = new PayAChargeFormProvider()
-      formProvider("", "")(messages)
+      formProvider("")(messages)
     }
   }
 }
