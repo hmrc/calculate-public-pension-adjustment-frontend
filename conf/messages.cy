@@ -485,7 +485,7 @@ payACharge.heading = cy: Did you have an annual allowance tax charge for the tax
 payACharge.message = cy: Annual allowance is the maximum amount that you can put into your pension without being charged extra tax.
 payACharge.hint = cy: If you reported an annual allowance tax charge, you will find this information in your self assessment for that year.
 payACharge.checkYourAnswersLabel = cy: Did you have an annual allowance tax charge for the tax year from {0}?
-payACharge.error.required = cy: Select yes if you had an annual allowance tax charge from {0}
+payACharge.error.required = cy: Select yes if you had an annual allowance tax charge for the tax year from {0}
 payACharge.change.hidden = cy: if you had an annual allowance tax charge for the tax year from {0}
 
 pensionSchemeDetails.title = Beth yw enw a chyfeirnod treth y cynllun pensiwn?
