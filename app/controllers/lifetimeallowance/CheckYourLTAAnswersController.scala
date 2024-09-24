@@ -41,11 +41,11 @@ class CheckYourLTAAnswersController @Inject() (
     val rows: Seq[Option[SummaryListRow]] = Seq(
       DateOfBenefitCrystallisationEventSummary.row(request.userAnswers),
       LtaProtectionOrEnhancementsSummary.row(request.userAnswers),
+      ProtectionTypeSummary.row(request.userAnswers),
       ProtectionReferenceSummary.row(request.userAnswers),
       EnhancementTypeSummary.row(request.userAnswers),
       InternationalEnhancementReferenceSummary.row(request.userAnswers),
       PensionCreditReferenceSummary.row(request.userAnswers),
-      ProtectionTypeSummary.row(request.userAnswers),
       ProtectionEnhancedChangedSummary.row(request.userAnswers),
       WhatNewProtectionTypeEnhancementSummary.row(request.userAnswers),
       ReferenceNewProtectionTypeEnhancementSummary.row(request.userAnswers),
