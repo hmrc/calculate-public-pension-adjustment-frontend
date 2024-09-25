@@ -1438,12 +1438,12 @@ hadAACharge.checkYourAnswersLabel = Did you pay an annual allowance charge from 
 hadAACharge.error.required = Select yes if you paid an annual allowance tax charge between 6 April 2015 and 5 April 2022
 hadAACharge.change.hidden = if you paid an annual allowance tax charge from 6 April 2015 to 5 April 2022
 
-contributionRefunds.title = Is the amount of contributions you paid into the reform scheme more than the amount of contributions you would have paid into the legacy scheme during the remedy?
-contributionRefunds.heading = Is the amount of contributions you paid into the reform scheme more than the amount of contributions you would have paid into the legacy scheme during the remedy period?
+contributionRefunds.title = Have your contributions changed as a result of the remedy?
+contributionRefunds.heading = Have your contributions changed as a result of the remedy?
 contributionRefunds.hint = If you are not sure, you should check with your pension scheme.
-contributionRefunds.checkYourAnswersLabel = Is the amount of contributions you paid into the reform scheme more than the amount of contributions you would have paid into the legacy scheme during the remedy?
-contributionRefunds.error.required =  Select yes if the amount of contributions you paid into the reform scheme is more than the amount of contributions you would have paid into the legacy scheme during the remedy
-contributionRefunds.change.hidden = if the amount of contributions you paid into the reform scheme is more than the amount of contributions you would have paid into the legacy scheme during the remedy
+contributionRefunds.checkYourAnswersLabel = Have your contributions changed as a result of the remedy?
+contributionRefunds.error.required = Select yes if your contributions changed as a result of the remedy
+contributionRefunds.change.hidden = if your contributions changed as a result of the remedy
 
 notAbleToUseThisServiceAA.title = You are not eligible
 notAbleToUseThisServiceAA.heading = You are not eligible to use this part of the service
