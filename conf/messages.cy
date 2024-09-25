@@ -1438,12 +1438,12 @@ hadAACharge.checkYourAnswersLabel = cy: Did you pay an annual allowance charge f
 hadAACharge.error.required = cy: Select yes if you paid an annual allowance tax charge between 6 April 2015 and 5 April 2022
 hadAACharge.change.hidden = cy: if you paid an annual allowance tax charge from 6 April 2015 to 5 April 2022
 
-contributionRefunds.title = cy: Is the amount of contributions you paid into the reform scheme more than the amount of contributions you would have paid into the legacy scheme during the remedy?
-contributionRefunds.heading = cy: Is the amount of contributions you paid into the reform scheme more than the amount of contributions you would have paid into the legacy scheme during the remedy period?
+contributionRefunds.title = cy: Have your contributions changed as a result of the remedy?
+contributionRefunds.heading = cy: Have your contributions changed as a result of the remedy?
 contributionRefunds.hint = cy: If you are not sure, you should check with your pension scheme.
-contributionRefunds.checkYourAnswersLabel = cy: Is the amount of contributions you paid into the reform scheme more than the amount of contributions you would have paid into the legacy scheme during the remedy?
-contributionRefunds.error.required = cy:  Select yes if the amount of contributions you paid into the reform scheme is more than the amount of contributions you would have paid into the legacy scheme during the remedy
-contributionRefunds.change.hidden = cy: if the amount of contributions you paid into the reform scheme is more than the amount of contributions you would have paid into the legacy scheme during the remedy
+contributionRefunds.checkYourAnswersLabel = cy: Have your contributions changed as a result of the remedy?
+contributionRefunds.error.required = cy: Select yes if your contributions changed as a result of the remedy
+contributionRefunds.change.hidden = cy: if your contributions changed as a result of the remedy
 
 notAbleToUseThisServiceAA.title = cy: You are not eligible
 notAbleToUseThisServiceAA.heading = cy: You are not eligible to use this part of the service
