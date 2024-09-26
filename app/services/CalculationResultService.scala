@@ -360,12 +360,12 @@ class CalculationResultService @Inject() (
 
       val isFlexiAccessDateBeforeThisPeriod: Option[Boolean] = oFlexiAccessDate.map(_.isBefore(period.start))
 
-      val thresholdAmount = Option({
+      val thresholdAmount: Option[Int] = {
         userAnswers.get(ThresholdIncomePage(period)) match {
-          case Some(ThresholdIncome.IDoNotKnow) => aboveThresholdController.calculateThresholdStatus(userAnswers, period).toInt
+          case Some(ThresholdIncome.IDoNotKnow) => Option(aboveThresholdController.calculateThresholdStatus(userAnswers, period).toInt)
           case _ => None
         }
-      })
+      }
       val optionTest = Option(thresholdAmount)
 
 
@@ -385,7 +385,7 @@ class CalculationResultService @Inject() (
           userAnswers.get(PersonalAllowancePage(period)).map(_.toInt),
           userAnswers.get(UnionPoliceReliefAmountPage(period)).map(_.toInt),
           userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt),
-          thresholdAmount.map(_toInt)
+          thresholdAmount
         )
 
       (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {

@@ -846,7 +846,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
            |          "otherDefinedBenefitOrContribution" : true,
            |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
            |          "definedBenefitAmount" : 53000,
-           |          "thresholdIncome" : "yes",
+           |          "thresholdIncome" : "idk",
            |          "totalIncome" : 60000,
            |          "anySalarySacrificeArrangements": true,
            |          "amountSalarySacrificeArrangements": 444,
@@ -2712,7 +2712,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               Some(90),
               Some(2291),
-              None
+              Some(58733)
             ),
             income = Some(AboveThreshold(166148))
           )
