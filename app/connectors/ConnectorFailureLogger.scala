@@ -27,15 +27,15 @@ object ConnectorFailureLogger extends Logging {
       val requestId = hc.requestId.getOrElse(RequestId("Undefined"))
       httpResult.recoverWith {
         case e: UpstreamErrorResponse =>
-          logger.warn(s"Received error status ${e.statusCode} from $connectorName with requestId: ${requestId.value}")
+          logger.warn(s"Received error status ${e.statusCode} from $connectorName")
           Future.failed(e)
         case e: JsValidationException =>
           logger.warn(
-            s"Unable to parse the content of a response from $connectorName with requestId: ${requestId.value}"
+            s"Unable to parse the content of a response from $connectorName"
           )
           Future.failed(e)
         case e                        =>
-          logger.warn(s"Received an error from $connectorName with requestId: ${requestId.value}")
+          logger.warn(s"Received an error from $connectorName")
           Future.failed(e)
       }
     }
