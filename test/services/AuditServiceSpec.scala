@@ -120,7 +120,8 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   )
                 ),
                 PostFlexiblyAccessedTaxYear(
@@ -147,7 +148,8 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -175,7 +177,8 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 )

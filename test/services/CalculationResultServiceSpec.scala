@@ -18,6 +18,7 @@ package services
 
 import base.SpecBase
 import connectors.{CalculationResultConnector, SubmissionsConnector}
+import controllers.annualallowance.taxyear.AboveThresholdController
 import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, LifetimeAllowanceSetup, Resubmission, RowViewModel, Setup}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
@@ -39,8 +40,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
   private val mockSubmissionsConnector       = mock[SubmissionsConnector]
   private val mockAuditService               = mock[AuditService]
+  private val mockAboveThresholdController = mock[AboveThresholdController]
   private val service                        =
-    new CalculationResultService(mockCalculationResultConnector, mockSubmissionsConnector, mockAuditService)
+    new CalculationResultService(mockCalculationResultConnector, mockSubmissionsConnector, mockAuditService, mockAboveThresholdController)
 
   private def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
     val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
@@ -2438,7 +2440,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               None,
-              Some(2291)
+              Some(2291),
+              None
             ),
             None,
             Some(30016),
@@ -2474,7 +2477,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               None,
-              Some(2291)
+              Some(2291),
+              None
             ),
             None,
             Some(30016),
@@ -2508,7 +2512,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(842),
               None,
               Some(90),
-              Some(2291)
+              Some(2291),
+              None
             ),
             Some(BelowThreshold)
           )
@@ -2540,7 +2545,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(842),
               None,
               Some(90),
-              Some(2291)
+              Some(2291),
+              None
             ),
             Some(BelowThreshold)
           )
@@ -2572,7 +2578,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(842),
               None,
               Some(90),
-              Some(2291)
+              Some(2291),
+              None
             ),
             Some(BelowThreshold)
           )
@@ -2604,7 +2611,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(842),
               None,
               Some(90),
-              Some(2291)
+              Some(2291),
+              None
             ),
             Some(BelowThreshold)
           )
@@ -2637,7 +2645,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 Some(842),
                 None,
                 Some(90),
-                Some(2291)
+                Some(2291),
+                None
               ),
               Some(AboveThreshold(96148))
             )
@@ -2669,7 +2678,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(842),
               None,
               Some(90),
-              Some(2291)
+              Some(2291),
+              None
             ),
             Some(BelowThreshold)
           )
@@ -2701,7 +2711,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(842),
               None,
               Some(90),
-              Some(2291)
+              Some(2291),
+              None
             ),
             income = Some(AboveThreshold(166148))
           )
@@ -2749,7 +2760,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   None,
                   None,
@@ -2800,7 +2812,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   None,
                   Some(2100),
@@ -2828,7 +2841,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(AboveThreshold(177748)),
                   None,
@@ -2855,7 +2869,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold),
                   None,
@@ -2905,7 +2920,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   None,
                   Some(2100),
@@ -2933,7 +2949,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(AboveThreshold(177748)),
                   None,
@@ -2960,7 +2977,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold),
                   None,
@@ -3010,7 +3028,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   None,
                   Some(61000)
@@ -3035,7 +3054,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold),
                   None
@@ -3063,7 +3083,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(AboveThreshold(209548)),
                   None,
@@ -3091,7 +3112,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold),
                   None,
@@ -3171,7 +3193,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   None,
                   Some(30016),
@@ -3198,7 +3221,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3223,7 +3247,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3248,7 +3273,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3273,7 +3299,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3298,7 +3325,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3323,7 +3351,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3348,7 +3377,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 )
@@ -3430,7 +3460,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   None,
                   Some(40000),
@@ -3458,7 +3489,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3483,7 +3515,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3508,7 +3541,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 )
@@ -3553,7 +3587,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   None,
                   Some(40000)
@@ -3578,7 +3613,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3602,7 +3638,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3626,7 +3663,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 )
@@ -3671,7 +3709,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   None,
                   Some(34000)
@@ -3696,7 +3735,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold),
                   None
@@ -3724,7 +3764,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(AboveThreshold(243148))
                 ),
@@ -3749,7 +3790,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3774,7 +3816,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(842),
                     None,
                     Some(90),
-                    Some(2291)
+                    Some(2291),
+                    None
                   ),
                   Some(BelowThreshold)
                 )
