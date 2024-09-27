@@ -20,6 +20,8 @@ import config.FrontendAppConfig
 import controllers.actions._
 import models.submission
 import models.submission.SubmissionResponse
+import models.tasklist.SectionStatus
+import models.tasklist.sections.LTASection
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -52,6 +54,8 @@ class CalculationResultController @Inject() (
       val isInCredit: Boolean              = calculationResponse.totalAmounts.inDatesCredit > 0
       val isInDebit: Boolean               = calculationResponse.totalAmounts.inDatesDebit > 0
       val isUserAuthenticated: Boolean     = request.userAnswers.authenticated
+      val isLTACompleteWithoutKickout      = LTASection.status(request.userAnswers) == SectionStatus.Completed && !LTASection
+        .kickoutHasBeenReached(request.userAnswers)
       Ok(
         view(
           form,
@@ -59,7 +63,8 @@ class CalculationResultController @Inject() (
           includeCompensation2015,
           isInCredit,
           isInDebit,
-          isUserAuthenticated
+          isUserAuthenticated,
+          isLTACompleteWithoutKickout
         )
       )
     }

@@ -24,11 +24,11 @@
         govukButton: GovukButton
 )
 
-@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean, isInCredit: Boolean, isInDebit: Boolean, isUserAuthenticated : Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], calculationResultsViewModel: CalculationResultsViewModel, includeCompensation2015: Boolean, isInCredit: Boolean, isInDebit: Boolean, isUserAuthenticated : Boolean, isLTACompleteWithoutKickout: Boolean)(implicit request: Request[_], messages: Messages)
 
 @buttonContent = @{
     if(isUserAuthenticated) {
-        messages("site.continue")
+        messages("site.saveAndContinue")
     } else {
         messages("site.continueSignIn")
     }
@@ -107,6 +107,8 @@
     <script @{CSPNonce.attr}>document.getElementById("print-result").addEventListener("click", () => window.print());</script>
 
 <h2 class="govuk-heading-m">@messages("calculationResults.whatHappensNext.heading")</h2>
+
+    @if(isInDebit || isInCredit || includeCompensation2015) {
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint1")</p>
     <ul class="govuk-body">
         <li>@messages("calculationResults.whatHappensNext.hint1.list1")</li>
@@ -116,12 +118,32 @@
         <li>@messages("calculationResults.whatHappensNext.hint1.list5")</li>
     </ul>
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint2")</p>
+    }
+
+    @if(!isInDebit && !isInCredit && !includeCompensation2015 && isLTACompleteWithoutKickout) {
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint.noAAChargeHasLTA")</p>
+    <ul class="govuk-body">
+        <li>@messages("calculationResults.whatHappensNext.hint1.list1")</li>
+        <li>@messages("calculationResults.whatHappensNext.hint1.list2")</li>
+        <li>@messages("calculationResults.whatHappensNext.hint1.list3")</li>
+        <li>@messages("calculationResults.whatHappensNext.hint1.list4")</li>
+        <li>@messages("calculationResults.whatHappensNext.hint1.list5")</li>
+    </ul>
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint2")</p>
+    }
+
     @if(isInDebit) {
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint.inDebit")</p>
     }
+
     @if(isInCredit) {
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint.inCredit")</p>
     }
+
+    @if(!isInDebit && !isInCredit && !includeCompensation2015 &&  !isLTACompleteWithoutKickout) {
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint.noAAChargeOrLTA")</p>
+    }
+
     @if(includeCompensation2015) {
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint.compensation")</p>
         <ul class="govuk-body">
@@ -130,8 +152,11 @@
         </ul>
     }
 
+    @if(!isUserAuthenticated && (isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout)) {
     <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint5")</p>
-    @if(isInCredit || includeCompensation2015 || isInDebit) {
+    }
+
+    @if(isInCredit || includeCompensation2015 || isInDebit || isLTACompleteWithoutKickout) {
             @formHelper(action = routes.CalculationResultController.onSubmit(), Symbol("autoComplete") -> "off") {
                 @govukButton(
                     ButtonViewModel(HtmlContent(buttonContent))
