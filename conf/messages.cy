@@ -1628,3 +1628,8 @@ contribution4000ToDirectContributionScheme.heading2 = cy: Did you and / or your 
 contribution4000ToDirectContributionScheme.checkYourAnswersLabel = cy: Did you and / or your employer contribute over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023?
 contribution4000ToDirectContributionScheme.error.required = cy: Select yes if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023
 contribution4000ToDirectContributionScheme.change.hidden = cy: if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023
+
+userEligibility.title = cy: You are eligible to use service
+userEligibility.heading = cy: You are eligible to use the Public Service Pensions adjustment service
+userEligibility.message1 = cy: You are able to use this service to calculate a change in your annual allowance position.
+userEligibility.message2 = cy: You are able to use this service to report changes to your lifetime allowance position.

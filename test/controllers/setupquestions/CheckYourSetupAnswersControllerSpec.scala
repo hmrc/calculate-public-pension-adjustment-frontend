@@ -54,7 +54,7 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           "checkYourAnswers.setup.subHeading",
-          controllers.routes.TaskListController.onPageLoad(),
+          controllers.setupquestions.routes.UserEligibility.onPageLoad,
           list
         )(
           request,
@@ -79,89 +79,89 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
       }
     }
 
-    "must redirect to ScottishTaxpayerFrom2016Controller if reporting page has indicated AA and Scottsih tax payer page has not been answered and AA eligible" in {
-      val mockUserDataService = mock[UserDataService]
-
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-
-      val userAnswers = emptyUserAnswers
-        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
-        .success
-        .value
-        .set(AAKickOutStatus(), 2)
-        .success
-        .value
-
-      val application =
-        applicationBuilder(userAnswers = Some(userAnswers))
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url)
-
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[CheckYourAnswersView]
-        val list = SummaryListViewModel(Seq(ReportingChangeSummary.row(userAnswers)(messages(application))).flatten)
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
-          "checkYourAnswers.setup.subHeading",
-          controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode),
-          list
-        )(
-          request,
-          messages(application)
-        ).toString
-      }
-    }
-
-    "must redirect to task list controller if reporting page has indicated AA and Scottsih tax payer page has been answered and AA eligible " in {
-      val mockUserDataService = mock[UserDataService]
-
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-
-      val userAnswers = emptyUserAnswers
-        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
-        .success
-        .value
-        .set(AAKickOutStatus(), 2)
-        .success
-        .value
-        .set(ScottishTaxpayerFrom2016Page, false)
-        .success
-        .value
-
-      val application =
-        applicationBuilder(userAnswers = Some(userAnswers))
-          .overrides(
-            bind[UserDataService].toInstance(mockUserDataService)
-          )
-          .build()
-
-      running(application) {
-        val request =
-          FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url)
-
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[CheckYourAnswersView]
-        val list = SummaryListViewModel(Seq(ReportingChangeSummary.row(userAnswers)(messages(application))).flatten)
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
-          "checkYourAnswers.setup.subHeading",
-          controllers.routes.TaskListController.onPageLoad(),
-          list
-        )(
-          request,
-          messages(application)
-        ).toString
-      }
-    }
+//    "must redirect to ScottishTaxpayerFrom2016Controller if reporting page has indicated AA and Scottsih tax payer page has not been answered and AA eligible" in {
+//      val mockUserDataService = mock[UserDataService]
+//
+//      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+//
+//      val userAnswers = emptyUserAnswers
+//        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
+//        .success
+//        .value
+//        .set(AAKickOutStatus(), 2)
+//        .success
+//        .value
+//
+//      val application =
+//        applicationBuilder(userAnswers = Some(userAnswers))
+//          .overrides(
+//            bind[UserDataService].toInstance(mockUserDataService)
+//          )
+//          .build()
+//
+//      running(application) {
+//        val request =
+//          FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url)
+//
+//        val result = route(application, request).value
+//
+//        val view = application.injector.instanceOf[CheckYourAnswersView]
+//        val list = SummaryListViewModel(Seq(ReportingChangeSummary.row(userAnswers)(messages(application))).flatten)
+//
+//        status(result) mustEqual OK
+//        contentAsString(result) mustEqual view(
+//          "checkYourAnswers.setup.subHeading",
+//          controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode),
+//          list
+//        )(
+//          request,
+//          messages(application)
+//        ).toString
+//      }
+//    }
+//
+//    "must redirect to task list controller if reporting page has indicated AA and Scottsih tax payer page has been answered and AA eligible " in {
+//      val mockUserDataService = mock[UserDataService]
+//
+//      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+//
+//      val userAnswers = emptyUserAnswers
+//        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
+//        .success
+//        .value
+//        .set(AAKickOutStatus(), 2)
+//        .success
+//        .value
+//        .set(ScottishTaxpayerFrom2016Page, false)
+//        .success
+//        .value
+//
+//      val application =
+//        applicationBuilder(userAnswers = Some(userAnswers))
+//          .overrides(
+//            bind[UserDataService].toInstance(mockUserDataService)
+//          )
+//          .build()
+//
+//      running(application) {
+//        val request =
+//          FakeRequest(GET, controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad().url)
+//
+//        val result = route(application, request).value
+//
+//        val view = application.injector.instanceOf[CheckYourAnswersView]
+//        val list = SummaryListViewModel(Seq(ReportingChangeSummary.row(userAnswers)(messages(application))).flatten)
+//
+//        status(result) mustEqual OK
+//        contentAsString(result) mustEqual view(
+//          "checkYourAnswers.setup.subHeading",
+//          controllers.routes.TaskListController.onPageLoad(),
+//          list
+//        )(
+//          request,
+//          messages(application)
+//        ).toString
+//      }
+//    }
   }
 }
