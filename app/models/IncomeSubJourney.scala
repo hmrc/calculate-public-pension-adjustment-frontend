@@ -33,7 +33,7 @@ case class IncomeSubJourney(
   personalAllowanceAmount: Option[Int],
   tradeUnionOrPoliceReliefAmount: Option[Int],
   blindPersonsAllowanceAmount: Option[Int],
-  thresholdAmount: Option[Int]
+  thresholdIncomeAmount: Option[Int]
 )
 
 object IncomeSubJourney {
