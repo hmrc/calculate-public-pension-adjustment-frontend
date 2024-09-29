@@ -98,6 +98,13 @@ class UserEligibilityControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[UserEligibilityView]
 
         status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          true, false,
+          controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode),
+        )(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -133,6 +140,13 @@ class UserEligibilityControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[UserEligibilityView]
 
         status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          true, false,
+          controllers.routes.TaskListController.onPageLoad(),
+        )(
+          request,
+          messages(application)
+        ).toString
       }
     }
   }
