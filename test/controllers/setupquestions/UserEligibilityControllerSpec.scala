@@ -99,8 +99,9 @@ class UserEligibilityControllerSpec extends SpecBase {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          true, false,
-          controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode),
+          true,
+          false,
+          controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
         )(
           request,
           messages(application)
@@ -141,8 +142,9 @@ class UserEligibilityControllerSpec extends SpecBase {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          true, false,
-          controllers.routes.TaskListController.onPageLoad(),
+          true,
+          false,
+          controllers.routes.TaskListController.onPageLoad()
         )(
           request,
           messages(application)
