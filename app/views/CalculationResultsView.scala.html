@@ -109,7 +109,11 @@
 <h2 class="govuk-heading-m">@messages("calculationResults.whatHappensNext.heading")</h2>
 
     @if(isInDebit || isInCredit || includeCompensation2015) {
-    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint1")</p>
+    @if(isUserAuthenticated) {
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint1.authenticated")</p>
+    } else {
+    <p class="govuk-body">@messages("calculationResults.whatHappensNext.hint1.nonAuthenticated")</p>
+    }
     <ul class="govuk-body">
         <li>@messages("calculationResults.whatHappensNext.hint1.list1")</li>
         <li>@messages("calculationResults.whatHappensNext.hint1.list2")</li>
