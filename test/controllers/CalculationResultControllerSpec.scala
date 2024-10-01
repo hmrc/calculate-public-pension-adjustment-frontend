@@ -43,19 +43,19 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val normalRoute = routes.CalculationResultController.onPageLoad().url
 
-  val dynamicDebit: String            =
+  val dynamicDebit: String                     =
     "You have extra tax charges to pay, you will receive a notice by post."
-  val dynamicCredit: String           =
+  val dynamicCredit: String                    =
     "You are due a refund for tax charges, HMRC will pay this using the bank details you provide on your adjustment."
-  val dynamicCompensation: String     =
+  val dynamicCompensation: String              =
     "You are due compensation, HMRC will review your information and pass it to your pension scheme. They will then:"
-  val notAuthenticated: String        =
+  val notAuthenticated: String                 =
     "If you do not sign in to your Government Gateway, your results will not be saved and you will need to complete the calculator again."
-  val dynamicNoAAChargeOrLTA: String  =
+  val dynamicNoAAChargeOrLTA: String           =
     "As there is no change in your annual allowance tax position you do not need to make a submission."
-  val dynamicNoAAChargeHasLTA: String =
+  val dynamicNoAAChargeHasLTA: String          =
     "There is no change in your annual allowance tax position, but you must still submit your answers to report a change in your lifetime allowance position."
-  val dynamicNextStepsAuthenticated: String =
+  val dynamicNextStepsAuthenticated: String    =
     "To submit the information, you will need to provide:"
   val dynamicNextStepsNotAuthenticated: String =
     "To submit the information, you will need sign in to your Government Gateway account and provide:"
