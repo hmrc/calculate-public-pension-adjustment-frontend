@@ -28,4 +28,7 @@ case object TriageSection extends Section {
 
   def removeAllLTAUserAnswers(userAnswers: UserAnswers): UserAnswers =
     userAnswers.removePath(JsPath \ "setup" \ "lta").get
+
+  def removeAllAAUserAnswers(userAnswers: UserAnswers): UserAnswers =
+    userAnswers.removePath(JsPath \ "setup" \ "aa").get
 }
