@@ -19,6 +19,7 @@ package controllers
 import base.SpecBase
 import models.CalculationResults.CalculationResponse
 import models.submission.{Failure, Success}
+import models.tasklist.sections.LTASection
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -29,21 +30,33 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{route, status, _}
 import services.CalculationResultService
 import uk.gov.hmrc.http.HeaderCarrier
+import models.tasklist.sections.LTASection.cannotUseLtaServiceNoChargePage
 
 import scala.concurrent.Future
 import scala.io.Source
 
 class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute       = Call("GET", "/foo")
+  def onwardRoute = Call("GET", "/foo")
+
   val hc: HeaderCarrier = HeaderCarrier()
 
-  lazy val normalRoute    = routes.CalculationResultController.onPageLoad().url
-  val dynamicDebit        = "You have extra tax charges to pay, you will receive a notice by post."
-  val dynamicCredit       =
+  lazy val normalRoute = routes.CalculationResultController.onPageLoad().url
+
+  val dynamicDebit: String            =
+    "You have extra tax charges to pay, you will receive a notice by post."
+  val dynamicCredit: String           =
     "You are due a refund for tax charges, HMRC will pay this using the bank details you provide on your adjustment."
-  val dynamicCompensation =
+  val dynamicCompensation: String     =
     "You are due compensation, HMRC will review your information and pass it to your pension scheme. They will then:"
+  val notAuthenticated: String        =
+    "If you do not sign in to your Government Gateway, your results will not be saved and you will need to complete the calculator again."
+  val dynamicNextSteps: String        =
+    "To submit the information, you will need sign in to your Government Gateway account and provide:"
+  val dynamicNoAAChargeOrLTA: String  =
+    "As there is no change in your annual allowance tax position you do not need to make a submission."
+  val dynamicNoAAChargeHasLTA: String =
+    "There is no change in your annual allowance tax position, but you must still submit your answers to report a change in your lifetime allowance position."
 
   "CalculationResult Controller" - {
 
@@ -121,98 +134,316 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must display correct dynamic content when compensation, credit, debit are greater than 0" in {
-      val calculationResult: CalculationResponse =
-        readCalculationResult("test/resources/CalculationResultsTestDataAllTotals.json")
+    "authenticated" - {
 
-      val result = returnResultFromBuiltApplication(calculationResult)
+      "must display correct dynamic content when compensation, credit, debit are greater than 0" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataAllTotals.json")
 
-      status(result) mustEqual OK
-      contentAsString(result).contains(dynamicDebit) mustBe true
-      contentAsString(result).contains(dynamicCredit) mustBe true
-      contentAsString(result).contains(dynamicCompensation) mustBe true
-      contentAsString(result).contains("Continue to sign in") mustBe true
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-    }
+        status(result) mustEqual OK
+        contentAsString(result).contains(dynamicNextSteps) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe true
+        contentAsString(result).contains(dynamicCredit) mustBe true
+        contentAsString(result).contains(dynamicCompensation) mustBe true
+        contentAsString(result).contains("Save and continue") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe false
 
-    "must display correct dynamic content when only credit is greater than 0" in {
-      val calculationResult: CalculationResponse =
-        readCalculationResult("test/resources/CalculationResultsTestDataCredit.json")
+      }
 
-      val result = returnResultFromBuiltApplication(calculationResult)
+      "must display correct dynamic content when only credit is greater than 0" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataCredit.json")
 
-      status(result) mustEqual OK
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-      contentAsString(result).contains(dynamicDebit) mustBe false
-      contentAsString(result).contains(dynamicCredit) mustBe true
-      contentAsString(result).contains(dynamicCompensation) mustBe false
-      contentAsString(result).contains("Continue to sign in") mustBe true
-    }
+        status(result) mustEqual OK
 
-    "must display correct dynamic content when only debit is greater than 0" in {
-      val calculationResult: CalculationResponse =
-        readCalculationResult("test/resources/CalculationResultsTestDataDebit.json")
+        contentAsString(result).contains(dynamicNextSteps) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe true
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Save and continue") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe false
+      }
 
-      val result = returnResultFromBuiltApplication(calculationResult)
+      "must display correct dynamic content when only debit is greater than 0" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataDebit.json")
 
-      status(result) mustEqual OK
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-      contentAsString(result).contains(dynamicDebit) mustBe true
-      contentAsString(result).contains(dynamicCredit) mustBe false
-      contentAsString(result).contains(dynamicCompensation) mustBe false
-      contentAsString(result).contains("Continue to sign in") mustBe true
-    }
+        status(result) mustEqual OK
 
-    "must display correct dynamic content when only compensation is greater than 0" in {
-      val calculationResult: CalculationResponse =
-        readCalculationResult("test/resources/CalculationResultsTestData.json")
+        contentAsString(result).contains(dynamicNextSteps) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe true
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Save and continue") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe false
+      }
 
-      val result = returnResultFromBuiltApplication(calculationResult)
+      "must display correct dynamic content when only compensation is greater than 0" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      status(result) mustEqual OK
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-      contentAsString(result).contains(dynamicDebit) mustBe false
-      contentAsString(result).contains(dynamicCredit) mustBe false
-      contentAsString(result).contains(dynamicCompensation) mustBe true
-      contentAsString(result).contains("Continue to sign in") mustBe true
-    }
+        status(result) mustEqual OK
 
-    "must not display dynamic content when no totals are greater than 0 and hide continue button" in {
-      val calculationResult: CalculationResponse =
-        readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
+        contentAsString(result).contains(dynamicNextSteps) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe true
+        contentAsString(result).contains("Save and continue") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe false
+      }
 
-      val result = returnResultFromBuiltApplication(calculationResult)
+      "must not display dynamic content when no totals are greater than 0 and hide continue button and no LTA" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
 
-      status(result) mustEqual OK
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-      contentAsString(result).contains(dynamicDebit) mustBe false
-      contentAsString(result).contains(dynamicCredit) mustBe false
-      contentAsString(result).contains(dynamicCompensation) mustBe false
-      contentAsString(result).contains("Continue to sign in") mustBe false
-    }
-  }
-  def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
-    val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
-    val json: JsValue  = Json.parse(source)
-    json.as[CalculationResponse]
-  }
+        status(result) mustEqual OK
 
-  def returnResultFromBuiltApplication(calculationResult: CalculationResponse): Future[Result] = {
-    val mockCalculationResultService = mock[CalculationResultService]
-    when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
-    when(mockCalculationResultService.calculationResultsViewModel(any)).thenCallRealMethod()
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Save and continue") mustBe false
+        contentAsString(result).contains(notAuthenticated) mustBe false
+      }
 
-    val application =
-      applicationBuilder(userAnswers = Some(emptyUserAnswers))
-        .overrides(
-          bind[CalculationResultService].toInstance(mockCalculationResultService)
+      "must display dynamic content when no totals are greater than 0 and hide continue button and LTA" in {
+
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
+
+        val result = returnResultFromBuiltApplicationWithLTACompleted(
+          calculationResult,
+          authenticatedStatus = true,
+          kickedOut = false
         )
-        .build()
 
-    running(application) {
-      val request = FakeRequest(GET, normalRoute)
+        status(result) mustEqual OK
 
-      route(application, request).value
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe false
+        contentAsString(result).contains(dynamicNoAAChargeHasLTA) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Save and continue") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe false
+      }
+
+      "must display dynamic content when no totals are greater than 0 and hide continue button and LTA kicked out" in {
+
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
+
+        val result = returnResultFromBuiltApplicationWithLTACompleted(
+          calculationResult,
+          authenticatedStatus = true,
+          kickedOut = true
+        )
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe true
+        contentAsString(result).contains(dynamicNoAAChargeHasLTA) mustBe false
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Save and continue") mustBe false
+        contentAsString(result).contains(notAuthenticated) mustBe false
+      }
+    }
+
+    "not authenticated" - {
+
+      "must display correct dynamic content when compensation, credit, debit are greater than 0" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataAllTotals.json")
+
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
+
+        status(result) mustEqual OK
+        contentAsString(result).contains(dynamicNextSteps) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe true
+        contentAsString(result).contains(dynamicCredit) mustBe true
+        contentAsString(result).contains(dynamicCompensation) mustBe true
+        contentAsString(result).contains("Continue to sign in") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe true
+
+      }
+
+      "must display correct dynamic content when only credit is greater than 0" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataCredit.json")
+
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains(dynamicNextSteps) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe true
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Continue to sign in") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe true
+      }
+
+      "must display correct dynamic content when only debit is greater than 0" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataDebit.json")
+
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains(dynamicNextSteps) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe true
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Continue to sign in") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe true
+      }
+
+      "must display correct dynamic content when only compensation is greater than 0" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains(dynamicNextSteps) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe true
+        contentAsString(result).contains("Continue to sign in") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe true
+      }
+
+      "must not display dynamic content when no totals are greater than 0 and hide continue button and no LTA" in {
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
+
+        val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Continue to sign in") mustBe false
+        contentAsString(result).contains(notAuthenticated) mustBe false
+      }
+
+      "must display dynamic content when no totals are greater than 0 and hide continue button and LTA" in {
+
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
+
+        val result = returnResultFromBuiltApplicationWithLTACompleted(
+          calculationResult,
+          authenticatedStatus = false,
+          kickedOut = false
+        )
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe false
+        contentAsString(result).contains(dynamicNoAAChargeHasLTA) mustBe true
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Continue to sign in") mustBe true
+        contentAsString(result).contains(notAuthenticated) mustBe true
+      }
+
+      "must display dynamic content when no totals are greater than 0 and hide continue button and LTA kicked out" in {
+
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
+
+        val result = returnResultFromBuiltApplicationWithLTACompleted(
+          calculationResult,
+          authenticatedStatus = false,
+          kickedOut = true
+        )
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe true
+        contentAsString(result).contains(dynamicNoAAChargeHasLTA) mustBe false
+        contentAsString(result).contains(dynamicDebit) mustBe false
+        contentAsString(result).contains(dynamicCredit) mustBe false
+        contentAsString(result).contains(dynamicCompensation) mustBe false
+        contentAsString(result).contains("Continue to sign in") mustBe false
+        contentAsString(result).contains(notAuthenticated) mustBe false
+      }
+    }
+
+    def readCalculationResult(calculationResponseFile: String): CalculationResponse = {
+      val source: String = Source.fromFile(calculationResponseFile).getLines().mkString
+      val json: JsValue  = Json.parse(source)
+      json.as[CalculationResponse]
+    }
+
+    def returnResultFromBuiltApplication(
+      calculationResult: CalculationResponse,
+      authenticatedStatus: Boolean
+    ): Future[Result] = {
+      val mockCalculationResultService = mock[CalculationResultService]
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.calculationResultsViewModel(any)).thenCallRealMethod()
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers.copy(authenticated = authenticatedStatus)))
+          .overrides(
+            bind[CalculationResultService].toInstance(mockCalculationResultService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        route(application, request).value
+      }
+    }
+
+    def returnResultFromBuiltApplicationWithLTACompleted(
+      calculationResult: CalculationResponse,
+      authenticatedStatus: Boolean,
+      kickedOut: Boolean
+    ): Future[Result] = {
+      val mockCalculationResultService = mock[CalculationResultService]
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.calculationResultsViewModel(any)).thenCallRealMethod()
+
+      val userAnswers =
+        if (!kickedOut) {
+          LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
+        } else {
+          LTASection.saveNavigation(emptyUserAnswers, cannotUseLtaServiceNoChargePage.url)
+        }
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers.copy(authenticated = authenticatedStatus)))
+          .overrides(
+            bind[CalculationResultService].toInstance(mockCalculationResultService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        route(application, request).value
+      }
     }
   }
 }

@@ -830,6 +830,8 @@ calculationResults.whatHappensNext.hint.compensation = You are due compensation,
 calculationResults.whatHappensNext.hint.compensation.list1 = directly pay any compensation for tax charges you paid from 6 April 2015 to 5 April 2019
 calculationResults.whatHappensNext.hint.compensation.list2 = increase your pension benefits to cover compensation for tax charges your scheme paid on your behalf from 6 April 2015 to 5 April 2019
 calculationResults.whatHappensNext.hint5 = If you do not sign in to your Government Gateway, your results will not be saved and you will need to complete the calculator again.
+calculationResults.whatHappensNext.hint.noAAChargeOrLTA = As there is no change in your annual allowance tax position you do not need to make a submission.
+calculationResults.whatHappensNext.hint.noAAChargeHasLTA = There is no change in your annual allowance tax position, but you must still submit your answers to report a change in your lifetime allowance position.
 
 multipleBenefitCrystallisationEvent.title = Have you had any other benefit crystallisation events after the one in your public service pension scheme?
 multipleBenefitCrystallisationEvent.heading = Have you had any other benefit crystallisation events after the one in your public service pension scheme?

@@ -830,6 +830,8 @@ calculationResults.whatHappensNext.hint.compensation = Mae iawndal yn ddyledus i
 calculationResults.whatHappensNext.hint.compensation.list1 = talu, yn uniongyrchol, unrhyw iawndal am daliadau treth a daloch o 6 Ebrill 2015 i 5 Ebrill 2019
 calculationResults.whatHappensNext.hint.compensation.list2 = cynyddu buddiannau’ch pensiwn i gwmpasu’r iawndal am daliadau treth a dalodd eich cynllun ar eich rhan o 6 Ebrill 2015 i 5 Ebrill 2019
 calculationResults.whatHappensNext.hint5 = Os na fyddwch yn mewngofnodi i’ch Porth y Llywodraeth, ni fydd eich canlyniadau’n cael eu cadw a bydd angen i chi lenwi’r gyfrifiannell eto.
+calculationResults.whatHappensNext.hint.noAAChargeOrLTA = cy: As there is no change in your annual allowance tax position you do not need to make a submission.
+calculationResults.whatHappensNext.hint.noAAChargeHasLTA = cy: There is no change in your annual allowance tax position, but you must still submit your answers to report a change in your lifetime allowance position.
 
 multipleBenefitCrystallisationEvent.title = cy: Have you had any other benefit crystallisation events after the one in your public service pension scheme?
 multipleBenefitCrystallisationEvent.heading = cy: Have you had any other benefit crystallisation events after the one in your public service pension scheme?
