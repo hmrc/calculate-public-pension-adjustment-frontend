@@ -80,16 +80,8 @@ class CheckYourSetupAnswersController @Inject() (
 
     val finalRows: Seq[Option[SummaryListRow]] = rows ++ aaRows ++ ltaRows
 
-    val continueURL = request.userAnswers.get(ReportingChangePage) match {
-      case Some(set)
-          if set.contains(ReportingChange.AnnualAllowance) && request.userAnswers.get(AAKickOutStatus()).contains(2) =>
-        request.userAnswers.get(ScottishTaxpayerFrom2016Page) match {
-          case None    =>
-            controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
-          case Some(_) => controllers.routes.TaskListController.onPageLoad()
-        }
-      case _ => controllers.routes.TaskListController.onPageLoad()
-    }
+    val continueURL = controllers.setupquestions.routes.UserEligibility.onPageLoad
+
     Ok(view("checkYourAnswers.setup.subHeading", continueURL, SummaryListViewModel(finalRows.flatten)))
   }
 }
