@@ -1225,14 +1225,14 @@ lumpSumDeathBenefitsValue.error.wholeNumber = Your taxable lump sum death benefi
 lumpSumDeathBenefitsValue.error.outOfRange = Your taxable lump sum death benefit amount from {2} must be between £0 and £999,999,999
 lumpSumDeathBenefitsValue.change.hidden = your taxable lump sum death benefits from {0}
 
-claimingTaxReliefPension.title = Did you claim for tax relief on your pension from {0}?
+claimingTaxReliefPension.title = Did you claim for income tax relief from {0}?
 claimingTaxReliefPension.heading = Claiming income tax relief
 claimingTaxReliefPension.message1 = You may have claimed income tax relief if any of the following applied to you:
 claimingTaxReliefPension.bullet1 = you claimed tax relief for job expenses such as uniforms
 claimingTaxReliefPension.bullet2 = you are self employed and you claimed for trading losses
 claimingTaxReliefPension.message2 = You must not include any tax relief claimed from trade union or police organisation fees.
 claimingTaxReliefPension.heading2 = Did you claim for income tax relief from {0}?
-claimingTaxReliefPension.checkYourAnswersLabel = Did you claim for tax relief on your pension from {0}?
+claimingTaxReliefPension.checkYourAnswersLabel = Did you claim for income tax relief from {0}?
 claimingTaxReliefPension.error.required = Select yes if you claimed for tax relief on your pension from {0}
 claimingTaxReliefPension.change.hidden = Claiming pension tax relief
 
