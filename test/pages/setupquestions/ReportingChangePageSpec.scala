@@ -257,13 +257,13 @@ class ReportingChangePageSpec extends PageBehaviours {
         ReportingChangePage.cleanup(Some(Set(ReportingChange.LifetimeAllowance)), ua).success.value
 
       // AA Triage Answers
-      cleanedUserAnswers.get(SavingsStatementPage) mustBe Some(true)
-      cleanedUserAnswers.get(PensionProtectedMemberPage) mustBe Some(true)
-      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe Some(MaybePIAIncrease.No)
-      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe Some(false)
-      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe Some(false)
-      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe Some(true)
-      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe Some(false)
+      cleanedUserAnswers.get(SavingsStatementPage) mustBe None
+      cleanedUserAnswers.get(PensionProtectedMemberPage) mustBe None
+      cleanedUserAnswers.get(MaybePIAIncreasePage) mustBe None
+      cleanedUserAnswers.get(PIAAboveAnnualAllowanceIn2023Page) mustBe None
+      cleanedUserAnswers.get(NetIncomeAbove190KIn2023Page) mustBe None
+      cleanedUserAnswers.get(FlexibleAccessDcSchemePage) mustBe None
+      cleanedUserAnswers.get(Contribution4000ToDirectContributionSchemePage) mustBe None
 
       // LTA Triage Answers
       cleanedUserAnswers.get(HadBenefitCrystallisationEventPage) mustBe Some(true)

@@ -65,7 +65,8 @@ case object ReportingChangePage extends QuestionPage[Set[ReportingChange]] {
           Try(LTASection.removeAllUserAnswersAndNavigation(answersWithNoTriageLTA))
         } else if (!set.contains(ReportingChange.AnnualAllowance) && set.contains(ReportingChange.LifetimeAllowance)) {
           val answersWithNoKickOutStatus = TriageSection.removeAllKickOutStatusUserAnswers(userAnswers)
-          val answersWithNoPreAA         = PreAASection.removeAllUserAnswersAndNavigation(answersWithNoKickOutStatus)
+          val answersWithNoAATriage      = TriageSection.removeAllAAUserAnswers(answersWithNoKickOutStatus)
+          val answersWithNoPreAA         = PreAASection.removeAllUserAnswersAndNavigation(answersWithNoAATriage)
           Try(AASection.removeAllAAPeriodAnswersAndNavigation(answersWithNoPreAA))
         } else {
           super.cleanup(value, userAnswers)
