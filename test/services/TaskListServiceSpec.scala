@@ -17,11 +17,16 @@
 package services
 
 import base.SpecBase
+import config.FrontendAppConfig
+import controllers.routes
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
-import models.tasklist.sections.{LTASection, PreAASection, SetupSection}
+import models.tasklist.sections.{LTASection, NextStepsSection, PreAASection, SetupSection}
 import models.tasklist.{SectionGroupViewModel, SectionStatus, TaskListViewModel}
 import models.{AAKickOutStatus, LTAKickOutStatus, NormalMode, PostTriageFlag, ReportingChange, UserAnswers}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
 import org.scalacheck.Gen
+import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import pages.behaviours.PageBehaviours
 import pages.setupquestions.{ReportingChangePage, ResubmittingAdjustmentPage}
@@ -29,9 +34,11 @@ import pages.setupquestions.{ReportingChangePage, ResubmittingAdjustmentPage}
 import java.time.LocalDate
 import scala.util.Try
 
-class TaskListServiceSpec extends SpecBase with PageBehaviours {
+class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar {
 
-  val taskListService: TaskListService = new TaskListService
+  val mockNextStepsSection = mock[NextStepsSection]
+  val taskListService      = new TaskListService(mockNextStepsSection)
+  when(mockNextStepsSection.sectionStatus(any(), any())).thenReturn(SectionStatus.CannotStartYet)
 
   def urlWithNoContext(url: String): String = url.replace("/public-pension-adjustment", "")
 
@@ -174,6 +181,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours {
       }
 
       "the nextStepsGroup must be well formed" in {
+
         val taskListViewModel: TaskListViewModel  =
           taskListService.taskListViewModel(userAnswersAferResubmittingAdjustmentSubmitted())
         val nextStepsGroup: SectionGroupViewModel = taskListViewModel.nextStepsGroup

@@ -17,23 +17,40 @@
 package models.tasklist
 
 import base.SpecBase
+import config.FrontendAppConfig
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.sections.{LTASection, NextStepsSection}
 import models.{AAKickOutStatus, LTAKickOutStatus, PostTriageFlag, ReportingChange, SectionNavigation, UserAnswers}
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar
 import pages.behaviours.PageBehaviours
 import pages.setupquestions.ReportingChangePage
 
-class NextStepsSectionSpec extends SpecBase with PageBehaviours {
+class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSugar {
+
+  val mockFrontEndAppConfig = mock[FrontendAppConfig]
+  val nextStepsSection      = new NextStepsSection(mockFrontEndAppConfig)
 
   "Next steps navigation" - {
 
     "pre triage" - {
 
-      "Must route to calculation result page when reporting a change that includes Annual Allowance details" in {
+      "Must route to calculation review page when reporting a change that includes Annual Allowance details when feature flag enabled" in {
+        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(true)
         val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
-        val nextStepsTaskUrl = NextStepsSection.navigateTo(answers)
+        val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
+
+        checkNavigation(nextStepsTaskUrl, "/calculationReview")
+      }
+
+      "Must route to calculation result page when reporting a change that includes Annual Allowance details when feature flag disabled" in {
+        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(false)
+        val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
+        val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
+
+        val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
 
         checkNavigation(nextStepsTaskUrl, "/calculation-result")
       }
@@ -42,13 +59,13 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
         val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
-        val nextStepsTaskUrl = NextStepsSection.navigateTo(answers)
+        val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
 
         checkNavigation(nextStepsTaskUrl, "/lta-submission")
       }
 
       "Must route to a page in the Setup Section when reporting change details have not been captured" in {
-        val nextStepsTaskUrl = NextStepsSection.navigateTo(emptyUserAnswers)
+        val nextStepsTaskUrl = nextStepsSection.navigateTo(emptyUserAnswers)
 
         checkNavigation(nextStepsTaskUrl, "/change-previous-adjustment")
       }
@@ -56,7 +73,8 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
     "post triage" - {
 
-      "Must route to calculation result page when reporting a change that includes Annual Allowance details" in {
+      "Must route to calculation review page when reporting a change that includes Annual Allowance details when feature flag true" in {
+        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(true)
         val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers
           .set(PostTriageFlag, true)
@@ -66,7 +84,23 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(AAKickOutStatus(), 2)
           .get
 
-        val nextStepsTaskUrl = NextStepsSection.navigateTo(answers)
+        val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
+
+        checkNavigation(nextStepsTaskUrl, "/calculationReview")
+      }
+
+      "Must route to calculation result page when reporting a change that includes Annual Allowance details when feature flag false" in {
+        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(false)
+        val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
+        val answers: UserAnswers                   = emptyUserAnswers
+          .set(PostTriageFlag, true)
+          .get
+          .set(ReportingChangePage, reportingChanges)
+          .get
+          .set(AAKickOutStatus(), 2)
+          .get
+
+        val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
 
         checkNavigation(nextStepsTaskUrl, "/calculation-result")
       }
@@ -79,7 +113,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(ReportingChangePage, reportingChanges)
           .get
 
-        val nextStepsTaskUrl = NextStepsSection.navigateTo(answers)
+        val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
 
         checkNavigation(nextStepsTaskUrl, "/lta-submission")
       }
@@ -96,13 +130,13 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(LTAKickOutStatus(), 1)
           .get
 
-        val nextStepsTaskUrl = NextStepsSection.navigateTo(answers)
+        val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
 
         checkNavigation(nextStepsTaskUrl, "/lta-submission")
       }
 
       "Must route to a page in the Setup Section when reporting change details have not been captured" in {
-        val nextStepsTaskUrl = NextStepsSection.navigateTo(
+        val nextStepsTaskUrl = nextStepsSection.navigateTo(
           emptyUserAnswers
             .set(PostTriageFlag, true)
             .get
@@ -121,7 +155,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
         val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.calculate"
       }
@@ -130,7 +164,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
         val reportingChanges: Set[ReportingChange] = Set(LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
       }
@@ -142,7 +176,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(ReportingChangePage, reportingChanges)
           .get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.continue"
       }
@@ -155,12 +189,12 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
         val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answersWithNav)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answersWithNav)
         sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
       }
 
       "Must be 'Complete setup questions' when reporting change details have not been captured" in {
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(emptyUserAnswers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(emptyUserAnswers)
 
         sectionNameOverride mustBe "taskList.nextSteps.setupRequired"
       }
@@ -175,7 +209,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(AAKickOutStatus(), 2)
           .get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.calculate"
       }
@@ -190,7 +224,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(LTAKickOutStatus(), 2)
           .get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.continue"
       }
@@ -203,7 +237,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(LTAKickOutStatus(), 2)
           .get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.continue"
       }
@@ -217,7 +251,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(LTAKickOutStatus(), 2)
           .get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
       }
@@ -229,7 +263,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(LTAKickOutStatus(), 2)
           .get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
       }
@@ -245,7 +279,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
         val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answersWithNav)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answersWithNav)
 
         sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
       }
@@ -260,7 +294,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(AAKickOutStatus(), 0)
           .get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
       }
@@ -275,7 +309,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .set(LTAKickOutStatus(), 0)
           .get
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
       }
@@ -294,7 +328,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
         val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answersWithNav)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answersWithNav)
 
         sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
       }
@@ -311,13 +345,13 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
 
         val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
 
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(answersWithNav)
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(answersWithNav)
 
         sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
       }
 
       "Must be 'Complete setup questions' when reporting change details have not been captured" in {
-        val sectionNameOverride = NextStepsSection.sectionNameOverride(
+        val sectionNameOverride = nextStepsSection.sectionNameOverride(
           emptyUserAnswers
             .set(PostTriageFlag, true)
             .get
@@ -337,7 +371,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           .get
           .set(LTAKickOutStatus(), 1)
           .get
-        val sectionNameOverride                    = NextStepsSection.sectionNameOverride(answers)
+        val sectionNameOverride                    = nextStepsSection.sectionNameOverride(answers)
 
         sectionNameOverride mustBe "taskList.nextSteps.setupRequired"
       }
@@ -366,7 +400,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           ),
           None
         )
-        val sectionStatus                          = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+        val sectionStatus                          = nextStepsSection.sectionStatus(dataCaptureSections, answers)
         sectionStatus mustBe SectionStatus.CannotStartYet
       }
 
@@ -382,7 +416,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           ),
           None
         )
-        val sectionStatus                          = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+        val sectionStatus                          = nextStepsSection.sectionStatus(dataCaptureSections, answers)
         sectionStatus mustBe SectionStatus.NotStarted
       }
 
@@ -401,7 +435,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           ),
           None
         )
-        val sectionStatus                          = NextStepsSection.sectionStatus(dataCaptureSections, answersWithNav)
+        val sectionStatus                          = nextStepsSection.sectionStatus(dataCaptureSections, answersWithNav)
         sectionStatus mustBe SectionStatus.CannotStartYet
       }
 
@@ -423,7 +457,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           ),
           None
         )
-        val sectionStatus                          = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+        val sectionStatus                          = nextStepsSection.sectionStatus(dataCaptureSections, answers)
         sectionStatus mustBe SectionStatus.NotStarted
       }
     }
@@ -453,7 +487,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           None
         )
 
-        val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+        val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answers)
         sectionStatus mustBe SectionStatus.CannotStartYet
       }
 
@@ -476,7 +510,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           None
         )
 
-        val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+        val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answers)
         sectionStatus mustBe SectionStatus.NotStarted
       }
 
@@ -500,7 +534,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           None
         )
 
-        val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answersWithNav)
+        val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answersWithNav)
         sectionStatus mustBe SectionStatus.CannotStartYet
       }
 
@@ -524,7 +558,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           None
         )
 
-        val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+        val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answers)
         sectionStatus mustBe SectionStatus.CannotStartYet
       }
 
@@ -556,7 +590,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours {
           None
         )
 
-        val sectionStatus = NextStepsSection.sectionStatus(dataCaptureSections, answers)
+        val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answers)
         sectionStatus mustBe SectionStatus.NotStarted
       }
     }

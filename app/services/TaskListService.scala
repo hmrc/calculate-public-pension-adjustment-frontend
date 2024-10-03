@@ -24,6 +24,7 @@ import pages.setupquestions.ReportingChangePage
 import javax.inject.Inject
 
 class TaskListService @Inject() (
+  nextStepsSection: NextStepsSection
 ) {
 
   def taskListViewModel(answers: UserAnswers): TaskListViewModel = {
@@ -155,15 +156,15 @@ class TaskListService @Inject() (
     dataCaptureSections: List[Option[SectionGroupViewModel]]
   ): SectionGroupViewModel = {
 
-    val sectionNameOverride = NextStepsSection.sectionNameOverride(answers)
+    val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
     SectionGroupViewModel(
       "taskList.nextSteps.groupHeading",
       Seq(
         SectionViewModel(
           sectionNameOverride,
-          NextStepsSection.navigateTo(answers),
-          NextStepsSection.sectionStatus(dataCaptureSections, answers),
+          nextStepsSection.navigateTo(answers),
+          nextStepsSection.sectionStatus(dataCaptureSections, answers),
           "next-steps-action",
           Some(sectionNameOverride)
         )
