@@ -17,6 +17,7 @@
 package services
 
 import connectors.{CalculationResultConnector, SubmissionsConnector}
+import controllers.annualallowance.taxyear.AboveThresholdController
 import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
@@ -40,7 +41,8 @@ import scala.concurrent.{ExecutionContext, Future}
 class CalculationResultService @Inject() (
   calculationResultConnector: CalculationResultConnector,
   submissionsConnector: SubmissionsConnector,
-  auditService: AuditService
+  auditService: AuditService,
+  aboveThresholdController: AboveThresholdController
 )(implicit
   ec: ExecutionContext
 ) extends Logging {
@@ -358,6 +360,13 @@ class CalculationResultService @Inject() (
 
       val isFlexiAccessDateBeforeThisPeriod: Option[Boolean] = oFlexiAccessDate.map(_.isBefore(period.start))
 
+      val thresholdIncomeAmount: Option[BigInt] =
+        userAnswers.get(ThresholdIncomePage(period)) match {
+          case Some(ThresholdIncome.IDoNotKnow) =>
+            Some(aboveThresholdController.calculateThresholdStatus(userAnswers, period))
+          case _                                => None
+        }
+
       val incomeSubJourney =
         IncomeSubJourney(
           userAnswers.get(AmountSalarySacrificeArrangementsPage(period)).map(_.toInt),
@@ -373,7 +382,8 @@ class CalculationResultService @Inject() (
           userAnswers.get(AmountOfGiftAidPage(period)).map(_.toInt),
           userAnswers.get(PersonalAllowancePage(period)).map(_.toInt),
           userAnswers.get(UnionPoliceReliefAmountPage(period)).map(_.toInt),
-          userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt)
+          userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt),
+          thresholdIncomeAmount.map(_.toInt)
         )
 
       (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {
