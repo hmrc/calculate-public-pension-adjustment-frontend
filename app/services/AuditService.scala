@@ -17,7 +17,7 @@
 package services
 
 import config.FrontendAppConfig
-import models.{CalculationAuditEvent, CalculationStartAuditEvent, CalculationTaskListAuditEvent}
+import models.{BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationStartAuditEvent, CalculationTaskListAuditEvent}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
@@ -28,6 +28,11 @@ class AuditService @Inject() (
   auditConnector: AuditConnector,
   config: FrontendAppConfig
 )(implicit ec: ExecutionContext) {
+
+  def auditBeforeCalculationRequest(event: BeforeCalculationAuditEvent)(implicit
+    hc: HeaderCarrier
+  ): Future[Unit] =
+    Future.successful(auditConnector.sendExplicitAudit(config.beforeCalculationAuditEventName, event))
 
   def auditCalculationRequest(event: CalculationAuditEvent)(implicit
     hc: HeaderCarrier
