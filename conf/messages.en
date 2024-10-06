@@ -422,14 +422,6 @@ excessLifetimeAllowancePaid.error.required = Select how the excess above your li
 excessLifetimeAllowancePaid.change.hidden = how the excess above your lifetime allowance was paid to you
 excessLifetimeAllowancePaid.hint = You can find this on your pension or bank statement.
 
-lifetimeAllowanceChargeAmount.title = What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.heading = What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.checkYourAnswersLabel = What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.error.nonNumeric = You have entered non-numerical characters for your lifetime allowance charge. You must enter numerical characters
-lifetimeAllowanceChargeAmount.error.required = Enter an amount for your lifetime allowance charge
-lifetimeAllowanceChargeAmount.error.wholeNumber = You have not entered a whole number for your lifetime allowance charge. You cannot use decimals.
-lifetimeAllowanceChargeAmount.error.outOfRange = You have entered too many characters for your lifetime allowance charge. The maximum number of characters you can enter is 9
-
 periodDateRangeAA.caption = Annual allowance between
 periodDateRangeAA.2016-pre = 6 April 2015 and 8 July 2015
 periodDateRangeAA.2016-post = 9 July 2015 and 5 April 2016

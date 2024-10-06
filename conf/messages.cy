@@ -422,14 +422,6 @@ excessLifetimeAllowancePaid.error.required = Dewiswch sut y cafodd y gormodedd s
 excessLifetimeAllowancePaid.change.hidden = sut y cafodd y gormodedd sydd uwchben eich lwfans oes ei dalu i chi
 excessLifetimeAllowancePaid.hint = Mae hwn i’w weld ar eich datganiad pensiwn neu’ch cyfriflen banc.
 
-lifetimeAllowanceChargeAmount.title = cy: What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.heading = cy: What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.checkYourAnswersLabel = cy: What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.error.nonNumeric = cy: You have entered non-numerical characters for your lifetime allowance charge. You must enter numerical characters
-lifetimeAllowanceChargeAmount.error.required = cy: Enter an amount for your lifetime allowance charge
-lifetimeAllowanceChargeAmount.error.wholeNumber = cy: You have not entered a whole number for your lifetime allowance charge. You cannot use decimals.
-lifetimeAllowanceChargeAmount.error.outOfRange = cy: You have entered too many characters for your lifetime allowance charge. The maximum number of characters you can enter is 9
-
 periodDateRangeAA.caption = Lwfans blynyddol rhwng
 periodDateRangeAA.2016 = 6 Ebrill 2015 a 5 Ebrill 2016
 periodDateRangeAA.2016-pre = 6 Ebrill 2015 a 8 Gorffennaf 2015
