@@ -17,34 +17,39 @@
 package services
 
 import base.SpecBase
-import connectors.{CalculationResultConnector, SubmissionsConnector}
+import connectors.{CalculationResultConnector, ReducedNetIncomeConnector, SubmissionsConnector}
 import controllers.annualallowance.taxyear.AboveThresholdController
 import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, CalculationReviewViewModel, LifetimeAllowanceSetup, Resubmission, ReviewRowViewModel, RowViewModel, Setup}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, ReducedNetIncomeResponse, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
 import play.api.libs.json.{JsObject, JsValue, Json}
+import uk.gov.hmrc.http.HeaderCarrier
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import java.time.LocalDate
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 import scala.io.Source
 
 class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
+  implicit lazy val headerCarrier: HeaderCarrier = HeaderCarrier()
+
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
   private val mockSubmissionsConnector       = mock[SubmissionsConnector]
   private val mockAuditService               = mock[AuditService]
+  private val mockReducedNetIncomeConnector  = mock[ReducedNetIncomeConnector]
   private val aboveThresholdController       = new AboveThresholdController
   private val service                        =
     new CalculationResultService(
       mockCalculationResultConnector,
       mockSubmissionsConnector,
+      mockReducedNetIncomeConnector,
       mockAuditService,
       aboveThresholdController
     )
@@ -59,1090 +64,1090 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
     val data1 = Json
       .parse(s"""
-           |{
-           |    "resubmittingAdjustment" : true,
-           |    "reasonForResubmission" : "Change in amounts",
-           |    "reportingChange" : [ "annualAllowance", "lifetimeAllowance" ],
-           |    "kickoutStatus": {
-           |      "annualAllowance": 2,
-           |      "lifetimeAllowance": 2
-           |    },
-           |    "setup": {
-           |      "aa": {
-           |        "savingsStatement": true,
-           |        "pensionProtectedMember": false,
-           |        "hadAACharge": false,
-           |        "contributionRefunds": false,
-           |        "netIncomeAbove100K": false,
-           |        "netIncomeAbove190K": false,
-           |        "maybePIAIncrease": "no",
-           |        "maybePIAUnchangedOrDecreased": "no",
-           |        "pIAAboveAnnualAllowanceIn2023": false,
-           |        "netIncomeAbove190KIn2023": false,
-           |        "flexibleAccessDcScheme": false,
-           |        "contribution4000ToDirectContributionScheme": false
-           |      },
-           |      "lta": {
-           |        "hadBenefitCrystallisationEvent": true,
-           |        "previousLTACharge": false,
-           |        "changeInLifetimeAllowance": true,
-           |        "increaseInLTACharge": false,
-           |        "newLTACharge": false,
-           |        "multipleBenefitCrystallisationEvent": false,
-           |        "otherSchemeNotification": false
-           |      }
-           |    },
-           |    "scottishTaxpayerFrom2016" : false,
-           |    "payingPublicPensionScheme" : true,
-           |    "definedContributionPensionScheme" : true,
-           |    "flexiblyAccessedPension" : true,
-           |    "flexibleAccessStartDate" : "2015-05-25",
-           |    "payTaxCharge1415" : false,
-           |     "2011" : {
-           |      "registeredYear" : true,
-           |      "pIAPreRemedy" : 10000
-           |    },
-           |    "2012" : {
-           |      "registeredYear" : false
-           |    },
-           |    "2013" : {
-           |      "registeredYear" : true,
-           |      "pIAPreRemedy" : 40000
-           |    },
-           |    "2014" : {
-           |      "registeredYear" : true,
-           |      "pIAPreRemedy" : 20000
-           |    },
-           |    "2015" : {
-           |      "registeredYear" : true,
-           |      "pIAPreRemedy" : 60000
-           |    },
-           |    "aa" : {
-           |      "years" : {
-           |        "2016" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "PensionSchemeInput2016preAmounts" : {
-           |                "revisedPIA" : 30000
-           |              },
-           |              "PensionSchemeInput2016postAmounts" : {
-           |                "revisedPIA" : 30000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
-           |          "definedContribution2016PreAmount" : 6015,
-           |          "definedContribution2016PostAmount" : 6016,
-           |          "definedContribution2016PreFlexiAmount" : 10015,
-           |          "definedBenefit2016PreAmount" : 30015,
-           |          "definedBenefit2016PostAmount" : 30016,
-           |          "totalIncome" : 60000,
-           |          "claimingTaxReliefPension": true,
-           |          "taxRelief": 888,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2017" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 35000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2018" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 40000
-           |              },
-           |              "payACharge" : true,
-           |              "whoPaidAACharge" : "both",
-           |              "howMuchAAChargeYouPaid" : 1000,
-           |              "howMuchAAChargeSchemePaid" : 1000
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2019" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 35000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2020" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 34000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 34000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2021" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 36000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2022" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 44000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 44000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2023" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 53000
-           |              },
-           |              "payACharge" : true,
-           |              "whoPaidAACharge" : "scheme",
-           |              "howMuchAAChargeSchemePaid" : 4400
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 53000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        }
-           |      }
-           |    },
-           |    "lta": {
-           |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
-           |      "increaseInLTACharge": true,
-           |      "newLTACharge": true,
-           |      "ltaProtectionOrEnhancements": "protection",
-           |      "protectionType": "fixedProtection2014",
-           |      "protectionReference": "R41AB678TR23355",
-           |      "protectionTypeEnhancementChanged": true,
-           |      "whatNewProtectionTypeEnhancement": "individualProtection2016",
-           |      "referenceNewProtectionTypeEnhancement": "2134567801",
-           |      "lifetimeAllowanceCharge": true,
-           |      "excessLifetimeAllowancePaid": "annualPayment",
-           |      "lifetimeAllowanceChargeAmount": 20000,
-           |      "whoPaidLTACharge": "pensionScheme",
-           |      "schemeNameAndTaxRef": {
-           |        "name": "Scheme 1",
-           |        "taxRef": "00348916RT"
-           |      },
-           |      "valueNewLtaCharge": 30000,
-           |      "whoPayingExtraLtaCharge": "you"
-           |    }
-           |  }
-           |""".stripMargin)
+                |{
+                |    "resubmittingAdjustment" : true,
+                |    "reasonForResubmission" : "Change in amounts",
+                |    "reportingChange" : [ "annualAllowance", "lifetimeAllowance" ],
+                |    "kickoutStatus": {
+                |      "annualAllowance": 2,
+                |      "lifetimeAllowance": 2
+                |    },
+                |    "setup": {
+                |      "aa": {
+                |        "savingsStatement": true,
+                |        "pensionProtectedMember": false,
+                |        "hadAACharge": false,
+                |        "contributionRefunds": false,
+                |        "netIncomeAbove100K": false,
+                |        "netIncomeAbove190K": false,
+                |        "maybePIAIncrease": "no",
+                |        "maybePIAUnchangedOrDecreased": "no",
+                |        "pIAAboveAnnualAllowanceIn2023": false,
+                |        "netIncomeAbove190KIn2023": false,
+                |        "flexibleAccessDcScheme": false,
+                |        "contribution4000ToDirectContributionScheme": false
+                |      },
+                |      "lta": {
+                |        "hadBenefitCrystallisationEvent": true,
+                |        "previousLTACharge": false,
+                |        "changeInLifetimeAllowance": true,
+                |        "increaseInLTACharge": false,
+                |        "newLTACharge": false,
+                |        "multipleBenefitCrystallisationEvent": false,
+                |        "otherSchemeNotification": false
+                |      }
+                |    },
+                |    "scottishTaxpayerFrom2016" : false,
+                |    "payingPublicPensionScheme" : true,
+                |    "definedContributionPensionScheme" : true,
+                |    "flexiblyAccessedPension" : true,
+                |    "flexibleAccessStartDate" : "2015-05-25",
+                |    "payTaxCharge1415" : false,
+                |     "2011" : {
+                |      "registeredYear" : true,
+                |      "pIAPreRemedy" : 10000
+                |    },
+                |    "2012" : {
+                |      "registeredYear" : false
+                |    },
+                |    "2013" : {
+                |      "registeredYear" : true,
+                |      "pIAPreRemedy" : 40000
+                |    },
+                |    "2014" : {
+                |      "registeredYear" : true,
+                |      "pIAPreRemedy" : 20000
+                |    },
+                |    "2015" : {
+                |      "registeredYear" : true,
+                |      "pIAPreRemedy" : 60000
+                |    },
+                |    "aa" : {
+                |      "years" : {
+                |        "2016" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "PensionSchemeInput2016preAmounts" : {
+                |                "revisedPIA" : 30000
+                |              },
+                |              "PensionSchemeInput2016postAmounts" : {
+                |                "revisedPIA" : 30000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
+                |          "definedContribution2016PreAmount" : 6015,
+                |          "definedContribution2016PostAmount" : 6016,
+                |          "definedContribution2016PreFlexiAmount" : 10015,
+                |          "definedBenefit2016PreAmount" : 30015,
+                |          "definedBenefit2016PostAmount" : 30016,
+                |          "totalIncome" : 60000,
+                |          "claimingTaxReliefPension": true,
+                |          "taxRelief": 888,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2017" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 35000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 35000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2018" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 40000
+                |              },
+                |              "payACharge" : true,
+                |              "whoPaidAACharge" : "both",
+                |              "howMuchAAChargeYouPaid" : 1000,
+                |              "howMuchAAChargeSchemePaid" : 1000
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : false,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2019" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 35000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 35000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2020" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 34000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 34000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2021" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 36000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : false,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2022" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 44000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 44000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2023" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 53000
+                |              },
+                |              "payACharge" : true,
+                |              "whoPaidAACharge" : "scheme",
+                |              "howMuchAAChargeSchemePaid" : 4400
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 53000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        }
+                |      }
+                |    },
+                |    "lta": {
+                |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
+                |      "increaseInLTACharge": true,
+                |      "newLTACharge": true,
+                |      "ltaProtectionOrEnhancements": "protection",
+                |      "protectionType": "fixedProtection2014",
+                |      "protectionReference": "R41AB678TR23355",
+                |      "protectionTypeEnhancementChanged": true,
+                |      "whatNewProtectionTypeEnhancement": "individualProtection2016",
+                |      "referenceNewProtectionTypeEnhancement": "2134567801",
+                |      "lifetimeAllowanceCharge": true,
+                |      "excessLifetimeAllowancePaid": "annualPayment",
+                |      "lifetimeAllowanceChargeAmount": 20000,
+                |      "whoPaidLTACharge": "pensionScheme",
+                |      "schemeNameAndTaxRef": {
+                |        "name": "Scheme 1",
+                |        "taxRef": "00348916RT"
+                |      },
+                |      "valueNewLtaCharge": 30000,
+                |      "whoPayingExtraLtaCharge": "you"
+                |    }
+                |  }
+                |""".stripMargin)
       .as[JsObject]
 
     val data2 = Json
       .parse(s"""
-           |{
-           |    "savingsStatement" : true,
-           |    "resubmittingAdjustment" : true,
-           |    "reasonForResubmission" : "Change in amounts",
-           |    "reportingChange" : [ "annualAllowance" ],
-           |    "scottishTaxpayerFrom2016" : false,
-           |    "payingPublicPensionScheme" : true,
-           |    "definedContributionPensionScheme" : true,
-           |    "flexiblyAccessedPension" : true,
-           |    "flexibleAccessStartDate" : "2015-05-25",
-           |    "payTaxCharge1415" : false,
-           |    "aa" : {
-           |      "years" : {
-           |         "2016" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "PensionSchemeInput2016preAmounts" : {
-           |                "revisedPIA" : 30000
-           |              },
-           |              "PensionSchemeInput2016postAmounts" : {
-           |                "revisedPIA" : 40000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
-           |          "definedContribution2016PreAmount" : 6000,
-           |          "definedContribution2016PreFlexiAmount" : 10000,
-           |          "definedBenefit2016PreAmount" : 30000,
-           |          "definedBenefit2016PostAmount" : 40000,
-           |          "totalIncome" : 60000,
-           |          "claimingTaxReliefPension": true,
-           |          "taxRelief": 888,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2017" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 35000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2018" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 40000
-           |              },
-           |              "payACharge" : true,
-           |              "whoPaidAACharge" : "both",
-           |              "howMuchAAChargeYouPaid" : 1000,
-           |              "howMuchAAChargeSchemePaid" : 1000
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2019" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 35000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2020" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 34000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 34000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2021" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 36000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : "yes",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2022" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 44000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 44000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "payeCodeAdjustment": "increase",
-           |          "codeAdjustmentAmount": 2740,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2023" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 53000
-           |              },
-           |              "payACharge" : true,
-           |              "whoPaidAACharge" : "scheme",
-           |              "howMuchAAChargeSchemePaid" : 4400
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 53000,
-           |          "thresholdIncome" : "idk",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        }
-           |      }
-           |    }
-           |  }
-           |""".stripMargin)
+                |{
+                |    "savingsStatement" : true,
+                |    "resubmittingAdjustment" : true,
+                |    "reasonForResubmission" : "Change in amounts",
+                |    "reportingChange" : [ "annualAllowance" ],
+                |    "scottishTaxpayerFrom2016" : false,
+                |    "payingPublicPensionScheme" : true,
+                |    "definedContributionPensionScheme" : true,
+                |    "flexiblyAccessedPension" : true,
+                |    "flexibleAccessStartDate" : "2015-05-25",
+                |    "payTaxCharge1415" : false,
+                |    "aa" : {
+                |      "years" : {
+                |         "2016" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "PensionSchemeInput2016preAmounts" : {
+                |                "revisedPIA" : 30000
+                |              },
+                |              "PensionSchemeInput2016postAmounts" : {
+                |                "revisedPIA" : 40000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
+                |          "definedContribution2016PreAmount" : 6000,
+                |          "definedContribution2016PreFlexiAmount" : 10000,
+                |          "definedBenefit2016PreAmount" : 30000,
+                |          "definedBenefit2016PostAmount" : 40000,
+                |          "totalIncome" : 60000,
+                |          "claimingTaxReliefPension": true,
+                |          "taxRelief": 888,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2017" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 35000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 35000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2018" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 40000
+                |              },
+                |              "payACharge" : true,
+                |              "whoPaidAACharge" : "both",
+                |              "howMuchAAChargeYouPaid" : 1000,
+                |              "howMuchAAChargeSchemePaid" : 1000
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : false,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2019" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 35000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 35000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2020" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 34000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 34000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2021" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 36000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : false,
+                |          "thresholdIncome" : "yes",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2022" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 44000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 44000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "payeCodeAdjustment": "increase",
+                |          "codeAdjustmentAmount": 2740,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2023" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 53000
+                |              },
+                |              "payACharge" : true,
+                |              "whoPaidAACharge" : "scheme",
+                |              "howMuchAAChargeSchemePaid" : 4400
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 53000,
+                |          "thresholdIncome" : "idk",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        }
+                |      }
+                |    }
+                |  }
+                |""".stripMargin)
       .as[JsObject]
 
     val data3 = Json
       .parse(s"""
-           |{
-           |    "savingsStatement" : true,
-           |    "resubmittingAdjustment" : false,
-           |    "reportingChange" : [ "annualAllowance" ],
-           |    "kickoutStatus": {
-           |      "annualAllowance": 2
-           |    },
-           |    "setup": {
-           |      "aa": {
-           |        "savingsStatement": true
-           |      }
-           |    },
-           |    "scottishTaxpayerFrom2016" : false,
-           |    "payingPublicPensionScheme" : true,
-           |    "definedContributionPensionScheme" : true,
-           |    "flexiblyAccessedPension" : true,
-           |    "flexibleAccessStartDate" : "2015-05-25",
-           |    "payTaxCharge1415" : false,
-           |    "2011" : {
-           |      "registeredYear" : false
-           |    },
-           |    "2012" : {
-           |      "registeredYear" : true,
-           |      "pIAPreRemedy" : 10000
-           |    },
-           |    "2013" : {
-           |      "registeredYear" : true,
-           |      "pIAPreRemedy" : 40000
-           |    },
-           |    "2014" : {
-           |      "registeredYear" : false
-           |    },
-           |    "2015" : {
-           |      "registeredYear" : false
-           |    },
-           |    "aa" : {
-           |      "years" : {
-           |         "2016" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "PensionSchemeInput2016preAmounts" : {
-           |                "revisedPIA" : 30000
-           |              },
-           |              "PensionSchemeInput2016postAmounts" : {
-           |                "revisedPIA" : 40000
-           |              },
-           |              "payACharge" : true,
-           |              "whoPaidAACharge" : "you",
-           |              "howMuchAAChargeYouPaid" : 2000
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
-           |          "definedContribution2016PreAmount" : 6000,
-           |          "definedContribution2016PreFlexiAmount" : 10000,
-           |          "definedBenefit2016PreAmount" : 30000,
-           |          "definedBenefit2016PostAmount" : 40000,
-           |          "totalIncome" : 60000,
-           |          "claimingTaxReliefPension": true,
-           |          "taxRelief": 888,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2017" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 35000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2018" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 40000
-           |              },
-           |              "payACharge" : true,
-           |              "whoPaidAACharge" : "both",
-           |              "howMuchAAChargeYouPaid" : 1000,
-           |              "howMuchAAChargeSchemePaid" : 1000
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : false,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        },
-           |        "2019" : {
-           |          "memberMoreThanOnePension" : false,
-           |          "schemes" : {
-           |            "0" : {
-           |              "pensionSchemeDetails" : {
-           |                "schemeName" : "Scheme 1",
-           |                "schemeTaxRef" : "00348916RT"
-           |              },
-           |              "whichScheme" : "00348916RT",
-           |              "pensionSchemeInputAmounts" : {
-           |                "revisedPIA" : 35000
-           |              },
-           |              "payACharge" : false
-           |            }
-           |          },
-           |          "otherDefinedBenefitOrContribution" : true,
-           |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
-           |          "definedBenefitAmount" : 35000,
-           |          "thresholdIncome" : "no",
-           |          "totalIncome" : 60000,
-           |          "anySalarySacrificeArrangements": true,
-           |          "amountSalarySacrificeArrangements": 444,
-           |          "flexibleRemunerationArrangements": true,
-           |          "amountFlexibleRemunerationArrangements": 666,
-           |          "didYouContributeToRASScheme": true,
-           |		  "rASContributionAmount": 712,
-           |          "howMuchContributionPensionScheme": 1212,
-           |          "anyLumpSumDeathBenefits": true,
-           |          "lumpSumDeathBenefitsValue": 777,
-           |          "claimingTaxReliefPension": true,
-           |          "aboveThreshold": true,
-           |          "taxRelief": 888,
-           |          "knowAdjustedAmount": false,
-           |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
-           |          "howMuchTaxReliefPension": 1111,
-           |          "areYouNonDom": true,
-           |          "hasReliefClaimedOnOverseasPension": true,
-           |          "amountClaimedOnOverseasPension": 1414,
-           |          "doYouHaveGiftAid": true,
-           |          "amountOfGiftAid": 842,
-           |          "doYouKnowPersonalAllowance": false,
-           |          "doYouHaveCodeAdjustment": true,
-           |          "tradeUnionRelief": true,
-           |          "unionPoliceReliefAmount": 90,
-           |          "blindAllowance": true,
-           |          "blindPersonsAllowanceAmount": 2291
-           |        }
-           |      }
-           |    },
-           |    "lta": {
-           |      "hadBenefitCrystallisationEvent": true,
-           |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
-           |      "changeInLifetimeAllowance": true,
-           |      "increaseInLTACharge": false
-           |    }
-           |  }
-           |""".stripMargin)
+                |{
+                |    "savingsStatement" : true,
+                |    "resubmittingAdjustment" : false,
+                |    "reportingChange" : [ "annualAllowance" ],
+                |    "kickoutStatus": {
+                |      "annualAllowance": 2
+                |    },
+                |    "setup": {
+                |      "aa": {
+                |        "savingsStatement": true
+                |      }
+                |    },
+                |    "scottishTaxpayerFrom2016" : false,
+                |    "payingPublicPensionScheme" : true,
+                |    "definedContributionPensionScheme" : true,
+                |    "flexiblyAccessedPension" : true,
+                |    "flexibleAccessStartDate" : "2015-05-25",
+                |    "payTaxCharge1415" : false,
+                |    "2011" : {
+                |      "registeredYear" : false
+                |    },
+                |    "2012" : {
+                |      "registeredYear" : true,
+                |      "pIAPreRemedy" : 10000
+                |    },
+                |    "2013" : {
+                |      "registeredYear" : true,
+                |      "pIAPreRemedy" : 40000
+                |    },
+                |    "2014" : {
+                |      "registeredYear" : false
+                |    },
+                |    "2015" : {
+                |      "registeredYear" : false
+                |    },
+                |    "aa" : {
+                |      "years" : {
+                |         "2016" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "PensionSchemeInput2016preAmounts" : {
+                |                "revisedPIA" : 30000
+                |              },
+                |              "PensionSchemeInput2016postAmounts" : {
+                |                "revisedPIA" : 40000
+                |              },
+                |              "payACharge" : true,
+                |              "whoPaidAACharge" : "you",
+                |              "howMuchAAChargeYouPaid" : 2000
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedContribution", "definedBenefit" ],
+                |          "definedContribution2016PreAmount" : 6000,
+                |          "definedContribution2016PreFlexiAmount" : 10000,
+                |          "definedBenefit2016PreAmount" : 30000,
+                |          "definedBenefit2016PostAmount" : 40000,
+                |          "totalIncome" : 60000,
+                |          "claimingTaxReliefPension": true,
+                |          "taxRelief": 888,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2017" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 35000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 35000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2018" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 40000
+                |              },
+                |              "payACharge" : true,
+                |              "whoPaidAACharge" : "both",
+                |              "howMuchAAChargeYouPaid" : 1000,
+                |              "howMuchAAChargeSchemePaid" : 1000
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : false,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        },
+                |        "2019" : {
+                |          "memberMoreThanOnePension" : false,
+                |          "schemes" : {
+                |            "0" : {
+                |              "pensionSchemeDetails" : {
+                |                "schemeName" : "Scheme 1",
+                |                "schemeTaxRef" : "00348916RT"
+                |              },
+                |              "whichScheme" : "00348916RT",
+                |              "pensionSchemeInputAmounts" : {
+                |                "revisedPIA" : 35000
+                |              },
+                |              "payACharge" : false
+                |            }
+                |          },
+                |          "otherDefinedBenefitOrContribution" : true,
+                |          "contributedToDuringRemedyPeriod" : [ "definedBenefit" ],
+                |          "definedBenefitAmount" : 35000,
+                |          "thresholdIncome" : "no",
+                |          "totalIncome" : 60000,
+                |          "anySalarySacrificeArrangements": true,
+                |          "amountSalarySacrificeArrangements": 444,
+                |          "flexibleRemunerationArrangements": true,
+                |          "amountFlexibleRemunerationArrangements": 666,
+                |          "didYouContributeToRASScheme": true,
+                |		  "rASContributionAmount": 712,
+                |          "howMuchContributionPensionScheme": 1212,
+                |          "anyLumpSumDeathBenefits": true,
+                |          "lumpSumDeathBenefitsValue": 777,
+                |          "claimingTaxReliefPension": true,
+                |          "aboveThreshold": true,
+                |          "taxRelief": 888,
+                |          "knowAdjustedAmount": false,
+                |          "ClaimingTaxReliefPensionNotAdjustedIncome": true,
+                |          "howMuchTaxReliefPension": 1111,
+                |          "areYouNonDom": true,
+                |          "hasReliefClaimedOnOverseasPension": true,
+                |          "amountClaimedOnOverseasPension": 1414,
+                |          "doYouHaveGiftAid": true,
+                |          "amountOfGiftAid": 842,
+                |          "doYouKnowPersonalAllowance": false,
+                |          "doYouHaveCodeAdjustment": true,
+                |          "tradeUnionRelief": true,
+                |          "unionPoliceReliefAmount": 90,
+                |          "blindAllowance": true,
+                |          "blindPersonsAllowanceAmount": 2291
+                |        }
+                |      }
+                |    },
+                |    "lta": {
+                |      "hadBenefitCrystallisationEvent": true,
+                |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
+                |      "changeInLifetimeAllowance": true,
+                |      "increaseInLTACharge": false
+                |    }
+                |  }
+                |""".stripMargin)
       .as[JsObject]
 
     val data4 = Json
       .parse("""
-        |{
-        |    "savingsStatement": true,
-        |    "resubmittingAdjustment": false,
-        |    "reportingChange": [
-        |      "lifetimeAllowance"
-        |    ],
-        |    "lta": {
-        |      "hadBenefitCrystallisationEvent": true,
-        |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
-        |      "changeInLifetimeAllowance": true,
-        |      "increaseInLTACharge": true,
-        |      "newLTACharge": true,
-        |      "ltaProtectionOrEnhancements": "protection",
-        |      "protectionType": "fixedProtection2014",
-        |      "protectionReference": "R41AB678TR23355",
-        |      "protectionTypeEnhancementChanged": true,
-        |      "whatNewProtectionTypeEnhancement": "individualProtection2016",
-        |      "referenceNewProtectionTypeEnhancement": "2134567801",
-        |      "lifetimeAllowanceCharge": true,
-        |      "excessLifetimeAllowancePaid": "annualPayment",
-        |      "lifetimeAllowanceChargeAmount": 20000,
-        |      "whoPaidLTACharge": "pensionScheme",
-        |      "schemeNameAndTaxRef": {
-        |        "name": "Scheme 1",
-        |        "taxRef": "00348916RT"
-        |      },
-        |      "valueNewLtaCharge": 30000,
-        |      "whoPayingExtraLtaCharge": "you"
-        |    }
-        |  }
-        |""".stripMargin)
+               |{
+               |    "savingsStatement": true,
+               |    "resubmittingAdjustment": false,
+               |    "reportingChange": [
+               |      "lifetimeAllowance"
+               |    ],
+               |    "lta": {
+               |      "hadBenefitCrystallisationEvent": true,
+               |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
+               |      "changeInLifetimeAllowance": true,
+               |      "increaseInLTACharge": true,
+               |      "newLTACharge": true,
+               |      "ltaProtectionOrEnhancements": "protection",
+               |      "protectionType": "fixedProtection2014",
+               |      "protectionReference": "R41AB678TR23355",
+               |      "protectionTypeEnhancementChanged": true,
+               |      "whatNewProtectionTypeEnhancement": "individualProtection2016",
+               |      "referenceNewProtectionTypeEnhancement": "2134567801",
+               |      "lifetimeAllowanceCharge": true,
+               |      "excessLifetimeAllowancePaid": "annualPayment",
+               |      "lifetimeAllowanceChargeAmount": 20000,
+               |      "whoPaidLTACharge": "pensionScheme",
+               |      "schemeNameAndTaxRef": {
+               |        "name": "Scheme 1",
+               |        "taxRef": "00348916RT"
+               |      },
+               |      "valueNewLtaCharge": 30000,
+               |      "whoPayingExtraLtaCharge": "you"
+               |    }
+               |  }
+               |""".stripMargin)
       .as[JsObject]
 
     val data5 = Json
@@ -1197,30 +1202,30 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
     val data8 = Json
       .parse("""
-          |{
-          |    "savingsStatement": true,
-          |    "resubmittingAdjustment": false,
-          |    "reportingChange": [
-          |      "lifetimeAllowance"
-          |    ],
-          |    "lta": {
-          |      "hadBenefitCrystallisationEvent": true,
-          |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
-          |      "changeInLifetimeAllowance": true,
-          |      "increaseInLTACharge": true,
-          |      "newLTACharge": true,
-          |      "ltaProtectionOrEnhancements": "protection",
-          |      "protectionType": "fixedProtection2014",
-          |      "protectionReference": "R41AB678TR23355",
-          |      "protectionTypeEnhancementChanged": true,
-          |      "whatNewProtectionTypeEnhancement": "individualProtection2016",
-          |      "referenceNewProtectionTypeEnhancement": "2134567801",
-          |      "lifetimeAllowanceCharge": false,
-          |      "newExcessLifetimeAllowancePaid": "annualPayment",
-          |      "newAnnualPaymentValue": 0
-          |    }
-          |  }
-          |""".stripMargin)
+               |{
+               |    "savingsStatement": true,
+               |    "resubmittingAdjustment": false,
+               |    "reportingChange": [
+               |      "lifetimeAllowance"
+               |    ],
+               |    "lta": {
+               |      "hadBenefitCrystallisationEvent": true,
+               |      "dateOfBenefitCrystallisationEvent": "2018-11-28",
+               |      "changeInLifetimeAllowance": true,
+               |      "increaseInLTACharge": true,
+               |      "newLTACharge": true,
+               |      "ltaProtectionOrEnhancements": "protection",
+               |      "protectionType": "fixedProtection2014",
+               |      "protectionReference": "R41AB678TR23355",
+               |      "protectionTypeEnhancementChanged": true,
+               |      "whatNewProtectionTypeEnhancement": "individualProtection2016",
+               |      "referenceNewProtectionTypeEnhancement": "2134567801",
+               |      "lifetimeAllowanceCharge": false,
+               |      "newExcessLifetimeAllowancePaid": "annualPayment",
+               |      "newAnnualPaymentValue": 0
+               |    }
+               |  }
+               |""".stripMargin)
       .as[JsObject]
 
     val data9 = Json
@@ -2419,7 +2424,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     "toTaxYear2016To2023" - {
 
       "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016)
+
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016).futureValue
 
         result mustBe Some(
           InitialFlexiblyAccessedTaxYear(
@@ -2443,10 +2451,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               None,
-              None,
+              Some(1),
               None,
               Some(2291),
-              None
+              None,
+              Some(2)
             ),
             None,
             Some(30016),
@@ -2456,7 +2465,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016 when PublicPension" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016).futureValue
 
         result mustBe Some(
           InitialFlexiblyAccessedTaxYear(
@@ -2480,10 +2491,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               None,
-              None,
+              Some(1),
               None,
               Some(2291),
-              None
+              None,
+              Some(2)
             ),
             None,
             Some(30016),
@@ -2493,7 +2505,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2017" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2017)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2017).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2515,10 +2529,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
-              None
+              None,
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2526,7 +2541,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2018" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2018)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2018).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2548,10 +2565,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
-              None
+              None,
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2559,7 +2577,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2019" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2019)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2019).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2581,10 +2601,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
-              None
+              None,
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2592,7 +2613,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2020" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2020)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2020).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2614,10 +2637,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
-              None
+              None,
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2625,7 +2649,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2021" in {
-        val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2021)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2021).futureValue
 
         result mustBe
           Some(
@@ -2648,10 +2674,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 Some(1212),
                 Some(1414),
                 Some(842),
-                None,
+                Some(1),
                 Some(90),
                 Some(2291),
-                None
+                None,
+                Some(2)
               ),
               Some(AboveThreshold(96148))
             )
@@ -2659,7 +2686,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2022" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2022)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2022).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2681,10 +2710,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
-              None
+              None,
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2692,7 +2722,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2023" in {
-        val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2023)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2023).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2714,10 +2746,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
-              Some(58733)
+              Some(58733),
+              Some(2)
             ),
             income = Some(AboveThreshold(166148))
           )
@@ -2728,9 +2761,12 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
     "buildInputs" - {
 
+      when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+
       "should return 2016 as the InitialFlexiblyAccessedTaxYear when stopPayingPublicPension falls in 2016 " in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data14))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data14)).futureValue
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -2763,10 +2799,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    None,
+                    Some(1),
                     None,
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   None,
                   None,
@@ -2782,7 +2819,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016 post period" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data11))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data11)).futureValue
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -2815,10 +2852,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    None,
+                    Some(1),
                     None,
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   None,
                   Some(2100),
@@ -2844,10 +2882,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(AboveThreshold(177748)),
                   None,
@@ -2872,10 +2911,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold),
                   None,
@@ -2890,7 +2930,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016 pre period" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data13))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data13)).futureValue
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -2923,10 +2963,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    None,
+                    Some(1),
                     None,
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   None,
                   Some(2100),
@@ -2952,10 +2993,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(AboveThreshold(177748)),
                   None,
@@ -2980,10 +3022,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold),
                   None,
@@ -2998,7 +3041,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return 2016, 2017 as the NormalTaxYear and 2018 as the InitialFlexiblyAccessedTaxYear and 2019 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2018" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data12))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data12)).futureValue
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Incorrect data")),
@@ -3031,10 +3074,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    None,
+                    Some(1),
                     None,
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   None,
                   Some(61000)
@@ -3057,10 +3101,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold),
                   None
@@ -3086,10 +3131,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(AboveThreshold(209548)),
                   None,
@@ -3115,10 +3161,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold),
                   None,
@@ -3134,7 +3181,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs for a valid UserAnswers with all years" in {
 
-        val result = service.buildCalculationInputs(userAnswers1)
+        val result = service.buildCalculationInputs(userAnswers1).futureValue
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Change in amounts")),
@@ -3196,10 +3243,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    None,
+                    Some(1),
                     None,
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   None,
                   Some(30016),
@@ -3224,10 +3272,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3250,10 +3299,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3276,10 +3326,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3302,10 +3353,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3328,10 +3380,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3354,10 +3407,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3380,10 +3434,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 )
@@ -3428,7 +3483,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs for a valid UserAnswers with missing years" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data3))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data3)).futureValue
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -3463,10 +3518,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    None,
+                    Some(1),
                     None,
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   None,
                   Some(40000),
@@ -3492,10 +3548,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3518,10 +3575,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3544,10 +3602,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 )
@@ -3560,7 +3619,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9)).futureValue
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -3590,10 +3649,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    None,
+                    Some(1),
                     None,
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   None,
                   Some(40000)
@@ -3616,10 +3676,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3641,10 +3702,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3666,10 +3728,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 )
@@ -3682,7 +3745,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10)).futureValue
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -3712,10 +3775,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     None,
-                    None,
+                    Some(1),
                     None,
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   None,
                   Some(34000)
@@ -3738,10 +3802,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold),
                   None
@@ -3767,10 +3832,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(AboveThreshold(243148))
                 ),
@@ -3793,10 +3859,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 ),
@@ -3819,10 +3886,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(1212),
                     Some(1414),
                     Some(842),
-                    None,
+                    Some(1),
                     Some(90),
                     Some(2291),
-                    None
+                    None,
+                    Some(2)
                   ),
                   Some(BelowThreshold)
                 )
@@ -4313,20 +4381,23 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
+      when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
+        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
+      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
       submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
     }
 
     "must fail when a valid calculation result cannot be obtained" in {
 
+      when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
+        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
       when(mockCalculationResultConnector.sendRequest(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
-      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
 
@@ -4334,11 +4405,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
+      when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
+        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
   }
