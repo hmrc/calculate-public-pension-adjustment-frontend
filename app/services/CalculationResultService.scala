@@ -16,14 +16,14 @@
 
 package services
 
-import connectors.{CalculationResultConnector, SubmissionsConnector}
+import connectors.{CalculationResultConnector, ReducedNetIncomeConnector, SubmissionsConnector}
 import controllers.annualallowance.taxyear.AboveThresholdController
 import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AAKickOutStatus, AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AAKickOutStatus, AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReducedNetIncome, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -33,6 +33,7 @@ import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, Res
 import play.api.Logging
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import java.time.LocalDate
 import javax.inject.Inject
@@ -41,6 +42,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class CalculationResultService @Inject() (
   calculationResultConnector: CalculationResultConnector,
   submissionsConnector: SubmissionsConnector,
+  reducedNetIncomeConnector: ReducedNetIncomeConnector,
   auditService: AuditService,
   aboveThresholdController: AboveThresholdController
 )(implicit
@@ -274,7 +276,7 @@ class CalculationResultService @Inject() (
   def toTaxYear2016To2023(
     userAnswers: UserAnswers,
     period: Period
-  ): Option[TaxYear2016To2023] = {
+  )(implicit hc: HeaderCarrier): Option[TaxYear2016To2023] = {
 
     val totalIncome: Int = userAnswers.get(TotalIncomePage(period)).map(_.toInt).getOrElse(0)
 
@@ -383,7 +385,46 @@ class CalculationResultService @Inject() (
           userAnswers.get(PersonalAllowancePage(period)).map(_.toInt),
           userAnswers.get(UnionPoliceReliefAmountPage(period)).map(_.toInt),
           userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt),
-          thresholdIncomeAmount.map(_.toInt)
+          thresholdIncomeAmount.map(_.toInt),
+          None
+        )
+
+      //API CALL
+      val scottishTaxYears: List[Period] = userAnswers.data.fields
+        .find(_._1 == WhichYearsScottishTaxpayerPage.toString)
+        .fold {
+          List.empty[Period]
+        } {
+          _._2.as[List[String]] flatMap { sYear =>
+            Period.fromString(sYear)
+          }
+        }
+
+      val personalAllowanceAndReducedNetIncome = ReducedNetIncome(reducedNetIncomeConnector.sendReducedNetIncomeRequest(period, scottishTaxYears, totalIncome, incomeSubJourney)(hc))
+
+      println("===================================================")
+      println(personalAllowanceAndReducedNetIncome.personalAllowance)
+      println(personalAllowanceAndReducedNetIncome.reducedNetIncome)
+      println("===================================================")
+
+      val updatedIncomeSubJourney =
+        IncomeSubJourney(
+          userAnswers.get(AmountSalarySacrificeArrangementsPage(period)).map(_.toInt),
+          userAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)).map(_.toInt),
+          userAnswers.get(RASContributionAmountPage(period)).map(_.toInt),
+          userAnswers.get(LumpSumDeathBenefitsValuePage(period)).map(_.toInt),
+          userAnswers.get(models.AboveThreshold(period)),
+          userAnswers.get(TaxReliefPage(period)).map(_.toInt),
+          userAnswers.get(AdjustedIncomePage(period)).map(_.toInt),
+          userAnswers.get(HowMuchTaxReliefPensionPage(period)).map(_.toInt),
+          userAnswers.get(HowMuchContributionPensionSchemePage(period)).map(_.toInt),
+          userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).map(_.toInt),
+          userAnswers.get(AmountOfGiftAidPage(period)).map(_.toInt),
+          userAnswers.get(PersonalAllowancePage(period)).map(_.toInt),
+          userAnswers.get(UnionPoliceReliefAmountPage(period)).map(_.toInt),
+          userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt),
+          thresholdIncomeAmount.map(_.toInt),
+          personalAllowanceAndReducedNetIncome.reducedNetIncome
         )
 
       (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {
