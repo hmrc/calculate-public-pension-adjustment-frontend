@@ -21,7 +21,9 @@ import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.submission.Success
 import models.{Done, IncomeSubJourney, Period, ReducedNetIncomeRequest}
 import play.api.http.Status.{ACCEPTED, NO_CONTENT, OK}
-import play.api.libs.json.Json
+import play.api.libs.functional.syntax.toFunctionalBuilderOps
+import play.api.libs.json.JsPath.\
+import play.api.libs.json.{Json, Reads, __}
 import play.api.{Configuration, Logging}
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
@@ -36,6 +38,11 @@ class ReducedNetIncomeConnector @Inject()(config: Configuration, httpClient: Htt
   private val baseUrl = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
   private val testUrl = url"$baseUrl/calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income"
 
+  implicit val tupleReads: Reads[(Int, Int)] = (
+    (__ \ "x").read[Int] and
+      (__ \ "y").read[Int]
+    ).tupled
+
   def sendReducedNetIncomeRequest(
                              reducedNetIncomeRequest: ReducedNetIncomeRequest
                            )(implicit hc: HeaderCarrier): Future[(Int,Int)] =
@@ -47,9 +54,9 @@ class ReducedNetIncomeConnector @Inject()(config: Configuration, httpClient: Htt
       .flatMap { response =>
         response.status match {
           case OK =>
-            println("//////// MAKES IT///////////")
-            println(response.json)
-            println(response.json.as[(Int,Int)])
+            println("::::::::::::::::Response as body::::::::::::")
+            println(response.body)
+            println(response.json.as[(Int,Int)]+ "&&&&&&&&&&&&&&&&&&&&&&&")
             Future.successful(response.json.as[(Int,Int)])
 //            Future.successful(response.json.as[(Int,Int)])
           case _        =>

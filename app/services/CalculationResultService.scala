@@ -38,6 +38,7 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success}
 
 class CalculationResultService @Inject() (
   calculationResultConnector: CalculationResultConnector,
@@ -402,17 +403,20 @@ class CalculationResultService @Inject() (
 
       val personalAllowanceAndReducedNetIncome = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc)
 
-      for {
-        test <-
-          reducedNetIncomeConnector.sendReducedNetIncomeRequest(
-            reducedNetIncomeRequest
-          )
-      } yield test
+      def getCalculatedReducedNetIncomeAndPersonAllowance: Unit = {
+        val xY = for {
+          test <-
+            reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)
+          reducedNetIncome = test._1
+            personalAllowance = test._2
+        }yield (reducedNetIncome, personalAllowance)
+      }
+
 
 
       println("===================================================")
-      println(personalAllowanceAndReducedNetIncome)
-      println(personalAllowanceAndReducedNetIncome)
+      println(calculatedReducedNetIncome + "REDUCED NEXT *******")
+      println(calcualtedPersonalAllowance+ "PERSONAL ALLOWANCE ********")
       println("===================================================")
 
       val updatedIncomeSubJourney =
