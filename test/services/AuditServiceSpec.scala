@@ -20,7 +20,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, IncomeSubJourney, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
+import models.{AnnualAllowance, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, IncomeSubJourney, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
@@ -52,6 +52,153 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
   implicit def defaultAwaitTimeout: Timeout = 60.seconds
 
   "AuditService" - {
+
+    "auditBeforeCalculationRequest" - {
+      "should call the audit connector with the BeforeCalculationAudit event" in {
+
+        implicit val hc = HeaderCarrier()
+
+        val calculationInputs = CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Setup(
+            Some(
+              AnnualAllowanceSetup(
+                Some(true),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(MaybePIAIncrease.No),
+                Some(MaybePIAUnchangedOrDecreased.No),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false)
+              )
+            ),
+            Some(
+              LifetimeAllowanceSetup(
+                Some(true),
+                Some(false),
+                Some(true),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(true)
+              )
+            )
+          ),
+          Some(
+            AnnualAllowance(
+              List(Period._2021, Period._2019, Period._2017),
+              List(
+                TaxYear2011To2015(40000, Period._2013),
+                TaxYear2011To2015(40000, Period._2014),
+                TaxYear2011To2015(40000, Period._2015),
+                PostFlexiblyAccessedTaxYear(
+                  33000,
+                  0,
+                  60000,
+                  0,
+                  List(
+                    TaxYearScheme("Scheme 1", "00348916RT", 15000, 0, Some(25000)),
+                    TaxYearScheme("Scheme 2", "00348916RG", 18000, 0, Some(25000))
+                  ),
+                  Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(2291),
+                    None
+                  )
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  38000,
+                  0,
+                  60000,
+                  1200,
+                  List(
+                    TaxYearScheme("Scheme 1", "00348916RT", 25000, 0, None),
+                    TaxYearScheme("Scheme 2", "00348916RG", 13000, 0, None)
+                  ),
+                  Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    Some(90),
+                    Some(2291),
+                    None
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  38000,
+                  0,
+                  60000,
+                  0,
+                  List(
+                    TaxYearScheme("Scheme 1", "00348916RT", 0, 0, None),
+                    TaxYearScheme("Scheme 2", "00348916RG", 25000, 0, None)
+                  ),
+                  Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    None,
+                    None,
+                    Some(2291),
+                    None
+                  ),
+                  Some(BelowThreshold)
+                )
+              )
+            )
+          ),
+          None
+        )
+
+        val beforeCalculationSubmissionAuditEvent =
+          BeforeCalculationAuditEvent(
+            "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
+            true,
+            "AA000000A",
+            calculationInputs
+          )
+
+        await(service.auditBeforeCalculationRequest(beforeCalculationSubmissionAuditEvent)(hc)) mustBe ()
+      }
+    }
 
     "auditCalculationRequest" - {
       "should call the audit connector with the CalculationSubmission event" in {
