@@ -23,7 +23,7 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AAKickOutStatus, AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReducedNetIncome, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AAKickOutStatus, AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReducedNetIncomeRequest, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -75,7 +75,7 @@ class CalculationResultService @Inject() (
         submissionsConnector.sendSubmissionRequest(
           SubmissionRequest(calculationInputs, Some(calculationResponse), userId, answers.uniqueId)
         )
-    } yield submissionResponse
+    }yield submissionResponse
   }
 
   def submitUserAnswersWithNoCalculation(answers: UserAnswers, userId: String)(implicit
@@ -90,8 +90,7 @@ class CalculationResultService @Inject() (
     } yield submissionResponse
   }
 
-  def buildCalculationInputs(userAnswers: UserAnswers): CalculationInputs = {
-
+  def buildCalculationInputs(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): CalculationInputs = {
     val resubmission: Resubmission = userAnswers
       .get(ResubmittingAdjustmentPage)
       .map {
@@ -126,7 +125,7 @@ class CalculationResultService @Inject() (
         Period._2022,
         Period._2023
       ).flatMap(
-        toTaxYear2016To2023(userAnswers, _)
+        toTaxYear2016To2023(userAnswers, _)(hc)
       )
 
     val tYears: List[TaxYear] = _2011To2015TaxYears ++ _2016To2023TaxYears
@@ -399,12 +398,21 @@ class CalculationResultService @Inject() (
             Period.fromString(sYear)
           }
         }
+      val reducedNetIncomeRequest = ReducedNetIncomeRequest(period, scottishTaxYears, totalIncome, incomeSubJourney)
 
-      val personalAllowanceAndReducedNetIncome = ReducedNetIncome(reducedNetIncomeConnector.sendReducedNetIncomeRequest(period, scottishTaxYears, totalIncome, incomeSubJourney)(hc))
+      val personalAllowanceAndReducedNetIncome = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc)
+
+      for {
+        test <-
+          reducedNetIncomeConnector.sendReducedNetIncomeRequest(
+            reducedNetIncomeRequest
+          )
+      } yield test
+
 
       println("===================================================")
-      println(personalAllowanceAndReducedNetIncome.personalAllowance)
-      println(personalAllowanceAndReducedNetIncome.reducedNetIncome)
+      println(personalAllowanceAndReducedNetIncome)
+      println(personalAllowanceAndReducedNetIncome)
       println("===================================================")
 
       val updatedIncomeSubJourney =
@@ -424,7 +432,7 @@ class CalculationResultService @Inject() (
           userAnswers.get(UnionPoliceReliefAmountPage(period)).map(_.toInt),
           userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt),
           thresholdIncomeAmount.map(_.toInt),
-          personalAllowanceAndReducedNetIncome.reducedNetIncome
+          None
         )
 
       (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {

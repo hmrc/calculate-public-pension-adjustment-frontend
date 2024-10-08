@@ -19,13 +19,14 @@ package connectors
 import config.Service
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.submission.Success
-import models.{Done, IncomeSubJourney, Period, ReducedNetIncome}
+import models.{Done, IncomeSubJourney, Period, ReducedNetIncomeRequest}
 import play.api.http.Status.{ACCEPTED, NO_CONTENT, OK}
 import play.api.libs.json.Json
 import play.api.{Configuration, Logging}
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ReducedNetIncomeConnector @Inject()(config: Configuration, httpClient: HttpClientV2)(implicit
@@ -36,24 +37,27 @@ class ReducedNetIncomeConnector @Inject()(config: Configuration, httpClient: Htt
   private val testUrl = url"$baseUrl/calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income"
 
   def sendReducedNetIncomeRequest(
-                             period: Period,
-                             scottishTaxYears: List[Period],
-                             totalIncome: Int,
-                             incomeSubJourney: IncomeSubJourney
-                           )(implicit hc: HeaderCarrier): Future[ReducedNetIncomeConnector] =
+                             reducedNetIncomeRequest: ReducedNetIncomeRequest
+                           )(implicit hc: HeaderCarrier): Future[(Int,Int)] =
     httpClient
       .post(testUrl)
-      .withBody(Json.toJson(period, scottishTaxYears, totalIncome, incomeSubJourney))
+      .withBody(Json.toJson(reducedNetIncomeRequest))
       .execute[HttpResponse]
       .logFailureReason(connectorName = "ReducedNetIncomeConnector on set")
       .flatMap { response =>
         response.status match {
-          case ACCEPTED =>
-            Future.successful(response.json.as[Success])
+          case OK =>
+            println("//////// MAKES IT///////////")
+            println(response.json)
+            println(response.json.as[(Int,Int)])
+            Future.successful(response.json.as[(Int,Int)])
+//            Future.successful(response.json.as[(Int,Int)])
           case _        =>
+            println("//////// DOES NOT MAKE IT :( ///////////")
             logger.error(
               s"Unexpected response from call to /calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income with status : ${response.status}"
             )
+            println("//////// DOES NOT MAKE IT BUT OVER HERE THIS TIME:( ///////////")
             Future.failed(
               UpstreamErrorResponse(
                 "Unexpected response from /calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income",

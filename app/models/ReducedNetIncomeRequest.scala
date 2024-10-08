@@ -18,13 +18,14 @@ package models
 
 import play.api.libs.json.{Format, Json}
 
-case class ReducedNetIncome(
-                              personalAllowance: Option[Int],
-                              reducedNetIncome: Option[Int],
-                              grossGiftAidAmount: Option[Int]
+case class ReducedNetIncomeRequest(
+                                    period: Period,
+                                    scottishTaxYears: List[Period],
+                                    totalIncome: Int,
+                                    incomeSubJourney: IncomeSubJourney
                             )
 
-object ReducedNetIncome {
+object ReducedNetIncomeRequest {
 
-  implicit lazy val format: Format[ReducedNetIncome] = Json.format
+  implicit lazy val format: Format[ReducedNetIncomeRequest] = Json.format
 }
