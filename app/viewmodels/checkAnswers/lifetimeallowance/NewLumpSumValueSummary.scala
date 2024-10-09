@@ -27,18 +27,26 @@ import viewmodels.implicits._
 
 object NewLumpSumValueSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(NewLumpSumValuePage).map { answer =>
-      SummaryListRowViewModel(
-        key = "newLumpSumValue.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(CheckMode).url
+
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "newLumpSumValue.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.NewLumpSumValueController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("newLumpSumValue.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("newLumpSumValue.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "newLumpSumValue.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(currencyFormat(answer)))
+        )
+      }
     }
 }

@@ -28,17 +28,24 @@ import viewmodels.implicits._
 
 object LtaPensionSchemeDetailsSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(LtaPensionSchemeDetailsPage).map { answer =>
       val value = HtmlFormat.escape(answer.name).toString + " / " + HtmlFormat.escape(answer.taxRef).toString
 
-      SummaryListRowViewModel(
-        key = "ltaPensionSchemeDetails.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(value)),
-        actions = Seq(
-          ActionItemViewModel("site.change", routes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("ltaPensionSchemeDetails.change.hidden"))
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "ltaPensionSchemeDetails.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(value)),
+          actions = Seq(
+            ActionItemViewModel("site.change", routes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("ltaPensionSchemeDetails.change.hidden"))
+          )
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "ltaPensionSchemeDetails.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(value))
+        )
+      }
     }
 }
