@@ -28,15 +28,23 @@ import viewmodels.implicits._
 
 object AnnualPaymentValueSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(AnnualPaymentValuePage).map { answer =>
-      SummaryListRowViewModel(
-        key = "annualPaymentValue.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
-        actions = Seq(
-          ActionItemViewModel("site.change", routes.AnnualPaymentValueController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("annualPaymentValue.change.hidden"))
+
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "annualPaymentValue.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+          actions = Seq(
+            ActionItemViewModel("site.change", routes.AnnualPaymentValueController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("annualPaymentValue.change.hidden"))
+          )
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "annualPaymentValue.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(currencyFormat(answer)))
+        )
+      }
     }
 }

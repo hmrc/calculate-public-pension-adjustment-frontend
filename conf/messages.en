@@ -52,6 +52,10 @@ checkYourAnswers.aa.period.subHeading.2021 = Annual allowance questions 2021
 checkYourAnswers.aa.period.subHeading.2022 = Annual allowance questions 2022
 checkYourAnswers.aa.period.subHeading.2023 = Annual allowance questions 2023
 
+reviewLTAAnswers.title = Review LTA answers
+reviewLTAAnswers.heading = Review LTA answers
+reviewLTAAnswers.returnToMainResult = return to main result
+
 journeyRecovery.continue.title = Sorry, there is a problem with the service
 journeyRecovery.continue.heading = Sorry, there is a problem with the service
 journeyRecovery.continue.guidance = [Add content to explain how to proceed.]

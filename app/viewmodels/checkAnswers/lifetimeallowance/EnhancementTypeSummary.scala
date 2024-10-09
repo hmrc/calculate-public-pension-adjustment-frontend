@@ -27,7 +27,7 @@ import viewmodels.implicits._
 
 object EnhancementTypeSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(EnhancementTypePage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
@@ -35,16 +35,23 @@ object EnhancementTypeSummary {
         )
       )
 
-      SummaryListRowViewModel(
-        key = "enhancementType.checkYourAnswersLabel",
-        value = value,
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.EnhancementTypeController.onPageLoad(CheckMode).url
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "enhancementType.checkYourAnswersLabel",
+          value = value,
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.EnhancementTypeController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("enhancementType.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("enhancementType.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "enhancementType.checkYourAnswersLabel",
+          value = value
+        )
+      }
     }
 }

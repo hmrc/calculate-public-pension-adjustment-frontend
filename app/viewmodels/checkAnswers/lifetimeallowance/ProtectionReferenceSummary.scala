@@ -27,15 +27,23 @@ import viewmodels.implicits._
 
 object ProtectionReferenceSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ProtectionReferencePage).map { answer =>
-      SummaryListRowViewModel(
-        key = "protectionReference.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(answer).toString),
-        actions = Seq(
-          ActionItemViewModel("site.change", routes.ProtectionReferenceController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("protectionReference.change.hidden"))
+
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "protectionReference.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString),
+          actions = Seq(
+            ActionItemViewModel("site.change", routes.ProtectionReferenceController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("protectionReference.change.hidden"))
+          )
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "protectionReference.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString)
+        )
+      }
     }
 }

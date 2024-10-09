@@ -27,7 +27,7 @@ import viewmodels.implicits._
 
 object QuarterChargePaidSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(QuarterChargePaidPage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
@@ -35,16 +35,23 @@ object QuarterChargePaidSummary {
         )
       )
 
-      SummaryListRowViewModel(
-        key = "quarterChargePaid.checkYourAnswersLabel",
-        value = value,
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.QuarterChargePaidController.onPageLoad(CheckMode).url
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "quarterChargePaid.checkYourAnswersLabel",
+          value = value,
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.QuarterChargePaidController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("quarterChargePaid.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("quarterChargePaid.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "quarterChargePaid.checkYourAnswersLabel",
+          value = value
+        )
+      }
     }
 }

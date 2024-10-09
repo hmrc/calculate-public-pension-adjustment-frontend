@@ -29,7 +29,7 @@ case object LtaPensionSchemeDetailsPage extends QuestionPage[LtaPensionSchemeDet
   override def toString: String = "ltaPensionSchemeDetails"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+    ltaRoutes.ViewYourLTAAnswersController.onPageLoad()
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     ltaRoutes.CheckYourLTAAnswersController.onPageLoad()

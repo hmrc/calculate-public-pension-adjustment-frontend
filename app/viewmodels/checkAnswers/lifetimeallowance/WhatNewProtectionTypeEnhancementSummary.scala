@@ -28,7 +28,7 @@ import viewmodels.implicits._
 
 object WhatNewProtectionTypeEnhancementSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(WhatNewProtectionTypeEnhancementPage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
@@ -36,16 +36,23 @@ object WhatNewProtectionTypeEnhancementSummary {
         )
       )
 
-      SummaryListRowViewModel(
-        key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
-        value = value,
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            routes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          value = value,
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              routes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("whatNewProtectionTypeEnhancement.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("whatNewProtectionTypeEnhancement.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          value = value
+        )
+      }
     }
 }
