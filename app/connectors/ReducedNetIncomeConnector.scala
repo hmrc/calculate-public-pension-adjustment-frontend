@@ -54,17 +54,11 @@ class ReducedNetIncomeConnector @Inject()(config: Configuration, httpClient: Htt
       .flatMap { response =>
         response.status match {
           case OK =>
-            println("::::::::::::::::Response as body::::::::::::")
-            println(response.body)
-            println(response.json.as[(Int,Int)]+ "&&&&&&&&&&&&&&&&&&&&&&&")
             Future.successful(response.json.as[(Int,Int)])
-//            Future.successful(response.json.as[(Int,Int)])
           case _        =>
-            println("//////// DOES NOT MAKE IT :( ///////////")
             logger.error(
               s"Unexpected response from call to /calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income with status : ${response.status}"
             )
-            println("//////// DOES NOT MAKE IT BUT OVER HERE THIS TIME:( ///////////")
             Future.failed(
               UpstreamErrorResponse(
                 "Unexpected response from /calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income",

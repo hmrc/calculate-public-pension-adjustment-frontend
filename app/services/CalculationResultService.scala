@@ -401,32 +401,14 @@ class CalculationResultService @Inject() (
         }
       val reducedNetIncomeRequest = ReducedNetIncomeRequest(period, scottishTaxYears, totalIncome, incomeSubJourney)
 
-      val personalAllowanceAndReducedNetIncome = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc)
+      //val personalAllowanceAndReducedNetIncome = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc)
 
-//      val result: Option[(Int,Int)] = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest).onComplete{
-//        case Success(value) =>
-//          Some(value)
-//        case Failure(exception) =>
-//          None
-//      }
-//  val result: Option[(Int, Int)] = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest) .map(Some(_)) .recover { case _ => None }
-//
-//      def getCalculatedReducedNetIncomeAndPersonAllowance: (Int,Int) = {
-//        val xY = for {
-//          test <-
-//            reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)
-//          reducedNetIncome = test._1
-//            personalAllowance = test._2 // call a function to update an int to this int
-//        }yield test
-//        xY
-//      }
-
-      val updatedIncomeSubJourney2 = for {
+      val updatedIncomeSubJourneyTest = for {
         test <-
           reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)
         reducedNetIncome = test._1
         personalAllowance = test._2
-      }yield (reducedNetIncome, personalAllowance)
+      }yield Some((reducedNetIncome, personalAllowance))
 
 
 
@@ -456,20 +438,6 @@ class CalculationResultService @Inject() (
               Some(reducedNetIncome)
             )
         }
-
-
-
-//      println("===================================================")
-//      println(calculatedReducedNetIncome + "REDUCED NEXT *******")
-//      println(calcualtedPersonalAllowance+ "PERSONAL ALLOWANCE ********")
-//      println("===================================================")
-
-
-
-      println("===========================================")
-      //println(Json.prettyPrint(Json.toJson(updatedIncomeSubJourney)))
-      println(updatedIncomeSubJourney)
-      println("===========================================")
 
 
       (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {
