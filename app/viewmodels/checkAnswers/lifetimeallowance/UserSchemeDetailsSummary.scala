@@ -27,21 +27,28 @@ import viewmodels.implicits._
 
 object UserSchemeDetailsSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(UserSchemeDetailsPage).map { answer =>
       val value =
         HtmlFormat.escape(answer.name).toString + " / " + HtmlFormat.escape(answer.taxRef).toString
 
-      SummaryListRowViewModel(
-        key = "userSchemeDetails.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(value)),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode).url
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "userSchemeDetails.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(value)),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("userSchemeDetails.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("userSchemeDetails.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "userSchemeDetails.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(value))
+        )
+      }
     }
 }

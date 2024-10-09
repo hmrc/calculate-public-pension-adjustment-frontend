@@ -15,6 +15,7 @@ GET         /there-is-a-problem                                                 
 GET         /check-your-answers-setup                                        controllers.setupquestions.CheckYourSetupAnswersController.onPageLoad()
 GET         /annual-allowance/setup-check-answers                            controllers.annualallowance.preaaquestions.CheckYourAASetupAnswersController.onPageLoad()
 GET         /lifetime-allowance/check-answers                                          controllers.lifetimeallowance.CheckYourLTAAnswersController.onPageLoad()
+GET         /lifetime-allowance/view-answers                                          controllers.lifetimeallowance.ViewYourLTAAnswersController.onPageLoad()
 GET         /annual-allowance/:period/check-answers                              controllers.annualallowance.taxyear.CheckYourAAPeriodAnswersController.onPageLoad(period:Period)
 
 GET         /account/sign-out-survey                                         controllers.auth.AuthController.signOut()

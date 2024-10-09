@@ -27,7 +27,7 @@ import viewmodels.implicits._
 
 object ExcessLifetimeAllowancePaidSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ExcessLifetimeAllowancePaidPage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
@@ -35,16 +35,23 @@ object ExcessLifetimeAllowancePaidSummary {
         )
       )
 
-      SummaryListRowViewModel(
-        key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
-        value = value,
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
+          value = value,
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.ExcessLifetimeAllowancePaidController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("excessLifetimeAllowancePaid.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("excessLifetimeAllowancePaid.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
+          value = value
+        )
+      }
     }
 }

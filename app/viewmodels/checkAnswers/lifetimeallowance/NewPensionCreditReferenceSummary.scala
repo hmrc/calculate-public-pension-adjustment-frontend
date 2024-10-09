@@ -26,18 +26,27 @@ import viewmodels.implicits._
 
 object NewPensionCreditReferenceSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(NewPensionCreditReferencePage).map { answer =>
-      SummaryListRowViewModel(
-        key = "newPensionCreditReference.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(answer).toString),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.NewPensionCreditReferenceController.onPageLoad(CheckMode).url
+
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "newPensionCreditReference.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.NewPensionCreditReferenceController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("newPensionCreditReference.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("newPensionCreditReference.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "newPensionCreditReference.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString)
+        )
+      }
+
     }
 }

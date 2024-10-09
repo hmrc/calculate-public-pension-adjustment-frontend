@@ -27,20 +27,27 @@ import views.helpers.ImplicitDateFormatter
 
 object DateOfBenefitCrystallisationEventSummary extends ImplicitDateFormatter {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(DateOfBenefitCrystallisationEventPage).map { answer =>
       val languageTag = if (messages.lang.code == "cy") "cy" else "en"
 
-      SummaryListRowViewModel(
-        key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
-        value = ValueViewModel(dateToString(answer, languageTag)),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            routes.DateOfBenefitCrystallisationEventController.onPageLoad(CheckMode).url
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
+          value = ValueViewModel(dateToString(answer, languageTag)),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              routes.DateOfBenefitCrystallisationEventController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("dateOfBenefitCrystallisationEvent.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("dateOfBenefitCrystallisationEvent.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
+          value = ValueViewModel(dateToString(answer, languageTag)).withCssClass("govuk-!-width-one-half")
+        )
+      }
     }
 }
