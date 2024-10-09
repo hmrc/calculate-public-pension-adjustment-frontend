@@ -403,41 +403,74 @@ class CalculationResultService @Inject() (
 
       val personalAllowanceAndReducedNetIncome = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc)
 
-      def getCalculatedReducedNetIncomeAndPersonAllowance: Unit = {
-        val xY = for {
-          test <-
-            reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)
-          reducedNetIncome = test._1
-            personalAllowance = test._2
-        }yield (reducedNetIncome, personalAllowance)
-      }
+//      val result: Option[(Int,Int)] = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest).onComplete{
+//        case Success(value) =>
+//          Some(value)
+//        case Failure(exception) =>
+//          None
+//      }
+//  val result: Option[(Int, Int)] = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest) .map(Some(_)) .recover { case _ => None }
+//
+//      def getCalculatedReducedNetIncomeAndPersonAllowance: (Int,Int) = {
+//        val xY = for {
+//          test <-
+//            reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)
+//          reducedNetIncome = test._1
+//            personalAllowance = test._2 // call a function to update an int to this int
+//        }yield test
+//        xY
+//      }
+
+      val updatedIncomeSubJourney2 = for {
+        test <-
+          reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)
+        reducedNetIncome = test._1
+        personalAllowance = test._2
+      }yield (reducedNetIncome, personalAllowance)
 
 
-
-      println("===================================================")
-      println(calculatedReducedNetIncome + "REDUCED NEXT *******")
-      println(calcualtedPersonalAllowance+ "PERSONAL ALLOWANCE ********")
-      println("===================================================")
 
       val updatedIncomeSubJourney =
-        IncomeSubJourney(
-          userAnswers.get(AmountSalarySacrificeArrangementsPage(period)).map(_.toInt),
-          userAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)).map(_.toInt),
-          userAnswers.get(RASContributionAmountPage(period)).map(_.toInt),
-          userAnswers.get(LumpSumDeathBenefitsValuePage(period)).map(_.toInt),
-          userAnswers.get(models.AboveThreshold(period)),
-          userAnswers.get(TaxReliefPage(period)).map(_.toInt),
-          userAnswers.get(AdjustedIncomePage(period)).map(_.toInt),
-          userAnswers.get(HowMuchTaxReliefPensionPage(period)).map(_.toInt),
-          userAnswers.get(HowMuchContributionPensionSchemePage(period)).map(_.toInt),
-          userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).map(_.toInt),
-          userAnswers.get(AmountOfGiftAidPage(period)).map(_.toInt),
-          userAnswers.get(PersonalAllowancePage(period)).map(_.toInt),
-          userAnswers.get(UnionPoliceReliefAmountPage(period)).map(_.toInt),
-          userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt),
-          thresholdIncomeAmount.map(_.toInt),
-          None
-        )
+        reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest).map {
+          case (reducedNetIncome, personalAllowance) =>
+            IncomeSubJourney(
+              userAnswers.get(AmountSalarySacrificeArrangementsPage(period)).map(_.toInt),
+              userAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)).map(_.toInt),
+              userAnswers.get(RASContributionAmountPage(period)).map(_.toInt),
+              userAnswers.get(LumpSumDeathBenefitsValuePage(period)).map(_.toInt),
+              userAnswers.get(models.AboveThreshold(period)),
+              userAnswers.get(TaxReliefPage(period)).map(_.toInt),
+              userAnswers.get(AdjustedIncomePage(period)).map(_.toInt),
+              userAnswers.get(HowMuchTaxReliefPensionPage(period)).map(_.toInt),
+              userAnswers.get(HowMuchContributionPensionSchemePage(period)).map(_.toInt),
+              userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).map(_.toInt),
+              userAnswers.get(AmountOfGiftAidPage(period)).map(_.toInt),
+              if(userAnswers.get(DoYouKnowPersonalAllowancePage(period)).isDefined) {
+                userAnswers.get(PersonalAllowancePage(period)).map(_.toInt)
+              } else {
+                Some(personalAllowance)
+              },
+              userAnswers.get(UnionPoliceReliefAmountPage(period)).map(_.toInt),
+              userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt),
+              thresholdIncomeAmount.map(_.toInt),
+              Some(reducedNetIncome)
+            )
+        }
+
+
+
+//      println("===================================================")
+//      println(calculatedReducedNetIncome + "REDUCED NEXT *******")
+//      println(calcualtedPersonalAllowance+ "PERSONAL ALLOWANCE ********")
+//      println("===================================================")
+
+
+
+      println("===========================================")
+      //println(Json.prettyPrint(Json.toJson(updatedIncomeSubJourney)))
+      println(updatedIncomeSubJourney)
+      println("===========================================")
+
 
       (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {
         case (Some(true), Some(false)) =>
@@ -487,7 +520,7 @@ class CalculationResultService @Inject() (
               totalIncome,
               chargePaidByMember,
               period,
-              incomeSubJourney,
+              updatedIncomeSubJourney,
               income,
               definedBenefitInput2016PostAmount,
               definedContributionInput2016PostAmount,
