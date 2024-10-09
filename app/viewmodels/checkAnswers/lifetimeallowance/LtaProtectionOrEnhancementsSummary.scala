@@ -28,7 +28,7 @@ import viewmodels.implicits._
 
 object LtaProtectionOrEnhancementsSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(LtaProtectionOrEnhancementsPage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
@@ -36,13 +36,20 @@ object LtaProtectionOrEnhancementsSummary {
         )
       )
 
-      SummaryListRowViewModel(
-        key = "ltaProtectionOrEnhancements.checkYourAnswersLabel",
-        value = value,
-        actions = Seq(
-          ActionItemViewModel("site.change", routes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("ltaProtectionOrEnhancements.change.hidden"))
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "ltaProtectionOrEnhancements.checkYourAnswersLabel",
+          value = value,
+          actions = Seq(
+            ActionItemViewModel("site.change", routes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("ltaProtectionOrEnhancements.change.hidden"))
+          )
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "ltaProtectionOrEnhancements.checkYourAnswersLabel",
+          value = value
+        )
+      }
     }
 }

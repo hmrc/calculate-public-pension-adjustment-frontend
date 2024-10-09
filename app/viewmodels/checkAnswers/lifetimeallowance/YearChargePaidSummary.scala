@@ -27,24 +27,30 @@ import viewmodels.implicits._
 
 object YearChargePaidSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(YearChargePaidPage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
           HtmlFormat.escape(messages(s"yearChargePaid.$answer"))
         )
       )
-
-      SummaryListRowViewModel(
-        key = "yearChargePaid.checkYourAnswersLabel",
-        value = value,
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.YearChargePaidController.onPageLoad(CheckMode).url
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "yearChargePaid.checkYourAnswersLabel",
+          value = value,
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.YearChargePaidController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("yearChargePaid.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("yearChargePaid.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "yearChargePaid.checkYourAnswersLabel",
+          value = value
+        )
+      }
     }
 }

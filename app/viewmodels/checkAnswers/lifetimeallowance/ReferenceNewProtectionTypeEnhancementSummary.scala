@@ -27,18 +27,26 @@ import viewmodels.implicits._
 
 object ReferenceNewProtectionTypeEnhancementSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ReferenceNewProtectionTypeEnhancementPage).map { answer =>
-      SummaryListRowViewModel(
-        key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(answer).toString),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            routes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
+
+      if(changeAllowed) {
+        SummaryListRowViewModel(
+          key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              routes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("referenceNewProtectionTypeEnhancement.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("referenceNewProtectionTypeEnhancement.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString)
+        )
+      }
     }
 }
