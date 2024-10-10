@@ -52,7 +52,7 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
               "site.change",
               routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
             )
-              .withVisuallyHiddenText("definedContributionAmount.change.hidden.2018")
+              .withVisuallyHiddenText("definedContributionAmount.change.hidden")
           )
         )
       )
@@ -86,7 +86,7 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
             "site.change",
             routes.DefinedContributionAmountController.onPageLoad(CheckMode, period).url
           )
-            .withVisuallyHiddenText("definedContributionAmount.change.hidden.2018")
+            .withVisuallyHiddenText("definedContributionAmount.change.hidden")
         )
       )
     )
