@@ -1335,7 +1335,7 @@ rASContributionAmount.heading = cy: What was your gross contribution in total to
 rASContributionAmount.checkYourAnswersLabel = cy: Your gross contribution to all your pension schemes from {0}?
 rASContributionAmount.message1 = cy: To work out your gross pension contributions, you must multiply your contribution by 1.25.
 rASContributionAmount.message2 = cy: For example, if you made £2000 of contributions after tax, your gross contribution would be £2500.
-rASContributionAmount.message3 = cy: rASContributionAmount.message3 = You can find this information in your pay slip for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
+rASContributionAmount.message3 = cy: You can find this information in your pay slip for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
 rASContributionAmount.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300
 rASContributionAmount.error.nonNumeric = cy: Your gross contribution to relief at source pension schemes from {0} must only include numbers 0 to 9
 rASContributionAmount.error.required = cy: Enter your gross contribution to relief at source pension schemes from {0}
