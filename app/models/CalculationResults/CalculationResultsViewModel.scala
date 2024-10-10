@@ -27,9 +27,4 @@ final case class CalculationResultsViewModel(
   def resubmissionData: Seq[Seq[RowViewModel]] = Seq(resubmissionVal)
 
   def annualResultsData: Seq[Seq[RowViewModel]] = outDates ++ inDates
-
-  def annualResultsDataForPeriod(period: String): Seq[RowViewModel] =
-    annualResultsData
-      .find(_.headOption.exists(_.value == period))
-      .getOrElse(Seq.empty)
 }

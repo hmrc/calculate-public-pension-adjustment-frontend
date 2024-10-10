@@ -30,7 +30,7 @@ import views.html.CalculationReviewIndividualAAView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class CalculationReviewIndividualAAController @Inject()(
+class CalculationReviewIndividualAAController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
@@ -45,21 +45,21 @@ class CalculationReviewIndividualAAController @Inject()(
 
   val form = Form("_" -> ignored(()))
 
-  def onPageLoad(period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    calculationResultService.sendRequest(request.userAnswers).map { calculationResponse =>
-      val includeCompensation2015: Boolean = calculationResponse.totalAmounts.outDatesCompensation > 0
-      val isInCredit: Boolean              = calculationResponse.totalAmounts.inDatesCredit > 0
-      val isInDebit: Boolean               = calculationResponse.totalAmounts.inDatesDebit > 0
-      Ok(
-        view(
-          form,
-          period.toString(),
-          calculationResultService.calculationReviewIndividualAAViewModel(calculationResponse, period.toString()),
-          isInCredit,
-          isInDebit
+  def onPageLoad(period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+    implicit request =>
+      calculationResultService.sendRequest(request.userAnswers).map { calculationResponse =>
+        val isInCredit: Boolean = calculationResponse.totalAmounts.inDatesCredit > 0
+        val isInDebit: Boolean  = calculationResponse.totalAmounts.inDatesDebit > 0
+        Ok(
+          view(
+            form,
+            period.toString(),
+            calculationResultService.calculationReviewIndividualAAViewModel(calculationResponse, period.toString()),
+            isInCredit,
+            isInDebit
+          )
         )
-      )
-    }
+      }
   }
 
   def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>

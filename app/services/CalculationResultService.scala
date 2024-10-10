@@ -784,23 +784,32 @@ class CalculationResultService @Inject() (
       .filter(outDate => outDate.period.toString == period)
       .map { outDate =>
         Seq(
-          RowViewModel("calculationResults.annualResults.chargePaidBySchemes", outDate.chargePaidBySchemes.toString()),
-          RowViewModel("calculationResults.annualResults.chargePaidByMember", outDate.chargePaidByMember.toString()),
           RowViewModel(
-            "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate",
+            "calculationReviewIndividualAA.annualResults.chargePaidBySchemes",
+            outDate.chargePaidBySchemes.toString()
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.chargePaidByMember",
+            outDate.chargePaidByMember.toString()
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.revisedChargeableAmountAfterTaxRate",
             outDate.revisedChargableAmountAfterTaxRate.toString()
           ),
           RowViewModel(
-            "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate",
+            "calculationReviewIndividualAA.annualResults.revisedChargeableAmountBeforeTaxRate",
             outDate.revisedChargableAmountBeforeTaxRate.toString()
           ),
-          RowViewModel("calculationResults.annualResults.directCompensation", outDate.directCompensation.toString()),
           RowViewModel(
-            "calculationResults.annualResults.indirectCompensation",
+            "calculationReviewIndividualAA.annualResults.directCompensation",
+            outDate.directCompensation.toString()
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.indirectCompensation",
             outDate.indirectCompensation.toString()
           ),
           RowViewModel(
-            "calculationResults.annualResults.unusedAnnualAllowance",
+            "calculationReviewIndividualAA.annualResults.unusedAnnualAllowance",
             outDate.unusedAnnualAllowance.toString()
           )
         )
@@ -811,20 +820,27 @@ class CalculationResultService @Inject() (
       .filter(inDate => inDate.period.toString == period)
       .map { inDate =>
         Seq(
-          RowViewModel("calculationResults.annualResults.chargePaidByMember", inDate.chargePaidByMember.toString()),
           RowViewModel(
-            "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate",
+            "calculationReviewIndividualAA.annualResults.chargePaidBySchemes",
+            inDate.chargePaidBySchemes.toString()
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.chargePaidByMember",
+            inDate.chargePaidByMember.toString()
+          ),
+          RowViewModel(
+            "calculationReviewIndividualAA.annualResults.revisedChargeableAmountAfterTaxRate",
             inDate.revisedChargableAmountAfterTaxRate.toString()
           ),
           RowViewModel(
-            "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate",
+            "calculationReviewIndividualAA.annualResults.revisedChargeableAmountBeforeTaxRate",
             inDate.revisedChargableAmountBeforeTaxRate.toString()
           ),
-          RowViewModel("calculationResults.annualResults.memberCredit", inDate.memberCredit.toString()),
-          RowViewModel("calculationResults.annualResults.schemeCredit", inDate.schemeCredit.toString()),
-          RowViewModel("calculationResults.annualResults.debit", inDate.debit.toString()),
+          RowViewModel("calculationReviewIndividualAA.annualResults.memberCredit", inDate.memberCredit.toString()),
+          RowViewModel("calculationReviewIndividualAA.annualResults.schemeCredit", inDate.schemeCredit.toString()),
+          RowViewModel("calculationReviewIndividualAA.annualResults.debit", inDate.debit.toString()),
           RowViewModel(
-            "calculationResults.annualResults.unusedAnnualAllowance",
+            "calculationReviewIndividualAA.annualResults.unusedAnnualAllowance",
             inDate.unusedAnnualAllowance.toString()
           )
         )
