@@ -256,7 +256,7 @@ pIAPreRemedy.error.maximum.2012 = Mae’n rhaid i’ch swm talu i mewn i bensiwn
 pIAPreRemedy.error.maximum.2013 = Mae’n rhaid i’ch swm talu i mewn i bensiwn o 6 Ebrill 2012 i 5 Ebrill 2013 fod yn £999,999,999 neu lai
 pIAPreRemedy.error.maximum.2014 = Mae’n rhaid i’ch swm talu i mewn i bensiwn o 6 Ebrill 2013 i 5 Ebrill 2014 fod yn £999,999,999 neu lai
 pIAPreRemedy.error.maximum.2015 = Mae’n rhaid i’ch swm talu i mewn i bensiwn o 6 Ebrill 2014 i 5 Ebrill 2015 fod yn £999,999,999 neu lai
-pIAPreRemedy.change.hidden = Mae’n rhaid i’ch swm talu i mewn i bensiwn o 6 Ebrill {0} i 5 Ebrill {1}
+pIAPreRemedy.change.hidden = cy: your pension input amount from 6 April {0} to 5 April {1}
 
 whatYouWillNeedLta.title = Lwfans oes
 whatYouWillNeedLta.heading = Lwfans oes
@@ -272,7 +272,7 @@ hadBenefitCrystallisationEvent.title = A ydych chi wedi cael digwyddiad crisialu
 hadBenefitCrystallisationEvent.heading = A ydych chi wedi cael digwyddiad crisialu buddiannau yn eich pensiwn ar ôl 5 Ebrill 2015?
 hadBenefitCrystallisationEvent.checkYourAnswersLabel = A ydych chi wedi cael digwyddiad crisialu buddiannau yn eich pensiwn ar ôl 5 Ebrill 2015?
 hadBenefitCrystallisationEvent.error.required = Dewiswch ‘Iawn’ os ydych wedi cael digwyddiad crisialu buddiannau yn eich pensiwn ar ôl 5 Ebrill 2015
-hadBenefitCrystallisationEvent.change.hidden = cy: If you have had a benefit crystallisation event in your pension after 5 April 2015
+hadBenefitCrystallisationEvent.change.hidden = cy: if you have had a benefit crystallisation event in your pension after 5 April 2015
 hadBenefitCrystallisationEvent.message1 = cy: A benefit crystallisation event is when the value of your pension is tested against the lifetime allowance.
 hadBenefitCrystallisationEvent.message2 = cy: Benefit crystallisation events can happen when you start receiving benefits from your pension, or take a lump sum from your scheme.
 
@@ -344,8 +344,8 @@ ltaProtectionOrEnhancements.both = Y ddau
 ltaProtectionOrEnhancements.no = Na
 ltaProtectionOrEnhancements.hint = Gwiriwch eich diogelwch lwfans oes ar-lein
 ltaProtectionOrEnhancements.checkYourAnswersLabel = A oedd gennych chi ddiogelwch neu ddiogelwch uwch mewn perthynas â’r lwfans oes ar adeg eich digwyddiad crisialu buddiannau?
-ltaProtectionOrEnhancements.error.required = Dewiswch a oes gennych chi ddiogelwch lwfans oes neu ddiogelwch lefel uwch
-ltaProtectionOrEnhancements.change.hidden = os oes gennych chi ddiogelwch lwfans oes neu ddiogelwch uwch
+ltaProtectionOrEnhancements.error.required = cy: Select if you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event
+ltaProtectionOrEnhancements.change.hidden = cy: if you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event
 
 protectionType.title = Beth yw’r math o ddiogelwch lwfans oes sydd gennych?
 protectionType.heading = Beth yw’r math o ddiogelwch lwfans oes sydd gennych?
@@ -403,8 +403,8 @@ whatNewProtectionTypeEnhancement.fixedProtection2016 = Diogelwch penodol 2016
 whatNewProtectionTypeEnhancement.individualProtection2014 = Diogelwch unigol 2014
 whatNewProtectionTypeEnhancement.individualProtection2016 = Diogelwch unigol 2016
 whatNewProtectionTypeEnhancement.checkYourAnswersLabel = Beth yw’r math newydd o ddiogelwch sydd gennych ar gyfer eich lwfans oes?
-whatNewProtectionTypeEnhancement.error.required = Dewiswch y math newydd o ddiogelwch lwfans oes sydd gennych
-whatNewProtectionTypeEnhancement.change.hidden = math o ddiogelwch lwfans oes neu ddiogelwch uwch
+whatNewProtectionTypeEnhancement.error.required = cy: Select your new lifetime allowance protection type
+whatNewProtectionTypeEnhancement.change.hidden = cy :new lifetime allowance protection type
 
 lifetimeAllowanceCharge.title = A ydych wedi cael tâl lwfans oes o 6 Ebrill 2015 i 5 Ebrill 2023?
 lifetimeAllowanceCharge.heading = A ydych wedi cael tâl lwfans oes o 6 Ebrill 2015 i 5 Ebrill 2023?
@@ -1038,7 +1038,7 @@ definedBenefit2016PreAmount.error.required = Nodwch eich swm talu i mewn i bensi
 definedBenefit2016PreAmount.error.wholeNumber = cy: Your pension input amount for defined contribution pension schemes between 6 April 2015 and 8 July 2015 must be a whole number
 definedBenefit2016PreAmount.error.maximum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 6 Ebrill a 8 Gorffennaf fod yn £999,999,999 neu lai
 definedBenefit2016PreAmount.error.minimum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 6 Ebrill a 8 Gorffennaf fod yn £0 neu fwy
-definedBenefit2016PreAmount.change.hidden = mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 6 Ebrill a 8 Gorffennaf
+definedBenefit2016PreAmount.change.hidden = cy: pension input amount for defined benefit pension schemes between 6 April 2015 and 8 July 2015
 
 definedBenefit2016PostAmount.title = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 9 Gorffennaf a 5 Ebrill?
 definedBenefit2016PostAmount.heading = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 9 Gorffennaf a 5 Ebrill?
@@ -1462,7 +1462,7 @@ newLTACharge.heading = cy: Have you received a new lifetime allowance charge as 
 newLTACharge.message1 = cy: Any amount that goes over the level of lifetime allowance available, is liable to a lifetime allowance charge.
 newLTACharge.checkYourAnswersLabel = cy:  Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
 newLTACharge.error.required = cy: Select yes if you have received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
-newLTACharge.change.hidden = cy: if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.change.hidden = cy: if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy
 
 otherSchemeNotification.title = cy: Have you been notified by any other pension scheme that you have a new lifetime allowance charge?
 otherSchemeNotification.heading = cy: Lifetime allowance charge from your other scheme
@@ -1502,7 +1502,7 @@ netIncomeAbove100k.message6 = cy: document.
 netIncomeAbove100K.heading2 = cy: Did you have a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
 netIncomeAbove100K.checkYourAnswersLabel = cy: Did you have a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
 netIncomeAbove100K.error.required = cy: Select yes if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
-netIncomeAbove100K.change.hidden = cy: if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
+netIncomeAbove100K.change.hidden = cy: if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020
 
 netIncomeAbove190K.title = cy: Net income from 6 April 2020 to 5 April 2022
 netIncomeAbove190K.heading = cy: Net income from 6 April 2020 to 5 April 2022
@@ -1527,7 +1527,7 @@ netIncomeAbove190K.message6 = cy: document.
 netIncomeAbove190K.heading2 = cy: Did you have a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022?
 netIncomeAbove190K.checkYourAnswersLabel = cy: Did you have a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022?
 netIncomeAbove190K.error.required = cy: Select yes if you had a net income of over £190,000 for any tax year in the period from 6 April 2020 to 5 April 2022?
-netIncomeAbove190K.change.hidden = cy: If you had a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022
+netIncomeAbove190K.change.hidden = cy: if you had a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022
 
 maybePIAIncrease.title = cy: How have your pension input amounts changed?
 maybePIAIncrease.caption = cy: Annual allowance
@@ -1565,7 +1565,7 @@ pIAAboveAnnualAllowanceIn2023.message2 = cy: In the year 2022/23, most people ha
 pIAAboveAnnualAllowanceIn2023.heading2 = cy: Did you have a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023?
 pIAAboveAnnualAllowanceIn2023.checkYourAnswersLabel = cy: Did you have a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023?
 pIAAboveAnnualAllowanceIn2023.error.required = cy: Select yes if you had a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023
-pIAAboveAnnualAllowanceIn2023.change.hidden = cy: If you had a pension input amount of over £40,000 6 April 2022 to 5 April 2023
+pIAAboveAnnualAllowanceIn2023.change.hidden = cy: if you had a pension input amount of over £40,000 6 April 2022 to 5 April 2023
 
 netIncomeAbove190KIn2023.title = cy: Net income from 1 April 2022 to 31 March 2023
 netIncomeAbove190KIn2023.caption = cy: Annual allowance
@@ -1591,7 +1591,7 @@ netIncomeAbove190KIn2023.message6 = cy: document.
 netIncomeAbove190KIn2023.heading2 = cy: Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.checkYourAnswersLabel = cy: Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.error.required = cy: Select yes if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
-netIncomeAbove190KIn2023.change.hidden = cy: If you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
+netIncomeAbove190KIn2023.change.hidden = cy: if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 
 flexibleAccessDcScheme.title = cy: Have you used flexible access on your DC pension scheme?
 flexibleAccessDcScheme.caption = cy: Annual allowance
