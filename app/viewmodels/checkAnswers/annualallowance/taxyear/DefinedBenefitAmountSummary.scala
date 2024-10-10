@@ -49,7 +49,7 @@ object DefinedBenefitAmountSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("definedBenefitAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("definedBenefitAmount.change.hidden", startEndDate))
         )
       )
     }

@@ -47,7 +47,7 @@ object ClaimingTaxReliefPensionNotAdjustedIncomeSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("claimingTaxReliefPensionNotAdjustedIncome.change.hidden"))
+            .withVisuallyHiddenText(messages("claimingTaxReliefPensionNotAdjustedIncome.change.hidden", startEndDate))
         )
       )
     }

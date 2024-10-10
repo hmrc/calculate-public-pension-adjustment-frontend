@@ -46,7 +46,7 @@ object AmountOfGiftAidSummary {
             "site.change",
             controllers.annualallowance.taxyear.routes.AmountOfGiftAidController.onPageLoad(CheckMode, period).url
           )
-            .withVisuallyHiddenText(messages("amountOfGiftAid.change.hidden"))
+            .withVisuallyHiddenText(messages("amountOfGiftAid.change.hidden", startEndDate))
         )
       )
     }

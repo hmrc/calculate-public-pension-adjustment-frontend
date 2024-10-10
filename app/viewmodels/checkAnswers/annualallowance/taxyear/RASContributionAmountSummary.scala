@@ -45,7 +45,7 @@ object RASContributionAmountSummary {
             "site.change",
             controllers.annualallowance.taxyear.routes.RASContributionAmountController.onPageLoad(CheckMode, period).url
           )
-            .withVisuallyHiddenText(messages("rASContributionAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("rASContributionAmount.change.hidden", startEndDate))
         )
       )
     }
