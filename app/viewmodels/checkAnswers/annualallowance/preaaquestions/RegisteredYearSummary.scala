@@ -44,7 +44,9 @@ object RegisteredYearSummary {
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel("site.change", RegisteredYearController.onPageLoad(CheckMode, period).url)
-            .withVisuallyHiddenText(messages("registeredYear.change.hidden", period.start.getYear.toString, period.end.getYear.toString))
+            .withVisuallyHiddenText(
+              messages("registeredYear.change.hidden", period.start.getYear.toString, period.end.getYear.toString)
+            )
         )
       )
     }
