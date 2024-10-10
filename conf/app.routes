@@ -608,3 +608,6 @@ GET        /triage-journey/eligible-to-use-service                              
 
 GET        /calculationReview                       controllers.CalculationReviewController.onPageLoad()
 POST       /calculationReview                       controllers.CalculationReviewController.onSubmit()
+
+GET        /CalculationReviewIndividualAA/:period                       controllers.CalculationReviewIndividualAAController.onPageLoad(period:Period)
+POST       /CalculationReviewIndividualAA                       controllers.CalculationReviewIndividualAAController.onSubmit()

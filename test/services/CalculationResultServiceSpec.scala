@@ -19,7 +19,7 @@ package services
 import base.SpecBase
 import connectors.{CalculationResultConnector, SubmissionsConnector}
 import controllers.annualallowance.taxyear.AboveThresholdController
-import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, CalculationReviewViewModel, LifetimeAllowanceSetup, Resubmission, ReviewRowViewModel, RowViewModel, Setup}
+import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, CalculationReviewViewModel, LifetimeAllowanceSetup, Resubmission, ReviewRowViewModel, RowViewModel, Setup}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
@@ -3927,6 +3927,79 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       )
     }
 
+    "out dates Review AA should be well formed and should filter chosen period" in {
+      val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      val viewModel: CalculationReviewIndividualAAViewModel =
+        service.calculationReviewIndividualAAViewModel(calculationResult, Period._2016.toString())
+
+      val sections: Seq[Seq[RowViewModel]] = viewModel.outDates
+      sections.size mustBe 1
+
+      val year = sections(0)
+
+      checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.chargePaidBySchemes", "0")
+      checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.chargePaidByMember", "0")
+      checkRowNameAndValue(
+        year,
+        2,
+        "calculationReviewIndividualAA.annualResults.revisedChargeableAmountAfterTaxRate",
+        "0"
+      )
+      checkRowNameAndValue(
+        year,
+        3,
+        "calculationReviewIndividualAA.annualResults.revisedChargeableAmountBeforeTaxRate",
+        "0"
+      )
+      checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.directCompensation", "0")
+      checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.indirectCompensation", "0")
+      checkRowNameAndValue(year, 6, "calculationReviewIndividualAA.annualResults.unusedAnnualAllowance", "60000")
+
+      viewModel.annualResultsData mustBe
+        List(
+          RowViewModel("calculationReviewIndividualAA.annualResults.chargePaidBySchemes", "0"),
+          RowViewModel("calculationReviewIndividualAA.annualResults.chargePaidByMember", "0"),
+          RowViewModel("calculationReviewIndividualAA.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
+          RowViewModel("calculationReviewIndividualAA.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
+          RowViewModel("calculationReviewIndividualAA.annualResults.directCompensation", "0"),
+          RowViewModel("calculationReviewIndividualAA.annualResults.indirectCompensation", "0"),
+          RowViewModel("calculationReviewIndividualAA.annualResults.unusedAnnualAllowance", "60000")
+        )
+    }
+
+    "in dates Review AA should be well formed and should filter chosen period" in {
+      val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      val viewModel: CalculationReviewIndividualAAViewModel =
+        service.calculationReviewIndividualAAViewModel(calculationResult, Period._2020.toString())
+
+      val sections: Seq[Seq[RowViewModel]] = viewModel.inDates
+      sections.size mustBe 1
+
+      val year = sections(0)
+
+      checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.chargePaidBySchemes", "0")
+      checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.chargePaidByMember", "0")
+      checkRowNameAndValue(
+        year,
+        2,
+        "calculationReviewIndividualAA.annualResults.revisedChargeableAmountAfterTaxRate",
+        "0"
+      )
+      checkRowNameAndValue(
+        year,
+        3,
+        "calculationReviewIndividualAA.annualResults.revisedChargeableAmountBeforeTaxRate",
+        "0"
+      )
+      checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.memberCredit", "0")
+      checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.schemeCredit", "0")
+      checkRowNameAndValue(year, 6, "calculationReviewIndividualAA.annualResults.debit", "0")
+      checkRowNameAndValue(year, 7, "calculationReviewIndividualAA.annualResults.unusedAnnualAllowance", "48000")
+
+    }
+
     "out dates should be well formed" in {
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
@@ -4153,28 +4226,28 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2016",
           Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "AA_Detailed_View.2016"
+          "CalculationReviewIndividualAA/2016"
         )
         checkRowNameAndValueReviewRow(
           sections(1),
           index,
           "calculationReview.period.2017",
           Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "AA_Detailed_View.2017"
+          "CalculationReviewIndividualAA/2017"
         )
         checkRowNameAndValueReviewRow(
           sections(2),
           index,
           "calculationReview.period.2018",
           Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "AA_Detailed_View.2018"
+          "CalculationReviewIndividualAA/2018"
         )
         checkRowNameAndValueReviewRow(
           sections(3),
           index,
           "calculationReview.period.2019",
           Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "AA_Detailed_View.2019"
+          "CalculationReviewIndividualAA/2019"
         )
       }
 
@@ -4193,28 +4266,28 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2020",
           Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "AA_Detailed_View.2020"
+          "CalculationReviewIndividualAA/2020"
         )
         checkRowNameAndValueReviewRow(
           sections(1),
           index,
           "calculationReview.period.2021",
           Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "AA_Detailed_View.2021"
+          "CalculationReviewIndividualAA/2021"
         )
         checkRowNameAndValueReviewRow(
           sections(2),
           index,
           "calculationReview.period.2022",
           Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "AA_Detailed_View.2022"
+          "CalculationReviewIndividualAA/2022"
         )
         checkRowNameAndValueReviewRow(
           sections(3),
           index,
           "calculationReview.period.2023",
           Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "AA_Detailed_View.2023"
+          "CalculationReviewIndividualAA/2023"
         )
       }
 
