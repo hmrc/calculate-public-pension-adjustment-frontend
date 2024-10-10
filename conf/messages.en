@@ -256,7 +256,7 @@ pIAPreRemedy.error.maximum.2012 = Your pension input amount from 6 April 2011 to
 pIAPreRemedy.error.maximum.2013 = Your pension input amount from 6 April 2012 to 5 April 2013 must be £999,999,999 or less
 pIAPreRemedy.error.maximum.2014 = Your pension input amount from 6 April 2013 to 5 April 2014 must be £999,999,999 or less
 pIAPreRemedy.error.maximum.2015 = Your pension input amount from 6 April 2014 to 5 April 2015 must be £999,999,999 or less
-pIAPreRemedy.change.hidden = your pension input amount from 6 April {0} and 5 April {1}
+pIAPreRemedy.change.hidden = your pension input amount from 6 April {0} to 5 April {1}
 
 whatYouWillNeedLta.title = Lifetime allowance
 whatYouWillNeedLta.heading = Lifetime allowance
@@ -272,7 +272,7 @@ hadBenefitCrystallisationEvent.title = Have you had a benefit crystallisation ev
 hadBenefitCrystallisationEvent.heading = Have you had a benefit crystallisation event in your pension after 5 April 2015?
 hadBenefitCrystallisationEvent.checkYourAnswersLabel = Have you had a benefit crystallisation event in your pension after 5 April 2015?
 hadBenefitCrystallisationEvent.error.required = Select yes if you have had a benefit crystallisation event in your pension after 5 April 2015
-hadBenefitCrystallisationEvent.change.hidden = If you have had a benefit crystallisation event in your pension after 5 April 2015
+hadBenefitCrystallisationEvent.change.hidden = if you have had a benefit crystallisation event in your pension after 5 April 2015
 hadBenefitCrystallisationEvent.message1 = A benefit crystallisation event is when the value of your pension is tested against the lifetime allowance.
 hadBenefitCrystallisationEvent.message2 = Benefit crystallisation events can happen when you start receiving benefits from your pension, or take a lump sum from your scheme.
 
@@ -344,8 +344,8 @@ ltaProtectionOrEnhancements.both = Both
 ltaProtectionOrEnhancements.no = No
 ltaProtectionOrEnhancements.hint = Check your lifetime allowance protection online
 ltaProtectionOrEnhancements.checkYourAnswersLabel = Did you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event?
-ltaProtectionOrEnhancements.error.required = Select if you have lifetime allowance protection or enhancements
-ltaProtectionOrEnhancements.change.hidden = if you have lifetime allowance protection or enhancements
+ltaProtectionOrEnhancements.error.required = Select if you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event
+ltaProtectionOrEnhancements.change.hidden = if you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event
 
 protectionType.title = What is your lifetime allowance protection type?
 protectionType.heading = What is your lifetime allowance protection type?
@@ -403,8 +403,8 @@ whatNewProtectionTypeEnhancement.fixedProtection2016 = Fixed protection 2016
 whatNewProtectionTypeEnhancement.individualProtection2014 = Individual protection 2014
 whatNewProtectionTypeEnhancement.individualProtection2016 = Individual protection 2016
 whatNewProtectionTypeEnhancement.checkYourAnswersLabel = What is your new lifetime allowance protection type?
-whatNewProtectionTypeEnhancement.error.required = Select your new lifetime allowance protection type or enhancement
-whatNewProtectionTypeEnhancement.change.hidden = new lifetime allowance protection type or enhancement
+whatNewProtectionTypeEnhancement.error.required = Select your new lifetime allowance protection type
+whatNewProtectionTypeEnhancement.change.hidden = new lifetime allowance protection type
 
 lifetimeAllowanceCharge.title = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
 lifetimeAllowanceCharge.heading = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
@@ -1038,7 +1038,7 @@ definedBenefit2016PreAmount.error.required = Enter your pension input amount for
 definedBenefit2016PreAmount.error.wholeNumber = Your pension input amount for defined contribution pension schemes between 6 April 2015 and 8 July 2015 must be a whole number
 definedBenefit2016PreAmount.error.maximum = Your pension input amount for defined benefit pension schemes between 6 April 2015 and 8 July 2015 must be £999,999,999 or less
 definedBenefit2016PreAmount.error.minimum = Your pension input amount for defined benefit pension schemes between 6 April 2015 and 8 July 2015 must be £0 or more
-definedBenefit2016PreAmount.change.hidden = pension input amount for defined contribution pension schemes between 6 April 2015 and 8 July 2015
+definedBenefit2016PreAmount.change.hidden = pension input amount for defined benefit pension schemes between 6 April 2015 and 8 July 2015
 
 definedBenefit2016PostAmount.title = What was your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016?
 definedBenefit2016PostAmount.heading = What was your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016?
@@ -1462,7 +1462,7 @@ newLTACharge.heading = Have you received a new lifetime allowance charge as a re
 newLTACharge.message1 = Any amount that goes over the level of lifetime allowance available, is liable to a lifetime allowance charge.
 newLTACharge.checkYourAnswersLabel =  Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
 newLTACharge.error.required = Select yes if you have received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
-newLTACharge.change.hidden = if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.change.hidden = if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy
 
 otherSchemeNotification.title = Have you been notified by any other pension scheme that you have a new lifetime allowance charge?
 otherSchemeNotification.heading = Lifetime allowance charge from your other scheme
@@ -1502,7 +1502,7 @@ netIncomeAbove100k.message6 = document.
 netIncomeAbove100K.heading2 = Did you have a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
 netIncomeAbove100K.checkYourAnswersLabel = Did you have a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
 netIncomeAbove100K.error.required = Select yes if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
-netIncomeAbove100K.change.hidden = if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
+netIncomeAbove100K.change.hidden = if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020
 
 netIncomeAbove190K.title = Net income from 6 April 2020 to 5 April 2022
 netIncomeAbove190K.heading = Net income from 6 April 2020 to 5 April 2022
@@ -1527,7 +1527,7 @@ netIncomeAbove190K.message6 = document.
 netIncomeAbove190K.heading2 = Did you have a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022?
 netIncomeAbove190K.checkYourAnswersLabel = Did you have a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022?
 netIncomeAbove190K.error.required = Select yes if you had a net income of over £190,000 for any tax year in the period from 6 April 2020 to 5 April 2022?
-netIncomeAbove190K.change.hidden = If you had a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022
+netIncomeAbove190K.change.hidden = if you had a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022
 
 maybePIAIncrease.title = How have your pension input amounts changed?
 maybePIAIncrease.caption = Annual allowance
@@ -1565,7 +1565,7 @@ pIAAboveAnnualAllowanceIn2023.message2 =  In the year 2022/23, most people have 
 pIAAboveAnnualAllowanceIn2023.heading2 = Did you have a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023?
 pIAAboveAnnualAllowanceIn2023.checkYourAnswersLabel = Did you have a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023?
 pIAAboveAnnualAllowanceIn2023.error.required = Select yes if you had a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023
-pIAAboveAnnualAllowanceIn2023.change.hidden = If you had a pension input amount of over £40,000 6 April 2022 to 5 April 2023
+pIAAboveAnnualAllowanceIn2023.change.hidden = if you had a pension input amount of over £40,000 6 April 2022 to 5 April 2023
 
 netIncomeAbove190KIn2023.title = Net income from 1 April 2022 to 31 March 2023
 netIncomeAbove190KIn2023.caption = Annual allowance
@@ -1591,7 +1591,7 @@ netIncomeAbove190KIn2023.message6 = document.
 netIncomeAbove190KIn2023.heading2 = Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.checkYourAnswersLabel = Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.error.required = Select yes if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
-netIncomeAbove190KIn2023.change.hidden = If you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
+netIncomeAbove190KIn2023.change.hidden = if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023
 
 flexibleAccessDcScheme.title = Have you used flexible access on your DC pension scheme?
 flexibleAccessDcScheme.caption = Annual allowance

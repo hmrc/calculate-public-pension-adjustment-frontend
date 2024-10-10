@@ -46,7 +46,7 @@ object PIAPreRemedySummary {
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel("site.change", routes.PIAPreRemedyController.onPageLoad(CheckMode, period).url)
-            .withVisuallyHiddenText(messages("pIAPreRemedy.change.hidden"))
+            .withVisuallyHiddenText(messages("pIAPreRemedy.change.hidden", period.start.getYear.toString, period.end.getYear.toString))
         )
       )
     }

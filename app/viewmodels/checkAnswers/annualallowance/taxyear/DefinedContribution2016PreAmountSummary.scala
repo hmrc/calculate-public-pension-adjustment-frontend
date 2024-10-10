@@ -47,7 +47,7 @@ object DefinedContribution2016PreAmountSummary {
               .onPageLoad(CheckMode)
               .url
           )
-            .withVisuallyHiddenText(messages("definedContribution2016PreAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("definedContribution2016PreAmount.change.hidden", startEndDate))
         )
       )
     }
