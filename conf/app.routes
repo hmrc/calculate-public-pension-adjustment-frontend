@@ -605,3 +605,6 @@ GET        /triage-journey/change-4000-contribution-to-defined-contribution-sche
 POST       /triage-journey/change-4000-contribution-to-defined-contribution-scheme   controllers.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeController.onSubmit(mode: Mode = CheckMode)
 
 GET        /triage-journey/eligible-to-use-service                                     controllers.setupquestions.UserEligibility.onPageLoad
+
+GET        /calculationReview                       controllers.CalculationReviewController.onPageLoad()
+POST       /calculationReview                       controllers.CalculationReviewController.onSubmit()

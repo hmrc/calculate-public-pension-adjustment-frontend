@@ -19,7 +19,7 @@ package services
 import base.SpecBase
 import connectors.{CalculationResultConnector, SubmissionsConnector}
 import controllers.annualallowance.taxyear.AboveThresholdController
-import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, LifetimeAllowanceSetup, Resubmission, RowViewModel, Setup}
+import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, CalculationReviewViewModel, LifetimeAllowanceSetup, Resubmission, ReviewRowViewModel, RowViewModel, Setup}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
@@ -4115,6 +4115,121 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     def checkRowName(rows: Seq[RowViewModel], index: Int, expectedName: String): Unit = {
       rows(index).name mustBe expectedName
       rows(index).value mustNot be(null)
+    }
+
+    "Calculation review" - {
+
+      def checkRowNameAndValueReviewRow(
+        rows: Seq[ReviewRowViewModel],
+        index: Int,
+        expectedTitle: String,
+        expectedString: Option[String],
+        expectedLink: String
+      ): Unit = {
+        rows(index).title mustBe expectedTitle
+        rows(index).changeString mustBe expectedString
+        rows(index).link mustBe expectedLink
+      }
+
+      def checkRowNameReviewRowLTA(row: ReviewRowViewModel, expectedTitle: String): Unit = {
+        row.title mustBe expectedTitle
+        row.changeString mustBe None
+      }
+
+      val index = 0
+
+      "out dates must be well formed" in {
+
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val viewModel: CalculationReviewViewModel =
+          service.calculationReviewViewModel(calculationResult)
+
+        val sections: Seq[Seq[ReviewRowViewModel]] = viewModel.outDates
+        sections.size mustBe 4
+
+        checkRowNameAndValueReviewRow(
+          sections(0),
+          index,
+          "calculationReview.period.2016",
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View.2016"
+        )
+        checkRowNameAndValueReviewRow(
+          sections(1),
+          index,
+          "calculationReview.period.2017",
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View.2017"
+        )
+        checkRowNameAndValueReviewRow(
+          sections(2),
+          index,
+          "calculationReview.period.2018",
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View.2018"
+        )
+        checkRowNameAndValueReviewRow(
+          sections(3),
+          index,
+          "calculationReview.period.2019",
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View.2019"
+        )
+      }
+
+      "in dates must be well formed" in {
+
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val viewModel: CalculationReviewViewModel =
+          service.calculationReviewViewModel(calculationResult)
+
+        val sections: Seq[Seq[ReviewRowViewModel]] = viewModel.inDates
+        sections.size mustBe 4
+
+        checkRowNameAndValueReviewRow(
+          sections(0),
+          index,
+          "calculationReview.period.2020",
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View.2020"
+        )
+        checkRowNameAndValueReviewRow(
+          sections(1),
+          index,
+          "calculationReview.period.2021",
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View.2021"
+        )
+        checkRowNameAndValueReviewRow(
+          sections(2),
+          index,
+          "calculationReview.period.2022",
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View.2022"
+        )
+        checkRowNameAndValueReviewRow(
+          sections(3),
+          index,
+          "calculationReview.period.2023",
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View.2023"
+        )
+      }
+
+      "lta must be well formed" in {
+
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val viewModel: CalculationReviewViewModel =
+          service.calculationReviewViewModel(calculationResult)
+
+        val sections: Seq[ReviewRowViewModel] = viewModel.lifetimeAllowance
+        sections.size mustBe 1
+
+        checkRowNameReviewRowLTA(sections(0), "calculationReview.lta")
+      }
     }
 
   }

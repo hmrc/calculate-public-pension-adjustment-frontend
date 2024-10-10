@@ -31,10 +31,10 @@ import pages.setupquestions.annualallowance.{Contribution4000ToDirectContributio
 import pages.setupquestions.lifetimeallowance._
 import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, ResubmittingAdjustmentPage}
 import play.api.Logging
-import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
+
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -666,6 +666,40 @@ class CalculationResultService @Inject() (
       )
     } else None
   }
+
+  def calculationReviewViewModel(calculationResponse: CalculationResponse): CalculationReviewViewModel = {
+    val outDatesVal: Seq[Seq[ReviewRowViewModel]]     = outDatesReview(calculationResponse)
+    val inDatesVal: Seq[Seq[ReviewRowViewModel]]      = inDatesReview(calculationResponse)
+    val lifetimeAllowanceVal: Seq[ReviewRowViewModel] = lifetimeAllowanceReview
+    CalculationReviewViewModel(outDatesVal, inDatesVal, lifetimeAllowanceVal)
+  }
+
+  private def outDatesReview(calculationResponse: CalculationResponse): Seq[Seq[ReviewRowViewModel]] =
+    calculationResponse.outDates.map { outDate =>
+      Seq(
+        ReviewRowViewModel(
+          "calculationReview.period." + outDate.period.toString,
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View." + outDate.period.toString
+        )
+      )
+    }
+
+  private def inDatesReview(calculationResponse: CalculationResponse): Seq[Seq[ReviewRowViewModel]] =
+    calculationResponse.inDates.map { inDate =>
+      Seq(
+        ReviewRowViewModel(
+          "calculationReview.period." + inDate.period.toString,
+          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+          "AA_Detailed_View." + inDate.period.toString
+        )
+      )
+    }
+
+  private def lifetimeAllowanceReview: Seq[ReviewRowViewModel] =
+    Seq(
+      ReviewRowViewModel("calculationReview.lta", None, "LTA_Detailed_View")
+    )
 
   def calculationResultsViewModel(calculateResponse: CalculationResponse): CalculationResultsViewModel = {
     val resubmissionVal: Seq[RowViewModel]  = resubmission(calculateResponse)

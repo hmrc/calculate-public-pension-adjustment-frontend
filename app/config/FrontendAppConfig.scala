@@ -73,6 +73,8 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
     "cy" -> Lang("cy")
   )
 
+  val calculationReviewEnabled = configuration.get[Boolean]("feature-flags.calculation-review")
+
   val timeout: Int   = configuration.get[Int]("timeout-dialog.timeout")
   val countdown: Int = configuration.get[Int]("timeout-dialog.countdown")
 
