@@ -1170,7 +1170,7 @@ amountFlexibleRemunerationArrangements.change.hidden = cy: Flexi remuneration am
 
 howMuchContributionPensionScheme.title = cy: How much did you contribute in total to all of your pension schemes from {0}?
 howMuchContributionPensionScheme.heading = cy: How much did you contribute in total to all of your pension schemes from {0}?
-howMuchContributionPensionScheme.message1 = cy: howMuchContributionPensionScheme.message1 = You can find this information in your pay slip for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
+howMuchContributionPensionScheme.message1 = cy: You can find this information in your pay slip for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
 howMuchContributionPensionScheme.hint = cy: Amounts must be rounded down to the nearest pound, for example 2300
 howMuchContributionPensionScheme.checkYourAnswersLabel = cy: The amount you contributed from {0}?
 howMuchContributionPensionScheme.error.nonNumeric = cy: The amount you contributed must only include numbers 0 to 9
