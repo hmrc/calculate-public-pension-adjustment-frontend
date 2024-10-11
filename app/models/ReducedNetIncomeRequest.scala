@@ -19,11 +19,11 @@ package models
 import play.api.libs.json.{Format, Json}
 
 case class ReducedNetIncomeRequest(
-                                    period: Period,
-                                    scottishTaxYears: List[Period],
-                                    totalIncome: Int,
-                                    incomeSubJourney: IncomeSubJourney
-                            )
+  period: Period,
+  scottishTaxYears: List[Period],
+  totalIncome: Int,
+  incomeSubJourney: IncomeSubJourney
+)
 
 object ReducedNetIncomeRequest {
 

@@ -31,21 +31,22 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, Upstream
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class ReducedNetIncomeConnector @Inject()(config: Configuration, httpClient: HttpClientV2)(implicit
-                                                                                           ec: ExecutionContext
+class ReducedNetIncomeConnector @Inject() (config: Configuration, httpClient: HttpClientV2)(implicit
+  ec: ExecutionContext
 ) extends Logging {
 
   private val baseUrl = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
-  private val testUrl = url"$baseUrl/calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income"
+  private val testUrl =
+    url"$baseUrl/calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income"
 
   implicit val tupleReads: Reads[(Int, Int)] = (
     (__ \ "x").read[Int] and
       (__ \ "y").read[Int]
-    ).tupled
+  ).tupled
 
   def sendReducedNetIncomeRequest(
-                             reducedNetIncomeRequest: ReducedNetIncomeRequest
-                           )(implicit hc: HeaderCarrier): Future[(Int,Int)] =
+    reducedNetIncomeRequest: ReducedNetIncomeRequest
+  )(implicit hc: HeaderCarrier): Future[(Int, Int)] =
     httpClient
       .post(testUrl)
       .withBody(Json.toJson(reducedNetIncomeRequest))
@@ -54,8 +55,8 @@ class ReducedNetIncomeConnector @Inject()(config: Configuration, httpClient: Htt
       .flatMap { response =>
         response.status match {
           case OK =>
-            Future.successful(response.json.as[(Int,Int)])
-          case _        =>
+            Future.successful(response.json.as[(Int, Int)])
+          case _  =>
             logger.error(
               s"Unexpected response from call to /calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income with status : ${response.status}"
             )

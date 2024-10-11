@@ -52,9 +52,23 @@ class CalculationResultService @Inject() (
 
   def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
     for {
-      calculationInputs   <- Future.successful(buildCalculationInputs(userAnswers))
-      calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
-      _                   <-
+      listOf2016To2023TaxYears <- Future.sequence(
+                                    List(
+                                      Period._2016,
+                                      Period._2017,
+                                      Period._2018,
+                                      Period._2019,
+                                      Period._2020,
+                                      Period._2021,
+                                      Period._2022,
+                                      Period._2023
+                                    ).map(
+                                      toTaxYear2016To2023(userAnswers, _)(hc)
+                                    )
+                                  )
+      calculationInputs        <- Future.successful(buildCalculationInputs(userAnswers, listOf2016To2023TaxYears.flatten))
+      calculationResponse      <- calculationResultConnector.sendRequest(calculationInputs)
+      _                        <-
         auditService.auditCalculationRequest(
           CalculationAuditEvent(
             userAnswers.uniqueId,
@@ -68,30 +82,60 @@ class CalculationResultService @Inject() (
 
   def submitUserAnswersAndCalculation(answers: UserAnswers, userId: String)(implicit
     hc: HeaderCarrier
-  ): Future[SubmissionResponse] = {
-    val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
+  ): Future[SubmissionResponse] =
+    // val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
     for {
-      calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
-      submissionResponse  <-
+      listOf2016To2023TaxYears <- Future.sequence(
+                                    List(
+                                      Period._2016,
+                                      Period._2017,
+                                      Period._2018,
+                                      Period._2019,
+                                      Period._2020,
+                                      Period._2021,
+                                      Period._2022,
+                                      Period._2023
+                                    ).map(
+                                      toTaxYear2016To2023(answers, _)(hc)
+                                    )
+                                  )
+      calculationInputs        <- Future.successful(buildCalculationInputs(answers, listOf2016To2023TaxYears.flatten))
+      calculationResponse      <- calculationResultConnector.sendRequest(calculationInputs)
+      submissionResponse       <-
         submissionsConnector.sendSubmissionRequest(
           SubmissionRequest(calculationInputs, Some(calculationResponse), userId, answers.uniqueId)
         )
-    }yield submissionResponse
-  }
+    } yield submissionResponse
 
   def submitUserAnswersWithNoCalculation(answers: UserAnswers, userId: String)(implicit
     hc: HeaderCarrier
-  ): Future[SubmissionResponse] = {
-    val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
+  ): Future[SubmissionResponse] =
+    // val calculationInputs: CalculationInputs = buildCalculationInputs(answers)
     for {
-      submissionResponse <-
+      listOf2016To2023TaxYears <- Future.sequence(
+                                    List(
+                                      Period._2016,
+                                      Period._2017,
+                                      Period._2018,
+                                      Period._2019,
+                                      Period._2020,
+                                      Period._2021,
+                                      Period._2022,
+                                      Period._2023
+                                    ).map(
+                                      toTaxYear2016To2023(answers, _)(hc)
+                                    )
+                                  )
+      calculationInputs        <- Future.successful(buildCalculationInputs(answers, listOf2016To2023TaxYears.flatten))
+      submissionResponse       <-
         submissionsConnector.sendSubmissionRequest(
           SubmissionRequest(calculationInputs, None, userId, answers.uniqueId)
         )
     } yield submissionResponse
-  }
 
-  def buildCalculationInputs(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): CalculationInputs = {
+  def buildCalculationInputs(userAnswers: UserAnswers, _2016To2023TaxYears: List[TaxYear2016To2023])(implicit
+    hc: HeaderCarrier
+  ): CalculationInputs = {
     val resubmission: Resubmission = userAnswers
       .get(ResubmittingAdjustmentPage)
       .map {
@@ -115,7 +159,7 @@ class CalculationResultService @Inject() (
         toTaxYear2011To2015(userAnswers, _)
       )
 
-    val _2016To2023TaxYears: List[TaxYear2016To2023] =
+    /*    val _2016To2023TaxYears: List[TaxYear2016To2023] =
       List(
         Period._2016,
         Period._2017,
@@ -127,7 +171,7 @@ class CalculationResultService @Inject() (
         Period._2023
       ).flatMap(
         toTaxYear2016To2023(userAnswers, _)(hc)
-      )
+      )*/
 
     val tYears: List[TaxYear] = _2011To2015TaxYears ++ _2016To2023TaxYears
 
@@ -276,7 +320,7 @@ class CalculationResultService @Inject() (
   def toTaxYear2016To2023(
     userAnswers: UserAnswers,
     period: Period
-  )(implicit hc: HeaderCarrier): Option[TaxYear2016To2023] = {
+  )(implicit hc: HeaderCarrier): Future[Option[TaxYear2016To2023]] = {
 
     val totalIncome: Int = userAnswers.get(TotalIncomePage(period)).map(_.toInt).getOrElse(0)
 
@@ -389,7 +433,7 @@ class CalculationResultService @Inject() (
           None
         )
 
-      //API CALL
+      // API CALL
       val scottishTaxYears: List[Period] = userAnswers.data.fields
         .find(_._1 == WhichYearsScottishTaxpayerPage.toString)
         .fold {
@@ -399,23 +443,21 @@ class CalculationResultService @Inject() (
             Period.fromString(sYear)
           }
         }
-      val reducedNetIncomeRequest = ReducedNetIncomeRequest(period, scottishTaxYears, totalIncome, incomeSubJourney)
+      val reducedNetIncomeRequest        = ReducedNetIncomeRequest(period, scottishTaxYears, totalIncome, incomeSubJourney)
 
-      //val personalAllowanceAndReducedNetIncome = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc)
+      // val personalAllowanceAndReducedNetIncome = reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc)
 
-      val updatedIncomeSubJourneyTest = for {
-        test <-
+      /*      val updatedIncomeSubJourneyTest = for {
+        test             <-
           reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)
-        reducedNetIncome = test._1
+        reducedNetIncome  = test._1
         personalAllowance = test._2
-      }yield Some((reducedNetIncome, personalAllowance))
+      } yield Some((reducedNetIncome, personalAllowance))*/
 
-
-
-      val updatedIncomeSubJourney =
+      def updatedIncomeSubJourney: Future[IncomeSubJourney] =
         reducedNetIncomeConnector.sendReducedNetIncomeRequest(reducedNetIncomeRequest).map {
-          case (reducedNetIncome, personalAllowance) =>
-            IncomeSubJourney(
+          case (personalAllowance, reducedNetIncome) =>
+            /*            IncomeSubJourney(
               userAnswers.get(AmountSalarySacrificeArrangementsPage(period)).map(_.toInt),
               userAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)).map(_.toInt),
               userAnswers.get(RASContributionAmountPage(period)).map(_.toInt),
@@ -436,9 +478,13 @@ class CalculationResultService @Inject() (
               userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt),
               thresholdIncomeAmount.map(_.toInt),
               Some(reducedNetIncome)
+            )*/
+
+            incomeSubJourney.copy(
+              reducedNetIncomeAmount = Some(reducedNetIncome),
+              personalAllowanceAmount = Some(personalAllowance)
             )
         }
-
 
       (isFlexiAccessDateInThisPeriod, isFlexiAccessDateBeforeThisPeriod) match {
         case (Some(true), Some(false)) =>
@@ -478,23 +524,25 @@ class CalculationResultService @Inject() (
             else
               None
 
-          Some(
-            InitialFlexiblyAccessedTaxYear(
-              definedBenefitInputAmount,
-              oFlexiAccessDate,
-              definedContributionInputAmount,
-              postAccessDefinedContributionInputAmount,
-              taxYearSchemes,
-              totalIncome,
-              chargePaidByMember,
-              period,
-              updatedIncomeSubJourney,
-              income,
-              definedBenefitInput2016PostAmount,
-              definedContributionInput2016PostAmount,
-              postAccessDefinedContributionInput2016PostAmount
+          updatedIncomeSubJourney.map { uIncomeSubJourney =>
+            Some(
+              InitialFlexiblyAccessedTaxYear(
+                definedBenefitInputAmount,
+                oFlexiAccessDate,
+                definedContributionInputAmount,
+                postAccessDefinedContributionInputAmount,
+                taxYearSchemes,
+                totalIncome,
+                chargePaidByMember,
+                period,
+                uIncomeSubJourney,
+                income,
+                definedBenefitInput2016PostAmount,
+                definedContributionInput2016PostAmount,
+                postAccessDefinedContributionInput2016PostAmount
+              )
             )
-          )
+          }
 
         case (Some(false), Some(true)) =>
           val definedBenefitInputAmount =
@@ -521,20 +569,22 @@ class CalculationResultService @Inject() (
             else
               None
 
-          Some(
-            PostFlexiblyAccessedTaxYear(
-              definedBenefitInputAmount,
-              definedContributionInputAmount,
-              totalIncome,
-              chargePaidByMember,
-              taxYearSchemes,
-              period,
-              incomeSubJourney,
-              income,
-              definedBenefitInput2016PostAmount,
-              definedContributionInput2016PostAmount
+          updatedIncomeSubJourney.map { uIncomeSubJourney =>
+            Some(
+              PostFlexiblyAccessedTaxYear(
+                definedBenefitInputAmount,
+                definedContributionInputAmount,
+                totalIncome,
+                chargePaidByMember,
+                taxYearSchemes,
+                period,
+                uIncomeSubJourney,
+                income,
+                definedBenefitInput2016PostAmount,
+                definedContributionInput2016PostAmount
+              )
             )
-          )
+          }
 
         case _ =>
           val definedBenefitInputAmount =
@@ -567,43 +617,47 @@ class CalculationResultService @Inject() (
             taxYearSchemes.flatMap(_.revisedPensionInput2016PostAmount)
           ) match {
             case (None, None, Nil) =>
-              Some(
-                NormalTaxYear(
-                  definedBenefitInputAmount + definedContributionInputAmount + taxYearSchemes
-                    .map(_.revisedPensionInputAmount)
-                    .sum,
-                  taxYearSchemes,
-                  totalIncome,
-                  chargePaidByMember,
-                  period,
-                  incomeSubJourney,
-                  income
-                )
-              )
-
-            case _ =>
-              Some(
-                NormalTaxYear(
-                  definedBenefitInputAmount + definedContributionInputAmount + taxYearSchemes
-                    .map(_.revisedPensionInputAmount)
-                    .sum,
-                  taxYearSchemes,
-                  totalIncome,
-                  chargePaidByMember,
-                  period,
-                  incomeSubJourney,
-                  income,
-                  Some(
-                    definedBenefitInput2016PostAmount.getOrElse(0) +
-                      definedContributionInput2016PostAmount.getOrElse(0) +
-                      taxYearSchemes.map(_.revisedPensionInput2016PostAmount.getOrElse(0)).sum
+              updatedIncomeSubJourney.map { uIncomeSubJourney =>
+                Some(
+                  NormalTaxYear(
+                    definedBenefitInputAmount + definedContributionInputAmount + taxYearSchemes
+                      .map(_.revisedPensionInputAmount)
+                      .sum,
+                    taxYearSchemes,
+                    totalIncome,
+                    chargePaidByMember,
+                    period,
+                    uIncomeSubJourney,
+                    income
                   )
                 )
-              )
+              }
+
+            case _ =>
+              updatedIncomeSubJourney.map { uIncomeSubJourney =>
+                Some(
+                  NormalTaxYear(
+                    definedBenefitInputAmount + definedContributionInputAmount + taxYearSchemes
+                      .map(_.revisedPensionInputAmount)
+                      .sum,
+                    taxYearSchemes,
+                    totalIncome,
+                    chargePaidByMember,
+                    period,
+                    uIncomeSubJourney,
+                    income,
+                    Some(
+                      definedBenefitInput2016PostAmount.getOrElse(0) +
+                        definedContributionInput2016PostAmount.getOrElse(0) +
+                        taxYearSchemes.map(_.revisedPensionInput2016PostAmount.getOrElse(0)).sum
+                    )
+                  )
+                )
+              }
           }
       }
     } else
-      None
+      Future.successful(None)
   }
 
   def buildLifeTimeAllowance(userAnswers: UserAnswers): Option[LifeTimeAllowance] = {
