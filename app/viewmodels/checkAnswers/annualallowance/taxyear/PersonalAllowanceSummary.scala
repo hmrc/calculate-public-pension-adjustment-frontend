@@ -43,7 +43,7 @@ object PersonalAllowanceSummary {
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel("site.change", routes.PersonalAllowanceController.onPageLoad(CheckMode, period).url)
-            .withVisuallyHiddenText(messages("personalAllowance.change.hidden"))
+            .withVisuallyHiddenText(messages("personalAllowance.change.hidden", startEndDate))
         )
       )
     }

@@ -50,7 +50,7 @@ object FlexibleRemunerationArrangementsSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("flexibleRemunerationArrangements.change.hidden"))
+            .withVisuallyHiddenText(messages("flexibleRemunerationArrangements.change.hidden", startEndDate))
         )
       )
     }

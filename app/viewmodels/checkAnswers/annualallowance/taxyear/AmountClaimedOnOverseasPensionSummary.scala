@@ -48,7 +48,7 @@ object AmountClaimedOnOverseasPensionSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("amountClaimedOnOverseasPension.change.hidden"))
+            .withVisuallyHiddenText(messages("amountClaimedOnOverseasPension.change.hidden", startEndDate))
         )
       )
     }

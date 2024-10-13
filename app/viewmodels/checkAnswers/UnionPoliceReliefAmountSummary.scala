@@ -26,12 +26,20 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 object UnionPoliceReliefAmountSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(UnionPoliceReliefAmountPage(period)).map { answer =>
+      val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
+      val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+      val startEndDate: String =
+        period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
+
       SummaryListRowViewModel(
-        key = "unionPoliceReliefAmount.checkYourAnswersLabel",
+        key = messages("unionPoliceReliefAmount.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
@@ -40,7 +48,7 @@ object UnionPoliceReliefAmountSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("unionPoliceReliefAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("unionPoliceReliefAmount.change.hidden", startEndDate))
         )
       )
     }
