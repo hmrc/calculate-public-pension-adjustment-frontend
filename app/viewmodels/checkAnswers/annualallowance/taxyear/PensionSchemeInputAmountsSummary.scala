@@ -25,6 +25,9 @@ import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 object PensionSchemeInputAmountsSummary {
 
   def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
@@ -36,6 +39,11 @@ object PensionSchemeInputAmountsSummary {
       val schemeName = answers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName
       }
+
+      val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
+      val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+      val startEndDate: String =
+        period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
         key = messages(
@@ -54,7 +62,9 @@ object PensionSchemeInputAmountsSummary {
             .withVisuallyHiddenText(
               messages(
                 if (period.start.getYear == 2022) "pensionSchemeInputAmounts.change.hidden"
-                else "pensionSchemeInputAmounts.change.revised.hidden"
+                else "pensionSchemeInputAmounts.change.revised.hidden",
+                schemeName.getOrElse(""),
+                startEndDate
               )
             )
         )

@@ -184,7 +184,7 @@ definedContributionPensionScheme.message = Fel arfer, bydd y rhain naill ai’n 
 definedContributionPensionScheme.bullet1 = yn bensiynau gweithle a drefnir gan eich cyflogwr
 definedContributionPensionScheme.bullet2 = yn bensiynau preifat a drefnir gennych chi
 definedContributionPensionScheme.error.required = Dewiswch ‘Iawn’ os oes gennych gynllun pensiwn cyfraniadau diffiniedig
-definedContributionPensionScheme.change.hidden = os oes gennych chi gynllun pensiwn cyfraniadau diffiniedig
+definedContributionPensionScheme.change.hidden = cy: if you have any other pension schemes apart from your public service ones
 
 flexiblyAccessedPension.title = A ydych chi wedi cyrchu eich pensiwn cyfraniadau diffiniedig yn hyblyg?
 flexiblyAccessedPension.heading = A ydych chi wedi cyrchu eich pensiwn cyfraniadau diffiniedig yn hyblyg?
@@ -523,7 +523,7 @@ pensionSchemeInputAmounts.error.revisedPIA.nonNumeric = cy: Your revised pension
 pensionSchemeInputAmounts.error.originalPIA.length = cy: Your pension input amount from {2} must be £999,999,999 or less
 pensionSchemeInputAmounts.error.revisedPIA.length = cy: Your revised pension input from {2} amount must be £999,999,999 or less
 pensionSchemeInputAmounts.change.hidden = pension input amount
-pensionSchemeInputAmounts.change.revised.hidden = revised pension input amount
+pensionSchemeInputAmounts.change.revised.hidden = cy: your revised pension input amount for {0} from {1}
 
 whichScheme.title = Pa gynllun ydych chi’n nodi manylion ar ei gyfer?
 whichScheme.heading = Pa gynllun ydych chi’n nodi manylion ar ei gyfer?
@@ -624,12 +624,6 @@ thresholdIncome.change.hidden.2020 = os yw eich incwm trothwy yn fwy na £110,00
 thresholdIncome.change.hidden.2021 = os yw eich incwm trothwy yn fwy na £200,000?
 thresholdIncome.change.hidden.2022 = os yw eich incwm trothwy yn fwy na £200,000?
 thresholdIncome.change.hidden.2023 = os yw eich incwm trothwy yn fwy na £200,000?
-
-valueNewLtaCharge.error.nonNumeric = cy: You have entered non-numerical characters for your extra lifetime allowance charge. You must enter numerical characters
-valueNewLtaCharge.error.required = cy: Enter an amount for your extra lifetime allowance charge
-valueNewLtaCharge.error.wholeNumber = cy: You have not entered a whole number for your extra lifetime allowance charge. You cannot use decimals.
-valueNewLtaCharge.error.outOfRange = cy: You have entered too many characters for your extra lifetime allowance charge. The maximum number of characters you can enter is 9
-valueNewLtaCharge.change.hidden = cy: the value of the new lifetime allowance charge
 
 whoPayingExtraLtaCharge.title = Pwy sy’n talu’r tâl lwfans oes ychwanegol?
 whoPayingExtraLtaCharge.heading = Pwy sy’n talu’r tâl lwfans oes ychwanegol?
@@ -1227,15 +1221,6 @@ claimingTaxReliefPension.heading2 = cy: Did you claim for income tax relief from
 claimingTaxReliefPension.checkYourAnswersLabel = cy: Did you claim for income tax relief from {0}?
 claimingTaxReliefPension.error.required = cy: Select yes if you claimed for tax relief on your pension from {0}
 claimingTaxReliefPension.change.hidden = cy: Claiming pension tax relief
-
-interestFromSavings.title = cy: InterestFromSavings
-interestFromSavings.heading = cy: InterestFromSavings
-interestFromSavings.checkYourAnswersLabel = cy: InterestFromSavings
-interestFromSavings.error.nonNumeric = cy: Enter your interestFromSavings using numbers
-interestFromSavings.error.required = cy: Enter your interestFromSavings
-interestFromSavings.error.wholeNumber = cy: Enter your interestFromSavings using whole numbers
-interestFromSavings.error.outOfRange = cy: InterestFromSavings must be between {0} and {1}
-interestFromSavings.change.hidden = cy: InterestFromSavings
 
 knowAdjustedAmount.title = cy: Do you know your adjusted income amount from {0}?
 knowAdjustedAmount.caption = cy: Annual allowance adjusted income

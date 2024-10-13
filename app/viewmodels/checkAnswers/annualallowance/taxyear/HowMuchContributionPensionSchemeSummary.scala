@@ -50,7 +50,7 @@ object HowMuchContributionPensionSchemeSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("howMuchContributionPensionScheme.change.hidden"))
+            .withVisuallyHiddenText(messages("howMuchContributionPensionScheme.change.hidden", startEndDate))
         )
       )
     }
