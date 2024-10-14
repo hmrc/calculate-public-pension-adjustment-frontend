@@ -19,7 +19,7 @@ package connectors
 import config.Service
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.submission.Success
-import models.{Done, IncomeSubJourney, Period, ReducedNetIncomeRequest}
+import models.{Done, IncomeSubJourney, Period, ReducedNetIncomeRequest, ReducedNetIncomeResponse}
 import play.api.http.Status.{ACCEPTED, NO_CONTENT, OK}
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.JsPath.\
@@ -36,26 +36,21 @@ class ReducedNetIncomeConnector @Inject() (config: Configuration, httpClient: Ht
 ) extends Logging {
 
   private val baseUrl = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
-  private val testUrl =
+  private val subsidiaryCalculationUrl =
     url"$baseUrl/calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income"
-
-  implicit val tupleReads: Reads[(Int, Int)] = (
-    (__ \ "x").read[Int] and
-      (__ \ "y").read[Int]
-  ).tupled
 
   def sendReducedNetIncomeRequest(
     reducedNetIncomeRequest: ReducedNetIncomeRequest
-  )(implicit hc: HeaderCarrier): Future[(Int, Int)] =
+  )(implicit hc: HeaderCarrier): Future[ReducedNetIncomeResponse] =
     httpClient
-      .post(testUrl)
+      .post(subsidiaryCalculationUrl)
       .withBody(Json.toJson(reducedNetIncomeRequest))
       .execute[HttpResponse]
       .logFailureReason(connectorName = "ReducedNetIncomeConnector on set")
       .flatMap { response =>
         response.status match {
           case OK =>
-            Future.successful(response.json.as[(Int, Int)])
+            Future.successful(response.json.as[ReducedNetIncomeResponse])
           case _  =>
             logger.error(
               s"Unexpected response from call to /calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income with status : ${response.status}"
