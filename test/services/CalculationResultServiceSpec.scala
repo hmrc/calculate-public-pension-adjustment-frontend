@@ -17,14 +17,14 @@
 package services
 
 import base.SpecBase
-import connectors.{CalculationResultConnector, SubmissionsConnector}
+import connectors.{CalculationResultConnector, ReducedNetIncomeConnector, SubmissionsConnector}
 import controllers.annualallowance.taxyear.AboveThresholdController
 import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, LifetimeAllowanceSetup, Resubmission, RowViewModel, Setup}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, ReducedNetIncomeRequest, ReducedNetIncomeResponse, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
@@ -39,12 +39,14 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
   private val mockSubmissionsConnector       = mock[SubmissionsConnector]
+  private val mockReducedNetIncomeConnector = mock[ReducedNetIncomeConnector]
   private val mockAuditService               = mock[AuditService]
   private val aboveThresholdController       = new AboveThresholdController
   private val service                        =
     new CalculationResultService(
       mockCalculationResultConnector,
       mockSubmissionsConnector,
+      mockReducedNetIncomeConnector,
       mockAuditService,
       aboveThresholdController
     )
@@ -2446,6 +2448,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               Some(2291),
+              None,
               None
             ),
             None,
@@ -2483,6 +2486,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               Some(2291),
+              None,
               None
             ),
             None,
@@ -2518,6 +2522,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               Some(90),
               Some(2291),
+              None,
               None
             ),
             Some(BelowThreshold)
@@ -2551,6 +2556,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               Some(90),
               Some(2291),
+              None,
               None
             ),
             Some(BelowThreshold)
@@ -2584,6 +2590,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               Some(90),
               Some(2291),
+              None,
               None
             ),
             Some(BelowThreshold)
@@ -2617,6 +2624,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               Some(90),
               Some(2291),
+              None,
               None
             ),
             Some(BelowThreshold)
@@ -2651,6 +2659,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 None,
                 Some(90),
                 Some(2291),
+                None,
                 None
               ),
               Some(AboveThreshold(96148))
@@ -2684,6 +2693,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               Some(90),
               Some(2291),
+              None,
               None
             ),
             Some(BelowThreshold)
@@ -2717,7 +2727,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               Some(90),
               Some(2291),
-              Some(58733)
+              Some(58733),
+              None
             ),
             income = Some(AboveThreshold(166148))
           )
@@ -2727,6 +2738,23 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     }
 
     "buildInputs" - {
+
+      val taxYears: List[TaxYear2016To2023] = {
+         Future.sequence(
+          List(
+            Period._2016,
+            Period._2017,
+            Period._2018,
+            Period._2019,
+            Period._2020,
+            Period._2021,
+            Period._2022,
+            Period._2023
+          ).map(
+            toTaxYear2016To2023(userAnswers, _)(hc)
+          )
+        )
+      }
 
       "should return 2016 as the InitialFlexiblyAccessedTaxYear when stopPayingPublicPension falls in 2016 " in {
 
@@ -4127,6 +4155,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
+      //when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any)).thenReturn(Future.successful(ReducedNetIncomeResponse(1,2)))
 
       val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
@@ -4137,6 +4166,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       when(mockCalculationResultConnector.sendRequest(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
+      //when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any)).thenReturn(Future.successful(ReducedNetIncomeResponse(1,2)))
 
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
@@ -4153,6 +4183,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
+
+
   }
 
   "adjustedIncomeCalculation" - {

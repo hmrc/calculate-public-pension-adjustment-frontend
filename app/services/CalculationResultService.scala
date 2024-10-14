@@ -36,6 +36,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success}
 
 class CalculationResultService @Inject() (
   calculationResultConnector: CalculationResultConnector,
