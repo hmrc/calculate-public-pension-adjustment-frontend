@@ -24,23 +24,26 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, ReducedNetIncomeRequest, ReducedNetIncomeResponse, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, ReducedNetIncomeResponse, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
 import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
 import play.api.libs.json.{JsObject, JsValue, Json}
+import uk.gov.hmrc.http.HeaderCarrier
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import java.time.LocalDate
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 import scala.io.Source
 
 class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
+  implicit lazy val headerCarrier: HeaderCarrier = HeaderCarrier()
+
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
   private val mockSubmissionsConnector       = mock[SubmissionsConnector]
-  private val mockReducedNetIncomeConnector = mock[ReducedNetIncomeConnector]
   private val mockAuditService               = mock[AuditService]
+  private val mockReducedNetIncomeConnector  = mock[ReducedNetIncomeConnector]
   private val aboveThresholdController       = new AboveThresholdController
   private val service                        =
     new CalculationResultService(
@@ -2421,7 +2424,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     "toTaxYear2016To2023" - {
 
       "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016)
+
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016).futureValue
 
         result mustBe Some(
           InitialFlexiblyAccessedTaxYear(
@@ -2445,11 +2451,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               None,
-              None,
+              Some(1),
               None,
               Some(2291),
               None,
-              None
+              Some(2)
             ),
             None,
             Some(30016),
@@ -2459,7 +2465,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016 when PublicPension" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2016).futureValue
 
         result mustBe Some(
           InitialFlexiblyAccessedTaxYear(
@@ -2483,11 +2491,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               None,
               None,
               None,
-              None,
+              Some(1),
               None,
               Some(2291),
               None,
-              None
+              Some(2)
             ),
             None,
             Some(30016),
@@ -2497,7 +2505,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2017" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2017)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2017).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2519,11 +2529,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
               None,
-              None
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2531,7 +2541,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2018" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2018)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2018).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2553,11 +2565,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
               None,
-              None
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2565,7 +2577,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2019" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2019)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2019).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2587,11 +2601,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
               None,
-              None
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2599,7 +2613,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2020" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2020)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2020).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2621,11 +2637,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
               None,
-              None
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2633,7 +2649,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2021" in {
-        val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2021)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2021).futureValue
 
         result mustBe
           Some(
@@ -2656,11 +2674,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 Some(1212),
                 Some(1414),
                 Some(842),
-                None,
+                Some(1),
                 Some(90),
                 Some(2291),
                 None,
-                None
+                Some(2)
               ),
               Some(AboveThreshold(96148))
             )
@@ -2668,7 +2686,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2022" in {
-        val result = service.toTaxYear2016To2023(userAnswers1, Period._2022)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1, Period._2022).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2690,11 +2710,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
               None,
-              None
+              Some(2)
             ),
             Some(BelowThreshold)
           )
@@ -2702,7 +2722,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       }
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2023" in {
-        val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2023)
+        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2023).futureValue
 
         result mustBe Some(
           PostFlexiblyAccessedTaxYear(
@@ -2724,11 +2746,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(1212),
               Some(1414),
               Some(842),
-              None,
+              Some(1),
               Some(90),
               Some(2291),
               Some(58733),
-              None
+              Some(2)
             ),
             income = Some(AboveThreshold(166148))
           )
@@ -2738,23 +2760,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     }
 
     "buildInputs" - {
-
-      val taxYears: List[TaxYear2016To2023] = {
-         Future.sequence(
-          List(
-            Period._2016,
-            Period._2017,
-            Period._2018,
-            Period._2019,
-            Period._2020,
-            Period._2021,
-            Period._2022,
-            Period._2023
-          ).map(
-            toTaxYear2016To2023(userAnswers, _)(hc)
-          )
-        )
-      }
 
       "should return 2016 as the InitialFlexiblyAccessedTaxYear when stopPayingPublicPension falls in 2016 " in {
 
@@ -2794,6 +2799,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   ),
                   None,
@@ -2846,6 +2852,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   ),
                   None,
@@ -2875,6 +2882,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(AboveThreshold(177748)),
@@ -2903,6 +2911,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold),
@@ -2918,7 +2927,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016 pre period" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data13))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data13), a)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -2954,6 +2963,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   ),
                   None,
@@ -2983,6 +2993,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(AboveThreshold(177748)),
@@ -3011,6 +3022,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold),
@@ -3026,7 +3038,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return 2016, 2017 as the NormalTaxYear and 2018 as the InitialFlexiblyAccessedTaxYear and 2019 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2018" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data12))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data12), a)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Incorrect data")),
@@ -3062,6 +3074,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   ),
                   None,
@@ -3088,6 +3101,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold),
@@ -3117,6 +3131,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(AboveThreshold(209548)),
@@ -3146,6 +3161,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold),
@@ -3162,7 +3178,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs for a valid UserAnswers with all years" in {
 
-        val result = service.buildCalculationInputs(userAnswers1)
+        val result = service.buildCalculationInputs(userAnswers1, a)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Change in amounts")),
@@ -3227,6 +3243,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   ),
                   None,
@@ -3255,6 +3272,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3281,6 +3299,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3307,6 +3326,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3333,6 +3353,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3359,6 +3380,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3385,6 +3407,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3411,6 +3434,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3456,7 +3480,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs for a valid UserAnswers with missing years" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data3))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data3), a)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -3494,6 +3518,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   ),
                   None,
@@ -3523,6 +3548,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3549,6 +3575,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3575,6 +3602,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3588,7 +3616,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9), a)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -3621,6 +3649,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   ),
                   None,
@@ -3647,6 +3676,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3672,6 +3702,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3697,6 +3728,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3710,7 +3742,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10))
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10), a)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -3743,6 +3775,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   ),
                   None,
@@ -3769,6 +3802,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold),
@@ -3798,6 +3832,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(AboveThreshold(243148))
@@ -3824,6 +3859,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -3850,6 +3886,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -4155,7 +4192,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
-      //when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any)).thenReturn(Future.successful(ReducedNetIncomeResponse(1,2)))
 
       val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
@@ -4166,7 +4202,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       when(mockCalculationResultConnector.sendRequest(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
-      //when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any)).thenReturn(Future.successful(ReducedNetIncomeResponse(1,2)))
 
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
@@ -4183,8 +4218,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
-
-
   }
 
   "adjustedIncomeCalculation" - {
