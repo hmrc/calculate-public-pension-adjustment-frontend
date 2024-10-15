@@ -62,12 +62,6 @@
         </tbody>
     </table>
 
-    <h2 class="govuk-heading-m">@messages("calculationReviewIndividualAA.heading4")</h2>
-    <p class="govuk-body">@messages("calculationReviewIndividualAA.message7")</p>
-
-    <p class="govuk-body"> <a class="govuk-link" id="print-result" href="#print" onclick="window.print();return false;">@messages("calculationReviewIndividualAA.print")</a>
-    <script @{CSPNonce.attr}>document.getElementById("print-result").addEventListener("click", () => window.print());</script>
-
 @formHelper(action = routes.CalculationReviewIndividualAAController.onSubmit(), Symbol("autoComplete") -> "off") {
             @govukButton(
                 ButtonViewModel(HtmlContent(messages("calculationReviewIndividualAA.backToSummary")))
