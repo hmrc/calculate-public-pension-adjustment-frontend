@@ -490,7 +490,7 @@ pensionSchemeDetails.error.schemeName.required = Enter the name of the pension s
 pensionSchemeDetails.error.schemeTaxRef.required = Enter the Pension Scheme Tax Reference
 pensionSchemeDetails.error.schemeName.length = The name of the pension scheme must be 100 characters or fewer
 pensionSchemeDetails.error.schemeTaxRef.invalid = The Pension Scheme Tax Reference that paid the annual allowance charge must be 8 numbers followed by 2 letters
-pensionSchemeDetails.change.hidden = the pension scheme name or pension scheme tax reference
+pensionSchemeDetails.change.hidden = pension scheme name or pension scheme tax reference
 
 pensionSchemeInputAmounts.title = Pension input amounts for {0}
 pensionSchemeInputAmounts.title.2016-pre = Pension input amount for the pension scheme {0} between 6 April 2015 and 8 July 2015
@@ -641,7 +641,7 @@ ltaPensionSchemeDetails.error.name.length = The name of your pension scheme must
 ltaPensionSchemeDetails.taxRef = Pension Scheme Tax Reference
 ltaPensionSchemeDetails.hint = For example, 00348916RT.
 ltaPensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the scheme that is paying the extra charge?
-ltaPensionSchemeDetails.change.hidden = the name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
+ltaPensionSchemeDetails.change.hidden = name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.required = Enter the Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.invalid = The Pension Scheme Tax Reference of the scheme that is paying the extra charge must only include letters a to z, numbers 0 to 9
 
@@ -1283,7 +1283,7 @@ doYouKnowPersonalAllowance.message1 = Your personal allowance is the amount of m
 doYouKnowPersonalAllowance.message2 = If you have filed for self-assessment you will find this information in your SA-302 document.
 doYouKnowPersonalAllowance.checkYourAnswersLabel = Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.error.required = Select yes if you know your personal allowance
-doYouKnowPersonalAllowance.change.hidden = your personal allowance from {0}
+doYouKnowPersonalAllowance.change.hidden = if you know your personal allowance from {0}
 
 blindAllowance.title = Did you claim blind person’s allowance from {0}?
 blindAllowance.caption = Annual allowance net income
@@ -1396,7 +1396,7 @@ previousLTACharge.message2 = The standard lifetime allowance was £1,073,100. Th
 previousLTACharge.heading2 = Have you paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023?
 previousLTACharge.checkYourAnswersLabel = Have you paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023?
 previousLTACharge.error.required = Select yes if you paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023?
-previousLTACharge.change.hidden = if you have paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023
+previousLTACharge.change.hidden = if you paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023
 
 pensionProtectedMember.title = Are you a protected member
 pensionProtectedMember.heading = Protected members
