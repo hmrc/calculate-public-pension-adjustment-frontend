@@ -2927,7 +2927,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016 pre period" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data13), a)
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data13),)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -3038,7 +3038,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return 2016, 2017 as the NormalTaxYear and 2018 as the InitialFlexiblyAccessedTaxYear and 2019 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2018" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data12), a)
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data12),)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Incorrect data")),
@@ -3178,7 +3178,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs for a valid UserAnswers with all years" in {
 
-        val result = service.buildCalculationInputs(userAnswers1, a)
+        val result = service.buildCalculationInputs(userAnswers1,)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(true, Some("Change in amounts")),
@@ -3480,7 +3480,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs for a valid UserAnswers with missing years" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data3), a)
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data3),)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -3616,7 +3616,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9), a)
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9),)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -3742,7 +3742,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
 
-        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10), a)
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10),)
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
