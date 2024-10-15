@@ -14,41 +14,40 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.annualallowance.taxyear
 
-import controllers.routes
 import models.{CheckMode, Period, UserAnswers}
-import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
+import pages.annualallowance.taxyear.UnionPoliceReliefAmountPage
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-object ClaimingTaxReliefPensionSummary {
+object UnionPoliceReliefAmountSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ClaimingTaxReliefPensionPage(period)).map { answer =>
-      val value = if (answer) "site.yes" else "site.no"
-
+    answers.get(UnionPoliceReliefAmountPage(period)).map { answer =>
       val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
       val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
       val startEndDate: String =
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key = messages("claimingTaxReliefPension.checkYourAnswersLabel", startEndDate),
-        value = ValueViewModel(value),
+        key = messages("unionPoliceReliefAmount.checkYourAnswersLabel", startEndDate),
+        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            controllers.annualallowance.taxyear.routes.ClaimingTaxReliefPensionController
+            controllers.annualallowance.taxyear.routes.UnionPoliceReliefAmountController
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("claimingTaxReliefPension.change.hidden", startEndDate))
+            .withVisuallyHiddenText(messages("unionPoliceReliefAmount.change.hidden", startEndDate))
         )
       )
     }

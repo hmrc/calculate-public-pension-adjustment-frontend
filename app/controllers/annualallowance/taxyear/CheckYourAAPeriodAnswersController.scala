@@ -25,7 +25,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.{ClaimingTaxReliefPensionSummary, TradeUnionReliefSummary, UnionPoliceReliefAmountSummary}
 import viewmodels.checkAnswers.annualallowance.taxyear._
 import viewmodels.govuk.summarylist._
 import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView

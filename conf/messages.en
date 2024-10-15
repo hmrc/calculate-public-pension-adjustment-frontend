@@ -700,7 +700,7 @@ contributedToDuringRemedyPeriod.change.hidden = annual allowance defined contrib
 
 definedContributionAmount.title = What was your pension input amount for defined contribution pension schemes between {0}?
 definedContributionAmount.heading = What was your pension input amount for defined contribution pension schemes between {0}?
-definedContributionAmount.checkYourAnswersLabel = What was your pension input amount for defined contribution pension schemes between {0}??
+definedContributionAmount.checkYourAnswersLabel = What was your pension input amount for defined contribution pension schemes between {0}?
 definedContributionAmount.message1 = This is the total amount paid into or any increase in a defined contribution pension scheme in a tax year.
 definedContributionAmount.message2 = This can be done by you or anyone else, such as your employer.
 definedContributionAmount.hint1 = Amounts must be rounded down to the nearest pound, for example 2300.
@@ -1220,7 +1220,7 @@ claimingTaxReliefPension.message2 = You must not include any tax relief claimed 
 claimingTaxReliefPension.heading2 = Did you claim for income tax relief from {0}?
 claimingTaxReliefPension.checkYourAnswersLabel = Did you claim for income tax relief from {0}?
 claimingTaxReliefPension.error.required = Select yes if you claimed for tax relief on your pension from {0}
-claimingTaxReliefPension.change.hidden = you had claimed for income tax relief from {0}
+claimingTaxReliefPension.change.hidden = if you had claimed for income tax relief from {0}
 
 knowAdjustedAmount.title = Do you know your adjusted income amount from {0}?
 knowAdjustedAmount.caption = Annual allowance adjusted income
@@ -1309,7 +1309,7 @@ blindPersonsAllowanceAmount.error.minimum = Your blind persons allowance must be
 
 rASContributionAmount.title = What was your gross contribution in total to all of your pension schemes where relief at source was given from {0}?
 rASContributionAmount.heading = What was your gross contribution in total to all of your pension schemes where relief at source was given from {0}?
-rASContributionAmount.checkYourAnswersLabel = Your gross contribution to all your pension schemes from {0}?
+rASContributionAmount.checkYourAnswersLabel = What was your gross contribution in total to all of your pension schemes where relief at source was given from {0}?
 rASContributionAmount.message1 = To work out your gross pension contributions, you must multiply your contribution by 1.25.
 rASContributionAmount.message2 = For example, if you made £2000 of contributions after tax, your gross contribution would be £2500.
 rASContributionAmount.message3 = You can find this information in your P60 document for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
@@ -1318,7 +1318,7 @@ rASContributionAmount.error.nonNumeric = Your gross contribution to relief at so
 rASContributionAmount.error.required = Enter your gross contribution to relief at source pension schemes from {0}
 rASContributionAmount.error.wholeNumber = Your gross contribution to relief at source pension schemes from {0} must be a whole number
 rASContributionAmount.error.outOfRange = Your gross contribution to relief at source pension schemes from {2} must be between £1 and £999,999,999
-rASContributionAmount.change.hidden = your gross contribution to all your pension schemes from {0}
+rASContributionAmount.change.hidden = your gross contribution in total to all of your pension schemes where relief at source was given from {0}
 
 didYouContributeToRASScheme.title = Did you make any contributions to a relief at source pension scheme from {0}?
 didYouContributeToRASScheme.mainHeading = Relief at source scheme contributions
@@ -1328,7 +1328,7 @@ didYouContributeToRASScheme.message2 = This may be the case if you pay into any 
 didYouContributeToRASScheme.message3 = Most public sector pension schemes such as Civil Service alpha or the NHS pension scheme are not relief at source schemes.
 didYouContributeToRASScheme.checkYourAnswersLabel = Did you make any contributions to a relief at source pension scheme from {0}?
 didYouContributeToRASScheme.error.required = Select yes if made any contributions to a relief at source pension scheme from {0}
-didYouContributeToRASScheme.change.hidden = if you have made any contributions to a relief at source pension scheme
+didYouContributeToRASScheme.change.hidden = if you have made any contributions to a relief at source pension scheme from {0}
 
 doYouHaveGiftAid.title = Did you make any donations to charity on which you claimed tax relief from {0}?
 doYouHaveGiftAid.heading1 = Gift aid donations
@@ -1370,7 +1370,7 @@ tradeUnionRelief.change.hidden = if you claimed tax relief for payments to trade
 unionPoliceReliefAmount.title = How much tax relief are you claiming for trade union or police organisation fees from {0}?
 unionPoliceReliefAmount.heading = How much tax relief are you claiming for trade union or police organisation fees from {0}?
 unionPoliceReliefAmount.message1 = If you have filed for self-assessment you will find this information in your SA-100 document.
-unionPoliceReliefAmount.checkYourAnswersLabel = Amount of tax relief you are claiming for trade union or police organisation fees from {0}
+unionPoliceReliefAmount.checkYourAnswersLabel = How much tax relief are you claiming for trade union or police organisation fees from {0}?
 unionPoliceReliefAmount.message2 = If you claimed tax relief but you did not file for self assessment, you will find the amount you claimed on your P87 form for that year.
 unionPoliceReliefAmount.error.nonNumeric = The tax relief you are claiming for trade union or police organisation fees must only include numbers 0 to 9
 unionPoliceReliefAmount.error.required = Enter the amount of tax relief you are claiming for trade union or police organisation fees from {0}
@@ -1385,9 +1385,9 @@ affectedByRemedy.bullet1 = you worked in public service between 1 April 2015 and
 affectedByRemedy.bullet2 = you left service after 31 March 2012 and returned within 5 years
 affectedByRemedy.message3 = Find out more about the Public Service Pensions remedy
 affectedByRemedy.heading2 = Are you affected by the Public Service Pensions remedy?
-affectedByRemedy.checkYourAnswersLabel = Were you affected by the Public Service Pensions Remedy?
+affectedByRemedy.checkYourAnswersLabel = Are you affected by the Public Service Pensions remedy?
 affectedByRemedy.error.required = Select yes if you were affected by the Public Service Pensions Remedy
-affectedByRemedy.change.hidden = if you were affected by the Public Service Pensions Remedy
+affectedByRemedy.change.hidden = if you are affected by the Public Service Pensions Remedy
 
 previousLTACharge.title = Have you paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023?
 previousLTACharge.heading = Lifetime allowance tax charge
@@ -1404,7 +1404,7 @@ pensionProtectedMember.message1 = Protected members did not move from their old 
 pensionProtectedMember.message2 = You could only join the reform scheme on 1 April 2022.
 pensionProtectedMember.link = Find out more information about protected members
 pensionProtectedMember.heading2 = Are you a protected member of your public service pension scheme?
-pensionProtectedMember.checkYourAnswersLabel = Are you a protected member?
+pensionProtectedMember.checkYourAnswersLabel = Are you a protected member of your public service pension scheme?
 pensionProtectedMember.error.required = Select yes if you were a protected member of your public service pension scheme
 pensionProtectedMember.change.hidden = if you are a protected member of your public service pension scheme
 
