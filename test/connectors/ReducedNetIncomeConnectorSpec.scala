@@ -42,7 +42,7 @@ import play.api.Application
 import play.api.http.Status.{ACCEPTED, BAD_REQUEST, NO_CONTENT}
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier}
 import com.github.tomakehurst.wiremock.client.WireMock._
 
 import scala.util.Try
@@ -65,8 +65,7 @@ class ReducedNetIncomeConnectorSpec extends SpecBase with WireMockHelper with Sc
 
     "sendSubmissionRequest" - {
 
-
-      "must return a Success response containing a uniqueId when the server provides one" in {
+      "must return a response containing a calculated personal allowance and reduced net income" in {
 
         val url = s"/calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income"
         val app = application
@@ -77,115 +76,33 @@ class ReducedNetIncomeConnectorSpec extends SpecBase with WireMockHelper with Sc
           val reducedNetIncomeResponse: ReducedNetIncomeResponse = ReducedNetIncomeResponse(1,1)
           val responseBody = Json.toJson(reducedNetIncomeResponse).toString
 
-          //server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withStatus(ACCEPTED).withBody(responseBody)))
           server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withBody(responseBody)))
 
-          val result1 = connector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc).futureValue
-          println("============================")
-          println(result1)
-          println("============================")
-
-          result1 mustBe reducedNetIncomeResponse
-
+          val result = connector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc).futureValue
+          result mustBe reducedNetIncomeResponse
 
         }
       }
 
-//      "must return a failed future when the server responds with an error" in {
-//
-//        val url = s"/calculate-public-pension-adjustment/submission"
-//        val app = application
-//
-//        running(app) {
-//          val connector         = app.injector.instanceOf[SubmissionsConnector]
-//          val submissionRequest =
-//            SubmissionRequest(
-//              CalculationInputs(
-//                Resubmission(false, None),
-//                Setup(
-//                  Some(
-//                    AnnualAllowanceSetup(
-//                      Some(true),
-//                      Some(false),
-//                      Some(false),
-//                      Some(false),
-//                      Some(false),
-//                      Some(false),
-//                      Some(MaybePIAIncrease.No),
-//                      Some(MaybePIAUnchangedOrDecreased.No),
-//                      Some(false),
-//                      Some(false),
-//                      Some(false),
-//                      Some(false)
-//                    )
-//                  ),
-//                  Some(
-//                    LifetimeAllowanceSetup(
-//                      Some(true),
-//                      Some(false),
-//                      Some(true),
-//                      Some(false),
-//                      Some(false),
-//                      Some(false),
-//                      Some(true)
-//                    )
-//                  )
-//                ),
-//                None,
-//                None
-//              ),
-//              None,
-//              "",
-//              ""
-//            )
-//
-//          val responseBody = Json.toJson(Failure(Seq("someError"))).toString
-//
-//          server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withStatus(BAD_REQUEST).withBody(responseBody)))
-//
-//          val response: Try[SubmissionResponse] =
-//            Try(connector.sendSubmissionRequest(submissionRequest)(hc).futureValue)
-//
-//          response.isFailure mustBe true
-//        }
-//      }
-//    }
-//
-//    "clear" - {
-//      "must return Done when the server responds with NO_CONTENT" in {
-//        val app = application
-//
-//        server.stubFor(
-//          delete(urlEqualTo("/calculate-public-pension-adjustment/submission"))
-//            .willReturn(aResponse().withStatus(NO_CONTENT))
-//        )
-//
-//        running(app) {
-//          val connector = app.injector.instanceOf[SubmissionsConnector]
-//          val result    = connector.clear()(hc).futureValue
-//
-//          result mustBe Done
-//        }
-//      }
-//
-//      "must return a failed future when the server responds with an error status" in {
-//        val app = application
-//
-//        server.stubFor(
-//          delete(urlEqualTo("/calculate-public-pension-adjustment/submission"))
-//            .willReturn(aResponse().withStatus(BAD_REQUEST))
-//        )
-//
-//        running(app) {
-//          val connector = app.injector.instanceOf[UserAnswersConnector]
-//          val result    = connector.clear()(hc).failed.futureValue
-//
-//          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
-//        }
-//      }
-//
-//    }
-//
-//  }
+      "must return a failed future when the server responds with an error status" in {
 
-    }}}
+        val url = s"/calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income"
+        val app = application
+
+        running(app) {
+          val connector = app.injector.instanceOf[ReducedNetIncomeConnector]
+
+          val responseBody = Json.toJson(Failure(Seq("someError"))).toString
+
+          server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withStatus(BAD_REQUEST).withBody(responseBody)))
+
+          val response: Try[ReducedNetIncomeResponse] =
+            Try(connector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc).futureValue)
+
+          response.isFailure mustBe true
+        }
+      }
+
+    }
+  }
+}
