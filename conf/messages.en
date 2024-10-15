@@ -179,7 +179,7 @@ stopPayingPublicPension.change.hidden = the date you stopped paying into a publi
 
 definedContributionPensionScheme.title = Do you have any other pension schemes apart from your public service ones?
 definedContributionPensionScheme.heading = Do you have any other pension schemes apart from your public service ones?
-definedContributionPensionScheme.checkYourAnswersLabel = Date you first flexibly accessed your defined contribution pension
+definedContributionPensionScheme.checkYourAnswersLabel = Do you have a defined contribution pension scheme?
 definedContributionPensionScheme.message = These are usually either personal or stakeholder pensions. They’re sometimes called ‘money purchase’ pension schemes. They can be:
 definedContributionPensionScheme.bullet1 = workplace pensions arranged by your employer
 definedContributionPensionScheme.bullet2 = private pensions arranged by you
@@ -198,7 +198,7 @@ flexiblyAccessedPension.change.hidden = if you have flexibly accessed your defin
 
 flexibleAccessStartDate.title = When did you first flexibly access your defined contribution pension?
 flexibleAccessStartDate.heading = When did you first flexibly access your defined contribution pension?
-flexibleAccessStartDate.checkYourAnswersLabel = When did you first flexibly access your defined contribution pension?
+flexibleAccessStartDate.checkYourAnswersLabel = Date you first flexibly accessed your defined contribution pension
 flexibleAccessStartDate.hint1 = You can find this on your flexible access statement.
 flexibleAccessStartDate.hint2 = For example, 25 2 2015.
 flexibleAccessStartDate.change.hidden = the date you first flexibly accessed your defined contribution pension
@@ -471,8 +471,8 @@ addAnotherScheme.heading = Do you need to add another pension scheme?
 addAnotherScheme.hint = You can add a maximum of five different pension schemes in a single tax year.
 addAnotherScheme.error.required = Select yes if you need to add another pension scheme
 
-payACharge.title = Did you have an annual allowance tax charge for the tax year from {0}?
-payACharge.heading = Did you have an annual allowance tax charge for the tax year from {0}?
+payACharge.title = Did you have an annual allowance tax charge for the tax year from {2}?
+payACharge.heading = Did you have an annual allowance tax charge for the tax year from {2}?
 payACharge.message = Annual allowance is the maximum amount that you can put into your pension without being charged extra tax.
 payACharge.hint = If you reported an annual allowance tax charge, you will find this information in your self assessment for that year.
 payACharge.checkYourAnswersLabel = Did you have an annual allowance tax charge for the tax year from {0}?
