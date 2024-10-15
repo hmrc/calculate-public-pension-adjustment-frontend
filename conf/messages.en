@@ -1170,7 +1170,7 @@ amountFlexibleRemunerationArrangements.change.hidden = Flexi remuneration amount
 
 howMuchContributionPensionScheme.title = How much did you contribute in total to all of your pension schemes from {0}?
 howMuchContributionPensionScheme.heading = How much did you contribute in total to all of your pension schemes from {0}?
-howMuchContributionPensionScheme.message1 = You can find this information in your pay slip for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
+howMuchContributionPensionScheme.message1 = You can find this information in your payslips for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
 howMuchContributionPensionScheme.hint = Amounts must be rounded down to the nearest pound, for example 2300
 howMuchContributionPensionScheme.checkYourAnswersLabel = The amount you contributed from {0}?
 howMuchContributionPensionScheme.error.nonNumeric = The amount you contributed must only include numbers 0 to 9
@@ -1335,7 +1335,7 @@ rASContributionAmount.heading = What was your gross contribution in total to all
 rASContributionAmount.checkYourAnswersLabel = Your gross contribution to all your pension schemes from {0}?
 rASContributionAmount.message1 = To work out your gross pension contributions, you must multiply your contribution by 1.25.
 rASContributionAmount.message2 = For example, if you made £2000 of contributions after tax, your gross contribution would be £2500.
-rASContributionAmount.message3 = You can find this information in your pay slip for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
+rASContributionAmount.message3 = You can find this information in your payslips for each job. You must also include any contributions you have made to private pensions. This is not the same as your pension input amount.
 rASContributionAmount.hint = Amounts must be rounded down to the nearest pound, for example 2300
 rASContributionAmount.error.nonNumeric = Your gross contribution to relief at source pension schemes from {0} must only include numbers 0 to 9
 rASContributionAmount.error.required = Enter your gross contribution to relief at source pension schemes from {0}
