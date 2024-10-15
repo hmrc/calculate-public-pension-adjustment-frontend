@@ -404,7 +404,7 @@ whatNewProtectionTypeEnhancement.individualProtection2014 = Diogelwch unigol 201
 whatNewProtectionTypeEnhancement.individualProtection2016 = Diogelwch unigol 2016
 whatNewProtectionTypeEnhancement.checkYourAnswersLabel = Beth yw’r math newydd o ddiogelwch sydd gennych ar gyfer eich lwfans oes?
 whatNewProtectionTypeEnhancement.error.required = cy: Select your new lifetime allowance protection type
-whatNewProtectionTypeEnhancement.change.hidden = cy :new lifetime allowance protection type
+whatNewProtectionTypeEnhancement.change.hidden = cy : new lifetime allowance protection type
 
 lifetimeAllowanceCharge.title = A ydych wedi cael tâl lwfans oes o 6 Ebrill 2015 i 5 Ebrill 2023?
 lifetimeAllowanceCharge.heading = A ydych wedi cael tâl lwfans oes o 6 Ebrill 2015 i 5 Ebrill 2023?
