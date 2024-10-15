@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
 import models.{CheckMode, UserAnswers}

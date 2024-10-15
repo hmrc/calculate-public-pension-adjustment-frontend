@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.annualallowance.taxyear
 
-import controllers.routes
 import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.TradeUnionReliefPage
 import play.api.i18n.Messages
@@ -24,10 +23,18 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 object TradeUnionReliefSummary {
 
   def row(answers: UserAnswers, period: Period)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(TradeUnionReliefPage(period)).map { answer =>
+      val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
+      val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+      val startEndDate: String =
+        period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
+
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
@@ -38,7 +45,7 @@ object TradeUnionReliefSummary {
             "site.change",
             controllers.annualallowance.taxyear.routes.TradeUnionReliefController.onPageLoad(CheckMode, period).url
           )
-            .withVisuallyHiddenText(messages("tradeUnionRelief.change.hidden"))
+            .withVisuallyHiddenText(messages("tradeUnionRelief.change.hidden", startEndDate))
         )
       )
     }
