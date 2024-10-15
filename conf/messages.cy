@@ -870,7 +870,7 @@ newLumpSumValue.error.nonNumeric = Mae’n rhaid i’ch cyfandaliad newydd gynnw
 newLumpSumValue.error.required = Nodwch werth newydd y cyfandaliad
 newLumpSumValue.error.wholeNumber = cy: Your new lump sum value must be a whole number
 newLumpSumValue.error.outOfRange = Mae’n rhaid i’ch cyfandaliad newydd fod yn £999999999 neu lai
-newLumpSumValue.change.hidden = cy: the value of the lump sum
+newLumpSumValue.change.hidden = cyfandaliad newydd lwfans oes
 
 newExcessLifetimeAllowancePaid.title = Sut y bydd y gormodedd sydd uwchben eich lwfans oes yn cael ei dalu i chi?
 newExcessLifetimeAllowancePaid.heading = Sut y bydd y gormodedd sydd uwchben eich lwfans oes yn cael ei dalu i chi?
@@ -944,7 +944,7 @@ lumpSumValue.error.nonNumeric = Mae’n rhaid i’ch cyfandaliad gynnwys y rhifa
 lumpSumValue.error.required = Nodwch werth y cyfandaliad
 lumpSumValue.error.wholeNumber = cy: Your lump sum value must be a whole number
 lumpSumValue.error.outOfRange = Mae’n rhaid i’ch cyfandaliad fod yn £999999999 neu lai
-lumpSumValue.change.hidden = cyfandaliad lwfans oes
+lumpSumValue.change.hidden = cy: the value of the lump sum
 
 newEnhancementType.title = Pa fath newydd o ddiogelwch lwfans oes uwch oedd gennych?
 newEnhancementType.heading = Pa fath newydd o ddiogelwch lwfans oes uwch oedd gennych?
