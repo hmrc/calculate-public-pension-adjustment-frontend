@@ -344,7 +344,7 @@ ltaProtectionOrEnhancements.both = Y ddau
 ltaProtectionOrEnhancements.no = Na
 ltaProtectionOrEnhancements.hint = Gwiriwch eich diogelwch lwfans oes ar-lein
 ltaProtectionOrEnhancements.checkYourAnswersLabel = A oedd gennych chi ddiogelwch neu ddiogelwch uwch mewn perthynas â’r lwfans oes ar adeg eich digwyddiad crisialu buddiannau?
-ltaProtectionOrEnhancements.error.required = cy: Select if you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event
+ltaProtectionOrEnhancements.error.required = Dewiswch a oes gennych chi ddiogelwch lwfans oes neu ddiogelwch lefel uwch
 ltaProtectionOrEnhancements.change.hidden = cy: if you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event
 
 protectionType.title = Beth yw’r math o ddiogelwch lwfans oes sydd gennych?
@@ -403,7 +403,7 @@ whatNewProtectionTypeEnhancement.fixedProtection2016 = Diogelwch penodol 2016
 whatNewProtectionTypeEnhancement.individualProtection2014 = Diogelwch unigol 2014
 whatNewProtectionTypeEnhancement.individualProtection2016 = Diogelwch unigol 2016
 whatNewProtectionTypeEnhancement.checkYourAnswersLabel = Beth yw’r math newydd o ddiogelwch sydd gennych ar gyfer eich lwfans oes?
-whatNewProtectionTypeEnhancement.error.required = cy: Select your new lifetime allowance protection type
+whatNewProtectionTypeEnhancement.error.required = Dewiswch y math newydd o ddiogelwch lwfans oes sydd gennych
 whatNewProtectionTypeEnhancement.change.hidden = cy : new lifetime allowance protection type
 
 lifetimeAllowanceCharge.title = A ydych wedi cael tâl lwfans oes o 6 Ebrill 2015 i 5 Ebrill 2023?
