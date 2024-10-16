@@ -64,6 +64,7 @@ class CalculationResultService @Inject() (
                                       toTaxYear2016To2023(userAnswers, _)(hc)
                                     )
                                   )
+      _ = println(s"============ Sandy ========= listOf2016To2023TaxYears = $listOf2016To2023TaxYears    =======")
       calculationInputs        <- Future.successful(buildCalculationInputs(userAnswers, listOf2016To2023TaxYears.flatten))
       calculationResponse      <- calculationResultConnector.sendRequest(calculationInputs)
       _                        <-
@@ -77,6 +78,26 @@ class CalculationResultService @Inject() (
           )
         )
     } yield calculationResponse
+
+  def test(answers: UserAnswers)(implicit
+                                                                            hc: HeaderCarrier
+  ) = for {
+    listOf2016To2023TaxYears <- Future.sequence(
+      List(
+        Period._2016,
+        Period._2017,
+        Period._2018,
+        Period._2019,
+        Period._2020,
+        Period._2021,
+        Period._2022,
+        Period._2023
+      ).map(
+        toTaxYear2016To2023(answers, _)(hc)
+      )
+    )
+    calculationInputs        <- Future.successful(buildCalculationInputs(answers, listOf2016To2023TaxYears.flatten))}
+    yield calculationInputs
 
   def submitUserAnswersAndCalculation(answers: UserAnswers, userId: String)(implicit
     hc: HeaderCarrier
@@ -122,6 +143,7 @@ class CalculationResultService @Inject() (
                                       toTaxYear2016To2023(answers, _)(hc)
                                     )
                                   )
+      _ = println(s"============ Sandy ========= listOf2016To2023TaxYears = $listOf2016To2023TaxYears    =======")
       calculationInputs        <- Future.successful(buildCalculationInputs(answers, listOf2016To2023TaxYears.flatten))
       submissionResponse       <-
         submissionsConnector.sendSubmissionRequest(
