@@ -46,7 +46,7 @@ object DoYouHaveGiftAidSummary {
             "site.change",
             controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController.onPageLoad(CheckMode, period).url
           )
-            .withVisuallyHiddenText(messages("doYouHaveGiftAid.change.hidden"))
+            .withVisuallyHiddenText(messages("doYouHaveGiftAid.change.hidden", startEndDate))
         )
       )
     }

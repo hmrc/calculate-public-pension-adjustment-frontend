@@ -47,7 +47,7 @@ object DefinedContribution2016PostAmountSummary {
               .onPageLoad(CheckMode)
               .url
           )
-            .withVisuallyHiddenText(messages("definedContribution2016PostAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("definedContribution2016PostAmount.change.hidden", startEndDate))
         )
       )
     }

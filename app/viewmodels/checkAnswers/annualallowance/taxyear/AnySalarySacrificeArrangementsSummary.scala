@@ -48,7 +48,7 @@ object AnySalarySacrificeArrangementsSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("anySalarySacrificeArrangements.change.hidden"))
+            .withVisuallyHiddenText(messages("anySalarySacrificeArrangements.change.hidden", startEndDate))
         )
       )
     }

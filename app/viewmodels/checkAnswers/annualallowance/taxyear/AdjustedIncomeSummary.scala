@@ -47,7 +47,7 @@ object AdjustedIncomeSummary {
           ActionItemViewModel(
             "site.change",
             AdjustedIncomeController.onPageLoad(CheckMode, period).url
-          ).withVisuallyHiddenText(messages("adjustedIncome.change.hidden"))
+          ).withVisuallyHiddenText(messages("adjustedIncome.change.hidden", startEndDate))
         )
       )
     }
