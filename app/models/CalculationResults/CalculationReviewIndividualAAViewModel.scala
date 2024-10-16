@@ -16,15 +16,9 @@
 
 package models.CalculationResults
 
-final case class CalculationResultsViewModel(
-  totalAmounts: Seq[RowViewModel],
-  resubmissionVal: Seq[RowViewModel],
+final case class CalculationReviewIndividualAAViewModel(
   outDates: Seq[Seq[RowViewModel]],
   inDates: Seq[Seq[RowViewModel]]
 ) {
-  def calculationData: Seq[Seq[RowViewModel]] = Seq(totalAmounts)
-
-  def resubmissionData: Seq[Seq[RowViewModel]] = Seq(resubmissionVal)
-
-  def annualResultsData: Seq[Seq[RowViewModel]] = outDates ++ inDates
+  def annualResultsData: Seq[RowViewModel] = (outDates ++ inDates).flatten
 }
