@@ -121,6 +121,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   )
                 ),
@@ -149,6 +150,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     Some(90),
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
@@ -178,6 +180,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
                     None,
                     None,
                     Some(2291),
+                    None,
                     None
                   ),
                   Some(BelowThreshold)
