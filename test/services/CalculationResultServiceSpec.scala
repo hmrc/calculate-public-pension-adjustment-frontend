@@ -2761,65 +2761,65 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
     "buildInputs" - {
 
-//      "should return 2016 as the InitialFlexiblyAccessedTaxYear when stopPayingPublicPension falls in 2016 " in {
-//
-//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data14))
-//
-//        result mustBe CalculationResults.CalculationInputs(
-//          Resubmission(false, None),
-//          Setup(
-//            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
-//            None
-//          ),
-//          Some(
-//            AnnualAllowance(
-//              List(),
-//              List(
-//                InitialFlexiblyAccessedTaxYear(
-//                  700,
-//                  Some(LocalDate.parse("2015-05-25")),
-//                  700,
-//                  1200,
-//                  List(TaxYearScheme("Scheme 1", "00348916RK", 18000, 1200, None)),
-//                  60000,
-//                  800,
-//                  Period._2016,
-//                  IncomeSubJourney(
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(888),
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  None,
-//                  None,
-//                  None,
-//                  None
-//                )
-//              )
-//            )
-//          ),
-//          None
-//        )
-//      }
+      when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
+        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+
+      "should return 2016 as the InitialFlexiblyAccessedTaxYear when stopPayingPublicPension falls in 2016 " in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data14)).futureValue
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
+            None
+          ),
+          Some(
+            AnnualAllowance(
+              List(),
+              List(
+                InitialFlexiblyAccessedTaxYear(
+                  700,
+                  Some(LocalDate.parse("2015-05-25")),
+                  700,
+                  1200,
+                  List(TaxYearScheme("Scheme 1", "00348916RK", 18000, 1200, None)),
+                  60000,
+                  800,
+                  Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(1),
+                    None,
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  None,
+                  None,
+                  None,
+                  None
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
 
       "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016 post period" in {
 
-//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data11))
-        when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
-        val result = service.test(userAnswers1.copy(data = data11)).futureValue
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data11)).futureValue
 
         result mustBe CalculationResults.CalculationInputs(
           Resubmission(false, None),
@@ -2928,1020 +2928,1020 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         )
       }
 
-//      "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016 pre period" in {
-//
-//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data13),)
-//
-//        result mustBe CalculationResults.CalculationInputs(
-//          Resubmission(false, None),
-//          Setup(
-//            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
-//            None
-//          ),
-//          Some(
-//            AnnualAllowance(
-//              List(),
-//              List(
-//                InitialFlexiblyAccessedTaxYear(
-//                  1800,
-//                  Some(LocalDate.parse("2015-05-20")),
-//                  2000,
-//                  800,
-//                  List(TaxYearScheme("Scheme 1", "00348916RD", 27000, 1600, Some(36000))),
-//                  60000,
-//                  1200,
-//                  Period._2016,
-//                  IncomeSubJourney(
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(888),
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  None,
-//                  Some(2100),
-//                  Some(1400),
-//                  None
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  0,
-//                  1600,
-//                  140000,
-//                  800,
-//                  List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 0, None)),
-//                  Period._2017,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(AboveThreshold(177748)),
-//                  None,
-//                  None
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  800,
-//                  0,
-//                  80000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 900, None)),
-//                  Period._2018,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold),
-//                  None,
-//                  None
-//                )
-//              )
-//            )
-//          ),
-//          None
-//        )
-//      }
-//
-//      "should return 2016, 2017 as the NormalTaxYear and 2018 as the InitialFlexiblyAccessedTaxYear and 2019 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2018" in {
-//
-//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data12),)
-//
-//        result mustBe CalculationResults.CalculationInputs(
-//          Resubmission(true, Some("Incorrect data")),
-//          Setup(
-//            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
-//            None
-//          ),
-//          Some(
-//            AnnualAllowance(
-//              List(Period._2018),
-//              List(
-//                TaxYear2011To2015(6000, Period._2011),
-//                TaxYear2011To2015(14000, Period._2013),
-//                TaxYear2011To2015(18000, Period._2015),
-//                NormalTaxYear(
-//                  50000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RU", 28000, 1700, Some(36000))),
-//                  60000,
-//                  900,
-//                  Period._2016,
-//                  IncomeSubJourney(
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(888),
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  None,
-//                  Some(61000)
-//                ),
-//                NormalTaxYear(
-//                  56000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RU", 33000, 1900, None)),
-//                  80000,
-//                  0,
-//                  Period._2017,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold),
-//                  None
-//                ),
-//                InitialFlexiblyAccessedTaxYear(
-//                  8000,
-//                  Some(LocalDate.parse("2017-11-09")),
-//                  3200,
-//                  4200,
-//                  List(TaxYearScheme("Scheme 1", "00348916RU", 54000, 0, None)),
-//                  140000,
-//                  2700,
-//                  Period._2018,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(AboveThreshold(209548)),
-//                  None,
-//                  None,
-//                  None
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  0,
-//                  0,
-//                  90000,
-//                  800,
-//                  List(TaxYearScheme("Scheme 1", "00348916RU", 46000, 2600, None)),
-//                  Period._2019,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold),
-//                  None,
-//                  None
-//                )
-//              )
-//            )
-//          ),
-//          None
-//        )
-//
-//      }
-//
-//      "should return valid CalculationInputs for a valid UserAnswers with all years" in {
-//
-//        val result = service.buildCalculationInputs(userAnswers1,)
-//
-//        result mustBe CalculationResults.CalculationInputs(
-//          Resubmission(true, Some("Change in amounts")),
-//          Setup(
-//            Some(
-//              AnnualAllowanceSetup(
-//                Some(true),
-//                Some(false),
-//                Some(false),
-//                Some(false),
-//                Some(false),
-//                Some(false),
-//                Some(MaybePIAIncrease.No),
-//                Some(MaybePIAUnchangedOrDecreased.No),
-//                Some(false),
-//                Some(false),
-//                Some(false),
-//                Some(false)
-//              )
-//            ),
-//            Some(
-//              LifetimeAllowanceSetup(
-//                Some(true),
-//                Some(false),
-//                Some(true),
-//                Some(false),
-//                Some(false),
-//                Some(false),
-//                Some(false)
-//              )
-//            )
-//          ),
-//          Some(
-//            AnnualAllowance(
-//              List.empty,
-//              List(
-//                TaxYear2011To2015(10000, Period._2011),
-//                TaxYear2011To2015(40000, Period._2013),
-//                TaxYear2011To2015(20000, Period._2014),
-//                TaxYear2011To2015(60000, Period._2015),
-//                InitialFlexiblyAccessedTaxYear(
-//                  30015,
-//                  Some(LocalDate.parse("2015-05-25")),
-//                  6015,
-//                  10015,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 0, Some(30000))),
-//                  60000,
-//                  0,
-//                  Period._2016,
-//                  IncomeSubJourney(
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(888),
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  None,
-//                  Some(30016),
-//                  Some(6016)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  35000,
-//                  0,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
-//                  Period._2017,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  0,
-//                  0,
-//                  60000,
-//                  1000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
-//                  Period._2018,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  35000,
-//                  0,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
-//                  Period._2019,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  34000,
-//                  0,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 34000, 0, None)),
-//                  Period._2020,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  0,
-//                  0,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 0, None)),
-//                  Period._2021,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  44000,
-//                  0,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 44000, 0, None)),
-//                  Period._2022,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  53000,
-//                  0,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 53000, 4400, None)),
-//                  Period._2023,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                )
-//              )
-//            )
-//          ),
-//          Some(
-//            LifeTimeAllowance(
-//              LocalDate.parse("2018-11-28"),
-//              LtaProtectionOrEnhancements.Protection,
-//              Some(ProtectionType.FixedProtection2014),
-//              Some("R41AB678TR23355"),
-//              ProtectionEnhancedChanged.Protection,
-//              Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
-//              Some("2134567801"),
-//              true,
-//              Some(ExcessLifetimeAllowancePaid.Annualpayment),
-//              Some(WhoPaidLTACharge.PensionScheme),
-//              Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
-//              Some(WhoPayingExtraLtaCharge.You),
-//              None,
-//              NewLifeTimeAllowanceAdditions(
-//                None,
-//                None,
-//                None,
-//                None,
-//                None,
-//                None,
-//                None,
-//                None,
-//                None,
-//                None,
-//                None,
-//                None,
-//                None,
-//                None
-//              )
-//            )
-//          )
-//        )
-//      }
-//
-//      "should return valid CalculationInputs for a valid UserAnswers with missing years" in {
-//
-//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data3),)
-//
-//        result mustBe CalculationResults.CalculationInputs(
-//          Resubmission(false, None),
-//          Setup(
-//            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
-//            None
-//          ),
-//          Some(
-//            AnnualAllowance(
-//              List.empty,
-//              List(
-//                TaxYear2011To2015(10000, Period._2012),
-//                TaxYear2011To2015(40000, Period._2013),
-//                InitialFlexiblyAccessedTaxYear(
-//                  30000,
-//                  Some(LocalDate.parse("2015-05-25")),
-//                  6000,
-//                  10000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 0, Some(40000))),
-//                  60000,
-//                  2000,
-//                  Period._2016,
-//                  IncomeSubJourney(
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(888),
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  None,
-//                  Some(40000),
-//                  None,
-//                  None
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  35000,
-//                  0,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
-//                  Period._2017,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  0,
-//                  0,
-//                  60000,
-//                  1000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
-//                  Period._2018,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  35000,
-//                  0,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
-//                  Period._2019,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                )
-//              )
-//            )
-//          ),
-//          None
-//        )
-//      }
-//
-//      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
-//
-//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9),)
-//
-//        result mustBe CalculationResults.CalculationInputs(
-//          Resubmission(false, None),
-//          Setup(
-//            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
-//            None
-//          ),
-//          Some(
-//            AnnualAllowance(
-//              List(Period._2019),
-//              List(
-//                NormalTaxYear(
-//                  40000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RO", 20000, 3600, Some(22000))),
-//                  0,
-//                  3600,
-//                  Period._2016,
-//                  IncomeSubJourney(
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(888),
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  None,
-//                  Some(40000)
-//                ),
-//                NormalTaxYear(
-//                  45000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RO", 45000, 0, None)),
-//                  60000,
-//                  0,
-//                  Period._2017,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                NormalTaxYear(
-//                  38000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RO", 38000, 200, None)),
-//                  60000,
-//                  200,
-//                  Period._2018,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                NormalTaxYear(
-//                  43000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RO", 43000, 0, None)),
-//                  60000,
-//                  3280,
-//                  Period._2019,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                )
-//              )
-//            )
-//          ),
-//          None
-//        )
-//      }
-//
-//      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
-//
-//        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10),)
-//
-//        result mustBe CalculationResults.CalculationInputs(
-//          Resubmission(false, None),
-//          Setup(
-//            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
-//            None
-//          ),
-//          Some(
-//            AnnualAllowance(
-//              List(),
-//              List(
-//                NormalTaxYear(
-//                  30600,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 28000, 0, Some(34000))),
-//                  60000,
-//                  300,
-//                  Period._2016,
-//                  IncomeSubJourney(
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(888),
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    None,
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  None,
-//                  Some(34000)
-//                ),
-//                NormalTaxYear(
-//                  33000,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 31000, 8000, None)),
-//                  60000,
-//                  0,
-//                  Period._2017,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold),
-//                  None
-//                ),
-//                InitialFlexiblyAccessedTaxYear(
-//                  0,
-//                  Some(LocalDate.parse("2017-10-20")),
-//                  0,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 43000, 0, None)),
-//                  200000,
-//                  0,
-//                  Period._2018,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(AboveThreshold(243148))
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  0,
-//                  0,
-//                  60000,
-//                  3400,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 52000, 4700, None)),
-//                  Period._2019,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                ),
-//                PostFlexiblyAccessedTaxYear(
-//                  4900,
-//                  700,
-//                  60000,
-//                  0,
-//                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, None)),
-//                  Period._2020,
-//                  IncomeSubJourney(
-//                    Some(444),
-//                    Some(666),
-//                    Some(712),
-//                    Some(777),
-//                    Some(true),
-//                    Some(888),
-//                    None,
-//                    Some(1111),
-//                    Some(1212),
-//                    Some(1414),
-//                    Some(842),
-//                    None,
-//                    Some(90),
-//                    Some(2291),
-//                    None,
-//                    None
-//                  ),
-//                  Some(BelowThreshold)
-//                )
-//              )
-//            )
-//          ),
-//          None
-//        )
-//      }
-//
-//    }
-//
-//    "buildLifeTimeAllowance" - {
-//
-//      "should return Some LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user inputs" in {
-//        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data4))
-//
-//        result mustBe Some(
-//          LifeTimeAllowance(
-//            LocalDate.parse("2018-11-28"),
-//            LtaProtectionOrEnhancements.Protection,
-//            Some(ProtectionType.FixedProtection2014),
-//            Some("R41AB678TR23355"),
-//            ProtectionEnhancedChanged.Protection,
-//            Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
-//            Some("2134567801"),
-//            true,
-//            Some(ExcessLifetimeAllowancePaid.Annualpayment),
-//            Some(WhoPaidLTACharge.PensionScheme),
-//            Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
-//            Some(WhoPayingExtraLtaCharge.You),
-//            None,
-//            NewLifeTimeAllowanceAdditions(
-//              None,
-//              None,
-//              None,
-//              None,
-//              None,
-//              None,
-//              None,
-//              None,
-//              None,
-//              None,
-//              None,
-//              None,
-//              None,
-//              None
-//            )
-//          )
-//        )
-//      }
+      "should return 2016 as the InitialFlexiblyAccessedTaxYear and 2017, 2018 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2016 pre period" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data13)).futureValue
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
+            None
+          ),
+          Some(
+            AnnualAllowance(
+              List(),
+              List(
+                InitialFlexiblyAccessedTaxYear(
+                  1800,
+                  Some(LocalDate.parse("2015-05-20")),
+                  2000,
+                  800,
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 27000, 1600, Some(36000))),
+                  60000,
+                  1200,
+                  Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(1),
+                    None,
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  None,
+                  Some(2100),
+                  Some(1400),
+                  None
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  1600,
+                  140000,
+                  800,
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 0, None)),
+                  Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(AboveThreshold(177748)),
+                  None,
+                  None
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  800,
+                  0,
+                  80000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RD", 36000, 900, None)),
+                  Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold),
+                  None,
+                  None
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
+
+      "should return 2016, 2017 as the NormalTaxYear and 2018 as the InitialFlexiblyAccessedTaxYear and 2019 as the PostFlexiblyAccessedTaxYear when FlexibleAccessStartDate falls in 2018" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data12)).futureValue
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(true, Some("Incorrect data")),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
+            None
+          ),
+          Some(
+            AnnualAllowance(
+              List(Period._2018),
+              List(
+                TaxYear2011To2015(6000, Period._2011),
+                TaxYear2011To2015(14000, Period._2013),
+                TaxYear2011To2015(18000, Period._2015),
+                NormalTaxYear(
+                  50000,
+                  List(TaxYearScheme("Scheme 1", "00348916RU", 28000, 1700, Some(36000))),
+                  60000,
+                  900,
+                  Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(1),
+                    None,
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  None,
+                  Some(61000)
+                ),
+                NormalTaxYear(
+                  56000,
+                  List(TaxYearScheme("Scheme 1", "00348916RU", 33000, 1900, None)),
+                  80000,
+                  0,
+                  Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold),
+                  None
+                ),
+                InitialFlexiblyAccessedTaxYear(
+                  8000,
+                  Some(LocalDate.parse("2017-11-09")),
+                  3200,
+                  4200,
+                  List(TaxYearScheme("Scheme 1", "00348916RU", 54000, 0, None)),
+                  140000,
+                  2700,
+                  Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(AboveThreshold(209548)),
+                  None,
+                  None,
+                  None
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
+                  90000,
+                  800,
+                  List(TaxYearScheme("Scheme 1", "00348916RU", 46000, 2600, None)),
+                  Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold),
+                  None,
+                  None
+                )
+              )
+            )
+          ),
+          None
+        )
+
+      }
+
+      "should return valid CalculationInputs for a valid UserAnswers with all years" in {
+
+        val result = service.buildCalculationInputs(userAnswers1).futureValue
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(true, Some("Change in amounts")),
+          Setup(
+            Some(
+              AnnualAllowanceSetup(
+                Some(true),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(MaybePIAIncrease.No),
+                Some(MaybePIAUnchangedOrDecreased.No),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false)
+              )
+            ),
+            Some(
+              LifetimeAllowanceSetup(
+                Some(true),
+                Some(false),
+                Some(true),
+                Some(false),
+                Some(false),
+                Some(false),
+                Some(false)
+              )
+            )
+          ),
+          Some(
+            AnnualAllowance(
+              List.empty,
+              List(
+                TaxYear2011To2015(10000, Period._2011),
+                TaxYear2011To2015(40000, Period._2013),
+                TaxYear2011To2015(20000, Period._2014),
+                TaxYear2011To2015(60000, Period._2015),
+                InitialFlexiblyAccessedTaxYear(
+                  30015,
+                  Some(LocalDate.parse("2015-05-25")),
+                  6015,
+                  10015,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 0, Some(30000))),
+                  60000,
+                  0,
+                  Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(1),
+                    None,
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  None,
+                  Some(30016),
+                  Some(6016)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  35000,
+                  0,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
+                  Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
+                  60000,
+                  1000,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
+                  Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  35000,
+                  0,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
+                  Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  34000,
+                  0,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 34000, 0, None)),
+                  Period._2020,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 36000, 0, None)),
+                  Period._2021,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  44000,
+                  0,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 44000, 0, None)),
+                  Period._2022,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  53000,
+                  0,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 53000, 4400, None)),
+                  Period._2023,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                )
+              )
+            )
+          ),
+          Some(
+            LifeTimeAllowance(
+              LocalDate.parse("2018-11-28"),
+              LtaProtectionOrEnhancements.Protection,
+              Some(ProtectionType.FixedProtection2014),
+              Some("R41AB678TR23355"),
+              ProtectionEnhancedChanged.Protection,
+              Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
+              Some("2134567801"),
+              true,
+              Some(ExcessLifetimeAllowancePaid.Annualpayment),
+              Some(WhoPaidLTACharge.PensionScheme),
+              Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
+              Some(WhoPayingExtraLtaCharge.You),
+              None,
+              NewLifeTimeAllowanceAdditions(
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None
+              )
+            )
+          )
+        )
+      }
+
+      "should return valid CalculationInputs for a valid UserAnswers with missing years" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data3)).futureValue
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
+            None
+          ),
+          Some(
+            AnnualAllowance(
+              List.empty,
+              List(
+                TaxYear2011To2015(10000, Period._2012),
+                TaxYear2011To2015(40000, Period._2013),
+                InitialFlexiblyAccessedTaxYear(
+                  30000,
+                  Some(LocalDate.parse("2015-05-25")),
+                  6000,
+                  10000,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 30000, 0, Some(40000))),
+                  60000,
+                  2000,
+                  Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(1),
+                    None,
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  None,
+                  Some(40000),
+                  None,
+                  None
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  35000,
+                  0,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
+                  Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
+                  60000,
+                  1000,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 40000, 1000, None)),
+                  Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  35000,
+                  0,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RT", 35000, 0, None)),
+                  Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
+
+      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = false" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data9)).futureValue
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
+            None
+          ),
+          Some(
+            AnnualAllowance(
+              List(Period._2019),
+              List(
+                NormalTaxYear(
+                  40000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 20000, 3600, Some(22000))),
+                  0,
+                  3600,
+                  Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(1),
+                    None,
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  None,
+                  Some(40000)
+                ),
+                NormalTaxYear(
+                  45000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 45000, 0, None)),
+                  60000,
+                  0,
+                  Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                NormalTaxYear(
+                  38000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 38000, 200, None)),
+                  60000,
+                  200,
+                  Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                NormalTaxYear(
+                  43000,
+                  List(TaxYearScheme("Scheme 1", "00348916RO", 43000, 0, None)),
+                  60000,
+                  3280,
+                  Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
+
+      "should return valid CalculationInputs with correct NormalTaxYear/InitialFlexiblyAccessedTaxYear/PostFlexiblyAccessedTaxYear for a valid UserAnswers when flexiblyAccessedPension = true" in {
+
+        val result = service.buildCalculationInputs(userAnswers1.copy(data = data10)).futureValue
+
+        result mustBe CalculationResults.CalculationInputs(
+          Resubmission(false, None),
+          Setup(
+            Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
+            None
+          ),
+          Some(
+            AnnualAllowance(
+              List(),
+              List(
+                NormalTaxYear(
+                  30600,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 28000, 0, Some(34000))),
+                  60000,
+                  300,
+                  Period._2016,
+                  IncomeSubJourney(
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(888),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(1),
+                    None,
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  None,
+                  Some(34000)
+                ),
+                NormalTaxYear(
+                  33000,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 31000, 8000, None)),
+                  60000,
+                  0,
+                  Period._2017,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold),
+                  None
+                ),
+                InitialFlexiblyAccessedTaxYear(
+                  0,
+                  Some(LocalDate.parse("2017-10-20")),
+                  0,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 43000, 0, None)),
+                  200000,
+                  0,
+                  Period._2018,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(AboveThreshold(243148))
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  0,
+                  0,
+                  60000,
+                  3400,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 52000, 4700, None)),
+                  Period._2019,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                ),
+                PostFlexiblyAccessedTaxYear(
+                  4900,
+                  700,
+                  60000,
+                  0,
+                  List(TaxYearScheme("Scheme 1", "00348916RP", 0, 0, None)),
+                  Period._2020,
+                  IncomeSubJourney(
+                    Some(444),
+                    Some(666),
+                    Some(712),
+                    Some(777),
+                    Some(true),
+                    Some(888),
+                    None,
+                    Some(1111),
+                    Some(1212),
+                    Some(1414),
+                    Some(842),
+                    Some(1),
+                    Some(90),
+                    Some(2291),
+                    None,
+                    Some(2)
+                  ),
+                  Some(BelowThreshold)
+                )
+              )
+            )
+          ),
+          None
+        )
+      }
+
+    }
+
+    "buildLifeTimeAllowance" - {
+
+      "should return Some LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user inputs" in {
+        val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data4))
+
+        result mustBe Some(
+          LifeTimeAllowance(
+            LocalDate.parse("2018-11-28"),
+            LtaProtectionOrEnhancements.Protection,
+            Some(ProtectionType.FixedProtection2014),
+            Some("R41AB678TR23355"),
+            ProtectionEnhancedChanged.Protection,
+            Some(WhatNewProtectionTypeEnhancement.IndividualProtection2016),
+            Some("2134567801"),
+            true,
+            Some(ExcessLifetimeAllowancePaid.Annualpayment),
+            Some(WhoPaidLTACharge.PensionScheme),
+            Some(SchemeNameAndTaxRef("Scheme 1", "00348916RT")),
+            Some(WhoPayingExtraLtaCharge.You),
+            None,
+            NewLifeTimeAllowanceAdditions(
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None,
+              None
+            )
+          )
+        )
+      }
 
       "should return None LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user input when an LTA kick out has been reached" in {
 
@@ -4193,20 +4193,23 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
+      when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
+        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
+      val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
       submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
     }
 
     "must fail when a valid calculation result cannot be obtained" in {
 
+      when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
+        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
       when(mockCalculationResultConnector.sendRequest(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
-      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
 
@@ -4214,11 +4217,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
+      when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
+        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
       when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
-      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")(any)
+      val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
       an[RuntimeException] mustBe thrownBy(result.futureValue)
     }
   }
