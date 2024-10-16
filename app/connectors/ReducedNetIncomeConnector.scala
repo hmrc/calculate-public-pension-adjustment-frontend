@@ -35,7 +35,7 @@ class ReducedNetIncomeConnector @Inject() (config: Configuration, httpClient: Ht
   ec: ExecutionContext
 ) extends Logging {
 
-  private val baseUrl = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
+  private val baseUrl                  = config.get[Service]("microservice.services.calculate-public-pension-adjustment")
   private val subsidiaryCalculationUrl =
     url"$baseUrl/calculate-public-pension-adjustment/calculate-personal-allowance-and-reduced-net-income"
 

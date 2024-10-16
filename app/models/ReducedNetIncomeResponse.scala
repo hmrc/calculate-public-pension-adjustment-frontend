@@ -20,7 +20,7 @@ import play.api.libs.json.{Format, Json}
 
 case class ReducedNetIncomeResponse(
   personalAllowance: Int,
-  reducedNetIncomeAmount: Int,
+  reducedNetIncomeAmount: Int
 )
 
 object ReducedNetIncomeResponse {

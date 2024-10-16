@@ -50,24 +50,9 @@ class CalculationResultService @Inject() (
 
   def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
     for {
-      listOf2016To2023TaxYears <- Future.sequence(
-                                    List(
-                                      Period._2016,
-                                      Period._2017,
-                                      Period._2018,
-                                      Period._2019,
-                                      Period._2020,
-                                      Period._2021,
-                                      Period._2022,
-                                      Period._2023
-                                    ).map(
-                                      toTaxYear2016To2023(userAnswers, _)(hc)
-                                    )
-                                  )
-      _ = println(s"============ Sandy ========= listOf2016To2023TaxYears = $listOf2016To2023TaxYears    =======")
-      calculationInputs        <- Future.successful(buildCalculationInputs(userAnswers, listOf2016To2023TaxYears.flatten))
-      calculationResponse      <- calculationResultConnector.sendRequest(calculationInputs)
-      _                        <-
+      calculationInputs   <- buildCalculationInputs(userAnswers)
+      calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
+      _                   <-
         auditService.auditCalculationRequest(
           CalculationAuditEvent(
             userAnswers.uniqueId,
@@ -79,47 +64,13 @@ class CalculationResultService @Inject() (
         )
     } yield calculationResponse
 
-  def test(answers: UserAnswers)(implicit
-                                                                            hc: HeaderCarrier
-  ) = for {
-    listOf2016To2023TaxYears <- Future.sequence(
-      List(
-        Period._2016,
-        Period._2017,
-        Period._2018,
-        Period._2019,
-        Period._2020,
-        Period._2021,
-        Period._2022,
-        Period._2023
-      ).map(
-        toTaxYear2016To2023(answers, _)(hc)
-      )
-    )
-    calculationInputs        <- Future.successful(buildCalculationInputs(answers, listOf2016To2023TaxYears.flatten))}
-    yield calculationInputs
-
   def submitUserAnswersAndCalculation(answers: UserAnswers, userId: String)(implicit
     hc: HeaderCarrier
   ): Future[SubmissionResponse] =
     for {
-      listOf2016To2023TaxYears <- Future.sequence(
-                                    List(
-                                      Period._2016,
-                                      Period._2017,
-                                      Period._2018,
-                                      Period._2019,
-                                      Period._2020,
-                                      Period._2021,
-                                      Period._2022,
-                                      Period._2023
-                                    ).map(
-                                      toTaxYear2016To2023(answers, _)(hc)
-                                    )
-                                  )
-      calculationInputs        <- Future.successful(buildCalculationInputs(answers, listOf2016To2023TaxYears.flatten))
-      calculationResponse      <- calculationResultConnector.sendRequest(calculationInputs)
-      submissionResponse       <-
+      calculationInputs   <- buildCalculationInputs(answers)
+      calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
+      submissionResponse  <-
         submissionsConnector.sendSubmissionRequest(
           SubmissionRequest(calculationInputs, Some(calculationResponse), userId, answers.uniqueId)
         )
@@ -129,75 +80,77 @@ class CalculationResultService @Inject() (
     hc: HeaderCarrier
   ): Future[SubmissionResponse] =
     for {
-      listOf2016To2023TaxYears <- Future.sequence(
-                                    List(
-                                      Period._2016,
-                                      Period._2017,
-                                      Period._2018,
-                                      Period._2019,
-                                      Period._2020,
-                                      Period._2021,
-                                      Period._2022,
-                                      Period._2023
-                                    ).map(
-                                      toTaxYear2016To2023(answers, _)(hc)
-                                    )
-                                  )
-      _ = println(s"============ Sandy ========= listOf2016To2023TaxYears = $listOf2016To2023TaxYears    =======")
-      calculationInputs        <- Future.successful(buildCalculationInputs(answers, listOf2016To2023TaxYears.flatten))
-      submissionResponse       <-
+      calculationInputs  <- buildCalculationInputs(answers)
+      submissionResponse <-
         submissionsConnector.sendSubmissionRequest(
           SubmissionRequest(calculationInputs, None, userId, answers.uniqueId)
         )
     } yield submissionResponse
 
-  def buildCalculationInputs(userAnswers: UserAnswers, _2016To2023TaxYears: List[TaxYear2016To2023])(implicit
+  def buildCalculationInputs(userAnswers: UserAnswers)(implicit
     hc: HeaderCarrier
-  ): CalculationInputs = {
-    val resubmission: Resubmission = userAnswers
-      .get(ResubmittingAdjustmentPage)
-      .map {
-        case true  => Resubmission(true, userAnswers.get(ReasonForResubmissionPage))
-        case false => Resubmission(false, None)
-      }
-      .getOrElse(Resubmission(false, None))
+  ): Future[CalculationInputs] = for {
+    listOf2016To2023TaxYears <- Future.sequence(
+                                  List(
+                                    Period._2016,
+                                    Period._2017,
+                                    Period._2018,
+                                    Period._2019,
+                                    Period._2020,
+                                    Period._2021,
+                                    Period._2022,
+                                    Period._2023
+                                  ).map(
+                                    toTaxYear2016To2023(userAnswers, _)(hc)
+                                  )
+                                )
 
-    val scottishTaxYears: List[Period] = userAnswers.data.fields
-      .find(_._1 == WhichYearsScottishTaxpayerPage.toString)
-      .fold {
-        List.empty[Period]
-      } {
-        _._2.as[List[String]] flatMap { sYear =>
-          Period.fromString(sYear)
+    calculationInputs = {
+      val resubmission: Resubmission = userAnswers
+        .get(ResubmittingAdjustmentPage)
+        .map {
+          case true  => Resubmission(true, userAnswers.get(ReasonForResubmissionPage))
+          case false => Resubmission(false, None)
         }
-      }
+        .getOrElse(Resubmission(false, None))
 
-    val _2011To2015TaxYears: List[TaxYear2011To2015] =
-      List(Period._2011, Period._2012, Period._2013, Period._2014, Period._2015).flatMap(
-        toTaxYear2011To2015(userAnswers, _)
+      val scottishTaxYears: List[Period] = userAnswers.data.fields
+        .find(_._1 == WhichYearsScottishTaxpayerPage.toString)
+        .fold {
+          List.empty[Period]
+        } {
+          _._2.as[List[String]] flatMap { sYear =>
+            Period.fromString(sYear)
+          }
+        }
+
+      val _2011To2015TaxYears: List[TaxYear2011To2015] =
+        List(Period._2011, Period._2012, Period._2013, Period._2014, Period._2015).flatMap(
+          toTaxYear2011To2015(userAnswers, _)
+        )
+
+      val tYears: List[TaxYear] = _2011To2015TaxYears ++ listOf2016To2023TaxYears.flatten
+
+      val reportingChange: Option[Set[ReportingChange]] = userAnswers.get(ReportingChangePage)
+
+      val postTriageFlagStatus = userAnswers.get(PostTriageFlag).isDefined
+
+      CalculationResults.CalculationInputs(
+        resubmission,
+        buildSetup(userAnswers),
+        if (postTriageFlagStatus) {
+          buildSetupAAPostTriage(userAnswers, scottishTaxYears, tYears, reportingChange)
+        } else {
+          buildSetupAAPreTriage(userAnswers, scottishTaxYears, tYears, reportingChange)
+        },
+        if (postTriageFlagStatus) {
+          buildSetupLTAPostTriage(userAnswers, reportingChange)
+        } else {
+          buildSetupLTAPreTriage(userAnswers, reportingChange)
+        }
       )
-
-    val tYears: List[TaxYear] = _2011To2015TaxYears ++ _2016To2023TaxYears
-
-    val reportingChange: Option[Set[ReportingChange]] = userAnswers.get(ReportingChangePage)
-
-    val postTriageFlagStatus = userAnswers.get(PostTriageFlag).isDefined
-
-    CalculationResults.CalculationInputs(
-      resubmission,
-      buildSetup(userAnswers),
-      if (postTriageFlagStatus) {
-        buildSetupAAPostTriage(userAnswers, scottishTaxYears, tYears, reportingChange)
-      } else {
-        buildSetupAAPreTriage(userAnswers, scottishTaxYears, tYears, reportingChange)
-      },
-      if (postTriageFlagStatus) {
-        buildSetupLTAPostTriage(userAnswers, reportingChange)
-      } else {
-        buildSetupLTAPreTriage(userAnswers, reportingChange)
-      }
-    )
-  }
+    }
+  } yield calculationInputs
 
   private def buildSetupLTAPostTriage(userAnswers: UserAnswers, reportingChange: Option[Set[ReportingChange]]) =
     if (

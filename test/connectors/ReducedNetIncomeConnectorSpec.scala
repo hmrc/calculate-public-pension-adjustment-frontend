@@ -54,12 +54,29 @@ class ReducedNetIncomeConnectorSpec extends SpecBase with WireMockHelper with Sc
       .configure("microservice.services.calculate-public-pension-adjustment.port" -> server.port)
       .build()
 
-  val hc: HeaderCarrier = HeaderCarrier()
-  val scottishTaxYears :List[Period] = List(Period._2021)
-  val incomeSubJourney: IncomeSubJourney = IncomeSubJourney(Some(1), Some(1), Some(1), Some(1), Some(true), Some(1), Some(1), Some(1), Some(1), Some(1), Some(1), Some(1), Some(1), Some(1), Some(1), Some(1))
+  val hc: HeaderCarrier                  = HeaderCarrier()
+  val scottishTaxYears: List[Period]     = List(Period._2021)
+  val incomeSubJourney: IncomeSubJourney = IncomeSubJourney(
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(true),
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(1),
+    Some(1)
+  )
 
-
-  val reducedNetIncomeRequest: ReducedNetIncomeRequest = ReducedNetIncomeRequest(Period._2021, scottishTaxYears, 1, incomeSubJourney)
+  val reducedNetIncomeRequest: ReducedNetIncomeRequest =
+    ReducedNetIncomeRequest(Period._2021, scottishTaxYears, 1, incomeSubJourney)
 
   "SubmissionConnectorSpec" - {
 
@@ -73,8 +90,8 @@ class ReducedNetIncomeConnectorSpec extends SpecBase with WireMockHelper with Sc
         running(app) {
           val connector = app.injector.instanceOf[ReducedNetIncomeConnector]
 
-          val reducedNetIncomeResponse: ReducedNetIncomeResponse = ReducedNetIncomeResponse(1,1)
-          val responseBody = Json.toJson(reducedNetIncomeResponse).toString
+          val reducedNetIncomeResponse: ReducedNetIncomeResponse = ReducedNetIncomeResponse(1, 1)
+          val responseBody                                       = Json.toJson(reducedNetIncomeResponse).toString
 
           server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withBody(responseBody)))
 
