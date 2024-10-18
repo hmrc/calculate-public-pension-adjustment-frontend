@@ -35,7 +35,7 @@ object ProtectionEnhancedChangedSummary {
         )
       )
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "protectionEnhancedChanged.checkYourAnswersLabel",
           value = value,

@@ -32,14 +32,14 @@ class AnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the summary row with change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           AnnualPaymentValuePage,
           BigInt("999")
         )
         .get
-      AnnualPaymentValueSummary.row(userAnswers) shouldBe Some(
+      AnnualPaymentValueSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "annualPaymentValue.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("&pound;999")),
@@ -51,9 +51,24 @@ class AnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when value is entered, return the summary row without change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          AnnualPaymentValuePage,
+          BigInt("999")
+        )
+        .get
+      AnnualPaymentValueSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "annualPaymentValue.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent("&pound;999"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      AnnualPaymentValueSummary.row(userAnswers) shouldBe None
+      AnnualPaymentValueSummary.row(userAnswers, true) shouldBe None
     }
   }
 

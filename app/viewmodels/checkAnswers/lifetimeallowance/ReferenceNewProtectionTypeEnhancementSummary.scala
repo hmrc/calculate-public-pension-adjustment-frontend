@@ -29,8 +29,7 @@ object ReferenceNewProtectionTypeEnhancementSummary {
 
   def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ReferenceNewProtectionTypeEnhancementPage).map { answer =>
-
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
           value = ValueViewModel(HtmlFormat.escape(answer).toString),

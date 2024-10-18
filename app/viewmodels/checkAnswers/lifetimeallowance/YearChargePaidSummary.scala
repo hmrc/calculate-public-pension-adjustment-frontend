@@ -34,7 +34,7 @@ object YearChargePaidSummary {
           HtmlFormat.escape(messages(s"yearChargePaid.$answer"))
         )
       )
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "yearChargePaid.checkYourAnswersLabel",
           value = value,

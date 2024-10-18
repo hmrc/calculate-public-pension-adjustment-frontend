@@ -33,14 +33,14 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when a radio button is selected, return the summary row" in {
+    "when a radio button is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           ProtectionTypePage,
           EnhancedProtection
         )
         .get
-      ProtectionTypeSummary.row(userAnswers) shouldBe Some(
+      ProtectionTypeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "protectionType.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("protectionType.enhancedProtection")),
@@ -52,9 +52,24 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when a radio button is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          ProtectionTypePage,
+          EnhancedProtection
+        )
+        .get
+      ProtectionTypeSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "protectionType.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent("protectionType.enhancedProtection"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionTypeSummary.row(userAnswers) shouldBe None
+      ProtectionTypeSummary.row(userAnswers, true) shouldBe None
     }
   }
 }

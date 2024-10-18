@@ -29,7 +29,7 @@ object LifetimeAllowanceChargeSummary {
     answers.get(LifetimeAllowanceChargePage).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
           value = ValueViewModel(value),
