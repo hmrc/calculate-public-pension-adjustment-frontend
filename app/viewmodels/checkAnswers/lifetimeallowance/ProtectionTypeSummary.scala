@@ -36,7 +36,7 @@ object ProtectionTypeSummary {
         )
       )
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "protectionType.checkYourAnswersLabel",
           value = value,

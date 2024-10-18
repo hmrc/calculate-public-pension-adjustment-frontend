@@ -31,14 +31,14 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when Pension Scheme is selected, return the summary row" in {
+    "when Pension Scheme is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           WhoPaidLTAChargePage,
           models.WhoPaidLTACharge.PensionScheme
         )
         .get
-      WhoPaidLTAChargeSummary.row(userAnswers) shouldBe Some(
+      WhoPaidLTAChargeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "whoPaidLTACharge.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoPaidLTACharge.pensionScheme")),
@@ -53,14 +53,29 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
-    "when You is selected, return the summary row" in {
+    "when Pension Scheme is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          WhoPaidLTAChargePage,
+          models.WhoPaidLTACharge.PensionScheme
+        )
+        .get
+      WhoPaidLTAChargeSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "whoPaidLTACharge.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent("whoPaidLTACharge.pensionScheme"))
+        )
+      )
+    }
+
+    "when You is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           WhoPaidLTAChargePage,
           models.WhoPaidLTACharge.You
         )
         .get
-      WhoPaidLTAChargeSummary.row(userAnswers) shouldBe Some(
+      WhoPaidLTAChargeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "whoPaidLTACharge.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoPaidLTACharge.you")),
@@ -75,9 +90,24 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when You is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          WhoPaidLTAChargePage,
+          models.WhoPaidLTACharge.You
+        )
+        .get
+      WhoPaidLTAChargeSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "whoPaidLTACharge.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent("whoPaidLTACharge.you"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhoPaidLTAChargeSummary.row(userAnswers) shouldBe None
+      WhoPaidLTAChargeSummary.row(userAnswers, true) shouldBe None
     }
   }
 

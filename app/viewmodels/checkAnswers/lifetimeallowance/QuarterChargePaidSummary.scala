@@ -35,7 +35,7 @@ object QuarterChargePaidSummary {
         )
       )
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "quarterChargePaid.checkYourAnswersLabel",
           value = value,

@@ -26,7 +26,7 @@ import viewmodels.checkAnswers.lifetimeallowance._
 import viewmodels.govuk.summarylist._
 import views.html.lifetimeallowance.ViewYourAnswersView
 
-class ViewYourLTAAnswersController @Inject()(
+class ViewYourLTAAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,

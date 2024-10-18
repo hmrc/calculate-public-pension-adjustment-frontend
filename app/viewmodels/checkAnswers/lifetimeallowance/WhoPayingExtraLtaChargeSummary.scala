@@ -36,7 +36,7 @@ object WhoPayingExtraLtaChargeSummary {
         )
       )
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "whoPayingExtraLtaCharge.checkYourAnswersLabel",
           value = value,

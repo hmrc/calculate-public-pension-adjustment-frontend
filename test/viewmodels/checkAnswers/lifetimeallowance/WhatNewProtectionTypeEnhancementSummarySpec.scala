@@ -33,14 +33,14 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when a radio button is selected, return the summary row" in {
+    "when a radio button is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           WhatNewProtectionTypeEnhancementPage,
           PrimaryProtection
         )
         .get
-      WhatNewProtectionTypeEnhancementSummary.row(userAnswers) shouldBe Some(
+      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.primaryProtection")),
@@ -55,9 +55,24 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
       )
     }
 
+    "when a radio button is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          WhatNewProtectionTypeEnhancementPage,
+          PrimaryProtection
+        )
+        .get
+      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.primaryProtection"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhatNewProtectionTypeEnhancementSummary.row(userAnswers) shouldBe None
+      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe None
     }
   }
 }

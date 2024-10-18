@@ -30,8 +30,7 @@ object LumpSumValueSummary {
 
   def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(LumpSumValuePage).map { answer =>
-
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "lumpSumValue.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent(currencyFormat(answer))),

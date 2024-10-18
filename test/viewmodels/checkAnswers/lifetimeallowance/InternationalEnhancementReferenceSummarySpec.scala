@@ -31,14 +31,14 @@ class InternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with Matc
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           InternationalEnhancementReferencePage,
           "test123"
         )
         .get
-      InternationalEnhancementReferenceSummary.row(userAnswers) shouldBe Some(
+      InternationalEnhancementReferenceSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "internationalEnhancementReference.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
@@ -53,9 +53,24 @@ class InternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with Matc
       )
     }
 
+    "when value is entered, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          InternationalEnhancementReferencePage,
+          "test123"
+        )
+        .get
+      InternationalEnhancementReferenceSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "internationalEnhancementReference.checkYourAnswersLabel",
+          value = ValueViewModel("test123")
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionReferenceSummary.row(userAnswers) shouldBe None
+      ProtectionReferenceSummary.row(userAnswers, true) shouldBe None
     }
   }
 

@@ -35,7 +35,7 @@ object WhoPaidLTAChargeSummary {
         )
       )
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "whoPaidLTACharge.checkYourAnswersLabel",
           value = value,

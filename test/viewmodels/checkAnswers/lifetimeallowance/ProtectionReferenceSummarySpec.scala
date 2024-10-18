@@ -31,14 +31,14 @@ class ProtectionReferenceSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           ProtectionReferencePage,
           "test123"
         )
         .get
-      ProtectionReferenceSummary.row(userAnswers) shouldBe Some(
+      ProtectionReferenceSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "protectionReference.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
@@ -50,9 +50,24 @@ class ProtectionReferenceSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when value is entered, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          ProtectionReferencePage,
+          "test123"
+        )
+        .get
+      ProtectionReferenceSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "protectionReference.checkYourAnswersLabel",
+          value = ValueViewModel("test123")
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionReferenceSummary.row(userAnswers) shouldBe None
+      ProtectionReferenceSummary.row(userAnswers, true) shouldBe None
     }
   }
 

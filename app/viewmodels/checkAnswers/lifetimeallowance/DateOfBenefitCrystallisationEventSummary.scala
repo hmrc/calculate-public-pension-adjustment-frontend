@@ -31,7 +31,7 @@ object DateOfBenefitCrystallisationEventSummary extends ImplicitDateFormatter {
     answers.get(DateOfBenefitCrystallisationEventPage).map { answer =>
       val languageTag = if (messages.lang.code == "cy") "cy" else "en"
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
           value = ValueViewModel(dateToString(answer, languageTag)),
@@ -46,7 +46,7 @@ object DateOfBenefitCrystallisationEventSummary extends ImplicitDateFormatter {
       } else {
         SummaryListRowViewModel(
           key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
-          value = ValueViewModel(dateToString(answer, languageTag)).withCssClass("govuk-!-width-one-half")
+          value = ValueViewModel(dateToString(answer, languageTag))
         )
       }
     }

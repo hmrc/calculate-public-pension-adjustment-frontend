@@ -35,7 +35,7 @@ object EnhancementTypeSummary {
         )
       )
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "enhancementType.checkYourAnswersLabel",
           value = value,

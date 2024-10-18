@@ -29,8 +29,7 @@ object ProtectionReferenceSummary {
 
   def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ProtectionReferencePage).map { answer =>
-
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "protectionReference.checkYourAnswersLabel",
           value = ValueViewModel(HtmlFormat.escape(answer).toString),

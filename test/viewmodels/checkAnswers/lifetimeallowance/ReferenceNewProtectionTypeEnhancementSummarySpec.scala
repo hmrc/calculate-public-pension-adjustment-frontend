@@ -31,14 +31,14 @@ class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with 
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           ReferenceNewProtectionTypeEnhancementPage,
           "test123"
         )
         .get
-      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers) shouldBe Some(
+      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
@@ -53,9 +53,24 @@ class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with 
       )
     }
 
+    "when value is entered, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          ReferenceNewProtectionTypeEnhancementPage,
+          "test123"
+        )
+        .get
+      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          value = ValueViewModel("test123")
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers) shouldBe None
+      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe None
     }
   }
 

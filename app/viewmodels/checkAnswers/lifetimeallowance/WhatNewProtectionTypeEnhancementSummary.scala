@@ -36,7 +36,7 @@ object WhatNewProtectionTypeEnhancementSummary {
         )
       )
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
           value = value,

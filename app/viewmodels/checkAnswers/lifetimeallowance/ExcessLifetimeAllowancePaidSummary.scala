@@ -35,7 +35,7 @@ object ExcessLifetimeAllowancePaidSummary {
         )
       )
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
           value = value,

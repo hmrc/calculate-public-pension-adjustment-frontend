@@ -31,14 +31,14 @@ class NewPensionCreditReferenceSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           NewPensionCreditReferencePage,
           "test123"
         )
         .get
-      NewPensionCreditReferenceSummary.row(userAnswers) shouldBe Some(
+      NewPensionCreditReferenceSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "newPensionCreditReference.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
@@ -50,9 +50,24 @@ class NewPensionCreditReferenceSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when value is entered, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          NewPensionCreditReferencePage,
+          "test123"
+        )
+        .get
+      NewPensionCreditReferenceSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "newPensionCreditReference.checkYourAnswersLabel",
+          value = ValueViewModel("test123")
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionReferenceSummary.row(userAnswers) shouldBe None
+      ProtectionReferenceSummary.row(userAnswers, true) shouldBe None
     }
   }
 

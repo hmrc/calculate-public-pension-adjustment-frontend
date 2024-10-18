@@ -29,8 +29,7 @@ object NewAnnualPaymentValueSummary {
 
   def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(NewAnnualPaymentValuePage).map { answer =>
-
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "newAnnualPaymentValue.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent(currencyFormat(answer))),
