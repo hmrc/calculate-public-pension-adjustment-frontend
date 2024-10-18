@@ -490,7 +490,7 @@ pensionSchemeDetails.error.schemeName.required = Enter the name of the pension s
 pensionSchemeDetails.error.schemeTaxRef.required = Enter the Pension Scheme Tax Reference
 pensionSchemeDetails.error.schemeName.length = The name of the pension scheme must be 100 characters or fewer
 pensionSchemeDetails.error.schemeTaxRef.invalid = The Pension Scheme Tax Reference that paid the annual allowance charge must be 8 numbers followed by 2 letters
-pensionSchemeDetails.change.hidden = pension scheme name or pension scheme tax reference
+pensionSchemeDetails.change.hidden = the pension scheme name or pension scheme tax reference
 
 pensionSchemeInputAmounts.title = Pension input amounts for {0}
 pensionSchemeInputAmounts.title.2016-pre = Pension input amount for the pension scheme {0} between 6 April 2015 and 8 July 2015
@@ -641,7 +641,7 @@ ltaPensionSchemeDetails.error.name.length = The name of your pension scheme must
 ltaPensionSchemeDetails.taxRef = Pension Scheme Tax Reference
 ltaPensionSchemeDetails.hint = For example, 00348916RT.
 ltaPensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the scheme that is paying the extra charge?
-ltaPensionSchemeDetails.change.hidden = name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
+ltaPensionSchemeDetails.change.hidden = the name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.required = Enter the Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.invalid = The Pension Scheme Tax Reference of the scheme that is paying the extra charge must only include letters a to z, numbers 0 to 9
 
@@ -717,7 +717,7 @@ definedBenefitAmount.hint1 = Amounts must be rounded down to the nearest pound, 
 definedBenefitAmount.checkYourAnswersLabel = What was your pension input amount for defined benefit pension schemes between {0}?
 definedBenefitAmount.error.nonNumeric = You have entered non-numerical characters for your defined benefit pension input amount. You must enter numerical characters
 definedBenefitAmount.error.required = Enter an amount for your defined benefit pension input amount in the space provided
-definedBenefitAmount.change.hidden = your pension input amount for defined benefit pension schemes from {0}
+definedBenefitAmount.change.hidden = your pension input amount for defined benefit pension schemes between {0}
 
 definedBenefitAmount.error.required.2016-pre = Enter your pension input amount for defined benefit pension schemes from 6 April 2015 to 8 July 2015
 definedBenefitAmount.error.required.2016-post = Enter your pension input amount for defined benefit pension schemes from 9 July 2015 to 5 April 2016

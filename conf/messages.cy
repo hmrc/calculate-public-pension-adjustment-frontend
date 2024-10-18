@@ -490,7 +490,7 @@ pensionSchemeDetails.error.schemeName.required = Nodwch enw’r cynllun pensiwn
 pensionSchemeDetails.error.schemeTaxRef.required = Nodwch Gyfeirnod Treth y Cynllun Pensiwn
 pensionSchemeDetails.error.schemeName.length = Mae’n rhaid i enw’r cynllun pensiwn fod yn 100 o gymeriadau neu lai
 pensionSchemeDetails.error.schemeTaxRef.invalid = Mae’n rhaid i Gyfeirnod Treth y Cynllun Pensiwn fod yn 8 rhif wedi’i ddilyn gan 2 lythyren
-pensionSchemeDetails.change.hidden = enw cynllun pensiwn neu Gyfeirnod Treth y Cynllun Pensiwn
+pensionSchemeDetails.change.hidden = cy: the pension scheme name or pension scheme tax reference
 
 pensionSchemeInputAmounts.title = cy: Pension input amounts for {0}
 pensionSchemeInputAmounts.title.2016-pre = cy: Pension input amount for the pension scheme {0} between 6 April 2015 and 8 July 2015
@@ -641,7 +641,7 @@ ltaPensionSchemeDetails.error.name.length = Mae’n rhaid i enw’ch cynllun pen
 ltaPensionSchemeDetails.taxRef = Cyfeirnod Treth y Cynllun Pensiwn
 ltaPensionSchemeDetails.hint = Er enghraifft, 00348916RT.
 ltaPensionSchemeDetails.checkYourAnswersLabel = Beth yw enw a chyfeirnod treth y cynllun sy’n talu’r tâl ychwanegol?
-ltaPensionSchemeDetails.change.hidden = enw a Chyfeirnod Treth y Cynllun Pensiwn ar gyfer y cynllun sy’n talu’r tâl ychwanegol
+ltaPensionSchemeDetails.change.hidden = cy: the name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.required = Nodwch Gyfeirnod Treth y Cynllun Pensiwn ar gyfer y cynllun sy’n talu’r tâl ychwanegol
 ltaPensionSchemeDetails.error.taxRef.invalid = Mae’n rhaid i Gyfeirnod Treth y Cynllun Pensiwn ar gyfer y cynllun sy’n talu’r tâl ychwanegol gynnwys y llythrennau A i Z, rhifau 0 i 9 yn unig
 
@@ -717,7 +717,7 @@ definedBenefitAmount.hint1 = Mae’n rhaid talgrynnu symiau i lawr i’r bunt ag
 definedBenefitAmount.checkYourAnswersLabel = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig o {0}?
 definedBenefitAmount.error.nonNumeric = Rydych wedi nodi cymeriadau nad ydynt yn rhifau ar gyfer swm mewnbwn eich pensiwn buddiannau diffiniedig. Mae’n rhaid i chi nodi cymeriadau rhifol
 definedBenefitAmount.error.required = Nodwch swm mewnbwn eich pensiwn buddiannau diffiniedig yn y blwch sydd ar gael
-definedBenefitAmount.change.hidden = mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig o {0}
+definedBenefitAmount.change.hidden = cy: your pension input amount for defined benefit pension schemes between {0}
 
 definedBenefitAmount.error.required.2016-pre = Nodwch eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig o 6 Ebrill 2015 i 8 Gorffennaf 2015?
 definedBenefitAmount.error.required.2016-post = Nodwch eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig o 9 Gorffennaf 2015 i 5 Ebrill 2016?
