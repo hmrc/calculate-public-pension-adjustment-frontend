@@ -36,7 +36,7 @@ object LtaProtectionOrEnhancementsSummary {
         )
       )
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "ltaProtectionOrEnhancements.checkYourAnswersLabel",
           value = value,

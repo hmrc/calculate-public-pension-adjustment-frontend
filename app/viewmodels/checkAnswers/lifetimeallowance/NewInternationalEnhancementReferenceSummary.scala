@@ -28,8 +28,7 @@ object NewInternationalEnhancementReferenceSummary {
 
   def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(NewInternationalEnhancementReferencePage).map { answer =>
-
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "newInternationalEnhancementReference.checkYourAnswersLabel",
           value = ValueViewModel(HtmlFormat.escape(answer).toString),

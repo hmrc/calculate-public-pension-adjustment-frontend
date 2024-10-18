@@ -28,8 +28,7 @@ object PensionCreditReferenceSummary {
 
   def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(PensionCreditReferencePage).map { answer =>
-
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "pensionCreditReference.checkYourAnswersLabel",
           value = ValueViewModel(HtmlFormat.escape(answer).toString),

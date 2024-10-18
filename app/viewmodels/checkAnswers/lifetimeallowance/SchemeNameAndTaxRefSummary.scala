@@ -32,7 +32,7 @@ object SchemeNameAndTaxRefSummary {
       val value =
         HtmlFormat.escape(answer.name).toString + " / " + HtmlFormat.escape(answer.taxRef).toString
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "schemeNameAndTaxRef.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent(value)),

@@ -4270,9 +4270,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         rows(index).link mustBe expectedLink
       }
 
-      def checkRowNameReviewRowLTA(row: ReviewRowViewModel, expectedTitle: String): Unit = {
+      def checkRowNameReviewRowLTA(row: ReviewRowViewModel, expectedTitle: String, expectedLink: String): Unit = {
         row.title mustBe expectedTitle
         row.changeString mustBe None
+        row.link mustBe expectedLink
       }
 
       val index = 0
@@ -4367,7 +4368,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         val sections: Seq[ReviewRowViewModel] = viewModel.lifetimeAllowance
         sections.size mustBe 1
 
-        checkRowNameReviewRowLTA(sections(0), "calculationReview.lta")
+        checkRowNameReviewRowLTA(sections(0), "calculationReview.lta", "lifetime-allowance/view-answers")
       }
     }
 

@@ -31,14 +31,14 @@ class NewExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matcher
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when Annual payment is selected, return the summary row" in {
+    "when Annual payment is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           NewExcessLifetimeAllowancePaidPage,
           models.NewExcessLifetimeAllowancePaid.Annualpayment
         )
         .get
-      NewExcessLifetimeAllowancePaidSummary.row(userAnswers) shouldBe Some(
+      NewExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "newExcessLifetimeAllowancePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("newExcessLifetimeAllowancePaid.annualPayment")),
@@ -53,9 +53,24 @@ class NewExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matcher
       )
     }
 
+    "when Annual payment is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          NewExcessLifetimeAllowancePaidPage,
+          models.NewExcessLifetimeAllowancePaid.Annualpayment
+        )
+        .get
+      NewExcessLifetimeAllowancePaidSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = "newExcessLifetimeAllowancePaid.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent("newExcessLifetimeAllowancePaid.annualPayment"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      NewExcessLifetimeAllowancePaidSummary.row(userAnswers) shouldBe None
+      NewExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe None
     }
   }
 

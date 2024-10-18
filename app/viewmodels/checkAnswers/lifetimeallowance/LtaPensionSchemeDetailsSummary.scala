@@ -32,7 +32,7 @@ object LtaPensionSchemeDetailsSummary {
     answers.get(LtaPensionSchemeDetailsPage).map { answer =>
       val value = HtmlFormat.escape(answer.name).toString + " / " + HtmlFormat.escape(answer.taxRef).toString
 
-      if(changeAllowed) {
+      if (changeAllowed) {
         SummaryListRowViewModel(
           key = "ltaPensionSchemeDetails.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent(value)),
