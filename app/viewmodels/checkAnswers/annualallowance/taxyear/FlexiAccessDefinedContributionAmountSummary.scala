@@ -50,7 +50,7 @@ object FlexiAccessDefinedContributionAmountSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("flexiAccessDefinedContributionAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("flexiAccessDefinedContributionAmount.change.hidden", startEndDate))
         )
       )
     }
