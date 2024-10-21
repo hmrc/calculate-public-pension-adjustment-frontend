@@ -17,20 +17,17 @@
 @this(
         layout: templates.Layout,
         govukSummaryList: GovukSummaryList,
+        continueButtonWithLink: components.ContinueButtonWithLink
 )
 
-@(subHeadingMessageKey: String, redirectURL:Call, list: SummaryList)(implicit request: Request[_], messages: Messages)
+@(redirectURL:Call, list: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("reviewLTAAnswers.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("reviewLTAAnswers.heading")</h1>
 
-    <h2 class="govuk-heading-m">@messages(subHeadingMessageKey)</h2>
-
     @govukSummaryList(list)
 
-    <a class="govuk-link" href= @redirectURL>
-        @messages("reviewLTAAnswers.returnToMainResult")
-    </a>
+    @continueButtonWithLink(redirectURL)
 
 }

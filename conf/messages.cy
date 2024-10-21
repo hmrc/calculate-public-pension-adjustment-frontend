@@ -52,6 +52,9 @@ checkYourAnswers.aa.period.subHeading.2021 = Cwestiynau lwfans blynyddol 2021
 checkYourAnswers.aa.period.subHeading.2022 = Cwestiynau lwfans blynyddol 2022
 checkYourAnswers.aa.period.subHeading.2023 = Cwestiynau lwfans blynyddol 2023
 
+reviewLTAAnswers.title = cy: Review lifetime allowance answers
+reviewLTAAnswers.heading = cy: Review lifetime allowance answers
+
 journeyRecovery.continue.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
 journeyRecovery.continue.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
 journeyRecovery.continue.guidance = [Ychwanegu cynnwys i egluro sut i symud ymlaen.]
