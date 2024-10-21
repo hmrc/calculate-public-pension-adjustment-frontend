@@ -24,7 +24,6 @@ import play.api.test.Helpers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.lifetimeallowance.ViewYourAnswersView
 
-
 class ViewYourLTAAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
   "View Your Answers Controller" - {
