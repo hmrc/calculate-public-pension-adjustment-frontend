@@ -52,6 +52,15 @@ class CalculationResultService @Inject() (
   def sendRequest(userAnswers: UserAnswers)(implicit hc: HeaderCarrier): Future[CalculationResponse] =
     for {
       calculationInputs   <- buildCalculationInputs(userAnswers)
+      _                   <-
+        auditService.auditBeforeCalculationRequest(
+          BeforeCalculationAuditEvent(
+            userAnswers.uniqueId,
+            userAnswers.authenticated,
+            userAnswers.id,
+            calculationInputs
+          )
+        )
       calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
       _                   <-
         auditService.auditCalculationRequest(
