@@ -1576,7 +1576,7 @@ netIncomeAbove190KIn2023.message6 = cy: document.
 netIncomeAbove190KIn2023.heading2 = cy: Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.checkYourAnswersLabel = cy: Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.error.required = cy: Select yes if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
-netIncomeAbove190KIn2023.change.hidden = cy: if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
+netIncomeAbove190KIn2023.change.hidden = cy: if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023
 
 flexibleAccessDcScheme.title = cy: Have you used flexible access on your DC pension scheme?
 flexibleAccessDcScheme.caption = cy: Annual allowance
