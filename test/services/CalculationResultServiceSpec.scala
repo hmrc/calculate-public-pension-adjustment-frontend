@@ -498,7 +498,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 |      "referenceNewProtectionTypeEnhancement": "2134567801",
                 |      "lifetimeAllowanceCharge": true,
                 |      "excessLifetimeAllowancePaid": "annualPayment",
-                |      "lifetimeAllowanceChargeAmount": 20000,
                 |      "whoPaidLTACharge": "pensionScheme",
                 |      "schemeNameAndTaxRef": {
                 |        "name": "Scheme 1",
@@ -1137,7 +1136,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                |      "referenceNewProtectionTypeEnhancement": "2134567801",
                |      "lifetimeAllowanceCharge": true,
                |      "excessLifetimeAllowancePaid": "annualPayment",
-               |      "lifetimeAllowanceChargeAmount": 20000,
                |      "whoPaidLTACharge": "pensionScheme",
                |      "schemeNameAndTaxRef": {
                |        "name": "Scheme 1",
