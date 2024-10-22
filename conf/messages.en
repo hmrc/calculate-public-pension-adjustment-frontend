@@ -205,7 +205,7 @@ flexibleAccessStartDate.change.hidden = the date you first flexibly accessed you
 flexibleAccessStartDate.error.required.all = Enter a date when you first flexibly accessed your defined contribution pension in the right format, with a date, month and year
 
 flexibleAccessStartDate.error.invalid = Enter the date when you stopped paying into a public service pension scheme in the right format, with a date, month and year
-flexibleAccessStartDate.error.required =  The date must include {0}
+flexibleAccessStartDate.error.required = The date must include {0}
 flexibleAccessStartDate.error.required.two = The date must include {0} and {1}
 flexibleAccessStartDate.error.min = The date when you first flexibly accessed your defined contribution pension must be after 5 April 2015
 flexibleAccessStartDate.error.max = The date when you first flexibly accessed your defined contribution pension must be before {0}
