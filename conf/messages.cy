@@ -184,7 +184,7 @@ definedContributionPensionScheme.message = Fel arfer, bydd y rhain naill ai’n 
 definedContributionPensionScheme.bullet1 = yn bensiynau gweithle a drefnir gan eich cyflogwr
 definedContributionPensionScheme.bullet2 = yn bensiynau preifat a drefnir gennych chi
 definedContributionPensionScheme.error.required = Dewiswch ‘Iawn’ os oes gennych gynllun pensiwn cyfraniadau diffiniedig
-definedContributionPensionScheme.change.hidden = os oes gennych chi gynllun pensiwn cyfraniadau diffiniedig
+definedContributionPensionScheme.change.hidden = cy: if you have any other pension schemes apart from your public service ones
 
 flexiblyAccessedPension.title = A ydych chi wedi cyrchu eich pensiwn cyfraniadau diffiniedig yn hyblyg?
 flexiblyAccessedPension.heading = A ydych chi wedi cyrchu eich pensiwn cyfraniadau diffiniedig yn hyblyg?
@@ -256,7 +256,7 @@ pIAPreRemedy.error.maximum.2012 = Mae’n rhaid i’ch swm talu i mewn i bensiwn
 pIAPreRemedy.error.maximum.2013 = Mae’n rhaid i’ch swm talu i mewn i bensiwn o 6 Ebrill 2012 i 5 Ebrill 2013 fod yn £999,999,999 neu lai
 pIAPreRemedy.error.maximum.2014 = Mae’n rhaid i’ch swm talu i mewn i bensiwn o 6 Ebrill 2013 i 5 Ebrill 2014 fod yn £999,999,999 neu lai
 pIAPreRemedy.error.maximum.2015 = Mae’n rhaid i’ch swm talu i mewn i bensiwn o 6 Ebrill 2014 i 5 Ebrill 2015 fod yn £999,999,999 neu lai
-pIAPreRemedy.change.hidden = Mae’n rhaid i’ch swm talu i mewn i bensiwn o 6 Ebrill {0} i 5 Ebrill {1}
+pIAPreRemedy.change.hidden = cy: your pension input amount from 6 April {0} to 5 April {1}
 
 whatYouWillNeedLta.title = Lwfans oes
 whatYouWillNeedLta.heading = Lwfans oes
@@ -272,7 +272,7 @@ hadBenefitCrystallisationEvent.title = A ydych chi wedi cael digwyddiad crisialu
 hadBenefitCrystallisationEvent.heading = A ydych chi wedi cael digwyddiad crisialu buddiannau yn eich pensiwn ar ôl 5 Ebrill 2015?
 hadBenefitCrystallisationEvent.checkYourAnswersLabel = A ydych chi wedi cael digwyddiad crisialu buddiannau yn eich pensiwn ar ôl 5 Ebrill 2015?
 hadBenefitCrystallisationEvent.error.required = Dewiswch ‘Iawn’ os ydych wedi cael digwyddiad crisialu buddiannau yn eich pensiwn ar ôl 5 Ebrill 2015
-hadBenefitCrystallisationEvent.change.hidden = cy: If you have had a benefit crystallisation event in your pension after 5 April 2015
+hadBenefitCrystallisationEvent.change.hidden = cy: if you have had a benefit crystallisation event in your pension after 5 April 2015
 hadBenefitCrystallisationEvent.message1 = cy: A benefit crystallisation event is when the value of your pension is tested against the lifetime allowance.
 hadBenefitCrystallisationEvent.message2 = cy: Benefit crystallisation events can happen when you start receiving benefits from your pension, or take a lump sum from your scheme.
 
@@ -345,7 +345,7 @@ ltaProtectionOrEnhancements.no = Na
 ltaProtectionOrEnhancements.hint = Gwiriwch eich diogelwch lwfans oes ar-lein
 ltaProtectionOrEnhancements.checkYourAnswersLabel = A oedd gennych chi ddiogelwch neu ddiogelwch uwch mewn perthynas â’r lwfans oes ar adeg eich digwyddiad crisialu buddiannau?
 ltaProtectionOrEnhancements.error.required = Dewiswch a oes gennych chi ddiogelwch lwfans oes neu ddiogelwch lefel uwch
-ltaProtectionOrEnhancements.change.hidden = os oes gennych chi ddiogelwch lwfans oes neu ddiogelwch uwch
+ltaProtectionOrEnhancements.change.hidden = cy: if you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event
 
 protectionType.title = Beth yw’r math o ddiogelwch lwfans oes sydd gennych?
 protectionType.heading = Beth yw’r math o ddiogelwch lwfans oes sydd gennych?
@@ -359,7 +359,7 @@ protectionType.individualProtection2016 = Diogelwch unigol 2016
 protectionType.hint = Gwiriwch eich diogelwch lwfans oes ar-lein
 protectionType.checkYourAnswersLabel = Beth yw’r math o ddiogelwch lwfans oes sydd gennych?
 protectionType.error.required = Dewiswch y math o ddiogelwch lwfans oes sydd gennych
-protectionType.change.hidden = math o ddiogelwch lwfans oes
+protectionType.change.hidden = cy: your lifetime allowance protection type
 
 protectionReference.title = Beth yw cyfeirnod eich diogelwch lwfans oes?
 protectionReference.heading = Beth yw cyfeirnod eich diogelwch lwfans oes?
@@ -370,7 +370,7 @@ protectionReference.checkYourAnswersLabel = Beth yw cyfeirnod eich diogelwch lwf
 protectionReference.error.required = Nodwch eich cyfeirnod diogelwch lwfans oes
 protectionReference.error.length = Mae’n rhaid i’r cyfeirnod ar gyfer eich diogelwch lwfans oes fod yn 15 cymeriad neu lai
 protectionReference.error.invalid = cy: Your lifetime allowance protection reference must only include letters a to z, numbers 0 to 9
-protectionReference.change.hidden = cyfeirnod diogelwch lwfans oes
+protectionReference.change.hidden = cy: your lifetime allowance protection reference
 
 protectionEnhancedChanged.title = A newidiodd eich math o ddiogelwch neu ddiogelwch uwch rhwng 6 Ebrill 2015 a 5 Ebrill 2023?
 protectionEnhancedChanged.heading = A newidiodd eich math o ddiogelwch neu ddiogelwch uwch rhwng 6 Ebrill 2015 a 5 Ebrill 2023?
@@ -390,7 +390,7 @@ referenceNewProtectionTypeEnhancement.checkYourAnswersLabel = Beth yw’r cyfeir
 referenceNewProtectionTypeEnhancement.error.required = Nodwch y cyfeirnod ar gyfer eich diogelwch lwfans oes newydd
 referenceNewProtectionTypeEnhancement.error.length = Mae’n rhaid i gyfeirnod eich diogelwch lwfans oes newydd fod yn 15 o gymeriadau neu lai
 referenceNewProtectionTypeEnhancement.error.invalid = cy: Your new lifetime allowance protection reference must only include letters a to z, numbers 0 to 9
-referenceNewProtectionTypeEnhancement.change.hidden = cyfeirnod diogelwch lwfans oes newydd
+referenceNewProtectionTypeEnhancement.change.hidden = cy: your new lifetime allowance protection reference
 
 whatNewProtectionTypeEnhancement.title = Beth yw’r math newydd o ddiogelwch sydd gennych ar gyfer eich lwfans oes?
 whatNewProtectionTypeEnhancement.heading = Beth yw’r math newydd o ddiogelwch sydd gennych ar gyfer eich lwfans oes?
@@ -404,7 +404,7 @@ whatNewProtectionTypeEnhancement.individualProtection2014 = Diogelwch unigol 201
 whatNewProtectionTypeEnhancement.individualProtection2016 = Diogelwch unigol 2016
 whatNewProtectionTypeEnhancement.checkYourAnswersLabel = Beth yw’r math newydd o ddiogelwch sydd gennych ar gyfer eich lwfans oes?
 whatNewProtectionTypeEnhancement.error.required = Dewiswch y math newydd o ddiogelwch lwfans oes sydd gennych
-whatNewProtectionTypeEnhancement.change.hidden = math o ddiogelwch lwfans oes neu ddiogelwch uwch
+whatNewProtectionTypeEnhancement.change.hidden = cy : your new lifetime allowance protection type
 
 lifetimeAllowanceCharge.title = A ydych wedi cael tâl lwfans oes o 6 Ebrill 2015 i 5 Ebrill 2023?
 lifetimeAllowanceCharge.heading = A ydych wedi cael tâl lwfans oes o 6 Ebrill 2015 i 5 Ebrill 2023?
@@ -421,14 +421,6 @@ excessLifetimeAllowancePaid.checkYourAnswersLabel = Sut y cafodd y gormodedd syd
 excessLifetimeAllowancePaid.error.required = Dewiswch sut y cafodd y gormodedd sydd uwchben eich lwfans oes ei dalu i chi
 excessLifetimeAllowancePaid.change.hidden = sut y cafodd y gormodedd sydd uwchben eich lwfans oes ei dalu i chi
 excessLifetimeAllowancePaid.hint = Mae hwn i’w weld ar eich datganiad pensiwn neu’ch cyfriflen banc.
-
-lifetimeAllowanceChargeAmount.title = cy: What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.heading = cy: What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.checkYourAnswersLabel = cy: What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.error.nonNumeric = cy: You have entered non-numerical characters for your lifetime allowance charge. You must enter numerical characters
-lifetimeAllowanceChargeAmount.error.required = cy: Enter an amount for your lifetime allowance charge
-lifetimeAllowanceChargeAmount.error.wholeNumber = cy: You have not entered a whole number for your lifetime allowance charge. You cannot use decimals.
-lifetimeAllowanceChargeAmount.error.outOfRange = cy: You have entered too many characters for your lifetime allowance charge. The maximum number of characters you can enter is 9
 
 periodDateRangeAA.caption = Lwfans blynyddol rhwng
 periodDateRangeAA.2016 = 6 Ebrill 2015 a 5 Ebrill 2016
@@ -498,7 +490,7 @@ pensionSchemeDetails.error.schemeName.required = Nodwch enw’r cynllun pensiwn
 pensionSchemeDetails.error.schemeTaxRef.required = Nodwch Gyfeirnod Treth y Cynllun Pensiwn
 pensionSchemeDetails.error.schemeName.length = Mae’n rhaid i enw’r cynllun pensiwn fod yn 100 o gymeriadau neu lai
 pensionSchemeDetails.error.schemeTaxRef.invalid = Mae’n rhaid i Gyfeirnod Treth y Cynllun Pensiwn fod yn 8 rhif wedi’i ddilyn gan 2 lythyren
-pensionSchemeDetails.change.hidden = enw cynllun pensiwn neu Gyfeirnod Treth y Cynllun Pensiwn
+pensionSchemeDetails.change.hidden = cy: the pension scheme name or pension scheme tax reference
 
 pensionSchemeInputAmounts.title = cy: Pension input amounts for {0}
 pensionSchemeInputAmounts.title.2016-pre = cy: Pension input amount for the pension scheme {0} between 6 April 2015 and 8 July 2015
@@ -531,7 +523,7 @@ pensionSchemeInputAmounts.error.revisedPIA.nonNumeric = cy: Your revised pension
 pensionSchemeInputAmounts.error.originalPIA.length = cy: Your pension input amount from {2} must be £999,999,999 or less
 pensionSchemeInputAmounts.error.revisedPIA.length = cy: Your revised pension input from {2} amount must be £999,999,999 or less
 pensionSchemeInputAmounts.change.hidden = pension input amount
-pensionSchemeInputAmounts.change.revised.hidden = revised pension input amount
+pensionSchemeInputAmounts.change.revised.hidden = cy: your revised pension input amount for {0} from {1}
 
 whichScheme.title = Pa gynllun ydych chi’n nodi manylion ar ei gyfer?
 whichScheme.heading = Pa gynllun ydych chi’n nodi manylion ar ei gyfer?
@@ -554,7 +546,7 @@ howMuchAAChargeSchemePaid.error.nonNumeric = cy: The amount of annual allowance 
 howMuchAAChargeSchemePaid.error.required = Nodwch faint o dâl treth lwfans blynyddol a dalodd eich cynllun pensiwn rhwng {0}
 howMuchAAChargeYouPaid.error.wholeNumber = cy: The amount of annual allowance tax charge your pension scheme paid between {0} must be a whole number
 howMuchAAChargeYouPaid.error.outOfRange = cy: The amount of annual allowance tax charge your pension scheme paid between {0} must be more than £0 and less than £999,999,999
-howMuchAAChargeSchemePaid.change.hidden = Faint o dâl treth lwfans blynyddol a dalodd eich cynllun pensiwn?
+howMuchAAChargeSchemePaid.change.hidden = cy: how much annual allowance tax charge did your pension scheme pay between {0}
 howMuchAAChargeSchemePaid.hint = Mae’n rhaid talgrynnu symiau i lawr i’r bunt agosaf, er enghraifft 2300.
 
 howMuchAAChargeYouPaid.title = Faint o dâl treth lwfans blynyddol a dalodd eich cynllun pensiwn rhwng {0}?
@@ -564,7 +556,7 @@ howMuchAAChargeYouPaid.error.nonNumeric = cy: The amount of annual allowance tax
 howMuchAAChargeYouPaid.error.required = Nodwch swm y tâl treth lwfans blynyddol a dalwyd gennych rhwng {0}
 howMuchAAChargeYouPaid.error.wholeNumber = cy: The amount of annual allowance tax charge you paid between {0} must be a whole number
 howMuchAAChargeYouPaid.error.outOfRange = cy: The amount of annual allowance tax charge you paid between {2} must be more than £0 and less than £999,999,9990 and less than £999,999,999
-howMuchAAChargeYouPaid.change.hidden = Faint o dâl treth lwfans blynyddol wnaethoch chi ei dalu?
+howMuchAAChargeYouPaid.change.hidden = cy: how much annual allowance tax charge did you pay between {0}
 howMuchAAChargeYouPaid.hint = Mae’n rhaid talgrynnu symiau i lawr i’r bunt agosaf, er enghraifft 2300.
 
 whoPaidLTACharge.title = Pwy sydd wedi talu eich tâl lwfans oes?
@@ -585,13 +577,13 @@ schemeNameAndTaxRef.name.error.required = Nodwch enw’r cynllun pensiwn sydd we
 schemeNameAndTaxRef.taxRef.error.required = Nodwch Gyfeirnod Treth y Cynllun Pensiwn ar gyfer y cynllun sydd wedi talu’r tâl lwfans oes
 schemeNameAndTaxRef.name.error.length = Mae’n rhaid i enw’r cynllun pensiwn sydd wedi talu’r tâl lwfans oes fod yn 100 o gymeriadau neu lai
 schemeNameAndTaxRef.taxRef.error.invalid = Mae’n rhaid i Gyfeirnod Treth y Cynllun Pensiwn a dalodd y tâl lwfans oes fod yn 8 rhif wedi’u dilyn gan 2 lythyren
-schemeNameAndTaxRef.change.hidden = enw’r cynllun pensiwn neu gyfeirnod treth y cynllun pensiwn ar gyfer y cynllun pensiwn a dalodd y tâl
+schemeNameAndTaxRef.change.hidden = cy: the pension scheme name or pension scheme tax reference of the pension scheme that paid the lifetime allowance charge
 
 otherDefinedBenefitOrContribution.title = A ydych wedi cyfrannu at unrhyw gynllun buddiannau diffiniedig neu gynllun cyfraniadau diffiniedig arall?
 otherDefinedBenefitOrContribution.heading = A ydych wedi cyfrannu at unrhyw gynllun buddiannau diffiniedig neu gynllun cyfraniadau diffiniedig arall?
 otherDefinedBenefitOrContribution.checkYourAnswersLabel = Cyfrannodd lwfans blynyddol tuag at gynllun pensiwn cyfraniadau diffiniedig neu gynllun pensiwn buddiannau diffiniedig yn ystod y cyfnod cywiro
 otherDefinedBenefitOrContribution.error.required = Dewiswch ‘Iawn’ os ydych wedi cyfrannu at unrhyw gynllun buddiannau diffiniedig neu gynllun cyfraniadau diffiniedig arall
-otherDefinedBenefitOrContribution.change.hidden = cy: annual allowance defined contribution or defined benefit pension scheme during the remedy period
+otherDefinedBenefitOrContribution.change.hidden = cy: if you have contributed to any other defined benefit or defined contribution scheme
 
 thresholdIncome.heading = Incwm trothwy
 thresholdIncome.title = Incwm trothwy
@@ -633,12 +625,6 @@ thresholdIncome.change.hidden.2021 = os yw eich incwm trothwy yn fwy na £200,00
 thresholdIncome.change.hidden.2022 = os yw eich incwm trothwy yn fwy na £200,000?
 thresholdIncome.change.hidden.2023 = os yw eich incwm trothwy yn fwy na £200,000?
 
-valueNewLtaCharge.error.nonNumeric = cy: You have entered non-numerical characters for your extra lifetime allowance charge. You must enter numerical characters
-valueNewLtaCharge.error.required = cy: Enter an amount for your extra lifetime allowance charge
-valueNewLtaCharge.error.wholeNumber = cy: You have not entered a whole number for your extra lifetime allowance charge. You cannot use decimals.
-valueNewLtaCharge.error.outOfRange = cy: You have entered too many characters for your extra lifetime allowance charge. The maximum number of characters you can enter is 9
-valueNewLtaCharge.change.hidden = cy: the value of the new lifetime allowance charge
-
 whoPayingExtraLtaCharge.title = Pwy sy’n talu’r tâl lwfans oes ychwanegol?
 whoPayingExtraLtaCharge.heading = Pwy sy’n talu’r tâl lwfans oes ychwanegol?
 whoPayingExtraLtaCharge.you = Chi
@@ -655,7 +641,7 @@ ltaPensionSchemeDetails.error.name.length = Mae’n rhaid i enw’ch cynllun pen
 ltaPensionSchemeDetails.taxRef = Cyfeirnod Treth y Cynllun Pensiwn
 ltaPensionSchemeDetails.hint = Er enghraifft, 00348916RT.
 ltaPensionSchemeDetails.checkYourAnswersLabel = Beth yw enw a chyfeirnod treth y cynllun sy’n talu’r tâl ychwanegol?
-ltaPensionSchemeDetails.change.hidden = enw a Chyfeirnod Treth y Cynllun Pensiwn ar gyfer y cynllun sy’n talu’r tâl ychwanegol
+ltaPensionSchemeDetails.change.hidden = cy: the name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.required = Nodwch Gyfeirnod Treth y Cynllun Pensiwn ar gyfer y cynllun sy’n talu’r tâl ychwanegol
 ltaPensionSchemeDetails.error.taxRef.invalid = Mae’n rhaid i Gyfeirnod Treth y Cynllun Pensiwn ar gyfer y cynllun sy’n talu’r tâl ychwanegol gynnwys y llythrennau A i Z, rhifau 0 i 9 yn unig
 
@@ -731,7 +717,7 @@ definedBenefitAmount.hint1 = Mae’n rhaid talgrynnu symiau i lawr i’r bunt ag
 definedBenefitAmount.checkYourAnswersLabel = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig o {0}?
 definedBenefitAmount.error.nonNumeric = Rydych wedi nodi cymeriadau nad ydynt yn rhifau ar gyfer swm mewnbwn eich pensiwn buddiannau diffiniedig. Mae’n rhaid i chi nodi cymeriadau rhifol
 definedBenefitAmount.error.required = Nodwch swm mewnbwn eich pensiwn buddiannau diffiniedig yn y blwch sydd ar gael
-definedBenefitAmount.change.hidden = mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig o {0}
+definedBenefitAmount.change.hidden = cy: your pension input amount for defined benefit pension schemes between {0}
 
 definedBenefitAmount.error.required.2016-pre = Nodwch eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig o 6 Ebrill 2015 i 8 Gorffennaf 2015?
 definedBenefitAmount.error.required.2016-post = Nodwch eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig o 9 Gorffennaf 2015 i 5 Ebrill 2016?
@@ -958,7 +944,7 @@ lumpSumValue.error.nonNumeric = Mae’n rhaid i’ch cyfandaliad gynnwys y rhifa
 lumpSumValue.error.required = Nodwch werth y cyfandaliad
 lumpSumValue.error.wholeNumber = cy: Your lump sum value must be a whole number
 lumpSumValue.error.outOfRange = Mae’n rhaid i’ch cyfandaliad fod yn £999999999 neu lai
-lumpSumValue.change.hidden = cyfandaliad lwfans oes
+lumpSumValue.change.hidden = cy: the value of the lump sum
 
 newEnhancementType.title = Pa fath newydd o ddiogelwch lwfans oes uwch oedd gennych?
 newEnhancementType.heading = Pa fath newydd o ddiogelwch lwfans oes uwch oedd gennych?
@@ -969,7 +955,7 @@ newEnhancementType.hint1 = Gwiriwch eich diogelwch lwfans oes uwch ar-lein
 newEnhancementType.hint2 = Dewiswch y math o ddiogelwch uwch sydd gennych o’r opsiynau isod.
 newEnhancementType.checkYourAnswersLabel = Dewiswch y math newydd o ddiogelwch lwfans oes sydd gennych
 newEnhancementType.error.required = Dewiswch y math newydd o ddiogelwch lwfans oes sydd gennych
-newEnhancementType.change.hidden = Pa fath o ddiogelwch lwfans oes uwch oedd gennych chi?
+newEnhancementType.change.hidden = cy: which new type of lifetime allowance enhancement did you have
 
 newInternationalEnhancementReference.title = Beth yw’r cyfeirnod ar gyfer eich diogelwch lwfans oes uwch rhyngwladol newydd?
 newInternationalEnhancementReference.heading = Beth yw’r cyfeirnod ar gyfer eich diogelwch lwfans oes uwch rhyngwladol newydd?
@@ -996,7 +982,7 @@ newPensionCreditReference.change.hidden = cy: your new lifetime allowance pensio
 registeredYear.title = A oeddech chi’n aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill {0} a 5 Ebrill {1}?
 registeredYear.heading = A oeddech chi’n aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill {0} a 5 Ebrill {1}?
 registeredYear.hint = Mae hyn yn cynnwys cynlluniau pensiwn tramor cymwys
-registeredYear.checkYourAnswersLabel = Aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill {0} a 5 Ebrill {1}?
+registeredYear.checkYourAnswersLabel = Aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill {0} a 5 Ebrill {1}
 registeredYear.checkYourAnswersLabel.2011 = Aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill 2010 a 5 Ebrill 2011
 registeredYear.checkYourAnswersLabel.2012 = Aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill 2011 a 5 Ebrill 2012
 registeredYear.checkYourAnswersLabel.2013 = Aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill 2012 a 5 Ebrill 2013
@@ -1007,7 +993,7 @@ registeredYear.error.required.2012 = Dewiswch ‘Iawn’ os oeddech yn aelod o g
 registeredYear.error.required.2013 = Dewiswch ‘Iawn’ os oeddech yn aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill 2012 a 5 Ebrill 2013
 registeredYear.error.required.2014 = Dewiswch ‘Iawn’ os oeddech yn aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill 2013 a 5 Ebrill 2014
 registeredYear.error.required.2015 = Dewiswch ‘Iawn’ os oeddech yn aelod o gynllun pensiwn cofrestredig rhwng 6 Ebrill 2014 a 5 Ebrill 2015
-registeredYear.change.hidden = cy: if you were a member of a registered pension scheme between from 6 April {0} and 5 April {1}
+registeredYear.change.hidden = cy: if you were a member of a registered pension scheme between 6 April {0} and 5 April {1}
 
 cannotUseLtaServiceNoCharge.title = Ni allwch wneud addasiad o ran lwfans oes
 cannotUseLtaServiceNoCharge.heading = Ni allwch wneud addasiad o ran lwfans oes
@@ -1046,7 +1032,7 @@ definedBenefit2016PreAmount.error.required = Nodwch eich swm talu i mewn i bensi
 definedBenefit2016PreAmount.error.wholeNumber = cy: Your pension input amount for defined contribution pension schemes between 6 April 2015 and 8 July 2015 must be a whole number
 definedBenefit2016PreAmount.error.maximum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 6 Ebrill a 8 Gorffennaf fod yn £999,999,999 neu lai
 definedBenefit2016PreAmount.error.minimum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 6 Ebrill a 8 Gorffennaf fod yn £0 neu fwy
-definedBenefit2016PreAmount.change.hidden = mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 6 Ebrill a 8 Gorffennaf
+definedBenefit2016PreAmount.change.hidden = cy: your pension input amount for defined benefit pension schemes between 6 April 2015 and 8 July 2015
 
 definedBenefit2016PostAmount.title = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 9 Gorffennaf a 5 Ebrill?
 definedBenefit2016PostAmount.heading = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 9 Gorffennaf a 5 Ebrill?
@@ -1058,7 +1044,7 @@ definedBenefit2016PostAmount.error.required = Nodwch eich swm talu i mewn i bens
 definedBenefit2016PostAmount.error.wholeNumber = cy: Your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016 must be a whole number
 definedBenefit2016PostAmount.error.maximum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 9 Gorffennaf a 5 Ebrill fod yn £999,999,999 neu lai
 definedBenefit2016PostAmount.error.minimum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 9 Gorffennaf a 5 Ebrill fod yn £0 neu fwy
-definedBenefit2016PostAmount.change.hidden = mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig rhwng 9 Gorffennaf a 5 Ebrill
+definedBenefit2016PostAmount.change.hidden = cy: your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016
 
 definedContribution2016PreAmount.title = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig rhwng {0}?
 definedContribution2016PreAmount.heading = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig rhwng {0}?
@@ -1132,7 +1118,7 @@ personalAllowance.error.nonNumeric = cy: Your personal allowance from {0} must o
 personalAllowance.error.required = cy: Enter your personal allowance from {0}
 personalAllowance.error.wholeNumber = cy: Your personal allowance from {0} must be a whole number
 personalAllowance.error.outOfRange = cy: Your personal allowance from {0} must be less than £999,999,999
-personalAllowance.change.hidden = cy: your personal allowance
+personalAllowance.change.hidden = cy: your personal allowance from {0}
 
 taxRelief.caption = cy: Annual allowance net income
 taxRelief.title = cy: What was your tax relief from {0}?
@@ -1157,7 +1143,7 @@ amountSalarySacrificeArrangements.error.nonNumeric = cy: The amount of your sala
 amountSalarySacrificeArrangements.error.required = cy: Enter the amount of your salary sacrifice arrangements from {0}
 amountSalarySacrificeArrangements.error.wholeNumber = cy: Enter the amount of your salary sacrifice arrangements from {0} must be a whole number
 amountSalarySacrificeArrangements.error.outOfRange = cy: The amount of your salary sacrifice arrangements from {2} must be between £0 and £999,999,999
-amountSalarySacrificeArrangements.change.hidden = cy: Salary sacrifice amount
+amountSalarySacrificeArrangements.change.hidden = cy: the amount of your salary sacrifice arrangements from {0}
 
 amountFlexibleRemunerationArrangements.title = cy: What was the amount of your flexible remuneration arrangements from {0}?
 amountFlexibleRemunerationArrangements.heading = cy: What was the amount of your flexible remuneration arrangements from {0}?
@@ -1166,7 +1152,7 @@ amountFlexibleRemunerationArrangements.error.nonNumeric = cy: The amount of your
 amountFlexibleRemunerationArrangements.error.required = cy: Enter the amount of your flexible remuneration arrangements from {0}
 amountFlexibleRemunerationArrangements.error.wholeNumber = cy: The amount of your flexible remuneration arrangements from {0} must be a whole number
 amountFlexibleRemunerationArrangements.error.outOfRange = cy: The amount of your flexible remuneration arrangements from {2} must be between £1 and £999,999,999
-amountFlexibleRemunerationArrangements.change.hidden = cy: Flexi remuneration amount
+amountFlexibleRemunerationArrangements.change.hidden = cy: the amount of your flexible remuneration arrangements from {0}
 
 howMuchContributionPensionScheme.title = cy: How much did you contribute in total to all of your pension schemes from {0}?
 howMuchContributionPensionScheme.heading = cy: How much did you contribute in total to all of your pension schemes from {0}?
@@ -1177,7 +1163,7 @@ howMuchContributionPensionScheme.error.nonNumeric = cy: The amount you contribut
 howMuchContributionPensionScheme.error.required = cy: Enter the amount you contributed in total to all of your pension schemes
 howMuchContributionPensionScheme.error.wholeNumber = cy: The amount you contributed must be a whole number
 howMuchContributionPensionScheme.error.outOfRange = cy: The amount you contributed must be between £0 and £999,999,999
-howMuchContributionPensionScheme.change.hidden = cy: Pre-Relief pension contributions
+howMuchContributionPensionScheme.change.hidden = cy: how much did you contribute in total to all of your pension schemes from {0}
 
 anySalarySacrificeArrangements.title = cy: Did you have any salary sacrifice arrangements from {0}
 anySalarySacrificeArrangements.heading = cy: Did you have any salary sacrifice arrangements from {0}?
@@ -1187,7 +1173,7 @@ anySalarySacrificeArrangements.message2 = cy: An example would be if you and you
 anySalarySacrificeArrangements.message3 = cy: You can only include any relevant salary sacrifice arrangements made after 8 July 2015.
 anySalarySacrificeArrangements.checkYourAnswersLabel = cy: Did you have any salary sacrifice arrangements from {0}?
 anySalarySacrificeArrangements.error.required = cy: Select yes if you had any salary sacrifice arrangements
-anySalarySacrificeArrangements.change.hidden = cy: Salary sacrifice
+anySalarySacrificeArrangements.change.hidden = cy: if you have any salary sacrifice arrangements from {0}
 
 flexibleRemunerationArrangements.title = cy: Did you have any flexible remuneration arrangements from {0}?
 flexibleRemunerationArrangements.heading = cy: Did you have any flexible remuneration arrangements from {0}?
@@ -1196,7 +1182,7 @@ flexibleRemunerationArrangements.message2 = cy: An example would be if you and y
 flexibleRemunerationArrangements.message3 = cy: You can only include any relevant flexible remuneration arrangements made after 8 July 2015.
 flexibleRemunerationArrangements.checkYourAnswersLabel = cy: Did you have any flexible remuneration arrangements from {0}?
 flexibleRemunerationArrangements.error.required = cy: Select yes if you had any flexible remuneration arrangements
-flexibleRemunerationArrangements.change.hidden = cy: Flexible remuneration
+flexibleRemunerationArrangements.change.hidden = cy: if you have any flexible remuneration arrangements from {0}
 
 anyLumpSumDeathBenefits.title = cy: Did you have any taxable lump sum death benefits from {0}?
 anyLumpSumDeathBenefits.heading = cy: Taxable lump sum death benefits
@@ -1213,7 +1199,7 @@ anyLumpSumDeathBenefits.list3 = cy: drawdown pension fund
 anyLumpSumDeathBenefits.list4 = cy: flexi-access drawdown fund
 anyLumpSumDeathBenefits.list5 = cy: pension protection
 anyLumpSumDeathBenefits.list6 = cy: annuity protection
-anyLumpSumDeathBenefits.change.hidden = cy: if you received any taxable lump sum death benefits from a pension scheme from {0}
+anyLumpSumDeathBenefits.change.hidden = cy: if you have any taxable lump sum death benefits from {0}
 
 lumpSumDeathBenefitsValue.title = cy: How much were your taxable lump sum death benefits from {0}?
 lumpSumDeathBenefitsValue.heading = cy: How much were your taxable lump sum death benefits from {0}?
@@ -1234,16 +1220,7 @@ claimingTaxReliefPension.message2 = cy: You must not include any tax relief clai
 claimingTaxReliefPension.heading2 = cy: Did you claim for income tax relief from {0}?
 claimingTaxReliefPension.checkYourAnswersLabel = cy: Did you claim for income tax relief from {0}?
 claimingTaxReliefPension.error.required = cy: Select yes if you claimed for tax relief on your pension from {0}
-claimingTaxReliefPension.change.hidden = cy: Claiming pension tax relief
-
-interestFromSavings.title = cy: InterestFromSavings
-interestFromSavings.heading = cy: InterestFromSavings
-interestFromSavings.checkYourAnswersLabel = cy: InterestFromSavings
-interestFromSavings.error.nonNumeric = cy: Enter your interestFromSavings using numbers
-interestFromSavings.error.required = cy: Enter your interestFromSavings
-interestFromSavings.error.wholeNumber = cy: Enter your interestFromSavings using whole numbers
-interestFromSavings.error.outOfRange = cy: InterestFromSavings must be between {0} and {1}
-interestFromSavings.change.hidden = cy: InterestFromSavings
+claimingTaxReliefPension.change.hidden = cy: if you had claimed for income tax relief from {0}
 
 knowAdjustedAmount.title = cy: Do you know your adjusted income amount from {0}?
 knowAdjustedAmount.caption = cy: Annual allowance adjusted income
@@ -1256,7 +1233,7 @@ knowAdjustedAmount.message2 = cy: Minus any lump sum death benefits you received
 knowAdjustedAmount.heading2 = cy: Do you know your adjusted income amount?
 knowAdjustedAmount.checkYourAnswersLabel = cy: Do you know your adjusted income from {0}?
 knowAdjustedAmount.error.required = cy: Select yes if you know your adjusted income from {0}
-knowAdjustedAmount.change.hidden = cy: do you know your adjusted income from {0}?
+knowAdjustedAmount.change.hidden = cy: if you know your adjusted income from {0}
 
 howMuchTaxReliefPension.title = cy: How much tax relief did you claim on your pension from {0}?
 howMuchTaxReliefPension.caption = cy: Adjusted Income
@@ -1291,14 +1268,14 @@ amountClaimedOnOverseasPension.error.nonNumeric = cy: Your amount of tax relief 
 amountClaimedOnOverseasPension.error.required = cy: Enter the amount of tax relief you claimed on savings in an overseas pension scheme
 amountClaimedOnOverseasPension.error.wholeNumber = cy: Your amount of tax relief you claimed on savings in an overseas pension scheme must be a whole number
 amountClaimedOnOverseasPension.error.outOfRange = cy: Your amount of tax relief you claimed on savings in an overseas pension scheme must be between £1 and £999,999,999
-amountClaimedOnOverseasPension.change.hidden = cy: amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.change.hidden = cy: how much tax relief did you claim on savings in an overseas pension scheme from {0}
 
 hasReliefClaimedOnOverseasPension.title = cy: Did you claim any tax relief on savings in an overseas pension scheme from {0}?
 hasReliefClaimedOnOverseasPension.heading = cy: Did you claim any tax relief on savings in an overseas pension scheme from {0}?
 hasReliefClaimedOnOverseasPension.checkYourAnswersLabel = cy: Did you claim any tax relief on savings in an overseas pension scheme from {0}?
 hasReliefClaimedOnOverseasPension.message1 = cy: Find out more about non-domiciled residents
 hasReliefClaimedOnOverseasPension.error.required = cy: Select yes if you claimed any tax relief on savings in an overseas pension scheme
-hasReliefClaimedOnOverseasPension.change.hidden = cy: if you have claimed relief on overseas pension
+hasReliefClaimedOnOverseasPension.change.hidden = cy: if you have claimed any tax relief on savings in an overseas pension scheme from {0}
 
 doYouKnowPersonalAllowance.title = cy: Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.heading = cy: Do you know your personal allowance from {0}?
@@ -1306,7 +1283,7 @@ doYouKnowPersonalAllowance.message1 = cy: Your personal allowance is the amount 
 doYouKnowPersonalAllowance.message2 = cy: If you have filed for self-assessment you will find this information in your SA-302 document.
 doYouKnowPersonalAllowance.checkYourAnswersLabel = cy: Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.error.required = cy: Select yes if you know your personal allowance
-doYouKnowPersonalAllowance.change.hidden = cy: your personal allowance
+doYouKnowPersonalAllowance.change.hidden = cy: if you know your personal allowance from {0}
 
 blindAllowance.title = cy: Did you claim blind person’s allowance from {0}?
 blindAllowance.caption = cy: Annual allowance net income
@@ -1326,7 +1303,7 @@ blindPersonsAllowanceAmount.caption = cy: Annual allowance net income
 blindPersonsAllowanceAmount.error.nonNumeric = cy: Your blind persons allowance from {0} must only include numbers 0 to 9
 blindPersonsAllowanceAmount.error.required = cy: How much blind persons allowance from {0} did you claim?
 blindPersonsAllowanceAmount.error.wholeNumber = cy: Your blind persons allowance from {0} must be a whole number
-blindPersonsAllowanceAmount.change.hidden = cy: your blind persons allowance
+blindPersonsAllowanceAmount.change.hidden = cy: how much blind persons allowance did you claim from {0}
 blindPersonsAllowanceAmount.error.maximum = cy: Your blind persons allowance must be £{0} or less from {1}
 blindPersonsAllowanceAmount.error.minimum = cy: Your blind persons allowance must be £{0} or more from {1}
 
@@ -1341,7 +1318,7 @@ rASContributionAmount.error.nonNumeric = cy: Your gross contribution to relief a
 rASContributionAmount.error.required = cy: Enter your gross contribution to relief at source pension schemes from {0}
 rASContributionAmount.error.wholeNumber = cy: Your gross contribution to relief at source pension schemes from {0} must be a whole number
 rASContributionAmount.error.outOfRange = cy: Your gross contribution to relief at source pension schemes from {2} must be between £1 and £999,999,999
-rASContributionAmount.change.hidden = cy: your gross contribution to all your pension schemes from {0}
+rASContributionAmount.change.hidden = cy: your gross contribution in total to all of your pension schemes where relief at source was given from {0}
 
 didYouContributeToRASScheme.title = cy: Did you make any contributions to a relief at source pension scheme from {0}?
 didYouContributeToRASScheme.mainHeading = cy: Relief at source scheme contributions
@@ -1351,7 +1328,7 @@ didYouContributeToRASScheme.message2 = cy: This may be the case if you pay into 
 didYouContributeToRASScheme.message3 = cy: Most public sector pension schemes such as Civil Service alpha or the NHS pension scheme are not relief at source schemes.
 didYouContributeToRASScheme.checkYourAnswersLabel = cy: Did you make any contributions to a relief at source pension scheme from {0}?
 didYouContributeToRASScheme.error.required = cy: Select yes if made any contributions to a relief at source pension scheme from {0}
-didYouContributeToRASScheme.change.hidden = cy: if you have made any contributions to a relief at source pension scheme
+didYouContributeToRASScheme.change.hidden = cy: if you have made any contributions to a relief at source pension scheme from {0}
 
 doYouHaveGiftAid.title = cy: Did you make any donations to charity on which you claimed tax relief from {0}?
 doYouHaveGiftAid.heading1 = cy: Gift aid donations
@@ -1362,7 +1339,7 @@ doYouHaveGiftAid.message3 = cy: This only applies if you are a higher or additio
 doYouHaveGiftAid.message4 = cy: You can find this information on your SA100 under charitable giving.
 doYouHaveGiftAid.checkYourAnswersLabel = cy: Did you make any contributions to charity via gift aid from {0}?
 doYouHaveGiftAid.error.required = cy: Select yes if you made any donations to charity on which you claimed tax relief from {0}
-doYouHaveGiftAid.change.hidden = cy: if you made any contributions to charity via gift aid from {0}?
+doYouHaveGiftAid.change.hidden = cy: if you made any donations to charity on which you claimed tax relief from {0}
 
 amountOfGiftAid.title = cy: How much did you donate to charity via gift aid from {0}?
 amountOfGiftAid.heading = cy: How much tax relief did you claim from gift aid from {0}?
@@ -1388,7 +1365,7 @@ tradeUnionRelief.message3 = cy: If you have relief, you will find it on your P87
 tradeUnionRelief.heading2 = cy: Did you claim tax relief for payments to trade unions or police organisations from {0}?
 tradeUnionRelief.checkYourAnswersLabel = cy: Did you claim tax relief for payments to trade unions or police organisations?
 tradeUnionRelief.error.required = cy: Select yes if you claimed tax relief for payments to trade unions or police organisations
-tradeUnionRelief.change.hidden = cy: if you claimed tax relief for payments to trade unions or police organisations
+tradeUnionRelief.change.hidden = cy: if you claimed tax relief for payments to trade unions or police organisations from {0}
 
 unionPoliceReliefAmount.title = cy: How much tax relief are you claiming for trade union or police organisation fees from {0}?
 unionPoliceReliefAmount.heading = cy: How much tax relief are you claiming for trade union or police organisation fees from {0}?
@@ -1399,7 +1376,7 @@ unionPoliceReliefAmount.error.nonNumeric = cy: The tax relief you are claiming f
 unionPoliceReliefAmount.error.required = cy: Enter the amount of tax relief you are claiming for trade union or police organisation fees from {0}
 unionPoliceReliefAmount.error.wholeNumber = cy: The tax relief you are claiming for trade union or police organisation fees from {0} must be a whole number
 unionPoliceReliefAmount.error.outOfRange = cy: The tax relief you are claiming for trade union or police organisation fees from {2} must be between £1 and £100
-unionPoliceReliefAmount.change.hidden = cy: amount of tax relief you are claiming for trade union or police organisation fees
+unionPoliceReliefAmount.change.hidden = cy: amount of tax relief you are claiming for trade union or police organisation fees from {0}
 
 affectedByRemedy.title = cy: Are you affected by the Public Service Pensions remedy?
 affectedByRemedy.heading1 = cy: Public Service Pensions Remedy
@@ -1410,7 +1387,7 @@ affectedByRemedy.message3 = cy: Find out more about the Public Service Pensions 
 affectedByRemedy.heading2 = cy: Are you affected by the Public Service Pensions remedy?
 affectedByRemedy.checkYourAnswersLabel = cy: Were you affected by the Public Service Pensions Remedy?
 affectedByRemedy.error.required = cy: Select yes if you were affected by the Public Service Pensions Remedy
-affectedByRemedy.change.hidden = cy: if you were affected by the Public Service Pensions Remedy
+affectedByRemedy.change.hidden = cy: if you are affected by the Public Service Pensions Remedy
 
 previousLTACharge.title = cy: Have you paid an LTA charge?
 previousLTACharge.heading = cy: Lifetime allowance tax charge
@@ -1429,7 +1406,7 @@ pensionProtectedMember.link = cy: Find out more information about protected memb
 pensionProtectedMember.heading2 = cy: Are you a protected member of your public service pension scheme?
 pensionProtectedMember.checkYourAnswersLabel = cy: Are you a protected member?
 pensionProtectedMember.error.required = cy: Select yes if you were a protected member of your public service pension scheme
-pensionProtectedMember.change.hidden = cy: if you are a protected member
+pensionProtectedMember.change.hidden = cy: if you are a protected member of your public service pension scheme
 
 hadAACharge.title = cy: Did you pay an annual allowance tax charge from 6 April 2015 to 5 April 2022
 hadAACharge.heading = cy: Did you pay an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
@@ -1437,7 +1414,7 @@ hadAACharge.message1 = cy: Annual allowance is the maximum amount that you can p
 hadAACharge.hint = cy: If you reported an annual allowance tax charge, you will find this information in your self assessment for that year.
 hadAACharge.checkYourAnswersLabel = cy: Did you pay an annual allowance charge from 6 April 2015 to 5 April 22?
 hadAACharge.error.required = cy: Select yes if you paid an annual allowance tax charge between 6 April 2015 and 5 April 2022
-hadAACharge.change.hidden = cy: if you paid an annual allowance tax charge from 6 April 2015 to 5 April 2022
+hadAACharge.change.hidden = cy: if you paid an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022
 
 contributionRefunds.title = cy: Have your contributions changed as a result of the remedy?
 contributionRefunds.heading = cy: Have your contributions changed as a result of the remedy?
@@ -1470,7 +1447,7 @@ newLTACharge.heading = cy: Have you received a new lifetime allowance charge as 
 newLTACharge.message1 = cy: Any amount that goes over the level of lifetime allowance available, is liable to a lifetime allowance charge.
 newLTACharge.checkYourAnswersLabel = cy:  Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
 newLTACharge.error.required = cy: Select yes if you have received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
-newLTACharge.change.hidden = cy: if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.change.hidden = cy: if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy
 
 otherSchemeNotification.title = cy: Have you been notified by any other pension scheme that you have a new lifetime allowance charge?
 otherSchemeNotification.heading = cy: Lifetime allowance charge from your other scheme
@@ -1478,7 +1455,7 @@ otherSchemeNotification.checkYourAnswersLabel = cy: Have you been notified by an
 otherSchemeNotification.message1 = cy: If you have had new or increased lifetime allowance charges in multiple schemes, you may have been told to report them.
 otherSchemeNotification.heading2 = cy: Have you been notified by your other scheme that you have a new or increased LTA charge in respect of any tax year from 2019/20 to 2022/23 that must be reported to HMRC?
 otherSchemeNotification.error.required = cy:  Select yes if you have been notified by any other pension scheme that you have a new LTA charge
-otherSchemeNotification.change.hidden = cy: if you been notified by any other pension scheme that you have a new LTA charge
+otherSchemeNotification.change.hidden = cy: if you have been notified by any other pension scheme that you have a new lifetime allowance charge
 
 notAbleToUseThisTriageLta.title = cy: You are not impacted
 notAbleToUseThisTriageLta.heading = cy: You are not eligible to use this service
@@ -1510,7 +1487,7 @@ netIncomeAbove100k.message6 = cy: document.
 netIncomeAbove100K.heading2 = cy: Did you have a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
 netIncomeAbove100K.checkYourAnswersLabel = cy: Did you have a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
 netIncomeAbove100K.error.required = cy: Select yes if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
-netIncomeAbove100K.change.hidden = cy: if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
+netIncomeAbove100K.change.hidden = cy: if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020
 
 netIncomeAbove190K.title = cy: Net income from 6 April 2020 to 5 April 2022
 netIncomeAbove190K.heading = cy: Net income from 6 April 2020 to 5 April 2022
@@ -1535,7 +1512,7 @@ netIncomeAbove190K.message6 = cy: document.
 netIncomeAbove190K.heading2 = cy: Did you have a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022?
 netIncomeAbove190K.checkYourAnswersLabel = cy: Did you have a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022?
 netIncomeAbove190K.error.required = cy: Select yes if you had a net income of over £190,000 for any tax year in the period from 6 April 2020 to 5 April 2022?
-netIncomeAbove190K.change.hidden = cy: If you had a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022
+netIncomeAbove190K.change.hidden = cy: if you had a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022
 
 maybePIAIncrease.title = cy: How have your pension input amounts changed?
 maybePIAIncrease.caption = cy: Annual allowance
@@ -1573,7 +1550,7 @@ pIAAboveAnnualAllowanceIn2023.message2 = cy: In the year 2022/23, most people ha
 pIAAboveAnnualAllowanceIn2023.heading2 = cy: Did you have a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023?
 pIAAboveAnnualAllowanceIn2023.checkYourAnswersLabel = cy: Did you have a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023?
 pIAAboveAnnualAllowanceIn2023.error.required = cy: Select yes if you had a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023
-pIAAboveAnnualAllowanceIn2023.change.hidden = cy: If you had a pension input amount of over £40,000 6 April 2022 to 5 April 2023
+pIAAboveAnnualAllowanceIn2023.change.hidden = cy: if you had a pension input amount of over £40,000 6 April 2022 to 5 April 2023
 
 netIncomeAbove190KIn2023.title = cy: Net income from 1 April 2022 to 31 March 2023
 netIncomeAbove190KIn2023.caption = cy: Annual allowance
@@ -1599,7 +1576,7 @@ netIncomeAbove190KIn2023.message6 = cy: document.
 netIncomeAbove190KIn2023.heading2 = cy: Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.checkYourAnswersLabel = cy: Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.error.required = cy: Select yes if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
-netIncomeAbove190KIn2023.change.hidden = cy: If you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
+netIncomeAbove190KIn2023.change.hidden = cy: if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023
 
 flexibleAccessDcScheme.title = cy: Have you used flexible access on your DC pension scheme?
 flexibleAccessDcScheme.caption = cy: Annual allowance
@@ -1627,9 +1604,9 @@ contribution4000ToDirectContributionScheme.caption = cy: Annual allowance
 contribution4000ToDirectContributionScheme.heading1 = cy: Defined contribution scheme
 contribution4000ToDirectContributionScheme.message1 = cy: Defined contribution (DC) schemes are a type of pension where the amount you get when you retire depends on how much you put in and how much this money grows.
 contribution4000ToDirectContributionScheme.heading2 = cy: Did you and / or your employer contribute over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023?
-contribution4000ToDirectContributionScheme.checkYourAnswersLabel = cy: Did you and / or your employer contribute over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023?
-contribution4000ToDirectContributionScheme.error.required = cy: Select yes if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023
-contribution4000ToDirectContributionScheme.change.hidden = cy: if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023
+contribution4000ToDirectContributionScheme.checkYourAnswersLabel = cy: Did you and / or your employer contribute over £4000 to any defined contribution (DC) scheme from 6 April 2017 to 5 April 2023?
+contribution4000ToDirectContributionScheme.error.required = cy: Select yes if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2017 to 5 April 2023
+contribution4000ToDirectContributionScheme.change.hidden = cy: if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2017 to 5 April 2023
 
 userEligibility.title = cy: You are eligible to use service
 userEligibility.heading = cy: You are eligible to use the Public Service Pensions adjustment service

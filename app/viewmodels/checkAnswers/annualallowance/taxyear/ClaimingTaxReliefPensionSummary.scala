@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package viewmodels.checkAnswers
+package viewmodels.checkAnswers.annualallowance.taxyear
 
-import controllers.routes
 import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
 import play.api.i18n.Messages
@@ -48,7 +47,7 @@ object ClaimingTaxReliefPensionSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("claimingTaxReliefPension.change.hidden"))
+            .withVisuallyHiddenText(messages("claimingTaxReliefPension.change.hidden", startEndDate))
         )
       )
     }

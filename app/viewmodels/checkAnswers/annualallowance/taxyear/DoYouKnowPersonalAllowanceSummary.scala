@@ -47,7 +47,7 @@ object DoYouKnowPersonalAllowanceSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("doYouKnowPersonalAllowance.change.hidden"))
+            .withVisuallyHiddenText(messages("doYouKnowPersonalAllowance.change.hidden", startEndDate))
         )
       )
     }

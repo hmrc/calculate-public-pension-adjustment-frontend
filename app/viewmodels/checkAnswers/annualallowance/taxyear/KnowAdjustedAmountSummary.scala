@@ -45,7 +45,7 @@ object KnowAdjustedAmountSummary {
             "site.change",
             controllers.annualallowance.taxyear.routes.KnowAdjustedAmountController.onPageLoad(CheckMode, period).url
           )
-            .withVisuallyHiddenText(messages("knowAdjustedAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("knowAdjustedAmount.change.hidden", startEndDate))
         )
       )
     }

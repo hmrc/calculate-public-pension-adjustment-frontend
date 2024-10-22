@@ -47,7 +47,7 @@ object DefinedContribution2016PostFlexiAmountSummary {
               .onPageLoad(CheckMode)
               .url
           )
-            .withVisuallyHiddenText(messages("definedContribution2016PostFlexiAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("definedContribution2016PostFlexiAmount.change.hidden", startEndDate))
         )
       )
     }

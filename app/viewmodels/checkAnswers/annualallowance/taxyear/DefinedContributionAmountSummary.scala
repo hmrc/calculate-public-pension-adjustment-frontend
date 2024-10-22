@@ -49,7 +49,7 @@ object DefinedContributionAmountSummary {
             "site.change",
             DefinedContributionAmountController.onPageLoad(CheckMode, period).url
           )
-            .withVisuallyHiddenText(messages("definedContributionAmount.change.hidden." + period))
+            .withVisuallyHiddenText(messages("definedContributionAmount.change.hidden", startEndDate))
         )
       )
     }

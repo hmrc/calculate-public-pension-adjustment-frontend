@@ -43,7 +43,7 @@ object BlindPersonsAllowanceAmountSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("blindPersonsAllowanceAmount.change.hidden"))
+            .withVisuallyHiddenText(messages("blindPersonsAllowanceAmount.change.hidden", startEndDate(period)))
         )
       )
     }

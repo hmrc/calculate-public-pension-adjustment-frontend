@@ -24,7 +24,6 @@ import pages.setupquestions.AffectedByRemedyPage
 import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.checkAnswers.AffectedByRemedySummary
 import viewmodels.checkAnswers.setupquestions.annualallowance.SavingsStatementSummary
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._

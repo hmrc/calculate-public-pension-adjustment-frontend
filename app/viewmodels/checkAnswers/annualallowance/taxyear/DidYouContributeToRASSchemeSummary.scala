@@ -47,7 +47,7 @@ object DidYouContributeToRASSchemeSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("didYouContributeToRASScheme.change.hidden"))
+            .withVisuallyHiddenText(messages("didYouContributeToRASScheme.change.hidden", startEndDate))
         )
       )
     }

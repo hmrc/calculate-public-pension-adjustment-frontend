@@ -27,8 +27,8 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers.setupquestions.annualallowance._
-import viewmodels.checkAnswers.setupquestions.{ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary}
-import viewmodels.checkAnswers.{AffectedByRemedySummary, Contribution4000ToDirectContributionSchemeSummary, FlexibleAccessDcSchemeSummary}
+import viewmodels.checkAnswers.setupquestions.{AffectedByRemedySummary, ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary}
+import viewmodels.checkAnswers.{Contribution4000ToDirectContributionSchemeSummary, FlexibleAccessDcSchemeSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, NetIncomeAbove100KSummary, NetIncomeAbove190KIn2023Summary, PIAAboveAnnualAllowanceIn2023Summary, PensionProtectedMemberSummary, SavingsStatementSummary}

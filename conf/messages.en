@@ -184,7 +184,7 @@ definedContributionPensionScheme.message = These are usually either personal or 
 definedContributionPensionScheme.bullet1 = workplace pensions arranged by your employer
 definedContributionPensionScheme.bullet2 = private pensions arranged by you
 definedContributionPensionScheme.error.required = Select yes if you have a defined contribution pension scheme
-definedContributionPensionScheme.change.hidden = if you have a defined contribution pension scheme
+definedContributionPensionScheme.change.hidden = if you have any other pension schemes apart from your public service ones
 
 flexiblyAccessedPension.title = Have you flexibly accessed your defined contribution pension?
 flexiblyAccessedPension.heading = Have you flexibly accessed your defined contribution pension?
@@ -256,7 +256,7 @@ pIAPreRemedy.error.maximum.2012 = Your pension input amount from 6 April 2011 to
 pIAPreRemedy.error.maximum.2013 = Your pension input amount from 6 April 2012 to 5 April 2013 must be £999,999,999 or less
 pIAPreRemedy.error.maximum.2014 = Your pension input amount from 6 April 2013 to 5 April 2014 must be £999,999,999 or less
 pIAPreRemedy.error.maximum.2015 = Your pension input amount from 6 April 2014 to 5 April 2015 must be £999,999,999 or less
-pIAPreRemedy.change.hidden = your pension input amount from 6 April {0} and 5 April {1}
+pIAPreRemedy.change.hidden = your pension input amount from 6 April {0} to 5 April {1}
 
 whatYouWillNeedLta.title = Lifetime allowance
 whatYouWillNeedLta.heading = Lifetime allowance
@@ -272,7 +272,7 @@ hadBenefitCrystallisationEvent.title = Have you had a benefit crystallisation ev
 hadBenefitCrystallisationEvent.heading = Have you had a benefit crystallisation event in your pension after 5 April 2015?
 hadBenefitCrystallisationEvent.checkYourAnswersLabel = Have you had a benefit crystallisation event in your pension after 5 April 2015?
 hadBenefitCrystallisationEvent.error.required = Select yes if you have had a benefit crystallisation event in your pension after 5 April 2015
-hadBenefitCrystallisationEvent.change.hidden = If you have had a benefit crystallisation event in your pension after 5 April 2015
+hadBenefitCrystallisationEvent.change.hidden = if you have had a benefit crystallisation event in your pension after 5 April 2015
 hadBenefitCrystallisationEvent.message1 = A benefit crystallisation event is when the value of your pension is tested against the lifetime allowance.
 hadBenefitCrystallisationEvent.message2 = Benefit crystallisation events can happen when you start receiving benefits from your pension, or take a lump sum from your scheme.
 
@@ -345,7 +345,7 @@ ltaProtectionOrEnhancements.no = No
 ltaProtectionOrEnhancements.hint = Check your lifetime allowance protection online
 ltaProtectionOrEnhancements.checkYourAnswersLabel = Did you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event?
 ltaProtectionOrEnhancements.error.required = Select if you have lifetime allowance protection or enhancements
-ltaProtectionOrEnhancements.change.hidden = if you have lifetime allowance protection or enhancements
+ltaProtectionOrEnhancements.change.hidden = if you have lifetime allowance protection or enhancements at the time of your benefit crystallisation event
 
 protectionType.title = What is your lifetime allowance protection type?
 protectionType.heading = What is your lifetime allowance protection type?
@@ -359,7 +359,7 @@ protectionType.individualProtection2016 = Individual protection 2016
 protectionType.hint = Check your lifetime allowance protection online
 protectionType.checkYourAnswersLabel = What is your lifetime allowance protection type?
 protectionType.error.required = Select your lifetime allowance protection type
-protectionType.change.hidden = lifetime allowance protection type
+protectionType.change.hidden = your lifetime allowance protection type
 
 protectionReference.title = What is your lifetime allowance protection reference?
 protectionReference.heading = What is your lifetime allowance protection reference?
@@ -370,7 +370,7 @@ protectionReference.checkYourAnswersLabel = What is your lifetime allowance prot
 protectionReference.error.required = Enter your lifetime allowance protection reference
 protectionReference.error.length = Your lifetime allowance protection reference must be 15 characters or fewer
 protectionReference.error.invalid = Your lifetime allowance protection reference must only include letters a to z, numbers 0 to 9
-protectionReference.change.hidden = lifetime allowance protection reference
+protectionReference.change.hidden = your lifetime allowance protection reference
 
 protectionEnhancedChanged.title = Has your protection type or enhancement changed between 6 April 2015 and 5 April 2023?
 protectionEnhancedChanged.heading = Has your protection type or enhancement changed between 6 April 2015 and 5 April 2023?
@@ -390,7 +390,7 @@ referenceNewProtectionTypeEnhancement.checkYourAnswersLabel = What is your new l
 referenceNewProtectionTypeEnhancement.error.required = Enter your new lifetime allowance protection reference
 referenceNewProtectionTypeEnhancement.error.length = Your new lifetime allowance protection reference must be 15 characters or fewer
 referenceNewProtectionTypeEnhancement.error.invalid = Your new lifetime allowance protection reference must only include letters a to z, numbers 0 to 9
-referenceNewProtectionTypeEnhancement.change.hidden = new lifetime allowance protection reference
+referenceNewProtectionTypeEnhancement.change.hidden = your new lifetime allowance protection reference
 
 whatNewProtectionTypeEnhancement.title = What is your new lifetime allowance protection type?
 whatNewProtectionTypeEnhancement.heading = What is your new lifetime allowance protection type?
@@ -404,7 +404,7 @@ whatNewProtectionTypeEnhancement.individualProtection2014 = Individual protectio
 whatNewProtectionTypeEnhancement.individualProtection2016 = Individual protection 2016
 whatNewProtectionTypeEnhancement.checkYourAnswersLabel = What is your new lifetime allowance protection type?
 whatNewProtectionTypeEnhancement.error.required = Select your new lifetime allowance protection type or enhancement
-whatNewProtectionTypeEnhancement.change.hidden = new lifetime allowance protection type or enhancement
+whatNewProtectionTypeEnhancement.change.hidden = your new lifetime allowance protection type
 
 lifetimeAllowanceCharge.title = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
 lifetimeAllowanceCharge.heading = Have you had a lifetime allowance charge from 6 April 2015 to 5 April 2023?
@@ -421,14 +421,6 @@ excessLifetimeAllowancePaid.checkYourAnswersLabel = How was the excess above you
 excessLifetimeAllowancePaid.error.required = Select how the excess above your lifetime allowance paid to you
 excessLifetimeAllowancePaid.change.hidden = how the excess above your lifetime allowance was paid to you
 excessLifetimeAllowancePaid.hint = You can find this on your pension or bank statement.
-
-lifetimeAllowanceChargeAmount.title = What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.heading = What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.checkYourAnswersLabel = What was the value of your lifetime allowance charge?
-lifetimeAllowanceChargeAmount.error.nonNumeric = You have entered non-numerical characters for your lifetime allowance charge. You must enter numerical characters
-lifetimeAllowanceChargeAmount.error.required = Enter an amount for your lifetime allowance charge
-lifetimeAllowanceChargeAmount.error.wholeNumber = You have not entered a whole number for your lifetime allowance charge. You cannot use decimals.
-lifetimeAllowanceChargeAmount.error.outOfRange = You have entered too many characters for your lifetime allowance charge. The maximum number of characters you can enter is 9
 
 periodDateRangeAA.caption = Annual allowance between
 periodDateRangeAA.2016-pre = 6 April 2015 and 8 July 2015
@@ -498,7 +490,7 @@ pensionSchemeDetails.error.schemeName.required = Enter the name of the pension s
 pensionSchemeDetails.error.schemeTaxRef.required = Enter the Pension Scheme Tax Reference
 pensionSchemeDetails.error.schemeName.length = The name of the pension scheme must be 100 characters or fewer
 pensionSchemeDetails.error.schemeTaxRef.invalid = The Pension Scheme Tax Reference that paid the annual allowance charge must be 8 numbers followed by 2 letters
-pensionSchemeDetails.change.hidden = pension scheme name or pension scheme tax reference
+pensionSchemeDetails.change.hidden = the pension scheme name or pension scheme tax reference
 
 pensionSchemeInputAmounts.title = Pension input amounts for {0}
 pensionSchemeInputAmounts.title.2016-pre = Pension input amount for the pension scheme {0} between 6 April 2015 and 8 July 2015
@@ -531,7 +523,7 @@ pensionSchemeInputAmounts.error.revisedPIA.nonNumeric = Your revised pension inp
 pensionSchemeInputAmounts.error.originalPIA.length = Your pension input amount from {2} must be £999,999,999 or less
 pensionSchemeInputAmounts.error.revisedPIA.length = Your revised pension input from {2} amount must be £999,999,999 or less
 pensionSchemeInputAmounts.change.hidden = pension input amount
-pensionSchemeInputAmounts.change.revised.hidden = revised pension input amount
+pensionSchemeInputAmounts.change.revised.hidden = your revised pension input amount for {0} from {1}
 
 whichScheme.title = Which scheme are you entering details for?
 whichScheme.heading = Which scheme are you entering details for?
@@ -554,7 +546,7 @@ howMuchAAChargeSchemePaid.error.nonNumeric = The amount of annual allowance tax 
 howMuchAAChargeSchemePaid.error.required = Enter the amount of annual allowance tax charge your pension scheme paid between {0}
 howMuchAAChargeSchemePaid.error.wholeNumber = The amount of annual allowance tax charge your pension scheme paid between {0} must be a whole number
 howMuchAAChargeSchemePaid.error.outOfRange = The amount of annual allowance tax charge your pension scheme paid between {2} must be more than £0 and less than £999,999,999
-howMuchAAChargeSchemePaid.change.hidden = how much tax charge your pension scheme paid
+howMuchAAChargeSchemePaid.change.hidden = how much annual allowance tax charge did your pension scheme pay between {0}
 howMuchAAChargeSchemePaid.hint = Amounts must be rounded down to the nearest pound, for example 2300.
 
 howMuchAAChargeYouPaid.title = How much annual allowance tax charge did you pay between {0}?
@@ -564,7 +556,7 @@ howMuchAAChargeYouPaid.error.nonNumeric = The amount of annual allowance tax cha
 howMuchAAChargeYouPaid.error.required = Enter the amount of annual allowance tax charge you paid between {0}
 howMuchAAChargeYouPaid.error.wholeNumber = The amount of annual allowance tax charge you paid between {0} must be a whole number
 howMuchAAChargeYouPaid.error.outOfRange = The amount of annual allowance tax charge you paid between {2} must be more than £0 and less than £999,999,999
-howMuchAAChargeYouPaid.change.hidden = how much tax charge you paid
+howMuchAAChargeYouPaid.change.hidden = how much annual allowance tax charge did you pay between {0}
 howMuchAAChargeYouPaid.hint = Amounts must be rounded down to the nearest pound, for example 2300.
 
 whoPaidLTACharge.title = Who paid your lifetime allowance charge?
@@ -585,13 +577,13 @@ schemeNameAndTaxRef.name.error.required = Enter the name of the pension scheme t
 schemeNameAndTaxRef.taxRef.error.required = Enter the Pension Scheme Tax Reference of the pension scheme that paid the lifetime allowance charge
 schemeNameAndTaxRef.name.error.length = The name of the pension scheme that paid the lifetime allowance charge must be 100 characters or fewer
 schemeNameAndTaxRef.taxRef.error.invalid = The Pension Scheme Tax Reference that paid the lifetime allowance charge must be 8 numbers followed by 2 letters
-schemeNameAndTaxRef.change.hidden = pension scheme name or pension scheme tax reference of the pension scheme that paid the charge
+schemeNameAndTaxRef.change.hidden = the pension scheme name or pension scheme tax reference of the pension scheme that paid the lifetime allowance charge
 
 otherDefinedBenefitOrContribution.title = Have you contributed to any other defined benefit or defined contribution scheme?
 otherDefinedBenefitOrContribution.heading = Have you contributed to any other defined benefit or defined contribution scheme?
 otherDefinedBenefitOrContribution.checkYourAnswersLabel = Annual allowance contributed to defined contribution or defined benefit pension scheme during the remedy period
 otherDefinedBenefitOrContribution.error.required = Select yes if you have contributed to any other defined benefit or defined contribution scheme
-otherDefinedBenefitOrContribution.change.hidden = annual allowance defined contribution or defined benefit pension scheme during the remedy period
+otherDefinedBenefitOrContribution.change.hidden = if you have contributed to any other defined benefit or defined contribution scheme
 
 thresholdIncome.heading = Threshold income
 thresholdIncome.title = Threshold income
@@ -633,12 +625,6 @@ thresholdIncome.change.hidden.2021 = if your threshold income more than £200,00
 thresholdIncome.change.hidden.2022 = if your threshold income more than £200,000
 thresholdIncome.change.hidden.2023 = if your threshold income more than £200,000
 
-valueNewLtaCharge.error.nonNumeric = You have entered non-numerical characters for your extra lifetime allowance charge. You must enter numerical characters
-valueNewLtaCharge.error.required = Enter an amount for your extra lifetime allowance charge
-valueNewLtaCharge.error.wholeNumber = You have not entered a whole number for your extra lifetime allowance charge. You cannot use decimals.
-valueNewLtaCharge.error.outOfRange = You have entered too many characters for your extra lifetime allowance charge. The maximum number of characters you can enter is 9
-valueNewLtaCharge.change.hidden = the value of the new lifetime allowance charge
-
 whoPayingExtraLtaCharge.title = Who is paying the extra lifetime allowance charge?
 whoPayingExtraLtaCharge.heading = Who is paying the extra lifetime allowance charge?
 whoPayingExtraLtaCharge.you = You
@@ -655,7 +641,7 @@ ltaPensionSchemeDetails.error.name.length = The name of your pension scheme must
 ltaPensionSchemeDetails.taxRef = Pension Scheme Tax Reference
 ltaPensionSchemeDetails.hint = For example, 00348916RT.
 ltaPensionSchemeDetails.checkYourAnswersLabel = What is the name and tax reference of the scheme that is paying the extra charge?
-ltaPensionSchemeDetails.change.hidden = name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
+ltaPensionSchemeDetails.change.hidden = the name and Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.required = Enter the Pension Scheme Tax Reference of the scheme that is paying the extra charge
 ltaPensionSchemeDetails.error.taxRef.invalid = The Pension Scheme Tax Reference of the scheme that is paying the extra charge must only include letters a to z, numbers 0 to 9
 
@@ -731,7 +717,7 @@ definedBenefitAmount.hint1 = Amounts must be rounded down to the nearest pound, 
 definedBenefitAmount.checkYourAnswersLabel = What was your pension input amount for defined benefit pension schemes between {0}?
 definedBenefitAmount.error.nonNumeric = You have entered non-numerical characters for your defined benefit pension input amount. You must enter numerical characters
 definedBenefitAmount.error.required = Enter an amount for your defined benefit pension input amount in the space provided
-definedBenefitAmount.change.hidden = your pension input amount for defined benefit pension schemes from {0}
+definedBenefitAmount.change.hidden = your pension input amount for defined benefit pension schemes between {0}
 
 definedBenefitAmount.error.required.2016-pre = Enter your pension input amount for defined benefit pension schemes from 6 April 2015 to 8 July 2015
 definedBenefitAmount.error.required.2016-post = Enter your pension input amount for defined benefit pension schemes from 9 July 2015 to 5 April 2016
@@ -958,7 +944,7 @@ lumpSumValue.error.nonNumeric = Your lump sum value must only include numbers 0 
 lumpSumValue.error.required = Enter the value of the lump sum
 lumpSumValue.error.wholeNumber = Your lump sum value must be a whole number
 lumpSumValue.error.outOfRange = Your lump sum value must be £999999999 or less
-lumpSumValue.change.hidden = lifetime allowance lump sum
+lumpSumValue.change.hidden = the value of the lump sum
 
 newEnhancementType.title = Which new type of lifetime allowance enhancement did you have?
 newEnhancementType.heading = Which new type of lifetime allowance enhancement did you have?
@@ -969,7 +955,7 @@ newEnhancementType.hint1 = Check your lifetime allowance enhancement online
 newEnhancementType.hint2 = Choose your enhancement type from the options below.
 newEnhancementType.checkYourAnswersLabel = Select your new lifetime allowance enhancement type
 newEnhancementType.error.required = Select your new lifetime allowance enhancement type
-newEnhancementType.change.hidden = which type of lifetime allowance enhancement did you have
+newEnhancementType.change.hidden = which new type of lifetime allowance enhancement did you have
 
 newInternationalEnhancementReference.title = What is your new lifetime allowance international enhancement reference?
 newInternationalEnhancementReference.heading = What is your new lifetime allowance international enhancement reference?
@@ -996,7 +982,7 @@ newPensionCreditReference.change.hidden = your new lifetime allowance pension cr
 registeredYear.title = Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
 registeredYear.heading = Were you a member of a registered pension scheme between 6 April {0} and 5 April {1}?
 registeredYear.hint = This includes qualifying overseas pension schemes
-registeredYear.checkYourAnswersLabel = Member of a registered pension scheme between 6 April {0} and 5 April {1}?
+registeredYear.checkYourAnswersLabel = Member of a registered pension scheme between 6 April {0} and 5 April {1}
 registeredYear.checkYourAnswersLabel.2011 = Member of a registered pension scheme between 6 April 2010 and 5 April 2011
 registeredYear.checkYourAnswersLabel.2012 = Member of a registered pension scheme between 6 April 2011 and 5 April 2012
 registeredYear.checkYourAnswersLabel.2013 = Member of a registered pension scheme between 6 April 2012 and 5 April 2013
@@ -1007,7 +993,7 @@ registeredYear.error.required.2012 = Select yes if you were a member of a regist
 registeredYear.error.required.2013 = Select yes if you were a member of a registered pension scheme between 6 April 2012 and 5 April 2013
 registeredYear.error.required.2014 = Select yes if you were a member of a registered pension scheme between 6 April 2013 and 5 April 2014
 registeredYear.error.required.2015 = Select yes if you were a member of a registered pension scheme between 6 April 2014 and 5 April 2015
-registeredYear.change.hidden = if you were a member of a registered pension scheme scheme between from 6 April {0} and 5 April {1}
+registeredYear.change.hidden = if you were a member of a registered pension scheme between 6 April {0} and 5 April {1}
 
 cannotUseLtaServiceNoCharge.title = You cannot make a lifetime allowance adjustment
 cannotUseLtaServiceNoCharge.heading = You cannot make a lifetime allowance adjustment
@@ -1046,7 +1032,7 @@ definedBenefit2016PreAmount.error.required = Enter your pension input amount for
 definedBenefit2016PreAmount.error.wholeNumber = Your pension input amount for defined contribution pension schemes between 6 April 2015 and 8 July 2015 must be a whole number
 definedBenefit2016PreAmount.error.maximum = Your pension input amount for defined benefit pension schemes between 6 April 2015 and 8 July 2015 must be £999,999,999 or less
 definedBenefit2016PreAmount.error.minimum = Your pension input amount for defined benefit pension schemes between 6 April 2015 and 8 July 2015 must be £0 or more
-definedBenefit2016PreAmount.change.hidden = pension input amount for defined contribution pension schemes between 6 April 2015 and 8 July 2015
+definedBenefit2016PreAmount.change.hidden = your pension input amount for defined benefit pension schemes between 6 April 2015 and 8 July 2015
 
 definedBenefit2016PostAmount.title = What was your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016?
 definedBenefit2016PostAmount.heading = What was your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016?
@@ -1058,7 +1044,7 @@ definedBenefit2016PostAmount.error.required = Enter your pension input amount fo
 definedBenefit2016PostAmount.error.wholeNumber = Your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016 must be a whole number
 definedBenefit2016PostAmount.error.maximum = Your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016 must be £999,999,999 or less
 definedBenefit2016PostAmount.error.minimum = Your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016 must be £0 or more
-definedBenefit2016PostAmount.change.hidden = pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016
+definedBenefit2016PostAmount.change.hidden = your pension input amount for defined benefit pension schemes between 9 July 2015 and 5 April 2016
 
 definedContribution2016PreAmount.title = What was your pension input amount for defined contribution pension schemes between {0}?
 definedContribution2016PreAmount.heading = What was your pension input amount for defined contribution pension schemes between {0}?
@@ -1132,7 +1118,7 @@ personalAllowance.error.nonNumeric = Your personal allowance from {0} must only 
 personalAllowance.error.required = Enter your personal allowance from {0}
 personalAllowance.error.wholeNumber = Your personal allowance from {0} must be a whole number
 personalAllowance.error.outOfRange = Your personal allowance from {2} must be less than £999,999,999
-personalAllowance.change.hidden = your personal allowance
+personalAllowance.change.hidden = your personal allowance from {0}
 
 taxRelief.caption = Annual allowance net income
 taxRelief.title = What was your tax relief from {0}?
@@ -1157,7 +1143,7 @@ amountSalarySacrificeArrangements.error.nonNumeric = The amount of your salary s
 amountSalarySacrificeArrangements.error.required = Enter the amount of your salary sacrifice arrangements from {0}
 amountSalarySacrificeArrangements.error.wholeNumber = The amount of your salary sacrifice arrangements from {0} must be a whole number
 amountSalarySacrificeArrangements.error.outOfRange = The amount of your salary sacrifice arrangements from {2} must be between £1 and £999,999,999
-amountSalarySacrificeArrangements.change.hidden = Salary sacrifice amount
+amountSalarySacrificeArrangements.change.hidden = the amount of your salary sacrifice arrangements from {0}
 
 amountFlexibleRemunerationArrangements.title = What was the amount of your flexible remuneration arrangements from {0}?
 amountFlexibleRemunerationArrangements.heading = What was the amount of your flexible remuneration arrangements from {0}?
@@ -1166,7 +1152,7 @@ amountFlexibleRemunerationArrangements.error.nonNumeric = The amount of your fle
 amountFlexibleRemunerationArrangements.error.required = Enter the amount of your flexible remuneration arrangements from {0}
 amountFlexibleRemunerationArrangements.error.wholeNumber = The amount of your flexible remuneration arrangements from {0} must be a whole number
 amountFlexibleRemunerationArrangements.error.outOfRange = The amount of your flexible remuneration arrangements from {2} must be between £1 and £999,999,999
-amountFlexibleRemunerationArrangements.change.hidden = Flexi remuneration amount
+amountFlexibleRemunerationArrangements.change.hidden = the amount of your flexible remuneration arrangements from {0}
 
 howMuchContributionPensionScheme.title = How much did you contribute in total to all of your pension schemes from {0}?
 howMuchContributionPensionScheme.heading = How much did you contribute in total to all of your pension schemes from {0}?
@@ -1177,7 +1163,7 @@ howMuchContributionPensionScheme.error.nonNumeric = The amount you contributed m
 howMuchContributionPensionScheme.error.required = Enter the amount you contributed in total to all of your pension schemes
 howMuchContributionPensionScheme.error.wholeNumber = The amount you contributed must be a whole number
 howMuchContributionPensionScheme.error.outOfRange = The amount you contributed must be between £0 and £999,999,999
-howMuchContributionPensionScheme.change.hidden = Pre-Relief pension contributions
+howMuchContributionPensionScheme.change.hidden = how much did you contribute in total to all of your pension schemes from {0}
 
 anySalarySacrificeArrangements.title = Did you have any salary sacrifice arrangements from {0}
 anySalarySacrificeArrangements.heading = Did you have any salary sacrifice arrangements from {0}?
@@ -1187,7 +1173,7 @@ anySalarySacrificeArrangements.message2 = An example would be if you and your em
 anySalarySacrificeArrangements.message3 = You can only include any relevant salary sacrifice arrangements made after 8 July 2015.
 anySalarySacrificeArrangements.checkYourAnswersLabel = Did you have any salary sacrifice arrangements from {0}?
 anySalarySacrificeArrangements.error.required = Select yes if you had any salary sacrifice arrangements
-anySalarySacrificeArrangements.change.hidden = Salary sacrifice
+anySalarySacrificeArrangements.change.hidden = if you have any salary sacrifice arrangements from {0}
 
 flexibleRemunerationArrangements.title = Did you have any flexible remuneration arrangements from {0}?
 flexibleRemunerationArrangements.heading = Did you have any flexible remuneration arrangements from {0}?
@@ -1196,7 +1182,7 @@ flexibleRemunerationArrangements.message2 = An example would be if you and your 
 flexibleRemunerationArrangements.message3 = You can only include any relevant flexible remuneration arrangements made after 8 July 2015.
 flexibleRemunerationArrangements.checkYourAnswersLabel = Did you have any flexible remuneration arrangements from {0}?
 flexibleRemunerationArrangements.error.required = Select yes if you had any flexible remuneration arrangements
-flexibleRemunerationArrangements.change.hidden = Flexible remuneration
+flexibleRemunerationArrangements.change.hidden = if you have any flexible remuneration arrangements from {0}
 
 anyLumpSumDeathBenefits.title = Did you have any taxable lump sum death benefits from {0}?
 anyLumpSumDeathBenefits.heading = Taxable lump sum death benefits
@@ -1213,7 +1199,7 @@ anyLumpSumDeathBenefits.list3 = drawdown pension fund
 anyLumpSumDeathBenefits.list4 = flexi-access drawdown fund
 anyLumpSumDeathBenefits.list5 = pension protection
 anyLumpSumDeathBenefits.list6 = annuity protection
-anyLumpSumDeathBenefits.change.hidden = if you received any taxable lump sum death benefits from a pension scheme from {0}
+anyLumpSumDeathBenefits.change.hidden = if you have any taxable lump sum death benefits from {0}
 
 lumpSumDeathBenefitsValue.title = How much were your taxable lump sum death benefits from {0}?
 lumpSumDeathBenefitsValue.heading = How much were your taxable lump sum death benefits from {0}?
@@ -1234,16 +1220,7 @@ claimingTaxReliefPension.message2 = You must not include any tax relief claimed 
 claimingTaxReliefPension.heading2 = Did you claim for income tax relief from {0}?
 claimingTaxReliefPension.checkYourAnswersLabel = Did you claim for income tax relief from {0}?
 claimingTaxReliefPension.error.required = Select yes if you claimed for tax relief on your pension from {0}
-claimingTaxReliefPension.change.hidden = Claiming pension tax relief
-
-interestFromSavings.title = InterestFromSavings
-interestFromSavings.heading = InterestFromSavings
-interestFromSavings.checkYourAnswersLabel = InterestFromSavings
-interestFromSavings.error.nonNumeric = Enter your interestFromSavings using numbers
-interestFromSavings.error.required = Enter your interestFromSavings
-interestFromSavings.error.wholeNumber = Enter your interestFromSavings using whole numbers
-interestFromSavings.error.outOfRange = InterestFromSavings must be between {0} and {1}
-interestFromSavings.change.hidden = InterestFromSavings
+claimingTaxReliefPension.change.hidden = if you had claimed for income tax relief from {0}
 
 knowAdjustedAmount.title = Do you know your adjusted income amount from {0}?
 knowAdjustedAmount.caption = Annual allowance adjusted income
@@ -1256,7 +1233,7 @@ knowAdjustedAmount.message2 = Minus any lump sum death benefits you received fro
 knowAdjustedAmount.heading2 = Do you know your adjusted income amount?
 knowAdjustedAmount.checkYourAnswersLabel = Do you know your adjusted income from {0}?
 knowAdjustedAmount.error.required = Select yes if you know your adjusted income from {0}
-knowAdjustedAmount.change.hidden = do you know your adjusted income from {0}?
+knowAdjustedAmount.change.hidden = if you know your adjusted income from {0}
 
 howMuchTaxReliefPension.title = How much tax relief did you claim on your pension from {0}?
 howMuchTaxReliefPension.caption = Adjusted Income
@@ -1291,14 +1268,14 @@ amountClaimedOnOverseasPension.error.nonNumeric = Your amount of tax relief you 
 amountClaimedOnOverseasPension.error.required = Enter the amount of tax relief you claimed on savings in an overseas pension scheme
 amountClaimedOnOverseasPension.error.wholeNumber = Your amount of tax relief you claimed on savings in an overseas pension scheme must be a whole number
 amountClaimedOnOverseasPension.error.outOfRange = Your amount of tax relief you claimed on savings in an overseas pension scheme must be between £1 and £999,999,999
-amountClaimedOnOverseasPension.change.hidden = amount of relief claimed on overseas pensions
+amountClaimedOnOverseasPension.change.hidden = how much tax relief did you claim on savings in an overseas pension scheme from {0}
 
 hasReliefClaimedOnOverseasPension.title = Did you claim any tax relief on savings in an overseas pension scheme from {0}?
 hasReliefClaimedOnOverseasPension.heading = Did you claim any tax relief on savings in an overseas pension scheme from {0}?
 hasReliefClaimedOnOverseasPension.checkYourAnswersLabel = Did you claim any tax relief on savings in an overseas pension scheme from {0}?
 hasReliefClaimedOnOverseasPension.message1 = Find out more about non-domiciled residents
 hasReliefClaimedOnOverseasPension.error.required = Select yes if you claimed any tax relief on savings in an overseas pension scheme
-hasReliefClaimedOnOverseasPension.change.hidden = if you have claimed relief on overseas pension
+hasReliefClaimedOnOverseasPension.change.hidden = if you have claimed any tax relief on savings in an overseas pension scheme from {0}
 
 doYouKnowPersonalAllowance.title = Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.heading = Do you know your personal allowance from {0}?
@@ -1306,7 +1283,7 @@ doYouKnowPersonalAllowance.message1 = Your personal allowance is the amount of m
 doYouKnowPersonalAllowance.message2 = If you have filed for self-assessment you will find this information in your SA-302 document.
 doYouKnowPersonalAllowance.checkYourAnswersLabel = Do you know your personal allowance from {0}?
 doYouKnowPersonalAllowance.error.required = Select yes if you know your personal allowance
-doYouKnowPersonalAllowance.change.hidden = your personal allowance
+doYouKnowPersonalAllowance.change.hidden = if you know your personal allowance from {0}
 
 blindAllowance.title = Did you claim blind person’s allowance from {0}?
 blindAllowance.caption = Annual allowance net income
@@ -1326,7 +1303,7 @@ blindPersonsAllowanceAmount.caption = Annual allowance net income
 blindPersonsAllowanceAmount.error.nonNumeric = Your blind persons allowance from {0} must only include numbers 0 to 9
 blindPersonsAllowanceAmount.error.required = How much blind persons allowance from {0} did you claim?
 blindPersonsAllowanceAmount.error.wholeNumber = Your blind persons allowance from {0} must be a whole number
-blindPersonsAllowanceAmount.change.hidden = your blind persons allowance
+blindPersonsAllowanceAmount.change.hidden = how much blind persons allowance did you claim from {0}
 blindPersonsAllowanceAmount.error.maximum = Your blind persons allowance must be £{0} or less from {1}
 blindPersonsAllowanceAmount.error.minimum = Your blind persons allowance must be £{0} or more from {1}
 
@@ -1341,7 +1318,7 @@ rASContributionAmount.error.nonNumeric = Your gross contribution to relief at so
 rASContributionAmount.error.required = Enter your gross contribution to relief at source pension schemes from {0}
 rASContributionAmount.error.wholeNumber = Your gross contribution to relief at source pension schemes from {0} must be a whole number
 rASContributionAmount.error.outOfRange = Your gross contribution to relief at source pension schemes from {2} must be between £1 and £999,999,999
-rASContributionAmount.change.hidden = your gross contribution to all your pension schemes from {0}
+rASContributionAmount.change.hidden = your gross contribution in total to all of your pension schemes where relief at source was given from {0}
 
 didYouContributeToRASScheme.title = Did you make any contributions to a relief at source pension scheme from {0}?
 didYouContributeToRASScheme.mainHeading = Relief at source scheme contributions
@@ -1351,7 +1328,7 @@ didYouContributeToRASScheme.message2 = This may be the case if you pay into any 
 didYouContributeToRASScheme.message3 = Most public sector pension schemes such as Civil Service alpha or the NHS pension scheme are not relief at source schemes.
 didYouContributeToRASScheme.checkYourAnswersLabel = Did you make any contributions to a relief at source pension scheme from {0}?
 didYouContributeToRASScheme.error.required = Select yes if made any contributions to a relief at source pension scheme from {0}
-didYouContributeToRASScheme.change.hidden = if you have made any contributions to a relief at source pension scheme
+didYouContributeToRASScheme.change.hidden = if you have made any contributions to a relief at source pension scheme from {0}
 
 doYouHaveGiftAid.title = Did you make any donations to charity on which you claimed tax relief from {0}?
 doYouHaveGiftAid.heading1 = Gift aid donations
@@ -1362,7 +1339,7 @@ doYouHaveGiftAid.message3 = This only applies if you are a higher or additional 
 doYouHaveGiftAid.message4 = You can find this information on your SA100 under charitable giving.
 doYouHaveGiftAid.checkYourAnswersLabel = Did you make any contributions to charity via gift aid from {0}?
 doYouHaveGiftAid.error.required = Select yes if you made any donations to charity on which you claimed tax relief from {0}
-doYouHaveGiftAid.change.hidden = if you made any contributions to charity via gift aid from {0}?
+doYouHaveGiftAid.change.hidden = if you made any donations to charity on which you claimed tax relief from {0}
 
 amountOfGiftAid.title = How much did you donate to charity via gift aid from {0}?
 amountOfGiftAid.heading = How much tax relief did you claim from gift aid from {0}?
@@ -1388,7 +1365,7 @@ tradeUnionRelief.message3 = If you have relief, you will find it on your P87 for
 tradeUnionRelief.heading2 = Did you claim tax relief for payments to trade unions or police organisations from {0}?
 tradeUnionRelief.checkYourAnswersLabel = Did you claim tax relief for payments to trade unions or police organisations?
 tradeUnionRelief.error.required = Select yes if you claimed tax relief for payments to trade unions or police organisations
-tradeUnionRelief.change.hidden = if you claimed tax relief for payments to trade unions or police organisations
+tradeUnionRelief.change.hidden = if you claimed tax relief for payments to trade unions or police organisations from {0}
 
 unionPoliceReliefAmount.title = How much tax relief are you claiming for trade union or police organisation fees from {0}?
 unionPoliceReliefAmount.heading = How much tax relief are you claiming for trade union or police organisation fees from {0}?
@@ -1399,7 +1376,7 @@ unionPoliceReliefAmount.error.nonNumeric = The tax relief you are claiming for t
 unionPoliceReliefAmount.error.required = Enter the amount of tax relief you are claiming for trade union or police organisation fees from {0}
 unionPoliceReliefAmount.error.wholeNumber = The tax relief you are claiming for trade union or police organisation fees from {0} must be a whole number
 unionPoliceReliefAmount.error.outOfRange = The tax relief you are claiming for trade union or police organisation fees from {2} must be between £1 and £100
-unionPoliceReliefAmount.change.hidden = amount of tax relief you are claiming for trade union or police organisation fees
+unionPoliceReliefAmount.change.hidden = amount of tax relief you are claiming for trade union or police organisation fees from {0}
 
 affectedByRemedy.title = Are you affected by the Public Service Pensions remedy?
 affectedByRemedy.heading1 = Public Service Pensions Remedy
@@ -1410,7 +1387,7 @@ affectedByRemedy.message3 = Find out more about the Public Service Pensions reme
 affectedByRemedy.heading2 = Are you affected by the Public Service Pensions remedy?
 affectedByRemedy.checkYourAnswersLabel = Were you affected by the Public Service Pensions Remedy?
 affectedByRemedy.error.required = Select yes if you were affected by the Public Service Pensions Remedy
-affectedByRemedy.change.hidden = if you were affected by the Public Service Pensions Remedy
+affectedByRemedy.change.hidden = if you are affected by the Public Service Pensions Remedy
 
 previousLTACharge.title = Have you paid an LTA charge?
 previousLTACharge.heading = Lifetime allowance tax charge
@@ -1429,7 +1406,7 @@ pensionProtectedMember.link = Find out more information about protected members
 pensionProtectedMember.heading2 = Are you a protected member of your public service pension scheme?
 pensionProtectedMember.checkYourAnswersLabel = Are you a protected member?
 pensionProtectedMember.error.required = Select yes if you were a protected member of your public service pension scheme
-pensionProtectedMember.change.hidden = if you are a protected member
+pensionProtectedMember.change.hidden = if you are a protected member of your public service pension scheme
 
 hadAACharge.title = Did you pay an annual allowance tax charge from 6 April 2015 to 5 April 2022
 hadAACharge.heading = Did you pay an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
@@ -1437,7 +1414,7 @@ hadAACharge.message1 = Annual allowance is the maximum amount that you can put i
 hadAACharge.hint = If you reported an annual allowance tax charge, you will find this information in your self assessment for that year.
 hadAACharge.checkYourAnswersLabel = Did you pay an annual allowance charge from 6 April 2015 to 5 April 22?
 hadAACharge.error.required = Select yes if you paid an annual allowance tax charge between 6 April 2015 and 5 April 2022
-hadAACharge.change.hidden = if you paid an annual allowance tax charge from 6 April 2015 to 5 April 2022
+hadAACharge.change.hidden = if you paid an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022
 
 contributionRefunds.title = Have your contributions changed as a result of the remedy?
 contributionRefunds.heading = Have your contributions changed as a result of the remedy?
@@ -1470,7 +1447,7 @@ newLTACharge.heading = Have you received a new lifetime allowance charge as a re
 newLTACharge.message1 = Any amount that goes over the level of lifetime allowance available, is liable to a lifetime allowance charge.
 newLTACharge.checkYourAnswersLabel =  Have you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
 newLTACharge.error.required = Select yes if you have received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
-newLTACharge.change.hidden = if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy?
+newLTACharge.change.hidden = if you received a new lifetime allowance charge as a result of the Public Service Pensions Remedy
 
 otherSchemeNotification.title = Have you been notified by any other pension scheme that you have a new lifetime allowance charge?
 otherSchemeNotification.heading = Lifetime allowance charge from your other scheme
@@ -1478,7 +1455,7 @@ otherSchemeNotification.checkYourAnswersLabel = Have you been notified by any ot
 otherSchemeNotification.message1 = If you have had new or increased lifetime allowance charges in multiple schemes, you may have been told to report them.
 otherSchemeNotification.heading2 = Have you been notified by your other scheme that you have a new or increased LTA charge in respect of any tax year from 2019/20 to 2022/23 that must be reported to HMRC?
 otherSchemeNotification.error.required =  Select yes if you have been notified by any other pension scheme that you have a new LTA charge
-otherSchemeNotification.change.hidden = if you been notified by any other pension scheme that you have a new LTA charge
+otherSchemeNotification.change.hidden = if you have been notified by any other pension scheme that you have a new lifetime allowance charge
 
 notAbleToUseThisTriageLta.title = You are not impacted
 notAbleToUseThisTriageLta.heading = You are not eligible to use this service
@@ -1510,7 +1487,7 @@ netIncomeAbove100k.message6 = document.
 netIncomeAbove100K.heading2 = Did you have a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
 netIncomeAbove100K.checkYourAnswersLabel = Did you have a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
 netIncomeAbove100K.error.required = Select yes if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
-netIncomeAbove100K.change.hidden = if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020?
+netIncomeAbove100K.change.hidden = if you had a net income of over £100,000 for any tax year from 6 April 2016 to 5 April 2020
 
 netIncomeAbove190K.title = Net income from 6 April 2020 to 5 April 2022
 netIncomeAbove190K.heading = Net income from 6 April 2020 to 5 April 2022
@@ -1535,7 +1512,7 @@ netIncomeAbove190K.message6 = document.
 netIncomeAbove190K.heading2 = Did you have a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022?
 netIncomeAbove190K.checkYourAnswersLabel = Did you have a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022?
 netIncomeAbove190K.error.required = Select yes if you had a net income of over £190,000 for any tax year in the period from 6 April 2020 to 5 April 2022?
-netIncomeAbove190K.change.hidden = If you had a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022
+netIncomeAbove190K.change.hidden = if you had a net income of over £190,000 for any tax year from 6 April 2020 to 5 April 2022
 
 maybePIAIncrease.title = How have your pension input amounts changed?
 maybePIAIncrease.caption = Annual allowance
@@ -1573,7 +1550,7 @@ pIAAboveAnnualAllowanceIn2023.message2 =  In the year 2022/23, most people have 
 pIAAboveAnnualAllowanceIn2023.heading2 = Did you have a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023?
 pIAAboveAnnualAllowanceIn2023.checkYourAnswersLabel = Did you have a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023?
 pIAAboveAnnualAllowanceIn2023.error.required = Select yes if you had a pension input amount of over £40,000 from 6 April 2022 to 5 April 2023
-pIAAboveAnnualAllowanceIn2023.change.hidden = If you had a pension input amount of over £40,000 6 April 2022 to 5 April 2023
+pIAAboveAnnualAllowanceIn2023.change.hidden = if you had a pension input amount of over £40,000 6 April 2022 to 5 April 2023
 
 netIncomeAbove190KIn2023.title = Net income from 1 April 2022 to 31 March 2023
 netIncomeAbove190KIn2023.caption = Annual allowance
@@ -1599,7 +1576,7 @@ netIncomeAbove190KIn2023.message6 = document.
 netIncomeAbove190KIn2023.heading2 = Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.checkYourAnswersLabel = Did you have a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
 netIncomeAbove190KIn2023.error.required = Select yes if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
-netIncomeAbove190KIn2023.change.hidden = If you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023?
+netIncomeAbove190KIn2023.change.hidden = if you had a net income of over £190,000 in the period from 6 April 2022 to 5 April 2023
 
 flexibleAccessDcScheme.title = Have you used flexible access on your DC pension scheme?
 flexibleAccessDcScheme.caption = Annual allowance
@@ -1627,9 +1604,9 @@ contribution4000ToDirectContributionScheme.caption = Annual allowance
 contribution4000ToDirectContributionScheme.heading1 = Defined contribution scheme
 contribution4000ToDirectContributionScheme.message1 = Defined contribution (DC) schemes are a type of pension where the amount you get when you retire depends on how much you put in and how much this money grows.
 contribution4000ToDirectContributionScheme.heading2 = Did you and / or your employer contribute over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023?
-contribution4000ToDirectContributionScheme.checkYourAnswersLabel = Did you and / or your employer contribute over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023?
-contribution4000ToDirectContributionScheme.error.required = Select yes if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023
-contribution4000ToDirectContributionScheme.change.hidden = if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2022 to 5 April 2023
+contribution4000ToDirectContributionScheme.checkYourAnswersLabel = Did you and / or your employer contribute over £4000 to any defined contribution (DC) scheme from 6 April 2017 to 5 April 2023?
+contribution4000ToDirectContributionScheme.error.required = Select yes if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2017 to 5 April 2023
+contribution4000ToDirectContributionScheme.change.hidden = if you and / or your employer contributed over £4000 to any defined contribution (DC) scheme from 6 April 2017 to 5 April 2023
 
 userEligibility.title = You are eligible to use service
 userEligibility.heading = You are eligible to use the Public Service Pensions adjustment service
