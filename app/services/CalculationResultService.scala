@@ -709,6 +709,14 @@ class CalculationResultService @Inject() (
     CalculationResultsViewModel(totalAmountVal, resubmissionVal, outDatesVal, inDatesVal)
   }
 
+  def calculationPrintViewModel(calculateResponse: CalculationResponse): CalculationPrintViewModel = {
+    val resubmissionVal: Seq[RowViewModel]  = resubmission(calculateResponse)
+    val totalAmountVal: Seq[RowViewModel]   = totalAmount(calculateResponse)
+    val outDatesVal: Seq[Seq[RowViewModel]] = outDates(calculateResponse)
+    val inDatesVal: Seq[Seq[RowViewModel]]  = inDates(calculateResponse)
+    CalculationPrintViewModel(totalAmountVal, resubmissionVal, outDatesVal, inDatesVal)
+  }
+
   def calculationReviewIndividualAAViewModel(
     calculateResponse: CalculationResponse,
     period: String
