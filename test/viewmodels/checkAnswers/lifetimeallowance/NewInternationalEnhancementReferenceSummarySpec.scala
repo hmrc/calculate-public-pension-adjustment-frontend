@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.lifetimeallowance.NewInternationalEnhancementReferencePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -62,7 +63,7 @@ class NewInternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with M
         .get
       NewInternationalEnhancementReferenceSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "newInternationalEnhancementReference.checkYourAnswersLabel",
+          key = KeyViewModel(s"newInternationalEnhancementReference.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("test123")
         )
       )

@@ -24,6 +24,7 @@ import pages.lifetimeallowance.LtaPensionSchemeDetailsPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -60,7 +61,7 @@ class LtaPensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
         .get
       LtaPensionSchemeDetailsSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "ltaPensionSchemeDetails.checkYourAnswersLabel",
+          key = KeyViewModel(s"ltaPensionSchemeDetails.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("Some scheme / Some Tax Ref"))
         )
       )

@@ -25,6 +25,7 @@ import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import controllers.lifetimeallowance.routes
 import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 import java.time.LocalDate
 import scala.xml.Text
@@ -66,7 +67,7 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
         .get
       DateOfBenefitCrystallisationEventSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
+          key = KeyViewModel(s"dateOfBenefitCrystallisationEvent.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(Text("6 April 2015").toString())
         )
       )

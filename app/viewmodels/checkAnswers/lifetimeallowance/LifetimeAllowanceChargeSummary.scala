@@ -22,6 +22,7 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object LifetimeAllowanceChargeSummary {
 
@@ -43,7 +44,7 @@ object LifetimeAllowanceChargeSummary {
         )
       } else {
         SummaryListRowViewModel(
-          key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
+          key = KeyViewModel(s"lifetimeAllowanceCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(value)
         )
       }

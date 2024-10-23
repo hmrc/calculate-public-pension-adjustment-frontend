@@ -25,6 +25,7 @@ import pages.lifetimeallowance.WhoPayingExtraLtaChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -64,7 +65,7 @@ class WhoPayingExtraLtaChargeSummarySpec extends AnyFreeSpec with Matchers {
         .get
       WhoPayingExtraLtaChargeSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "whoPayingExtraLtaCharge.checkYourAnswersLabel",
+          key = KeyViewModel(s"whoPayingExtraLtaCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("whoPayingExtraLtaCharge.pensionScheme"))
         )
       )

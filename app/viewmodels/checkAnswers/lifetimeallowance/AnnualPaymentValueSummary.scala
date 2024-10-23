@@ -25,6 +25,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object AnnualPaymentValueSummary {
 
@@ -41,7 +42,7 @@ object AnnualPaymentValueSummary {
         )
       } else {
         SummaryListRowViewModel(
-          key = "annualPaymentValue.checkYourAnswersLabel",
+          key = KeyViewModel(s"annualPaymentValue.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent(currencyFormat(answer)))
         )
       }

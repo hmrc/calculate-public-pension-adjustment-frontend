@@ -25,6 +25,7 @@ import pages.lifetimeallowance.LtaProtectionOrEnhancementsPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -64,7 +65,7 @@ class LtaProtectionOrEnhancementsSummarySpec extends AnyFreeSpec with Matchers {
         .get
       LtaProtectionOrEnhancementsSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "ltaProtectionOrEnhancements.checkYourAnswersLabel",
+          key = KeyViewModel(s"ltaProtectionOrEnhancements.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("ltaProtectionOrEnhancements.protection"))
         )
       )

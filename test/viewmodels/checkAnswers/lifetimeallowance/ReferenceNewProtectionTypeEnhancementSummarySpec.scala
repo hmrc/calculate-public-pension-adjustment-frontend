@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.lifetimeallowance.ReferenceNewProtectionTypeEnhancementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -62,7 +63,7 @@ class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with 
         .get
       ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          key = KeyViewModel(s"referenceNewProtectionTypeEnhancement.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("test123")
         )
       )

@@ -24,6 +24,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import views.helpers.ImplicitDateFormatter
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object DateOfBenefitCrystallisationEventSummary extends ImplicitDateFormatter {
 
@@ -45,7 +46,7 @@ object DateOfBenefitCrystallisationEventSummary extends ImplicitDateFormatter {
         )
       } else {
         SummaryListRowViewModel(
-          key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
+          key = KeyViewModel(s"dateOfBenefitCrystallisationEvent.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(dateToString(answer, languageTag))
         )
       }

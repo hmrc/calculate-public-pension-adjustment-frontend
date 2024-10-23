@@ -24,6 +24,7 @@ import pages.lifetimeallowance.AnnualPaymentValuePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -60,7 +61,7 @@ class AnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
         .get
       AnnualPaymentValueSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "annualPaymentValue.checkYourAnswersLabel",
+          key = KeyViewModel(s"annualPaymentValue.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("&pound;999"))
         )
       )

@@ -54,6 +54,7 @@ checkYourAnswers.aa.period.subHeading.2023 = Cwestiynau lwfans blynyddol 2023
 
 reviewLTAAnswers.title = cy: Review lifetime allowance answers
 reviewLTAAnswers.heading = cy: Review lifetime allowance answers
+reviewLTAAnswers.returnToMainResult = cy: return to main summary
 
 journeyRecovery.continue.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
 journeyRecovery.continue.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth

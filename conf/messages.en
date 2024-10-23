@@ -54,6 +54,7 @@ checkYourAnswers.aa.period.subHeading.2023 = Annual allowance questions 2023
 
 reviewLTAAnswers.title = Review lifetime allowance answers
 reviewLTAAnswers.heading = Review lifetime allowance answers
+reviewLTAAnswers.returnToMainResult = return to main summary
 
 journeyRecovery.continue.title = Sorry, there is a problem with the service
 journeyRecovery.continue.heading = Sorry, there is a problem with the service

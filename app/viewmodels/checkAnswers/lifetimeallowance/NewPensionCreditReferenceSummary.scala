@@ -23,6 +23,7 @@ import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object NewPensionCreditReferenceSummary {
 
@@ -42,7 +43,7 @@ object NewPensionCreditReferenceSummary {
         )
       } else {
         SummaryListRowViewModel(
-          key = "newPensionCreditReference.checkYourAnswersLabel",
+          key = KeyViewModel(s"newPensionCreditReference.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlFormat.escape(answer).toString)
         )
       }

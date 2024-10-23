@@ -25,6 +25,7 @@ import pages.lifetimeallowance.WhatNewProtectionTypeEnhancementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -64,7 +65,7 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
         .get
       WhatNewProtectionTypeEnhancementSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          key = KeyViewModel(s"whatNewProtectionTypeEnhancement.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.primaryProtection"))
         )
       )

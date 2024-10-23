@@ -25,6 +25,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object WhatNewProtectionTypeEnhancementSummary {
 
@@ -50,7 +51,7 @@ object WhatNewProtectionTypeEnhancementSummary {
         )
       } else {
         SummaryListRowViewModel(
-          key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
+          key = KeyViewModel(s"whatNewProtectionTypeEnhancement.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = value
         )
       }

@@ -69,7 +69,7 @@ class ViewYourLTAAnswersController @Inject() (
 
     Ok(
       view(
-        controllers.routes.TaskListController.onPageLoad(),
+        controllers.routes.CalculationReviewController.onPageLoad(),
         SummaryListViewModel(rows.flatten)
       )
     )

@@ -23,6 +23,7 @@ import pages.lifetimeallowance.NewExcessLifetimeAllowancePaidPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -62,7 +63,7 @@ class NewExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matcher
         .get
       NewExcessLifetimeAllowancePaidSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "newExcessLifetimeAllowancePaid.checkYourAnswersLabel",
+          key = KeyViewModel(s"newExcessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("newExcessLifetimeAllowancePaid.annualPayment"))
         )
       )
