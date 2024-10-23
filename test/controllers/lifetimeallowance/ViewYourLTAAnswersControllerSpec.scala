@@ -43,7 +43,7 @@ class ViewYourLTAAnswersControllerSpec extends SpecBase with SummaryListFluency 
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
-          controllers.routes.TaskListController.onPageLoad(),
+          controllers.routes.CalculationReviewController.onPageLoad(),
           list
         )(
           request,

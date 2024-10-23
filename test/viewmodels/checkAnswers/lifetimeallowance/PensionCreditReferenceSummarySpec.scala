@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.lifetimeallowance.PensionCreditReferencePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -59,7 +60,7 @@ class PensionCreditReferenceSummarySpec extends AnyFreeSpec with Matchers {
         .get
       PensionCreditReferenceSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "pensionCreditReference.checkYourAnswersLabel",
+          key = KeyViewModel(s"pensionCreditReference.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("test123")
         )
       )

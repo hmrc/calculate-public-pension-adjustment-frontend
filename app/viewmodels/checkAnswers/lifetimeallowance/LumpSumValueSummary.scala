@@ -25,6 +25,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object LumpSumValueSummary {
 
@@ -41,7 +42,7 @@ object LumpSumValueSummary {
         )
       } else {
         SummaryListRowViewModel(
-          key = "lumpSumValue.checkYourAnswersLabel",
+          key = KeyViewModel(s"lumpSumValue.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent(currencyFormat(answer)))
         )
       }

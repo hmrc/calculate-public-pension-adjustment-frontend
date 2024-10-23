@@ -23,6 +23,7 @@ import pages.lifetimeallowance.ExcessLifetimeAllowancePaidPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -62,7 +63,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
         .get
       ExcessLifetimeAllowancePaidSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
+          key = KeyViewModel(s"excessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.annualPayment"))
         )
       )
@@ -99,7 +100,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
         .get
       ExcessLifetimeAllowancePaidSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
+          key = KeyViewModel(s"excessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.lumpSum"))
         )
       )

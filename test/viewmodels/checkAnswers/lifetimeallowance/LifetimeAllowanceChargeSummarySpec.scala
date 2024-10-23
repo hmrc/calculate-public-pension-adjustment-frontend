@@ -22,6 +22,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.lifetimeallowance.LifetimeAllowanceChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -61,7 +62,7 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
         .get
       LifetimeAllowanceChargeSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
+          key = KeyViewModel(s"lifetimeAllowanceCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("site.yes")
         )
       )
@@ -98,7 +99,7 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
         .get
       LifetimeAllowanceChargeSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
+          key = KeyViewModel(s"lifetimeAllowanceCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("site.no")
         )
       )

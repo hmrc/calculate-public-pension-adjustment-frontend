@@ -24,6 +24,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object YearChargePaidSummary {
 
@@ -48,7 +49,7 @@ object YearChargePaidSummary {
         )
       } else {
         SummaryListRowViewModel(
-          key = "yearChargePaid.checkYourAnswersLabel",
+          key = KeyViewModel(s"yearChargePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = value
         )
       }

@@ -24,6 +24,7 @@ import pages.lifetimeallowance.UserSchemeDetailsPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -60,7 +61,7 @@ class UserSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
         .get
       UserSchemeDetailsSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "userSchemeDetails.checkYourAnswersLabel",
+          key = KeyViewModel(s"userSchemeDetails.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("Some scheme / Some Tax Ref"))
         )
       )

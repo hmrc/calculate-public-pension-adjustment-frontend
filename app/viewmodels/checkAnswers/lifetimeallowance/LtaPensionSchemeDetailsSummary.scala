@@ -25,6 +25,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object LtaPensionSchemeDetailsSummary {
 
@@ -43,7 +44,7 @@ object LtaPensionSchemeDetailsSummary {
         )
       } else {
         SummaryListRowViewModel(
-          key = "ltaPensionSchemeDetails.checkYourAnswersLabel",
+          key = KeyViewModel(s"ltaPensionSchemeDetails.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent(value))
         )
       }

@@ -25,6 +25,7 @@ import pages.lifetimeallowance.ProtectionEnhancedChangedPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -64,7 +65,7 @@ class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
         .get
       ProtectionEnhancedChangedSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "protectionEnhancedChanged.checkYourAnswersLabel",
+          key = KeyViewModel(s"protectionEnhancedChanged.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("protectionEnhancedChanged.enhancement"))
         )
       )

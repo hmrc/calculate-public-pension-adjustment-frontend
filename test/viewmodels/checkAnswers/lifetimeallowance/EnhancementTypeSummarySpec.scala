@@ -25,6 +25,7 @@ import pages.lifetimeallowance.EnhancementTypePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -64,7 +65,7 @@ class EnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
         .get
       EnhancementTypeSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "enhancementType.checkYourAnswersLabel",
+          key = KeyViewModel(s"enhancementType.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("enhancementType.pensionCredit"))
         )
       )

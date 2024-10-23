@@ -24,6 +24,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object ExcessLifetimeAllowancePaidSummary {
 
@@ -49,7 +50,7 @@ object ExcessLifetimeAllowancePaidSummary {
         )
       } else {
         SummaryListRowViewModel(
-          key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
+          key = KeyViewModel(s"excessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = value
         )
       }

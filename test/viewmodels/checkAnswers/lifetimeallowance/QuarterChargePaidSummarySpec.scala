@@ -23,6 +23,7 @@ import pages.lifetimeallowance.QuarterChargePaidPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -62,7 +63,7 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
         .get
       QuarterChargePaidSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
-          key = "quarterChargePaid.checkYourAnswersLabel",
+          key = KeyViewModel(s"quarterChargePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("quarterChargePaid.aprToJul"))
         )
       )
