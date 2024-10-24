@@ -17,7 +17,7 @@
 package controllers
 
 import base.SpecBase
-import models.CalculationResults.CalculationResponse
+import models.CalculationResults.{CalculationResponse, CalculationReviewIndividualAAViewModel, IndividualAASummaryModel, RowViewModel}
 import models.Period
 import models.submission.{Failure, Success}
 import models.tasklist.sections.LTASection
@@ -52,9 +52,20 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
       val calculationResult: CalculationResponse =
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      val mockCalculationResultService = mock[CalculationResultService]
+      val mockRowViewModel                           = RowViewModel("test", "test")
+      val mockCalculationResultService               = mock[CalculationResultService]
+      val mockCalculationReviewIndividualAAViewModel =
+        CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+      val mockIndividualAASummaryModel               =
+        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10)
+
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
-      when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any)).thenCallRealMethod()
+
+      when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
+        .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+
+      when(mockCalculationResultService.individualAASummaryModel(calculationResult))
+        .thenReturn(Seq(mockIndividualAASummaryModel))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

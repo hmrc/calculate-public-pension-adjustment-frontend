@@ -19,7 +19,7 @@ package services
 import base.SpecBase
 import connectors.{CalculationResultConnector, ReducedNetIncomeConnector, SubmissionsConnector}
 import controllers.annualallowance.taxyear.AboveThresholdController
-import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, CalculationReviewViewModel, LifetimeAllowanceSetup, Resubmission, ReviewRowViewModel, RowViewModel, Setup}
+import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, CalculationReviewViewModel, IndividualAASummaryModel, LifetimeAllowanceSetup, Resubmission, ReviewRowViewModel, RowViewModel, Setup}
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
@@ -30,9 +30,9 @@ import org.mockito.MockitoSugar
 import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
 import play.api.libs.json.{JsObject, JsValue, Json}
 import uk.gov.hmrc.http.HeaderCarrier
+
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import java.time.LocalDate
 import scala.io.Source
 
@@ -3993,79 +3993,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       )
     }
 
-    "out dates Review AA should be well formed and should filter chosen period" in {
-      val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
-
-      val viewModel: CalculationReviewIndividualAAViewModel =
-        service.calculationReviewIndividualAAViewModel(calculationResult, Period._2016.toString())
-
-      val sections: Seq[Seq[RowViewModel]] = viewModel.outDates
-      sections.size mustBe 1
-
-      val year = sections(0)
-
-      checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.chargePaidBySchemes", "0")
-      checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.chargePaidByMember", "0")
-      checkRowNameAndValue(
-        year,
-        2,
-        "calculationReviewIndividualAA.annualResults.revisedChargeableAmountAfterTaxRate",
-        "0"
-      )
-      checkRowNameAndValue(
-        year,
-        3,
-        "calculationReviewIndividualAA.annualResults.revisedChargeableAmountBeforeTaxRate",
-        "0"
-      )
-      checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.directCompensation", "0")
-      checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.indirectCompensation", "0")
-      checkRowNameAndValue(year, 6, "calculationReviewIndividualAA.annualResults.unusedAnnualAllowance", "60000")
-
-      viewModel.annualResultsData mustBe
-        List(
-          RowViewModel("calculationReviewIndividualAA.annualResults.chargePaidBySchemes", "0"),
-          RowViewModel("calculationReviewIndividualAA.annualResults.chargePaidByMember", "0"),
-          RowViewModel("calculationReviewIndividualAA.annualResults.revisedChargeableAmountAfterTaxRate", "0"),
-          RowViewModel("calculationReviewIndividualAA.annualResults.revisedChargeableAmountBeforeTaxRate", "0"),
-          RowViewModel("calculationReviewIndividualAA.annualResults.directCompensation", "0"),
-          RowViewModel("calculationReviewIndividualAA.annualResults.indirectCompensation", "0"),
-          RowViewModel("calculationReviewIndividualAA.annualResults.unusedAnnualAllowance", "60000")
-        )
-    }
-
-    "in dates Review AA should be well formed and should filter chosen period" in {
-      val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
-
-      val viewModel: CalculationReviewIndividualAAViewModel =
-        service.calculationReviewIndividualAAViewModel(calculationResult, Period._2020.toString())
-
-      val sections: Seq[Seq[RowViewModel]] = viewModel.inDates
-      sections.size mustBe 1
-
-      val year = sections(0)
-
-      checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.chargePaidBySchemes", "0")
-      checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.chargePaidByMember", "0")
-      checkRowNameAndValue(
-        year,
-        2,
-        "calculationReviewIndividualAA.annualResults.revisedChargeableAmountAfterTaxRate",
-        "0"
-      )
-      checkRowNameAndValue(
-        year,
-        3,
-        "calculationReviewIndividualAA.annualResults.revisedChargeableAmountBeforeTaxRate",
-        "0"
-      )
-      checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.memberCredit", "0")
-      checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.schemeCredit", "0")
-      checkRowNameAndValue(year, 6, "calculationReviewIndividualAA.annualResults.debit", "0")
-      checkRowNameAndValue(year, 7, "calculationReviewIndividualAA.annualResults.unusedAnnualAllowance", "48000")
-
-    }
-
     "out dates should be well formed" in {
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
@@ -4217,6 +4144,230 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       val sections: Seq[Seq[RowViewModel]] = viewModel.inDates
 
       sections.foreach(year => checkYearInDates(year))
+    }
+
+    "Caculation Reivew Individual AA" - {
+      "out dates Review AA should be well formed and should filter chosen period" in {
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val viewModel: Future[CalculationReviewIndividualAAViewModel] =
+          service.calculationReviewIndividualAAViewModel(
+            calculationResult,
+            Period._2016.toString(),
+            userAnswers1.copy(data = data2)
+          )
+
+        val sections: Seq[Seq[RowViewModel]] = viewModel.futureValue.outDates
+        sections.size mustBe 1
+
+        val year = sections(0)
+
+        checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes", "0")
+        checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember", "0")
+        checkRowNameAndValue(
+          year,
+          2,
+          "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(
+          year,
+          3,
+          "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.outDates.directCompensation", "0")
+        checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation", "0")
+        checkRowNameAndValue(
+          year,
+          6,
+          "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
+          "60000"
+        )
+      }
+
+      "in dates Review AA should be well formed and should filter chosen period" in {
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val viewModel: Future[CalculationReviewIndividualAAViewModel] =
+          service.calculationReviewIndividualAAViewModel(
+            calculationResult,
+            Period._2020.toString(),
+            userAnswers1.copy(data = data2)
+          )
+
+        val sections: Seq[Seq[RowViewModel]] = viewModel.futureValue.inDates
+        sections.size mustBe 1
+
+        val year = sections(0)
+
+        checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "0")
+        checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "0")
+        checkRowNameAndValue(
+          year,
+          2,
+          "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountBeforeTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(
+          year,
+          3,
+          "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountAfterTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.inDates.debit", "0")
+        checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.inDates.memberCredit", "0")
+        checkRowNameAndValue(year, 6, "calculationReviewIndividualAA.annualResults.inDates.schemeCredit", "0")
+        checkRowNameAndValue(
+          year,
+          7,
+          "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
+          "48000"
+        )
+
+      }
+    }
+
+    "individualAASummaryModel" - {
+      "Should form a sequence including indates and outdates" in {
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val summaryModel: Seq[IndividualAASummaryModel] =
+          service.individualAASummaryModel(
+            calculationResult
+          )
+
+        summaryModel.size mustBe 8
+
+        summaryModel mustBe List(
+          IndividualAASummaryModel(
+            Period._2016,
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
+            0,
+            0,
+            0
+          ),
+          IndividualAASummaryModel(
+            Period._2017,
+            1200,
+            1200,
+            "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+            0,
+            1200,
+            0,
+            0
+          ),
+          IndividualAASummaryModel(
+            Period._2018,
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
+            0,
+            0,
+            0
+          ),
+          IndividualAASummaryModel(
+            Period._2019,
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
+            0,
+            0,
+            0
+          ),
+          IndividualAASummaryModel(
+            Period._2020,
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
+            0,
+            0,
+            0
+          ),
+          IndividualAASummaryModel(
+            Period._2021,
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
+            0,
+            0,
+            0
+          ),
+          IndividualAASummaryModel(
+            Period._2022,
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
+            0,
+            0,
+            0
+          ),
+          IndividualAASummaryModel(
+            Period._2023,
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
+            0,
+            0,
+            0
+          )
+        )
+
+      }
+
+      "An out dates year should be well formed" in {
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val summaryModel: Seq[IndividualAASummaryModel] =
+          service.individualAASummaryModel(
+            calculationResult
+          )
+
+        summaryModel.size mustBe 8
+
+        val year2016 = summaryModel(0)
+
+        year2016.period mustBe Period._2016
+        year2016.changeInTaxCharge mustBe 0
+        year2016.changeInTaxChargeNonAbs mustBe 0
+        year2016.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+        year2016.revisedChargeableAmountBeforeTaxRate mustBe 0
+        year2016.chargePaidByMember mustBe 0
+        year2016.chargePaidBySchemes mustBe 0
+        year2016.revisedChargeableAmountAfterTaxRate mustBe 0
+      }
+
+      "An in date year should be well formed" in {
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val summaryModel: Seq[IndividualAASummaryModel] =
+          service.individualAASummaryModel(
+            calculationResult
+          )
+
+        summaryModel.size mustBe 8
+
+        val year2021 = summaryModel(5)
+
+        year2021.period mustBe Period._2021
+        year2021.changeInTaxCharge mustBe 0
+        year2021.changeInTaxChargeNonAbs mustBe 0
+        year2021.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+        year2021.revisedChargeableAmountBeforeTaxRate mustBe 0
+        year2021.chargePaidByMember mustBe 0
+        year2021.chargePaidBySchemes mustBe 0
+        year2021.revisedChargeableAmountAfterTaxRate mustBe 0
+
+      }
     }
 
     def checkYearInDates(year: Seq[RowViewModel]) = {
