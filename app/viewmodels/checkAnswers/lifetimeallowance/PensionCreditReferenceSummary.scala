@@ -23,21 +23,29 @@ import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object PensionCreditReferenceSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(PensionCreditReferencePage).map { answer =>
-      SummaryListRowViewModel(
-        key = "pensionCreditReference.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(answer).toString),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.PensionCreditReferenceController.onPageLoad(CheckMode).url
+      if (changeAllowed) {
+        SummaryListRowViewModel(
+          key = "pensionCreditReference.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.PensionCreditReferenceController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("pensionCreditReference.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("pensionCreditReference.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"pensionCreditReference.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlFormat.escape(answer).toString)
+        )
+      }
     }
 }

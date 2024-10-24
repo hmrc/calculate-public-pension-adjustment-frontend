@@ -25,18 +25,26 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object LumpSumValueSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(LumpSumValuePage).map { answer =>
-      SummaryListRowViewModel(
-        key = "lumpSumValue.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
-        actions = Seq(
-          ActionItemViewModel("site.change", routes.LumpSumValueController.onPageLoad(CheckMode).url)
-            .withVisuallyHiddenText(messages("lumpSumValue.change.hidden"))
+      if (changeAllowed) {
+        SummaryListRowViewModel(
+          key = "lumpSumValue.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+          actions = Seq(
+            ActionItemViewModel("site.change", routes.LumpSumValueController.onPageLoad(CheckMode).url)
+              .withVisuallyHiddenText(messages("lumpSumValue.change.hidden"))
+          )
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"lumpSumValue.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlContent(currencyFormat(answer)))
+        )
+      }
     }
 }

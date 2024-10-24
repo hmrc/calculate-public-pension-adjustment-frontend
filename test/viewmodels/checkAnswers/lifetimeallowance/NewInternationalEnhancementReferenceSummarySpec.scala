@@ -23,6 +23,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.lifetimeallowance.NewInternationalEnhancementReferencePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -31,14 +32,14 @@ class NewInternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with M
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           NewInternationalEnhancementReferencePage,
           "test123"
         )
         .get
-      NewInternationalEnhancementReferenceSummary.row(userAnswers) shouldBe Some(
+      NewInternationalEnhancementReferenceSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "newInternationalEnhancementReference.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
@@ -53,9 +54,24 @@ class NewInternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with M
       )
     }
 
+    "when value is entered, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          NewInternationalEnhancementReferencePage,
+          "test123"
+        )
+        .get
+      NewInternationalEnhancementReferenceSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"newInternationalEnhancementReference.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel("test123")
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionReferenceSummary.row(userAnswers) shouldBe None
+      ProtectionReferenceSummary.row(userAnswers, true) shouldBe None
     }
   }
 

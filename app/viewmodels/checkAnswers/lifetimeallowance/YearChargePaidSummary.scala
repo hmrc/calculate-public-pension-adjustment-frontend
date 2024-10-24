@@ -24,27 +24,34 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object YearChargePaidSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(YearChargePaidPage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
           HtmlFormat.escape(messages(s"yearChargePaid.$answer"))
         )
       )
-
-      SummaryListRowViewModel(
-        key = "yearChargePaid.checkYourAnswersLabel",
-        value = value,
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.YearChargePaidController.onPageLoad(CheckMode).url
+      if (changeAllowed) {
+        SummaryListRowViewModel(
+          key = "yearChargePaid.checkYourAnswersLabel",
+          value = value,
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.YearChargePaidController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("yearChargePaid.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("yearChargePaid.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"yearChargePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = value
+        )
+      }
     }
 }

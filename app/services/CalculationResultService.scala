@@ -731,7 +731,7 @@ class CalculationResultService @Inject() (
 
   private def lifetimeAllowanceReview: Seq[ReviewRowViewModel] =
     Seq(
-      ReviewRowViewModel("calculationReview.lta", None, "LTA_Detailed_View")
+      ReviewRowViewModel("calculationReview.lta", None, "lifetime-allowance/view-answers")
     )
 
   def calculationResultsViewModel(calculateResponse: CalculationResponse): CalculationResultsViewModel = {

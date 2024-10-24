@@ -23,6 +23,7 @@ import pages.lifetimeallowance.QuarterChargePaidPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -31,14 +32,14 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when Apr to Juls is selected, return the summary row" in {
+    "when Apr to Juls is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           QuarterChargePaidPage,
           models.QuarterChargePaid.AprToJul
         )
         .get
-      QuarterChargePaidSummary.row(userAnswers) shouldBe Some(
+      QuarterChargePaidSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "quarterChargePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("quarterChargePaid.aprToJul")),
@@ -53,9 +54,24 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when Apr to Juls is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          QuarterChargePaidPage,
+          models.QuarterChargePaid.AprToJul
+        )
+        .get
+      QuarterChargePaidSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"quarterChargePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlContent("quarterChargePaid.aprToJul"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      QuarterChargePaidSummary.row(userAnswers) shouldBe None
+      QuarterChargePaidSummary.row(userAnswers, true) shouldBe None
     }
   }
 
