@@ -15,6 +15,7 @@
  *@
 
 @import models.CalculationResults.CalculationReviewIndividualAAViewModel
+@import models.CalculationResults.IndividualAASummaryModel
 @import views.html.helper.CSPNonce
 
 @this(
@@ -24,23 +25,40 @@
         govukButton: GovukButton
 )
 
-@(form: Form[_], period: String, calculationReviewIndividualAAViewModel: CalculationReviewIndividualAAViewModel, isInCredit: Boolean, isInDebit: Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], period: String, calculationReviewIndividualAAViewModel: CalculationReviewIndividualAAViewModel, isInCredit: Boolean, isInDebit: Boolean, individualYear: IndividualAASummaryModel)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("calculationReviewIndividualAA.title"))) {
 
-    <h1 class="govuk-heading-l">@messages("calculationReviewIndividualAA.heading")</h1>
-    <h2 class="govuk-heading-m">@messages("calculationReviewIndividualAA.heading2")</h2>
-    <p class="govuk-body">@messages("calculationReviewIndividualAA.message1")</p>
-    <p class="govuk-body">@messages("calculationReviewIndividualAA.message2")</p>
-    <p class="govuk-body">@messages("calculationReviewIndividualAA.message3")</p>
-    <p class="govuk-body">@messages("calculationReviewIndividualAA.message4")</p>
-    <p class="govuk-body">@messages("calculationReviewIndividualAA.message5")</p>
+    <h1 class="govuk-heading-l">@messages(individualYear.changeInTaxChargeString + "message1", individualYear.changeInTaxCharge)</h1>
+
+    <h2 class="govuk-heading-m">@messages("calculationReviewIndividualAA.heading2." + period)</h2>
+
+@if(individualYear.changeInTaxChargeNonAbs < 0) {
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message8")</p>
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message9")</p>
+
+}
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message1", individualYear.revisedChargeableAmountBeforeTaxRate)</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message2", individualYear.chargePaidByMember)</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message3", individualYear.chargePaidBySchemes)</p>
+
+    <p class="govuk-body">@messages("calculationReviewIndividualAA.message4", individualYear.revisedChargeableAmountAfterTaxRate)</p>
+
+    <p class="govuk-body">@messages(individualYear.changeInTaxChargeString + "message2", individualYear.changeInTaxCharge)</p>
+
+    @if(individualYear.changeInTaxChargeNonAbs > 0){
     <p class="govuk-body">@messages("calculationReviewIndividualAA.message6")</p>
 
     <ul class="govuk-body">
         <li>@messages("calculationReviewIndividualAA.bullet.1")</li>
         <li>@messages("calculationReviewIndividualAA.bullet.2")</li>
     </ul>
+    }
 
     <!-- results table -->
     <h2 class="govuk-heading-m">@messages("calculationReviewIndividualAA.heading3")</h2>
@@ -56,7 +74,7 @@
         @calculationReviewIndividualAAViewModel.annualResultsData.map { section =>
         <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">@messages(section.name)</th>
-            <td class="govuk-table__cell">@section.value</td>
+            <td class="govuk-table__cell">@messages(section.value)</td>
         </tr>
         }
         </tbody>

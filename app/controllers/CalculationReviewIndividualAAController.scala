@@ -18,13 +18,16 @@ package controllers
 
 import config.FrontendAppConfig
 import controllers.actions._
+import models.CalculationResults.IndividualAASummaryModel
 import models.Period
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.CalculationResultService
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.CalculationReviewIndividualAAView
 
 import javax.inject.Inject
@@ -47,18 +50,28 @@ class CalculationReviewIndividualAAController @Inject() (
 
   def onPageLoad(period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      calculationResultService.sendRequest(request.userAnswers).map { calculationResponse =>
-        val isInCredit: Boolean = calculationResponse.totalAmounts.inDatesCredit > 0
-        val isInDebit: Boolean  = calculationResponse.totalAmounts.inDatesDebit > 0
-        Ok(
-          view(
-            form,
-            period.toString(),
-            calculationResultService.calculationReviewIndividualAAViewModel(calculationResponse, period.toString()),
-            isInCredit,
-            isInDebit
-          )
-        )
+      implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+
+      calculationResultService.sendRequest(request.userAnswers).flatMap { calculationResponse =>
+        val allYears: Seq[IndividualAASummaryModel]  =
+          calculationResultService.individualAASummaryModel(calculationResponse)
+        val individualYear: IndividualAASummaryModel = allYears.find(year => year.period == period).get
+        calculationResultService
+          .calculationReviewIndividualAAViewModel(calculationResponse, period.toString(), request.userAnswers)
+          .map { calculationReviewIndividualAAViewModel =>
+            val isInCredit: Boolean = calculationResponse.totalAmounts.inDatesCredit > 0
+            val isInDebit: Boolean  = calculationResponse.totalAmounts.inDatesDebit > 0
+            Ok(
+              view(
+                form,
+                period.toString(),
+                calculationReviewIndividualAAViewModel,
+                isInCredit,
+                isInDebit,
+                individualYear
+              )
+            )
+          }
       }
   }
 
