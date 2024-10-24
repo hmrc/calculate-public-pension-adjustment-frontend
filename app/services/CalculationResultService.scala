@@ -812,7 +812,22 @@ class CalculationResultService @Inject() (
       )
     }
 
-  private def outDatesReviewAA(calculateResponse: CalculationResponse, period: String): Seq[Seq[RowViewModel]] =
+  private def outDatesReviewAA(calculateResponse: CalculationResponse, period: String, userAnswers: UserAnswers): Seq[Seq[RowViewModel]] = {
+
+    val _2016To2023TaxYears: List[TaxYear2016To2023] =
+      List(
+        Period._2016,
+        Period._2017,
+        Period._2018,
+        Period._2019,
+        Period._2020,
+        Period._2021,
+        Period._2022,
+        Period._2023
+      ).flatMap(
+        toTaxYear2016To2023(userAnswers, _)
+      )
+
     calculateResponse.outDates
       .filter(outDate => outDate.period.toString == period)
       .map { outDate =>
@@ -844,9 +859,38 @@ class CalculationResultService @Inject() (
           RowViewModel(
             "calculationReviewIndividualAA.annualResults.unusedAnnualAllowance",
             outDate.unusedAnnualAllowance.toString()
+          ),
+          //reduced net income
+          RowViewModel(
+            "redcued net income",
+            taxYearIncomeSubJourney(_2016To2023TaxYears, outDate.period).reducedNetIncomeAmount.getOrElse(0).toString
+          ),
+          //personal allowance
+          RowViewModel(
+            "personal allowance",
+            taxYearIncomeSubJourney(_2016To2023TaxYears, outDate.period).personalAllowanceAmount.getOrElse(0).toString
+          ),
+          //Threshold Income (if calculaed)
+          RowViewModel(
+            "Threshold income",
+            taxYearIncomeSubJourney(_2016To2023TaxYears, outDate.period).thresholdIncomeAmount.getOrElse(0).toString
+          ),
+          //AdjustedIncome
+          RowViewModel(
+            "adjusted income",
+            taxYearIncomeSubJourney(_2016To2023TaxYears, outDate.period).adjustedIncomeAmount.getOrElse(0).toString
           )
         )
       }
+  }
+
+  private def taxYearIncomeSubJourney(taxYears: List[TaxYear2016To2023], period: Period): IncomeSubJourney = {
+    taxYears.filter(ty => ty.period == period) match {
+      case ty: NormalTaxYear                  => ty.incomeSubJourney
+      case ty: InitialFlexiblyAccessedTaxYear => ty.incomeSubJourney
+      case ty: PostFlexiblyAccessedTaxYear    => ty.incomeSubJourney
+    }
+  }
 
   private def inDatesReviewAA(calculateResponse: CalculationResponse, period: String): Seq[Seq[RowViewModel]] =
     calculateResponse.inDates
