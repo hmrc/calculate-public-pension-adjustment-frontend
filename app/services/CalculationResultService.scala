@@ -882,12 +882,13 @@ class CalculationResultService @Inject() (
     }
   }
 
-  private def taxYearIncomeSubJourney(taxYears: List[TaxYear2016To2023], period: Period): IncomeSubJourney =
-    taxYears.filter(ty => ty.period == period) match {
+  private def taxYearIncomeSubJourney(taxYears: List[TaxYear2016To2023], period: Period): IncomeSubJourney = {
+    taxYears.filter(ty => ty.period == period).head match {
       case ty: NormalTaxYear                  => ty.incomeSubJourney
       case ty: InitialFlexiblyAccessedTaxYear => ty.incomeSubJourney
       case ty: PostFlexiblyAccessedTaxYear    => ty.incomeSubJourney
     }
+  }
 
   private def inDatesReviewAA(calculateResponse: CalculationResponse, period: String): Seq[Seq[RowViewModel]] =
     calculateResponse.inDates
