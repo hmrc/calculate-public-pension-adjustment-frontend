@@ -24,6 +24,7 @@ import pages.lifetimeallowance.SchemeNameAndTaxRefPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -32,14 +33,14 @@ class SchemeNameAndTaxRefSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           SchemeNameAndTaxRefPage,
           models.SchemeNameAndTaxRef("Some scheme", "Some Tax Ref")
         )
         .get
-      SchemeNameAndTaxRefSummary.row(userAnswers) shouldBe Some(
+      SchemeNameAndTaxRefSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "schemeNameAndTaxRef.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Some scheme / Some Tax Ref")),
@@ -51,9 +52,24 @@ class SchemeNameAndTaxRefSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when value is entered, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          SchemeNameAndTaxRefPage,
+          models.SchemeNameAndTaxRef("Some scheme", "Some Tax Ref")
+        )
+        .get
+      SchemeNameAndTaxRefSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"schemeNameAndTaxRef.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlContent("Some scheme / Some Tax Ref"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      SchemeNameAndTaxRefSummary.row(userAnswers) shouldBe None
+      SchemeNameAndTaxRefSummary.row(userAnswers, true) shouldBe None
     }
   }
 

@@ -22,23 +22,31 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object LifetimeAllowanceChargeSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(LifetimeAllowanceChargePage).map { answer =>
       val value = if (answer) "site.yes" else "site.no"
 
-      SummaryListRowViewModel(
-        key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
-        value = ValueViewModel(value),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(CheckMode).url
+      if (changeAllowed) {
+        SummaryListRowViewModel(
+          key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
+          value = ValueViewModel(value),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("lifetimeAllowanceCharge.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("lifetimeAllowanceCharge.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"lifetimeAllowanceCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(value)
+        )
+      }
     }
 }

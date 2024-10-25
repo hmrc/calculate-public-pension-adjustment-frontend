@@ -24,6 +24,7 @@ import pages.lifetimeallowance.NewLumpSumValuePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -32,14 +33,14 @@ class NewLumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           NewLumpSumValuePage,
           BigInt("999")
         )
         .get
-      NewLumpSumValueSummary.row(userAnswers) shouldBe Some(
+      NewLumpSumValueSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "newLumpSumValue.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("&pound;999")),
@@ -51,9 +52,24 @@ class NewLumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when value is entered, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          NewLumpSumValuePage,
+          BigInt("999")
+        )
+        .get
+      NewLumpSumValueSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"newLumpSumValue.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlContent("&pound;999"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      NewLumpSumValueSummary.row(userAnswers) shouldBe None
+      NewLumpSumValueSummary.row(userAnswers, true) shouldBe None
     }
   }
 

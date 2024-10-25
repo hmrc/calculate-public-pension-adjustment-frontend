@@ -23,23 +23,31 @@ import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object NewInternationalEnhancementReferenceSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(NewInternationalEnhancementReferencePage).map { answer =>
-      SummaryListRowViewModel(
-        key = "newInternationalEnhancementReference.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlFormat.escape(answer).toString),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.NewInternationalEnhancementReferenceController
-              .onPageLoad(CheckMode)
-              .url
+      if (changeAllowed) {
+        SummaryListRowViewModel(
+          key = "newInternationalEnhancementReference.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.NewInternationalEnhancementReferenceController
+                .onPageLoad(CheckMode)
+                .url
+            )
+              .withVisuallyHiddenText(messages("newInternationalEnhancementReference.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("newInternationalEnhancementReference.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"newInternationalEnhancementReference.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlFormat.escape(answer).toString)
+        )
+      }
     }
 }

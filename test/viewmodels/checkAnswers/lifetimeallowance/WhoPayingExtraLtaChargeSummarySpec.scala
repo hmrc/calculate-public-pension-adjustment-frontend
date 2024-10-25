@@ -25,6 +25,7 @@ import pages.lifetimeallowance.WhoPayingExtraLtaChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -33,14 +34,14 @@ class WhoPayingExtraLtaChargeSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when a radio button is selected, return the summary row" in {
+    "when a radio button is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           WhoPayingExtraLtaChargePage,
           PensionScheme
         )
         .get
-      WhoPayingExtraLtaChargeSummary.row(userAnswers) shouldBe Some(
+      WhoPayingExtraLtaChargeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "whoPayingExtraLtaCharge.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoPayingExtraLtaCharge.pensionScheme")),
@@ -55,9 +56,24 @@ class WhoPayingExtraLtaChargeSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when a radio button is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          WhoPayingExtraLtaChargePage,
+          PensionScheme
+        )
+        .get
+      WhoPayingExtraLtaChargeSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"whoPayingExtraLtaCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlContent("whoPayingExtraLtaCharge.pensionScheme"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      LtaProtectionOrEnhancementsSummary.row(userAnswers) shouldBe None
+      LtaProtectionOrEnhancementsSummary.row(userAnswers, true) shouldBe None
     }
   }
 }

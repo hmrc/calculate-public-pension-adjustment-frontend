@@ -25,6 +25,7 @@ import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import controllers.lifetimeallowance.routes
 import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 import java.time.LocalDate
 import scala.xml.Text
@@ -35,14 +36,14 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
   val validAnswer: LocalDate              = LocalDate.of(2015, 4, 6)
 
   "row" - {
-    "when value is entered, return the summary row" in {
+    "when value is entered, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           DateOfBenefitCrystallisationEventPage,
           validAnswer
         )
         .get
-      DateOfBenefitCrystallisationEventSummary.row(userAnswers) shouldBe Some(
+      DateOfBenefitCrystallisationEventSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
           value = ValueViewModel(Text("6 April 2015").toString()),
@@ -57,9 +58,24 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
       )
     }
 
+    "when value is entered, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          DateOfBenefitCrystallisationEventPage,
+          validAnswer
+        )
+        .get
+      DateOfBenefitCrystallisationEventSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"dateOfBenefitCrystallisationEvent.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(Text("6 April 2015").toString())
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      DateOfBenefitCrystallisationEventSummary.row(userAnswers) shouldBe None
+      DateOfBenefitCrystallisationEventSummary.row(userAnswers, true) shouldBe None
     }
   }
 

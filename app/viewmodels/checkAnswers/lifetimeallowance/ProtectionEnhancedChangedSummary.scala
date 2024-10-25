@@ -24,10 +24,11 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object ProtectionEnhancedChangedSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ProtectionEnhancedChangedPage).map { answer =>
       val value = ValueViewModel(
         HtmlContent(
@@ -35,16 +36,23 @@ object ProtectionEnhancedChangedSummary {
         )
       )
 
-      SummaryListRowViewModel(
-        key = "protectionEnhancedChanged.checkYourAnswersLabel",
-        value = value,
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onPageLoad(CheckMode).url
+      if (changeAllowed) {
+        SummaryListRowViewModel(
+          key = "protectionEnhancedChanged.checkYourAnswersLabel",
+          value = value,
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("protectionEnhancedChanged.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("protectionEnhancedChanged.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"protectionEnhancedChanged.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = value
+        )
+      }
     }
 }

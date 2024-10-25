@@ -23,6 +23,7 @@ import pages.lifetimeallowance.ExcessLifetimeAllowancePaidPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -31,14 +32,14 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when Annual payment is selected, return the summary row" in {
+    "when Annual payment is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           ExcessLifetimeAllowancePaidPage,
           models.ExcessLifetimeAllowancePaid.Annualpayment
         )
         .get
-      ExcessLifetimeAllowancePaidSummary.row(userAnswers) shouldBe Some(
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.annualPayment")),
@@ -53,14 +54,29 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
-    "when Lump sum is selected, return the summary row" in {
+    "when Annual payment is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          ExcessLifetimeAllowancePaidPage,
+          models.ExcessLifetimeAllowancePaid.Annualpayment
+        )
+        .get
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"excessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.annualPayment"))
+        )
+      )
+    }
+
+    "when Lump sum is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           ExcessLifetimeAllowancePaidPage,
           models.ExcessLifetimeAllowancePaid.Lumpsum
         )
         .get
-      ExcessLifetimeAllowancePaidSummary.row(userAnswers) shouldBe Some(
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.lumpSum")),
@@ -75,9 +91,24 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when Lump sum is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          ExcessLifetimeAllowancePaidPage,
+          models.ExcessLifetimeAllowancePaid.Lumpsum
+        )
+        .get
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"excessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.lumpSum"))
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ExcessLifetimeAllowancePaidSummary.row(userAnswers) shouldBe None
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe None
     }
   }
 

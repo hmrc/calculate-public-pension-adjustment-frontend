@@ -24,24 +24,32 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object UserSchemeDetailsSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(UserSchemeDetailsPage).map { answer =>
       val value =
         HtmlFormat.escape(answer.name).toString + " / " + HtmlFormat.escape(answer.taxRef).toString
 
-      SummaryListRowViewModel(
-        key = "userSchemeDetails.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(value)),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode).url
+      if (changeAllowed) {
+        SummaryListRowViewModel(
+          key = "userSchemeDetails.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(value)),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("userSchemeDetails.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("userSchemeDetails.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"userSchemeDetails.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlContent(value))
+        )
+      }
     }
 }

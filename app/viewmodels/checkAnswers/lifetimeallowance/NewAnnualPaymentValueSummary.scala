@@ -24,21 +24,29 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import utils.CurrencyFormatter.currencyFormat
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object NewAnnualPaymentValueSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, changeAllowed: Boolean)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(NewAnnualPaymentValuePage).map { answer =>
-      SummaryListRowViewModel(
-        key = "newAnnualPaymentValue.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(currencyFormat(answer))),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(CheckMode).url
+      if (changeAllowed) {
+        SummaryListRowViewModel(
+          key = "newAnnualPaymentValue.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(currencyFormat(answer))),
+          actions = Seq(
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.NewAnnualPaymentValueController.onPageLoad(CheckMode).url
+            )
+              .withVisuallyHiddenText(messages("newAnnualPaymentValue.change.hidden"))
           )
-            .withVisuallyHiddenText(messages("newAnnualPaymentValue.change.hidden"))
         )
-      )
+      } else {
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"newAnnualPaymentValue.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel(HtmlContent(currencyFormat(answer)))
+        )
+      }
     }
 }

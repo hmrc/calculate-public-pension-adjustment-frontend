@@ -22,6 +22,7 @@ import org.scalatest.matchers.should.Matchers
 import pages.lifetimeallowance.LifetimeAllowanceChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -30,14 +31,14 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
   private implicit val messages: Messages = Helpers.stubMessages()
 
   "row" - {
-    "when Yes is selected, return the summary row" in {
+    "when Yes is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           LifetimeAllowanceChargePage,
           true
         )
         .get
-      LifetimeAllowanceChargeSummary.row(userAnswers) shouldBe Some(
+      LifetimeAllowanceChargeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -52,14 +53,29 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
-    "when No is selected, return the summary row" in {
+    "when Yes is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          LifetimeAllowanceChargePage,
+          true
+        )
+        .get
+      LifetimeAllowanceChargeSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"lifetimeAllowanceCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel("site.yes")
+        )
+      )
+    }
+
+    "when No is selected, return the summary row and change link when true" in {
       val userAnswers = UserAnswers("id")
         .set(
           LifetimeAllowanceChargePage,
           false
         )
         .get
-      LifetimeAllowanceChargeSummary.row(userAnswers) shouldBe Some(
+      LifetimeAllowanceChargeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -74,9 +90,24 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
       )
     }
 
+    "when No is selected, return the summary row and not change link when false" in {
+      val userAnswers = UserAnswers("id")
+        .set(
+          LifetimeAllowanceChargePage,
+          false
+        )
+        .get
+      LifetimeAllowanceChargeSummary.row(userAnswers, false) shouldBe Some(
+        SummaryListRowViewModel(
+          key = KeyViewModel(s"lifetimeAllowanceCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
+          value = ValueViewModel("site.no")
+        )
+      )
+    }
+
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      LifetimeAllowanceChargeSummary.row(userAnswers) shouldBe None
+      LifetimeAllowanceChargeSummary.row(userAnswers, true) shouldBe None
     }
   }
 
