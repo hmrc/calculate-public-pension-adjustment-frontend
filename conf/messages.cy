@@ -422,14 +422,6 @@ excessLifetimeAllowancePaid.error.required = Dewiswch sut y cafodd y gormodedd s
 excessLifetimeAllowancePaid.change.hidden = sut y cafodd y gormodedd sydd uwchben eich lwfans oes ei dalu i chi
 excessLifetimeAllowancePaid.hint = Mae hwn i’w weld ar eich datganiad pensiwn neu’ch cyfriflen banc.
 
-lifetimeAllowanceChargeAmount.title = Beth oedd gwerth eich tâl lwfans oes?
-lifetimeAllowanceChargeAmount.heading = Beth oedd gwerth eich tâl lwfans oes?
-lifetimeAllowanceChargeAmount.checkYourAnswersLabel = Beth oedd gwerth eich tâl lwfans oes?
-lifetimeAllowanceChargeAmount.error.nonNumeric = Rydych wedi nodi cymeriadau nad ydynt yn rhifau ar gyfer eich tâl lwfans oes. Mae’n rhaid i chi nodi cymeriadau rhifol
-lifetimeAllowanceChargeAmount.error.required = Nodwch swm ar gyfer eich tâl lwfans oes
-lifetimeAllowanceChargeAmount.error.wholeNumber = Nid ydych wedi nodi rhif cyfan ar gyfer eich tâl lwfans oes. Ni allwch ddefnyddio degolion.
-lifetimeAllowanceChargeAmount.error.outOfRange = Rydych wedi nodi gormod o gymeriadau ar gyfer eich tâl lwfans oes. 9 yw uchafswm y cymeriadau y gallwch eu nodi
-
 periodDateRangeAA.caption = Lwfans blynyddol rhwng
 periodDateRangeAA.2016 = 6 Ebrill 2015 a 5 Ebrill 2016
 periodDateRangeAA.2016-pre = 6 Ebrill 2015 a 8 Gorffennaf 2015
