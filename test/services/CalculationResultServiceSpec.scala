@@ -4263,17 +4263,20 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         index: Int,
         expectedTitle: String,
         expectedString: Option[String],
-        expectedLink: String
+        expectedLink: String,
+        expectedTotalCharge: Option[Int]
       ): Unit = {
         rows(index).title mustBe expectedTitle
         rows(index).changeString mustBe expectedString
         rows(index).link mustBe expectedLink
+        rows(index).totalCharge mustBe expectedTotalCharge
       }
 
       def checkRowNameReviewRowLTA(row: ReviewRowViewModel, expectedTitle: String, expectedLink: String): Unit = {
         row.title mustBe expectedTitle
         row.changeString mustBe None
         row.link mustBe expectedLink
+        row.totalCharge mustBe None
       }
 
       val index = 0
@@ -4292,29 +4295,33 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           sections(0),
           index,
           "calculationReview.period.2016",
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/2016"
+          Some("calculationReview.taxChargeNotChanged"),
+          "CalculationReviewIndividualAA/2016",
+          Some(0)
         )
         checkRowNameAndValueReviewRow(
           sections(1),
           index,
           "calculationReview.period.2017",
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/2017"
+          Some("calculationReview.taxChargeDecreasedBy"),
+          "CalculationReviewIndividualAA/2017",
+          Some(1200)
         )
         checkRowNameAndValueReviewRow(
           sections(2),
           index,
           "calculationReview.period.2018",
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/2018"
+          Some("calculationReview.taxChargeNotChanged"),
+          "CalculationReviewIndividualAA/2018",
+          Some(0)
         )
         checkRowNameAndValueReviewRow(
           sections(3),
           index,
           "calculationReview.period.2019",
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/2019"
+          Some("calculationReview.taxChargeNotChanged"),
+          "CalculationReviewIndividualAA/2019",
+          Some(0)
         )
       }
 
@@ -4332,29 +4339,33 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           sections(0),
           index,
           "calculationReview.period.2020",
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/2020"
+          Some("calculationReview.taxChargeNotChanged"),
+          "CalculationReviewIndividualAA/2020",
+          Some(0)
         )
         checkRowNameAndValueReviewRow(
           sections(1),
           index,
           "calculationReview.period.2021",
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/2021"
+          Some("calculationReview.taxChargeNotChanged"),
+          "CalculationReviewIndividualAA/2021",
+          Some(0)
         )
         checkRowNameAndValueReviewRow(
           sections(2),
           index,
           "calculationReview.period.2022",
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/2022"
+          Some("calculationReview.taxChargeNotChanged"),
+          "CalculationReviewIndividualAA/2022",
+          Some(0)
         )
         checkRowNameAndValueReviewRow(
           sections(3),
           index,
           "calculationReview.period.2023",
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/2023"
+          Some("calculationReview.taxChargeNotChanged"),
+          "CalculationReviewIndividualAA/2023",
+          Some(0)
         )
       }
 
