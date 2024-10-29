@@ -505,7 +505,6 @@ pensionSchemeInputAmounts.heading2.2016-pre = Beth yw eich swm mewnbwn pensiwn a
 pensionSchemeInputAmounts.heading2.2016-post = Beth yw eich swm mewnbwn pensiwn ar gyfer {0} rhwng 9 Gorffennaf 2015 a 5 Ebrill 2016?
 pensionSchemeInputAmounts.originalPIA.heading1 = Swm mewnbwn pensiwn
 pensionSchemeInputAmounts.originalPIA.heading2 = cy: What is your pension input amount for {0}?
-pensionSchemeInputAmounts.originalPIA.hint1 = Mae’n rhaid talgrynnu’r swm i lawr i’r bunt agosaf, er enghraifft 2300.
 pensionSchemeInputAmounts.message1 = Eich swm mewnbwn pensiwn yw’r cynnydd neu’r twf yng ngwerth eich pensiwn dros gyfnod o flwyddyn.
 pensionSchemeInputAmounts.message2 = Gallwch ddod o hyd i’r wybodaeth hon ar eich datganiad cynilion pensiwn wedi’i ddiwygio neu’ch datganiad cynilion pensiwn wedi’i unioni.
 pensionSchemeInputAmounts.message3 = Mae’n rhaid i chi ychwanegu’r symiau o’ch cynlluniau pensiwn hanesyddol a’ch cynlluniau ôl-ddiwygio, os yw’n berthnasol.
