@@ -1671,6 +1671,9 @@ calculationReview.charges = Change in annual allowance tax charges
 calculationReview.answers = Answers
 calculationReview.reviewPeriod = Review period
 calculationReview.reviewAnswers = Review answers
+calculationReview.taxChargeNotChanged = Not Changed
+calculationReview.taxChargeIncreasedBy = Increased by £
+calculationReview.taxChargeDecreasedBy =  Decreased by £
 
 calculationReviewIndividualAA.title = Calculation review for individual annual allowance
 calculationReviewIndividualAA.heading = Your annual allowance tax charge has reduced by £3,600

@@ -34,9 +34,9 @@ import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
-
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
+import scala.math.abs
 import scala.util.{Failure, Success}
 
 class CalculationResultService @Inject() (
@@ -712,26 +712,54 @@ class CalculationResultService @Inject() (
       Seq(
         ReviewRowViewModel(
           "calculationReview.period." + outDate.period.toString,
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/" + outDate.period.toString
+          Some(changeInAAOutDateTaxCharge(outDate)),
+          "CalculationReviewIndividualAA/" + outDate.period.toString,
+          Some(outDateTotalTaxCharge(outDate))
         )
       )
     }
+
+  private def changeInAAOutDateTaxCharge(outDate: OutOfDatesTaxYearsCalculation): String = {
+    val totalCharge = outDateTotalTaxCharge(outDate)
+    if (totalCharge == 0) {
+      "calculationReview.taxChargeNotChanged"
+    } else {
+      "calculationReview.taxChargeDecreasedBy"
+    }
+  }
+
+  private def outDateTotalTaxCharge(outDate: OutOfDatesTaxYearsCalculation): Int =
+    outDate.directCompensation + outDate.indirectCompensation
 
   private def inDatesReview(calculationResponse: CalculationResponse): Seq[Seq[ReviewRowViewModel]] =
     calculationResponse.inDates.map { inDate =>
       Seq(
         ReviewRowViewModel(
           "calculationReview.period." + inDate.period.toString,
-          Some("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-          "CalculationReviewIndividualAA/" + inDate.period.toString
+          Some(changeInAAInDateTaxCharge(inDate)),
+          "CalculationReviewIndividualAA/" + inDate.period.toString,
+          Some(abs(inDateTotalTaxCharge(inDate)))
         )
       )
     }
 
+  private def changeInAAInDateTaxCharge(inDate: InDatesTaxYearsCalculation): String = {
+    val totalCharge = inDateTotalTaxCharge(inDate)
+    if (totalCharge == 0) {
+      "calculationReview.taxChargeNotChanged"
+    } else if (totalCharge > 0) {
+      "calculationReview.taxChargeDecreasedBy"
+    } else {
+      "calculationReview.taxChargeIncreasedBy"
+    }
+  }
+
+  private def inDateTotalTaxCharge(inDate: InDatesTaxYearsCalculation): Int =
+    inDate.memberCredit + inDate.schemeCredit - inDate.debit
+
   private def lifetimeAllowanceReview: Seq[ReviewRowViewModel] =
     Seq(
-      ReviewRowViewModel("calculationReview.lta", None, "lifetime-allowance/view-answers")
+      ReviewRowViewModel("calculationReview.lta", None, "lifetime-allowance/view-answers", None)
     )
 
   def calculationResultsViewModel(calculateResponse: CalculationResponse): CalculationResultsViewModel = {

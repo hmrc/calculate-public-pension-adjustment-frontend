@@ -1671,6 +1671,9 @@ calculationReview.charges = cy: Change in annual allowance tax charges
 calculationReview.answers = cy: Answers
 calculationReview.reviewPeriod = cy: Review period
 calculationReview.reviewAnswers = cy: Review answers
+calculationReview.taxChargeNotChanged = cy: Not Changed
+calculationReview.taxChargeIncreasedBy = cy: Increased by £
+calculationReview.taxChargeDecreasedBy =  cy: Decreased by £
 
 calculationReviewIndividualAA.title = cy: Calculation review for individual annual allowance
 calculationReviewIndividualAA.heading = cy: Your annual allowance tax charge has reduced by £3,600
