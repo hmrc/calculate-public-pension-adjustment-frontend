@@ -17,20 +17,20 @@
 package forms.mappings
 
 import java.time.LocalDate
-
 import play.api.data.FormError
 import play.api.data.format.Formatter
+import play.api.i18n.Messages
 
 import scala.util.{Failure, Success, Try}
 
 private[mappings] class LocalDateFormatter(
-  invalidKey: String,
-  allRequiredKey: String,
-  twoRequiredKey: String,
-  requiredKey: String,
-  args: Seq[String] = Seq.empty
-) extends Formatter[LocalDate]
-    with Formatters {
+                                            invalidKey: String,
+                                            allRequiredKey: String,
+                                            twoRequiredKey: String,
+                                            requiredKey: String,
+                                            args: Seq[String] = Seq.empty
+                                          )(implicit val messages: Messages) extends Formatter[LocalDate]
+  with Formatters {
 
   private val fieldKeys: List[String] = List("day", "month", "year")
 
@@ -61,26 +61,8 @@ private[mappings] class LocalDateFormatter(
 
   override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], LocalDate] = {
 
-    val languageCode = args.head
-
-    println("====================================")
-    println(languageCode)
-    println("====================================")
-
-    val welshMessages = Map(
-      "day"  -> "dayButWelsh",
-      "month"  -> "monthButWelsh",
-      "year"  -> "yearButWelsh",
-    )
-
-
     val fields = fieldKeys.map { field =>
-      if(languageCode == "cy"){
-      welshMessages.getOrElse(field,field) -> data.get(s"$key.$field").filter(_.nonEmpty)
-      }
-      else{
-        field -> data.get(s"$key.$field").filter(_.nonEmpty)
-      }
+      field -> data.get(s"$key.$field").filter(_.nonEmpty)
     }.toMap
 
     lazy val missingFields = fields
@@ -88,17 +70,18 @@ private[mappings] class LocalDateFormatter(
       .map(_._1)
       .toList
 
+    val localisedFieldMessages = missingFields.map(field => messages(s"date.$field").toLowerCase)
     fields.count(_._2.isDefined) match {
       case 3 =>
         formatDate(key, data).left.map {
           _.map(_.copy(key = key, args = args))
         }
       case 2 =>
-        Left(List(FormError(key, requiredKey, missingFields ++ args)))
+        Left(List(FormError(key, requiredKey, localisedFieldMessages ++ args)))
       case 1 =>
-        Left(List(FormError(key, twoRequiredKey, missingFields ++ args)))
+        Left(List(FormError(key, twoRequiredKey, localisedFieldMessages ++ args)))
       case _ =>
-        Left(List(FormError(key, allRequiredKey, args)))
+        Left(List(FormError(key, allRequiredKey, localisedFieldMessages ++ args)))
     }
   }
 
@@ -108,6 +91,4 @@ private[mappings] class LocalDateFormatter(
       s"$key.month" -> value.getMonthValue.toString,
       s"$key.year"  -> value.getYear.toString
     )
-
-
 }

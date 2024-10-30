@@ -22,7 +22,7 @@ import models.Mode
 import models.requests.DataRequest
 import models.tasklist.sections.PreAASection
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, StopPayingPublicPensionPage}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -41,7 +41,7 @@ class FlexibleAccessStartDateController @Inject() (
   formProvider: FlexibleAccessStartDateFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: FlexibleAccessStartDateView
-)(implicit ec: ExecutionContext)
+)(implicit ec: ExecutionContext, messages: Messages)
     extends FrontendBaseController
     with I18nSupport {
 

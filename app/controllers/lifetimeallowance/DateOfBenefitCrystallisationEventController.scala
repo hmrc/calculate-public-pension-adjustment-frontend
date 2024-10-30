@@ -21,7 +21,7 @@ import forms.lifetimeallowance.DateOfBenefitCrystallisationEventFormProvider
 import models.Mode
 import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -39,7 +39,7 @@ class DateOfBenefitCrystallisationEventController @Inject() (
   formProvider: DateOfBenefitCrystallisationEventFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: DateOfBenefitCrystallisationEventView
-)(implicit ec: ExecutionContext)
+)(implicit ec: ExecutionContext, messages: Messages)
     extends FrontendBaseController
     with I18nSupport {
 
