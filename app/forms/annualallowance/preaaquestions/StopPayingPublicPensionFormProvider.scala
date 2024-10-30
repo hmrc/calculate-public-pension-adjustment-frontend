@@ -18,10 +18,12 @@ package forms.annualallowance.preaaquestions
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
 import forms.mappings.Mappings
+
 import javax.inject.Inject
 import play.api.data.Form
+
+import java.util.Locale
 
 class StopPayingPublicPensionFormProvider @Inject() extends Mappings {
 
@@ -29,7 +31,7 @@ class StopPayingPublicPensionFormProvider @Inject() extends Mappings {
 
     val min                               = LocalDate.of(2015, 4, 6)
     val max                               = LocalDate.of(2022, 4, 5)
-    val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+    val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("cy"))
 
     Form(
       "value" -> localDate(

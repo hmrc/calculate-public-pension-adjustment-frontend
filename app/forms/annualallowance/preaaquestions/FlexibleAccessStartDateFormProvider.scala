@@ -34,12 +34,14 @@ class FlexibleAccessStartDateFormProvider @Inject() extends Mappings {
     val min                               = LocalDate.of(FLEXIBLE_ACCESS_DATE_MIN_YEAR, FLEXIBLE_ACCESS_DATE_MIN_MONTH, FLEXIBLE_ACCESS_DATE_MIN_DAY)
     val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
+
     Form(
       "value" -> localDate(
         invalidKey = "flexibleAccessStartDate.error.invalid",
         allRequiredKey = "flexibleAccessStartDate.error.required.all",
         twoRequiredKey = "flexibleAccessStartDate.error.required.two",
-        requiredKey = "flexibleAccessStartDate.error.required"
+        requiredKey = "flexibleAccessStartDate.error.required",
+        Seq("cy")
       )
         .verifying(
           maxDate(
