@@ -708,17 +708,16 @@ class CalculationResultService @Inject() (
   def individualAASummaryModel(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     outDatesSummary(calculationResponse) ++ inDatesSummary(calculationResponse)
 
-  private def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] = {
-    // TODO get change in tax change int, then decide appropriate string before making tax charge int absolute
-    val changeInTaxChargeAmount = 1234
-
-    val messageKey = if (changeInTaxChargeAmount > 0) {
-      "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
-    } else {
-      "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
-    }
-
+  private def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.outDates.map { outDate =>
+      val changeInTaxChargeAmount = outDateTotalTaxCharge(outDate)
+
+      val messageKey = if (changeInTaxChargeAmount > 0) {
+        "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
+      } else {
+        "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+      }
+
       IndividualAASummaryModel(
         outDate.period,
         changeInTaxChargeAmount.abs,
@@ -730,20 +729,19 @@ class CalculationResultService @Inject() (
         outDate.revisedChargableAmountAfterTaxRate
       )
     }
-  }
 
-  private def inDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] = {
-    // TODO to change with change in tax charge value
-    val changeInTaxChargeAmount = 0
-
-    val messageKey = if (changeInTaxChargeAmount > 0) {
-      "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
-    } else if (changeInTaxChargeAmount < 0) {
-      "calculationReviewIndividualAA.changeInTaxChargeString.increase."
-    } else {
-      "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
-    }
+  private def inDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.inDates.map { inDate =>
+      val changeInTaxChargeAmount = inDateTotalTaxCharge(inDate)
+
+      val messageKey = if (changeInTaxChargeAmount > 0) {
+        "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
+      } else if (changeInTaxChargeAmount < 0) {
+        "calculationReviewIndividualAA.changeInTaxChargeString.increase."
+      } else {
+        "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+      }
+
       IndividualAASummaryModel(
         inDate.period,
         changeInTaxChargeAmount.abs,
@@ -755,7 +753,6 @@ class CalculationResultService @Inject() (
         inDate.revisedChargableAmountAfterTaxRate
       )
     }
-  }
 
   def calculationReviewViewModel(calculationResponse: CalculationResponse): CalculationReviewViewModel = {
     val outDatesVal: Seq[Seq[ReviewRowViewModel]]     = outDatesReview(calculationResponse)

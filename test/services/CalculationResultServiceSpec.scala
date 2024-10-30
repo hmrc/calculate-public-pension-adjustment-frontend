@@ -4242,9 +4242,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         summaryModel mustBe List(
           IndividualAASummaryModel(
             Period._2016,
-            1234,
-            1234,
-            "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
             0,
             0,
             0,
@@ -4252,8 +4252,8 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           ),
           IndividualAASummaryModel(
             Period._2017,
-            1234,
-            1234,
+            1200,
+            1200,
             "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
             0,
             1200,
@@ -4262,9 +4262,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           ),
           IndividualAASummaryModel(
             Period._2018,
-            1234,
-            1234,
-            "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
             0,
             0,
             0,
@@ -4272,9 +4272,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           ),
           IndividualAASummaryModel(
             Period._2019,
-            1234,
-            1234,
-            "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
             0,
             0,
             0,
@@ -4337,9 +4337,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         val year2016 = summaryModel(0)
 
         year2016.period mustBe Period._2016
-        year2016.changeInTaxCharge mustBe 1234
-        year2016.changeInTaxChargeNonAbs mustBe 1234
-        year2016.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
+        year2016.changeInTaxCharge mustBe 0
+        year2016.changeInTaxChargeNonAbs mustBe 0
+        year2016.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
         year2016.revisedChargeableAmountBeforeTaxRate mustBe 0
         year2016.chargePaidByMember mustBe 0
         year2016.chargePaidBySchemes mustBe 0
