@@ -503,7 +503,6 @@ pensionSchemeInputAmounts.heading.2016-pre = Pension input amount for {0} betwee
 pensionSchemeInputAmounts.heading.2016-post = Pension input amount for {0} between 9 July 2015 and 5 April 2016
 pensionSchemeInputAmounts.heading2.2016-pre = What is your pension input amount for {0} from 6 April 2015 and 8 July 2015?
 pensionSchemeInputAmounts.heading2.2016-post = What is your pension input amount for {0} from 9 July 2015 to 5 April 2016?
-pensionSchemeInputAmounts.heading = Pension input amount for {0} between {1}
 pensionSchemeInputAmounts.originalPIA.heading1 = Pension input amount
 pensionSchemeInputAmounts.originalPIA.heading2 = What is your pension input amount for {0} from {1}?
 pensionSchemeInputAmounts.message1 = Your pension input amount is the increase or growth in the value of your pension over a year.
