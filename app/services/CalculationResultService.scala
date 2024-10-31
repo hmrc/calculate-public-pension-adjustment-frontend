@@ -708,7 +708,7 @@ class CalculationResultService @Inject() (
   def individualAASummaryModel(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     outDatesSummary(calculationResponse) ++ inDatesSummary(calculationResponse)
 
-  private def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
+  def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.outDates.map { outDate =>
       val changeInTaxChargeAmount = outDateTotalTaxCharge(outDate)
 
@@ -730,7 +730,7 @@ class CalculationResultService @Inject() (
       )
     }
 
-  private def inDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
+  def inDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.inDates.map { inDate =>
       val changeInTaxChargeAmount = inDateTotalTaxCharge(inDate)
 
@@ -826,7 +826,7 @@ class CalculationResultService @Inject() (
 
   def calculationReviewIndividualAAViewModel(
     calculateResponse: CalculationResponse,
-    period: String,
+    period: Option[String],
     userAnswers: UserAnswers
   )(implicit ec: ExecutionContext, hc: HeaderCarrier): Future[CalculationReviewIndividualAAViewModel] = {
     val outDatesFuture: Future[Seq[Seq[RowViewModel]]] = outDatesReviewAA(calculateResponse, period, userAnswers)
@@ -899,9 +899,17 @@ class CalculationResultService @Inject() (
       )
     }
 
-  private def outDatesReviewAA(
+  private def outDatesReviewAAFiltered(
+    period: Option[String],
+    outDates: List[OutOfDatesTaxYearsCalculation]
+  ): List[OutOfDatesTaxYearsCalculation] =
+    if (period.isDefined) {
+      outDates.filter(outDate => outDate.period.toString == period.get)
+    } else outDates
+
+  def outDatesReviewAA(
     calculateResponse: CalculationResponse,
-    period: String,
+    period: Option[String],
     userAnswers: UserAnswers
   )(implicit ec: ExecutionContext, hc: HeaderCarrier): Future[Seq[Seq[RowViewModel]]] = {
     val taxYearsFutures: List[Future[Option[TaxYear2016To2023]]] = List(
@@ -918,8 +926,7 @@ class CalculationResultService @Inject() (
     val resolvedTaxYears: Future[List[Option[TaxYear2016To2023]]] = Future.sequence(taxYearsFutures)
 
     resolvedTaxYears.map { _2016To2023TaxYears =>
-      calculateResponse.outDates
-        .filter(outDate => outDate.period.toString == period)
+      outDatesReviewAAFiltered(period, calculateResponse.outDates)
         .map { outDate =>
           val taxYear: IncomeSubJourney = taxYearIncomeSubJourney(_2016To2023TaxYears.flatten, outDate.period)
           Seq(
@@ -972,9 +979,16 @@ class CalculationResultService @Inject() (
     }
   }
 
+  private def inDatesReviewAAFiltered(
+    period: Option[String],
+    inDates: List[InDatesTaxYearsCalculation]
+  ): List[InDatesTaxYearsCalculation] =
+    if (period.isDefined) inDates.filter(inDate => inDate.period.toString == period.get)
+    else inDates
+
   private def inDatesReviewAA(
     calculateResponse: CalculationResponse,
-    period: String,
+    period: Option[String],
     userAnswers: UserAnswers
   )(implicit ec: ExecutionContext, hc: HeaderCarrier): Future[Seq[Seq[RowViewModel]]] = {
     val taxYearsFutures: List[Future[Option[TaxYear2016To2023]]] = List(
@@ -991,8 +1005,7 @@ class CalculationResultService @Inject() (
     val resolvedTaxYears: Future[List[Option[TaxYear2016To2023]]] = Future.sequence(taxYearsFutures)
 
     resolvedTaxYears.map { _2016To2023TaxYears =>
-      calculateResponse.inDates
-        .filter(inDate => inDate.period.toString == period)
+      inDatesReviewAAFiltered(period, calculateResponse.inDates)
         .map { inDate =>
           val taxYear: IncomeSubJourney = taxYearIncomeSubJourney(_2016To2023TaxYears.flatten, inDate.period)
           Seq(

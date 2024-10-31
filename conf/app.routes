@@ -612,3 +612,5 @@ POST       /calculationReview                       controllers.CalculationRevie
 
 GET        /CalculationReviewIndividualAA/:period                       controllers.CalculationReviewIndividualAAController.onPageLoad(period:Period)
 POST       /CalculationReviewIndividualAA                       controllers.CalculationReviewIndividualAAController.onSubmit()
+
+GET        /printReview                       controllers.PrintReviewController.onPageLoad()

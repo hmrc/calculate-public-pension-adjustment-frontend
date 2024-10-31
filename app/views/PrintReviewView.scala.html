@@ -1,0 +1,149 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.CalculationResults.CalculationReviewIndividualAAViewModel
+@import models.CalculationResults.IndividualAASummaryModel
+@import models.CalculationResults.RowViewModel
+
+@import views.html.helper.CSPNonce
+@this(
+        printLink: PrintLink,
+        layout: templates.Layout,
+        formHelper: FormWithCSRF,
+        govukButton: GovukButton
+)
+
+@(form: Form[_],
+calculationReviewIndividualAAViewModel: CalculationReviewIndividualAAViewModel,
+isInCredit: Boolean,
+isInDebit: Boolean,
+outDatesStringValues: Seq[IndividualAASummaryModel],
+inDatesStringValues: Seq[IndividualAASummaryModel])(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("printReview.title"))) {
+
+<h1 class="govuk-heading-xl">@messages("printReview.heading")</h1>
+
+@outDatesStringValues.zipWithIndex.map { outDateStringValues =>
+<h1 class="govuk-heading-l">@messages(outDateStringValues._1.changeInTaxChargeString + "message1", outDateStringValues._1.changeInTaxCharge)</h1>
+
+<h2 class="govuk-heading-m">@messages("calculationReviewIndividualAA.heading2." + outDateStringValues._1.period.toString())</h2>
+
+@if(outDateStringValues._1.changeInTaxChargeNonAbs < 0) {
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message8")</p>
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message9")</p>
+
+}
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message1", outDateStringValues._1.revisedChargeableAmountBeforeTaxRate)</p>
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message2", outDateStringValues._1.chargePaidByMember)</p>
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message3", outDateStringValues._1.chargePaidBySchemes)</p>
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message4", outDateStringValues._1.revisedChargeableAmountAfterTaxRate)</p>
+
+<p class="govuk-body">@messages(outDateStringValues._1.changeInTaxChargeString + "message2", outDateStringValues._1.changeInTaxCharge)</p>
+
+@if(outDateStringValues._1.changeInTaxChargeNonAbs > 0){
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message6")</p>
+
+<ul class="govuk-body">
+    <li>@messages("calculationReviewIndividualAA.bullet.1")</li>
+    <li>@messages("calculationReviewIndividualAA.bullet.2")</li>
+</ul>
+}
+
+<!-- results table -->
+<h2 class="govuk-heading-m">@messages("calculationReviewIndividualAA.heading3")</h2>
+
+<table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">@messages("calculationResults.yourResult")</th>
+        <th scope="col" class="govuk-table__header">@messages("calculationResults.amount")</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    @calculationReviewIndividualAAViewModel.outDatesData(outDateStringValues._2).map { section =>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@messages(section.name)</th>
+        <td class="govuk-table__cell">@messages(section.value)</td>
+    </tr>
+    }
+    </tbody>
+</table>
+
+}
+
+@inDatesStringValues.zipWithIndex.map { inDatesStringValues =>
+<h1 class="govuk-heading-l">@messages(inDatesStringValues._1.changeInTaxChargeString + "message1", inDatesStringValues._1.changeInTaxCharge)</h1>
+
+<h2 class="govuk-heading-m">@messages("calculationReviewIndividualAA.heading2." + inDatesStringValues._1.period.toString())</h2>
+
+@if(inDatesStringValues._1.changeInTaxChargeNonAbs < 0) {
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message8")</p>
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message9")</p>
+
+}
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message1", inDatesStringValues._1.revisedChargeableAmountBeforeTaxRate)</p>
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message2", inDatesStringValues._1.chargePaidByMember)</p>
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message3", inDatesStringValues._1.chargePaidBySchemes)</p>
+
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message4", inDatesStringValues._1.revisedChargeableAmountAfterTaxRate)</p>
+
+<p class="govuk-body">@messages(inDatesStringValues._1.changeInTaxChargeString + "message2", inDatesStringValues._1.changeInTaxCharge)</p>
+
+@if(inDatesStringValues._1.changeInTaxChargeNonAbs > 0){
+<p class="govuk-body">@messages("calculationReviewIndividualAA.message6")</p>
+
+<ul class="govuk-body">
+    <li>@messages("calculationReviewIndividualAA.bullet.1")</li>
+    <li>@messages("calculationReviewIndividualAA.bullet.2")</li>
+</ul>
+}
+
+<!-- results table -->
+<h2 class="govuk-heading-m">@messages("calculationReviewIndividualAA.heading3")</h2>
+
+<table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">@messages("calculationResults.yourResult")</th>
+        <th scope="col" class="govuk-table__header">@messages("calculationResults.amount")</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    @calculationReviewIndividualAAViewModel.outDatesData(inDatesStringValues._2).map { section =>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@messages(section.name)</th>
+        <td class="govuk-table__cell">@messages(section.value)</td>
+    </tr>
+    }
+    </tbody>
+</table>
+
+}
+
+
+}

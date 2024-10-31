@@ -16,66 +16,60 @@
 
 package controllers
 
-import config.FrontendAppConfig
 import controllers.actions._
 import models.CalculationResults.IndividualAASummaryModel
-import models.Period
 import play.api.data.Form
 import play.api.data.Forms.ignored
+
+import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.CalculationResultService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
-import views.html.CalculationReviewIndividualAAView
+import views.html.PrintReviewView
+import services.CalculationResultService
 
-import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
-class CalculationReviewIndividualAAController @Inject() (
-  override val messagesApi: MessagesApi,
-  identify: IdentifierAction,
-  getData: DataRetrievalAction,
-  requireData: DataRequiredAction,
-  val controllerComponents: MessagesControllerComponents,
-  view: CalculationReviewIndividualAAView,
-  calculationResultService: CalculationResultService,
-  config: FrontendAppConfig
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
-    with I18nSupport {
+class PrintReviewController @Inject()(
+                                       override val messagesApi: MessagesApi,
+                                       identify: IdentifierAction,
+                                       getData: DataRetrievalAction,
+                                       requireData: DataRequiredAction,
+                                       val controllerComponents: MessagesControllerComponents,
+                                       view: PrintReviewView,
+                                       calculationResultService: CalculationResultService,
+                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = Form("_" -> ignored(()))
 
-  def onPageLoad(period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
       calculationResultService.sendRequest(request.userAnswers).flatMap { calculationResponse =>
-        val allYears: Seq[IndividualAASummaryModel]  =
-          calculationResultService.individualAASummaryModel(calculationResponse)
-        val individualYear: IndividualAASummaryModel = allYears.find(year => year.period == period).get
+        val outDatesStringValues = calculationResultService.outDatesSummary(calculationResponse)
+        val inDatesStringValues = calculationResultService.inDatesSummary(calculationResponse)
+
         calculationResultService
-          .calculationReviewIndividualAAViewModel(calculationResponse, Some(period.toString()), request.userAnswers)
+          .calculationReviewIndividualAAViewModel(calculationResponse, None, request.userAnswers)
           .map { calculationReviewIndividualAAViewModel =>
             val isInCredit: Boolean = calculationResponse.totalAmounts.inDatesCredit > 0
-            val isInDebit: Boolean  = calculationResponse.totalAmounts.inDatesDebit > 0
+            val isInDebit: Boolean = calculationResponse.totalAmounts.inDatesDebit > 0
             Ok(
               view(
                 form,
-                period.toString(),
                 calculationReviewIndividualAAViewModel,
                 isInCredit,
                 isInDebit,
-                individualYear
+                outDatesStringValues,
+                inDatesStringValues
               )
             )
           }
       }
   }
 
-  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    Future.successful(Redirect(routes.CalculationReviewController.onPageLoad()))
-  }
 }

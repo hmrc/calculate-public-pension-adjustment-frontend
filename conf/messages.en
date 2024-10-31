@@ -1726,3 +1726,6 @@ calculationReviewIndividualAA.heading2.2020 = Results explained for 6 April 2019
 calculationReviewIndividualAA.heading2.2021 = Results explained for 6 April 2020 to 5 April 2021
 calculationReviewIndividualAA.heading2.2022 = Results explained for 6 April 2021 to 5 April 2022
 calculationReviewIndividualAA.heading2.2023 = Results explained for 6 April 2022 to 5 April 2023
+
+printReview.title = printReview
+printReview.heading = printReview
