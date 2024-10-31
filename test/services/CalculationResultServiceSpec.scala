@@ -4147,13 +4147,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     }
 
     "Caculation Reivew Individual AA" - {
-      "out dates Review AA should be well formed and should filter chosen period" in {
+      "out dates Review AA should be well formed and should filter chosen period when given period" in {
         val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
         val viewModel: Future[CalculationReviewIndividualAAViewModel] =
           service.calculationReviewIndividualAAViewModel(
             calculationResult,
-            Period._2016.toString(),
+            Some(Period._2016.toString()),
             userAnswers1.copy(data = data2)
           )
 
@@ -4186,13 +4186,13 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         )
       }
 
-      "in dates Review AA should be well formed and should filter chosen period" in {
+      "in dates Review AA should be well formed and should filter chosen period when given period" in {
         val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
         val viewModel: Future[CalculationReviewIndividualAAViewModel] =
           service.calculationReviewIndividualAAViewModel(
             calculationResult,
-            Period._2020.toString(),
+            Some(Period._2020.toString()),
             userAnswers1.copy(data = data2)
           )
 
@@ -4223,6 +4223,180 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           7,
           "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
           "48000"
+        )
+
+      }
+
+      "out dates Review AA should be well formed and should return all period when NOT given period" in {
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val viewModel: Future[CalculationReviewIndividualAAViewModel] =
+          service.calculationReviewIndividualAAViewModel(
+            calculationResult,
+            None,
+            userAnswers1.copy(data = data2)
+          )
+
+        val sections: Seq[Seq[RowViewModel]] = viewModel.futureValue.outDates
+        sections.size mustBe 4
+
+        val _2016Period = sections(0)
+        val _2017Period = sections(1)
+
+        println(_2017Period)
+
+        checkRowNameAndValue(
+          _2016Period,
+          0,
+          "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          1,
+          "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          2,
+          "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          3,
+          "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          4,
+          "calculationReviewIndividualAA.annualResults.outDates.directCompensation",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          5,
+          "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          6,
+          "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
+          "60000"
+        )
+
+        checkRowNameAndValue(
+          _2017Period,
+          0,
+          "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          1,
+          "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember",
+          "1200"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          2,
+          "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          3,
+          "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          4,
+          "calculationReviewIndividualAA.annualResults.outDates.directCompensation",
+          "1200"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          5,
+          "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          6,
+          "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
+          "0"
+        )
+
+      }
+
+      "in dates Review AA should be well formed and should return all period when NOT given period" in {
+        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val viewModel: Future[CalculationReviewIndividualAAViewModel] =
+          service.calculationReviewIndividualAAViewModel(
+            calculationResult,
+            None,
+            userAnswers1.copy(data = data2)
+          )
+
+        val sections: Seq[Seq[RowViewModel]] = viewModel.futureValue.inDates
+        sections.size mustBe 4
+
+        val _2020 = sections(0)
+        val _2021 = sections(1)
+
+        println(_2021)
+
+        checkRowNameAndValue(_2020, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "0")
+        checkRowNameAndValue(_2020, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "0")
+        checkRowNameAndValue(
+          _2020,
+          2,
+          "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountBeforeTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2020,
+          3,
+          "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountAfterTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(_2020, 4, "calculationReviewIndividualAA.annualResults.inDates.debit", "0")
+        checkRowNameAndValue(_2020, 5, "calculationReviewIndividualAA.annualResults.inDates.memberCredit", "0")
+        checkRowNameAndValue(_2020, 6, "calculationReviewIndividualAA.annualResults.inDates.schemeCredit", "0")
+        checkRowNameAndValue(
+          _2020,
+          7,
+          "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
+          "48000"
+        )
+
+        checkRowNameAndValue(_2021, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "0")
+        checkRowNameAndValue(_2021, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "0")
+        checkRowNameAndValue(
+          _2021,
+          2,
+          "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountBeforeTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(
+          _2021,
+          3,
+          "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountAfterTaxRate",
+          "0"
+        )
+        checkRowNameAndValue(_2021, 4, "calculationReviewIndividualAA.annualResults.inDates.debit", "0")
+        checkRowNameAndValue(_2021, 5, "calculationReviewIndividualAA.annualResults.inDates.memberCredit", "0")
+        checkRowNameAndValue(_2021, 6, "calculationReviewIndividualAA.annualResults.inDates.schemeCredit", "0")
+        checkRowNameAndValue(
+          _2021,
+          7,
+          "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
+          "56000"
         )
 
       }
@@ -4447,7 +4621,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2016",
           Some("calculationReview.taxChargeNotChanged"),
-          "CalculationReviewIndividualAA/2016",
+          "/public-pension-adjustment/calculation-results/2016/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4455,7 +4629,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2017",
           Some("calculationReview.taxChargeDecreasedBy"),
-          "CalculationReviewIndividualAA/2017",
+          "/public-pension-adjustment/calculation-results/2017/detailed-breakdown",
           Some(1200)
         )
         checkRowNameAndValueReviewRow(
@@ -4463,7 +4637,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2018",
           Some("calculationReview.taxChargeNotChanged"),
-          "CalculationReviewIndividualAA/2018",
+          "/public-pension-adjustment/calculation-results/2018/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4471,7 +4645,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2019",
           Some("calculationReview.taxChargeNotChanged"),
-          "CalculationReviewIndividualAA/2019",
+          "/public-pension-adjustment/calculation-results/2019/detailed-breakdown",
           Some(0)
         )
       }
@@ -4491,7 +4665,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2020",
           Some("calculationReview.taxChargeNotChanged"),
-          "CalculationReviewIndividualAA/2020",
+          "/public-pension-adjustment/calculation-results/2020/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4499,7 +4673,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2021",
           Some("calculationReview.taxChargeNotChanged"),
-          "CalculationReviewIndividualAA/2021",
+          "/public-pension-adjustment/calculation-results/2021/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4507,7 +4681,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2022",
           Some("calculationReview.taxChargeNotChanged"),
-          "CalculationReviewIndividualAA/2022",
+          "/public-pension-adjustment/calculation-results/2022/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4515,7 +4689,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2023",
           Some("calculationReview.taxChargeNotChanged"),
-          "CalculationReviewIndividualAA/2023",
+          "/public-pension-adjustment/calculation-results/2023/detailed-breakdown",
           Some(0)
         )
       }
