@@ -43,9 +43,9 @@ class StopPayingPublicPensionController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  def form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    val form = formProvider()
     val preparedForm = request.userAnswers.get(StopPayingPublicPensionPage) match {
       case None        => form
       case Some(value) => form.fill(value)
@@ -69,7 +69,8 @@ class StopPayingPublicPensionController @Inject() (
           .get
       }
 
-      form
+      val form = formProvider()
+        form
         .bindFromRequest()
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
