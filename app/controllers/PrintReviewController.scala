@@ -65,7 +65,8 @@ class PrintReviewController @Inject()(
                 isInCredit,
                 isInDebit,
                 outDatesStringValues,
-                inDatesStringValues
+                inDatesStringValues,
+                calculationResultService.calculationReviewViewModel(calculationResponse)
               )
             )
           }
