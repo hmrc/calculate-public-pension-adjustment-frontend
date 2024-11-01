@@ -16,11 +16,11 @@
 
 package models
 
-import models.CalculationResults.{CalculationInputs, CalculationResponse}
 import play.api.libs.json._
 
 case class CalculationStartAuditEvent(
   uniqueId: String,
+  userId: String,
   authenticated: Boolean
 )
 
