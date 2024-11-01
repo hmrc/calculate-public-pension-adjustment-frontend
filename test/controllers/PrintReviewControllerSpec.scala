@@ -50,13 +50,14 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
       val calculationResult: CalculationResponse =
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      val mockRowViewModel                  = RowViewModel("test", "test")
-      val mockCalculationResultService      = mock[CalculationResultService]
-      val mockPrintReviewViewModel          = CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
-      val list = SummaryListViewModel(Seq.empty)
-      val mockOutDatesSummary               =
+      val mockRowViewModel             = RowViewModel("test", "test")
+      val mockCalculationResultService = mock[CalculationResultService]
+      val mockPrintReviewViewModel     =
+        CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+      val list                         = SummaryListViewModel(Seq.empty)
+      val mockOutDatesSummary          =
         IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10)
-      val mockInDatesSummary               =
+      val mockInDatesSummary           =
         IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10)
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
@@ -72,6 +73,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
       when(mockCalculationResultService.inDatesSummary(any))
         .thenReturn(Seq(mockInDatesSummary))
 
+      when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -86,7 +88,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        //contentAsString(result).contains("Print review") mustBe true
+        contentAsString(result).contains("Print or save calculation results") mustBe true
       }
     }
 

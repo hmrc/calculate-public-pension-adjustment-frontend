@@ -903,9 +903,9 @@ class CalculationResultService @Inject() (
   }
 
   private def outDatesReviewAAFiltered(
-                                        period: Option[String],
-                                        outDates: List[OutOfDatesTaxYearsCalculation]
-                                      ): List[OutOfDatesTaxYearsCalculation] =
+    period: Option[String],
+    outDates: List[OutOfDatesTaxYearsCalculation]
+  ): List[OutOfDatesTaxYearsCalculation] =
     if (period.isDefined) {
       outDates.filter(outDate => outDate.period.toString == period.get)
     } else outDates
@@ -987,9 +987,9 @@ class CalculationResultService @Inject() (
   }
 
   private def inDatesReviewAAFiltered(
-                                       period: Option[String],
-                                       inDates: List[InDatesTaxYearsCalculation]
-                                     ): List[InDatesTaxYearsCalculation] =
+    period: Option[String],
+    inDates: List[InDatesTaxYearsCalculation]
+  ): List[InDatesTaxYearsCalculation] =
     if (period.isDefined) inDates.filter(inDate => inDate.period.toString == period.get)
     else inDates
 
@@ -1024,7 +1024,6 @@ class CalculationResultService @Inject() (
       case ty: InitialFlexiblyAccessedTaxYear => ty.incomeSubJourney
       case ty: PostFlexiblyAccessedTaxYear    => ty.incomeSubJourney
     }
-
 
   def calculationResultsViewModel(calculateResponse: CalculationResponse): CalculationResultsViewModel = {
     val resubmissionVal: Seq[RowViewModel]  = resubmission(calculateResponse)
@@ -1094,7 +1093,6 @@ class CalculationResultService @Inject() (
         RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", inDate.unusedAnnualAllowance.toString())
       )
     }
-
 
   def adjustedIncomeCalculation(userAnswers: UserAnswers, period: Period): BigInt = {
 
