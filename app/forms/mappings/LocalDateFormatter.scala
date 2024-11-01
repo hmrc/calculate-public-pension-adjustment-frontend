@@ -53,9 +53,9 @@ private[mappings] class LocalDateFormatter(
     val month = new MonthFormatter(invalidKey, args)
 
     for {
-      day   <- int.bind(s"key.day", data)
-      month <- month.bind(s"key.month", data)
-      year  <- int.bind(s"key.year", data)
+      day   <- int.bind(s"$key.day", data)
+      month <- month.bind(s"$key.month", data)
+      year  <- int.bind(s"$key.year", data)
       date  <- toDate(key, day, month, year)
     } yield date
   }
@@ -64,22 +64,14 @@ private[mappings] class LocalDateFormatter(
 
     val fields = fieldKeys.map {
       field =>
-        field -> data.get(s"key.field").filter(_.nonEmpty)
+        field -> data.get(s"$key.$field").filter(_.nonEmpty)
     }.toMap
 
     lazy val missingFields = fields
       .withFilter(_._2.isEmpty)
       .map(_._1)
       .toList
-      .map{ field =>
-        val message = messages(s"date.error.$field")
-        println(s"Field: $field, Message: $message")
-        message
-      }
-
-    println("======================================")
-    println(missingFields)
-    println("======================================")
+      .map(field => messages(s"date.error.$field"))
 
     fields.count(_._2.isDefined) match {
       case 3 =>
@@ -97,9 +89,9 @@ private[mappings] class LocalDateFormatter(
 
   override def unbind(key: String, value: LocalDate): Map[String, String] =
     Map(
-      s"key.day" -> value.getDayOfMonth.toString,
-      s"key.month" -> value.getMonthValue.toString,
-      s"key.year" -> value.getYear.toString
+      s"$key.day" -> value.getDayOfMonth.toString,
+      s"$key.month" -> value.getMonthValue.toString,
+      s"$key.year" -> value.getYear.toString
     )
 }
 
