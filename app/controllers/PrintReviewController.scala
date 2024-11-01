@@ -18,6 +18,8 @@ package controllers
 
 import controllers.actions._
 import models.CalculationResults.IndividualAASummaryModel
+import models.tasklist.SectionStatus
+import models.tasklist.sections.LTASection
 import play.api.data.Form
 import play.api.data.Forms.ignored
 
@@ -29,48 +31,87 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.PrintReviewView
 import services.CalculationResultService
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import viewmodels.checkAnswers.lifetimeallowance.{AnnualPaymentValueSummary, DateOfBenefitCrystallisationEventSummary, EnhancementTypeSummary, ExcessLifetimeAllowancePaidSummary, InternationalEnhancementReferenceSummary, LifetimeAllowanceChargeSummary, LtaPensionSchemeDetailsSummary, LtaProtectionOrEnhancementsSummary, LumpSumValueSummary, NewAnnualPaymentValueSummary, NewEnhancementTypeSummary, NewExcessLifetimeAllowancePaidSummary, NewInternationalEnhancementReferenceSummary, NewLumpSumValueSummary, NewPensionCreditReferenceSummary, PensionCreditReferenceSummary, ProtectionEnhancedChangedSummary, ProtectionReferenceSummary, ProtectionTypeSummary, QuarterChargePaidSummary, ReferenceNewProtectionTypeEnhancementSummary, SchemeNameAndTaxRefSummary, UserSchemeDetailsSummary, WhatNewProtectionTypeEnhancementSummary, WhoPaidLTAChargeSummary, WhoPayingExtraLtaChargeSummary, YearChargePaidSummary}
+import viewmodels.govuk.all.SummaryListViewModel
 
 import scala.concurrent.ExecutionContext
 
-class PrintReviewController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: PrintReviewView,
-                                       calculationResultService: CalculationResultService,
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class PrintReviewController @Inject() (
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: PrintReviewView,
+  calculationResultService: CalculationResultService
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   val form = Form("_" -> ignored(()))
 
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
-      implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    val rows: Seq[Option[SummaryListRow]] = Seq(
+      DateOfBenefitCrystallisationEventSummary.row(request.userAnswers, changeAllowed = false),
+      LtaProtectionOrEnhancementsSummary.row(request.userAnswers, changeAllowed = false),
+      ProtectionTypeSummary.row(request.userAnswers, changeAllowed = false),
+      ProtectionReferenceSummary.row(request.userAnswers, changeAllowed = false),
+      EnhancementTypeSummary.row(request.userAnswers, changeAllowed = false),
+      InternationalEnhancementReferenceSummary.row(request.userAnswers, changeAllowed = false),
+      PensionCreditReferenceSummary.row(request.userAnswers, changeAllowed = false),
+      ProtectionEnhancedChangedSummary.row(request.userAnswers, changeAllowed = false),
+      WhatNewProtectionTypeEnhancementSummary.row(request.userAnswers, changeAllowed = false),
+      ReferenceNewProtectionTypeEnhancementSummary.row(request.userAnswers, changeAllowed = false),
+      NewEnhancementTypeSummary.row(request.userAnswers, changeAllowed = false),
+      NewInternationalEnhancementReferenceSummary.row(request.userAnswers, changeAllowed = false),
+      NewPensionCreditReferenceSummary.row(request.userAnswers, changeAllowed = false),
+      LifetimeAllowanceChargeSummary.row(request.userAnswers, changeAllowed = false),
+      ExcessLifetimeAllowancePaidSummary.row(request.userAnswers, changeAllowed = false),
+      LumpSumValueSummary.row(request.userAnswers, changeAllowed = false),
+      AnnualPaymentValueSummary.row(request.userAnswers, changeAllowed = false),
+      WhoPaidLTAChargeSummary.row(request.userAnswers, changeAllowed = false),
+      SchemeNameAndTaxRefSummary.row(request.userAnswers, changeAllowed = false),
+      UserSchemeDetailsSummary.row(request.userAnswers, changeAllowed = false),
+      QuarterChargePaidSummary.row(request.userAnswers, changeAllowed = false),
+      YearChargePaidSummary.row(request.userAnswers, changeAllowed = false),
+      NewExcessLifetimeAllowancePaidSummary.row(request.userAnswers, false),
+      NewLumpSumValueSummary.row(request.userAnswers, changeAllowed = false),
+      NewAnnualPaymentValueSummary.row(request.userAnswers, changeAllowed = false),
+      WhoPayingExtraLtaChargeSummary.row(request.userAnswers, changeAllowed = false),
+      LtaPensionSchemeDetailsSummary.row(request.userAnswers, changeAllowed = false)
+    )
 
-      calculationResultService.sendRequest(request.userAnswers).flatMap { calculationResponse =>
-        val outDatesStringValues = calculationResultService.outDatesSummary(calculationResponse)
-        val inDatesStringValues = calculationResultService.inDatesSummary(calculationResponse)
+    val isLTACompleteWithoutKickout = LTASection.status(request.userAnswers) == SectionStatus.Completed && !LTASection
+      .kickoutHasBeenReached(request.userAnswers)
 
-        calculationResultService
-          .calculationReviewIndividualAAViewModel(calculationResponse, None, request.userAnswers)
-          .map { calculationReviewIndividualAAViewModel =>
-            val isInCredit: Boolean = calculationResponse.totalAmounts.inDatesCredit > 0
-            val isInDebit: Boolean = calculationResponse.totalAmounts.inDatesDebit > 0
-            Ok(
-              view(
-                form,
-                calculationReviewIndividualAAViewModel,
-                isInCredit,
-                isInDebit,
-                outDatesStringValues,
-                inDatesStringValues,
-                calculationResultService.calculationReviewViewModel(calculationResponse)
-              )
+    calculationResultService.sendRequest(request.userAnswers).flatMap { calculationResponse =>
+      val outDatesStringValues = calculationResultService.outDatesSummary(calculationResponse)
+      val inDatesStringValues  = calculationResultService.inDatesSummary(calculationResponse)
+
+      calculationResultService
+        .calculationReviewIndividualAAViewModel(calculationResponse, None, request.userAnswers)
+        .map { calculationReviewIndividualAAViewModel =>
+          val isInCredit: Boolean = calculationResponse.totalAmounts.inDatesCredit > 0
+          val isInDebit: Boolean  = calculationResponse.totalAmounts.inDatesDebit > 0
+          Ok(
+            view(
+              form,
+              calculationReviewIndividualAAViewModel,
+              isInCredit,
+              isInDebit,
+              outDatesStringValues,
+              inDatesStringValues,
+              calculationResultService.calculationReviewViewModel(calculationResponse),
+              SummaryListViewModel(rows.flatten),
+              isLTACompleteWithoutKickout,
+              controllers.routes.CalculationReviewController.onPageLoad()
             )
-          }
-      }
+          )
+        }
+    }
   }
 
 }

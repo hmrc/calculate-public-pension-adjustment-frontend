@@ -25,7 +25,9 @@
         printLink: PrintLink,
         layout: templates.Layout,
         formHelper: FormWithCSRF,
-        govukButton: GovukButton
+        govukButton: GovukButton,
+        govukSummaryList: GovukSummaryList
+
 )
 
 @(form: Form[_],
@@ -34,7 +36,10 @@ isInCredit: Boolean,
 isInDebit: Boolean,
 outDatesStringValues: Seq[IndividualAASummaryModel],
 inDatesStringValues: Seq[IndividualAASummaryModel],
-calculationReviewViewModel: CalculationReviewViewModel
+calculationReviewViewModel: CalculationReviewViewModel,
+list: SummaryList,
+isLTACompleteWithoutKickout: Boolean,
+redirectURL:Call,
 )(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("printReview.title"))) {
@@ -43,7 +48,6 @@ calculationReviewViewModel: CalculationReviewViewModel
 
     <p class="govuk-body"> <a class="govuk-link" id="print-result" href="#print" onclick="window.print();return false;">@messages("calculationResults.printYourResults.heading")</a>
         @messages("calculationResults.printYourResults.hint")</p>
-    <script @{CSPNonce.attr}>document.getElementById("print-result").addEventListener("click", () => window.print());</script>
 
     <h2 class="govuk-heading-m">@messages("printReview.heading.calculationResults")</h2>
 
@@ -238,5 +242,28 @@ calculationReviewViewModel: CalculationReviewViewModel
         </tbody>
     </table>
 
+    @if(isLTACompleteWithoutKickout) {
+
+    <h2 class="govuk-heading-m">@messages("printReview.heading.lta")</h2>
+
+    <p class="govuk-body">@messages("printReview.message12")</p>
+
+    <p class="govuk-body">@messages("printReview.message13")</p>
+
+    @govukSummaryList(list)
+
     }
+
+    <h2 class="govuk-heading-m">@messages("printReview.heading.print")</h2>
+
+    <p class="govuk-body"> @messages("printReview.message14") <a class="govuk-link" id="print-result" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
+        </p>
+
+    <p>< <a class="govuk-link" href= @redirectURL>
+            @messages("reviewLTAAnswers.returnToMainResult")
+        </a></p>
+
+    <script @{CSPNonce.attr}>document.getElementById("print-result").addEventListener("click", () => window.print());</script>
+
+}
 }
