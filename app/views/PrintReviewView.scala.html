@@ -46,8 +46,9 @@ redirectURL:Call,
 
     <h1 class="govuk-heading-xl">@messages("printReview.heading")</h1>
 
-    <p class="govuk-body"> <a class="govuk-link" id="print-result" href="#print" onclick="window.print();return false;">@messages("calculationResults.printYourResults.heading")</a>
+    <p class="govuk-body"> <a class="govuk-link" id="print-result-top" href="#print" onclick="window.print();return false;">@messages("calculationResults.printYourResults.heading")</a>
         @messages("calculationResults.printYourResults.hint")</p>
+    <script @{CSPNonce.attr}>document.getElementById("print-result-top").addEventListener("click", () => window.print());</script>
 
     <h2 class="govuk-heading-m">@messages("printReview.heading.calculationResults")</h2>
 
@@ -256,14 +257,13 @@ redirectURL:Call,
 
     <h2 class="govuk-heading-m">@messages("printReview.heading.print")</h2>
 
-    <p class="govuk-body"> @messages("printReview.message14") <a class="govuk-link" id="print-result" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
+    <p class="govuk-body"> @messages("printReview.message14") <a class="govuk-link" id="print-result-bottom" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
         </p>
+    <script @{CSPNonce.attr}>document.getElementById("print-result-bottom").addEventListener("click", () => window.print());</script>
 
     <p>< <a class="govuk-link" href= @redirectURL>
             @messages("reviewLTAAnswers.returnToMainResult")
         </a></p>
-
-    <script @{CSPNonce.attr}>document.getElementById("print-result").addEventListener("click", () => window.print());</script>
 
 }
 }

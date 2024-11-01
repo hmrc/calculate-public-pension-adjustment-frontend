@@ -68,7 +68,8 @@ class CalculationReviewIndividualAAController @Inject() (
                 calculationReviewIndividualAAViewModel,
                 isInCredit,
                 isInDebit,
-                individualYear
+                individualYear,
+                routes.CalculationReviewController.onPageLoad()
               )
             )
           }

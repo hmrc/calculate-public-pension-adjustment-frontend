@@ -25,7 +25,7 @@
         govukButton: GovukButton
 )
 
-@(form: Form[_], period: String, calculationReviewIndividualAAViewModel: CalculationReviewIndividualAAViewModel, isInCredit: Boolean, isInDebit: Boolean, individualYear: IndividualAASummaryModel)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], period: String, calculationReviewIndividualAAViewModel: CalculationReviewIndividualAAViewModel, isInCredit: Boolean, isInDebit: Boolean, individualYear: IndividualAASummaryModel, redirectURL: Call)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("calculationReviewIndividualAA.title"))) {
 
@@ -80,9 +80,7 @@
         </tbody>
     </table>
 
-@formHelper(action = routes.CalculationReviewIndividualAAController.onSubmit(), Symbol("autoComplete") -> "off") {
-            @govukButton(
-                ButtonViewModel(HtmlContent(messages("calculationReviewIndividualAA.backToSummary")))
-            )
-        }
+        <p>< <a class="govuk-link" href=@redirectURL>
+            @messages("reviewLTAAnswers.returnToMainResult")
+        </a></p>
     }
