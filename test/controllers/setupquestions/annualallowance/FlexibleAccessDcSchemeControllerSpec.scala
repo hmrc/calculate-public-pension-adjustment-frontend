@@ -37,7 +37,6 @@ class FlexibleAccessDcSchemeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new FlexibleAccessDcSchemeFormProvider()
-  val form         = formProvider()
 
   lazy val flexibleAccessDcSchemeRoute =
     controllers.setupquestions.annualallowance.routes.FlexibleAccessDcSchemeController.onPageLoad(NormalMode).url
@@ -50,6 +49,7 @@ class FlexibleAccessDcSchemeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, flexibleAccessDcSchemeRoute)
+        val form         = formProvider()
 
         val result = route(application, request).value
 
@@ -68,6 +68,7 @@ class FlexibleAccessDcSchemeControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, flexibleAccessDcSchemeRoute)
+        val form         = formProvider()
 
         val view = application.injector.instanceOf[FlexibleAccessDcSchemeView]
 
@@ -108,6 +109,8 @@ class FlexibleAccessDcSchemeControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, flexibleAccessDcSchemeRoute)
             .withFormUrlEncodedBody(("value", ""))
+
+        val form         = formProvider()
 
         val boundForm = form.bind(Map("value" -> ""))
 

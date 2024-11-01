@@ -17,12 +17,15 @@
 package forms.annualallowance.preaaquestions
 
 import java.time.LocalDate
-
 import forms.behaviours.DateBehaviours
+import play.api.i18n.Messages
+import play.api.test.Helpers.stubMessages
 
 class FlexibleAccessStartDateFormProviderSpec extends DateBehaviours {
 
-  val form = new FlexibleAccessStartDateFormProvider()(LocalDate.of(2023, 4, 5))
+  private implicit val messages: Messages = stubMessages()
+
+  val form = new FlexibleAccessStartDateFormProvider()(LocalDate.of(2023, 4, 5))(messages)
 
   ".value" - {
 
