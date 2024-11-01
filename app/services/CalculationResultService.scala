@@ -705,55 +705,6 @@ class CalculationResultService @Inject() (
     } else None
   }
 
-  def individualAASummaryModel(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
-    outDatesSummary(calculationResponse) ++ inDatesSummary(calculationResponse)
-
-  def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
-    calculationResponse.outDates.map { outDate =>
-      val changeInTaxChargeAmount = outDateTotalTaxCharge(outDate)
-
-      val messageKey = if (changeInTaxChargeAmount > 0) {
-        "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
-      } else {
-        "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
-      }
-
-      IndividualAASummaryModel(
-        outDate.period,
-        changeInTaxChargeAmount.abs,
-        changeInTaxChargeAmount,
-        messageKey,
-        outDate.revisedChargableAmountBeforeTaxRate,
-        outDate.chargePaidByMember,
-        outDate.chargePaidBySchemes,
-        outDate.revisedChargableAmountAfterTaxRate
-      )
-    }
-
-  def inDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
-    calculationResponse.inDates.map { inDate =>
-      val changeInTaxChargeAmount = inDateTotalTaxCharge(inDate)
-
-      val messageKey = if (changeInTaxChargeAmount > 0) {
-        "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
-      } else if (changeInTaxChargeAmount < 0) {
-        "calculationReviewIndividualAA.changeInTaxChargeString.increase."
-      } else {
-        "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
-      }
-
-      IndividualAASummaryModel(
-        inDate.period,
-        changeInTaxChargeAmount.abs,
-        changeInTaxChargeAmount,
-        messageKey,
-        inDate.revisedChargableAmountBeforeTaxRate,
-        inDate.chargePaidByMember,
-        inDate.chargePaidBySchemes,
-        inDate.revisedChargableAmountAfterTaxRate
-      )
-    }
-
   def calculationReviewViewModel(calculationResponse: CalculationResponse): CalculationReviewViewModel = {
     val outDatesVal: Seq[Seq[ReviewRowViewModel]]     = outDatesReview(calculationResponse)
     val inDatesVal: Seq[Seq[ReviewRowViewModel]]      = inDatesReview(calculationResponse)
@@ -816,13 +767,54 @@ class CalculationResultService @Inject() (
       ReviewRowViewModel("calculationReview.lta", None, "lifetime-allowance/view-answers", None)
     )
 
-  def calculationResultsViewModel(calculateResponse: CalculationResponse): CalculationResultsViewModel = {
-    val resubmissionVal: Seq[RowViewModel]  = resubmission(calculateResponse)
-    val totalAmountVal: Seq[RowViewModel]   = totalAmount(calculateResponse)
-    val outDatesVal: Seq[Seq[RowViewModel]] = outDates(calculateResponse)
-    val inDatesVal: Seq[Seq[RowViewModel]]  = inDates(calculateResponse)
-    CalculationResultsViewModel(totalAmountVal, resubmissionVal, outDatesVal, inDatesVal)
-  }
+  def individualAASummaryModel(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
+    outDatesSummary(calculationResponse) ++ inDatesSummary(calculationResponse)
+
+  def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
+    calculationResponse.outDates.map { outDate =>
+      val changeInTaxChargeAmount = outDateTotalTaxCharge(outDate)
+
+      val messageKey = if (changeInTaxChargeAmount > 0) {
+        "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
+      } else {
+        "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+      }
+
+      IndividualAASummaryModel(
+        outDate.period,
+        changeInTaxChargeAmount.abs,
+        changeInTaxChargeAmount,
+        messageKey,
+        outDate.revisedChargableAmountBeforeTaxRate,
+        outDate.chargePaidByMember,
+        outDate.chargePaidBySchemes,
+        outDate.revisedChargableAmountAfterTaxRate
+      )
+    }
+
+  def inDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
+    calculationResponse.inDates.map { inDate =>
+      val changeInTaxChargeAmount = inDateTotalTaxCharge(inDate)
+
+      val messageKey = if (changeInTaxChargeAmount > 0) {
+        "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
+      } else if (changeInTaxChargeAmount < 0) {
+        "calculationReviewIndividualAA.changeInTaxChargeString.increase."
+      } else {
+        "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+      }
+
+      IndividualAASummaryModel(
+        inDate.period,
+        changeInTaxChargeAmount.abs,
+        changeInTaxChargeAmount,
+        messageKey,
+        inDate.revisedChargableAmountBeforeTaxRate,
+        inDate.chargePaidByMember,
+        inDate.chargePaidBySchemes,
+        inDate.revisedChargableAmountAfterTaxRate
+      )
+    }
 
   def calculationReviewIndividualAAViewModel(
     calculateResponse: CalculationResponse,
@@ -837,75 +829,6 @@ class CalculationResultService @Inject() (
       inDatesVal  <- inDatesFuture
     } yield CalculationReviewIndividualAAViewModel(outDatesVal, inDatesVal)
   }
-
-  private def totalAmount(calculateResponse: CalculationResponse): Seq[RowViewModel] =
-    Seq(
-      RowViewModel(
-        "calculationResults.outDatesCompensation",
-        calculateResponse.totalAmounts.outDatesCompensation.toString()
-      )
-    ) ++
-      Seq(RowViewModel("calculationResults.inDatesDebit", calculateResponse.totalAmounts.inDatesDebit.toString())) ++
-      Seq(RowViewModel("calculationResults.inDatesCredit", calculateResponse.totalAmounts.inDatesCredit.toString()))
-
-  private def resubmission(calculateResponse: CalculationResponse): Seq[RowViewModel] =
-    if (calculateResponse.resubmission.isResubmission) {
-      Seq(RowViewModel("calculationResults.annualResults.isResubmission", "")) ++
-        Seq(
-          RowViewModel("calculationResults.annualResults.reason", calculateResponse.resubmission.reason.getOrElse(""))
-        )
-    } else {
-      Seq(RowViewModel("calculationResults.annualResults.notResubmission", ""))
-    }
-
-  private def outDates(calculateResponse: CalculationResponse): Seq[Seq[RowViewModel]] =
-    calculateResponse.outDates.map { outDate =>
-      Seq(
-        RowViewModel("periodDateRangeAA." + outDate.period.toString, outDate.period.toString),
-        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", outDate.chargePaidBySchemes.toString()),
-        RowViewModel("calculationResults.annualResults.chargePaidByMember", outDate.chargePaidByMember.toString()),
-        RowViewModel(
-          "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate",
-          outDate.revisedChargableAmountAfterTaxRate.toString()
-        ),
-        RowViewModel(
-          "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate",
-          outDate.revisedChargableAmountBeforeTaxRate.toString()
-        ),
-        RowViewModel("calculationResults.annualResults.directCompensation", outDate.directCompensation.toString()),
-        RowViewModel("calculationResults.annualResults.indirectCompensation", outDate.indirectCompensation.toString()),
-        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", outDate.unusedAnnualAllowance.toString())
-      )
-    }
-
-  private def inDates(calculateResponse: CalculationResponse): Seq[Seq[RowViewModel]] =
-    calculateResponse.inDates.map { inDate =>
-      Seq(
-        RowViewModel("periodDateRangeAA." + inDate.period.toString(), inDate.period.toString()),
-        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", inDate.chargePaidBySchemes.toString()),
-        RowViewModel("calculationResults.annualResults.chargePaidByMember", inDate.chargePaidByMember.toString()),
-        RowViewModel(
-          "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate",
-          inDate.revisedChargableAmountAfterTaxRate.toString()
-        ),
-        RowViewModel(
-          "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate",
-          inDate.revisedChargableAmountBeforeTaxRate.toString()
-        ),
-        RowViewModel("calculationResults.annualResults.memberCredit", inDate.memberCredit.toString()),
-        RowViewModel("calculationResults.annualResults.schemeCredit", inDate.schemeCredit.toString()),
-        RowViewModel("calculationResults.annualResults.debit", inDate.debit.toString()),
-        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", inDate.unusedAnnualAllowance.toString())
-      )
-    }
-
-  private def outDatesReviewAAFiltered(
-    period: Option[String],
-    outDates: List[OutOfDatesTaxYearsCalculation]
-  ): List[OutOfDatesTaxYearsCalculation] =
-    if (period.isDefined) {
-      outDates.filter(outDate => outDate.period.toString == period.get)
-    } else outDates
 
   def outDatesReviewAA(
     calculateResponse: CalculationResponse,
@@ -979,12 +902,13 @@ class CalculationResultService @Inject() (
     }
   }
 
-  private def inDatesReviewAAFiltered(
-    period: Option[String],
-    inDates: List[InDatesTaxYearsCalculation]
-  ): List[InDatesTaxYearsCalculation] =
-    if (period.isDefined) inDates.filter(inDate => inDate.period.toString == period.get)
-    else inDates
+  private def outDatesReviewAAFiltered(
+                                        period: Option[String],
+                                        outDates: List[OutOfDatesTaxYearsCalculation]
+                                      ): List[OutOfDatesTaxYearsCalculation] =
+    if (period.isDefined) {
+      outDates.filter(outDate => outDate.period.toString == period.get)
+    } else outDates
 
   private def inDatesReviewAA(
     calculateResponse: CalculationResponse,
@@ -1062,6 +986,13 @@ class CalculationResultService @Inject() (
     }
   }
 
+  private def inDatesReviewAAFiltered(
+                                       period: Option[String],
+                                       inDates: List[InDatesTaxYearsCalculation]
+                                     ): List[InDatesTaxYearsCalculation] =
+    if (period.isDefined) inDates.filter(inDate => inDate.period.toString == period.get)
+    else inDates
+
 //  private def thresholdIncomeMessage(
 //    period: Period,
 //    userAnswers: UserAnswers,
@@ -1093,6 +1024,77 @@ class CalculationResultService @Inject() (
       case ty: InitialFlexiblyAccessedTaxYear => ty.incomeSubJourney
       case ty: PostFlexiblyAccessedTaxYear    => ty.incomeSubJourney
     }
+
+
+  def calculationResultsViewModel(calculateResponse: CalculationResponse): CalculationResultsViewModel = {
+    val resubmissionVal: Seq[RowViewModel]  = resubmission(calculateResponse)
+    val totalAmountVal: Seq[RowViewModel]   = totalAmount(calculateResponse)
+    val outDatesVal: Seq[Seq[RowViewModel]] = outDates(calculateResponse)
+    val inDatesVal: Seq[Seq[RowViewModel]]  = inDates(calculateResponse)
+    CalculationResultsViewModel(totalAmountVal, resubmissionVal, outDatesVal, inDatesVal)
+  }
+
+  private def totalAmount(calculateResponse: CalculationResponse): Seq[RowViewModel] =
+    Seq(
+      RowViewModel(
+        "calculationResults.outDatesCompensation",
+        calculateResponse.totalAmounts.outDatesCompensation.toString()
+      )
+    ) ++
+      Seq(RowViewModel("calculationResults.inDatesDebit", calculateResponse.totalAmounts.inDatesDebit.toString())) ++
+      Seq(RowViewModel("calculationResults.inDatesCredit", calculateResponse.totalAmounts.inDatesCredit.toString()))
+
+  private def resubmission(calculateResponse: CalculationResponse): Seq[RowViewModel] =
+    if (calculateResponse.resubmission.isResubmission) {
+      Seq(RowViewModel("calculationResults.annualResults.isResubmission", "")) ++
+        Seq(
+          RowViewModel("calculationResults.annualResults.reason", calculateResponse.resubmission.reason.getOrElse(""))
+        )
+    } else {
+      Seq(RowViewModel("calculationResults.annualResults.notResubmission", ""))
+    }
+
+  private def outDates(calculateResponse: CalculationResponse): Seq[Seq[RowViewModel]] =
+    calculateResponse.outDates.map { outDate =>
+      Seq(
+        RowViewModel("periodDateRangeAA." + outDate.period.toString, outDate.period.toString),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", outDate.chargePaidBySchemes.toString()),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", outDate.chargePaidByMember.toString()),
+        RowViewModel(
+          "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate",
+          outDate.revisedChargableAmountAfterTaxRate.toString()
+        ),
+        RowViewModel(
+          "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate",
+          outDate.revisedChargableAmountBeforeTaxRate.toString()
+        ),
+        RowViewModel("calculationResults.annualResults.directCompensation", outDate.directCompensation.toString()),
+        RowViewModel("calculationResults.annualResults.indirectCompensation", outDate.indirectCompensation.toString()),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", outDate.unusedAnnualAllowance.toString())
+      )
+    }
+
+  private def inDates(calculateResponse: CalculationResponse): Seq[Seq[RowViewModel]] =
+    calculateResponse.inDates.map { inDate =>
+      Seq(
+        RowViewModel("periodDateRangeAA." + inDate.period.toString(), inDate.period.toString()),
+        RowViewModel("calculationResults.annualResults.chargePaidBySchemes", inDate.chargePaidBySchemes.toString()),
+        RowViewModel("calculationResults.annualResults.chargePaidByMember", inDate.chargePaidByMember.toString()),
+        RowViewModel(
+          "calculationResults.annualResults.revisedChargeableAmountAfterTaxRate",
+          inDate.revisedChargableAmountAfterTaxRate.toString()
+        ),
+        RowViewModel(
+          "calculationResults.annualResults.revisedChargeableAmountBeforeTaxRate",
+          inDate.revisedChargableAmountBeforeTaxRate.toString()
+        ),
+        RowViewModel("calculationResults.annualResults.memberCredit", inDate.memberCredit.toString()),
+        RowViewModel("calculationResults.annualResults.schemeCredit", inDate.schemeCredit.toString()),
+        RowViewModel("calculationResults.annualResults.debit", inDate.debit.toString()),
+        RowViewModel("calculationResults.annualResults.unusedAnnualAllowance", inDate.unusedAnnualAllowance.toString())
+      )
+    }
+
 
   def adjustedIncomeCalculation(userAnswers: UserAnswers, period: Period): BigInt = {
 
