@@ -4153,7 +4153,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         val viewModel: Future[CalculationReviewIndividualAAViewModel] =
           service.calculationReviewIndividualAAViewModel(
             calculationResult,
-            Period._2016.toString(),
+            Some(Period._2016.toString()),
             userAnswers1.copy(data = data2)
           )
 
@@ -4192,7 +4192,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         val viewModel: Future[CalculationReviewIndividualAAViewModel] =
           service.calculationReviewIndividualAAViewModel(
             calculationResult,
-            Period._2020.toString(),
+            Some(Period._2020.toString()),
             userAnswers1.copy(data = data2)
           )
 
