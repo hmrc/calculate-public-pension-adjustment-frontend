@@ -610,7 +610,7 @@ GET        /triage-journey/eligible-to-use-service                              
 GET        /calculation-results                       controllers.CalculationReviewController.onPageLoad()
 POST       /calculation-results                       controllers.CalculationReviewController.onSubmit()
 
-GET        /CalculationReviewIndividualAA/:period                       controllers.CalculationReviewIndividualAAController.onPageLoad(period:Period)
-POST       /CalculationReviewIndividualAA                       controllers.CalculationReviewIndividualAAController.onSubmit()
+GET        /calculation-results/:period/detailed-breakdown                       controllers.CalculationReviewIndividualAAController.onPageLoad(period:Period)
+POST       /calculation-results/detailed-breakdown                       controllers.CalculationReviewIndividualAAController.onSubmit()
 
 GET        /print-or-save-calculation-results                       controllers.PrintReviewController.onPageLoad()
