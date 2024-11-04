@@ -33,6 +33,7 @@ import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, Res
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 import play.api.mvc.MessagesControllerComponents
+import play.api.routing.Router.empty.routes
 
 import java.time.LocalDate
 import javax.inject.Inject
@@ -718,7 +719,7 @@ class CalculationResultService @Inject() (
         ReviewRowViewModel(
           "calculationReview.period." + outDate.period.toString,
           Some(changeInAAOutDateTaxCharge(outDate)),
-          "CalculationReviewIndividualAA/" + outDate.period.toString,
+          controllers.routes.CalculationReviewIndividualAAController.onPageLoad(outDate.period).url,
           Some(outDateTotalTaxCharge(outDate))
         )
       )
@@ -742,7 +743,7 @@ class CalculationResultService @Inject() (
         ReviewRowViewModel(
           "calculationReview.period." + inDate.period.toString,
           Some(changeInAAInDateTaxCharge(inDate)),
-          "CalculationReviewIndividualAA/" + inDate.period.toString,
+          controllers.routes.CalculationReviewIndividualAAController.onPageLoad(inDate.period).url,
           Some(abs(inDateTotalTaxCharge(inDate)))
         )
       )
