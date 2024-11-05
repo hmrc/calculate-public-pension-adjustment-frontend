@@ -179,6 +179,8 @@
         <script @{CSPNonce.attr}>document.getElementById("print-result").addEventListener("click", () => window.print());</script>
 
         @if(isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout) {
+            <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
+
             <h2 class="govuk-heading-m">@messages("calculationReview.whatHappensNext.heading1")</h2>
 
             <p class="govuk-body">@messages("calculationReview.whatHappensNext.message1")</p>
