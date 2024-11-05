@@ -27,19 +27,16 @@ import models.{AAKickOutStatus, AnnualAllowance, BeforeCalculationAuditEvent, Ca
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
-import pages.setupquestions.annualallowance.{Contribution4000ToDirectContributionSchemePage, ContributionRefundsPage, FlexibleAccessDcSchemePage, HadAAChargePage, MaybePIAIncreasePage, MaybePIAUnchangedOrDecreasedPage, NetIncomeAbove100KPage, NetIncomeAbove190KIn2023Page, NetIncomeAbove190KPage, PIAAboveAnnualAllowanceIn2023Page, PensionProtectedMemberPage, SavingsStatementPage}
+import pages.setupquestions.annualallowance._
 import pages.setupquestions.lifetimeallowance._
 import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, ResubmittingAdjustmentPage}
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
-import play.api.mvc.MessagesControllerComponents
-import play.api.routing.Router.empty.routes
 
 import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.abs
-import scala.util.{Failure, Success}
 
 class CalculationResultService @Inject() (
   calculationResultConnector: CalculationResultConnector,
@@ -881,23 +878,23 @@ class CalculationResultService @Inject() (
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
               outDate.unusedAnnualAllowance.toString()
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+              taxYear.reducedNetIncomeAmount.getOrElse(0).toString
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.personalAllowance",
+              taxYear.personalAllowanceAmount.getOrElse(0).toString
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.thresholdIncome",
+              thresholdIncomeMessage(outDate.period, taxYear)
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.adjustedIncome",
+              adjustedIncomeMessage(outDate.period, taxYear)
             )
-//            RowViewModel(
-//              "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-//              taxYear.reducedNetIncomeAmount.getOrElse(0).toString
-//            ),
-//            RowViewModel(
-//              "calculationReviewIndividualAA.annualResults.personalAllowance",
-//              taxYear.personalAllowanceAmount.getOrElse(0).toString
-//            ),
-//            RowViewModel(
-//              "calculationReviewIndividualAA.annualResults.thresholdIncome",
-//              thresholdIncomeMessage(outDate.period, userAnswers, taxYear)
-//            ),
-//            RowViewModel(
-//              "calculationReviewIndividualAA.annualResults.adjustedIncome",
-//              adjustedIncomeMessage(outDate.period, taxYear)
-//            )
           )
         }
     }
@@ -965,23 +962,23 @@ class CalculationResultService @Inject() (
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
               inDate.unusedAnnualAllowance.toString()
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+              taxYear.reducedNetIncomeAmount.getOrElse(0).toString
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.personalAllowance",
+              taxYear.personalAllowanceAmount.getOrElse(0).toString
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.thresholdIncome",
+              thresholdIncomeMessage(inDate.period, taxYear)
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.adjustedIncome",
+              adjustedIncomeMessage(inDate.period, taxYear)
             )
-//            RowViewModel(
-//              "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-//              taxYear.reducedNetIncomeAmount.getOrElse(0).toString
-//            ),
-//            RowViewModel(
-//              "calculationReviewIndividualAA.annualResults.personalAllowance",
-//              taxYear.personalAllowanceAmount.getOrElse(0).toString
-//            ),
-//            RowViewModel(
-//              "calculationReviewIndividualAA.annualResults.thresholdIncome",
-//              thresholdIncomeMessage(inDate.period, userAnswers, taxYear)
-//            ),
-//            RowViewModel(
-//              "calculationReviewIndividualAA.annualResults.adjustedIncome",
-//              adjustedIncomeMessage(inDate.period, taxYear)
-//            )
           )
         }
     }
@@ -994,30 +991,28 @@ class CalculationResultService @Inject() (
     if (period.isDefined) inDates.filter(inDate => inDate.period.toString == period.get)
     else inDates
 
-//  private def thresholdIncomeMessage(
-//    period: Period,
-//    userAnswers: UserAnswers,
-//    incomeSubJourney: IncomeSubJourney
-//  ): String =
-//    period match {
-//      case Period._2016 => "notApplicable"
-//      case _            =>
-//        userAnswers.get(ThresholdIncomePage(period)) match {
-//          case Some(ThresholdIncome.IDoNotKnow) => incomeSubJourney.thresholdIncomeAmount.getOrElse(0).toString
-//          case _                                => "notApplicable"
-//        }
-//    }
-//
-//  private def adjustedIncomeMessage(period: Period, incomeSubJourney: IncomeSubJourney): String =
-//    period match {
-//      case Period._2016 => "notApplicable"
-//      case _            =>
-//        incomeSubJourney.adjustedIncomeAmount.getOrElse(None) match {
-//          case Some(adjustedIncome) => adjustedIncome.toString
-//          case None                 => "notApplicable"
-//          case _                    => "notApplicable"
-//        }
-//    }
+  private def thresholdIncomeMessage(
+    period: Period,
+    incomeSubJourney: IncomeSubJourney
+  ): String =
+    period match {
+      case Period._2016 => "notApplicable"
+      case _            =>
+        incomeSubJourney.thresholdIncomeAmount.getOrElse(None) match {
+          case Some(thresholdIncome) => "£" + thresholdIncome.toString
+          case _                     => "notApplicable"
+        }
+    }
+
+  private def adjustedIncomeMessage(period: Period, incomeSubJourney: IncomeSubJourney): String =
+    period match {
+      case Period._2016 => "notApplicable"
+      case _            =>
+        incomeSubJourney.adjustedIncomeAmount.getOrElse(None) match {
+          case Some(adjustedIncome) => adjustedIncome.toString
+          case _                    => "notApplicable"
+        }
+    }
 
   private def taxYearIncomeSubJourney(taxYears: List[TaxYear2016To2023], period: Period): IncomeSubJourney =
     taxYears.filter(ty => ty.period == period).head match {

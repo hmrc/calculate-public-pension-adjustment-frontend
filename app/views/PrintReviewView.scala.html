@@ -242,7 +242,7 @@ redirectURL:Call,
         }
         </tbody>
     </table>
-
+}
     @if(isLTACompleteWithoutKickout) {
 
     <h2 class="govuk-heading-m">@messages("printReview.heading.lta")</h2>
@@ -255,6 +255,7 @@ redirectURL:Call,
 
     }
 
+
     <h2 class="govuk-heading-m">@messages("printReview.heading.print")</h2>
 
     <p class="govuk-body"> @messages("printReview.message14") <a class="govuk-link" id="print-result-bottom" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
@@ -265,5 +266,4 @@ redirectURL:Call,
             @messages("reviewLTAAnswers.returnToMainResult")
         </a></p>
 
-}
 }
