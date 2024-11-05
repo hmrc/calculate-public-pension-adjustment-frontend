@@ -34,6 +34,9 @@ case class WhichSchemePage(period: Period, schemeIndex: SchemeIndex) extends Que
       case Some(PSTR.New) =>
         controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
           .onPageLoad(NormalMode, period, schemeIndex)
+      case Some("Newydd") =>
+        controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
+          .onPageLoad(NormalMode, period, schemeIndex)
       case Some(_)        =>
         controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
           .onPageLoad(NormalMode, period, schemeIndex)

@@ -13,6 +13,7 @@ site.startAgain = Start again
 site.signIn = Sign in
 site.govuk = GOV.UK
 site.opensInNewTab = (opens in a new tab)
+site.newPSTR = New
 
 date.day = Day
 date.month = Month

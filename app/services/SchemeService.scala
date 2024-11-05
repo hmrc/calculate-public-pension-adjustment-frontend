@@ -18,13 +18,15 @@ package services
 
 import models.{PSTR, PensionSchemeDetails, Period, SchemeIndex, UserAnswers, WhichScheme}
 import pages.annualallowance.taxyear.PensionSchemeDetailsPage
+import play.api.i18n.Messages
 
 object SchemeService {
 
-  def whichScheme(answers: UserAnswers): WhichScheme = {
+  def whichScheme(answers: UserAnswers)(implicit messages: Messages): WhichScheme = {
     val schemeRefs: Seq[PSTR]        = allSchemeRefs(answers)
     val schemeRefsOrNew: Seq[String] = schemeRefs.map(pstr => pstr.value)
-    WhichScheme(schemeRefsOrNew :+ PSTR.New)
+
+    WhichScheme(schemeRefsOrNew :+ messages("site.newPSTR"))
   }
 
   def maybeAddSchemeDetailsToPeriod(
@@ -32,8 +34,8 @@ object SchemeService {
     schemeRef: String,
     period: Period,
     schemeIndex: SchemeIndex
-  ): UserAnswers =
-    if (schemeRef != PSTR.New) {
+  )(implicit messages: Messages): UserAnswers =
+    if (schemeRef != messages("site.newPSTR")) {
       val schemeName: Option[String] = findSchemeName(answers, schemeRef)
 
       schemeName match {
