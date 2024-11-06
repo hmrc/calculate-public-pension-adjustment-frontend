@@ -29,7 +29,8 @@ case class InDatesTaxYearsCalculation(
   revisedChargableAmountBeforeTaxRate: Int,
   revisedChargableAmountAfterTaxRate: Int,
   unusedAnnualAllowance: Int,
-  taxYearSchemes: List[InDatesTaxYearSchemeCalculation]
+  taxYearSchemes: List[InDatesTaxYearSchemeCalculation],
+  totalCompensation: Option[Int]
 )
 
 object InDatesTaxYearsCalculation {
@@ -48,7 +49,8 @@ object InDatesTaxYearsCalculation {
         (__ \ "revisedChargableAmountBeforeTaxRate").read[Int] and
         (__ \ "revisedChargableAmountAfterTaxRate").read[Int] and
         (__ \ "unusedAnnualAllowance").read[Int] and
-        (__ \ "taxYearSchemes").read[List[InDatesTaxYearSchemeCalculation]]
+        (__ \ "taxYearSchemes").read[List[InDatesTaxYearSchemeCalculation]] and
+        (__ \ "totalCompensation").readNullable[Int]
     )(InDatesTaxYearsCalculation.apply _)
   }
 
@@ -66,7 +68,8 @@ object InDatesTaxYearsCalculation {
         (__ \ "revisedChargableAmountBeforeTaxRate").write[Int] and
         (__ \ "revisedChargableAmountAfterTaxRate").write[Int] and
         (__ \ "unusedAnnualAllowance").write[Int] and
-        (__ \ "taxYearSchemes").write[List[InDatesTaxYearSchemeCalculation]]
+        (__ \ "taxYearSchemes").write[List[InDatesTaxYearSchemeCalculation]] and
+        (__ \ "totalCompensation").writeNullable[Int]
     )(a =>
       (
         a.period,
@@ -78,7 +81,8 @@ object InDatesTaxYearsCalculation {
         a.revisedChargableAmountBeforeTaxRate,
         a.revisedChargableAmountAfterTaxRate,
         a.unusedAnnualAllowance,
-        a.taxYearSchemes
+        a.taxYearSchemes,
+        a.totalCompensation
       )
     )
   }

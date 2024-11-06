@@ -718,22 +718,19 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + outDate.period.toString,
           Some(changeInAAOutDateTaxCharge(outDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(outDate.period).url,
-          Some(outDateTotalTaxCharge(outDate))
+          Some(outDate.adjustedCompensation).getOrElse(Some(0))
         )
       )
     }
 
   private def changeInAAOutDateTaxCharge(outDate: OutOfDatesTaxYearsCalculation): String = {
-    val totalCharge = outDateTotalTaxCharge(outDate)
-    if (totalCharge == 0) {
+    val totalCharge = outDate.adjustedCompensation
+    if (totalCharge.contains(0)) {
       "calculationReview.taxChargeNotChanged"
     } else {
       "calculationReview.taxChargeDecreasedBy"
     }
   }
-
-  private def outDateTotalTaxCharge(outDate: OutOfDatesTaxYearsCalculation): Int =
-    outDate.directCompensation + outDate.indirectCompensation
 
   private def inDatesReview(calculationResponse: CalculationResponse): Seq[Seq[ReviewRowViewModel]] =
     calculationResponse.inDates.map { inDate =>
@@ -742,24 +739,21 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + inDate.period.toString,
           Some(changeInAAInDateTaxCharge(inDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(inDate.period).url,
-          Some(abs(inDateTotalTaxCharge(inDate)))
+          Some(inDate.totalCompensation).getOrElse(Some(0))
         )
       )
     }
 
   private def changeInAAInDateTaxCharge(inDate: InDatesTaxYearsCalculation): String = {
-    val totalCharge = inDateTotalTaxCharge(inDate)
-    if (totalCharge == 0) {
+    val totalCharge = inDate.totalCompensation
+    if (totalCharge.contains(0)) {
       "calculationReview.taxChargeNotChanged"
-    } else if (totalCharge > 0) {
+    } else if (totalCharge.exists(_ > 0)) {
       "calculationReview.taxChargeDecreasedBy"
     } else {
       "calculationReview.taxChargeIncreasedBy"
     }
   }
-
-  private def inDateTotalTaxCharge(inDate: InDatesTaxYearsCalculation): Int =
-    inDate.memberCredit + inDate.schemeCredit - inDate.debit
 
   private def lifetimeAllowanceReview: Seq[ReviewRowViewModel] =
     Seq(
