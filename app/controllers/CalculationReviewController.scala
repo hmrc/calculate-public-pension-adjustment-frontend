@@ -57,6 +57,7 @@ class CalculationReviewController @Inject() (
       val isUserAuthenticated: Boolean     = request.userAnswers.authenticated
       val isLTACompleteWithoutKickout      = LTASection.status(request.userAnswers) == SectionStatus.Completed && !LTASection
         .kickoutHasBeenReached(request.userAnswers)
+      val hasInDates: Boolean              = calculationResponse.inDates.isDefinedAt(0)
       Ok(
         view(
           form,
@@ -65,7 +66,8 @@ class CalculationReviewController @Inject() (
           isInCredit,
           isInDebit,
           isUserAuthenticated,
-          isLTACompleteWithoutKickout
+          isLTACompleteWithoutKickout,
+          hasInDates
         )
       )
     }

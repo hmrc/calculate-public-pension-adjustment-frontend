@@ -15,7 +15,6 @@
  *@
 
 @import models.CalculationResults.CalculationReviewViewModel
-@import views.html.helper.CSPNonce
 
 @this(
         layout: templates.Layout,
@@ -24,7 +23,7 @@
 )
 
 
-@(form: Form[_], calculationReviewViewModel: CalculationReviewViewModel, includeCompensation2015: Boolean, isInCredit: Boolean, isInDebit: Boolean, isUserAuthenticated : Boolean, isLTACompleteWithoutKickout: Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], calculationReviewViewModel: CalculationReviewViewModel, includeCompensation2015: Boolean, isInCredit: Boolean, isInDebit: Boolean, isUserAuthenticated : Boolean, isLTACompleteWithoutKickout: Boolean, hasInDates: Boolean)(implicit request: Request[_], messages: Messages)
 
 @buttonContent = @{
     if(isUserAuthenticated) {
@@ -67,7 +66,8 @@
 
         <p class="govuk-body">@messages("calculationReview.outDatesAA.message2")</p>
 
-        <p class="govuk-body">@messages("calculationReview.outDatesAA.message3")</p>
+        <p class="govuk-body">@messages("calculationReview.outDatesAA.message3a") <a class="govuk-link" id="pension-scheme-pays" href="https://www.gov.uk/guidance/who-must-pay-the-pensions-annual-allowance-tax-charge">@messages("calculationReview.nextSteps.schemePays")</a>
+            @messages("calculationReview.outDatesAA.message3b")</p>
 
         <p class="govuk-body">@messages("calculationReview.outDatesAA.message4")</p>
 
@@ -84,7 +84,7 @@
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.period")</th>
                 <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.charges")</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third"></th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.periodDetails")</th>
             </tr>
             </thead>
             <tbody class="govuk-table__body">
@@ -104,40 +104,43 @@
             </tbody>
         </table>
 
-        <h2 class="govuk-heading-m">@messages("calculationReview.inDatesAA.heading1")</h2>
+        @if(hasInDates) {
 
-        <p class="govuk-body">@messages("calculationReview.inDatesAA.message1")</p>
+            <h2 class="govuk-heading-m">@messages("calculationReview.inDatesAA.heading1")</h2>
 
-        <p class="govuk-body">@messages("calculationReview.inDatesAA.message2")</p>
+            <p class="govuk-body">@messages("calculationReview.inDatesAA.message1")</p>
 
-        <!--summary list 2020 - 2023-->
+            <p class="govuk-body">@messages("calculationReview.inDatesAA.message2")</p>
 
-        <table class="govuk-table">
-            <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.period")</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.charges")</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third"></th>
-            </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-                @calculationReviewViewModel.inDatesData.map { data =>
-                    @data.map { section =>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">@messages(section.title)</th>
-                            @if(section.totalCharge.get == 0) {
-                                <td class="govuk-table__cell">@messages(section.changeString.get)</td>
-                            } else {
-                                <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>
-                            }
-                            <td class="govuk-table__cell"><a class="govuk-link" href=@section.link>@messages("calculationReview.reviewPeriod")</a></td>
-                        </tr>
+            <!--summary list 2020 - 2023-->
+
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.period")</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.charges")</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.periodDetails")</th>
+                </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    @calculationReviewViewModel.inDatesData.map { data =>
+                        @data.map { section =>
+                            <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header">@messages(section.title)</th>
+                                @if(section.totalCharge.get == 0) {
+                                    <td class="govuk-table__cell">@messages(section.changeString.get)</td>
+                                } else {
+                                    <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>
+                                }
+                                <td class="govuk-table__cell"><a class="govuk-link" href=@section.link>@messages("calculationReview.reviewPeriod")</a></td>
+                            </tr>
+                        }
                     }
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        }
 
-        <p class="govuk-body">@messages("calculationReview.inDatesAA.message3")</p>
+        <p class="govuk-body">@messages("calculationReview.message9")</p>
 
         <!--lta summary-->
         @if(isLTACompleteWithoutKickout) {
@@ -174,16 +177,19 @@
 
         <h2 class="govuk-heading-m">@messages("calculationReview.printOrSave")</h2>
 
-        <p class="govuk-body">@messages("calculationReview.printOrSave.message1a") <a class="govuk-link" id="print-result" href="#print" onclick="window.print();return false;">@messages("calculationReview.printOrSave.printResult")</a>
+        <p class="govuk-body">@messages("calculationReview.printOrSave.message1a") <a class="govuk-link" id="print-result" href="">@messages("calculationReview.printOrSave.printResult")</a>
         @messages("calculationReview.printOrSave.message1b")</p>
-        <script @{CSPNonce.attr}>document.getElementById("print-result").addEventListener("click", () => window.print());</script>
 
-        @if(isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout) {
-            <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
+        <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
+
+        @if(!isInDebit && !isInCredit && !includeCompensation2015 &&  !isLTACompleteWithoutKickout) {
 
             <h2 class="govuk-heading-m">@messages("calculationReview.whatHappensNext.heading1")</h2>
 
             <p class="govuk-body">@messages("calculationReview.whatHappensNext.message1")</p>
+        }
+
+        @if(isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout) {
 
             <h2 class="govuk-heading-m">@messages("calculationReview.nextSteps.heading1")</h2>
 
