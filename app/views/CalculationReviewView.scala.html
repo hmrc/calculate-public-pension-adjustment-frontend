@@ -167,13 +167,10 @@
             </table>
         }
 
-        <div class="govuk-warning-text">
-            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-            <strong class="govuk-warning-text__text">
-                <span class="govuk-warning-text__assistive">Warning</span>
-                @messages("calculationReview.notResubmission")
-            </strong>
-        </div>
+        @if(calculationReviewViewModel.resubmissionData.isResubmission) {
+            <h2 class="govuk-heading-m">@messages("calculationReview.annualResults.isResubmission")</h2>
+            <p class="govuk-body">@messages("calculationReview.annualResults.reason") @calculationReviewViewModel.resubmissionData.reason.getOrElse("No reason")</p>
+        }
 
         <h2 class="govuk-heading-m">@messages("calculationReview.printOrSave")</h2>
 

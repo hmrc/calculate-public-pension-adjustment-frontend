@@ -1691,6 +1691,9 @@ calculationReview.reviewAnswers = Review answers
 calculationReview.taxChargeNotChanged = Not Changed
 calculationReview.taxChargeIncreasedBy = Increased by £
 calculationReview.taxChargeDecreasedBy =  Decreased by £
+calculationReview.annualResults.notResubmission = It is not a resubmission
+calculationReview.annualResults.isResubmission = It is a resubmission
+calculationReview.annualResults.reason = Reason:
 
 calculationReviewIndividualAA.title = Calculation review for individual annual allowance
 calculationReviewIndividualAA.heading = Your annual allowance tax charge has reduced by £3,600
