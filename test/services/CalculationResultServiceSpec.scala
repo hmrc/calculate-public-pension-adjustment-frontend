@@ -4704,7 +4704,11 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         val sections: Seq[ReviewRowViewModel] = viewModel.lifetimeAllowance
         sections.size mustBe 1
 
-        checkRowNameReviewRowLTA(sections(0), "calculationReview.lta", "lifetime-allowance/view-answers")
+        checkRowNameReviewRowLTA(
+          sections(0),
+          "calculationReview.lta",
+          "/public-pension-adjustment/review-lifetime-allowance-answers"
+        )
       }
     }
 
