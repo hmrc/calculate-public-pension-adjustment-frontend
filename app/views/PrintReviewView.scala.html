@@ -40,6 +40,7 @@ calculationReviewViewModel: CalculationReviewViewModel,
 list: SummaryList,
 isLTACompleteWithoutKickout: Boolean,
 redirectURL:Call,
+hasInDates: Boolean
 )(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("printReview.title"))) {
@@ -161,6 +162,8 @@ redirectURL:Call,
     </table>
     }
 
+    @if(hasInDates) {
+
     <h2 class="govuk-heading-m">@messages("printReview.heading.changeInDates")</h2>
 
     <p class="govuk-body">@messages("printReview.message10")</p>
@@ -242,6 +245,7 @@ redirectURL:Call,
         }
         </tbody>
     </table>
+    }
 }
     @if(isLTACompleteWithoutKickout) {
 

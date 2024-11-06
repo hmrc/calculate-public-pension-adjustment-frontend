@@ -90,6 +90,7 @@ class PrintReviewController @Inject() (
     calculationResultService.sendRequest(request.userAnswers).flatMap { calculationResponse =>
       val outDatesStringValues = calculationResultService.outDatesSummary(calculationResponse)
       val inDatesStringValues  = calculationResultService.inDatesSummary(calculationResponse)
+      val hasinDates: Boolean  = calculationResponse.inDates.isDefinedAt(0)
 
       calculationResultService
         .calculationReviewIndividualAAViewModel(calculationResponse, None, request.userAnswers)
@@ -107,7 +108,8 @@ class PrintReviewController @Inject() (
               calculationResultService.calculationReviewViewModel(calculationResponse),
               SummaryListViewModel(rows.flatten),
               isLTACompleteWithoutKickout,
-              controllers.routes.CalculationReviewController.onPageLoad()
+              controllers.routes.CalculationReviewController.onPageLoad(),
+              hasinDates
             )
           )
         }

@@ -762,7 +762,12 @@ class CalculationResultService @Inject() (
 
   private def lifetimeAllowanceReview: Seq[ReviewRowViewModel] =
     Seq(
-      ReviewRowViewModel("calculationReview.lta", None, "lifetime-allowance/view-answers", None)
+      ReviewRowViewModel(
+        "calculationReview.lta",
+        None,
+        controllers.lifetimeallowance.routes.ViewYourLTAAnswersController.onPageLoad().url,
+        None
+      )
     )
 
   def individualAASummaryModel(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
