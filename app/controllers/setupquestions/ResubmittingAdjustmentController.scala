@@ -87,7 +87,7 @@ class ResubmittingAdjustmentController @Inject() (
       answersWithFlag = PostTriageFlag.setStatusTrue(answersWithNav)
       _              <- userDataService.set(answersWithFlag)
       _              <- auditService.auditCalculationStart(
-                          CalculationStartAuditEvent(answersWithFlag.uniqueId, answersWithFlag.authenticated)
+                          CalculationStartAuditEvent(answersWithFlag.uniqueId, answersWithFlag.id, answersWithFlag.authenticated)
                         )
     } yield Redirect(redirectUrl)
 
@@ -104,7 +104,7 @@ class ResubmittingAdjustmentController @Inject() (
       answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
       _              <- userDataService.set(answersWithNav)
       _              <- auditService.auditCalculationStart(
-                          CalculationStartAuditEvent(answersWithNav.uniqueId, answersWithNav.authenticated)
+                          CalculationStartAuditEvent(answersWithNav.uniqueId, answersWithNav.id, answersWithNav.authenticated)
                         )
     } yield Redirect(redirectUrl)
 
