@@ -89,6 +89,170 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result).contains("Print or save calculation results") mustBe true
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
+        ) mustBe true
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
+        ) mustBe true
+      }
+    }
+
+    "when only out of dates AA, only show content relevant for out dates" in {
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsOutDatesTestData.json")
+
+      val mockRowViewModel             = RowViewModel("test", "test")
+      val mockCalculationResultService = mock[CalculationResultService]
+      val mockPrintReviewViewModel     =
+        CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+      val list                         = SummaryListViewModel(Seq.empty)
+      val mockOutDatesSummary          =
+        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10)
+
+      val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
+
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+
+      when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
+        .thenReturn(Future.successful(mockPrintReviewViewModel))
+
+      when(mockCalculationResultService.outDatesSummary(any))
+        .thenReturn(Seq(mockOutDatesSummary))
+
+      when(mockCalculationResultService.inDatesSummary(any))
+        .thenReturn(Seq())
+
+      when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            inject.bind[CalculationResultService].toInstance(mockCalculationResultService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result).contains("Print or save calculation results") mustBe true
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
+        ) mustBe true
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
+        ) mustBe false
+      }
+    }
+
+    "when LTA reported, should so content relevant for LTA" in {
+
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      val mockRowViewModel             = RowViewModel("test", "test")
+      val mockCalculationResultService = mock[CalculationResultService]
+      val mockPrintReviewViewModel     =
+        CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+      val list                         = SummaryListViewModel(Seq.empty)
+      val mockOutDatesSummary          =
+        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10)
+      val mockInDatesSummary           =
+        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10)
+
+      val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
+
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+
+      when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
+        .thenReturn(Future.successful(mockPrintReviewViewModel))
+
+      when(mockCalculationResultService.outDatesSummary(any))
+        .thenReturn(Seq(mockOutDatesSummary))
+
+      when(mockCalculationResultService.inDatesSummary(any))
+        .thenReturn(Seq(mockInDatesSummary))
+
+      when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            inject.bind[CalculationResultService].toInstance(mockCalculationResultService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result).contains("Print or save calculation results") mustBe true
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
+        ) mustBe true
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
+        ) mustBe true
+        contentAsString(result).contains("Lifetime allowance answers") mustBe true
+      }
+    }
+
+    "when no LTA reported, should not show content for LTA" in {
+
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      val mockRowViewModel             = RowViewModel("test", "test")
+      val mockCalculationResultService = mock[CalculationResultService]
+      val mockPrintReviewViewModel     =
+        CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+      val list                         = SummaryListViewModel(Seq.empty)
+      val mockOutDatesSummary          =
+        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10)
+      val mockInDatesSummary           =
+        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10)
+
+      val userAnswers = emptyUserAnswers
+
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+
+      when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
+        .thenReturn(Future.successful(mockPrintReviewViewModel))
+
+      when(mockCalculationResultService.outDatesSummary(any))
+        .thenReturn(Seq(mockOutDatesSummary))
+
+      when(mockCalculationResultService.inDatesSummary(any))
+        .thenReturn(Seq(mockInDatesSummary))
+
+      when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            inject.bind[CalculationResultService].toInstance(mockCalculationResultService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result).contains("Print or save calculation results") mustBe true
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
+        ) mustBe true
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
+        ) mustBe true
+        contentAsString(result).contains("Lifetime allowance answers") mustBe false
       }
     }
 
