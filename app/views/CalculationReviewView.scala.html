@@ -174,7 +174,7 @@
 
         <h2 class="govuk-heading-m">@messages("calculationReview.printOrSave")</h2>
 
-        <p class="govuk-body">@messages("calculationReview.printOrSave.message1a") <a class="govuk-link" id="print-result" href="">@messages("calculationReview.printOrSave.printResult")</a>
+        <p class="govuk-body">@messages("calculationReview.printOrSave.message1a") <a class="govuk-link" id="print-result" href="@controllers.routes.PrintReviewController.onPageLoad()">@messages("calculationReview.printOrSave.printResult")</a>
         @messages("calculationReview.printOrSave.message1b")</p>
 
         <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
