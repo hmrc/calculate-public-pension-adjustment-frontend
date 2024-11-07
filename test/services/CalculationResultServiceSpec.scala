@@ -4184,6 +4184,30 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
           "60000"
         )
+        checkRowNameAndValue(
+          year,
+          7,
+          "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+          "2"
+        )
+        checkRowNameAndValue(
+          year,
+          8,
+          "calculationReviewIndividualAA.annualResults.personalAllowance",
+          "1"
+        )
+        checkRowNameAndValue(
+          year,
+          9,
+          "calculationReviewIndividualAA.annualResults.thresholdIncome",
+          "notApplicable"
+        )
+        checkRowNameAndValue(
+          year,
+          10,
+          "calculationReviewIndividualAA.annualResults.adjustedIncome",
+          "notApplicable"
+        )
       }
 
       "in dates Review AA should be well formed and should filter chosen period when given period" in {
@@ -4223,6 +4247,30 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           7,
           "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
           "48000"
+        )
+        checkRowNameAndValue(
+          year,
+          8,
+          "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+          "2"
+        )
+        checkRowNameAndValue(
+          year,
+          9,
+          "calculationReviewIndividualAA.annualResults.personalAllowance",
+          "1"
+        )
+        checkRowNameAndValue(
+          year,
+          10,
+          "calculationReviewIndividualAA.annualResults.thresholdIncome",
+          "notApplicable"
+        )
+        checkRowNameAndValue(
+          year,
+          11,
+          "calculationReviewIndividualAA.annualResults.adjustedIncome",
+          "notApplicable"
         )
 
       }
@@ -4287,6 +4335,30 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
           "60000"
         )
+        checkRowNameAndValue(
+          _2016Period,
+          7,
+          "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+          "2"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          8,
+          "calculationReviewIndividualAA.annualResults.personalAllowance",
+          "1"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          9,
+          "calculationReviewIndividualAA.annualResults.thresholdIncome",
+          "notApplicable"
+        )
+        checkRowNameAndValue(
+          _2016Period,
+          10,
+          "calculationReviewIndividualAA.annualResults.adjustedIncome",
+          "notApplicable"
+        )
 
         checkRowNameAndValue(
           _2017Period,
@@ -4329,6 +4401,30 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           6,
           "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
           "0"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          7,
+          "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+          "2"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          8,
+          "calculationReviewIndividualAA.annualResults.personalAllowance",
+          "1"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          9,
+          "calculationReviewIndividualAA.annualResults.thresholdIncome",
+          "notApplicable"
+        )
+        checkRowNameAndValue(
+          _2017Period,
+          10,
+          "calculationReviewIndividualAA.annualResults.adjustedIncome",
+          "notApplicable"
         )
 
       }
@@ -4374,6 +4470,30 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
           "48000"
         )
+        checkRowNameAndValue(
+          _2020,
+          8,
+          "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+          "2"
+        )
+        checkRowNameAndValue(
+          _2020,
+          9,
+          "calculationReviewIndividualAA.annualResults.personalAllowance",
+          "1"
+        )
+        checkRowNameAndValue(
+          _2020,
+          10,
+          "calculationReviewIndividualAA.annualResults.thresholdIncome",
+          "notApplicable"
+        )
+        checkRowNameAndValue(
+          _2020,
+          11,
+          "calculationReviewIndividualAA.annualResults.adjustedIncome",
+          "notApplicable"
+        )
 
         checkRowNameAndValue(_2021, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "0")
         checkRowNameAndValue(_2021, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "0")
@@ -4397,6 +4517,30 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           7,
           "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
           "56000"
+        )
+        checkRowNameAndValue(
+          _2021,
+          8,
+          "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+          "2"
+        )
+        checkRowNameAndValue(
+          _2021,
+          9,
+          "calculationReviewIndividualAA.annualResults.personalAllowance",
+          "1"
+        )
+        checkRowNameAndValue(
+          _2021,
+          10,
+          "calculationReviewIndividualAA.annualResults.thresholdIncome",
+          "notApplicable"
+        )
+        checkRowNameAndValue(
+          _2021,
+          11,
+          "calculationReviewIndividualAA.annualResults.adjustedIncome",
+          "notApplicable"
         )
 
       }
