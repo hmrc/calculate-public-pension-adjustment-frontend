@@ -718,7 +718,7 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + outDate.period.toString,
           Some(changeInAAOutDateTaxCharge(outDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(outDate.period).url,
-          Some(outDate.adjustedCompensation).getOrElse(Some(0))
+          Some(outDate.adjustedCompensation).getOrElse(Some(0)).map(Math.abs)
         )
       )
     }
@@ -739,7 +739,7 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + inDate.period.toString,
           Some(changeInAAInDateTaxCharge(inDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(inDate.period).url,
-          Some(inDate.totalCompensation).getOrElse(Some(0))
+          Some(inDate.totalCompensation).getOrElse(Some(0)).map(Math.abs)
         )
       )
     }
@@ -771,7 +771,7 @@ class CalculationResultService @Inject() (
   def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.outDates.map { outDate =>
       val changeInTaxChargeAmount =
-        outDateTotalTaxCharge(outDate) /// outdate.totalcompensation  when bhartis branch comes in
+        outDate.adjustedCompensation.getOrElse(0)
 
       val messageKey = if (changeInTaxChargeAmount > 0) {
         "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
@@ -793,7 +793,7 @@ class CalculationResultService @Inject() (
 
   def inDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.inDates.map { inDate =>
-      val changeInTaxChargeAmount = inDateTotalTaxCharge(inDate)
+      val changeInTaxChargeAmount = inDate.totalCompensation.getOrElse(0)
 
       val messageKey = if (changeInTaxChargeAmount > 0) {
         "calculationReviewIndividualAA.changeInTaxChargeString.decrease."

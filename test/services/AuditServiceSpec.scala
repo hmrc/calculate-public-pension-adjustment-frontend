@@ -357,7 +357,8 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
               List(
                 OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0),
                 OutOfDatesTaxYearSchemeCalculation("Scheme 2", "00348916RG", 0)
-              )
+              ),
+              Some(0)
             ),
             OutOfDatesTaxYearsCalculation(
               Period._2017,
@@ -371,7 +372,8 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
               List(
                 OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0),
                 OutOfDatesTaxYearSchemeCalculation("Scheme 2", "00348916RG", 0)
-              )
+              ),
+              Some(1200)
             ),
             OutOfDatesTaxYearsCalculation(
               Period._2018,
@@ -385,7 +387,8 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
               List(
                 OutOfDatesTaxYearSchemeCalculation("Scheme 1", "00348916RT", 0),
                 OutOfDatesTaxYearSchemeCalculation("Scheme 2", "00348916RG", 0)
-              )
+              ),
+              Some(0)
             )
           ),
           List()

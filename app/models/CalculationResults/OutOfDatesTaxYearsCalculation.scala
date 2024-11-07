@@ -49,7 +49,6 @@ object OutOfDatesTaxYearsCalculation {
         (__ \ "unusedAnnualAllowance").read[Int] and
         (__ \ "taxYearSchemes").read[List[OutOfDatesTaxYearSchemeCalculation]] and
         (__ \ "adjustedCompensation").readNullable[Int]
-
     )(OutOfDatesTaxYearsCalculation.apply _)
 
   }
