@@ -42,7 +42,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
 
-        checkNavigation(nextStepsTaskUrl, "/calculationReview")
+        checkNavigation(nextStepsTaskUrl, "/calculation-results")
       }
 
       "Must route to calculation result page when reporting a change that includes Annual Allowance details when feature flag disabled" in {
@@ -86,7 +86,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
 
-        checkNavigation(nextStepsTaskUrl, "/calculationReview")
+        checkNavigation(nextStepsTaskUrl, "/calculation-results")
       }
 
       "Must route to calculation result page when reporting a change that includes Annual Allowance details when feature flag false" in {

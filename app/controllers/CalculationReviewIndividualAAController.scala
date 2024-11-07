@@ -57,7 +57,7 @@ class CalculationReviewIndividualAAController @Inject() (
           calculationResultService.individualAASummaryModel(calculationResponse)
         val individualYear: IndividualAASummaryModel = allYears.find(year => year.period == period).get
         calculationResultService
-          .calculationReviewIndividualAAViewModel(calculationResponse, period.toString(), request.userAnswers)
+          .calculationReviewIndividualAAViewModel(calculationResponse, Some(period.toString()), request.userAnswers)
           .map { calculationReviewIndividualAAViewModel =>
             val isInCredit: Boolean = calculationResponse.totalAmounts.inDatesCredit > 0
             val isInDebit: Boolean  = calculationResponse.totalAmounts.inDatesDebit > 0
@@ -68,7 +68,8 @@ class CalculationReviewIndividualAAController @Inject() (
                 calculationReviewIndividualAAViewModel,
                 isInCredit,
                 isInDebit,
-                individualYear
+                individualYear,
+                routes.CalculationReviewController.onPageLoad()
               )
             )
           }
