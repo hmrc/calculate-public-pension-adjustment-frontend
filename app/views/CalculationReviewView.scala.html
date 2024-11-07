@@ -192,7 +192,7 @@
 
             <!--    no AA charge with LTA-->
             @if(!isInDebit && !isInCredit && !includeCompensation2015 && isLTACompleteWithoutKickout) {
-                <p class="govuk-body">@messages("calculationReview.whatHappensNext.message.noAAChargeHasLTA")</p>
+                <p class="govuk-body">@messages("calculationReview.nextSteps.message.noAAChargeHasLTA ")</p>
             }
 
             @if(isUserAuthenticated) {
