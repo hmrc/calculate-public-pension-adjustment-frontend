@@ -88,7 +88,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result).contains("Print or save calculation results") mustBe true
+        contentAsString(result).contains("Print calculation results") mustBe true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
         ) mustBe true
@@ -138,7 +138,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result).contains("Print or save calculation results") mustBe true
+        contentAsString(result).contains("Print calculation results") mustBe true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
         ) mustBe true
@@ -191,7 +191,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result).contains("Print or save calculation results") mustBe true
+        contentAsString(result).contains("Print calculation results") mustBe true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
         ) mustBe true
@@ -245,7 +245,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result).contains("Print or save calculation results") mustBe true
+        contentAsString(result).contains("Print calculation results") mustBe true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
         ) mustBe true

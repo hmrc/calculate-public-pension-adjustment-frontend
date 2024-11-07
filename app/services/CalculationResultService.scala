@@ -776,7 +776,8 @@ class CalculationResultService @Inject() (
 
   def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.outDates.map { outDate =>
-      val changeInTaxChargeAmount = outDateTotalTaxCharge(outDate)
+      val changeInTaxChargeAmount =
+        outDateTotalTaxCharge(outDate) /// outdate.totalcompensation  when bhartis branch comes in
 
       val messageKey = if (changeInTaxChargeAmount > 0) {
         "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
