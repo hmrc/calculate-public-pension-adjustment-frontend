@@ -20,6 +20,8 @@ import config.FrontendAppConfig
 import controllers.actions._
 import models.submission
 import models.submission.SubmissionResponse
+import models.tasklist.SectionStatus
+import models.tasklist.sections.LTASection
 import play.api.data.Form
 import play.api.data.Forms.ignored
 
@@ -49,7 +51,25 @@ class CalculationReviewController @Inject() (
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     calculationResultService.sendRequest(request.userAnswers).map { calculationResponse =>
-      Ok(view(form, calculationResultService.calculationReviewViewModel(calculationResponse)))
+      val includeCompensation2015: Boolean = calculationResponse.totalAmounts.outDatesCompensation > 0
+      val isInCredit: Boolean              = calculationResponse.totalAmounts.inDatesCredit > 0
+      val isInDebit: Boolean               = calculationResponse.totalAmounts.inDatesDebit > 0
+      val isUserAuthenticated: Boolean     = request.userAnswers.authenticated
+      val isLTACompleteWithoutKickout      = LTASection.status(request.userAnswers) == SectionStatus.Completed && !LTASection
+        .kickoutHasBeenReached(request.userAnswers)
+      val hasInDates: Boolean              = calculationResponse.inDates.isDefinedAt(0)
+      Ok(
+        view(
+          form,
+          calculationResultService.calculationReviewViewModel(calculationResponse),
+          includeCompensation2015,
+          isInCredit,
+          isInDebit,
+          isUserAuthenticated,
+          isLTACompleteWithoutKickout,
+          hasInDates
+        )
+      )
     }
   }
 

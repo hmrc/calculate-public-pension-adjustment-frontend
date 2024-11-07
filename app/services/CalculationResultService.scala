@@ -758,7 +758,8 @@ class CalculationResultService @Inject() (
     val outDatesVal: Seq[Seq[ReviewRowViewModel]]     = outDatesReview(calculationResponse)
     val inDatesVal: Seq[Seq[ReviewRowViewModel]]      = inDatesReview(calculationResponse)
     val lifetimeAllowanceVal: Seq[ReviewRowViewModel] = lifetimeAllowanceReview
-    CalculationReviewViewModel(outDatesVal, inDatesVal, lifetimeAllowanceVal)
+    val resubmissionVal: Resubmission                 = calculationResponse.resubmission
+    CalculationReviewViewModel(outDatesVal, inDatesVal, lifetimeAllowanceVal, resubmissionVal)
   }
 
   private def outDatesReview(calculationResponse: CalculationResponse): Seq[Seq[ReviewRowViewModel]] =
