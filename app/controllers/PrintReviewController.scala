@@ -95,8 +95,9 @@ class PrintReviewController @Inject() (
       calculationResultService
         .calculationReviewIndividualAAViewModel(calculationResponse, None, request.userAnswers)
         .map { calculationReviewIndividualAAViewModel =>
-          val isInCredit: Boolean = calculationResponse.totalAmounts.inDatesCredit > 0
-          val isInDebit: Boolean  = calculationResponse.totalAmounts.inDatesDebit > 0
+          val isInCredit: Boolean              = calculationResponse.totalAmounts.inDatesCredit > 0
+          val isInDebit: Boolean               = calculationResponse.totalAmounts.inDatesDebit > 0
+          val includeCompensation2015: Boolean = calculationResponse.totalAmounts.outDatesCompensation > 0
           Ok(
             view(
               form,
@@ -108,6 +109,7 @@ class PrintReviewController @Inject() (
               calculationResultService.calculationReviewViewModel(calculationResponse),
               SummaryListViewModel(rows.flatten),
               isLTACompleteWithoutKickout,
+              includeCompensation2015,
               controllers.routes.CalculationReviewController.onPageLoad(),
               hasinDates
             )

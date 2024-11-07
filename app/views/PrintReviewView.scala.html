@@ -39,6 +39,7 @@ inDatesStringValues: Seq[IndividualAASummaryModel],
 calculationReviewViewModel: CalculationReviewViewModel,
 list: SummaryList,
 isLTACompleteWithoutKickout: Boolean,
+includeCompensation2015: Boolean,
 redirectURL:Call,
 hasInDates: Boolean
 )(implicit request: Request[_], messages: Messages)
@@ -47,9 +48,15 @@ hasInDates: Boolean
 
     <h1 class="govuk-heading-xl">@messages("printReview.heading")</h1>
 
-    <p class="govuk-body"> <a class="govuk-link" id="print-result-top" href="#print" onclick="window.print();return false;">@messages("calculationResults.printYourResults.heading")</a>
-        @messages("calculationResults.printYourResults.hint")</p>
+    <p class="govuk-body">@messages("printReview.message1")</p>
+
+    <p class="govuk-body"> @messages("printReview.printYourResults.hint") <a class="govuk-link" id="print-result-top" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
+        </p>
     <script @{CSPNonce.attr}>document.getElementById("print-result-top").addEventListener("click", () => window.print());</script>
+
+    @if(isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout) {
+    <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
+    }
 
     <h2 class="govuk-heading-m">@messages("printReview.heading.calculationResults")</h2>
 
@@ -75,6 +82,10 @@ hasInDates: Boolean
     <p class="govuk-body">@messages("printReview.message5")</p>
 
     <p class="govuk-body">@messages("printReview.message6")</p>
+
+    <p class="govuk-body">@messages("printReview.message6.1") <a class="govuk-link" href= "https://www.gov.uk/guidance/who-must-pay-the-pensions-annual-allowance-tax-charge"> @messages("printReview.schemepays.link")</a> @messages("printReview.message6.2") </p>
+
+    <p class="govuk-body">@messages("printReview.message6.3")</p>
 
     <h2 class="govuk-heading-m">@messages("printReview.heading.changeOutDates")</h2>
 
@@ -262,9 +273,13 @@ hasInDates: Boolean
 
     <h2 class="govuk-heading-m">@messages("printReview.heading.print")</h2>
 
-    <p class="govuk-body"> @messages("printReview.message14") <a class="govuk-link" id="print-result-bottom" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
+    <p class="govuk-body"> @messages("printReview.printYourResults.hint") <a class="govuk-link" id="print-result-bottom" href="#print" onclick="window.print();return false;">@messages("printReview.printLink")</a>
         </p>
     <script @{CSPNonce.attr}>document.getElementById("print-result-bottom").addEventListener("click", () => window.print());</script>
+
+    @if(isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout) {
+    <p class="govuk-body">@messages("calculationReview.printOrSave.message2")</p>
+    }
 
     <p>< <a class="govuk-link" href= @redirectURL>
             @messages("reviewLTAAnswers.returnToMainResult")
