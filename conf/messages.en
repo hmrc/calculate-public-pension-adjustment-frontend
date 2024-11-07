@@ -1412,13 +1412,13 @@ pensionProtectedMember.checkYourAnswersLabel = Are you a protected member?
 pensionProtectedMember.error.required = Select yes if you were a protected member of your public service pension scheme
 pensionProtectedMember.change.hidden = if you are a protected member of your public service pension scheme
 
-hadAACharge.title = Did you pay an annual allowance tax charge from 6 April 2015 to 5 April 2022
-hadAACharge.heading = Did you pay an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
+hadAACharge.title = Did you have an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
+hadAACharge.heading = Did you have an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
 hadAACharge.message1 = Annual allowance is the maximum amount that you can put into your pension without being charged extra tax.
 hadAACharge.hint = If you reported an annual allowance tax charge, you will find this information in your self assessment for that year.
-hadAACharge.checkYourAnswersLabel = Did you pay an annual allowance charge from 6 April 2015 to 5 April 22?
-hadAACharge.error.required = Select yes if you paid an annual allowance tax charge between 6 April 2015 and 5 April 2022
-hadAACharge.change.hidden = if you paid an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022
+hadAACharge.checkYourAnswersLabel = Did you have an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
+hadAACharge.error.required = Select yes if you had an annual allowance tax charge between 6 April 2015 and 5 April 2022
+hadAACharge.change.hidden = if you had an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022
 
 contributionRefunds.title = Have your contributions changed as a result of the remedy?
 contributionRefunds.heading = Have your contributions changed as a result of the remedy?

@@ -1412,13 +1412,13 @@ pensionProtectedMember.checkYourAnswersLabel = cy: Are you a protected member?
 pensionProtectedMember.error.required = cy: Select yes if you were a protected member of your public service pension scheme
 pensionProtectedMember.change.hidden = cy: if you are a protected member of your public service pension scheme
 
-hadAACharge.title = cy: Did you pay an annual allowance tax charge from 6 April 2015 to 5 April 2022
-hadAACharge.heading = cy: Did you pay an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
+hadAACharge.title = cy: Did you have an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
+hadAACharge.heading = cy: Did you have an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
 hadAACharge.message1 = Lwfans blynyddol yw’r uchafswm y gallwch ei roi i mewn i’ch pensiwn heb dalu treth ychwanegol.
 hadAACharge.hint = Os gwnaethoch roi gwybod am dâl treth lwfans blynyddol, fe welwch yr wybodaeth hon yn eich Ffurflen Dreth Hunanasesiad ar gyfer y flwyddyn honno.
-hadAACharge.checkYourAnswersLabel = cy: Did you pay an annual allowance charge from 6 April 2015 to 5 April 22?
-hadAACharge.error.required = cy: Select yes if you paid an annual allowance tax charge between 6 April 2015 and 5 April 2022
-hadAACharge.change.hidden = cy: if you paid an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022
+hadAACharge.checkYourAnswersLabel = cy: Did you have an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
+hadAACharge.error.required = cy: Select yes if you had an annual allowance tax charge between 6 April 2015 and 5 April 2022
+hadAACharge.change.hidden = cy: if you had an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022
 
 contributionRefunds.title = cy: Have your contributions changed as a result of the remedy?
 contributionRefunds.heading = cy: Have your contributions changed as a result of the remedy?
