@@ -1746,8 +1746,8 @@ calculationReviewIndividualAA.heading2.2021 = cy: Results explained for 6 April 
 calculationReviewIndividualAA.heading2.2022 = cy: Results explained for 6 April 2021 to 5 April 2022
 calculationReviewIndividualAA.heading2.2023 = cy: Results explained for 6 April 2022 to 5 April 2023
 
-printReview.title = cy: Print or save calculation results
-printReview.heading = cy: Print or save calculation results
+printReview.title = cy: Print calculation results
+printReview.heading = cy: Print calculation results
 printReview.heading.calculationResults = cy: Calculation results
 printReview.heading.varyAA = cy: How annual allowance tax charges vary each tax year
 printReview.heading.changeOutDates = cy: Change in annual allowance tax charges from 6 April 2015 to 5 April 2019
