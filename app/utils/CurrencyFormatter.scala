@@ -19,14 +19,14 @@ package utils
 import utils.CurrencyFormatter.formatNumberString
 
 trait CurrencyFormatter {
-  def currencyFormat(amt: BigInt): String = f"&pound;$amt"
-  def currencyFormat(amt: Int): String    = f"&pound;$amt"
-  def currencyFormat(string: String): String    = formatNumberString(string)
+  def currencyFormat(amt: BigInt): String    = f"&pound;$amt"
+  def currencyFormat(amt: Int): String       = f"&pound;$amt"
+  def currencyFormat(string: String): String = formatNumberString(string)
 }
 
 object CurrencyFormatter extends CurrencyFormatter {
 
-  def formatNumberString(input: String): String = {
+  def formatNumberString(input: String): String =
     if (input.forall(_.isDigit)) {
       val formattedString = input.reverse
         .grouped(3)
@@ -36,6 +36,5 @@ object CurrencyFormatter extends CurrencyFormatter {
     } else {
       input
     }
-  }
 
 }
