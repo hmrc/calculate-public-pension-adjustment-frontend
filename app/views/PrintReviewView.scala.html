@@ -106,7 +106,7 @@ hasInDates: Boolean
         @data.map { section =>
         <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">@messages(section.title)</th>
-            @if(section.totalCharge.get == 0) {
+            @if(section.totalCharge.getOrElse(0) == 0) {
             <td class="govuk-table__cell">@messages(section.changeString.get)</td>
             } else {
             <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>
@@ -195,7 +195,7 @@ hasInDates: Boolean
         @data.map { section =>
         <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">@messages(section.title)</th>
-            @if(section.totalCharge.get == 0) {
+            @if(section.totalCharge.getOrElse(0) == 0) {
             <td class="govuk-table__cell">@messages(section.changeString.get)</td>
             } else {
             <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>

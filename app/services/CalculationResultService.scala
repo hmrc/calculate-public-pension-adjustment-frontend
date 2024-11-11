@@ -718,22 +718,19 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + outDate.period.toString,
           Some(changeInAAOutDateTaxCharge(outDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(outDate.period).url,
-          Some(outDateTotalTaxCharge(outDate))
+          outDate.adjustedCompensation.map(Math.abs).orElse(Some(0))
         )
       )
     }
 
   private def changeInAAOutDateTaxCharge(outDate: OutOfDatesTaxYearsCalculation): String = {
-    val totalCharge = outDateTotalTaxCharge(outDate)
-    if (totalCharge == 0) {
+    val totalCharge = outDate.adjustedCompensation
+    if (totalCharge.contains(0)) {
       "calculationReview.taxChargeNotChanged"
     } else {
       "calculationReview.taxChargeDecreasedBy"
     }
   }
-
-  private def outDateTotalTaxCharge(outDate: OutOfDatesTaxYearsCalculation): Int =
-    outDate.directCompensation + outDate.indirectCompensation
 
   private def inDatesReview(calculationResponse: CalculationResponse): Seq[Seq[ReviewRowViewModel]] =
     calculationResponse.inDates.map { inDate =>
@@ -742,24 +739,21 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + inDate.period.toString,
           Some(changeInAAInDateTaxCharge(inDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(inDate.period).url,
-          Some(abs(inDateTotalTaxCharge(inDate)))
+          inDate.totalCompensation.map(Math.abs).orElse(Some(0))
         )
       )
     }
 
   private def changeInAAInDateTaxCharge(inDate: InDatesTaxYearsCalculation): String = {
-    val totalCharge = inDateTotalTaxCharge(inDate)
-    if (totalCharge == 0) {
+    val totalCharge = inDate.totalCompensation
+    if (totalCharge.contains(0)) {
       "calculationReview.taxChargeNotChanged"
-    } else if (totalCharge > 0) {
+    } else if (totalCharge.exists(_ > 0)) {
       "calculationReview.taxChargeDecreasedBy"
     } else {
       "calculationReview.taxChargeIncreasedBy"
     }
   }
-
-  private def inDateTotalTaxCharge(inDate: InDatesTaxYearsCalculation): Int =
-    inDate.memberCredit + inDate.schemeCredit - inDate.debit
 
   private def lifetimeAllowanceReview: Seq[ReviewRowViewModel] =
     Seq(
@@ -777,7 +771,7 @@ class CalculationResultService @Inject() (
   def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.outDates.map { outDate =>
       val changeInTaxChargeAmount =
-        outDateTotalTaxCharge(outDate) /// outdate.totalcompensation  when bhartis branch comes in
+        outDate.adjustedCompensation.getOrElse(0)
 
       val messageKey = if (changeInTaxChargeAmount > 0) {
         "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
@@ -799,7 +793,7 @@ class CalculationResultService @Inject() (
 
   def inDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.inDates.map { inDate =>
-      val changeInTaxChargeAmount = inDateTotalTaxCharge(inDate)
+      val changeInTaxChargeAmount = inDate.totalCompensation.getOrElse(0)
 
       val messageKey = if (changeInTaxChargeAmount > 0) {
         "calculationReviewIndividualAA.changeInTaxChargeString.decrease."

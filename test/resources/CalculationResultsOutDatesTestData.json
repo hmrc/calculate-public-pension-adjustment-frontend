@@ -24,7 +24,8 @@
           "pensionSchemeTaxReference": "pstrTest1",
           "compensation": 0
         }
-      ]
+      ],
+      "adjustedCompensation": 0
     },
     {
       "period": "2017",
@@ -41,7 +42,8 @@
           "pensionSchemeTaxReference": "pstrTest1",
           "compensation": 0
         }
-      ]
+      ],
+      "adjustedCompensation": 0
     },
     {
       "period": "2018",
@@ -58,7 +60,8 @@
           "pensionSchemeTaxReference": "pstrTest1",
           "compensation": 0
         }
-      ]
+      ],
+      "adjustedCompensation": 0
     },
     {
       "period": "2019",
@@ -75,7 +78,8 @@
           "pensionSchemeTaxReference": "pstrTest1",
           "compensation": 0
         }
-      ]
+      ],
+      "adjustedCompensation": 0
     }
   ],
   "inDates": []
