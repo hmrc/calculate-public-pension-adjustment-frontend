@@ -718,7 +718,7 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + outDate.period.toString,
           Some(changeInAAOutDateTaxCharge(outDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(outDate.period).url,
-          Some(outDate.adjustedCompensation).getOrElse(Some(0)).map(Math.abs)
+          outDate.adjustedCompensation.map(Math.abs).orElse(Some(0))
         )
       )
     }
@@ -739,7 +739,7 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + inDate.period.toString,
           Some(changeInAAInDateTaxCharge(inDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(inDate.period).url,
-          Some(inDate.totalCompensation).getOrElse(Some(0)).map(Math.abs)
+          inDate.totalCompensation.map(Math.abs).orElse(Some(0))
         )
       )
     }
