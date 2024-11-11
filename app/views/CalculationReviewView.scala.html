@@ -96,7 +96,7 @@
                             @if(section.totalCharge.get == 0) {
                                 <td class="govuk-table__cell">@messages(section.changeString.get)</td>
                             } else {
-                                <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>
+                                <td class="govuk-table__cell">@messages(section.changeString.get, section.totalCharge.get)</td>
                             }
                             <td class="govuk-table__cell"><a class="govuk-link" href=@section.link>@messages("calculationReview.reviewPeriod")</a></td>
                         </tr>
@@ -131,7 +131,7 @@
                                 @if(section.totalCharge.get == 0) {
                                     <td class="govuk-table__cell">@messages(section.changeString.get)</td>
                                 } else {
-                                    <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>
+                                    <td class="govuk-table__cell">@messages(section.changeString.get, section.totalCharge.get)</td>
                                 }
                                 <td class="govuk-table__cell"><a class="govuk-link" href=@section.link>@messages("calculationReview.reviewPeriod")</a></td>
                             </tr>

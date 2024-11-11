@@ -109,7 +109,7 @@ hasInDates: Boolean
             @if(section.totalCharge.getOrElse(0) == 0) {
             <td class="govuk-table__cell">@messages(section.changeString.get)</td>
             } else {
-            <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>
+            <td class="govuk-table__cell">@messages(section.changeString.get, section.totalCharge.get)</td>
             }
         </tr>
         }
@@ -198,7 +198,7 @@ hasInDates: Boolean
             @if(section.totalCharge.getOrElse(0) == 0) {
             <td class="govuk-table__cell">@messages(section.changeString.get)</td>
             } else {
-            <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>
+            <td class="govuk-table__cell">@messages(section.changeString.get, section.totalCharge.get)</td>
             }
         </tr>
         }
