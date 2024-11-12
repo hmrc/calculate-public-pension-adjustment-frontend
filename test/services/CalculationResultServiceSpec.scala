@@ -2667,7 +2667,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                 Some(777),
                 Some(true),
                 Some(888),
-                None,
+                Some(96148),
                 Some(1111),
                 Some(1212),
                 Some(1414),
@@ -2739,7 +2739,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
               Some(777),
               Some(true),
               Some(888),
-              None,
+              Some(166148),
               Some(1111),
               Some(1212),
               Some(1414),
@@ -2875,7 +2875,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(777),
                     Some(true),
                     Some(888),
-                    None,
+                    Some(177748),
                     Some(1111),
                     Some(1212),
                     Some(1414),
@@ -2986,7 +2986,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(777),
                     Some(true),
                     Some(888),
-                    None,
+                    Some(177748),
                     Some(1111),
                     Some(1212),
                     Some(1414),
@@ -3124,7 +3124,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(777),
                     Some(true),
                     Some(888),
-                    None,
+                    Some(209548),
                     Some(1111),
                     Some(1212),
                     Some(1414),
@@ -3825,7 +3825,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                     Some(777),
                     Some(true),
                     Some(888),
-                    None,
+                    Some(243148),
                     Some(1111),
                     Some(1212),
                     Some(1414),
@@ -4540,7 +4540,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           _2021,
           11,
           "calculationReviewIndividualAA.annualResults.adjustedIncome",
-          "notApplicable"
+          "£96,148"
         )
 
       }
