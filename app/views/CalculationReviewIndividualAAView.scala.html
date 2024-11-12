@@ -74,7 +74,7 @@
         @calculationReviewIndividualAAViewModel.annualResultsData.map { section =>
         <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">@messages(section.name)</th>
-            <td class="govuk-table__cell">@messages("£" + section.value)</td>
+            <td class="govuk-table__cell">@messages(section.value)</td>
         </tr>
         }
         </tbody>

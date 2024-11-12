@@ -32,6 +32,7 @@ import pages.setupquestions.lifetimeallowance._
 import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, ResubmittingAdjustmentPage}
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
+import utils.CurrencyFormatter.currencyFormat
 
 import java.time.LocalDate
 import javax.inject.Inject
@@ -854,47 +855,47 @@ class CalculationResultService @Inject() (
           Seq(
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
-              outDate.chargePaidBySchemes.toString()
+              currencyFormat(outDate.chargePaidBySchemes.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember",
-              outDate.chargePaidByMember.toString()
+              currencyFormat(outDate.chargePaidByMember.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
-              outDate.revisedChargableAmountBeforeTaxRate.toString()
+              currencyFormat(outDate.revisedChargableAmountBeforeTaxRate.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
-              outDate.revisedChargableAmountAfterTaxRate.toString()
+              currencyFormat(outDate.revisedChargableAmountAfterTaxRate.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.outDates.directCompensation",
-              outDate.directCompensation.toString()
+              currencyFormat(outDate.directCompensation.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation",
-              outDate.indirectCompensation.toString()
+              currencyFormat(outDate.indirectCompensation.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
-              outDate.unusedAnnualAllowance.toString()
+              currencyFormat(outDate.unusedAnnualAllowance.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-              taxYear.reducedNetIncomeAmount.getOrElse(0).toString
+              currencyFormat(taxYear.reducedNetIncomeAmount.getOrElse(0).toString)
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.personalAllowance",
-              taxYear.personalAllowanceAmount.getOrElse(0).toString
+              currencyFormat(taxYear.personalAllowanceAmount.getOrElse(0).toString)
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.thresholdIncome",
-              thresholdIncomeMessage(outDate.period, taxYear)
+              currencyFormat(thresholdIncomeMessage(outDate.period, taxYear))
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.adjustedIncome",
-              adjustedIncomeMessage(outDate.period, taxYear)
+              currencyFormat(adjustedIncomeMessage(outDate.period, taxYear))
             )
           )
         }
@@ -934,51 +935,51 @@ class CalculationResultService @Inject() (
           Seq(
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes",
-              inDate.chargePaidBySchemes.toString()
+              currencyFormat(inDate.chargePaidBySchemes.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember",
-              inDate.chargePaidByMember.toString()
+              currencyFormat(inDate.chargePaidByMember.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountBeforeTaxRate",
-              inDate.revisedChargableAmountBeforeTaxRate.toString()
+              currencyFormat(inDate.revisedChargableAmountBeforeTaxRate.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountAfterTaxRate",
-              inDate.revisedChargableAmountAfterTaxRate.toString()
+              currencyFormat(inDate.revisedChargableAmountAfterTaxRate.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.debit",
-              inDate.debit.toString()
+              currencyFormat(inDate.debit.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.memberCredit",
-              inDate.memberCredit.toString()
+              currencyFormat(inDate.memberCredit.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.schemeCredit",
-              inDate.schemeCredit.toString()
+              currencyFormat(inDate.schemeCredit.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
-              inDate.unusedAnnualAllowance.toString()
+              currencyFormat(inDate.unusedAnnualAllowance.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-              taxYear.reducedNetIncomeAmount.getOrElse(0).toString
+              currencyFormat(taxYear.reducedNetIncomeAmount.getOrElse(0).toString)
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.personalAllowance",
-              taxYear.personalAllowanceAmount.getOrElse(0).toString
+              currencyFormat(taxYear.personalAllowanceAmount.getOrElse(0).toString)
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.thresholdIncome",
-              thresholdIncomeMessage(inDate.period, taxYear)
+              currencyFormat(thresholdIncomeMessage(inDate.period, taxYear))
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.adjustedIncome",
-              adjustedIncomeMessage(inDate.period, taxYear)
+              currencyFormat(adjustedIncomeMessage(inDate.period, taxYear))
             )
           )
         }

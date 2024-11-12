@@ -83,7 +83,7 @@ hasInDates: Boolean
 
     <p class="govuk-body">@messages("printReview.message6")</p>
 
-    <p class="govuk-body">@messages("printReview.message6.1") <a class="govuk-link" href= "https://www.gov.uk/guidance/who-must-pay-the-pensions-annual-allowance-tax-charge"> @messages("printReview.schemepays.link")</a> @messages("printReview.message6.2") </p>
+    <p class="govuk-body">@messages("printReview.message6.1") <a class="govuk-link" href="https://www.gov.uk/guidance/who-must-pay-the-pensions-annual-allowance-tax-charge" rel="noreferrer noopener" target="_blank"> @messages("printReview.schemepays.link")</a> @messages("printReview.message6.2") <span class="govuk-visually-hidden">(opens in new tab)</span> </p>
 
     <p class="govuk-body">@messages("printReview.message6.3")</p>
 
@@ -109,7 +109,7 @@ hasInDates: Boolean
             @if(section.totalCharge.getOrElse(0) == 0) {
             <td class="govuk-table__cell">@messages(section.changeString.get)</td>
             } else {
-            <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>
+            <td class="govuk-table__cell">@messages(section.changeString.get, section.totalCharge.get)</td>
             }
         </tr>
         }
@@ -198,7 +198,7 @@ hasInDates: Boolean
             @if(section.totalCharge.getOrElse(0) == 0) {
             <td class="govuk-table__cell">@messages(section.changeString.get)</td>
             } else {
-            <td class="govuk-table__cell">@messages(section.changeString.get)@section.totalCharge</td>
+            <td class="govuk-table__cell">@messages(section.changeString.get, section.totalCharge.get)</td>
             }
         </tr>
         }

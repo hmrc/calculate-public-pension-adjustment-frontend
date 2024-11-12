@@ -4162,39 +4162,39 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val year = sections(0)
 
-        checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes", "0")
-        checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember", "0")
+        checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes", "£0")
+        checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember", "£0")
         checkRowNameAndValue(
           year,
           2,
           "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           year,
           3,
           "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
-          "0"
+          "£0"
         )
-        checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.outDates.directCompensation", "0")
-        checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation", "0")
+        checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.outDates.directCompensation", "£0")
+        checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation", "£0")
         checkRowNameAndValue(
           year,
           6,
           "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
-          "60000"
+          "£60,000"
         )
         checkRowNameAndValue(
           year,
           7,
           "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-          "2"
+          "£2"
         )
         checkRowNameAndValue(
           year,
           8,
           "calculationReviewIndividualAA.annualResults.personalAllowance",
-          "1"
+          "£1"
         )
         checkRowNameAndValue(
           year,
@@ -4225,40 +4225,40 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val year = sections(0)
 
-        checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "0")
-        checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "0")
+        checkRowNameAndValue(year, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "£0")
+        checkRowNameAndValue(year, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "£0")
         checkRowNameAndValue(
           year,
           2,
           "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountBeforeTaxRate",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           year,
           3,
           "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountAfterTaxRate",
-          "0"
+          "£0"
         )
-        checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.inDates.debit", "0")
-        checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.inDates.memberCredit", "0")
-        checkRowNameAndValue(year, 6, "calculationReviewIndividualAA.annualResults.inDates.schemeCredit", "0")
+        checkRowNameAndValue(year, 4, "calculationReviewIndividualAA.annualResults.inDates.debit", "£0")
+        checkRowNameAndValue(year, 5, "calculationReviewIndividualAA.annualResults.inDates.memberCredit", "£0")
+        checkRowNameAndValue(year, 6, "calculationReviewIndividualAA.annualResults.inDates.schemeCredit", "£0")
         checkRowNameAndValue(
           year,
           7,
           "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
-          "48000"
+          "£48,000"
         )
         checkRowNameAndValue(
           year,
           8,
           "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-          "2"
+          "£2"
         )
         checkRowNameAndValue(
           year,
           9,
           "calculationReviewIndividualAA.annualResults.personalAllowance",
-          "1"
+          "£1"
         )
         checkRowNameAndValue(
           year,
@@ -4297,55 +4297,55 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           _2016Period,
           0,
           "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2016Period,
           1,
           "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2016Period,
           2,
           "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2016Period,
           3,
           "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2016Period,
           4,
           "calculationReviewIndividualAA.annualResults.outDates.directCompensation",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2016Period,
           5,
           "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2016Period,
           6,
           "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
-          "60000"
+          "£60,000"
         )
         checkRowNameAndValue(
           _2016Period,
           7,
           "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-          "2"
+          "£2"
         )
         checkRowNameAndValue(
           _2016Period,
           8,
           "calculationReviewIndividualAA.annualResults.personalAllowance",
-          "1"
+          "£1"
         )
         checkRowNameAndValue(
           _2016Period,
@@ -4364,55 +4364,55 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           _2017Period,
           0,
           "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2017Period,
           1,
           "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember",
-          "1200"
+          "£1,200"
         )
         checkRowNameAndValue(
           _2017Period,
           2,
           "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2017Period,
           3,
           "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2017Period,
           4,
           "calculationReviewIndividualAA.annualResults.outDates.directCompensation",
-          "1200"
+          "£1,200"
         )
         checkRowNameAndValue(
           _2017Period,
           5,
           "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2017Period,
           6,
           "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2017Period,
           7,
           "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-          "2"
+          "£2"
         )
         checkRowNameAndValue(
           _2017Period,
           8,
           "calculationReviewIndividualAA.annualResults.personalAllowance",
-          "1"
+          "£1"
         )
         checkRowNameAndValue(
           _2017Period,
@@ -4447,40 +4447,40 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         println(_2021)
 
-        checkRowNameAndValue(_2020, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "0")
-        checkRowNameAndValue(_2020, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "0")
+        checkRowNameAndValue(_2020, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "£0")
+        checkRowNameAndValue(_2020, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "£0")
         checkRowNameAndValue(
           _2020,
           2,
           "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountBeforeTaxRate",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2020,
           3,
           "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountAfterTaxRate",
-          "0"
+          "£0"
         )
-        checkRowNameAndValue(_2020, 4, "calculationReviewIndividualAA.annualResults.inDates.debit", "0")
-        checkRowNameAndValue(_2020, 5, "calculationReviewIndividualAA.annualResults.inDates.memberCredit", "0")
-        checkRowNameAndValue(_2020, 6, "calculationReviewIndividualAA.annualResults.inDates.schemeCredit", "0")
+        checkRowNameAndValue(_2020, 4, "calculationReviewIndividualAA.annualResults.inDates.debit", "£0")
+        checkRowNameAndValue(_2020, 5, "calculationReviewIndividualAA.annualResults.inDates.memberCredit", "£0")
+        checkRowNameAndValue(_2020, 6, "calculationReviewIndividualAA.annualResults.inDates.schemeCredit", "£0")
         checkRowNameAndValue(
           _2020,
           7,
           "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
-          "48000"
+          "£48,000"
         )
         checkRowNameAndValue(
           _2020,
           8,
           "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-          "2"
+          "£2"
         )
         checkRowNameAndValue(
           _2020,
           9,
           "calculationReviewIndividualAA.annualResults.personalAllowance",
-          "1"
+          "£1"
         )
         checkRowNameAndValue(
           _2020,
@@ -4495,40 +4495,40 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           "notApplicable"
         )
 
-        checkRowNameAndValue(_2021, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "0")
-        checkRowNameAndValue(_2021, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "0")
+        checkRowNameAndValue(_2021, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "£0")
+        checkRowNameAndValue(_2021, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "£0")
         checkRowNameAndValue(
           _2021,
           2,
           "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountBeforeTaxRate",
-          "0"
+          "£0"
         )
         checkRowNameAndValue(
           _2021,
           3,
           "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountAfterTaxRate",
-          "0"
+          "£0"
         )
-        checkRowNameAndValue(_2021, 4, "calculationReviewIndividualAA.annualResults.inDates.debit", "0")
-        checkRowNameAndValue(_2021, 5, "calculationReviewIndividualAA.annualResults.inDates.memberCredit", "0")
-        checkRowNameAndValue(_2021, 6, "calculationReviewIndividualAA.annualResults.inDates.schemeCredit", "0")
+        checkRowNameAndValue(_2021, 4, "calculationReviewIndividualAA.annualResults.inDates.debit", "£0")
+        checkRowNameAndValue(_2021, 5, "calculationReviewIndividualAA.annualResults.inDates.memberCredit", "£0")
+        checkRowNameAndValue(_2021, 6, "calculationReviewIndividualAA.annualResults.inDates.schemeCredit", "£0")
         checkRowNameAndValue(
           _2021,
           7,
           "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
-          "56000"
+          "£56,000"
         )
         checkRowNameAndValue(
           _2021,
           8,
           "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-          "2"
+          "£2"
         )
         checkRowNameAndValue(
           _2021,
           9,
           "calculationReviewIndividualAA.annualResults.personalAllowance",
-          "1"
+          "£1"
         )
         checkRowNameAndValue(
           _2021,
