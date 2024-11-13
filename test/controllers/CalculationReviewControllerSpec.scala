@@ -17,10 +17,13 @@
 package controllers
 
 import base.SpecBase
-import models.CalculationResults.{CalculationResponse, CalculationReviewViewModel, ReviewRowViewModel}
+import models.CalculationResults.CalculationResponse
 import models.submission.{Failure, Success}
+import models.tasklist.sections.LTASection
+import org.jsoup.Jsoup
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
@@ -74,6 +77,128 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual OK
         contentAsString(result).contains("Calculation results") mustBe true
       }
+    }
+
+    "when only out of dates AA, only show content relevant for out dates" in {
+
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsOutDatesTestData.json")
+
+      val mockCalculationResultService     = mock[CalculationResultService]
+
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[CalculationResultService].toInstance(mockCalculationResultService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains("Calculation results") mustBe true
+        contentAsString(result).contains("Change in annual allowance tax charges from 6 April 2015 to 5 April 2019") mustBe true
+        contentAsString(result).contains("Change in annual allowance tax charges from 6 April 2019 to 5 April 2023") mustBe false
+      }
+    }
+
+    "when LTA reported, should so content relevant for LTA" in {
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      val mockCalculationResultService     = mock[CalculationResultService]
+
+      val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
+
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[CalculationResultService].toInstance(mockCalculationResultService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result).contains("Calculation results") mustBe true
+        contentAsString(result).contains("Lifetime allowance") mustBe true
+      }
+    }
+
+    "when no LTA reported, should not show content for LTA" in {
+
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      val mockCalculationResultService     = mock[CalculationResultService]
+
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[CalculationResultService].toInstance(mockCalculationResultService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result).contains("Calculation results") mustBe true
+        contentAsString(result).contains("Lifetime allowance") mustBe false
+      }
+
+    }
+
+    "must contain right data for totalCharge in all the valid FY" in {
+
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+      val mockCalculationResultService     = mock[CalculationResultService]
+
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[CalculationResultService].toInstance(mockCalculationResultService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+
+
+        val document = Jsoup.parse(contentAsString(result))
+        val table = document.select("table").first()
+        val columnCells = table.select("tbody tr td:nth-child(2)")
+        val columnTexts = columnCells.eachText()
+        columnTexts should contain allOf ("Not Changed", "Decreased by £1,200")
+      }
+
     }
 
     "must redirect to submit landing page on a POST when answers / calculation are submitted to backend successfully" in {
