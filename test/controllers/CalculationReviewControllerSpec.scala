@@ -84,7 +84,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val calculationResult: CalculationResponse =
         readCalculationResult("test/resources/CalculationResultsOutDatesTestData.json")
 
-      val mockCalculationResultService     = mock[CalculationResultService]
+      val mockCalculationResultService = mock[CalculationResultService]
 
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
@@ -104,8 +104,12 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         status(result) mustEqual OK
 
         contentAsString(result).contains("Calculation results") mustBe true
-        contentAsString(result).contains("Change in annual allowance tax charges from 6 April 2015 to 5 April 2019") mustBe true
-        contentAsString(result).contains("Change in annual allowance tax charges from 6 April 2019 to 5 April 2023") mustBe false
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
+        ) mustBe true
+        contentAsString(result).contains(
+          "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
+        ) mustBe false
       }
     }
 
@@ -113,7 +117,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val calculationResult: CalculationResponse =
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      val mockCalculationResultService     = mock[CalculationResultService]
+      val mockCalculationResultService = mock[CalculationResultService]
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
@@ -143,7 +147,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val calculationResult: CalculationResponse =
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      val mockCalculationResultService     = mock[CalculationResultService]
+      val mockCalculationResultService = mock[CalculationResultService]
 
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
@@ -172,7 +176,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val calculationResult: CalculationResponse =
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      val mockCalculationResultService     = mock[CalculationResultService]
+      val mockCalculationResultService = mock[CalculationResultService]
 
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
@@ -191,9 +195,8 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
 
-
-        val document = Jsoup.parse(contentAsString(result))
-        val table = document.select("table").first()
+        val document    = Jsoup.parse(contentAsString(result))
+        val table       = document.select("table").first()
         val columnCells = table.select("tbody tr td:nth-child(2)")
         val columnTexts = columnCells.eachText()
         columnTexts should contain allOf ("Not Changed", "Decreased by £1,200")
