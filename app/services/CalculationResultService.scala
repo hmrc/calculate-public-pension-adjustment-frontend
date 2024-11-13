@@ -999,19 +999,13 @@ class CalculationResultService @Inject() (
   ): String =
     period match {
       case Period._2016 => "notApplicable"
-      case _            =>
-        if (incomeSubJourney.thresholdIncomeAmount.isDefined)
-          incomeSubJourney.thresholdIncomeAmount.get.toString
-        else "notApplicable"
+      case _            => incomeSubJourney.thresholdIncomeAmount.map(_.toString).getOrElse("notApplicable")
     }
 
   private def adjustedIncomeMessage(period: Period, incomeSubJourney: IncomeSubJourney): String =
     period match {
       case Period._2016 => "notApplicable"
-      case _            =>
-        if (incomeSubJourney.adjustedIncomeAmount.isDefined)
-          incomeSubJourney.adjustedIncomeAmount.get.toString
-        else "notApplicable"
+      case _            => incomeSubJourney.adjustedIncomeAmount.map(_.toString).getOrElse("notApplicable")
     }
 
   private def taxYearIncomeSubJourney(taxYears: List[TaxYear2016To2023], period: Period): IncomeSubJourney =
