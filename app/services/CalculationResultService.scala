@@ -295,31 +295,31 @@ class CalculationResultService @Inject() (
 
     val totalIncome: Int = userAnswers.get(TotalIncomePage(period)).map(_.toInt).getOrElse(0)
 
-    val income: Option[Income] =
-      if (period == Period._2016)
-        None
-      else if (userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.Yes))
-        userAnswers.get(KnowAdjustedAmountPage(period)) match {
-          case Some(true)  =>
-            Some(AboveThreshold(userAnswers.get(AdjustedIncomePage(period)).getOrElse(BigInt(0)).toInt))
-          case Some(false) =>
-            Some(AboveThreshold(adjustedIncomeCalculation(userAnswers, period).toInt))
-          case _           => None
+    val adjustedIncomeAmount: Option[BigInt] = {
+      def getAdjustedIncomeValue =
+        userAnswers.get(AdjustedIncomePage(period)) match {
+          case a @ Some(_) => a
+          case None        => Some(adjustedIncomeCalculation(userAnswers, period))
         }
+
+      if (userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.Yes))
+        getAdjustedIncomeValue
       else if (userAnswers.get(ThresholdIncomePage(period)).contains(ThresholdIncome.IDoNotKnow))
         userAnswers.get(models.AboveThreshold(period)) match {
-          case Some(true)  =>
-            userAnswers.get(KnowAdjustedAmountPage(period)) match {
-              case Some(true)  =>
-                Some(AboveThreshold(userAnswers.get(AdjustedIncomePage(period)).getOrElse(BigInt(0)).toInt))
-              case Some(false) =>
-                Some(AboveThreshold(adjustedIncomeCalculation(userAnswers, period).toInt))
-              case _           => None
-            }
-          case Some(false) => Some(BelowThreshold)
+          case Some(true) => getAdjustedIncomeValue
+          case _          => None
         }
-      else
-        Some(BelowThreshold)
+      else None
+    }
+
+    val income: Option[Income] = period match {
+      case Period._2016 => None
+      case _            =>
+        adjustedIncomeAmount match {
+          case Some(amount) => Some(AboveThreshold(amount.toInt))
+          case None         => Some(BelowThreshold)
+        }
+    }
 
     val chargePaidByMember: Int =
       userAnswers.get(HowMuchAAChargeYouPaidPage(period, SchemeIndex(0))).map(_.toInt).getOrElse(0)
@@ -392,7 +392,7 @@ class CalculationResultService @Inject() (
           userAnswers.get(LumpSumDeathBenefitsValuePage(period)).map(_.toInt),
           userAnswers.get(models.AboveThreshold(period)),
           userAnswers.get(TaxReliefPage(period)).map(_.toInt),
-          userAnswers.get(AdjustedIncomePage(period)).map(_.toInt),
+          adjustedIncomeAmount.map(_.toInt),
           userAnswers.get(HowMuchTaxReliefPensionPage(period)).map(_.toInt),
           userAnswers.get(HowMuchContributionPensionSchemePage(period)).map(_.toInt),
           userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).map(_.toInt),
@@ -999,21 +999,13 @@ class CalculationResultService @Inject() (
   ): String =
     period match {
       case Period._2016 => "notApplicable"
-      case _            =>
-        incomeSubJourney.thresholdIncomeAmount.getOrElse(None) match {
-          case Some(thresholdIncome) => "£" + thresholdIncome.toString
-          case _                     => "notApplicable"
-        }
+      case _            => incomeSubJourney.thresholdIncomeAmount.map(_.toString).getOrElse("notApplicable")
     }
 
   private def adjustedIncomeMessage(period: Period, incomeSubJourney: IncomeSubJourney): String =
     period match {
       case Period._2016 => "notApplicable"
-      case _            =>
-        incomeSubJourney.adjustedIncomeAmount.getOrElse(None) match {
-          case Some(adjustedIncome) => adjustedIncome.toString
-          case _                    => "notApplicable"
-        }
+      case _            => incomeSubJourney.adjustedIncomeAmount.map(_.toString).getOrElse("notApplicable")
     }
 
   private def taxYearIncomeSubJourney(taxYears: List[TaxYear2016To2023], period: Period): IncomeSubJourney =

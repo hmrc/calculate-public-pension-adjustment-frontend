@@ -1538,13 +1538,13 @@ maybePIAUnchangedOrDecreased.heading1 = cy: Pension input amount changes
 maybePIAUnchangedOrDecreased.message1 = cy: Your pension input amount (PIA) is the amount that your pension has increased in a pension input period (PIP), which is usually a year.
 maybePIAUnchangedOrDecreased.message2 = cy: As a result of the Public Service Pensions remedy, your pension input amounts (PIA) may have changed.
 maybePIAUnchangedOrDecreased.message3 = cy: If your pension scheme administrator sends you the original figures, you will find both the original and revised figures on your pension savings statement.
-maybePIAUnchangedOrDecreased.heading2 = cy: Have any of your pension input amounts remained unchanged or decreased for the tax years ending 5 April 2016 to 5 April 2022?
+maybePIAUnchangedOrDecreased.heading2 = cy: Have any of your pension input amounts remained unchanged or decreased for the tax years ending 6 April 2016 to 5 April 2022?
 maybePIAUnchangedOrDecreased.yes = cy: Yes
 maybePIAUnchangedOrDecreased.no = cy: No
 maybePIAUnchangedOrDecreased.idk = cy: Do not know
-maybePIAUnchangedOrDecreased.checkYourAnswersLabel = cy: Have any of your pension input amounts remained unchanged or decreased for the tax years ending 5 April 2016 to 5 April 2022?
-maybePIAUnchangedOrDecreased.error.required = cy: Select yes if any of your pension input amounts remained unchanged or decreased for the tax years ending 5 April 2016 to 5 April 2022
-maybePIAUnchangedOrDecreased.change.hidden = cy: if any of your pension input amounts remained unchanged or decreased for the tax years ending 5 April 2016 to 5 April 2022
+maybePIAUnchangedOrDecreased.checkYourAnswersLabel = cy: Have any of your pension input amounts remained unchanged or decreased for the tax years ending 6 April 2016 to 5 April 2022?
+maybePIAUnchangedOrDecreased.error.required = cy: Select yes if any of your pension input amounts remained unchanged or decreased for the tax years ending 6 April 2016 to 5 April 2022
+maybePIAUnchangedOrDecreased.change.hidden = cy: if any of your pension input amounts remained unchanged or decreased for the tax years ending 6 April 2016 to 5 April 2022
 
 pIAAboveAnnualAllowanceIn2023.title = cy: Did you have a pension input amount above £40000?
 pIAAboveAnnualAllowanceIn2023.caption = Lwfans blynyddol
