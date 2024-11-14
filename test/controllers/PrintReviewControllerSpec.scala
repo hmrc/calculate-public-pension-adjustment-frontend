@@ -56,9 +56,9 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
-        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10)
+        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10, 20)
       val mockInDatesSummary           =
-        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10)
+        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10, 20)
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
@@ -108,7 +108,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
-        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10)
+        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10, 20)
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
@@ -159,9 +159,9 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
-        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10)
+        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10, 20)
       val mockInDatesSummary           =
-        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10)
+        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10, 20)
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
@@ -213,9 +213,9 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
-        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10)
+        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10, 20)
       val mockInDatesSummary           =
-        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10)
+        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10, 20)
 
       val userAnswers = emptyUserAnswers
 
