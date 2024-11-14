@@ -57,7 +57,7 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
       val mockCalculationReviewIndividualAAViewModel =
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val mockIndividualAASummaryModel               =
-        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10)
+        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10, 20)
 
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
 

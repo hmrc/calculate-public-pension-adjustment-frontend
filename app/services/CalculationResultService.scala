@@ -788,7 +788,8 @@ class CalculationResultService @Inject() (
         outDate.revisedChargableAmountBeforeTaxRate,
         outDate.chargePaidByMember,
         outDate.chargePaidBySchemes,
-        outDate.revisedChargableAmountAfterTaxRate
+        outDate.revisedChargableAmountAfterTaxRate,
+        outDate.chargePaidByMember + outDate.chargePaidBySchemes
       )
     }
 
@@ -812,7 +813,8 @@ class CalculationResultService @Inject() (
         inDate.revisedChargableAmountBeforeTaxRate,
         inDate.chargePaidByMember,
         inDate.chargePaidBySchemes,
-        inDate.revisedChargableAmountAfterTaxRate
+        inDate.revisedChargableAmountAfterTaxRate,
+        inDate.chargePaidByMember + inDate.chargePaidBySchemes
       )
     }
 

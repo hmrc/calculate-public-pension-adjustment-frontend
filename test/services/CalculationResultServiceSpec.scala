@@ -4291,8 +4291,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         val _2016Period = sections(0)
         val _2017Period = sections(1)
 
-        println(_2017Period)
-
         checkRowNameAndValue(
           _2016Period,
           0,
@@ -4445,8 +4443,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         val _2020 = sections(0)
         val _2021 = sections(1)
 
-        println(_2021)
-
         checkRowNameAndValue(_2020, 0, "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes", "£0")
         checkRowNameAndValue(_2020, 1, "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember", "£0")
         checkRowNameAndValue(
@@ -4566,6 +4562,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             0,
             0,
+            0,
             0
           ),
           IndividualAASummaryModel(
@@ -4576,13 +4573,15 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             1200,
             0,
-            0
+            0,
+            1200
           ),
           IndividualAASummaryModel(
             Period._2018,
             0,
             0,
             "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
             0,
             0,
             0,
@@ -4596,6 +4595,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             0,
             0,
+            0,
             0
           ),
           IndividualAASummaryModel(
@@ -4603,6 +4603,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             0,
             "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
             0,
             0,
             0,
@@ -4616,6 +4617,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             0,
             0,
+            0,
             0
           ),
           IndividualAASummaryModel(
@@ -4626,6 +4628,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             0,
             0,
+            0,
             0
           ),
           IndividualAASummaryModel(
@@ -4633,6 +4636,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             0,
             0,
             "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            0,
             0,
             0,
             0,

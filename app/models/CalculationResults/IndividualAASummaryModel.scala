@@ -26,5 +26,6 @@ final case class IndividualAASummaryModel(
   revisedChargeableAmountBeforeTaxRate: Int,
   chargePaidByMember: Int,
   chargePaidBySchemes: Int,
-  revisedChargeableAmountAfterTaxRate: Int
+  revisedChargeableAmountAfterTaxRate: Int,
+  totalChargePaid: Int
 )
