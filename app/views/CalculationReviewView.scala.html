@@ -148,9 +148,7 @@
             <h2 class="govuk-heading-m">@messages("calculationReview.lta.heading1")</h2>
 
             <p class="govuk-body">@messages("calculationReview.lta.message1a")
-                @calculationReviewViewModel.lifetimeAllowanceData.map { data =>
-                <a class="govuk-link" href=@data.link>@messages("calculationReview.lta.link")</a>
-            }
+                <a class="govuk-link" href="@controllers.lifetimeallowance.routes.ViewYourLTAAnswersController.onPageLoad()">@messages("calculationReview.lta.link")</a>
             @messages("calculationReview.lta.message1b")</p>
 
             <p class="govuk-body">@messages("calculationReview.lta.message2")</p>

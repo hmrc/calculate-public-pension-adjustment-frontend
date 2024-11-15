@@ -707,9 +707,8 @@ class CalculationResultService @Inject() (
   def calculationReviewViewModel(calculationResponse: CalculationResponse): CalculationReviewViewModel = {
     val outDatesVal: Seq[Seq[ReviewRowViewModel]]     = outDatesReview(calculationResponse)
     val inDatesVal: Seq[Seq[ReviewRowViewModel]]      = inDatesReview(calculationResponse)
-    val lifetimeAllowanceVal: Seq[ReviewRowViewModel] = lifetimeAllowanceReview
     val resubmissionVal: Resubmission                 = calculationResponse.resubmission
-    CalculationReviewViewModel(outDatesVal, inDatesVal, lifetimeAllowanceVal, resubmissionVal)
+    CalculationReviewViewModel(outDatesVal, inDatesVal, resubmissionVal)
   }
 
   private def outDatesReview(calculationResponse: CalculationResponse): Seq[Seq[ReviewRowViewModel]] =
@@ -755,16 +754,6 @@ class CalculationResultService @Inject() (
       "calculationReview.taxChargeIncreasedBy"
     }
   }
-
-  private def lifetimeAllowanceReview: Seq[ReviewRowViewModel] =
-    Seq(
-      ReviewRowViewModel(
-        "calculationReview.lta",
-        None,
-        controllers.lifetimeallowance.routes.ViewYourLTAAnswersController.onPageLoad().url,
-        None
-      )
-    )
 
   def individualAASummaryModel(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     outDatesSummary(calculationResponse) ++ inDatesSummary(calculationResponse)
