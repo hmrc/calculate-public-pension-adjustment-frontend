@@ -4842,22 +4842,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         )
       }
 
-      "lta must be well formed" in {
-
-        val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
-
-        val viewModel: CalculationReviewViewModel =
-          service.calculationReviewViewModel(calculationResult)
-
-        val sections: Seq[ReviewRowViewModel] = viewModel.lifetimeAllowance
-        sections.size mustBe 1
-
-        checkRowNameReviewRowLTA(
-          sections(0),
-          "calculationReview.lta",
-          "/public-pension-adjustment/review-lifetime-allowance-answers"
-        )
-      }
     }
 
   }

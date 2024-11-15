@@ -705,9 +705,9 @@ class CalculationResultService @Inject() (
   }
 
   def calculationReviewViewModel(calculationResponse: CalculationResponse): CalculationReviewViewModel = {
-    val outDatesVal: Seq[Seq[ReviewRowViewModel]]     = outDatesReview(calculationResponse)
-    val inDatesVal: Seq[Seq[ReviewRowViewModel]]      = inDatesReview(calculationResponse)
-    val resubmissionVal: Resubmission                 = calculationResponse.resubmission
+    val outDatesVal: Seq[Seq[ReviewRowViewModel]] = outDatesReview(calculationResponse)
+    val inDatesVal: Seq[Seq[ReviewRowViewModel]]  = inDatesReview(calculationResponse)
+    val resubmissionVal: Resubmission             = calculationResponse.resubmission
     CalculationReviewViewModel(outDatesVal, inDatesVal, resubmissionVal)
   }
 
