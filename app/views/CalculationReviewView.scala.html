@@ -147,25 +147,13 @@
         @if(isLTACompleteWithoutKickout) {
             <h2 class="govuk-heading-m">@messages("calculationReview.lta.heading1")</h2>
 
-            <p class="govuk-body">@messages("calculationReview.lta.message1")</p>
+            <p class="govuk-body">@messages("calculationReview.lta.message1a")
+                @calculationReviewViewModel.lifetimeAllowanceData.map { data =>
+                <a class="govuk-link" href=@data.link>@messages("calculationReview.lta.link")</a>
+            }
+            @messages("calculationReview.lta.message1b")</p>
 
             <p class="govuk-body">@messages("calculationReview.lta.message2")</p>
-            <table class="govuk-table">
-                <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header govuk-!-width-two-thirds"></th>
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.answers")</th>
-                </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                @calculationReviewViewModel.lifetimeAllowanceData.map { data =>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">@messages(data.title)</th>
-                    <td class="govuk-table__cell"><a class="govuk-link" href=@data.link>@messages("calculationReview.reviewAnswers")</a></td>
-                </tr>
-                }
-                </tbody>
-            </table>
         }
 
         @if(calculationReviewViewModel.resubmissionData.isResubmission) {
