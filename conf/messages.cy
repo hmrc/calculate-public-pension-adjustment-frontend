@@ -967,7 +967,7 @@ newEnhancementType.change.hidden = cy: which new type of lifetime allowance enha
 
 newInternationalEnhancementReference.title = Beth yw’r cyfeirnod ar gyfer eich diogelwch lwfans oes uwch rhyngwladol newydd?
 newInternationalEnhancementReference.heading = Beth yw’r cyfeirnod ar gyfer eich diogelwch lwfans oes uwch rhyngwladol newydd?
-newInternationalEnhancementReference.checkYourAnswersLabel = Beth yw’r cyfeirnod ar gyfer eich diogelwch lwfans oes uwch rhyngwladol newydd?
+newInternationalEnhancementReference.checkYourAnswersLabel = cy: What is your new lifetime allowance international enhancement reference?
 newInternationalEnhancementReference.message1 = Mae eich cyfeirnod ar dystysgrif diogelwch uwch neu yn eich cyfrif treth bersonol. Gallwch hefyd fewngofnodi i Borth y Llywodraeth i’w wirio.
 newInternationalEnhancementReference.message2 = Gwiriwch eich diogelwch lwfans oes uwch ar-lein
 newInternationalEnhancementReference.hint1 = Mae gan y cyfeirnod 15 o gymeriadau ar y mwyaf. Mae’n gymysgedd o lythrennau a rhifau.
