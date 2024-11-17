@@ -38,7 +38,7 @@ object UnionPoliceReliefAmountSummary {
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key = "unionPoliceReliefAmount.checkYourAnswersLabel",
+        key = messages("unionPoliceReliefAmount.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(

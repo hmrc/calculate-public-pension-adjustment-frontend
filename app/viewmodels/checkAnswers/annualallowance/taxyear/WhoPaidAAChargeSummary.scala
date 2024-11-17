@@ -25,6 +25,9 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 object WhoPaidAAChargeSummary {
 
   def row(answers: UserAnswers, period: Period, schemeIndex: SchemeIndex)(implicit
@@ -41,8 +44,13 @@ object WhoPaidAAChargeSummary {
         answer.schemeName
       }
 
+      val languageTag          = if (messages.lang.code == "cy") "cy" else "en"
+      val formatter            = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag(languageTag))
+      val startEndDate: String =
+        period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
+
       SummaryListRowViewModel(
-        key = messages("whoPaidAACharge.checkYourAnswersLabel", schemeName.getOrElse("")),
+        key = messages("whoPaidAACharge.checkYourAnswersLabel", schemeName.getOrElse(""), startEndDate),
         value = value,
         actions = Seq(
           ActionItemViewModel(
@@ -51,7 +59,7 @@ object WhoPaidAAChargeSummary {
               .onPageLoad(CheckMode, period, schemeIndex)
               .url
           )
-            .withVisuallyHiddenText(messages("whoPaidAACharge.change.hidden", schemeName.getOrElse("")))
+            .withVisuallyHiddenText(messages("whoPaidAACharge.change.hidden", schemeName.getOrElse(""), startEndDate))
         )
       )
     }

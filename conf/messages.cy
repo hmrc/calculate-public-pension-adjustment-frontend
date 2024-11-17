@@ -121,7 +121,7 @@ resubmittingAdjustment.hint = Dewiswch ‘Na’ os mai dyma’ch tro cyntaf yn d
 
 reasonForResubmission.title = Pam ydych am drosysgrifo cyflwyniad blaenorol?
 reasonForResubmission.heading = Pam ydych am drosysgrifo cyflwyniad blaenorol?
-reasonForResubmission.checkYourAnswersLabel = Rheswm dros ailgyflwyno addasiad
+reasonForResubmission.checkYourAnswersLabel = Pam ydych am drosysgrifo cyflwyniad blaenorol?
 reasonForResubmission.error.required = Nodwch y rheswm rydych am drosysgrifo cyflwyniad blaenorol
 reasonForResubmission.error.length = Mae’n rhaid i’r rheswm rydych wedi’i nodi ar gyfer trosysgrifo cyflwyniad blaenorol fod yn 500 o gymeriadau neu lai
 reasonForResubmission.change.hidden = Y rheswm am drosysgrifo cyflwyniad blaenorol
@@ -135,16 +135,16 @@ ineligible.bullet3 = gwnaethoch adael y maes gwasanaeth cyhoeddus ar ôl 31 Mawr
 ineligible.bullet4 = nid oeddech yn rhan o unrhyw hen gynllun pensiwn gwasanaeth cyhoeddus
 ineligible.message2 = Mae’r rhesymau hyn yn golygu na fydd eich buddiannau pensiwn yn cael eu heffeithio gan y Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus, a does dim rhaid i chi ddefnyddio’r gwasanaeth hwn.
 
-reportingChange.title = Pa daliadau treth yr hoffech chi eu haddasu?
-reportingChange.heading = Pa daliadau treth y gallai cael eu heffeithio gan y Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus, yn eich barn chi?
+reportingChange.title = cy: Which tax charges do you think may have been affected by the public service pension remedy?
+reportingChange.heading = cy: Which tax charges do you think may have been affected by the public service pension remedy?
 reportingChange.error.required = Dewiswch y taliadau treth y gallai cael eu heffeithio gan y Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus, yn eich barn chi
 reportingChange.annualAllowance = Lwfans blynyddol
 reportingChange.lifetimeAllowance = Lwfans oes
 reportingChange.annualAllowance.hint = Lwfans blynyddol (AA) yw’r swm o arian y gallwch ei gyfrannu tuag at eich pensiwn bob blwyddyn heb dalu treth.
 reportingChange.lifetimeAllowance.hint = Lwfans Oes (LTA) yw cyfanswm yr arian y gallwch ei gynilo yn eich pensiwn yn ystod eich oes heb dalu treth.
 reportingChange.hint = Dewiswch bob un sy’n berthnasol.
-reportingChange.checkYourAnswersLabel = Pa daliadau treth y gallai cael eu heffeithio gan y Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus, yn eich barn chi?
-reportingChange.change.hidden = y taliadau treth y gallai cael eu heffeithio gan y Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus, yn eich barn chi
+reportingChange.checkYourAnswersLabel = cy: Which tax charges do you think may have been affected by the public service pension remedy?
+reportingChange.change.hidden = cy: the tax charges you think may have been affected by the public service pension remedy
 
 scottishTaxpayerFrom2016.title = A ydych chi wedi bod yn drethdalwr yn yr Alban ar unrhyw adeg o 6 Ebrill 2016 ymlaen?
 scottishTaxpayerFrom2016.heading = A ydych chi wedi bod yn drethdalwr yn yr Alban ar unrhyw adeg o 6 Ebrill 2016 ymlaen?
@@ -163,9 +163,9 @@ whichYearsScottishTaxpayer.2020 = 6 Ebrill 2019 i 5 Ebrill 2020
 whichYearsScottishTaxpayer.2019 = 6 Ebrill 2018 i 5 Ebrill 2019
 whichYearsScottishTaxpayer.2018 = 6 Ebrill 2017 i 5 Ebrill 2018
 whichYearsScottishTaxpayer.2017 = 6 Ebrill 2016 i 5 Ebrill 2017
-whichYearsScottishTaxpayer.checkYourAnswersLabel = Blynyddoedd treth yr oeddech yn drethdalwr yn yr Alban
+whichYearsScottishTaxpayer.checkYourAnswersLabel = Pa flynyddoedd treth oeddech chi’n drethdalwr yn yr Alban?
 whichYearsScottishTaxpayer.error.required = Dewiswch pa flynyddoedd treth yr oeddech yn drethdalwr yn yr Alban
-whichYearsScottishTaxpayer.change.hidden = Pa flynyddoedd treth oeddech chi’n drethdalwr yn yr Alban?
+whichYearsScottishTaxpayer.change.hidden = cy: which tax years were you a Scottish taxpayer
 
 payingPublicPensionScheme.title = Ydych chi wedi parhau i dalu i mewn neu gynyddu eich cynllun pensiwn gwasanaeth cyhoeddus ar ôl 5 Ebrill 2022?
 payingPublicPensionScheme.heading = Ydych chi wedi parhau i dalu i mewn neu gynyddu eich cynllun pensiwn gwasanaeth cyhoeddus ar ôl 5 Ebrill 2022?
@@ -188,7 +188,7 @@ stopPayingPublicPension.change.hidden = y dyddiad y gwnaethoch roi’r gorau i d
 
 definedContributionPensionScheme.title = A oes gennych chi unrhyw gynlluniau pensiwn eraill heblaw am eich cynlluniau gwasanaeth cyhoeddus?
 definedContributionPensionScheme.heading = A oes gennych chi unrhyw gynlluniau pensiwn eraill heblaw am eich cynlluniau gwasanaeth cyhoeddus?
-definedContributionPensionScheme.checkYourAnswersLabel = A oes gennych chi gynllun pensiwn cyfraniadau diffiniedig?
+definedContributionPensionScheme.checkYourAnswersLabel = A oes gennych chi unrhyw gynlluniau pensiwn eraill heblaw am eich cynlluniau gwasanaeth cyhoeddus?
 definedContributionPensionScheme.message = Fel arfer, bydd y rhain naill ai’n bensiynau personol neu’n bensiynau rhanddeiliaid. Weithiau, fe’u gelwir yn gynlluniau pensiwn ‘pryniannau arian’. Gallant fod:
 definedContributionPensionScheme.bullet1 = yn bensiynau gweithle a drefnir gan eich cyflogwr
 definedContributionPensionScheme.bullet2 = yn bensiynau preifat a drefnir gennych chi
@@ -207,7 +207,7 @@ flexiblyAccessedPension.change.hidden = os ydych wedi cyrchu eich pensiwn cyfran
 
 flexibleAccessStartDate.title = Pryd gwnaethoch chi gyrchu’ch pensiwn cyfraniadau diffiniedig yn hyblyg am y tro cyntaf?
 flexibleAccessStartDate.heading = Pryd gwnaethoch chi gyrchu’ch pensiwn cyfraniadau diffiniedig yn hyblyg am y tro cyntaf?
-flexibleAccessStartDate.checkYourAnswersLabel = Dyddiad y gwnaethoch gyrchu pensiwn cyfraniadau diffiniedig yn hyblyg am y tro cyntaf
+flexibleAccessStartDate.checkYourAnswersLabel = Pryd gwnaethoch chi gyrchu’ch pensiwn cyfraniadau diffiniedig yn hyblyg am y tro cyntaf?
 flexibleAccessStartDate.hint1 = Mae hwn i’w weld ar eich datganiad cyrchu’n hyblyg.
 flexibleAccessStartDate.hint2 = Er enghraifft, 25 2 2015
 flexibleAccessStartDate.change.hidden = dyddiad y gwnaethoch gyrchu eich pensiwn cyfraniadau diffiniedig yn hyblyg am y tro cyntaf
@@ -240,11 +240,11 @@ pIAPreRemedy.message1 = Eich swm mewnbwn pensiwn yw’r cynnydd neu’r twf yng 
 pIAPreRemedy.message2 = Gallwch ddod o hyd i’r wybodaeth hon ar eich datganiad cynilion pensiwn wedi’i ddiwygio neu’ch datganiad cynilion pensiwn wedi’i unioni.
 pIAPreRemedy.hint = Mae’n rhaid talgrynnu symiau i lawr i’r bunt agosaf, er enghraifft 2300
 
-pIAPreRemedy.checkYourAnswersLabel.2011 = Swm talu i mewn i bensiwn o 6 Ebrill 2010 i 5 Ebrill 2011
-pIAPreRemedy.checkYourAnswersLabel.2012 = Swm talu i mewn i bensiwn o 6 Ebrill 2011 i 5 Ebrill 2012
-pIAPreRemedy.checkYourAnswersLabel.2013 = Swm talu i mewn i bensiwn o 6 Ebrill 2012 i 5 Ebrill 2013
-pIAPreRemedy.checkYourAnswersLabel.2014 = Swm talu i mewn i bensiwn o 6 Ebrill 2013 i 5 Ebrill 2014
-pIAPreRemedy.checkYourAnswersLabel.2015 = Swm talu i mewn i bensiwn o 6 Ebrill 2014 i 5 Ebrill 2015
+pIAPreRemedy.checkYourAnswersLabel.2011 = Beth oedd eich swm talu i mewn i bensiwn o 6 Ebrill 2010 i 5 Ebrill 2011?
+pIAPreRemedy.checkYourAnswersLabel.2012 = Beth oedd eich swm talu i mewn i bensiwn o 6 Ebrill 2011 i 5 Ebrill 2012?
+pIAPreRemedy.checkYourAnswersLabel.2013 = Beth oedd eich swm talu i mewn i bensiwn o 6 Ebrill 2012 i 5 Ebrill 2013?
+pIAPreRemedy.checkYourAnswersLabel.2014 = Beth oedd eich swm talu i mewn i bensiwn o 6 Ebrill 2013 i 5 Ebrill 2014?
+pIAPreRemedy.checkYourAnswersLabel.2015 = Beth oedd eich swm talu i mewn i bensiwn o 6 Ebrill 2014 i 5 Ebrill 2015?
 pIAPreRemedy.error.required.2011 = Nodwch eich swm talu i mewn i bensiwn o 6 Ebrill 2010 i 5 Ebrill 2011
 pIAPreRemedy.error.required.2012 = Nodwch eich swm talu i mewn i bensiwn o 6 Ebrill 2011 i 5 Ebrill 2012
 pIAPreRemedy.error.required.2013 = Nodwch eich swm talu i mewn i bensiwn o 6 Ebrill 2012 i 5 Ebrill 2013
