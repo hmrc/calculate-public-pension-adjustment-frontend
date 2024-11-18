@@ -27,6 +27,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, FlexiblyAccessedPensionPage, StopPayingPublicPensionPage}
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
@@ -39,8 +40,10 @@ import scala.concurrent.Future
 
 class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new StopPayingPublicPensionFormProvider()
-  private def form = formProvider()
+  val formProvider                        = new StopPayingPublicPensionFormProvider()
+  private implicit val messages: Messages = stubMessages()
+
+  private def form = formProvider()(messages)
 
   def onwardRoute = Call("GET", "/foo")
 

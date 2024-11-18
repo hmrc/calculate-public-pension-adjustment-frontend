@@ -18,6 +18,7 @@ package forms.lifetimeallowance
 
 import forms.mappings.Mappings
 import play.api.data.Form
+import play.api.i18n.Messages
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -25,7 +26,7 @@ import javax.inject.Inject
 
 class DateOfBenefitCrystallisationEventFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[LocalDate] = {
+  def apply()(implicit messages: Messages): Form[LocalDate] = {
 
     val min                               = LocalDate.of(2015, 4, 6)
     val max                               = LocalDate.of(2023, 4, 5)

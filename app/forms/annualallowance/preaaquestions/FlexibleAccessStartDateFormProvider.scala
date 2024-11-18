@@ -18,10 +18,11 @@ package forms.annualallowance.preaaquestions
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
 import forms.mappings.Mappings
+
 import javax.inject.Inject
 import play.api.data.Form
+import play.api.i18n.Messages
 
 class FlexibleAccessStartDateFormProvider @Inject() extends Mappings {
 
@@ -29,11 +30,10 @@ class FlexibleAccessStartDateFormProvider @Inject() extends Mappings {
   private val FLEXIBLE_ACCESS_DATE_MIN_MONTH = 4
   private val FLEXIBLE_ACCESS_DATE_MIN_DAY   = 6
 
-  def apply(flexibleAccessDateMax: LocalDate): Form[LocalDate] = {
+  def apply(flexibleAccessDateMax: LocalDate)(implicit messages: Messages): Form[LocalDate] = {
 
     val min                               = LocalDate.of(FLEXIBLE_ACCESS_DATE_MIN_YEAR, FLEXIBLE_ACCESS_DATE_MIN_MONTH, FLEXIBLE_ACCESS_DATE_MIN_DAY)
     val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-
     Form(
       "value" -> localDate(
         invalidKey = "flexibleAccessStartDate.error.invalid",

@@ -26,6 +26,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
@@ -37,8 +38,10 @@ import scala.concurrent.Future
 
 class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
 
+  private implicit val messages: Messages = stubMessages()
+
   val formProvider = new FlexibleAccessStartDateFormProvider()
-  private def form = formProvider(LocalDate.of(2023, 4, 5))
+  private def form = formProvider(LocalDate.of(2023, 4, 5))(messages)
 
   def onwardRoute = Call("GET", "/public-pension-adjustment/check-your-answers")
 

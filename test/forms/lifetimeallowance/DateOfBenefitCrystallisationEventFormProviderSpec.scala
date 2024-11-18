@@ -17,12 +17,15 @@
 package forms.lifetimeallowance
 
 import forms.behaviours.DateBehaviours
+import play.api.i18n.Messages
+import play.api.test.Helpers.stubMessages
 
 import java.time.LocalDate
 
 class DateOfBenefitCrystallisationEventFormProviderSpec extends DateBehaviours {
+  private implicit val messages: Messages = stubMessages()
 
-  val form = new DateOfBenefitCrystallisationEventFormProvider()()
+  val form = new DateOfBenefitCrystallisationEventFormProvider()()(messages)
 
   ".value" - {
 

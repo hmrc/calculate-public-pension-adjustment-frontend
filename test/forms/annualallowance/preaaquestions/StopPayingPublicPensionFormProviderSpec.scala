@@ -17,12 +17,15 @@
 package forms.annualallowance.preaaquestions
 
 import java.time.LocalDate
-
 import forms.behaviours.DateBehaviours
+import play.api.i18n.Messages
+import play.api.test.Helpers.stubMessages
 
 class StopPayingPublicPensionFormProviderSpec extends DateBehaviours {
 
-  val form = new StopPayingPublicPensionFormProvider()()
+  private implicit val messages: Messages = stubMessages()
+
+  val form = new StopPayingPublicPensionFormProvider()()(messages)
 
   ".value" - {
 
