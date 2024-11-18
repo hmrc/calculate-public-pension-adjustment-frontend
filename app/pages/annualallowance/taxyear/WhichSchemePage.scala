@@ -31,13 +31,13 @@ case class WhichSchemePage(period: Period, schemeIndex: SchemeIndex) extends Que
     val selectedScheme: Option[String] = answers.get(WhichSchemePage(period, schemeIndex))
 
     selectedScheme match {
-      case Some(PSTR.New) =>
+      case Some(PSTR.New | PSTR.NewInWelsh) =>
         controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
           .onPageLoad(NormalMode, period, schemeIndex)
-      case Some(_)        =>
+      case Some(_)                          =>
         controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
           .onPageLoad(NormalMode, period, schemeIndex)
-      case None           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case None                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 

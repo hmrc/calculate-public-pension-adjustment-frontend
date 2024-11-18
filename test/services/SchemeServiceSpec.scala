@@ -19,13 +19,16 @@ package services
 import base.SpecBase
 import models.{PSTR, PensionSchemeDetails, Period, SchemeIndex}
 import pages.annualallowance.taxyear.PensionSchemeDetailsPage
+import play.api.i18n.Messages
+import play.api.test.Helpers.stubMessages
 
 class SchemeServiceSpec extends SpecBase {
+  private implicit val messages: Messages = stubMessages()
 
   "WhichScheme" - {
 
     "options should include an option to add a new scheme if there are no previous schemes" in {
-      SchemeService.whichScheme(emptyUserAnswers).values must be(Seq(PSTR.New))
+      SchemeService.whichScheme(emptyUserAnswers).values must be(Seq(messages("site.newPSTR")))
     }
 
     "options should include previous scheme references from a single period and new" in {
@@ -36,7 +39,7 @@ class SchemeServiceSpec extends SpecBase {
         )
         .get
 
-      SchemeService.whichScheme(userAnswers).values must be(Seq("pstr1", PSTR.New))
+      SchemeService.whichScheme(userAnswers).values must be(Seq("pstr1", messages("site.newPSTR")))
     }
 
     "options should include multiple scheme references from a single period and new" in {
@@ -52,7 +55,7 @@ class SchemeServiceSpec extends SpecBase {
         )
         .get
 
-      SchemeService.whichScheme(userAnswers).values must be(Seq("pstr1", "pstr2", PSTR.New))
+      SchemeService.whichScheme(userAnswers).values must be(Seq("pstr1", "pstr2", messages("site.newPSTR")))
     }
 
     "options should include scheme references from multiple periods and new" in {
@@ -68,7 +71,7 @@ class SchemeServiceSpec extends SpecBase {
         )
         .get
 
-      SchemeService.whichScheme(userAnswers).values must be(Seq("pstr1", "pstr2", PSTR.New))
+      SchemeService.whichScheme(userAnswers).values must be(Seq("pstr1", "pstr2", messages("site.newPSTR")))
     }
   }
 

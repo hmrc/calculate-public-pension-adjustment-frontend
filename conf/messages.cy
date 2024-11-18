@@ -13,6 +13,7 @@ site.startAgain = Dechrau eto
 site.signIn = Mewngofnodi
 site.govuk = GOV.UK
 site.opensInNewTab = (yn agor tab newydd)
+site.newPSTR = Newydd
 
 date.day = Diwrnod
 date.month = Mis
