@@ -1647,10 +1647,10 @@ calculationReview.inDatesAA.heading1 = cy: Change in annual allowance tax charge
 calculationReview.inDatesAA.message1 = cy: For this period, any increases in tax charges will apply and you will owe HMRC. You will have the option to elect your public service pension scheme to pay any charges through the service. If you wish to pay any charges yourself, HMRC will raise an assessment.
 calculationReview.inDatesAA.message2 = cy: If your tax charges have decreased, you may be due a refund from HMRC. If you paid your tax charges directly, you may receive a refund of this amount from HMRC. If your pension scheme paid your tax charges, HMRC will notify the scheme of any refund due.
 calculationReview.message9 = cy: Once you submit this information, HMRC may offset tax charges between these years, where appropriate. This only applies if you paid the original charge, not your pension scheme. If so, HMRC will confirm this to you in later correspondence.
-calculationReview.lta.heading1 = cy: Lifetime allowance
 calculationReview.lta.message1a = cy: You can
-calculationReview.lta.link = cy: review the answers
-calculationReview.lta.message1b = cy: you have entered in the lifetime allowance section. HMRC will assess them once you have submitted your information.calculationReview.lta.message2 = cy: You will not be able to change your answers.
+calculationReview.lta.link = cy: review your lifetime allowance answers.
+calculationReview.lta.message1b = cy: HMRC will assess them once you have submitted your information.
+calculationReview.lta.message2 = cy: You will not be able to change your answers.
 calculationReview.notResubmission = cy: This is not a resubmission.
 calculationReview.printOrSave = cy: Print your results
 calculationReview.printOrSave.message1a = cy: You can
