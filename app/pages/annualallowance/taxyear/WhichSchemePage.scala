@@ -31,7 +31,7 @@ case class WhichSchemePage(period: Period, schemeIndex: SchemeIndex) extends Que
     val selectedScheme: Option[String] = answers.get(WhichSchemePage(period, schemeIndex))
 
     selectedScheme match {
-      case Some(PSTR.New | "Newydd") =>
+      case Some(PSTR.New | PSTR.NewInWelsh) =>
         controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
           .onPageLoad(NormalMode, period, schemeIndex)
       case Some(_)                   =>

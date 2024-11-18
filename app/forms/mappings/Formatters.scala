@@ -52,7 +52,7 @@ trait Formatters {
           .bind(key, data)
           .flatMap {
             case s if PSTR.fromString(s).isDefined => Right(s.toUpperCase.replaceAll(" ", ""))
-            case PSTR.New | "Newydd"               => Right(PSTR.New)
+            case PSTR.New | PSTR.NewInWelsh              => Right(PSTR.New)
             case _                                 => Left(Seq(FormError(key, invalidKey, args)))
           }
 

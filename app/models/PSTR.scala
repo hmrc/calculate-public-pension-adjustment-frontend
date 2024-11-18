@@ -23,6 +23,7 @@ case class PSTR(value: String)
 object PSTR {
 
   val New: String = "New"
+  val NewInWelsh: String = "Newydd"
 
   private val pattern: Regex = """(\d\s*){8}[A-Za-z]{2}""".r.anchored
 
