@@ -47,7 +47,7 @@ object HowMuchTaxReliefPensionSummary {
               .onPageLoad(CheckMode, period)
               .url
           )
-            .withVisuallyHiddenText(messages("howMuchTaxReliefPension.change.hidden"))
+            .withVisuallyHiddenText(messages("howMuchTaxReliefPension.change.hidden", startEndDate))
         )
       )
     }

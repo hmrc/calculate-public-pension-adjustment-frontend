@@ -45,7 +45,7 @@
 
 }
 
-@layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", schemeName))) {
+@layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title.2016-post", schemeName))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.PensionSchemeInput2016postAmountsController.onSubmit(mode, period, schemeIndex), Symbol("autoComplete") -> "off") {
 
@@ -57,7 +57,7 @@
             InputViewModel(
                 field = form("revisedPIA"),
                 label = HmrcPageHeadingLabel(
-                    content = messages("pensionSchemeInputAmounts.revisedPIA.heading1"),
+                    content = messages("pensionSchemeInputAmounts.revisedPIA.heading1", schemeName),
                     caption = HtmlContent(captionText)
                 )
             )

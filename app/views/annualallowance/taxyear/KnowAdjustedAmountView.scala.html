@@ -57,7 +57,7 @@
             RadiosViewModel.yesNo(
                 field = form("value"),
                 legend = HmrcPageHeadingLegend(
-                    content = messages("knowAdjustedAmount.heading1"),
+                    content = messages("knowAdjustedAmount.heading1", startEndDate),
                     caption = HmrcSectionCaption(messages("knowAdjustedAmount.caption"))
                 )
             ).withHint(HintViewModel(HtmlContent(contentHint)))
