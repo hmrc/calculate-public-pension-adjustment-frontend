@@ -133,7 +133,7 @@ ineligible.bullet1 = nid oeddech yn rhan o gynllun pensiwn gwasanaeth cyhoeddus 
 ineligible.bullet2 = nid oeddech yn gweithio yn y maes gwasanaeth cyhoeddus rhwng 1 Ebrill 2015 a 31 Mawrth 2022
 ineligible.bullet3 = gwnaethoch adael y maes gwasanaeth cyhoeddus ar ôl 31 Mawrth 2012 ond ni wnaethoch ddychwelyd o fewn 5 mlynedd
 ineligible.bullet4 = nid oeddech yn rhan o unrhyw hen gynllun pensiwn gwasanaeth cyhoeddus
-ineligible.message2 = Mae’r rhesymau hyn yn golygu na fydd eich buddiannau pensiwn yn cael eu heffeithio gan y Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus, a does dim rhaid i chi ddefnyddio’r gwasanaeth hwn.
+ineligible.message2 = Mae’r rhesymau hyn yn golygu na fydd eich buddiannau pensiwn yn cael eu heffeithio gan y cynllun unioni pensiynau gwasanaeth cyhoeddus, a does dim rhaid i chi ddefnyddio’r gwasanaeth hwn.
 
 reportingChange.title = cy: Which tax charges do you think may have been affected by the public service pension remedy?
 reportingChange.heading = cy: Which tax charges do you think may have been affected by the public service pension remedy?
@@ -1530,7 +1530,7 @@ maybePIAIncrease.heading1 = cy: Pension input amount increase
 maybePIAIncrease.message1 = cy: Your pension input amount is the amount that your pension has increased in a tax year. This applies to all schemes.
 maybePIAIncrease.message2 = cy: As a result of the public service pensions remedy, your pension input amounts may have changed.
 maybePIAIncrease.message3 = cy: If your pension scheme administrator sends you the original figures, you will find both the original and revised figures on your pension savings statement.
-maybePIAIncrease.heading2 = cy: Have any of your pension input amounts for any tax years from 6 April 2015 to 5 April 2022 increased as a result of the Public Service Pensions remedy?
+maybePIAIncrease.heading2 = cy: Have any of your pension input amounts for any tax years from 6 April 2015 to 5 April 2022 increased as a result of the public service pensions remedy?
 maybePIAIncrease.yes = cy: Yes
 maybePIAIncrease.no = cy: No
 maybePIAIncrease.idk = cy: Do not know
