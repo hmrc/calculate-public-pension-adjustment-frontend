@@ -32,13 +32,22 @@ class WhichSchemeSpec extends PageBehaviours {
 
   "normal mode navigation" - {
 
-    "when a scheme ref is specified capture input amounts" in {
+    "when a scheme ref is specified capture input amounts for 2017+ periods" in {
       val userAnswers = emptyUserAnswers.set(WhichSchemePage(Period._2018, SchemeIndex(0)), "schemeRef").get
 
       val nextPageUrl: String =
         WhichSchemePage(Period._2018, SchemeIndex(0)).navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/2018/pension-scheme-0/pension-input-amount")
+    }
+
+    "when a scheme ref is specified capture input amounts for 2016 period" in {
+      val userAnswers = emptyUserAnswers.set(WhichSchemePage(Period._2016, SchemeIndex(0)), "schemeRef").get
+
+      val nextPageUrl: String =
+        WhichSchemePage(Period._2016, SchemeIndex(0)).navigate(NormalMode, userAnswers).url
+
+      checkNavigation(nextPageUrl, "/annual-allowance/2016/pension-scheme-0/pension-input-amount-15-16-period-1")
     }
 
     "when a new scheme is indicated capture scheme details" in {
