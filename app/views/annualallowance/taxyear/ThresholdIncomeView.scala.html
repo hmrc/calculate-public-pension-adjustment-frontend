@@ -23,7 +23,7 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
 <p class="govuk-body">@messages("thresholdIncome.message1")</p>
@@ -67,7 +67,7 @@
 <h2 class="govuk-heading-m">@messages("thresholdIncome.subHeading2." + period)</h2>
 }
 
-@layout(pageTitle = title(form, messages("thresholdIncome.title"))) {
+@layout(pageTitle = title(form, messages("thresholdIncome.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onSubmit(mode, period), 'autoComplete -> "off") {
 

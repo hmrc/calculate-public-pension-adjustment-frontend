@@ -38,7 +38,7 @@ object TradeUnionReliefSummary {
       val value = if (answer) "site.yes" else "site.no"
 
       SummaryListRowViewModel(
-        key = "tradeUnionRelief.checkYourAnswersLabel",
+        key = messages("tradeUnionRelief.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(

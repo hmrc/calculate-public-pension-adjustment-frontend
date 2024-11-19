@@ -40,7 +40,7 @@ object HowMuchAAChargeYouPaidSummary {
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key = "howMuchAAChargeYouPaid.checkYourAnswersLabel",
+        key = messages("howMuchAAChargeYouPaid.checkYourAnswersLabel", startEndDate),
         value = ValueViewModel(HtmlContent(currencyFormat(answer))),
         actions = Seq(
           ActionItemViewModel(

@@ -67,7 +67,8 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           form,
           NormalMode,
-          Period._2013
+          Period._2013,
+          "6 April 2012 and 5 April 2013"
         )(request, messages(application)).toString
       }
     }
@@ -95,7 +96,8 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           form.fill(ThresholdIncome.Yes),
           NormalMode,
-          Period._2013
+          Period._2013,
+          "6 April 2012 and 5 April 2013"
         )(request, messages(application)).toString
       }
     }
@@ -141,7 +143,8 @@ class ThresholdIncomeControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result) mustEqual view(
           boundForm,
           NormalMode,
-          Period._2013
+          Period._2013,
+          "6 April 2012 and 5 April 2013"
         )(request, messages(application)).toString
       }
     }
