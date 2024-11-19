@@ -46,11 +46,11 @@ object PensionSchemeInputAmountsSummary {
         period.start.format(formatter) + " " + messages("startEndDateTo") + " " + period.end.format(formatter)
 
       SummaryListRowViewModel(
-        key = messages(
-          if (period.start.getYear == 2022) "pensionSchemeInputAmounts.checkYourAnswersLabel"
-          else "pensionSchemeInputAmounts.checkYourAnswersLabelRevised",
-          schemeName.get
-        ),
+        key =
+          if (period.start.getYear == 2022)
+            messages("pensionSchemeInputAmounts.checkYourAnswersLabel", schemeName.getOrElse(""), startEndDate)
+          else
+            messages("pensionSchemeInputAmounts.checkYourAnswersLabelRevised", schemeName.getOrElse(""), startEndDate),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
@@ -60,12 +60,9 @@ object PensionSchemeInputAmountsSummary {
               .url
           )
             .withVisuallyHiddenText(
-              messages(
-                if (period.start.getYear == 2022) "pensionSchemeInputAmounts.change.hidden"
-                else "pensionSchemeInputAmounts.change.revised.hidden",
-                schemeName.getOrElse(""),
-                startEndDate
-              )
+              if (period.start.getYear == 2022)
+                messages("pensionSchemeInputAmounts.change.hidden", schemeName.getOrElse(""), startEndDate)
+              else messages("pensionSchemeInputAmounts.change.revised.hidden", schemeName.getOrElse(""), startEndDate)
             )
         )
       )

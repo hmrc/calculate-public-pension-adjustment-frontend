@@ -38,7 +38,7 @@ object PensionSchemeInput2016postAmountsSummary {
       }
 
       SummaryListRowViewModel(
-        key = messages("pensionSchemeInputAmounts.2016-post.checkYourAnswersLabel", schemeName.get),
+        key = messages("pensionSchemeInputAmounts.2016-post.checkYourAnswersLabel", schemeName.getOrElse("")),
         value = ValueViewModel(value),
         actions = Seq(
           ActionItemViewModel(
@@ -47,7 +47,9 @@ object PensionSchemeInput2016postAmountsSummary {
               .onPageLoad(CheckMode, period, schemeIndex)
               .url
           )
-            .withVisuallyHiddenText(messages("pensionSchemeInputAmounts.change.hidden"))
+            .withVisuallyHiddenText(
+              messages("pensionSchemeInputAmounts.2016-post.change.hidden", schemeName.getOrElse(""))
+            )
         )
       )
     }

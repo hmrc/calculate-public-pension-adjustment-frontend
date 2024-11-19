@@ -48,14 +48,14 @@ class PensionSchemeInput2016preAmountsSummarySpec extends AnyFreeSpec with Match
         .get
       PensionSchemeInput2016preAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
-          key = "pensionSchemeInputAmounts.2016-pre.checkYourAnswersLabel",
+          key = messages("pensionSchemeInputAmounts.2016-pre.checkYourAnswersLabel", "SomeScheme"),
           value = ValueViewModel(HtmlContent("&pound;100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
               routes.PensionSchemeInput2016preAmountsController.onPageLoad(CheckMode, period, schemeIndex).url
             )
-              .withVisuallyHiddenText("pensionSchemeInputAmounts.change.hidden")
+              .withVisuallyHiddenText(messages("pensionSchemeInputAmounts.2016-pre.change.hidden", "SomeScheme"))
           )
         )
       )

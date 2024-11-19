@@ -64,7 +64,7 @@
                 InputViewModel(
                     field = form("revisedPIA"),
                     label = HmrcPageHeadingLabel(
-                        content = messages("pensionSchemeInputAmounts.originalPIA.heading1", period.start.getYear.toString, period.end.getYear.toString),
+                        content = messages("pensionSchemeInputAmounts.originalPIA.heading1", schemeName, startEndDate),
                         caption = HtmlContent(captionText)
                     )
                 )
@@ -79,7 +79,7 @@
             InputViewModel(
                 field = form("revisedPIA"),
                 label = HmrcPageHeadingLabel(
-                    content = messages("pensionSchemeInputAmounts.revisedPIA.heading1", period.start.getYear.toString, period.end.getYear.toString),
+                    content = messages("pensionSchemeInputAmounts.revisedPIA.heading1", schemeName, startEndDate),
                     caption = HtmlContent(captionText)
                 )
             )
