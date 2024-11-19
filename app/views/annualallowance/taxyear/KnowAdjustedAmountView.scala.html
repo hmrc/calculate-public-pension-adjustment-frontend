@@ -42,7 +42,7 @@
 
     <p class="govuk-body">@messages("knowAdjustedAmount.message2")</p>
 
-    <h2 class="govuk-heading-m">@messages("knowAdjustedAmount.heading2")</h2>
+    <h2 class="govuk-heading-m">@messages("knowAdjustedAmount.heading2", startEndDate)</h2>
 }
 
 @layout(pageTitle = title(form, messages("knowAdjustedAmount.title", startEndDate))) {
@@ -57,7 +57,7 @@
             RadiosViewModel.yesNo(
                 field = form("value"),
                 legend = HmrcPageHeadingLegend(
-                    content = messages("knowAdjustedAmount.heading1", startEndDate),
+                    content = messages("knowAdjustedAmount.heading1"),
                     caption = HmrcSectionCaption(messages("knowAdjustedAmount.caption"))
                 )
             ).withHint(HintViewModel(HtmlContent(contentHint)))

@@ -1304,7 +1304,7 @@ blindAllowance.bullet2 = cy: you have a certificate that says you’re blind or 
 blindAllowance.heading2 = cy: Did you claim blind person’s allowance from {0}?
 blindAllowance.checkYourAnswersLabel = cy: Did you claim blind person’s allowance from {0}
 blindAllowance.error.required = cy: Did you claim blind person’s allowance from {0}?
-blindAllowance.change.hidden = cy: your blind person’s allowance from {0}
+blindAllowance.change.hidden = cy: if you claimed blind person's allowance from {0}
 
 blindPersonsAllowanceAmount.title = cy: How much blind persons allowance did you claim from {0}?
 blindPersonsAllowanceAmount.heading = cy: How much blind persons allowance did you claim from {0}?
