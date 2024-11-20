@@ -35,8 +35,14 @@ case class WhichSchemePage(period: Period, schemeIndex: SchemeIndex) extends Que
         controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
           .onPageLoad(NormalMode, period, schemeIndex)
       case Some(_)                          =>
-        controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
-          .onPageLoad(NormalMode, period, schemeIndex)
+        period match {
+          case Period._2016 =>
+            controllers.annualallowance.taxyear.routes.PensionSchemeInput2016preAmountsController
+              .onPageLoad(NormalMode, period, schemeIndex)
+          case _            =>
+            controllers.annualallowance.taxyear.routes.PensionSchemeInputAmountsController
+              .onPageLoad(NormalMode, period, schemeIndex)
+        }
       case None                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
