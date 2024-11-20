@@ -67,7 +67,7 @@
         <p class="govuk-body">@messages("calculationReview.outDatesAA.message2")</p>
 
         <p class="govuk-body">@messages("calculationReview.outDatesAA.message3a")
-            <a class="govuk-link" id="pension-scheme-pays" href="https://www.gov.uk/guidance/who-must-pay-the-pensions-annual-allowance-tax-charge" rel="noreferrer noopener" target="_blank">@messages("calculationReview.nextSteps.schemePays")</a>
+            <a class="govuk-link" id="pension-scheme-pays" href="https://www.gov.uk/guidance/who-must-pay-the-pensions-annual-allowance-tax-charge" rel="noreferrer noopener" target="_blank">@messages("calculationReview.nextSteps.schemePays")</a>.
             @messages("calculationReview.outDatesAA.message3b")</p>
 
         <p class="govuk-body">@messages("calculationReview.outDatesAA.message4")</p>
@@ -147,25 +147,11 @@
         @if(isLTACompleteWithoutKickout) {
             <h2 class="govuk-heading-m">@messages("calculationReview.lta.heading1")</h2>
 
-            <p class="govuk-body">@messages("calculationReview.lta.message1")</p>
+            <p class="govuk-body">@messages("calculationReview.lta.message1a")
+                <a class="govuk-link" href="@controllers.lifetimeallowance.routes.ViewYourLTAAnswersController.onPageLoad()">@messages("calculationReview.lta.link")</a>.
+            @messages("calculationReview.lta.message1b")</p>
 
             <p class="govuk-body">@messages("calculationReview.lta.message2")</p>
-            <table class="govuk-table">
-                <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header govuk-!-width-two-thirds"></th>
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">@messages("calculationReview.answers")</th>
-                </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                @calculationReviewViewModel.lifetimeAllowanceData.map { data =>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">@messages(data.title)</th>
-                    <td class="govuk-table__cell"><a class="govuk-link" href=@data.link>@messages("calculationReview.reviewAnswers")</a></td>
-                </tr>
-                }
-                </tbody>
-            </table>
         }
 
         @if(calculationReviewViewModel.resubmissionData.isResubmission) {

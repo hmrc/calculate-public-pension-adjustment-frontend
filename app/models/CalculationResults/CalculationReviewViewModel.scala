@@ -19,14 +19,11 @@ package models.CalculationResults
 final case class CalculationReviewViewModel(
   outDates: Seq[Seq[ReviewRowViewModel]],
   inDates: Seq[Seq[ReviewRowViewModel]],
-  lifetimeAllowance: Seq[ReviewRowViewModel],
   resubmission: Resubmission
 ) {
   def outDatesData: Seq[Seq[ReviewRowViewModel]] = outDates
 
   def inDatesData: Seq[Seq[ReviewRowViewModel]] = inDates
-
-  def lifetimeAllowanceData: Seq[ReviewRowViewModel] = lifetimeAllowance
 
   def resubmissionData: Resubmission = resubmission
 }
