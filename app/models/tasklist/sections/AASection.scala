@@ -20,6 +20,7 @@ import controllers.annualallowance.taxyear.{routes => aaRoutes}
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{Period, SectionNavigation, UserAnswers, UserAnswersPeriod}
+import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
 
@@ -57,4 +58,9 @@ object AASection {
         )
       case None         => answers
     }
+
+  def removeAASchemeIndexedAnswers(answers: UserAnswers, period: Period): UserAnswers = {
+    answers.removePath(UserAnswersPeriod(period).schemesPath).get
+  }
+
 }

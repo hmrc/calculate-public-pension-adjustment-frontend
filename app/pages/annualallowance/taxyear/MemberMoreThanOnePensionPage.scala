@@ -16,11 +16,14 @@
 
 package pages.annualallowance.taxyear
 
+import models.tasklist.sections.AASection
 import models.{NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 import services.PeriodService
+
+import scala.util.Try
 
 case class MemberMoreThanOnePensionPage(period: Period) extends QuestionPage[Boolean] {
 
@@ -39,4 +42,11 @@ case class MemberMoreThanOnePensionPage(period: Period) extends QuestionPage[Boo
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value
+      .map { _ =>
+        Try(AASection.removeAASchemeIndexedAnswers(userAnswers, period))
+        }.getOrElse(super.cleanup(value, userAnswers))
+      }
 }

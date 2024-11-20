@@ -16,8 +16,10 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, SchemeIndex}
 import pages.behaviours.PageBehaviours
+
+import scala.util.Random
 
 class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
 
@@ -59,6 +61,29 @@ class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
           MemberMoreThanOnePensionPage(Period._2017).navigate(CheckMode, userAnswers).url
 
         checkNavigation(nextUrl, "/annual-allowance/2017/check-answers")
+      }
+    }
+
+    "cleanup" - {
+
+      "test" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(PensionSchemeDetailsPage(Period._2020, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
+          .success
+          .value
+          .set(PensionSchemeDetailsPage(Period._2020, SchemeIndex(1)), PensionSchemeDetails("schemeName2", "schemeRef2"))
+          .success
+          .value
+
+        val cleanedUserAnswers = MemberMoreThanOnePensionPage(Period._2020)
+          .cleanup(Some(Random.nextBoolean()), userAnswers)
+          .success
+          .value
+
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020, SchemeIndex(0))) mustBe None
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020, SchemeIndex(1))) mustBe None
+
       }
     }
   }

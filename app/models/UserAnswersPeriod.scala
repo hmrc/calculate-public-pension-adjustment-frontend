@@ -21,4 +21,5 @@ import queries.Settable
 
 case class UserAnswersPeriod(period: Period) extends Settable[Nothing] {
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString
+  def schemesPath :  JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes"
 }
