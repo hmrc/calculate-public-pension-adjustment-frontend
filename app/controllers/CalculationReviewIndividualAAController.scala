@@ -59,8 +59,10 @@ class CalculationReviewIndividualAAController @Inject() (
         calculationResultService
           .calculationReviewIndividualAAViewModel(calculationResponse, Some(period.toString()), request.userAnswers)
           .map { calculationReviewIndividualAAViewModel =>
-            val isInCredit: Boolean = calculationResponse.totalAmounts.inDatesCredit > 0
-            val isInDebit: Boolean  = calculationResponse.totalAmounts.inDatesDebit > 0
+            val isInCredit: Boolean    = calculationResponse.totalAmounts.inDatesCredit > 0
+            val isInDebit: Boolean     = calculationResponse.totalAmounts.inDatesDebit > 0
+            val outDates: List[Period] = List(Period._2016, Period._2017, Period._2018, Period._2019)
+            val isOutDate: Boolean     = outDates.contains(individualYear.period)
             Ok(
               view(
                 form,
@@ -69,6 +71,7 @@ class CalculationReviewIndividualAAController @Inject() (
                 isInCredit,
                 isInDebit,
                 individualYear,
+                isOutDate,
                 routes.CalculationReviewController.onPageLoad()
               )
             )

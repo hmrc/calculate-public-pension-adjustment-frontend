@@ -42,45 +42,263 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
 
   val hc: HeaderCarrier = HeaderCarrier()
 
-  lazy val normalRoute = routes.CalculationReviewIndividualAAController.onPageLoad(Period._2022).url
-  lazy val submitRoute = routes.CalculationReviewIndividualAAController.onSubmit().url
+  lazy val normalRouteOutDate = routes.CalculationReviewIndividualAAController.onPageLoad(Period._2016).url
+  lazy val normalRouteInDate  = routes.CalculationReviewIndividualAAController.onPageLoad(Period._2022).url
+  lazy val submitRoute        = routes.CalculationReviewIndividualAAController.onSubmit().url
 
   "CalculationReviewIndividualAA Controller" - {
 
-    "must show the calculation review individual AA view on a GET" in {
+    "must show the calculation review individual AA view on a GET for out date" - {
 
-      val calculationResult: CalculationResponse =
-        readCalculationResult("test/resources/CalculationResultsTestData.json")
+      "when decrease in tax charge" in {
 
-      val mockRowViewModel                           = RowViewModel("test", "test")
-      val mockCalculationResultService               = mock[CalculationResultService]
-      val mockCalculationReviewIndividualAAViewModel =
-        CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
-      val mockIndividualAASummaryModel               =
-        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10, 20)
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestData.json")
 
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
-
-      when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-        .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
-
-      when(mockCalculationResultService.individualAASummaryModel(calculationResult))
-        .thenReturn(Seq(mockIndividualAASummaryModel))
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[CalculationResultService].toInstance(mockCalculationResultService)
+        val mockRowViewModel                           = RowViewModel("test", "test")
+        val mockCalculationResultService               = mock[CalculationResultService]
+        val mockCalculationReviewIndividualAAViewModel =
+          CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+        val mockIndividualAASummaryModel               =
+          IndividualAASummaryModel(
+            Period._2016,
+            10,
+            10,
+            "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+            10,
+            1,
+            1,
+            10,
+            20,
+            None
           )
-          .build()
 
-      running(application) {
-        val request = FakeRequest(GET, normalRoute)
+        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
 
-        val result = route(application, request).value
+        when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
+          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
+        when(mockCalculationResultService.individualAASummaryModel(calculationResult))
+          .thenReturn(Seq(mockIndividualAASummaryModel))
+
+        val application =
+          applicationBuilder(userAnswers = Some(emptyUserAnswers))
+            .overrides(
+              bind[CalculationResultService].toInstance(mockCalculationResultService)
+            )
+            .build()
+
+        running(application) {
+          val request = FakeRequest(GET, normalRouteOutDate)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
+          contentAsString(result).contains("Your annual allowance tax charge has reduced by £10") mustBe true
+        }
+      }
+
+      "when no change in tax charge" in {
+
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val mockRowViewModel                           = RowViewModel("test", "test")
+        val mockCalculationResultService               = mock[CalculationResultService]
+        val mockCalculationReviewIndividualAAViewModel =
+          CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+        val mockIndividualAASummaryModel               =
+          IndividualAASummaryModel(
+            Period._2016,
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            10,
+            1,
+            1,
+            10,
+            20,
+            Some(8)
+          )
+
+        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+
+        when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
+          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+
+        when(mockCalculationResultService.individualAASummaryModel(calculationResult))
+          .thenReturn(Seq(mockIndividualAASummaryModel))
+
+        val application =
+          applicationBuilder(userAnswers = Some(emptyUserAnswers))
+            .overrides(
+              bind[CalculationResultService].toInstance(mockCalculationResultService)
+            )
+            .build()
+
+        running(application) {
+          val request = FakeRequest(GET, normalRouteOutDate)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
+          contentAsString(result).contains("You have no annual allowance tax charge to pay") mustBe true
+          contentAsString(result).contains(
+            "You do not need to pay the £8 increase in tax charge, as it is written off for this year."
+          ) mustBe true
+        }
+      }
+    }
+
+    "must show the calculation review individual AA view on a GET for in date" - {
+
+      "when increase in tax charge" in {
+
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val mockRowViewModel                           = RowViewModel("test", "test")
+        val mockCalculationResultService               = mock[CalculationResultService]
+        val mockCalculationReviewIndividualAAViewModel =
+          CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+        val mockIndividualAASummaryModel               =
+          IndividualAASummaryModel(
+            Period._2022,
+            10,
+            -10,
+            "calculationReviewIndividualAA.changeInTaxChargeString.increase.",
+            10,
+            10,
+            10,
+            10,
+            20,
+            None
+          )
+
+        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+
+        when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
+          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+
+        when(mockCalculationResultService.individualAASummaryModel(calculationResult))
+          .thenReturn(Seq(mockIndividualAASummaryModel))
+
+        val application =
+          applicationBuilder(userAnswers = Some(emptyUserAnswers))
+            .overrides(
+              bind[CalculationResultService].toInstance(mockCalculationResultService)
+            )
+            .build()
+
+        running(application) {
+          val request = FakeRequest(GET, normalRouteInDate)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
+          contentAsString(result).contains("You must pay £10") mustBe true
+        }
+      }
+
+      "when decrease in tax charge" in {
+
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val mockRowViewModel                           = RowViewModel("test", "test")
+        val mockCalculationResultService               = mock[CalculationResultService]
+        val mockCalculationReviewIndividualAAViewModel =
+          CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+        val mockIndividualAASummaryModel               =
+          IndividualAASummaryModel(
+            Period._2022,
+            10,
+            10,
+            "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+            10,
+            10,
+            10,
+            10,
+            20,
+            None
+          )
+
+        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+
+        when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
+          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+
+        when(mockCalculationResultService.individualAASummaryModel(calculationResult))
+          .thenReturn(Seq(mockIndividualAASummaryModel))
+
+        val application =
+          applicationBuilder(userAnswers = Some(emptyUserAnswers))
+            .overrides(
+              bind[CalculationResultService].toInstance(mockCalculationResultService)
+            )
+            .build()
+
+        running(application) {
+          val request = FakeRequest(GET, normalRouteInDate)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
+          contentAsString(result).contains("Your annual allowance tax charge has reduced by £10") mustBe true
+        }
+      }
+
+      "when no change in tax charge" in {
+
+        val calculationResult: CalculationResponse =
+          readCalculationResult("test/resources/CalculationResultsTestData.json")
+
+        val mockRowViewModel                           = RowViewModel("test", "test")
+        val mockCalculationResultService               = mock[CalculationResultService]
+        val mockCalculationReviewIndividualAAViewModel =
+          CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
+        val mockIndividualAASummaryModel               =
+          IndividualAASummaryModel(
+            Period._2022,
+            0,
+            0,
+            "calculationReviewIndividualAA.changeInTaxChargeString.noChange.",
+            10,
+            10,
+            0,
+            0,
+            20,
+            None
+          )
+
+        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+
+        when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
+          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+
+        when(mockCalculationResultService.individualAASummaryModel(calculationResult))
+          .thenReturn(Seq(mockIndividualAASummaryModel))
+
+        val application =
+          applicationBuilder(userAnswers = Some(emptyUserAnswers))
+            .overrides(
+              bind[CalculationResultService].toInstance(mockCalculationResultService)
+            )
+            .build()
+
+        running(application) {
+          val request = FakeRequest(GET, normalRouteInDate)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
+          contentAsString(result).contains("You have no annual allowance tax charge to pay") mustBe true
+        }
       }
     }
 
