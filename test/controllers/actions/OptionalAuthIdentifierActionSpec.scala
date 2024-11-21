@@ -71,7 +71,7 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
         }
       }
 
-      "as an individual" - {
+      "as an individual or as an organisation" - {
 
         "with a non specific authorisation error" - {
 

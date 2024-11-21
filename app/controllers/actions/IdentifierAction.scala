@@ -60,13 +60,14 @@ class OptionalAuthIdentifierAction @Inject() (
 
     val requiredConfidenceLevel = ConfidenceLevel.fromInt(config.requiredAuthConfidenceLevel.toInt).get
 
-    authorised(AffinityGroup.Individual and requiredConfidenceLevel and User).retrieve(retrievals) {
-      case Some(nino) ~ Some(_) =>
-        block(AuthenticatedIdentifierRequest(request, nino))
-      case _                    =>
-        logger.warn(s"Incomplete retrievals")
-        Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
-    } recoverWith {
+    authorised((AffinityGroup.Individual or AffinityGroup.Organisation) and requiredConfidenceLevel and User)
+      .retrieve(retrievals) {
+        case Some(nino) ~ Some(_) =>
+          block(AuthenticatedIdentifierRequest(request, nino))
+        case _                    =>
+          logger.warn(s"Incomplete retrievals")
+          Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
+      } recoverWith {
       case _: NoActiveSession             =>
         hc.sessionId match {
           case Some(sessionId) =>
@@ -91,7 +92,7 @@ class OptionalAuthIdentifierAction @Inject() (
       Redirect(
         config.confidenceUpliftUrl,
         Map(
-          "origin"          -> Seq(config.upliftOrigin),
+          "origin"          -> Seq(config.origin),
           "confidenceLevel" -> Seq(config.requiredAuthConfidenceLevel),
           "completionURL"   -> Seq(config.upliftCompletionUrl),
           "failureURL"      -> Seq(config.upliftFailureUrl)
