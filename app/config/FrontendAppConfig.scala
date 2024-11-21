@@ -52,7 +52,6 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val upliftCompletionUrl         = configuration.get[String]("urls.upliftCompletion")
   val upliftFailureUrl            = configuration.get[String]("urls.upliftFailure")
   val requiredAuthConfidenceLevel = configuration.get[String]("required-auth-confidence-level")
-  val upliftOrigin                = configuration.get[String]("uplift-origin")
 
   private val exitSurveyBaseUrl: String = configuration.get[Service]("microservice.services.feedback-frontend").baseUrl
   val exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/calculate-public-pension-adjustment-frontend"
