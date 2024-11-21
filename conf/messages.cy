@@ -631,9 +631,9 @@ thresholdIncome.change.hidden.2017 = cy: if your threshold income was more than 
 thresholdIncome.change.hidden.2018 = cy: if your threshold income was more than £110,000
 thresholdIncome.change.hidden.2019 = cy: if your threshold income was more than £110,000
 thresholdIncome.change.hidden.2020 = cy: if your threshold income was more than £110,000
-thresholdIncome.change.hidden.2021 = os yw eich incwm trothwy yn fwy na £200,000?
-thresholdIncome.change.hidden.2022 = os yw eich incwm trothwy yn fwy na £200,000?
-thresholdIncome.change.hidden.2023 = os yw eich incwm trothwy yn fwy na £200,000?
+thresholdIncome.change.hidden.2021 = cy: if your threshold income was more than £200,000
+thresholdIncome.change.hidden.2022 = cy: if your threshold income was more than £200,000
+thresholdIncome.change.hidden.2023 = cy: if your threshold income was more than £200,000
 
 whoPayingExtraLtaCharge.title = Pwy sy’n talu’r tâl lwfans oes ychwanegol?
 whoPayingExtraLtaCharge.heading = Pwy sy’n talu’r tâl lwfans oes ychwanegol?

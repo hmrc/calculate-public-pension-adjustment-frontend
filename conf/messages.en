@@ -631,9 +631,9 @@ thresholdIncome.change.hidden.2017 = if your threshold income was more than £11
 thresholdIncome.change.hidden.2018 = if your threshold income was more than £110,000
 thresholdIncome.change.hidden.2019 = if your threshold income was more than £110,000
 thresholdIncome.change.hidden.2020 = if your threshold income was more than £110,000
-thresholdIncome.change.hidden.2021 = if your threshold income more than £200,000
-thresholdIncome.change.hidden.2022 = if your threshold income more than £200,000
-thresholdIncome.change.hidden.2023 = if your threshold income more than £200,000
+thresholdIncome.change.hidden.2021 = if your threshold income was more than £200,000
+thresholdIncome.change.hidden.2022 = if your threshold income was more than £200,000
+thresholdIncome.change.hidden.2023 = if your threshold income was more than £200,000
 
 whoPayingExtraLtaCharge.title = Who is paying the extra lifetime allowance charge?
 whoPayingExtraLtaCharge.heading = Who is paying the extra lifetime allowance charge?
