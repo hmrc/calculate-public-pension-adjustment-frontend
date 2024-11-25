@@ -40,8 +40,16 @@ case class MemberMoreThanOnePensionPage(period: Period) extends QuestionPage[Boo
       controllers.annualallowance.taxyear.routes.WhichSchemeController.onPageLoad(NormalMode, period, SchemeIndex(0))
   }
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+    val firstPeriod = PeriodService.isFirstPeriod(answers, period)
+    if (firstPeriod) {
+      controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
+        .onPageLoad(NormalMode, period, SchemeIndex(0))
+    } else {
+    controllers.annualallowance.taxyear.routes.WhichSchemeController.onPageLoad(NormalMode, period, SchemeIndex(0))
+    }
+
+  }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
     value
@@ -50,3 +58,4 @@ case class MemberMoreThanOnePensionPage(period: Period) extends QuestionPage[Boo
         }.getOrElse(super.cleanup(value, userAnswers))
       }
 }
+
