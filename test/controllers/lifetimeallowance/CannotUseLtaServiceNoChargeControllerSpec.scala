@@ -18,11 +18,19 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import controllers.lifetimeallowance.{routes => ltaRoutes}
-import models.{ReportingChange, UserAnswers}
+import models.{Done, KickOffAuditEvent, ReportingChange, UserAnswers}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.{verify, when}
+import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.setupquestions.ReportingChangePage
+import play.api.inject
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import services.AuditService
+import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lifetimeallowance.CannotUseLtaServiceNoChargeView
+
+import scala.concurrent.Future
 
 class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
 
@@ -71,6 +79,26 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
           contentAsString(result) mustEqual view(false)(request, messages(application)).toString
           contentAsString(result) must not include "Continue"
         }
+      }
+    }
+
+    "must trigger audit event" in {
+
+      val mockAuditService = mock[AuditService]
+      when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
+        .thenReturn(Future.successful(Done))
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(
+          inject.bind[AuditService].toInstance(mockAuditService)
+        )
+        .build()
+
+      running(application) {
+        val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad.url)
+        val result  = route(application, request).value
+        status(result) mustEqual OK
+        verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])
       }
     }
   }
