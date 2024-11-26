@@ -87,7 +87,11 @@ class PreviousClaimContinueController @Inject() (
     }
 
   private def submitFrontendCalculationResultPageUrl() =
-    s"${config.submitFrontend}/calculation-result"
+    if (config.calculationReviewEnabled) {
+      s"${config.submitFrontend}/calculation-results"
+    } else {
+      s"${config.submitFrontend}/calculation-result"
+    }
 
   def redirect(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     submitBackendService.submissionsPresentInSubmissionService(request.userAnswers.uniqueId)(hc).map {

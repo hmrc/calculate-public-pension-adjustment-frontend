@@ -186,15 +186,45 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
     }
 
     "Redirect()" - {
-      "must redirect to the calculation result page when submissions are present" in {
+      "must redirect to the new calculation results page when calculationReviewEnabled flag true and submissions are present" in {
         val mockSubmitBackendService = mock[SubmitBackendService]
+        val mockFrontEndAppConfig    = mock[FrontendAppConfig]
 
         when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any()))
           .thenReturn(Future.successful(true))
 
+        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(true)
+
         val application =
           applicationBuilder(userAnswers = Some(emptyUserAnswers))
             .overrides(bind[SubmitBackendService].toInstance(mockSubmitBackendService))
+            .overrides(bind[FrontendAppConfig].toInstance(mockFrontEndAppConfig))
+            .build()
+
+        running(application) {
+          val appConfig = application.injector.instanceOf[FrontendAppConfig]
+          val request   = FakeRequest(GET, routes.PreviousClaimContinueController.redirect().url)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual s"${appConfig.submitFrontend}/calculation-results"
+        }
+      }
+
+      "must redirect to the old calculation results page when calculationReviewEnabled flag false and submissions are present" in {
+        val mockSubmitBackendService = mock[SubmitBackendService]
+        val mockFrontEndAppConfig    = mock[FrontendAppConfig]
+
+        when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any()))
+          .thenReturn(Future.successful(true))
+
+        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(false)
+
+        val application =
+          applicationBuilder(userAnswers = Some(emptyUserAnswers))
+            .overrides(bind[SubmitBackendService].toInstance(mockSubmitBackendService))
+            .overrides(bind[FrontendAppConfig].toInstance(mockFrontEndAppConfig))
             .build()
 
         running(application) {
