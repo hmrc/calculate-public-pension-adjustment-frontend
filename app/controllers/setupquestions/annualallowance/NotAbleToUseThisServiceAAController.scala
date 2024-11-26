@@ -17,11 +17,13 @@
 package controllers.setupquestions.annualallowance
 
 import controllers.actions._
-import models.{LTAKickOutStatus, NormalMode, ReportingChange}
+import models.{KickOffAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import utils.Constants.TriageJourneyNotImpactedKickOff
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
 
 import javax.inject.Inject
@@ -31,12 +33,23 @@ class NotAbleToUseThisServiceAAController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceAAView
 ) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+    auditService
+      .auditTriageJourneyNotImpactedKickOff(
+        KickOffAuditEvent(
+          request.userAnswers.uniqueId,
+          request.userAnswers.id,
+          request.userAnswers.authenticated,
+          TriageJourneyNotEligible
+        )
+      )
+
     val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
 
     val shouldShowContinueButton = ltaKickOutStatusStatus match {
