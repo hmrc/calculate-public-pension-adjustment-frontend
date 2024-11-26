@@ -27,6 +27,8 @@ import uk.gov.hmrc.play.bootstrap.binders.{AbsoluteWithHostnameFromAllowlist, Re
 @Singleton
 class FrontendAppConfig @Inject() (configuration: Configuration) {
 
+  private val TriageJourneyNotImpactedKickOff = "triageJourneyNotImpactedKickOff"
+
   val host: String    = configuration.get[String]("host")
   val appName: String = configuration.get[String]("appName")
 
@@ -90,4 +92,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val calculationTaskListAuditEventName =
     configuration.get[String]("auditing.calculation-task-list-event-name")
+
+  val triageJourneyNotImpactedKickOffAuditEventName =
+    configuration.get[String]("auditing.triage-journey-not-impacted-kick-off-event-name")
 }

@@ -17,23 +17,41 @@
 package controllers.setupquestions
 
 import controllers.actions._
+import models.KickOffAuditEvent
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.IneligibleView
+import utils.Constants._
+
+import scala.concurrent.ExecutionContext
 
 class IneligibleController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: IneligibleView
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    Ok(view())
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+    auditService
+      .auditTriageJourneyNotImpactedKickOff(
+        KickOffAuditEvent(
+          request.userAnswers.uniqueId,
+          request.userAnswers.id,
+          request.userAnswers.authenticated,
+          TriageJourneyNotImpactedKickOff
+        )
+      )
+      .map(_ => Ok(view()))
   }
+
 }
