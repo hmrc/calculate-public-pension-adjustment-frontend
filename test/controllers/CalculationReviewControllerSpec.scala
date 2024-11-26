@@ -199,7 +199,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         val table       = document.select("table").first()
         val columnCells = table.select("tbody tr td:nth-child(2)")
         val columnTexts = columnCells.eachText()
-        columnTexts should contain allOf ("Not Changed", "Decreased by £1,200")
+        columnTexts should contain allOf ("No tax to pay", "Decreased by £1,200")
       }
 
     }

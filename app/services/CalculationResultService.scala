@@ -769,6 +769,12 @@ class CalculationResultService @Inject() (
         "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
       }
 
+      def writtenOffAmountFormatter(changeinTaxCharge: Int, writtenOffAmount: Option[Int]): Option[Int] =
+        changeinTaxCharge match {
+          case 0 => writtenOffAmount
+          case _ => None
+        }
+
       IndividualAASummaryModel(
         outDate.period,
         changeInTaxChargeAmount.abs,
@@ -778,7 +784,11 @@ class CalculationResultService @Inject() (
         outDate.chargePaidByMember,
         outDate.chargePaidBySchemes,
         outDate.revisedChargableAmountAfterTaxRate,
-        outDate.chargePaidByMember + outDate.chargePaidBySchemes
+        outDate.chargePaidByMember + outDate.chargePaidBySchemes,
+        writtenOffAmountFormatter(
+          changeInTaxChargeAmount,
+          Some(outDate.revisedChargableAmountAfterTaxRate - (outDate.chargePaidByMember + outDate.chargePaidBySchemes))
+        )
       )
     }
 
@@ -803,7 +813,8 @@ class CalculationResultService @Inject() (
         inDate.chargePaidByMember,
         inDate.chargePaidBySchemes,
         inDate.revisedChargableAmountAfterTaxRate,
-        inDate.chargePaidByMember + inDate.chargePaidBySchemes
+        inDate.chargePaidByMember + inDate.chargePaidBySchemes,
+        None
       )
     }
 
@@ -845,32 +856,12 @@ class CalculationResultService @Inject() (
           val taxYear: IncomeSubJourney = taxYearIncomeSubJourney(_2016To2023TaxYears.flatten, outDate.period)
           Seq(
             RowViewModel(
-              "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
-              currencyFormat(outDate.chargePaidBySchemes.toString())
-            ),
-            RowViewModel(
               "calculationReviewIndividualAA.annualResults.outDates.chargePaidByMember",
               currencyFormat(outDate.chargePaidByMember.toString())
             ),
             RowViewModel(
-              "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
-              currencyFormat(outDate.revisedChargableAmountBeforeTaxRate.toString())
-            ),
-            RowViewModel(
-              "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
-              currencyFormat(outDate.revisedChargableAmountAfterTaxRate.toString())
-            ),
-            RowViewModel(
-              "calculationReviewIndividualAA.annualResults.outDates.directCompensation",
-              currencyFormat(outDate.directCompensation.toString())
-            ),
-            RowViewModel(
-              "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation",
-              currencyFormat(outDate.indirectCompensation.toString())
-            ),
-            RowViewModel(
-              "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
-              currencyFormat(outDate.unusedAnnualAllowance.toString())
+              "calculationReviewIndividualAA.annualResults.outDates.chargePaidBySchemes",
+              currencyFormat(outDate.chargePaidBySchemes.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.reducedNetIncome",
@@ -887,6 +878,30 @@ class CalculationResultService @Inject() (
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.adjustedIncome",
               currencyFormat(adjustedIncomeMessage(outDate.period, taxYear))
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.outDates.unusedAnnualAllowance",
+              currencyFormat(outDate.unusedAnnualAllowance.toString())
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountBeforeTaxRate",
+              currencyFormat(outDate.revisedChargableAmountBeforeTaxRate.toString())
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.outDates.revisedChargeableAmountAfterTaxRate",
+              currencyFormat(outDate.revisedChargableAmountAfterTaxRate.toString())
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.outDates.amountYouOwe",
+              currencyFormat("0")
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.outDates.directCompensation",
+              currencyFormat(outDate.directCompensation.toString())
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.outDates.indirectCompensation",
+              currencyFormat(outDate.indirectCompensation.toString())
             )
           )
         }
@@ -925,12 +940,32 @@ class CalculationResultService @Inject() (
           val taxYear: IncomeSubJourney = taxYearIncomeSubJourney(_2016To2023TaxYears.flatten, inDate.period)
           Seq(
             RowViewModel(
+              "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember",
+              currencyFormat(inDate.chargePaidByMember.toString())
+            ),
+            RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.chargePaidBySchemes",
               currencyFormat(inDate.chargePaidBySchemes.toString())
             ),
             RowViewModel(
-              "calculationReviewIndividualAA.annualResults.inDates.chargePaidByMember",
-              currencyFormat(inDate.chargePaidByMember.toString())
+              "calculationReviewIndividualAA.annualResults.reducedNetIncome",
+              currencyFormat(taxYear.reducedNetIncomeAmount.getOrElse(0).toString)
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.personalAllowance",
+              currencyFormat(taxYear.personalAllowanceAmount.getOrElse(0).toString)
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.thresholdIncome",
+              currencyFormat(thresholdIncomeMessage(inDate.period, taxYear))
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.adjustedIncome",
+              currencyFormat(adjustedIncomeMessage(inDate.period, taxYear))
+            ),
+            RowViewModel(
+              "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
+              currencyFormat(inDate.unusedAnnualAllowance.toString())
             ),
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.revisedChargeableAmountBeforeTaxRate",
@@ -951,26 +986,6 @@ class CalculationResultService @Inject() (
             RowViewModel(
               "calculationReviewIndividualAA.annualResults.inDates.schemeCredit",
               currencyFormat(inDate.schemeCredit.toString())
-            ),
-            RowViewModel(
-              "calculationReviewIndividualAA.annualResults.inDates.unusedAnnualAllowance",
-              currencyFormat(inDate.unusedAnnualAllowance.toString())
-            ),
-            RowViewModel(
-              "calculationReviewIndividualAA.annualResults.reducedNetIncome",
-              currencyFormat(taxYear.reducedNetIncomeAmount.getOrElse(0).toString)
-            ),
-            RowViewModel(
-              "calculationReviewIndividualAA.annualResults.personalAllowance",
-              currencyFormat(taxYear.personalAllowanceAmount.getOrElse(0).toString)
-            ),
-            RowViewModel(
-              "calculationReviewIndividualAA.annualResults.thresholdIncome",
-              currencyFormat(thresholdIncomeMessage(inDate.period, taxYear))
-            ),
-            RowViewModel(
-              "calculationReviewIndividualAA.annualResults.adjustedIncome",
-              currencyFormat(adjustedIncomeMessage(inDate.period, taxYear))
             )
           )
         }

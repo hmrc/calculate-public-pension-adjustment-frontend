@@ -56,9 +56,31 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
-        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10, 20)
+        IndividualAASummaryModel(
+          Period._2017,
+          10,
+          10,
+          "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+          10,
+          1,
+          1,
+          10,
+          20,
+          None
+        )
       val mockInDatesSummary           =
-        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10, 20)
+        IndividualAASummaryModel(
+          Period._2022,
+          10,
+          10,
+          "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+          10,
+          10,
+          10,
+          10,
+          20,
+          None
+        )
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
@@ -95,6 +117,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
         ) mustBe true
+        contentAsString(result).contains("Your annual allowance tax charge has reduced by £10") mustBe true
       }
     }
 
@@ -108,7 +131,18 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
-        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10, 20)
+        IndividualAASummaryModel(
+          Period._2017,
+          10,
+          10,
+          "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+          10,
+          1,
+          1,
+          10,
+          20,
+          Some(8)
+        )
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
@@ -159,9 +193,31 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
-        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10, 20)
+        IndividualAASummaryModel(
+          Period._2017,
+          10,
+          10,
+          "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+          10,
+          1,
+          1,
+          10,
+          20,
+          Some(8)
+        )
       val mockInDatesSummary           =
-        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10, 20)
+        IndividualAASummaryModel(
+          Period._2022,
+          10,
+          10,
+          "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+          10,
+          10,
+          10,
+          10,
+          20,
+          None
+        )
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
@@ -213,9 +269,31 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
-        IndividualAASummaryModel(Period._2017, -10, 10, "Reduced", 10, 10, 10, 10, 20)
+        IndividualAASummaryModel(
+          Period._2017,
+          10,
+          10,
+          "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+          10,
+          1,
+          1,
+          10,
+          20,
+          Some(8)
+        )
       val mockInDatesSummary           =
-        IndividualAASummaryModel(Period._2022, -10, 10, "Reduced", 10, 10, 10, 10, 20)
+        IndividualAASummaryModel(
+          Period._2022,
+          10,
+          10,
+          "calculationReviewIndividualAA.changeInTaxChargeString.decrease.",
+          10,
+          10,
+          10,
+          10,
+          20,
+          None
+        )
 
       val userAnswers = emptyUserAnswers
 
