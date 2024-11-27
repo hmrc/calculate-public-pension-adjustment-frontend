@@ -16,6 +16,7 @@
 
 package controllers.setupquestions
 
+import config.FrontendAppConfig
 import controllers.actions._
 import models.KickOffAuditEvent
 
@@ -35,6 +36,7 @@ class IneligibleController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   auditService: AuditService,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: IneligibleView
 )(implicit ec: ExecutionContext)
@@ -43,7 +45,7 @@ class IneligibleController @Inject() (
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     auditService
-      .auditKickOff(
+      .auditKickOff(config.triageJourneyNotImpactedKickOff,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,

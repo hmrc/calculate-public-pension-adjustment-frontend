@@ -40,7 +40,7 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
 )(implicit ec: ExecutionContext) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
 
     val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
 
@@ -68,14 +68,15 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    auditService
-      .auditKickOff(
-        KickOffAuditEvent(
-          request.userAnswers.uniqueId,
-          request.userAnswers.id,
-          request.userAnswers.authenticated,
-          TriageJourneyNotImpactedPIADecrease
-        )
-      ).map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
+//    auditService
+//      .auditKickOff(
+//        KickOffAuditEvent(
+//          request.userAnswers.uniqueId,
+//          request.userAnswers.id,
+//          request.userAnswers.authenticated,
+//          TriageJourneyNotImpactedPIADecrease
+//        )
+//      ).map(_ =>
+        Ok(view(shouldShowContinueButton, urlFromStatus))
   }
 }
