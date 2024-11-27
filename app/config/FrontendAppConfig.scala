@@ -93,6 +93,6 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val calculationTaskListAuditEventName =
     configuration.get[String]("auditing.calculation-task-list-event-name")
 
-  val triageJourneyNotImpactedKickOffAuditEventName =
-    configuration.get[String]("auditing.triage-journey-not-impacted-kick-off-event-name")
+  val kickOffAuditEventName =
+    configuration.get[String]("auditing.kick-off-event-name")
 }

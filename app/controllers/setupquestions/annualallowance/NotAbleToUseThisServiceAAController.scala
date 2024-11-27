@@ -23,7 +23,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import utils.Constants.TriageJourneyNotImpactedKickOff
+import utils.Constants.TriageJourneyNotAbleToUseThisServiceAaNoRpss
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
 
 import javax.inject.Inject
@@ -41,12 +41,12 @@ class NotAbleToUseThisServiceAAController @Inject() (
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     auditService
-      .auditTriageJourneyNotImpactedKickOff(
+      .auditKickOff(
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,
           request.userAnswers.authenticated,
-          TriageJourneyNotEligible
+          TriageJourneyNotAbleToUseThisServiceAaNoRpss
         )
       )
 
