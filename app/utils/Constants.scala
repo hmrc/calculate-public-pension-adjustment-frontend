@@ -19,6 +19,6 @@ package utils
 object Constants {
 
   val TriageJourneyNotImpactedKickOff = "TriageJourneyNotImpactedKickOff"
-  val TriageJourneyNotAbleToUseThisServiceAaNoRpss = "TriageJourneyNotAbleToUseThisServiceAaNoRpss"
+  val TriageJourneyNotAbleToUseThisServiceAaNoRpssKickOff = "TriageJourneyNotAbleToUseThisServiceAaNoRpssKickOff"
   val TriageJourneyNotImpactedPIADecrease = "TriageJourneyNotImpactedPIADecrease"
 }
