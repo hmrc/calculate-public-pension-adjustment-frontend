@@ -1786,3 +1786,9 @@ printReview.printLink = cy: print this page
 printReview.printYourResults.hint = cy: To keep a record of this, you should
 printReview.bullet1 = cy: any new or additional tax charges you may owe
 printReview.bullet2 = cy: any compensation or refunds that may be owed to you
+
+outstandingTasks.title = cy: Sorry, you cannot view this page
+outstandingTasks.heading = cy: Sorry, you cannot view this page
+outstandingTasks.message1 = cy: You must
+outstandingTasks.message2 = cy: for each tax year before calculating your public service pension adjustment.
+outstandingTasks.link = cy: complete all required tasks

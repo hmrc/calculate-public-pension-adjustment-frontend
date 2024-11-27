@@ -19,16 +19,19 @@ package controllers
 import base.SpecBase
 import models.CalculationResults.{CalculationResponse, CalculationReviewIndividualAAViewModel, IndividualAASummaryModel, RowViewModel}
 import models.Period
+import models.tasklist.{SectionGroupViewModel, SectionViewModel, TaskListViewModel}
+import models.tasklist.SectionStatus.{Completed, NotStarted}
 import models.tasklist.sections.LTASection
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject
+import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.CalculationResultService
+import services.{CalculationResultService, TaskListService}
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.govuk.all.SummaryListViewModel
 
@@ -51,6 +54,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       val mockRowViewModel             = RowViewModel("test", "test")
+      val mockTaskListService          = mock[TaskListService]
       val mockCalculationResultService = mock[CalculationResultService]
       val mockPrintReviewViewModel     =
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
@@ -97,10 +101,20 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
+
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            inject.bind[CalculationResultService].toInstance(mockCalculationResultService)
+            inject.bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
@@ -126,6 +140,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         readCalculationResult("test/resources/CalculationResultsOutDatesTestData.json")
 
       val mockRowViewModel             = RowViewModel("test", "test")
+      val mockTaskListService          = mock[TaskListService]
       val mockCalculationResultService = mock[CalculationResultService]
       val mockPrintReviewViewModel     =
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
@@ -159,10 +174,20 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
+
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            inject.bind[CalculationResultService].toInstance(mockCalculationResultService)
+            inject.bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
@@ -188,6 +213,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       val mockRowViewModel             = RowViewModel("test", "test")
+      val mockTaskListService          = mock[TaskListService]
       val mockCalculationResultService = mock[CalculationResultService]
       val mockPrintReviewViewModel     =
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
@@ -234,10 +260,20 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
+
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            inject.bind[CalculationResultService].toInstance(mockCalculationResultService)
+            inject.bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
@@ -265,6 +301,7 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
       val mockRowViewModel             = RowViewModel("test", "test")
       val mockCalculationResultService = mock[CalculationResultService]
+      val mockTaskListService          = mock[TaskListService]
       val mockPrintReviewViewModel     =
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
       val list                         = SummaryListViewModel(Seq.empty)
@@ -310,10 +347,20 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
+
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            inject.bind[CalculationResultService].toInstance(mockCalculationResultService)
+            inject.bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
