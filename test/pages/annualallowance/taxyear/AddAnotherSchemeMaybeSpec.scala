@@ -16,12 +16,57 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, SchemeIndex}
+import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, SchemeIndex, ThresholdIncome}
+import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.behaviours.PageBehaviours
 
 class AddAnotherSchemeMaybeSpec extends PageBehaviours {
 
   "Add Another Scheme Maybe" - {
+
+    "must navigate to  check answer page when OtherDefinedBenefitOrContributionPage is defined" in {
+      val userAnswers = emptyUserAnswers
+        .set(MemberMoreThanOnePensionPage(Period._2016), false).get
+        .set(AddAnotherSchemePage(Period._2016,SchemeIndex(0)), false).get
+        .set(PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef")).get
+        .set(DefinedContributionPensionSchemePage, true)
+        .get
+        .set(OtherDefinedBenefitOrContributionPage(Period._2016), true)
+        .get
+
+      val nextUrl: String =
+        AddAnotherSchemePage(Period._2016,SchemeIndex(0)).navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextUrl, "/annual-allowance/2016/check-answers")
+    }
+
+    "must navigate to  check answer page when ThresholdIncomePage is defined" in {
+      val userAnswers = emptyUserAnswers
+        .set(MemberMoreThanOnePensionPage(Period._2016), false).get
+        .set(AddAnotherSchemePage(Period._2016,SchemeIndex(0)), false).get
+        .set(PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef")).get
+        .set(ThresholdIncomePage(Period._2016),ThresholdIncome.No)
+        .get
+
+      val nextUrl: String =
+        AddAnotherSchemePage(Period._2016,SchemeIndex(0)).navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextUrl, "/annual-allowance/2016/check-answers")
+    }
+
+    "must navigate to  check answer page when TotalIncomePage is defined" in {
+      val userAnswers = emptyUserAnswers
+        .set(MemberMoreThanOnePensionPage(Period._2016), false).get
+        .set(AddAnotherSchemePage(Period._2016,SchemeIndex(0)), false).get
+        .set(PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef")).get
+        .set(TotalIncomePage(Period._2016),BigInt(100))
+        .get
+
+      val nextUrl: String =
+        AddAnotherSchemePage(Period._2016,SchemeIndex(0)).navigate(CheckMode, userAnswers).url
+
+      checkNavigation(nextUrl, "/annual-allowance/2016/check-answers")
+    }
 
     "must redirect to journey recovery when member more than one pension scheme page not answered" in {
 
