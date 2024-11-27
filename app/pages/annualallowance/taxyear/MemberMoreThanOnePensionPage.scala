@@ -46,16 +46,15 @@ case class MemberMoreThanOnePensionPage(period: Period) extends QuestionPage[Boo
       controllers.annualallowance.taxyear.routes.PensionSchemeDetailsController
         .onPageLoad(NormalMode, period, SchemeIndex(0))
     } else {
-    controllers.annualallowance.taxyear.routes.WhichSchemeController.onPageLoad(NormalMode, period, SchemeIndex(0))
+      controllers.annualallowance.taxyear.routes.WhichSchemeController.onPageLoad(NormalMode, period, SchemeIndex(0))
     }
 
   }
 
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value
       .map { _ =>
         Try(AASection.removeAASchemeIndexedAnswers(userAnswers, period))
-        }.getOrElse(super.cleanup(value, userAnswers))
       }
+      .getOrElse(super.cleanup(value, userAnswers))
 }
-

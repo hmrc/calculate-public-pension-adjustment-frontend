@@ -37,9 +37,10 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2018, SchemeIndex(0))
 
       val userAnswers = emptyUserAnswers
-        .set(MemberMoreThanOnePensionPage(Period._2018), true).get
-        .set(page, false).get
-
+        .set(MemberMoreThanOnePensionPage(Period._2018), true)
+        .get
+        .set(page, false)
+        .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
@@ -57,7 +58,6 @@ class PayAChargePageSpec extends PageBehaviours {
         .set(page, false)
         .get
 
-
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/2018/contributed-to-any-other-dc-or-db-scheme")
@@ -73,7 +73,6 @@ class PayAChargePageSpec extends PageBehaviours {
         .get
         .set(page, false)
         .get
-
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
@@ -91,7 +90,6 @@ class PayAChargePageSpec extends PageBehaviours {
         .set(page, false)
         .get
 
-
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/2016/contributed-to-any-other-dc-or-db-scheme")
@@ -107,7 +105,6 @@ class PayAChargePageSpec extends PageBehaviours {
         .get
         .set(page, false)
         .get
-
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
@@ -125,7 +122,6 @@ class PayAChargePageSpec extends PageBehaviours {
         .set(page, false)
         .get
 
-
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/2017/threshold-income")
@@ -142,7 +138,6 @@ class PayAChargePageSpec extends PageBehaviours {
         .set(page, false)
         .get
 
-
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/2017/contributed-to-any-other-dc-or-db-scheme")
@@ -158,7 +153,6 @@ class PayAChargePageSpec extends PageBehaviours {
         .get
         .set(page, false)
         .get
-
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 

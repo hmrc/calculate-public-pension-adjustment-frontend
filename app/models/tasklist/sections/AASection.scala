@@ -59,8 +59,7 @@ object AASection {
       case None         => answers
     }
 
-  def removeAASchemeIndexedAnswers(answers: UserAnswers, period: Period): UserAnswers = {
+  def removeAASchemeIndexedAnswers(answers: UserAnswers, period: Period): UserAnswers =
     answers.removePath(UserAnswersPeriod(period).schemesPath).get
-  }
 
 }
