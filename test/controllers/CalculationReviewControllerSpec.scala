@@ -17,8 +17,11 @@
 package controllers
 
 import base.SpecBase
+import config.FrontendAppConfig
 import models.CalculationResults.CalculationResponse
 import models.submission.{Failure, Success}
+import models.tasklist.{SectionGroupViewModel, SectionViewModel, TaskListViewModel}
+import models.tasklist.SectionStatus.{Completed, NotStarted}
 import models.tasklist.sections.LTASection
 import org.jsoup.Jsoup
 import org.mockito.ArgumentMatchers.any
@@ -30,7 +33,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.CalculationResultService
+import services.{CalculationResultService, TaskListService}
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.CalculationReviewView
 
@@ -59,13 +62,24 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       val mockCalculationResultService = mock[CalculationResultService]
+      val mockTaskListService          = mock[TaskListService]
+
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[CalculationResultService].toInstance(mockCalculationResultService)
+            bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
@@ -79,20 +93,59 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    "must redirect to outstanding tasks page on a GET if next steps section is not ready to start" in {
+
+      val application = applicationBuilder(Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual appConfig.redirectToOutstandingTasksPage
+      }
+    }
+
+    "must redirect to outstanding tasks page on a POST if next steps section is not ready to start" in {
+
+      val application = applicationBuilder(Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val appConfig = application.injector.instanceOf[FrontendAppConfig]
+        val request   = FakeRequest(POST, normalRoute)
+
+        val result = route(application, request).value
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual appConfig.redirectToOutstandingTasksPage
+
+      }
+    }
+
     "when only out of dates AA, only show content relevant for out dates" in {
 
       val calculationResult: CalculationResponse =
         readCalculationResult("test/resources/CalculationResultsOutDatesTestData.json")
 
       val mockCalculationResultService = mock[CalculationResultService]
+      val mockTaskListService          = mock[TaskListService]
 
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[CalculationResultService].toInstance(mockCalculationResultService)
+            bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
@@ -121,13 +174,24 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
+      val mockTaskListService = mock[TaskListService]
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
+
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
-            bind[CalculationResultService].toInstance(mockCalculationResultService)
+            bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
@@ -148,14 +212,24 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       val mockCalculationResultService = mock[CalculationResultService]
+      val mockTaskListService          = mock[TaskListService]
 
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[CalculationResultService].toInstance(mockCalculationResultService)
+            bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
@@ -177,14 +251,24 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       val mockCalculationResultService = mock[CalculationResultService]
+      val mockTaskListService          = mock[TaskListService]
 
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
       when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[CalculationResultService].toInstance(mockCalculationResultService)
+            bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
@@ -207,13 +291,24 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
     "must redirect to submit landing page on a POST when answers / calculation are submitted to backend successfully" in {
 
       val mockCalculationResultService = mock[CalculationResultService]
+      val mockTaskListService          = mock[TaskListService]
+
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
       when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
         .thenReturn(Future.successful(Success("123")))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[CalculationResultService].toInstance(mockCalculationResultService)
+            bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
@@ -232,13 +327,24 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
     "must redirect to journey recovery on a POST when answers / calculation submission fails" in {
 
       val mockCalculationResultService = mock[CalculationResultService]
+      val mockTaskListService          = mock[TaskListService]
+
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
       when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
         .thenReturn(Future.successful(Failure(Seq("someError"))))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[CalculationResultService].toInstance(mockCalculationResultService)
+            bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
           )
           .build()
 
