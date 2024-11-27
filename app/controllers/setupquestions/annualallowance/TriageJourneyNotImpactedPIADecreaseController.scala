@@ -24,8 +24,10 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import utils.Constants.TriageJourneyNotImpactedKickOff
+import utils.Constants.TriageJourneyNotImpactedPIADecrease
 import views.html.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseView
+
+import scala.concurrent.ExecutionContext
 
 class TriageJourneyNotImpactedPIADecreaseController @Inject() (
   override val messagesApi: MessagesApi,
@@ -35,19 +37,10 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
   auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: TriageJourneyNotImpactedPIADecreaseView
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    auditService
-      .auditTriageJourneyNotImpactedKickOff(
-        KickOffAuditEvent(
-          request.userAnswers.uniqueId,
-          request.userAnswers.id,
-          request.userAnswers.authenticated,
-          TriageJourneyNotImpactedKickOff
-        )
-      )
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
 
     val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
 
@@ -74,6 +67,15 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
       case None    =>
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
-    Ok(view(shouldShowContinueButton, urlFromStatus))
+
+    auditService
+      .auditKickOff(
+        KickOffAuditEvent(
+          request.userAnswers.uniqueId,
+          request.userAnswers.id,
+          request.userAnswers.authenticated,
+          TriageJourneyNotImpactedPIADecrease
+        )
+      ).map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
   }
 }

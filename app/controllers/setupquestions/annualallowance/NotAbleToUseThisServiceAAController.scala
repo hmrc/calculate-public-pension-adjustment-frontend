@@ -27,6 +27,7 @@ import utils.Constants.TriageJourneyNotAbleToUseThisServiceAaNoRpss
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
 class NotAbleToUseThisServiceAAController @Inject() (
   override val messagesApi: MessagesApi,
@@ -36,19 +37,10 @@ class NotAbleToUseThisServiceAAController @Inject() (
   auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceAAView
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    auditService
-      .auditKickOff(
-        KickOffAuditEvent(
-          request.userAnswers.uniqueId,
-          request.userAnswers.id,
-          request.userAnswers.authenticated,
-          TriageJourneyNotAbleToUseThisServiceAaNoRpss
-        )
-      )
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
 
     val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
 
@@ -76,6 +68,14 @@ class NotAbleToUseThisServiceAAController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    Ok(view(shouldShowContinueButton, urlFromStatus))
+    auditService
+      .auditKickOff(
+        KickOffAuditEvent(
+          request.userAnswers.uniqueId,
+          request.userAnswers.id,
+          request.userAnswers.authenticated,
+          TriageJourneyNotAbleToUseThisServiceAaNoRpss
+        )
+      ).map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
   }
 }

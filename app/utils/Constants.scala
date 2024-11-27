@@ -20,4 +20,5 @@ object Constants {
 
   val TriageJourneyNotImpactedKickOff = "TriageJourneyNotImpactedKickOff"
   val TriageJourneyNotAbleToUseThisServiceAaNoRpss = "TriageJourneyNotAbleToUseThisServiceAaNoRpss"
+  val TriageJourneyNotImpactedPIADecrease = "TriageJourneyNotImpactedPIADecrease"
 }
