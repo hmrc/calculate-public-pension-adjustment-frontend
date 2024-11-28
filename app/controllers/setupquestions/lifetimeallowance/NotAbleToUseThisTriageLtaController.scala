@@ -16,27 +16,34 @@
 
 package controllers.setupquestions.lifetimeallowance
 
+import config.FrontendAppConfig
 import controllers.actions._
-import models.{AAKickOutStatus, NormalMode}
+import models.{AAKickOutStatus, KickOffAuditEvent, NormalMode}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.Format.GenericFormat
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaView
+import utils.Constants._
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
 class NotAbleToUseThisTriageLtaController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  auditService: AuditService,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
-  view: NotAbleToUseThisTriageLtaView
-) extends FrontendBaseController
+  view: NotAbleToUseThisTriageLtaView,
+
+)(implicit ec: ExecutionContext) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     val annualAllowanceStatus = request.userAnswers.get(AAKickOutStatus())
 
     val shouldShowContinueButton = annualAllowanceStatus match {
@@ -61,6 +68,15 @@ class NotAbleToUseThisTriageLtaController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    Ok(view(shouldShowContinueButton, urlFromStatus))
+    auditService
+      .auditKickOff(config.triageJourneyNotImpactedNoChange,
+        KickOffAuditEvent(
+          request.userAnswers.uniqueId,
+          request.userAnswers.id,
+          request.userAnswers.authenticated,
+          TriageJourneyNotImpactedNoChange
+        )
+      )
+      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
   }
 }

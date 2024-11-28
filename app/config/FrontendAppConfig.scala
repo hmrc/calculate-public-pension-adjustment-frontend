@@ -105,4 +105,10 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val triageJourneyNotImpactedNoBceKickOff =
     configuration.get[String]("auditing.triage-journey-not-impacted-no-bce-kick-off-event-name")
+
+  val triageJourneyNotImpactedNoChange =
+    configuration.get[String]("auditing.triage-journey-not-impacted-no-change-event-name")
+
+  val cannotUseLtaServiceNoCharge =
+    configuration.get[String]("auditing.cannot-use-lta-service-no-change-event-name")
 }
