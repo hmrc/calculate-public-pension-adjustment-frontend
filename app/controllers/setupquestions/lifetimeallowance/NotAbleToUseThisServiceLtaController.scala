@@ -16,27 +16,34 @@
 
 package controllers.setupquestions.lifetimeallowance
 
+import config.FrontendAppConfig
 import controllers.actions._
-import models.{AAKickOutStatus, NormalMode}
+import models.{AAKickOutStatus, KickOffAuditEvent, NormalMode}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.Format.GenericFormat
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaView
+import services.AuditService
+import utils.Constants._
+
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
 class NotAbleToUseThisServiceLtaController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  auditService: AuditService,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceLtaView
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     val annualAllowanceStatus = request.userAnswers.get(AAKickOutStatus())
 
     val shouldShowContinueButton = annualAllowanceStatus match {
@@ -61,6 +68,14 @@ class NotAbleToUseThisServiceLtaController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    Ok(view(shouldShowContinueButton, urlFromStatus))
+    auditService
+      .auditKickOff(config.triageJourneyNotImpactedNoBceKickOff,
+        KickOffAuditEvent(
+          request.userAnswers.uniqueId,
+          request.userAnswers.id,
+          request.userAnswers.authenticated,
+          TriageJourneyNotImpactedNoBceKickOff
+        )
+      ).map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
   }
 }

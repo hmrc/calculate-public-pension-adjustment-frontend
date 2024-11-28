@@ -24,7 +24,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import utils.Constants.TriageJourneyNotAbleToUseThisServiceAaNoRpssKickOff
+import utils.Constants.TriageJourneyNotEligibleNoRpssKickOff
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
 
 import javax.inject.Inject
@@ -71,12 +71,12 @@ class NotAbleToUseThisServiceAAController @Inject() (
     }
 
     auditService
-      .auditKickOff(config.triageJourneyNotAbleToUseThisServiceAaNoRpssKickOff,
+      .auditKickOff(config.triageJourneyNotEligibleNoRpssKickOff,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,
           request.userAnswers.authenticated,
-          TriageJourneyNotAbleToUseThisServiceAaNoRpssKickOff
+          TriageJourneyNotEligibleNoRpssKickOff
         )
       ).map(_ =>
         Ok(view(shouldShowContinueButton, urlFromStatus)))

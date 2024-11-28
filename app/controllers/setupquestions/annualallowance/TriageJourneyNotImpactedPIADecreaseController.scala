@@ -16,6 +16,7 @@
 
 package controllers.setupquestions.annualallowance
 
+import config.FrontendAppConfig
 import controllers.actions._
 import models.{KickOffAuditEvent, LTAKickOutStatus, NormalMode}
 
@@ -24,7 +25,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import utils.Constants.TriageJourneyNotImpactedPIADecrease
+import utils.Constants.TriageJourneyNotEligiblePiaDecreaseKickOff
 import views.html.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseView
 
 import scala.concurrent.ExecutionContext
@@ -35,12 +36,13 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   auditService: AuditService,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: TriageJourneyNotImpactedPIADecreaseView
 )(implicit ec: ExecutionContext) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
 
     val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
 
@@ -68,15 +70,14 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-//    auditService
-//      .auditKickOff(
-//        KickOffAuditEvent(
-//          request.userAnswers.uniqueId,
-//          request.userAnswers.id,
-//          request.userAnswers.authenticated,
-//          TriageJourneyNotImpactedPIADecrease
-//        )
-//      ).map(_ =>
-        Ok(view(shouldShowContinueButton, urlFromStatus))
+    auditService
+      .auditKickOff(config.triageJourneyNotEligiblePiaDecreaseKickOff,
+        KickOffAuditEvent(
+          request.userAnswers.uniqueId,
+          request.userAnswers.id,
+          request.userAnswers.authenticated,
+          TriageJourneyNotEligiblePiaDecreaseKickOff
+        )
+      ).map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
   }
 }

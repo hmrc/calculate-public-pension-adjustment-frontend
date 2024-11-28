@@ -96,9 +96,13 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val triageJourneyNotImpactedKickOff =
     configuration.get[String]("auditing.triage-journey-not-impacted-kick-off-event-name")
 
-  val triageJourneyNotAbleToUseThisServiceAaNoRpssKickOff =
-    configuration.get[String]("auditing.triage-journey-not-impacted-kick-off-event-name")
+  val triageJourneyNotEligibleNoRpssKickOff  =
+    configuration.get[String]("auditing.triage-journey-not-eligible-no-rpss-kick-off-event-name")
 
-  //each unique name
+  val triageJourneyNotEligiblePiaDecreaseKickOff=
+    configuration.get[String]("auditing.triage-journey-not-eligible-pia-decrease-kick-off-event-name")
 
+
+  val triageJourneyNotImpactedNoBceKickOff =
+    configuration.get[String]("auditing.triage-journey-not-impacted-no-bce-kick-off-event-name")
 }
