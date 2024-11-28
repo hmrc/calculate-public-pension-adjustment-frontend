@@ -36,7 +36,11 @@ class PayAChargePageSpec extends PageBehaviours {
     "when did not pay charge and member of more than one scheme then check onward navigation" in {
       val page = PayAChargePage(Period._2018, SchemeIndex(0))
 
-      val userAnswers = emptyUserAnswers.set(page, false).get.set(MemberMoreThanOnePensionPage(Period._2018), true).get
+      val userAnswers = emptyUserAnswers
+        .set(MemberMoreThanOnePensionPage(Period._2018), true)
+        .get
+        .set(page, false)
+        .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 
@@ -49,9 +53,9 @@ class PayAChargePageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(DefinedContributionPensionSchemePage, true)
         .get
-        .set(page, false)
-        .get
         .set(MemberMoreThanOnePensionPage(Period._2018), false)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -65,9 +69,9 @@ class PayAChargePageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(DefinedContributionPensionSchemePage, false)
         .get
-        .set(page, false)
-        .get
         .set(MemberMoreThanOnePensionPage(Period._2018), false)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -81,9 +85,9 @@ class PayAChargePageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(DefinedContributionPensionSchemePage, true)
         .get
-        .set(page, false)
-        .get
         .set(MemberMoreThanOnePensionPage(Period._2016), false)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -97,9 +101,9 @@ class PayAChargePageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(DefinedContributionPensionSchemePage, false)
         .get
-        .set(page, false)
-        .get
         .set(MemberMoreThanOnePensionPage(Period._2016), false)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -113,9 +117,9 @@ class PayAChargePageSpec extends PageBehaviours {
       val userAnswers = emptyUserAnswers
         .set(DefinedContributionPensionSchemePage, false)
         .get
-        .set(page, false)
-        .get
         .set(MemberMoreThanOnePensionPage(Period._2017), true)
+        .get
+        .set(page, false)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -127,11 +131,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2017, SchemeIndex(4))
 
       val userAnswers = emptyUserAnswers
+        .set(MemberMoreThanOnePensionPage(Period._2017), true)
+        .get
         .set(DefinedContributionPensionSchemePage, true)
         .get
         .set(page, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2017), true)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -143,11 +147,11 @@ class PayAChargePageSpec extends PageBehaviours {
       val page = PayAChargePage(Period._2016, SchemeIndex(4))
 
       val userAnswers = emptyUserAnswers
+        .set(MemberMoreThanOnePensionPage(Period._2016), true)
+        .get
         .set(DefinedContributionPensionSchemePage, false)
         .get
         .set(page, false)
-        .get
-        .set(MemberMoreThanOnePensionPage(Period._2016), true)
         .get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
@@ -158,7 +162,7 @@ class PayAChargePageSpec extends PageBehaviours {
     "when did pay charge then check onward navigation" in {
       val page = PayAChargePage(Period._2018, SchemeIndex(0))
 
-      val userAnswers = emptyUserAnswers.set(page, true).get.set(MemberMoreThanOnePensionPage(Period._2018), true).get
+      val userAnswers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2018), true).get.set(page, true).get
 
       val nextPageUrl: String = page.navigate(NormalMode, userAnswers).url
 

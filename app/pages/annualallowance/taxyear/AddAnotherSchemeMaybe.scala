@@ -31,20 +31,35 @@ object AddAnotherSchemeMaybe {
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  def exitSchemeLoopNavigation(answers: UserAnswers, period: Period) =
+  def exitSchemeLoopNavigation(answers: UserAnswers, period: Period): Call =
     answers.get(DefinedContributionPensionSchemePage) match {
       case Some(true)  =>
-        controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
-          .onPageLoad(NormalMode, period)
-      case Some(false) => noDCNavigation(period)
+        if (answers.get(OtherDefinedBenefitOrContributionPage(period)).isDefined) {
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
+            .onPageLoad(period)
+        } else {
+          controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
+            .onPageLoad(NormalMode, period)
+        }
+      case Some(false) => noDCNavigation(period, answers)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  private def noDCNavigation(period: Period): Call =
+  private def noDCNavigation(period: Period, answers: UserAnswers): Call =
     period match {
       case Period._2016   =>
-        controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
+        if (answers.get(TotalIncomePage(period)).isDefined) {
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
+            .onPageLoad(period)
+        } else {
+          controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
+        }
       case Period.Year(_) =>
-        controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
+        if (answers.get(ThresholdIncomePage(period)).isDefined) {
+          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
+            .onPageLoad(period)
+        } else {
+          controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
+        }
     }
 }

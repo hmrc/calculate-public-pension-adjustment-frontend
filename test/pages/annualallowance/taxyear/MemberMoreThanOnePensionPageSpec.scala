@@ -16,8 +16,11 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, NormalMode, PensionSchemeDetails, Period, SchemeIndex}
+import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import pages.behaviours.PageBehaviours
+
+import scala.util.Random
 
 class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
 
@@ -58,7 +61,63 @@ class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
         val nextUrl: String =
           MemberMoreThanOnePensionPage(Period._2017).navigate(CheckMode, userAnswers).url
 
-        checkNavigation(nextUrl, "/annual-allowance/2017/check-answers")
+        checkNavigation(nextUrl, "/annual-allowance/2017/select-scheme-0")
+      }
+
+      "must navigate to   ask for scheme detail page when change to 'yes'  with pension scheme" in {
+        val userAnswers = emptyUserAnswers
+          .set(MemberMoreThanOnePensionPage(Period._2016), true)
+          .get
+          .set(PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
+          .get
+          .set(DefinedContributionPensionSchemePage, true)
+          .get
+
+        val nextUrl: String =
+          MemberMoreThanOnePensionPage(Period._2017).navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextUrl, "/annual-allowance/2017/scheme-name-reference/0")
+      }
+
+      "must navigate to   ask for scheme detail page when change to 'no'  with pension scheme" in {
+        val userAnswers = emptyUserAnswers
+          .set(MemberMoreThanOnePensionPage(Period._2016), false)
+          .get
+          .set(PensionSchemeDetailsPage(Period._2016, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
+          .get
+          .set(DefinedContributionPensionSchemePage, true)
+          .get
+
+        val nextUrl: String =
+          MemberMoreThanOnePensionPage(Period._2017).navigate(CheckMode, userAnswers).url
+
+        checkNavigation(nextUrl, "/annual-allowance/2017/scheme-name-reference/0")
+      }
+    }
+
+    "Cleanup if more pension scheme change happen" - {
+
+      "clean multiple scheme data if user changes between" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(PensionSchemeDetailsPage(Period._2020, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
+          .success
+          .value
+          .set(
+            PensionSchemeDetailsPage(Period._2020, SchemeIndex(1)),
+            PensionSchemeDetails("schemeName2", "schemeRef2")
+          )
+          .success
+          .value
+
+        val cleanedUserAnswers = MemberMoreThanOnePensionPage(Period._2020)
+          .cleanup(Some(Random.nextBoolean()), userAnswers)
+          .success
+          .value
+
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020, SchemeIndex(0))) mustBe None
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020, SchemeIndex(1))) mustBe None
+
       }
     }
   }
