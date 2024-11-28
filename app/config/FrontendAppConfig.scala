@@ -111,4 +111,8 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val cannotUseLtaServiceNoCharge =
     configuration.get[String]("auditing.cannot-use-lta-service-no-change-event-name")
+
+  val eligibility =
+    configuration.get[String]("auditing.eligibility")
+
 }
