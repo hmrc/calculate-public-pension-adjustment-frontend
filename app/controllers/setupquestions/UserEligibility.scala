@@ -59,19 +59,19 @@ class UserEligibility @Inject() (
     val annualAllowanceIncluded: Boolean =
       request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
 
-    val eligibleForAA: Option[Boolean] = request.userAnswers.get(AAKickOutStatus()) match {
-      case Some(2) => Some(true)
-      case None => None
-      case _ => Some(false)
+    val eligibleForAA: Boolean = request.userAnswers.get(AAKickOutStatus()) match {
+      case Some(2) => true
+      case None => false
+      case _ => false
     }
 
     val lifetimeAllowanceIncluded: Boolean =
       request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.LifetimeAllowance))
 
-    val eligibleForLTA: Option[Boolean] = request.userAnswers.get(LTAKickOutStatus()) match {
-      case Some(2) => Some(true)
-      case None => None
-      case _ => Some(false)
+    val eligibleForLTA: Boolean = request.userAnswers.get(LTAKickOutStatus()) match {
+      case Some(2) => true
+      case None => false
+      case _ => false
     }
 
     auditService

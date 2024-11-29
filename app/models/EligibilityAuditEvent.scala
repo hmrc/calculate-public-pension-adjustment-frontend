@@ -24,8 +24,8 @@ case class EligibilityAuditEvent(
   authenticated: Boolean,
   annualAllowanceIncluded: Boolean,
   lifetimeAllowanceIncluded: Boolean,
-  eligibleForAA: Option[Boolean],
-  eligibleForLTA: Option[Boolean]
+  eligibleForAA: Boolean,
+  eligibleForLTA: Boolean
                                 )
 
 object EligibilityAuditEvent {
