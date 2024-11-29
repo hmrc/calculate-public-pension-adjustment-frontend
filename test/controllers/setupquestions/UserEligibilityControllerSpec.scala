@@ -18,7 +18,7 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import models.{AAKickOutStatus, Done, NormalMode, ReportingChange}
+import models.{AAKickOutStatus, Done, LTAKickOutStatus, NormalMode, ReportingChange}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito
 import org.mockito.Mockito.when
@@ -74,11 +74,17 @@ class UserEligibilityControllerSpec extends SpecBase {
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
+      val ltaKickOutStatus = 0
+      val aaKickoutStatus  = 2
+
       val userAnswers = emptyUserAnswers
         .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
         .success
         .value
-        .set(AAKickOutStatus(), 2)
+        .set(AAKickOutStatus(), aaKickoutStatus)
+        .success
+        .value
+        .set(LTAKickOutStatus(), ltaKickOutStatus)
         .success
         .value
 
@@ -101,7 +107,9 @@ class UserEligibilityControllerSpec extends SpecBase {
         contentAsString(result) mustEqual view(
           true,
           false,
-          controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
+          controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode),
+          Some(ltaKickOutStatus),
+          Some(aaKickoutStatus)
         )(
           request,
           messages(application)
@@ -114,11 +122,17 @@ class UserEligibilityControllerSpec extends SpecBase {
 
       when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
 
+      val ltaKickOutStatus = 0
+      val aaKickoutStatus  = 2
+
       val userAnswers = emptyUserAnswers
         .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
         .success
         .value
-        .set(AAKickOutStatus(), 2)
+        .set(AAKickOutStatus(), aaKickoutStatus)
+        .success
+        .value
+        .set(LTAKickOutStatus(), ltaKickOutStatus)
         .success
         .value
         .set(ScottishTaxpayerFrom2016Page, false)
@@ -144,12 +158,133 @@ class UserEligibilityControllerSpec extends SpecBase {
         contentAsString(result) mustEqual view(
           true,
           false,
-          controllers.routes.TaskListController.onPageLoad()
+          controllers.routes.TaskListController.onPageLoad(),
+          Some(ltaKickOutStatus),
+          Some(aaKickoutStatus)
         )(
           request,
           messages(application)
         ).toString
       }
     }
+
+    "must SHOW lta content only if lta kickout status is complete and must NOT show aa if aa kickout status is false" in {
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val ltaKickOutStatus = 2
+      val aaKickoutStatus  = 0
+
+      val userAnswers = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.LifetimeAllowance))
+        .success
+        .value
+        .set(LTAKickOutStatus(), ltaKickOutStatus)
+        .success
+        .value
+        .set(AAKickOutStatus(), aaKickoutStatus)
+        .success
+        .value
+        .set(ScottishTaxpayerFrom2016Page, false)
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(GET, controllers.setupquestions.routes.UserEligibility.onPageLoad.url)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[UserEligibilityView]
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains(
+          "You are able to use this service to report changes to your lifetime allowance position."
+        ) mustBe true
+        contentAsString(result).contains(
+          "You are able to use this service to calculate a change in your annual allowance position."
+        ) mustBe false
+
+        contentAsString(result) mustEqual view(
+          false,
+          true,
+          controllers.routes.TaskListController.onPageLoad(),
+          Some(ltaKickOutStatus),
+          Some(aaKickoutStatus)
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must NOT show lta content only if lta kickout status is false and must show aa if aa kickout status is complete" in {
+      val mockUserDataService = mock[UserDataService]
+
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val ltaKickOutStatus = 0
+      val aaKickoutStatus  = 2
+
+      val userAnswers = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.AnnualAllowance))
+        .success
+        .value
+        .set(LTAKickOutStatus(), ltaKickOutStatus)
+        .success
+        .value
+        .set(AAKickOutStatus(), aaKickoutStatus)
+        .success
+        .value
+        .set(ScottishTaxpayerFrom2016Page, false)
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(GET, controllers.setupquestions.routes.UserEligibility.onPageLoad.url)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[UserEligibilityView]
+
+        status(result) mustEqual OK
+
+        contentAsString(result).contains(
+          "You are able to use this service to report changes to your lifetime allowance position."
+        ) mustBe false
+        contentAsString(result).contains(
+          "You are able to use this service to calculate a change in your annual allowance position."
+        ) mustBe true
+
+        contentAsString(result) mustEqual view(
+          true,
+          false,
+          controllers.routes.TaskListController.onPageLoad(),
+          Some(ltaKickOutStatus),
+          Some(aaKickoutStatus)
+        )(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
   }
 }

@@ -22,17 +22,17 @@
     continueButtonWithLink: components.ContinueButtonWithLink
 )
 
-@(aaExist: Boolean, ltaExist: Boolean, continueURL:Call)(implicit request: Request[_], messages: Messages)
+@(aaExist: Boolean, ltaExist: Boolean, continueURL:Call, ltaKickOutStatusStatus: Option[Int], annualAllowanceStatus: Option[Int])(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("userEligibility.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("userEligibility.heading")</h1>
 
-    @if(aaExist) {
+    @if(aaExist && annualAllowanceStatus == Some(2)) {
         <p class="govuk-body">@messages("userEligibility.message1")</p>
     }
 
-    @if(ltaExist) {
+    @if(ltaExist && ltaKickOutStatusStatus == Some(2)) {
         <p class="govuk-body">@messages("userEligibility.message2")</p>
     }
 
