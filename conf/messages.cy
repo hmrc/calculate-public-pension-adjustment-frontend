@@ -1341,7 +1341,7 @@ didYouContributeToRASScheme.error.required = Dewiswch ‘Iawn’ os gwnaethoch u
 didYouContributeToRASScheme.change.hidden = os gwnaethoch unrhyw gyfraniadau at gynllun pensiwn rhyddhad wrth y ffynhonnell
 
 doYouHaveGiftAid.title = cy: Gift aid donations - Annual allowance from {0}
-doYouHaveGiftAid.heading1 = cy: Gift aid donations
+doYouHaveGiftAid.heading1 = Cyfraniadau Rhodd Cymorth
 doYouHaveGiftAid.heading2 = A wnaethoch unrhyw gyfraniadau at elusen a hawlio rhyddhad treth ar gyfer y cyfraniad hwnnw o {0}?
 doYouHaveGiftAid.message1 = Mae Cymorth Rhodd yn gynllun sy’n caniatáu i elusennau hawlio arian ychwanegol ar unrhyw beth rydych yn ei roi fel cyfraniad.
 doYouHaveGiftAid.message2 = Os ydych wedi rhoi arian yn uniongyrchol i elusen, gallwch hawlio’n ôl y gwahaniaeth rhwng y dreth rydych wedi’i thalu ar y cyfraniad a’r hyn a gafodd yr elusen yn ôl pan fyddwch yn llenwi’ch Ffurflen Dreth Hunanasesiad. Mae’r un peth yn wir os ydych yn byw yn yr Alban.
@@ -1355,7 +1355,7 @@ amountOfGiftAid.title = Beth oedd swm y rhyddhad treth y gwnaethoch ei hawlio dr
 amountOfGiftAid.heading = Beth oedd swm y rhyddhad treth y gwnaethoch ei hawlio drwy Rodd Cymorth o {0}?
 amountOfGiftAid.message1 = I gyfrifo swm y rhyddhad treth rydych wedi’i hawlio, mae’n rhaid i chi luosi eich cyfraniad â 1.25.
 amountOfGiftAid.message2 = Er enghraifft, os gwnaethoch gyfraniadau gwerth £100 drwy Rodd Cymorth, gwnaethoch hawlio £125 o ryddhad treth.
-amountOfGiftAid.message3 = cy: If you have filed fmessaor self-assessment you will find the amount that you donated in your SA100 document under charitable giving
+amountOfGiftAid.message3 = Os ydych wedi cyflwyno Ffurflen Dreth Hunanasesiad, fe welwch swm eich cyfraniad yn eich SA100 o dan ‘Cyfrannu at elusennau’.
 amountOfGiftAid.checkYourAnswersLabel = Beth oedd swm y rhyddhad treth y gwnaethoch ei hawlio drwy Rodd Cymorth o {0}?
 amountOfGiftAid.error.nonNumeric = Mae’n rhaid i swm y rhyddhad treth y gwnaethoch ei hawlio drwy Rodd Cymorth o {0} gynnwys y rhifau 0 i 9 yn unig
 amountOfGiftAid.error.required = Nodwch swm y rhyddhad treth y gwnaethoch ei hawlio drwy Rodd Cymorth o {0}
