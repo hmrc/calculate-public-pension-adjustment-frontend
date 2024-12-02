@@ -53,7 +53,6 @@ class AuditService @Inject() (
   def auditKickOff(auditName: String, event: KickOffAuditEvent)(implicit hc: HeaderCarrier): Future[Unit] =
     Future.successful(auditConnector.sendExplicitAudit(auditName, event))
 
-  def auditEligibility(event: EligibilityAuditEvent)(implicit hc: HeaderCarrier): Future[Unit] = {
+  def auditEligibility(event: EligibilityAuditEvent)(implicit hc: HeaderCarrier): Future[Unit] =
     Future.successful(auditConnector.sendExplicitAudit(config.eligibility, event))
-  }
 }
