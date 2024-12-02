@@ -20,7 +20,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, IncomeSubJourney, KickOffAuditEvent, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
+import models.{AnnualAllowance, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, EligibilityAuditEvent, IncomeSubJourney, KickOffAuditEvent, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
@@ -452,7 +452,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "auditCalculationTaskList" - {
+    "auditKickoffEvent" - {
       implicit val hc = HeaderCarrier()
 
       val kickOffAuditEvent =
@@ -464,6 +464,23 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
         )
 
       await(service.auditKickOff("test", kickOffAuditEvent)(hc)) mustBe ()
+    }
+
+    "auditEligibility" - {
+      implicit val hc = HeaderCarrier()
+
+      val eligibilityEvent =
+        EligibilityAuditEvent(
+          "uniqueID",
+          "userID",
+          false,
+          true,
+          false,
+          true,
+          false
+        )
+
+      await(service.auditEligibility(eligibilityEvent)(hc)) mustBe ()
     }
 
   }
