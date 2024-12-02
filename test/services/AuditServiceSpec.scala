@@ -20,7 +20,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, IncomeSubJourney, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
+import models.{AnnualAllowance, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, IncomeSubJourney, KickOffAuditEvent, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
@@ -450,6 +450,20 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
 
         await(service.auditCalculationTaskList(calculationTaskListAuditEvent)(hc)) mustBe ()
       }
+    }
+
+    "auditCalculationTaskList" - {
+      implicit val hc = HeaderCarrier()
+
+      val kickOffAuditEvent =
+        KickOffAuditEvent(
+          "uniqueID",
+          "userID",
+          false,
+          "KickOffPage"
+        )
+
+      await(service.auditKickOff("test", kickOffAuditEvent)(hc)) mustBe ()
     }
 
   }

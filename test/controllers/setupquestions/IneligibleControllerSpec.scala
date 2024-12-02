@@ -18,9 +18,18 @@ package controllers.setupquestions
 
 import base.SpecBase
 import controllers.setupquestions.{routes => setupRoutes}
+import models.{Done, KickOffAuditEvent}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.{verify, when}
+import org.scalatestplus.mockito.MockitoSugar.mock
+import play.api.inject
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import services.AuditService
+import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.IneligibleView
+
+import scala.concurrent.Future
 
 class IneligibleControllerSpec extends SpecBase {
 
@@ -40,6 +49,27 @@ class IneligibleControllerSpec extends SpecBase {
         status(result) mustEqual OK
         contentAsString(result) mustEqual view()(request, messages(application)).toString
       }
+    }
+
+    "must trigger audit event" in {
+
+      val mockAuditService = mock[AuditService]
+      when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
+        .thenReturn(Future.successful(Done))
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(
+          inject.bind[AuditService].toInstance(mockAuditService)
+        )
+        .build()
+
+      running(application) {
+        val request = FakeRequest(GET, setupRoutes.IneligibleController.onPageLoad.url)
+        val result  = route(application, request).value
+        status(result) mustEqual OK
+        verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])
+      }
+
     }
   }
 }

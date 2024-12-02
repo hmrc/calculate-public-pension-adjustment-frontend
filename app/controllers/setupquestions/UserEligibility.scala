@@ -40,9 +40,9 @@ class UserEligibility @Inject() (
   auditService: AuditService,
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
-
   view: UserEligibilityView
-)(implicit ec: ExecutionContext) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
@@ -61,8 +61,8 @@ class UserEligibility @Inject() (
 
     val eligibleForAA: Boolean = request.userAnswers.get(AAKickOutStatus()) match {
       case Some(2) => true
-      case None => false
-      case _ => false
+      case None    => false
+      case _       => false
     }
 
     val lifetimeAllowanceIncluded: Boolean =
@@ -70,8 +70,8 @@ class UserEligibility @Inject() (
 
     val eligibleForLTA: Boolean = request.userAnswers.get(LTAKickOutStatus()) match {
       case Some(2) => true
-      case None => false
-      case _ => false
+      case None    => false
+      case _       => false
     }
 
     auditService

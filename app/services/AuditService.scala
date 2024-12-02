@@ -50,13 +50,10 @@ class AuditService @Inject() (
   ): Future[Unit] =
     Future.successful(auditConnector.sendExplicitAudit(config.calculationTaskListAuditEventName, event))
 
-  def auditKickOff(auditName: String, event: KickOffAuditEvent)(implicit hc: HeaderCarrier
-  ): Future[Unit] = {
+  def auditKickOff(auditName: String, event: KickOffAuditEvent)(implicit hc: HeaderCarrier): Future[Unit] =
     Future.successful(auditConnector.sendExplicitAudit(auditName, event))
-  }
 
-  def auditEligibility(event: EligibilityAuditEvent)(implicit hc: HeaderCarrier
-  ): Future[Unit] = {
+  def auditEligibility(event: EligibilityAuditEvent)(implicit hc: HeaderCarrier): Future[Unit] = {
     println(s"===== Test ===== ${config.eligibility} : ${Json.prettyPrint(Json.toJson(event))} =======")
     Future.successful(auditConnector.sendExplicitAudit(config.eligibility, event))
   }

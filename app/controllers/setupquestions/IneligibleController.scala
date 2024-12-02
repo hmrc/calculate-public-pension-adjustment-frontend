@@ -45,7 +45,8 @@ class IneligibleController @Inject() (
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     auditService
-      .auditKickOff(config.triageJourneyNotImpactedKickOff,
+      .auditKickOff(
+        config.triageJourneyNotImpactedKickOff,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,

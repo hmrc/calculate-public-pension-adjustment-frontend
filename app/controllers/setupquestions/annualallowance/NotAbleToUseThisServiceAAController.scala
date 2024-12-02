@@ -39,11 +39,11 @@ class NotAbleToUseThisServiceAAController @Inject() (
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceAAView
-)(implicit ec: ExecutionContext) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-
     val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
 
     val shouldShowContinueButton = ltaKickOutStatusStatus match {
@@ -71,14 +71,15 @@ class NotAbleToUseThisServiceAAController @Inject() (
     }
 
     auditService
-      .auditKickOff(config.triageJourneyNotEligibleNoRpssKickOff,
+      .auditKickOff(
+        config.triageJourneyNotEligibleNoRpssKickOff,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,
           request.userAnswers.authenticated,
           TriageJourneyNotEligibleNoRpssKickOff
         )
-      ).map(_ =>
-        Ok(view(shouldShowContinueButton, urlFromStatus)))
+      )
+      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
   }
 }

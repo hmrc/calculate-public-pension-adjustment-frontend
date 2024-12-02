@@ -39,11 +39,11 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: TriageJourneyNotImpactedPIADecreaseView
-)(implicit ec: ExecutionContext) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-
     val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
 
     val shouldShowContinueButton = ltaKickOutStatusStatus match {
@@ -71,13 +71,15 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
     }
 
     auditService
-      .auditKickOff(config.triageJourneyNotEligiblePiaDecreaseKickOff,
+      .auditKickOff(
+        config.triageJourneyNotEligiblePiaDecreaseKickOff,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,
           request.userAnswers.authenticated,
           TriageJourneyNotEligiblePiaDecreaseKickOff
         )
-      ).map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
+      )
+      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
   }
 }

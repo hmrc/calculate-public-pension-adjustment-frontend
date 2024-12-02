@@ -38,9 +38,9 @@ class NotAbleToUseThisTriageLtaController @Inject() (
   auditService: AuditService,
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
-  view: NotAbleToUseThisTriageLtaView,
-
-)(implicit ec: ExecutionContext) extends FrontendBaseController
+  view: NotAbleToUseThisTriageLtaView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
@@ -69,7 +69,8 @@ class NotAbleToUseThisTriageLtaController @Inject() (
     }
 
     auditService
-      .auditKickOff(config.triageJourneyNotImpactedNoChange,
+      .auditKickOff(
+        config.triageJourneyNotImpactedNoChange,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,

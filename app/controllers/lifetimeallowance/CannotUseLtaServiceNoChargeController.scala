@@ -40,7 +40,8 @@ class CannotUseLtaServiceNoChargeController @Inject() (
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: CannotUseLtaServiceNoChargeView
-)(implicit ec: ExecutionContext) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
@@ -48,7 +49,8 @@ class CannotUseLtaServiceNoChargeController @Inject() (
       request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
 
     auditService
-      .auditKickOff(config.cannotUseLtaServiceNoCharge,
+      .auditKickOff(
+        config.cannotUseLtaServiceNoCharge,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,

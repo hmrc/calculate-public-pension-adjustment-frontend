@@ -27,7 +27,6 @@ import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaVie
 import services.AuditService
 import utils.Constants._
 
-
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
@@ -40,7 +39,8 @@ class NotAbleToUseThisServiceLtaController @Inject() (
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceLtaView
-)(implicit ec: ExecutionContext) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
@@ -69,13 +69,15 @@ class NotAbleToUseThisServiceLtaController @Inject() (
     }
 
     auditService
-      .auditKickOff(config.triageJourneyNotImpactedNoBceKickOff,
+      .auditKickOff(
+        config.triageJourneyNotImpactedNoBceKickOff,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,
           request.userAnswers.authenticated,
           TriageJourneyNotImpactedNoBceKickOff
         )
-      ).map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
+      )
+      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
   }
 }
