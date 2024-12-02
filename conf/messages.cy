@@ -1386,7 +1386,7 @@ unionPoliceReliefAmount.error.nonNumeric = Mae’n rhaid i swm y rhyddhad treth 
 unionPoliceReliefAmount.error.required = Nodwch swm y rhyddhad treth rydych yn ei hawlio ar ffioedd undebau llafur neu ffioedd sefydliadau’r heddlu o {0}
 unionPoliceReliefAmount.error.wholeNumber = Mae’n rhaid i swm y rhyddhad treth rydych yn ei hawlio ar ffioedd undebau llafur neu ffioedd sefydliadau’r heddlu o {0} fod yn rhif cyfan
 unionPoliceReliefAmount.error.outOfRange = Mae’n rhaid i swm y rhyddhad treth rydych yn ei hawlio ar ffioedd undebau llafur neu ffioedd sefydliadau’r heddlu o {2} fod rhwng £1 a £100
-unionPoliceReliefAmount.change.hidden = cy: amount of tax relief you are claiming for trade union or police organisation fees from {0}
+unionPoliceReliefAmount.change.hidden = swm y rhyddhad treth rydych yn ei hawlio ar ffioedd undebau llafur neu ffioedd sefydliadau’r heddlu o {0}
 
 affectedByRemedy.title = cy: Public service pensions remedy
 affectedByRemedy.heading1 = cy: Public service pensions remedy
