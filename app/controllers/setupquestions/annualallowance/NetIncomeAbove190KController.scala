@@ -64,7 +64,7 @@ class NetIncomeAbove190KController @Inject() (
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value => {
-            val revisedPSSStatus = request.userAnswers.get(SavingsStatementPage).get
+            val revisedPSSStatus = request.userAnswers.get(SavingsStatementPage).getOrElse(false)
             val aaKickOutStatus  = (value, revisedPSSStatus) match {
               case (true, true)  => kickOutStatusCompleted
               case (false, true) => kickOutStatusFalse
