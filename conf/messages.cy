@@ -1334,13 +1334,13 @@ didYouContributeToRASScheme.title = cy: Relief at source scheme contributions - 
 didYouContributeToRASScheme.mainHeading = Cyfraniadau at gynllun rhyddhad wrth y ffynhonnell
 didYouContributeToRASScheme.heading = A wnaethoch unrhyw gyfraniadau at gynllun pensiwn rhyddhad wrth y ffynhonnell o {0}?
 didYouContributeToRASScheme.message1 = Mae cynllun pensiwn rhyddhad wrth y ffynhonnell yn golygu bod eich cyfraniadau yn cael eu cymryd o’ch cyflog ar ôl i’ch cyflog gael ei drethu.
-didYouContributeToRASScheme.message2 = Gallai hyn ddigwydd os ydych yn talu i mewn i unrhyw bensiynau preifat, neu’n talu unrhyw gyfraniadau gwirfoddol ychwanegol (AVC).
+didYouContributeToRASScheme.message2 = Gallai hyn ddigwydd os ydych yn talu i mewn i unrhyw bensiynau preifat, neu’n talu unrhyw gyfraniadau gwirfoddol ychwanegol (AVCs).
 didYouContributeToRASScheme.message3 = Nid yw’r rhan fwyaf o gynlluniau pensiwn y sector cyhoeddus, megis Gwasanaeth Sifil Alpha neu gynllun pensiwn y GIG, yn gynlluniau pensiwn rhyddhad wrth y ffynhonnell.
 didYouContributeToRASScheme.checkYourAnswersLabel = A wnaethoch unrhyw gyfraniadau at gynllun pensiwn rhyddhad wrth y ffynhonnell o {0}?
 didYouContributeToRASScheme.error.required = Dewiswch ‘Iawn’ os gwnaethoch unrhyw gyfraniadau at gynllun pensiwn rhyddhad wrth y ffynhonnell o {0}
 didYouContributeToRASScheme.change.hidden = os gwnaethoch unrhyw gyfraniadau at gynllun pensiwn rhyddhad wrth y ffynhonnell
 
-doYouHaveGiftAid.title = cy: Gift aid donations - Annual allowance from {0}
+doYouHaveGiftAid.title = cy: Gift Aid donations - Annual allowance from {0}
 doYouHaveGiftAid.heading1 = Cyfraniadau Rhodd Cymorth
 doYouHaveGiftAid.heading2 = A wnaethoch unrhyw gyfraniadau at elusen a hawlio rhyddhad treth ar gyfer y cyfraniad hwnnw o {0}?
 doYouHaveGiftAid.message1 = Mae Cymorth Rhodd yn gynllun sy’n caniatáu i elusennau hawlio arian ychwanegol ar unrhyw beth rydych yn ei roi fel cyfraniad.
