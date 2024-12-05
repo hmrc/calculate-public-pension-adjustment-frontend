@@ -63,7 +63,7 @@ class ContributionRefundsController @Inject() (
         .fold(
           formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
           value => {
-            val revisedPSSStatus = request.userAnswers.get(SavingsStatementPage).get
+            val revisedPSSStatus = request.userAnswers.get(SavingsStatementPage).getOrElse(false)
             val aaKickOutStatus  = if (!value && !revisedPSSStatus) kickOutStatusTrue else kickOutStatusFalse
             for {
               updatedAnswers          <- Future.fromTry(request.userAnswers.set(ContributionRefundsPage, value))
