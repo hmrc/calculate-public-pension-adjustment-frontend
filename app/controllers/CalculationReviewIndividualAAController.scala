@@ -17,19 +17,22 @@
 package controllers
 
 import config.FrontendAppConfig
-import controllers.actions._
+import controllers.actions.{IsRevelantPeriodAction, _}
 import models.CalculationResults.IndividualAASummaryModel
-import models.Period
+import models.{Period, UserAnswers}
+import models.tasklist.sections.AASection
+import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.CalculationResultService
+import services.{CalculationResultService, PeriodService, TaskListService}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.CalculationReviewIndividualAAView
 
+import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -41,6 +44,8 @@ class CalculationReviewIndividualAAController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: CalculationReviewIndividualAAView,
   calculationResultService: CalculationResultService,
+  requireTasksCompleted: RequireTasksCompletedAction,
+  isRelevantPeriod: IsRevelantPeriodAction,
   config: FrontendAppConfig
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
@@ -48,38 +53,41 @@ class CalculationReviewIndividualAAController @Inject() (
 
   val form = Form("_" -> ignored(()))
 
-  def onPageLoad(period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
-      implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+  def onPageLoad(period: Period): Action[AnyContent] =
+    (identify andThen getData andThen requireData andThen requireTasksCompleted andThen isRelevantPeriod(period))
+      .async { implicit request =>
+        implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
-      calculationResultService.sendRequest(request.userAnswers).flatMap { calculationResponse =>
-        val allYears: Seq[IndividualAASummaryModel]  =
-          calculationResultService.individualAASummaryModel(calculationResponse)
-        val individualYear: IndividualAASummaryModel = allYears.find(year => year.period == period).get
-        calculationResultService
-          .calculationReviewIndividualAAViewModel(calculationResponse, Some(period.toString()), request.userAnswers)
-          .map { calculationReviewIndividualAAViewModel =>
-            val isInCredit: Boolean    = calculationResponse.totalAmounts.inDatesCredit > 0
-            val isInDebit: Boolean     = calculationResponse.totalAmounts.inDatesDebit > 0
-            val outDates: List[Period] = List(Period._2016, Period._2017, Period._2018, Period._2019)
-            val isOutDate: Boolean     = outDates.contains(individualYear.period)
-            Ok(
-              view(
-                form,
-                period.toString(),
-                calculationReviewIndividualAAViewModel,
-                isInCredit,
-                isInDebit,
-                individualYear,
-                isOutDate,
-                routes.CalculationReviewController.onPageLoad()
+        calculationResultService.sendRequest(request.userAnswers).flatMap { calculationResponse =>
+          val allYears: Seq[IndividualAASummaryModel]  =
+            calculationResultService.individualAASummaryModel(calculationResponse)
+          val individualYear: IndividualAASummaryModel = allYears.find(year => year.period == period).get
+          calculationResultService
+            .calculationReviewIndividualAAViewModel(calculationResponse, Some(period.toString()), request.userAnswers)
+            .map { calculationReviewIndividualAAViewModel =>
+              val isInCredit: Boolean    = calculationResponse.totalAmounts.inDatesCredit > 0
+              val isInDebit: Boolean     = calculationResponse.totalAmounts.inDatesDebit > 0
+              val outDates: List[Period] = List(Period._2016, Period._2017, Period._2018, Period._2019)
+              val isOutDate: Boolean     = outDates.contains(individualYear.period)
+              Ok(
+                view(
+                  form,
+                  period.toString(),
+                  calculationReviewIndividualAAViewModel,
+                  isInCredit,
+                  isInDebit,
+                  individualYear,
+                  isOutDate,
+                  routes.CalculationReviewController.onPageLoad()
+                )
               )
-            )
-          }
+            }
+        }
       }
-  }
 
-  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    Future.successful(Redirect(routes.CalculationReviewController.onPageLoad()))
-  }
+  def onSubmit(period: Period): Action[AnyContent] =
+    (identify andThen getData andThen requireData andThen requireTasksCompleted andThen isRelevantPeriod(period))
+      .async { implicit request =>
+        Future.successful(Redirect(routes.CalculationReviewController.onPageLoad()))
+      }
 }
