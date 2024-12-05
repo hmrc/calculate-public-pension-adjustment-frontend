@@ -50,12 +50,12 @@ class CannotUseLtaServiceNoChargeController @Inject() (
 
     auditService
       .auditKickOff(
-        config.cannotUseLtaServiceNoCharge,
+        config.cannotUseLtaServiceNoChargeKickOff,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,
           request.userAnswers.authenticated,
-          CannotUseLtaServiceNoCharge
+          CannotUseLtaServiceNoChargeKickOff
         )
       )
       .map(_ => Ok(view(annualAllowanceIncluded)))

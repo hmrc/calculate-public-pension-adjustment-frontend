@@ -70,12 +70,12 @@ class NotAbleToUseThisTriageLtaController @Inject() (
 
     auditService
       .auditKickOff(
-        config.triageJourneyNotImpactedNoChange,
+        config.triageJourneyNotImpactedNoChangeKickOff,
         KickOffAuditEvent(
           request.userAnswers.uniqueId,
           request.userAnswers.id,
           request.userAnswers.authenticated,
-          TriageJourneyNotImpactedNoChange
+          TriageJourneyNotImpactedNoChangeKickOff
         )
       )
       .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
