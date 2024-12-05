@@ -1295,7 +1295,7 @@ doYouKnowPersonalAllowance.checkYourAnswersLabel = A ydych yn gwybod eich lwfans
 doYouKnowPersonalAllowance.error.required = Dewiswch ‘Iawn’ os ydych yn gwybod eich lwfans personol
 doYouKnowPersonalAllowance.change.hidden = cy: if you know your personal allowance from {0}
 
-blindAllowance.title = cy: Blind person allowance - Annual allowance from {0}
+blindAllowance.title = cy: Blind Person's Allowance - Annual allowance from {0}
 blindAllowance.caption = Incwm net o ran y lwfans blynyddol
 blindAllowance.heading1 = Lwfans person dall
 blindAllowance.message1 = Gallwch hawlio lwfans person dall os yw’r ddau o’r canlynol yn berthnasol:

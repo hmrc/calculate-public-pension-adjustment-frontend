@@ -1295,9 +1295,9 @@ doYouKnowPersonalAllowance.checkYourAnswersLabel = Do you know your personal all
 doYouKnowPersonalAllowance.error.required = Select yes if you know your personal allowance
 doYouKnowPersonalAllowance.change.hidden = if you know your personal allowance from {0}
 
-blindAllowance.title = Blind person allowance - Annual allowance from {0}
+blindAllowance.title = Blind Person's Allowance - Annual allowance from {0}
 blindAllowance.caption = Annual allowance net income
-blindAllowance.heading1 = Blind person allowance
+blindAllowance.heading1 = Blind Person's Allowance
 blindAllowance.message1 = You can claim Blind Person's Allowance if both of the following apply:
 blindAllowance.bullet1 = you’re registered with your local council as blind or severely sight impaired
 blindAllowance.bullet2 = you have a certificate that says you’re blind or severely sight impaired (or a similar document from your doctor)
