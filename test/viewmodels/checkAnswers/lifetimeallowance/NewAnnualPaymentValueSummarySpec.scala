@@ -43,7 +43,7 @@ class NewAnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
       NewAnnualPaymentValueSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "newAnnualPaymentValue.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;999")),
+          value = ValueViewModel(HtmlContent("£999")),
           actions = Seq(
             ActionItemViewModel("site.change", routes.NewAnnualPaymentValueController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText("newAnnualPaymentValue.change.hidden")
@@ -62,7 +62,7 @@ class NewAnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
       NewAnnualPaymentValueSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"newAnnualPaymentValue.checkYourAnswersLabel").withCssClass(keyCssClass),
-          value = ValueViewModel(HtmlContent("&pound;999"))
+          value = ValueViewModel(HtmlContent("£999"))
         )
       )
     }

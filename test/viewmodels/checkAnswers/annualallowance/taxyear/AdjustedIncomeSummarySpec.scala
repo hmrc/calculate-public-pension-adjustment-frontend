@@ -43,7 +43,7 @@ class AdjustedIncomeSummarySpec extends AnyFreeSpec with Matchers {
       AdjustedIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "adjustedIncome.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

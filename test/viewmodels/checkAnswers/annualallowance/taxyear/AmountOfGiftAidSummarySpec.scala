@@ -42,7 +42,7 @@ class AmountOfGiftAidSummarySpec extends AnyFreeSpec with Matchers {
       AmountOfGiftAidSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "amountOfGiftAid.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
