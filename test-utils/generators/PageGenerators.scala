@@ -27,6 +27,9 @@ import pages.setupquestions.annualallowance._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryWhoPaidAAChargeCheckboxPage: Arbitrary[WhoPaidAAChargeCheckboxPage.type] =
+    Arbitrary(WhoPaidAAChargeCheckboxPage)
+
   implicit lazy val arbitraryMaybePIAUnchangedOrDecreasedPage: Arbitrary[MaybePIAUnchangedOrDecreasedPage.type] =
     Arbitrary(MaybePIAUnchangedOrDecreasedPage)
 

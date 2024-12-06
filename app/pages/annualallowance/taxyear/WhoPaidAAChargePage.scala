@@ -26,7 +26,7 @@ import play.api.mvc.Call
 import scala.util.Try
 
 case class WhoPaidAAChargePage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[WhoPaidAACharge] {
-
+//////3.6
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
 
   override def toString: String = "whoPaidAACharge"

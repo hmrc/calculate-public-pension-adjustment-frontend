@@ -32,6 +32,7 @@ trait UserAnswersGenerator extends TryValues {
   self: Generators =>
 
   val generators: Seq[Gen[(QuestionPage[_], JsValue)]] =
+    arbitrary[(WhoPaidAAChargeCheckboxPage.type, JsValue)] ::
     arbitrary[(MaybePIAUnchangedOrDecreasedPage.type, JsValue)] ::
       arbitrary[(MaybePIAIncreasePage.type, JsValue)] ::
       arbitrary[(NetIncomeAbove190KPage.type, JsValue)] ::
