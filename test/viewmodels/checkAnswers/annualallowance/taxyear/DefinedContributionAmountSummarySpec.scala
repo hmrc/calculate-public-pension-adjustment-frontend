@@ -46,7 +46,7 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
       DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "definedContributionAmount.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
@@ -80,7 +80,7 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
     DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
       SummaryListRowViewModel(
         key = "definedContributionAmount.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent("&pound;100")),
+        value = ValueViewModel(HtmlContent("£100")),
         actions = Seq(
           ActionItemViewModel(
             "site.change",

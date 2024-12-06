@@ -46,7 +46,7 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
       FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
@@ -80,7 +80,7 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
     FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
       SummaryListRowViewModel(
         key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent("&pound;100")),
+        value = ValueViewModel(HtmlContent("£100")),
         actions = Seq(
           ActionItemViewModel(
             "site.change",

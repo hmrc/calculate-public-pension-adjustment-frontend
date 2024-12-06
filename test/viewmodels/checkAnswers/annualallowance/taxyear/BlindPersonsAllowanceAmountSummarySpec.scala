@@ -43,7 +43,7 @@ class BlindPersonsAllowanceAmountSummarySpec extends AnyFreeSpec with Matchers {
       BlindPersonsAllowanceAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "blindPersonsAllowanceAmount.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;2325")),
+          value = ValueViewModel(HtmlContent("£2,325")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
