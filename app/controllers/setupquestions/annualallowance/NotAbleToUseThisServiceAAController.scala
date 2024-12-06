@@ -16,27 +16,34 @@
 
 package controllers.setupquestions.annualallowance
 
+import config.FrontendAppConfig
 import controllers.actions._
-import models.{LTAKickOutStatus, NormalMode, ReportingChange}
+import models.{KickOffAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import utils.Constants.TriageJourneyNotEligibleNoRpssKickOff
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
 class NotAbleToUseThisServiceAAController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  auditService: AuditService,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceAAView
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
 
     val shouldShowContinueButton = ltaKickOutStatusStatus match {
@@ -63,6 +70,16 @@ class NotAbleToUseThisServiceAAController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    Ok(view(shouldShowContinueButton, urlFromStatus))
+    auditService
+      .auditKickOff(
+        config.triageJourneyNotEligibleNoRpssKickOff,
+        KickOffAuditEvent(
+          request.userAnswers.uniqueId,
+          request.userAnswers.id,
+          request.userAnswers.authenticated,
+          TriageJourneyNotEligibleNoRpssKickOff
+        )
+      )
+      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
   }
 }

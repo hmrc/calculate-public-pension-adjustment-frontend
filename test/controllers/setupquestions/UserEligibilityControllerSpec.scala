@@ -18,17 +18,19 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import models.{AAKickOutStatus, Done, LTAKickOutStatus, NormalMode, ReportingChange}
+import models.{AAKickOutStatus, Done, EligibilityAuditEvent, KickOffAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import pages.setupquestions.ReportingChangePage
+import play.api.inject
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserDataService
+import services.{AuditService, UserDataService}
+import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.UserEligibilityView
 
 import scala.concurrent.Future
@@ -108,8 +110,8 @@ class UserEligibilityControllerSpec extends SpecBase {
           true,
           false,
           controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode),
-          Some(ltaKickOutStatus),
-          Some(aaKickoutStatus)
+          false,
+          true
         )(
           request,
           messages(application)
@@ -159,8 +161,8 @@ class UserEligibilityControllerSpec extends SpecBase {
           true,
           false,
           controllers.routes.TaskListController.onPageLoad(),
-          Some(ltaKickOutStatus),
-          Some(aaKickoutStatus)
+          false,
+          true
         )(
           request,
           messages(application)
@@ -218,8 +220,8 @@ class UserEligibilityControllerSpec extends SpecBase {
           false,
           true,
           controllers.routes.TaskListController.onPageLoad(),
-          Some(ltaKickOutStatus),
-          Some(aaKickoutStatus)
+          true,
+          false
         )(
           request,
           messages(application)
@@ -277,8 +279,8 @@ class UserEligibilityControllerSpec extends SpecBase {
           true,
           false,
           controllers.routes.TaskListController.onPageLoad(),
-          Some(ltaKickOutStatus),
-          Some(aaKickoutStatus)
+          false,
+          true
         )(
           request,
           messages(application)
@@ -286,5 +288,37 @@ class UserEligibilityControllerSpec extends SpecBase {
       }
     }
 
+    "must trigger audit event" in {
+
+      val mockUserDataService = mock[UserDataService]
+      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+
+      val mockAuditService = mock[AuditService]
+      when(mockAuditService.auditEligibility(any[EligibilityAuditEvent])(any[HeaderCarrier]))
+        .thenReturn(Future.successful(Done))
+
+      val userAnswers = emptyUserAnswers
+        .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
+        .success
+        .value
+        .set(AAKickOutStatus(), 2)
+        .success
+        .value
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(
+            bind[UserDataService].toInstance(mockUserDataService),
+            bind[AuditService].toInstance(mockAuditService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, controllers.setupquestions.routes.UserEligibility.onPageLoad.url)
+        val result  = route(application, request).value
+        status(result) mustEqual OK
+        verify(mockAuditService).auditEligibility(any[EligibilityAuditEvent])(any[HeaderCarrier])
+      }
+    }
   }
 }
