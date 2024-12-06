@@ -49,7 +49,7 @@ class PensionSchemeInput2016postAmountsSummarySpec extends AnyFreeSpec with Matc
       PensionSchemeInput2016postAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = messages("pensionSchemeInputAmounts.2016-post.checkYourAnswersLabel", "SomeScheme"),
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

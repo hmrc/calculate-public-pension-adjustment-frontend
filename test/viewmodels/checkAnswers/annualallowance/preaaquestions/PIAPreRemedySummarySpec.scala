@@ -45,7 +45,7 @@ class PIAPreRemedySummarySpec extends AnyFreeSpec with Matchers {
         Some(
           SummaryListRowViewModel(
             key = "pIAPreRemedy.checkYourAnswersLabel.2011",
-            value = ValueViewModel(HtmlContent("&pound;123")),
+            value = ValueViewModel(HtmlContent("£123")),
             actions = Seq(
               ActionItemViewModel("site.change", routes.PIAPreRemedyController.onPageLoad(CheckMode, Period._2011).url)
                 .withVisuallyHiddenText("pIAPreRemedy.change.hidden")
