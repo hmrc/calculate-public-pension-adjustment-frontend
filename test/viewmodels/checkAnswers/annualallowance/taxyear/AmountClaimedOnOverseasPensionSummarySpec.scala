@@ -43,7 +43,7 @@ class AmountClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matcher
       AmountClaimedOnOverseasPensionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "amountClaimedOnOverseasPension.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
