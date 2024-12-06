@@ -18,7 +18,7 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import models.{AAKickOutStatus, Done, EligibilityAuditEvent, KickOffAuditEvent,  LTAKickOutStatus, NormalMode, ReportingChange}
+import models.{AAKickOutStatus, Done, EligibilityAuditEvent, KickOffAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito
 import org.mockito.Mockito.{verify, when}
@@ -110,8 +110,8 @@ class UserEligibilityControllerSpec extends SpecBase {
           true,
           false,
           controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode),
-          Some(ltaKickOutStatus),
-          Some(aaKickoutStatus)
+          false,
+          true
         )(
           request,
           messages(application)
@@ -161,8 +161,8 @@ class UserEligibilityControllerSpec extends SpecBase {
           true,
           false,
           controllers.routes.TaskListController.onPageLoad(),
-          Some(ltaKickOutStatus),
-          Some(aaKickoutStatus)
+          false,
+          true
         )(
           request,
           messages(application)
@@ -220,8 +220,8 @@ class UserEligibilityControllerSpec extends SpecBase {
           false,
           true,
           controllers.routes.TaskListController.onPageLoad(),
-          Some(ltaKickOutStatus),
-          Some(aaKickoutStatus)
+          true,
+          false
         )(
           request,
           messages(application)
@@ -279,8 +279,8 @@ class UserEligibilityControllerSpec extends SpecBase {
           true,
           false,
           controllers.routes.TaskListController.onPageLoad(),
-          Some(ltaKickOutStatus),
-          Some(aaKickoutStatus)
+          false,
+          true
         )(
           request,
           messages(application)

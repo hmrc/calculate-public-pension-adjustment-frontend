@@ -86,7 +86,9 @@ class UserEligibility @Inject() (
           eligibleForLTA
         )
       )
-      .map(_ => Ok(view(annualAllowanceIncluded, lifetimeAllowanceIncluded, continueURL)))
+      .map(_ =>
+        Ok(view(annualAllowanceIncluded, lifetimeAllowanceIncluded, continueURL, eligibleForLTA, eligibleForAA))
+      )
 
   }
 }
