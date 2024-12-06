@@ -27,8 +27,6 @@ import uk.gov.hmrc.play.bootstrap.binders.{AbsoluteWithHostnameFromAllowlist, Re
 @Singleton
 class FrontendAppConfig @Inject() (configuration: Configuration) {
 
-  private val TriageJourneyNotImpactedKickOff = "triageJourneyNotImpactedKickOff"
-
   val host: String    = configuration.get[String]("host")
   val appName: String = configuration.get[String]("appName")
 

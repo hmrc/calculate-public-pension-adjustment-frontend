@@ -61,7 +61,6 @@ class UserEligibility @Inject() (
 
     val eligibleForAA: Boolean = request.userAnswers.get(AAKickOutStatus()) match {
       case Some(2) => true
-      case None    => false
       case _       => false
     }
 
@@ -70,7 +69,6 @@ class UserEligibility @Inject() (
 
     val eligibleForLTA: Boolean = request.userAnswers.get(LTAKickOutStatus()) match {
       case Some(2) => true
-      case None    => false
       case _       => false
     }
 
