@@ -17,7 +17,7 @@
 package controllers.setupquestions
 
 import controllers.actions._
-import models.{AAKickOutStatus, NormalMode, ReportingChange}
+import models.{AAKickOutStatus, LTAKickOutStatus, NormalMode, ReportingChange}
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -54,7 +54,19 @@ class UserEligibility @Inject() (
     val lifetimeAllowanceIncluded: Boolean =
       request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.LifetimeAllowance))
 
-    Ok(view(annualAllowanceIncluded, lifetimeAllowanceIncluded, continueURL))
+    val ltaKickOutStatusStatus = request.userAnswers.get(LTAKickOutStatus())
+
+    val annualAllowanceStatus = request.userAnswers.get(AAKickOutStatus())
+
+    Ok(
+      view(
+        annualAllowanceIncluded,
+        lifetimeAllowanceIncluded,
+        continueURL,
+        ltaKickOutStatusStatus,
+        annualAllowanceStatus
+      )
+    )
 
   }
 }
