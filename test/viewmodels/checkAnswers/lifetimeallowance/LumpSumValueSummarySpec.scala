@@ -43,7 +43,7 @@ class LumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
       LumpSumValueSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "lumpSumValue.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;999")),
+          value = ValueViewModel(HtmlContent("£999")),
           actions = Seq(
             ActionItemViewModel("site.change", routes.LumpSumValueController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText("lumpSumValue.change.hidden")
@@ -62,7 +62,7 @@ class LumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
       LumpSumValueSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"lumpSumValue.checkYourAnswersLabel").withCssClass(keyCssClass),
-          value = ValueViewModel(HtmlContent("&pound;999"))
+          value = ValueViewModel(HtmlContent("£999"))
         )
       )
     }
