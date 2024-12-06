@@ -22,6 +22,11 @@ import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryWhoPaidAAChargeCheckbox: Arbitrary[WhoPaidAAChargeCheckbox] =
+    Arbitrary {
+      Gen.oneOf(WhoPaidAAChargeCheckbox.values)
+    }
+
   implicit lazy val arbitraryMaybePIAUnchangedOrDecreased: Arbitrary[MaybePIAUnchangedOrDecreased] =
     Arbitrary {
       Gen.oneOf(MaybePIAUnchangedOrDecreased.values.toSeq)

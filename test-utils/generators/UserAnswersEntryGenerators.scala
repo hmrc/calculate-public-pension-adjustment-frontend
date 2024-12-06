@@ -30,6 +30,14 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryWhoPaidAAChargeCheckboxUserAnswersEntry: Arbitrary[(WhoPaidAAChargeCheckboxPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[WhoPaidAAChargeCheckboxPage.type]
+        value <- arbitrary[WhoPaidAAChargeCheckbox].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryMaybePIAUnchangedOrDecreasedUserAnswersEntry
     : Arbitrary[(MaybePIAUnchangedOrDecreasedPage.type, JsValue)] =
     Arbitrary {
