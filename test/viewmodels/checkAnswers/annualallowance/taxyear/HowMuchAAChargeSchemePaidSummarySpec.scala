@@ -44,7 +44,7 @@ class HowMuchAAChargeSchemePaidSummarySpec extends AnyFreeSpec with Matchers {
       HowMuchAAChargeSchemePaidSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = "howMuchAAChargeSchemePaid.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
