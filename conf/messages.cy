@@ -1401,21 +1401,21 @@ affectedByRemedy.change.hidden = cy: if you are affected by the public service p
 
 previousLTACharge.title = Tâl treth lwfans oes - Lwfans oes
 previousLTACharge.heading = Tâl treth lwfans oes
-previousLTACharge.message1 = cy: The Lifetime allowance (LTA) is the total amount of money that you can put into UK registered pension schemes before being liable for a tax charge.
-previousLTACharge.message2 = cy: The standard lifetime allowance was £1,073,100. This was abolished from 6 April 2023.
-previousLTACharge.heading2 = cy: Have you paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023?
-previousLTACharge.checkYourAnswersLabel = cy: Have you paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023?
-previousLTACharge.error.required = cy: Select yes if you paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023?
-previousLTACharge.change.hidden = cy: if you paid a lifetime allowance tax charge in any tax year from 6 April 2015 to 5 April 2023
+previousLTACharge.message1 = Y lwfans oes yw cyfanswm yr arian y gallwch ei roi i mewn i gynlluniau pensiwn cofrestredig yn y DU cyn bod agored i dâl treth.
+previousLTACharge.message2 = Y lwfans oes safonol oedd £1,073,100. Cafodd hyn ei ddiddymu o 6 Ebrill 2023 ymlaen.
+previousLTACharge.heading2 = A ydych wedi talu tâl treth lwfans oes yn ystod unrhyw flwyddyn dreth o 6 Ebrill 2015 i 5 Ebrill 2023?
+previousLTACharge.checkYourAnswersLabel = A ydych wedi talu tâl treth lwfans oes yn ystod unrhyw flwyddyn dreth o 6 Ebrill 2015 i 5 Ebrill 2023?
+previousLTACharge.error.required = Dewiswch ‘Iawn’ os gwnaethoch dalu tâl treth lwfans oes yn ystod unrhyw flwyddyn dreth o 6 Ebrill 2015 i 5 Ebrill 2023
+previousLTACharge.change.hidden = os gwnaethoch dalu tâl treth lwfans oes yn ystod unrhyw flwyddyn dreth o 6 Ebrill 2015 i 5 Ebrill 2023
 
-pensionProtectedMember.title = cy: Protected members - Annual allowance
-pensionProtectedMember.heading = cy: Protected members
-pensionProtectedMember.message1 = cy: Protected members did not move from their old (legacy) pension schemes to the new (reform) scheme during the remedy period.
-pensionProtectedMember.message2 = cy: You could only join the reform scheme on 1 April 2022.
-pensionProtectedMember.link = cy: Find out more information about protected members
-pensionProtectedMember.heading2 = cy: Are you a protected member of your public service pension scheme?
-pensionProtectedMember.checkYourAnswersLabel = cy: Are you a protected member of your public service pension scheme?
-pensionProtectedMember.error.required = cy: Select yes if you were a protected member of your public service pension scheme
+pensionProtectedMember.title = Aelodau a ddiogelir - Lwfans blynyddol
+pensionProtectedMember.heading = Aelodau a ddiogelir
+pensionProtectedMember.message1 = Ni wnaeth aelodau a ddiogelir symud eu hen gynlluniau pensiwn (legacy) i’r cynllun newydd (reform) yn ystod y cyfnod pontio.
+pensionProtectedMember.message2 = Gallech ond fod wedi ymuno â’r cynllun ôl-ddiwygio o 1 Ebrill 2022 ymlaen.
+pensionProtectedMember.link = Gallwch ddod o hyd i ragor o wybodaeth am aelodau a ddiogelir
+pensionProtectedMember.heading2 =A ydych yn aelod a ddiogelir o’ch cynllun pensiwn gwasanaeth cyhoeddus?
+pensionProtectedMember.checkYourAnswersLabel = A ydych yn aelod a ddiogelir o’ch cynllun pensiwn gwasanaeth cyhoeddus?
+pensionProtectedMember.error.required = Dewiswch ‘Iawn’ os oeddech yn aelod a ddiogelir o’ch cynllun pensiwn gwasanaeth cyhoeddus
 pensionProtectedMember.change.hidden = cy: if you are a protected member of your public service pension scheme
 
 hadAACharge.title = cy: Did you have an annual allowance tax charge for any tax year from 6 April 2015 to 5 April 2022?
