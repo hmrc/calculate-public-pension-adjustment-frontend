@@ -37,7 +37,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2016),
-              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+              Set(ContributedToDuringRemedyPeriod.values.head)
             )
             .success
             .value
@@ -53,7 +53,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2016),
-              Set(ContributedToDuringRemedyPeriod.values.head)
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
             )
             .success
             .value
@@ -86,7 +86,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2017),
-              Set(ContributedToDuringRemedyPeriod.values.head)
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
             )
             .success
             .value
@@ -99,7 +99,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2017),
-              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+              Set(ContributedToDuringRemedyPeriod.values.head)
             )
             .success
             .value
@@ -141,7 +141,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2016),
-              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+              Set(ContributedToDuringRemedyPeriod.values.head)
             )
             .success
             .value
@@ -154,7 +154,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2016),
-              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+              Set(ContributedToDuringRemedyPeriod.values.head)
             )
             .success
             .value
@@ -174,7 +174,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2016),
-              Set(ContributedToDuringRemedyPeriod.values.head)
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
             )
             .success
             .value
@@ -188,7 +188,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2016),
-              Set(ContributedToDuringRemedyPeriod.values.head)
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
             )
             .success
             .value
@@ -294,7 +294,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2017),
-              Set(ContributedToDuringRemedyPeriod.values.head)
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
             )
             .success
             .value
@@ -307,7 +307,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2017),
-              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+              Set(ContributedToDuringRemedyPeriod.values.head)
             )
             .success
             .value
@@ -383,7 +383,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2017),
-              Set(ContributedToDuringRemedyPeriod.values.head)
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
             )
             .success
             .value
@@ -402,7 +402,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           val ua     = emptyUserAnswers
             .set(
               ContributedToDuringRemedyPeriodPage(Period._2017),
-              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+              Set(ContributedToDuringRemedyPeriod.values.head)
             )
             .success
             .value
@@ -460,7 +460,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
       "must clean up correctly when user deselects DB and DC remains" in {
 
         val cleanedUserAnswers = ContributedToDuringRemedyPeriodPage(Period._2016)
-          .cleanup(Some(Set(ContributedToDuringRemedyPeriod.values.head)), ua)
+          .cleanup(Some(Set(ContributedToDuringRemedyPeriod.values.tail.head)), ua)
           .success
           .value
 
@@ -476,7 +476,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
       "must clean up correctly when user deselects DC and DB remains" in {
 
         val cleanedUserAnswers = ContributedToDuringRemedyPeriodPage(Period._2016)
-          .cleanup(Some(Set(ContributedToDuringRemedyPeriod.values.tail.head)), ua)
+          .cleanup(Some(Set(ContributedToDuringRemedyPeriod.values.head)), ua)
           .success
           .value
 
@@ -531,7 +531,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
       "must clean up correctly when user deselects DB and DC remains" in {
 
         val cleanedUserAnswers = ContributedToDuringRemedyPeriodPage(Period._2017)
-          .cleanup(Some(Set(ContributedToDuringRemedyPeriod.values.head)), ua)
+          .cleanup(Some(Set(ContributedToDuringRemedyPeriod.values.tail.head)), ua)
           .success
           .value
 
@@ -543,7 +543,7 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
       "must clean up correctly when user deselects DC and DB remains" in {
 
         val cleanedUserAnswers = ContributedToDuringRemedyPeriodPage(Period._2017)
-          .cleanup(Some(Set(ContributedToDuringRemedyPeriod.values.tail.head)), ua)
+          .cleanup(Some(Set(ContributedToDuringRemedyPeriod.values.head)), ua)
           .success
           .value
 

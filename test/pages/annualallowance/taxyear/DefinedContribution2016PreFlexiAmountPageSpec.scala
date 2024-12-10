@@ -161,7 +161,7 @@ class DefinedContribution2016PreFlexiAmountPageSpec extends PageBehaviours {
           .value
           .set(
             ContributedToDuringRemedyPeriodPage(Period._2016),
-            Set(ContributedToDuringRemedyPeriod.values.head)
+            Set(ContributedToDuringRemedyPeriod.values.tail.head)
           )
           .success
           .value
