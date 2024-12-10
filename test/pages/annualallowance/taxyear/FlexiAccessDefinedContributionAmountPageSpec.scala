@@ -45,7 +45,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             .value
             .set(
               ContributedToDuringRemedyPeriodPage(period),
-              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+              Set(ContributedToDuringRemedyPeriod.values.head)
             )
             .success
             .value
@@ -64,7 +64,7 @@ class FlexiAccessDefinedContributionAmountPageSpec extends PageBehaviours {
             .value
             .set(
               ContributedToDuringRemedyPeriodPage(period),
-              Set(ContributedToDuringRemedyPeriod.values.head)
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
             )
             .success
             .value

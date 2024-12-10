@@ -29,8 +29,8 @@ object ContributedToDuringRemedyPeriod extends Enumerable.Implicits {
   case object Definedbenefit extends WithName("definedBenefit") with ContributedToDuringRemedyPeriod
 
   val values: Seq[ContributedToDuringRemedyPeriod] = Seq(
-    Definedcontribution,
-    Definedbenefit
+    Definedbenefit,
+    Definedcontribution
   )
 
   def checkboxItems(implicit messages: Messages): Seq[CheckboxItem] =

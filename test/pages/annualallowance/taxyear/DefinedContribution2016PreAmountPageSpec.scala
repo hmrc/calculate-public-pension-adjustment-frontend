@@ -319,7 +319,10 @@ class DefinedContribution2016PreAmountPageSpec extends PageBehaviours {
             .set(StopPayingPublicPensionPage, LocalDate.of(2015, 7, 30))
             .success
             .value
-            .set(ContributedToDuringRemedyPeriodPage(Period._2016), Set(ContributedToDuringRemedyPeriod.values.head))
+            .set(
+              ContributedToDuringRemedyPeriodPage(Period._2016),
+              Set(ContributedToDuringRemedyPeriod.values.tail.head)
+            )
             .success
             .value
             .set(DefinedContribution2016PreAmountPage, BigInt(1))
