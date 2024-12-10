@@ -182,7 +182,7 @@ class DefinedContributionAmountPageNormalModeSpec extends PageBehaviours {
           .value
           .set(
             ContributedToDuringRemedyPeriodPage(period),
-            Set(ContributedToDuringRemedyPeriod.values.head)
+            Set(ContributedToDuringRemedyPeriod.values.tail.head)
           )
           .success
           .value
@@ -209,7 +209,7 @@ class DefinedContributionAmountPageNormalModeSpec extends PageBehaviours {
           .value
           .set(
             ContributedToDuringRemedyPeriodPage(period),
-            Set(ContributedToDuringRemedyPeriod.values.head)
+            Set(ContributedToDuringRemedyPeriod.values.tail.head)
           )
           .success
           .value

@@ -46,7 +46,7 @@ class DefinedContribution2016PostFlexiAmountPageSpec extends PageBehaviours {
       val ua = emptyUserAnswers
         .set(
           ContributedToDuringRemedyPeriodPage(Period._2016),
-          Set(ContributedToDuringRemedyPeriod.values.head)
+          Set(ContributedToDuringRemedyPeriod.values.tail.head)
         )
         .success
         .value
@@ -96,7 +96,7 @@ class DefinedContribution2016PostFlexiAmountPageSpec extends PageBehaviours {
       val ua = emptyUserAnswers
         .set(
           ContributedToDuringRemedyPeriodPage(Period._2016),
-          Set(ContributedToDuringRemedyPeriod.values.head)
+          Set(ContributedToDuringRemedyPeriod.values.tail.head)
         )
         .success
         .value
