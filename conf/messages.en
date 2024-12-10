@@ -432,9 +432,9 @@ excessLifetimeAllowancePaid.change.hidden = how the excess above your lifetime a
 excessLifetimeAllowancePaid.hint = You can find this on your pension or bank statement.
 
 periodDateRangeAA.caption = Annual allowance from
+periodDateRangeAA.2016 = 6 April 2015 to 5 April 2016
 periodDateRangeAA.2016-pre = 6 April 2015 to 8 July 2015
 periodDateRangeAA.2016-post = 9 July 2015 to 5 April 2016
-periodDateRangeAA.2016 = 6 April 2015 to 5 April 2016
 periodDateRangeAA.2017 = 6 April 2016 to 5 April 2017
 periodDateRangeAA.2018 = 6 April 2017 to 5 April 2018
 periodDateRangeAA.2019 = 6 April 2018 to 5 April 2019
@@ -477,7 +477,7 @@ memberMoreThanOnePension.checkYourAnswersLabel = Were you a member of more than 
 
 addAnotherScheme.title = Do you need to add another pension scheme?
 addAnotherScheme.heading = Do you need to add another pension scheme?
-addAnotherScheme.hint = You can add a maximum of five different pension schemes in a single tax year.
+addAnotherScheme.hint = You can add a maximum of 5 different pension schemes in a single tax year.
 addAnotherScheme.error.required = Select yes if you need to add another pension scheme
 
 payACharge.title = Did you have an annual allowance tax charge for the tax year from {2}?
