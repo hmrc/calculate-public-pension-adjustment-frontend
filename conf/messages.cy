@@ -1530,13 +1530,13 @@ maybePIAIncrease.heading1 = cy: Pension input amount increase
 maybePIAIncrease.message1 = Eich swm mewnbwn pensiwn yw’r swm y mae’ch pensiwn wedi cynyddu dros gyfnod o flwyddyn dreth. Mae hyn yn berthnasol i bob cynllun.
 maybePIAIncrease.message2 = O ganlyniad i’r Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus, efallai bod eich symiau mewnbwn pensiwn wedi newid.
 maybePIAIncrease.message3 = Os yw gweinyddwr eich cynllun pensiwn yn anfon y ffigurau gwreiddiol atoch, fe welwch y ffigurau gwreiddiol a’r ffigurau diwygiedig ar eich datganiad cynilion pensiwn.
-maybePIAIncrease.heading2 = cy: Have any of your pension input amounts for any tax years from 6 April 2015 to 5 April 2022 increased as a result of the public service pensions remedy?
+maybePIAIncrease.heading2 = A wnaeth unrhyw un o’ch symiau mewnbwn pensiwn ar gyfer unrhyw flwyddyn dreth o 6 Ebrill 2016 i 5 Ebrill 2022 gynyddu o ganlyniad i’r Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus?
 maybePIAIncrease.yes = Iawn
 maybePIAIncrease.no = Na
 maybePIAIncrease.idk = Wn i ddim
-maybePIAIncrease.checkYourAnswersLabel = cy: Have any of your pension input amounts for any tax years from 6 April 2016 to 5 April 2022 increased as a result of the public service pensions remedy?
-maybePIAIncrease.error.required = cy: Select yes if any of your pension input amounts for any tax years from 6 April 2016 to 5 April 2022 increased as a result of the public service pensions remedy
-maybePIAIncrease.change.hidden = if any of your pension input amounts for any tax years from 6 April 2016 to 5 April 2022 increased as a result of the public service pensions remedy
+maybePIAIncrease.checkYourAnswersLabel = A wnaeth unrhyw un o’ch symiau mewnbwn pensiwn ar gyfer unrhyw flwyddyn dreth o 6 Ebrill 2016 i 5 Ebrill 2022 gynyddu o ganlyniad i’r Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus?
+maybePIAIncrease.error.required = Dewiswch ‘Iawn’ os gwnaeth unrhyw un o’ch symiau mewnbwn pensiwn ar gyfer unrhyw flwyddyn dreth o 6 Ebrill 2016 i 5 Ebrill 2022 gynyddu o ganlyniad i’r Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus
+maybePIAIncrease.change.hidden = os gwnaeth unrhyw un o’ch symiau mewnbwn pensiwn ar gyfer unrhyw flwyddyn dreth o 6 Ebrill 2016 i 5 Ebrill 2022 gynyddu o ganlyniad i’r Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus
 
 maybePIAUnchangedOrDecreased.title = Newidiadau i swm mewnbwn pensiwn - Lwfans blynyddol
 maybePIAUnchangedOrDecreased.caption = Lwfans blynyddol
