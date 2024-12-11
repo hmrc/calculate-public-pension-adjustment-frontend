@@ -113,7 +113,7 @@ class DefinedContribution2016PostAmountPageSpec extends PageBehaviours {
           .value
           .set(
             ContributedToDuringRemedyPeriodPage(Period._2016),
-            Set(ContributedToDuringRemedyPeriod.values.head)
+            Set(ContributedToDuringRemedyPeriod.values.tail.head)
           )
           .success
           .value
@@ -251,7 +251,7 @@ class DefinedContribution2016PostAmountPageSpec extends PageBehaviours {
         .value
         .set(
           ContributedToDuringRemedyPeriodPage(Period._2016),
-          Set(ContributedToDuringRemedyPeriod.values.head)
+          Set(ContributedToDuringRemedyPeriod.values.tail.head)
         )
         .success
         .value
@@ -328,7 +328,7 @@ class DefinedContribution2016PostAmountPageSpec extends PageBehaviours {
         .value
         .set(
           ContributedToDuringRemedyPeriodPage(Period._2016),
-          Set(ContributedToDuringRemedyPeriod.values.head)
+          Set(ContributedToDuringRemedyPeriod.values.tail.head)
         )
         .success
         .value

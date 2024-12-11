@@ -25,6 +25,12 @@
 
 @(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+
+    <p class="govuk-hint">@messages("contributedToDuringRemedyPeriod.hint")</p>
+
+}
+
 @layout(pageTitle = title(form, messages("contributedToDuringRemedyPeriod.title"))) {
 
     @formHelper(
@@ -44,7 +50,7 @@
                 legend = HmrcPageHeadingLegend(
                 content = messages("contributedToDuringRemedyPeriod.heading"),
                 caption = HmrcSectionCaption(messages("annualAllowance.period.caption." + period)))
-            )
+            ).withHint(HintViewModel(HtmlContent(contentHint)))
         )
 
         @continueButton()
