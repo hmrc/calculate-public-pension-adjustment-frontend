@@ -55,7 +55,7 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
       .map {
         case false =>
           for {
-            updated1 <- userAnswers.remove(WhoPaidAAChargePage(period, schemeIndex))
+            updated1 <- userAnswers.remove(WhoPaidAAChargeCheckboxPage(period, schemeIndex))
             updated2 <- updated1.remove(HowMuchAAChargeYouPaidPage(period, schemeIndex))
             updated3 <- updated2.remove(HowMuchAAChargeSchemePaidPage(period, schemeIndex))
           } yield updated3
@@ -65,7 +65,7 @@ case class PayAChargePage(period: Period, schemeIndex: SchemeIndex) extends Ques
 
   private def navigateToWhoPaidOrHowMuchSchemePaid(mode: Mode) =
     if (isFirstSchemeInPeriod)
-      controllers.annualallowance.taxyear.routes.WhoPaidAAChargeController.onPageLoad(mode, period, schemeIndex)
+      controllers.annualallowance.taxyear.routes.WhoPaidAAChargeCheckboxController.onPageLoad(mode, period, schemeIndex)
     else
       controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
         .onPageLoad(mode, period, schemeIndex)

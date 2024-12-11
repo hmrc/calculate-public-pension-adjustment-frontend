@@ -16,7 +16,9 @@
 
 package pages.annualallowance.taxyear
 
-import models.{Period, SchemeIndex, UserAnswers, WhoPaidAAChargeCheckbox}
+import controllers.routes
+import models.WhoPaidAAChargeCheckbox.{PrivateScheme, PublicScheme, You}
+import models.{CheckMode, Mode, NormalMode, Period, SchemeIndex, UserAnswers, WhoPaidAAChargeCheckbox}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -27,17 +29,22 @@ case class WhoPaidAAChargeCheckboxPage(period: Period, schemeIndex: SchemeIndex)
 
   override def toString: String = "whoPaidAAChargeCheckbox"
 
-  override protected def navigateInNormalMode(answers: UserAnswers): Call = {
-    answers.get(WhoPaidAAChargeCheckboxPage(period, schemeIndex)) match {
-      case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-    }
-  }
+  override protected def navigateInNormalMode(answers: UserAnswers): Call = navigateInEitherMode(answers, NormalMode)
 
-  override protected def navigateInCheckMode(answers: UserAnswers): Call = {
+  override protected def navigateInCheckMode(answers: UserAnswers): Call = navigateInEitherMode(answers, CheckMode)
+
+  private def navigateInEitherMode(answers: UserAnswers, mode: Mode): Call =
     answers.get(WhoPaidAAChargeCheckboxPage(period, schemeIndex)) match {
-      case Some(_) => controllers.routes.JourneyRecoveryController.onPageLoad(None)
-      case _ => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(whoPaidAAChargeCheckbox) if whoPaidAAChargeCheckbox.contains(You) =>
+        controllers.annualallowance.taxyear.routes.HowMuchAAChargeYouPaidController
+          .onPageLoad(mode, period, schemeIndex)
+      case Some(whoPaidAAChargeCheckbox) if whoPaidAAChargeCheckbox.contains(PublicScheme) =>
+        controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
+          .onPageLoad(mode, period, schemeIndex)
+      case Some(whoPaidAAChargeCheckbox) if whoPaidAAChargeCheckbox.contains(PrivateScheme) =>
+        controllers.annualallowance.taxyear.routes.WhichPrivateSchemeController
+          .onPageLoad(mode, period, schemeIndex)
+
+      case _ => routes.JourneyRecoveryController.onPageLoad(None)
     }
-  }
 }

@@ -23,17 +23,14 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class HowMuchAAChargeSchemePaidPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[BigInt] {
+case class HowMuchAAChargePrivateSchemePaidPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[BigInt] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
 
-  override def toString: String = "howMuchAAChargeSchemePaid"
+  override def toString: String = "howMuchAAChargePrivateSchemePaid"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =     answers.get(WhoPaidAAChargeCheckboxPage(period, schemeIndex)) match {
-    case Some(whoPaidAAChargeCheckbox) if !whoPaidAAChargeCheckbox.contains(PrivateScheme)  => addAnotherMaybe(answers)
-    case Some(whoPaidAAChargeCheckbox) if whoPaidAAChargeCheckbox.contains(PrivateScheme)=>
-      controllers.annualallowance.taxyear.routes.WhichPrivateSchemeController
-        .onPageLoad(NormalMode, period, schemeIndex)
+    case Some(_) => addAnotherMaybe(answers)
     case _ => routes.JourneyRecoveryController.onPageLoad(None)
   }
 

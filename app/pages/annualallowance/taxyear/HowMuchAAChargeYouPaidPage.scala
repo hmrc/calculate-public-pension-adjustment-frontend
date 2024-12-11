@@ -18,6 +18,7 @@ package pages.annualallowance.taxyear
 
 import controllers.routes
 import models.WhoPaidAACharge.{Both, You}
+import models.WhoPaidAAChargeCheckbox.{PrivateScheme, PublicScheme}
 import models.{CheckMode, NormalMode, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -30,10 +31,13 @@ case class HowMuchAAChargeYouPaidPage(period: Period, schemeIndex: SchemeIndex) 
   override def toString: String = "howMuchAAChargeYouPaid"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    answers.get(WhoPaidAAChargePage(period, schemeIndex)) match {
-      case Some(You)  => AddAnotherSchemeMaybe.navigate(answers, period, schemeIndex)
-      case Some(Both) =>
+    answers.get(WhoPaidAAChargeCheckboxPage(period, schemeIndex)) match {
+      case Some(whoPaidAAChargeCheckbox) if !whoPaidAAChargeCheckbox.contains(PrivateScheme) || !whoPaidAAChargeCheckbox.contains(PublicScheme) => AddAnotherSchemeMaybe.navigate(answers, period, schemeIndex)
+      case Some(whoPaidAAChargeCheckbox) if whoPaidAAChargeCheckbox.contains(PublicScheme)=>
         controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
+          .onPageLoad(NormalMode, period, schemeIndex)
+      case Some(whoPaidAAChargeCheckbox) if whoPaidAAChargeCheckbox.contains(PrivateScheme)=>
+        controllers.annualallowance.taxyear.routes.WhichPrivateSchemeController
           .onPageLoad(NormalMode, period, schemeIndex)
 
       case _ => routes.JourneyRecoveryController.onPageLoad(None)

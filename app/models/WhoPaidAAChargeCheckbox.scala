@@ -26,11 +26,14 @@ sealed trait WhoPaidAAChargeCheckbox
 object WhoPaidAAChargeCheckbox extends Enumerable.Implicits {
 
   case object You extends WithName("you") with WhoPaidAAChargeCheckbox
-  case object Pensionscheme extends WithName("pensionScheme") with WhoPaidAAChargeCheckbox
+  case object PublicScheme extends WithName("publicScheme") with WhoPaidAAChargeCheckbox
+  case object PrivateScheme extends WithName("privateScheme") with WhoPaidAAChargeCheckbox
+
 
   val values: Seq[WhoPaidAAChargeCheckbox] = Seq(
     You,
-    Pensionscheme
+    PublicScheme,
+    PrivateScheme
   )
 
   def checkboxItems(implicit messages: Messages): Seq[CheckboxItem] =
