@@ -1544,14 +1544,13 @@ maybePIAUnchangedOrDecreased.heading1 = Newidiadau i swm mewnbwn pensiwn
 maybePIAUnchangedOrDecreased.message1 = Eich swm mewnbwn pensiwn (PIA) yw’r swm y mae’ch pensiwn wedi cynyddu dros gyfnod mewnbwn pensiwn (PIP), sydd fel arfer yn hafal i flwyddyn.
 maybePIAUnchangedOrDecreased.message2 = O ganlyniad i’r Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus, efallai bod eich symiau mewnbwn pensiwn (PIA) wedi newid.
 maybePIAUnchangedOrDecreased.message3 = Os yw gweinyddwr eich cynllun pensiwn yn anfon y ffigurau gwreiddiol atoch, fe welwch y ffigurau gwreiddiol a’r ffigurau diwygiedig ar eich datganiad cynilion pensiwn.
-maybePIAUnchangedOrDecreased.heading2 = cy: Have any of your pension input amounts remained unchanged or decreased for the tax years ending 6 April 2016 to 5 April 2022?
+maybePIAUnchangedOrDecreased.heading2 = A wnaeth unrhyw un o’ch symiau mewnbwn pensiwn aros yr un peth neu ostwng ar gyfer unrhyw flwyddyn dreth a ddaeth i ben rhwng 6 Ebrill 2016 a 5 Ebrill 2022?
 maybePIAUnchangedOrDecreased.yes = Iawn
 maybePIAUnchangedOrDecreased.no = Na
 maybePIAUnchangedOrDecreased.idk = Wn i ddim
 maybePIAUnchangedOrDecreased.checkYourAnswersLabel = cy: Have any of your pension input amounts remained unchanged or decreased for the tax years ending 6 April 2016 to 5 April 2022?
-maybePIAUnchangedOrDecreased.error.required = cy: Select yes if any of your pension input amounts remained unchanged or decreased for the tax years ending 6 April 2016 to 5 April 2022
-maybePIAUnchangedOrDecreased.change.hidden = cy: if any of your pension input amounts remained unchanged or decreased for the tax years ending 6 April 2016 to 5 April 2022
-
+maybePIAUnchangedOrDecreased.error.required = Dewiswch ‘Iawn’ os gwnaeth unrhyw un o’ch symiau mewnbwn pensiwn aros yr un peth neu ostwng ar gyfer unrhyw flwyddyn dreth a ddaeth i ben rhwng 6 Ebrill 2016 a 5 Ebrill 2022
+maybePIAUnchangedOrDecreased.change.hidden = os gwnaeth unrhyw un o’ch symiau mewnbwn pensiwn aros yr un peth neu ostwng ar gyfer unrhyw flwyddyn dreth a ddaeth i ben rhwng 6 Ebrill 2016 a 5 Ebrill 2022
 pIAAboveAnnualAllowanceIn2023.title = Swm mewnbwn pensiwn - Lwfans blynyddol
 pIAAboveAnnualAllowanceIn2023.caption = Lwfans blynyddol
 pIAAboveAnnualAllowanceIn2023.heading1 = Swm mewnbwn pensiwn
