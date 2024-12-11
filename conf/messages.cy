@@ -702,10 +702,11 @@ totalIncome.change.hidden = eich incwm trethadwy o {0}
 
 contributedToDuringRemedyPeriod.title = cy: Which pension schemes have you contributed to during the remedy period?
 contributedToDuringRemedyPeriod.heading = cy: Which pension schemes have you contributed to during the remedy period?
+contributedToDuringRemedyPeriod.hint = cy: Select all that apply.
 contributedToDuringRemedyPeriod.definedContribution = Cyfraniadau diffiniedig
 contributedToDuringRemedyPeriod.definedBenefit = Buddiannau diffiniedig
 contributedToDuringRemedyPeriod.checkYourAnswersLabel = cy: Which pension schemes have you contributed to during the remedy period?
-contributedToDuringRemedyPeriod.error.required = Dewiswch a wnaethoch gyfrannu at gynllun pensiwn cyfraniadau diffiniedig neu fuddiannau diffiniedig ystod y cyfnod pontio
+contributedToDuringRemedyPeriod.error.required = cy: Select which types of pension schemes you contributed to during the remedy period
 contributedToDuringRemedyPeriod.change.hidden = cy: pension schemes you have contributed to during the remedy period
 
 definedContributionAmount.title = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {1}?

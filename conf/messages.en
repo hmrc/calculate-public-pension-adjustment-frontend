@@ -702,10 +702,11 @@ totalIncome.change.hidden = your taxable income from {0}
 
 contributedToDuringRemedyPeriod.title = Which pension schemes have you contributed to during the remedy period?
 contributedToDuringRemedyPeriod.heading = Which pension schemes have you contributed to during the remedy period?
+contributedToDuringRemedyPeriod.hint = Select all that apply.
 contributedToDuringRemedyPeriod.definedContribution = Defined contribution
 contributedToDuringRemedyPeriod.definedBenefit = Defined benefit
 contributedToDuringRemedyPeriod.checkYourAnswersLabel = Which pension schemes have you contributed to during the remedy period?
-contributedToDuringRemedyPeriod.error.required = Select if you contributed to during a defined contribution or defined benefit pension scheme during the remedy period
+contributedToDuringRemedyPeriod.error.required = Select which types of pension schemes you contributed to during the remedy period
 contributedToDuringRemedyPeriod.change.hidden = pension schemes you have contributed to during the remedy period
 
 definedContributionAmount.title = What was your pension input amount for defined contribution pension schemes between {0}?
