@@ -1551,6 +1551,7 @@ maybePIAUnchangedOrDecreased.idk = Wn i ddim
 maybePIAUnchangedOrDecreased.checkYourAnswersLabel = A wnaeth unrhyw un o’ch symiau mewnbwn pensiwn aros yr un peth neu ostwng ar gyfer unrhyw flwyddyn dreth a ddaeth i ben rhwng 6 Ebrill 2016 a 5 Ebrill 2022?
 maybePIAUnchangedOrDecreased.error.required = Dewiswch ‘Iawn’ os gwnaeth unrhyw un o’ch symiau mewnbwn pensiwn aros yr un peth neu ostwng ar gyfer unrhyw flwyddyn dreth a ddaeth i ben rhwng 6 Ebrill 2016 a 5 Ebrill 2022
 maybePIAUnchangedOrDecreased.change.hidden = os gwnaeth unrhyw un o’ch symiau mewnbwn pensiwn aros yr un peth neu ostwng ar gyfer unrhyw flwyddyn dreth a ddaeth i ben rhwng 6 Ebrill 2016 a 5 Ebrill 2022
+
 pIAAboveAnnualAllowanceIn2023.title = Swm mewnbwn pensiwn - Lwfans blynyddol
 pIAAboveAnnualAllowanceIn2023.caption = Lwfans blynyddol
 pIAAboveAnnualAllowanceIn2023.heading1 = Swm mewnbwn pensiwn
