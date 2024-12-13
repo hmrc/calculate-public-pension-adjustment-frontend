@@ -42,8 +42,10 @@ case class WhoPaidAAChargeCheckboxPage(period: Period, schemeIndex: SchemeIndex)
         controllers.annualallowance.taxyear.routes.HowMuchAAChargeSchemePaidController
           .onPageLoad(mode, period, schemeIndex)
       case Some(whoPaidAAChargeCheckbox) if whoPaidAAChargeCheckbox.contains(PrivateScheme) =>
-        controllers.annualallowance.taxyear.routes.WhichPrivateSchemeController
-          .onPageLoad(mode, period, schemeIndex)
+        if (schemeIndex == SchemeIndex(0)) {
+          controllers.annualallowance.taxyear.routes.WhichPrivateSchemeController
+            .onPageLoad(NormalMode, period, schemeIndex)
+        } else {controllers.annualallowance.taxyear.routes.HowMuchAAChargePrivateSchemePaidController.onPageLoad(NormalMode, period, schemeIndex)}
 
       case _ => routes.JourneyRecoveryController.onPageLoad(None)
     }

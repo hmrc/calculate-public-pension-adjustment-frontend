@@ -23,7 +23,7 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AAKickOutStatus, AnnualAllowance, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReducedNetIncomeRequest, ReducedNetIncomeResponse, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AAKickOutStatus, AnnualAllowance, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, PrivatePensionSchemeDetails, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReducedNetIncomeRequest, ReducedNetIncomeResponse, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -331,6 +331,9 @@ class CalculationResultService @Inject() (
           val oPensionSchemeDetails: Option[PensionSchemeDetails] =
             userAnswers.get(PensionSchemeDetailsPage(period, SchemeIndex(v)))
 
+          val oPrivatePensionSchemeDetails: Option[PrivatePensionSchemeDetails] =
+            userAnswers.get(PrivatePensionSchemeDetailsPage(period, SchemeIndex(0)))
+
           val oPensionSchemeInputAmounts: Option[PensionSchemeInputAmounts] =
             if (period == Period._2016) {
               userAnswers.get(PensionSchemeInput2016preAmountsPage(period, SchemeIndex(v))).map { pia =>
@@ -349,6 +352,9 @@ class CalculationResultService @Inject() (
           val oChargePaidByScheme: Option[Int] =
             userAnswers.get(HowMuchAAChargeSchemePaidPage(period, SchemeIndex(v))).map(_.toInt)
 
+          val oChargePaidByPrivateScheme: Option[Int] =
+            userAnswers.get(HowMuchAAChargePrivateSchemePaidPage(period, SchemeIndex(v))).map(_.toInt)
+
           (oPensionSchemeDetails, oPensionSchemeInputAmounts) match {
             case (Some(pensionSchemeDetails), Some(pensionSchemeInputAmounts)) =>
               Some(
@@ -357,6 +363,9 @@ class CalculationResultService @Inject() (
                   pensionSchemeDetails.schemeTaxRef,
                   pensionSchemeInputAmounts.revisedPIA.toInt,
                   oChargePaidByScheme.getOrElse(0),
+                oPrivatePensionSchemeDetails.map(_.schemeName),
+                  oPrivatePensionSchemeDetails.map(_.schemeTaxRef),
+                    oChargePaidByPrivateScheme.getOrElse(0),
                   oPensionSchemeInput2016PostAmounts.map(_.revisedPIA.toInt)
                 )
               )

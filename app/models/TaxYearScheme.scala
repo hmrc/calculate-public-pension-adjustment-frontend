@@ -23,6 +23,9 @@ case class TaxYearScheme(
   pensionSchemeTaxReference: String,
   revisedPensionInputAmount: Int,
   chargePaidByScheme: Int,
+  privatePensionSchemeName: Option[String],
+  privatePensionSchemeReference: Option[String],
+  chargePaidByPrivateScheme: Int,
   revisedPensionInput2016PostAmount: Option[Int]
 )
 
