@@ -1786,3 +1786,9 @@ printReview.printLink = print this page
 printReview.printYourResults.hint = To keep a record of this, you should
 printReview.bullet1 = any new or additional tax charges you may owe
 printReview.bullet2 = any compensation or refunds that may be owed to you
+
+outstandingTasks.title = Sorry, you cannot view this page
+outstandingTasks.heading = Sorry, you cannot view this page
+outstandingTasks.message1 = You must
+outstandingTasks.message2 = for each tax year before calculating your public service pension adjustment.
+outstandingTasks.link = complete all required tasks

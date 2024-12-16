@@ -611,6 +611,8 @@ GET        /calculation-results                       controllers.CalculationRev
 POST       /calculation-results                       controllers.CalculationReviewController.onSubmit()
 
 GET        /calculation-results/:period/detailed-breakdown                       controllers.CalculationReviewIndividualAAController.onPageLoad(period:Period)
-POST       /calculation-results/detailed-breakdown                       controllers.CalculationReviewIndividualAAController.onSubmit()
+POST       /calculation-results/:period/detailed-breakdown                       controllers.CalculationReviewIndividualAAController.onSubmit(period:Period)
 
 GET        /print-calculation-results                       controllers.PrintReviewController.onPageLoad()
+
+GET        /complete-tasks-before-calculation                       controllers.OutstandingTasksController.onPageLoad()

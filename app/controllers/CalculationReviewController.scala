@@ -39,6 +39,7 @@ class CalculationReviewController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  requireTasksCompleted: RequireTasksCompletedAction,
   val controllerComponents: MessagesControllerComponents,
   view: CalculationReviewView,
   calculationResultService: CalculationResultService,
@@ -49,39 +50,42 @@ class CalculationReviewController @Inject() (
 
   val form = Form("_" -> ignored(()))
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    calculationResultService.sendRequest(request.userAnswers).map { calculationResponse =>
-      val includeCompensation2015: Boolean = calculationResponse.totalAmounts.outDatesCompensation > 0
-      val isInCredit: Boolean              = calculationResponse.totalAmounts.inDatesCredit > 0
-      val isInDebit: Boolean               = calculationResponse.totalAmounts.inDatesDebit > 0
-      val isUserAuthenticated: Boolean     = request.userAnswers.authenticated
-      val isLTACompleteWithoutKickout      = LTASection.status(request.userAnswers) == SectionStatus.Completed && !LTASection
-        .kickoutHasBeenReached(request.userAnswers)
-      val hasInDates: Boolean              = calculationResponse.inDates.isDefinedAt(0)
-      Ok(
-        view(
-          form,
-          calculationResultService.calculationReviewViewModel(calculationResponse),
-          includeCompensation2015,
-          isInCredit,
-          isInDebit,
-          isUserAuthenticated,
-          isLTACompleteWithoutKickout,
-          hasInDates
+  def onPageLoad: Action[AnyContent] =
+    (identify andThen getData andThen requireData andThen requireTasksCompleted).async { implicit request =>
+      calculationResultService.sendRequest(request.userAnswers).map { calculationResponse =>
+        val includeCompensation2015: Boolean = calculationResponse.totalAmounts.outDatesCompensation > 0
+        val isInCredit: Boolean              = calculationResponse.totalAmounts.inDatesCredit > 0
+        val isInDebit: Boolean               = calculationResponse.totalAmounts.inDatesDebit > 0
+        val isUserAuthenticated: Boolean     = request.userAnswers.authenticated
+        val isLTACompleteWithoutKickout      =
+          LTASection.status(request.userAnswers) == SectionStatus.Completed && !LTASection
+            .kickoutHasBeenReached(request.userAnswers)
+        val hasInDates: Boolean              = calculationResponse.inDates.isDefinedAt(0)
+        Ok(
+          view(
+            form,
+            calculationResultService.calculationReviewViewModel(calculationResponse),
+            includeCompensation2015,
+            isInCredit,
+            isInDebit,
+            isUserAuthenticated,
+            isLTACompleteWithoutKickout,
+            hasInDates
+          )
         )
-      )
+      }
     }
-  }
 
-  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    calculationResultService.submitUserAnswersAndCalculation(request.userAnswers, request.userId).map {
-      submissionResponse: SubmissionResponse =>
-        submissionResponse match {
-          case submission.Success(uniqueId) => Redirect(submitFrontendLandingPageUrl(uniqueId))
-          case submission.Failure(_)        => Redirect(routes.JourneyRecoveryController.onPageLoad())
-        }
+  def onSubmit(): Action[AnyContent] =
+    (identify andThen getData andThen requireData andThen requireTasksCompleted).async { implicit request =>
+      calculationResultService.submitUserAnswersAndCalculation(request.userAnswers, request.userId).map {
+        submissionResponse: SubmissionResponse =>
+          submissionResponse match {
+            case submission.Success(uniqueId) => Redirect(submitFrontendLandingPageUrl(uniqueId))
+            case submission.Failure(_)        => Redirect(routes.JourneyRecoveryController.onPageLoad())
+          }
+      }
     }
-  }
 
   private def submitFrontendLandingPageUrl(uniqueId: String) =
     s"${config.submitFrontend}/landing-page?submissionUniqueId=$uniqueId"
