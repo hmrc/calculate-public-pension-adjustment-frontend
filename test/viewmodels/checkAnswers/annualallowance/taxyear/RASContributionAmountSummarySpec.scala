@@ -43,7 +43,7 @@ class RASContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
       RASContributionAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "rASContributionAmount.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

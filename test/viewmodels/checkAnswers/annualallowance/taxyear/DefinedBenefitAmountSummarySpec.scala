@@ -43,7 +43,7 @@ class DefinedBenefitAmountSummarySpec extends AnyFreeSpec with Matchers {
       DefinedBenefitAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "definedBenefitAmount.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

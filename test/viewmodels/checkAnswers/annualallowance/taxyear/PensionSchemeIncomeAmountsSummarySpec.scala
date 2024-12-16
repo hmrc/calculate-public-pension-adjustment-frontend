@@ -49,7 +49,7 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
       PensionSchemeInputAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionSchemeInputAmounts.checkYourAnswersLabelRevised",
-          value = ValueViewModel(HtmlContent("&pound;100")),
+          value = ValueViewModel(HtmlContent("£100")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
@@ -79,7 +79,7 @@ class PensionSchemeIncomeAmountsSummarySpec extends AnyFreeSpec with Matchers {
         PensionSchemeInputAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
           SummaryListRowViewModel(
             key = "pensionSchemeInputAmounts.checkYourAnswersLabel",
-            value = ValueViewModel(HtmlContent("&pound;100")),
+            value = ValueViewModel(HtmlContent("£100")),
             actions = Seq(
               ActionItemViewModel(
                 "site.change",
