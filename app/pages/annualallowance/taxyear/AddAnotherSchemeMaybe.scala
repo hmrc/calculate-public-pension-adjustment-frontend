@@ -41,25 +41,15 @@ object AddAnotherSchemeMaybe {
           controllers.annualallowance.taxyear.routes.OtherDefinedBenefitOrContributionController
             .onPageLoad(NormalMode, period)
         }
-      case Some(false) => noDCNavigation(period, answers)
+      case Some(false) => noDCNavigation(period)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
-  private def noDCNavigation(period: Period, answers: UserAnswers): Call =
+  private def noDCNavigation(period: Period): Call =
     period match {
       case Period._2016   =>
-        if (answers.get(TotalIncomePage(period)).isDefined) {
-          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-            .onPageLoad(period)
-        } else {
           controllers.annualallowance.taxyear.routes.TotalIncomeController.onPageLoad(NormalMode, period)
-        }
       case Period.Year(_) =>
-        if (answers.get(ThresholdIncomePage(period)).isDefined) {
-          controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController
-            .onPageLoad(period)
-        } else {
-          controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
-        }
+        controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onPageLoad(NormalMode, period)
     }
 }

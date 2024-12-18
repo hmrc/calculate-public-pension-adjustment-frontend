@@ -16,10 +16,10 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, PSTR, Period, SchemeIndex}
+import models.{CheckMode, NormalMode, PSTR, PensionSchemeDetails, Period, SchemeIndex}
 import pages.behaviours.PageBehaviours
 
-class WhichSchemeSpec extends PageBehaviours {
+class WhichSchemePageSpec extends PageBehaviours {
 
   "WhichSchemePage" - {
 
@@ -80,6 +80,53 @@ class WhichSchemeSpec extends PageBehaviours {
         WhichSchemePage(Period._2018, SchemeIndex(0)).navigate(CheckMode, userAnswers).url
 
       checkNavigation(nextPageUrl, "/annual-allowance/2018/check-answers")
+    }
+  }
+
+  "Cleanup" - {
+
+    "must clean up correctly when a user selects new in English" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
+        .get
+
+      val cleanedUserAnswers = WhichSchemePage(Period._2018, SchemeIndex(0))
+        .cleanup(Some(PSTR.New), userAnswers)
+        .success
+        .value
+
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))) mustBe None
+    }
+
+    "must clean up correctly when a user selects new in welsh" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
+        .get
+
+      val cleanedUserAnswers = WhichSchemePage(Period._2018, SchemeIndex(0))
+        .cleanup(Some(PSTR.NewInWelsh), userAnswers)
+        .success
+        .value
+
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))) mustBe None
+    }
+
+    "must not clean up when a user selects another scheme from the scheme list" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)), PensionSchemeDetails("schemeName", "schemeRef"))
+        .get
+
+      val cleanedUserAnswers = WhichSchemePage(Period._2018, SchemeIndex(0))
+        .cleanup(Some("schemeRef"), userAnswers)
+        .success
+        .value
+
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))) mustBe Some(
+        PensionSchemeDetails("schemeName", "schemeRef")
+      )
     }
   }
 }

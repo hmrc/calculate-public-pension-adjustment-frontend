@@ -18,8 +18,11 @@ package pages.annualallowance.taxyear
 
 import models.{NormalMode, PSTR, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
+import pages.setupquestions.ReasonForResubmissionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case class WhichSchemePage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[String] {
 
@@ -49,4 +52,15 @@ case class WhichSchemePage(period: Period, schemeIndex: SchemeIndex) extends Que
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+
+  override def cleanup(value: Option[String], userAnswers: UserAnswers): Try[UserAnswers] =
+    value
+      .map {
+        case value if value.contains(PSTR.New) || value.contains(PSTR.NewInWelsh) =>
+          userAnswers.remove(PensionSchemeDetailsPage(period, schemeIndex))
+        case _                                                                    =>
+          super.cleanup(value, userAnswers)
+      }
+      .getOrElse(super.cleanup(value, userAnswers))
+
 }

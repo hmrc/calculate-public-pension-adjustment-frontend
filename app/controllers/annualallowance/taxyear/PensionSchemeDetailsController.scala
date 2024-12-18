@@ -18,12 +18,13 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.PensionSchemeDetailsFormProvider
+import models.PSTR.{New, NewInWelsh}
 import models.tasklist.sections.AASection
 import models.{Mode, PSTR, Period, SchemeIndex}
 import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, WhichSchemePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.UserDataService
+import services.{PeriodService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.PensionSchemeDetailsView
 
@@ -47,13 +48,21 @@ class PensionSchemeDetailsController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
-      var preparedForm = form
+      val preparedForm = {
+        val whichScheme          = request.userAnswers.get(WhichSchemePage(period, schemeIndex))
+        val pensionSchemeDetails = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex))
 
-      val whichScheme = request.userAnswers.get(WhichSchemePage(period, schemeIndex))
+        pensionSchemeDetails match {
+          case None        => form
+          case Some(value) =>
+            val isFirstPeriod = PeriodService.isFirstPeriod(request.userAnswers, period)
+            val isNewScheme   = whichScheme.contains(New) || whichScheme.contains(NewInWelsh)
 
-      if (whichScheme.isDefined && !whichScheme.get.equalsIgnoreCase(PSTR.New)) {
-        preparedForm = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)) match {
-          case Some(value) => form.fill(value)
+            (isFirstPeriod, isNewScheme, pensionSchemeDetails.isEmpty) match {
+              case (true, _, _)    => form.fill(value)
+              case (_, true, true) => form
+              case (_, _, _)       => form.fill(value)
+            }
         }
       }
 

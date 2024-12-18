@@ -23,7 +23,7 @@ import models.{Done, NormalMode, PSTR, PensionSchemeDetails, Period, SchemeIndex
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, WhichSchemePage}
+import pages.annualallowance.taxyear.{MemberMoreThanOnePensionPage, PensionSchemeDetailsPage, WhichSchemePage}
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Call
@@ -77,75 +77,150 @@ class PensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-      val previouslyAnswered = UserAnswers(userAnswersId)
-        .set(WhichSchemePage(Period._2018, SchemeIndex(0)), "12345678RL")
-        .success
-        .value
+    "must populate the view correctly on a GET" - {
 
-      val userAnswers = previouslyAnswered
-        .set(
-          PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)),
-          PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")
-        )
-        .success
-        .value
+      "when the user is entering their first period" in {
+        val previouslyAnswered = UserAnswers(userAnswersId)
+          .set(WhichSchemePage(Period._2018, SchemeIndex(0)), "12345678RL")
+          .success
+          .value
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+        val userAnswers = previouslyAnswered
+          .set(
+            PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)),
+            PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")
+          )
+          .success
+          .value
 
-      running(application) {
-        val request = FakeRequest(GET, pensionSchemeDetailsRoute)
+        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
-        val view = application.injector.instanceOf[PensionSchemeDetailsView]
+        running(application) {
+          val request = FakeRequest(GET, pensionSchemeDetailsRoute)
 
-        val result = route(application, request).value
+          val view = application.injector.instanceOf[PensionSchemeDetailsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
-          form.fill(PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")),
-          NormalMode,
-          Period._2018,
-          SchemeIndex(0)
-        )(
-          request,
-          messages(application)
-        ).toString
+          val result = route(application, request).value
+
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(
+            form.fill(PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")),
+            NormalMode,
+            Period._2018,
+            SchemeIndex(0)
+          )(
+            request,
+            messages(application)
+          ).toString
+        }
       }
-    }
 
-    "must populate the view correctly on a GET when previous scheme exists" in {
-      val previouslyAnswered = UserAnswers(userAnswersId)
-        .set(WhichSchemePage(Period._2018, SchemeIndex(0)), PSTR.New)
-        .success
-        .value
+      "when the user is entering their second period" in {
+        val previouslyAnswered = UserAnswers(userAnswersId)
+          .set(MemberMoreThanOnePensionPage(Period._2016), false)
+          .success
+          .value
+          .set(WhichSchemePage(Period._2016, SchemeIndex(0)), "11111111RL")
+          .success
+          .value
+          .set(WhichSchemePage(Period._2018, SchemeIndex(0)), "12345678RL")
+          .success
+          .value
 
-      val userAnswers = previouslyAnswered
-        .set(
-          PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)),
-          PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")
-        )
-        .success
-        .value
+        val userAnswers = previouslyAnswered
+          .set(
+            PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)),
+            PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")
+          )
+          .success
+          .value
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
-      running(application) {
-        val request = FakeRequest(GET, pensionSchemeDetailsRoute)
+        running(application) {
+          val request = FakeRequest(GET, pensionSchemeDetailsRoute)
 
-        val view = application.injector.instanceOf[PensionSchemeDetailsView]
+          val view = application.injector.instanceOf[PensionSchemeDetailsView]
 
-        val result = route(application, request).value
+          val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
-          form,
-          NormalMode,
-          Period._2018,
-          SchemeIndex(0)
-        )(
-          request,
-          messages(application)
-        ).toString
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(
+            form.fill(PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")),
+            NormalMode,
+            Period._2018,
+            SchemeIndex(0)
+          )(
+            request,
+            messages(application)
+          ).toString
+        }
+      }
+
+      "must populate the view correctly on a GET when previous scheme exists" in {
+        val previouslyAnswered = UserAnswers(userAnswersId)
+          .set(WhichSchemePage(Period._2018, SchemeIndex(0)), PSTR.New)
+          .success
+          .value
+
+        val userAnswers = previouslyAnswered
+          .set(
+            PensionSchemeDetailsPage(Period._2018, SchemeIndex(0)),
+            PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")
+          )
+          .success
+          .value
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+        running(application) {
+          val request = FakeRequest(GET, pensionSchemeDetailsRoute)
+
+          val view = application.injector.instanceOf[PensionSchemeDetailsView]
+
+          val result = route(application, request).value
+
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(
+            form.fill(PensionSchemeDetails("someSchemeName", "someSchemeTaxRef")),
+            NormalMode,
+            Period._2018,
+            SchemeIndex(0)
+          )(
+            request,
+            messages(application)
+          ).toString
+        }
+      }
+
+      "must not populate the view on a GET when isNewScheme and no pension scheme details entered" in {
+        val previouslyAnswered = UserAnswers(userAnswersId)
+          .set(WhichSchemePage(Period._2018, SchemeIndex(0)), PSTR.New)
+          .success
+          .value
+
+        val userAnswers = previouslyAnswered
+
+        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+        running(application) {
+          val request = FakeRequest(GET, pensionSchemeDetailsRoute)
+
+          val view = application.injector.instanceOf[PensionSchemeDetailsView]
+
+          val result = route(application, request).value
+
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(
+            form,
+            NormalMode,
+            Period._2018,
+            SchemeIndex(0)
+          )(
+            request,
+            messages(application)
+          ).toString
+        }
       }
     }
 
