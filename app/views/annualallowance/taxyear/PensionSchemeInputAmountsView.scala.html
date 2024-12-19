@@ -28,7 +28,7 @@
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @captionText = {
-    <span class="govuk-caption-xl">@messages("annualAllowance.period.caption."+{period.toString})</span>
+    <h2 class="govuk-caption-xl">@messages("annualAllowance.period.caption."+{period.toString})</h2>
 }
 
 @contentHint = {
@@ -42,7 +42,19 @@
     }
 }
 
-@subheadingContent = {
+@pageContent = {
+    @headingContent
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message1")</p>
+
+    @if(period != Period._2023){
+        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message1")</p>
+    }
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message2")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message3")</p>
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
+}
+
+@subHeadingContent = {
     @if(period == Period._2023){
     <h2 class="govuk-heading-m">
             @messages("pensionSchemeInputAmounts.originalPIA.heading2", schemeName, startEndDate)
@@ -63,23 +75,15 @@
     }
 
     @captionText
-    @headingContent
+    @pageContent
 
-    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message1")</p>
-
-    @if(period != Period._2023){
-        <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message1")</p>
-    }
-    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message2")</p>
-    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message3")</p>
-    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
 
     @govukInput(
                 InputViewModel(
                     field = form("revisedPIA"),
                     label = Label(
                     isPageHeading = false,
-                    content = HtmlContent(subheadingContent)
+                    content = HtmlContent(subHeadingContent)
                 )
                     )
                     .withCssClass("govuk-currency-input__inner__input")
