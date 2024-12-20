@@ -29,10 +29,15 @@
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
 
 @captionText = {
-    <span class="govuk-caption-xl">@messages("annualAllowance.period.caption.2016pre")</span>
+    <h2 class="govuk-caption-xl">@messages("annualAllowance.period.caption.2016pre")</h2>
 }
 
 @contentHint = {
+    <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
+}
+
+@pageContent = {
+    <h1 class="govuk-heading-xl">@messages("pensionSchemeInputAmounts.revisedPIA.heading1", schemeName)</h1>
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message1")</p>
 
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message1")</p>
@@ -40,9 +45,10 @@
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message3")</p>
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
 
-    <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.heading2.2016-pre", schemeName)</h2>
-    <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
+}
 
+@subHeadingContent = {
+    <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.heading2.2016-pre", schemeName)</h2>
 }
 
 @layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title.2016-pre", schemeName))) {
@@ -53,12 +59,15 @@
         @govukErrorSummary(ErrorSummaryViewModel(form))
     }
 
+    @captionText
+    @pageContent
+
     @govukInput(
         InputViewModel(
             field = form("revisedPIA"),
-            label = HmrcPageHeadingLabel(
-                content = messages("pensionSchemeInputAmounts.revisedPIA.heading1", schemeName),
-                caption = HtmlContent(captionText)
+            label = Label(
+                isPageHeading = false,
+                content = HtmlContent(subHeadingContent)
             )
         )
     .withCssClass("govuk-currency-input__inner__input")
