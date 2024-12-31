@@ -23,14 +23,12 @@ import javax.inject.Inject
 
 class AmountOfGiftAidFormProvider @Inject() extends Mappings {
 
-  def apply(startEndDate: String): Form[BigInt] =
+  def apply(startEndDate: String): Form[BigDecimal] =
     Form(
-      "value" -> bigInt(
+      "value" -> bigDecimal(
         "amountOfGiftAid.error.required",
-        "amountOfGiftAid.error.wholeNumber",
         "amountOfGiftAid.error.nonNumeric",
         Seq(startEndDate)
       )
-        .verifying(inRangeWithArg(BigInt("1"), BigInt("999999999"), "amountOfGiftAid.error.outOfRange", startEndDate))
     )
 }

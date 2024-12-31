@@ -29,7 +29,7 @@ case class IncomeSubJourney(
   taxReliefPensionAmount: Option[Int],
   personalContributionsAmount: Option[Int],
   reliefClaimedOnOverseasPensionsAmount: Option[Int],
-  giftAidAmount: Option[Int],
+  giftAidAmount: Option[Double],
   personalAllowanceAmount: Option[Int],
   tradeUnionOrPoliceReliefAmount: Option[Int],
   blindPersonsAllowanceAmount: Option[Int],

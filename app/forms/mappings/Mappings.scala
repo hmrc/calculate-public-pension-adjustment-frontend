@@ -24,6 +24,13 @@ import play.api.i18n.Messages
 
 trait Mappings extends Formatters with Constraints {
 
+  protected def bigDecimal(
+    requiredKey: String = "error.required",
+    nonNumericKey: String = "error.nonNumeric",
+    args: Seq[String] = Seq()
+  ): FieldMapping[BigDecimal] =
+    of(bigDecimalFormatter(requiredKey, nonNumericKey, args))
+
   protected def bigInt(
     requiredKey: String = "error.required",
     wholeNumberKey: String = "error.wholeNumber",
