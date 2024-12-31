@@ -18,7 +18,7 @@ package models.CalculationResults
 
 import play.api.libs.json.{Reads, Writes, __}
 
-case class TotalAmounts(outDatesCompensation: Int, inDatesDebit: Int, inDatesCredit: Int)
+case class TotalAmounts(outDatesCompensation: Double, inDatesDebit: Double, inDatesCredit: Double)
 
 object TotalAmounts {
 
@@ -26,9 +26,9 @@ object TotalAmounts {
 
     import play.api.libs.functional.syntax._
 
-    ((__ \ "outDatesCompensation").read[Int] and
-      (__ \ "inDatesDebit").read[Int] and
-      (__ \ "inDatesCredit").read[Int])(TotalAmounts(_, _, _))
+    ((__ \ "outDatesCompensation").read[Double] and
+      (__ \ "inDatesDebit").read[Double] and
+      (__ \ "inDatesCredit").read[Double])(TotalAmounts(_, _, _))
   }
 
   implicit lazy val writes: Writes[TotalAmounts] = {
@@ -36,9 +36,9 @@ object TotalAmounts {
     import play.api.libs.functional.syntax._
 
     (
-      (__ \ "outDatesCompensation").write[Int] and
-        (__ \ "inDatesDebit").write[Int] and
-        (__ \ "inDatesCredit").write[Int]
+      (__ \ "outDatesCompensation").write[Double] and
+        (__ \ "inDatesDebit").write[Double] and
+        (__ \ "inDatesCredit").write[Double]
     )(a =>
       (
         a.outDatesCompensation,

@@ -16,4 +16,4 @@
 
 package models.CalculationResults
 
-case class ReviewRowViewModel(title: String, changeString: Option[String], link: String, totalCharge: Option[Int])
+case class ReviewRowViewModel(title: String, changeString: Option[String], link: String, totalCharge: Option[Double])

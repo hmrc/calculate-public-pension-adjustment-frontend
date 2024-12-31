@@ -395,7 +395,7 @@ class CalculationResultService @Inject() (
           userAnswers.get(HowMuchTaxReliefPensionPage(period)).map(_.toInt),
           userAnswers.get(HowMuchContributionPensionSchemePage(period)).map(_.toInt),
           userAnswers.get(AmountClaimedOnOverseasPensionPage(period)).map(_.toInt),
-          userAnswers.get(AmountOfGiftAidPage(period)).map(_.toInt),
+          userAnswers.get(AmountOfGiftAidPage(period)).map(_.toDouble),
           userAnswers.get(PersonalAllowancePage(period)).map(_.toInt),
           userAnswers.get(UnionPoliceReliefAmountPage(period)).map(_.toInt),
           userAnswers.get(BlindPersonsAllowanceAmountPage(period)).map(_.toInt),
@@ -717,7 +717,7 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + outDate.period.toString,
           Some(changeInAAOutDateTaxCharge(outDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(outDate.period).url,
-          outDate.adjustedCompensation.map(Math.abs).orElse(Some(0))
+          outDate.adjustedCompensation.map(Math.abs).orElse(Some(0.00))
         )
       )
     }
@@ -738,7 +738,7 @@ class CalculationResultService @Inject() (
           "calculationReview.period." + inDate.period.toString,
           Some(changeInAAInDateTaxCharge(inDate)),
           controllers.routes.CalculationReviewIndividualAAController.onPageLoad(inDate.period).url,
-          inDate.totalCompensation.map(Math.abs).orElse(Some(0))
+          inDate.totalCompensation.map(Math.abs).orElse(Some(0.00))
         )
       )
     }
@@ -760,18 +760,18 @@ class CalculationResultService @Inject() (
   def outDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.outDates.map { outDate =>
       val changeInTaxChargeAmount =
-        outDate.adjustedCompensation.getOrElse(0)
+        outDate.adjustedCompensation.getOrElse(0.00)
 
-      val messageKey = if (changeInTaxChargeAmount > 0) {
+      val messageKey = if (changeInTaxChargeAmount > 0.00) {
         "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
       } else {
         "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
       }
 
-      def writtenOffAmountFormatter(changeinTaxCharge: Int, writtenOffAmount: Option[Int]): Option[Int] =
+      def writtenOffAmountFormatter(changeinTaxCharge: Double, writtenOffAmount: Option[Double]): Option[Double] =
         changeinTaxCharge match {
-          case 0 => writtenOffAmount
-          case _ => None
+          case 0.00 => writtenOffAmount
+          case _    => None
         }
 
       IndividualAASummaryModel(
@@ -793,11 +793,11 @@ class CalculationResultService @Inject() (
 
   def inDatesSummary(calculationResponse: CalculationResponse): Seq[IndividualAASummaryModel] =
     calculationResponse.inDates.map { inDate =>
-      val changeInTaxChargeAmount = inDate.totalCompensation.getOrElse(0)
+      val changeInTaxChargeAmount = inDate.totalCompensation.getOrElse(0.00)
 
-      val messageKey = if (changeInTaxChargeAmount > 0) {
+      val messageKey = if (changeInTaxChargeAmount > 0.00) {
         "calculationReviewIndividualAA.changeInTaxChargeString.decrease."
-      } else if (changeInTaxChargeAmount < 0) {
+      } else if (changeInTaxChargeAmount < 0.00) {
         "calculationReviewIndividualAA.changeInTaxChargeString.increase."
       } else {
         "calculationReviewIndividualAA.changeInTaxChargeString.noChange."

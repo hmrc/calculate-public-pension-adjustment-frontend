@@ -21,7 +21,7 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class AmountOfGiftAidPage(period: Period) extends QuestionPage[BigInt] {
+case class AmountOfGiftAidPage(period: Period) extends QuestionPage[BigDecimal] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ toString
 

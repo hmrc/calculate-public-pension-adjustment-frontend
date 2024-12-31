@@ -25,7 +25,7 @@ sealed trait TaxYearSchemeCalculation {
   def pensionSchemeTaxReference: String
 }
 
-case class OutOfDatesTaxYearSchemeCalculation(name: String, pensionSchemeTaxReference: String, compensation: Int)
+case class OutOfDatesTaxYearSchemeCalculation(name: String, pensionSchemeTaxReference: String, compensation: Double)
 
 object OutOfDatesTaxYearSchemeCalculation {
 
@@ -36,7 +36,7 @@ object OutOfDatesTaxYearSchemeCalculation {
     (
       (__ \ "name").read[String] and
         (__ \ "pensionSchemeTaxReference").read[String] and
-        (__ \ "compensation").read[Int]
+        (__ \ "compensation").read[Double]
     )(OutOfDatesTaxYearSchemeCalculation.apply _)
 
   }
@@ -48,7 +48,7 @@ object OutOfDatesTaxYearSchemeCalculation {
     (
       (__ \ "name").write[String] and
         (__ \ "pensionSchemeTaxReference").write[String] and
-        (__ \ "compensation").write[Int]
+        (__ \ "compensation").write[Double]
     )(a =>
       (
         a.name,
@@ -59,7 +59,7 @@ object OutOfDatesTaxYearSchemeCalculation {
   }
 }
 
-case class InDatesTaxYearSchemeCalculation(name: String, pensionSchemeTaxReference: String, chargePaidByScheme: Int)
+case class InDatesTaxYearSchemeCalculation(name: String, pensionSchemeTaxReference: String, chargePaidByScheme: Double)
 
 object InDatesTaxYearSchemeCalculation {
 
@@ -70,7 +70,7 @@ object InDatesTaxYearSchemeCalculation {
     (
       (__ \ "name").read[String] and
         (__ \ "pensionSchemeTaxReference").read[String] and
-        (__ \ "chargePaidByScheme").read[Int]
+        (__ \ "chargePaidByScheme").read[Double]
     )(InDatesTaxYearSchemeCalculation.apply _)
 
   }
@@ -82,7 +82,7 @@ object InDatesTaxYearSchemeCalculation {
     (
       (__ \ "name").write[String] and
         (__ \ "pensionSchemeTaxReference").write[String] and
-        (__ \ "chargePaidByScheme").write[Int]
+        (__ \ "chargePaidByScheme").write[Double]
     )(a =>
       (
         a.name,

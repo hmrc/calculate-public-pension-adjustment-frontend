@@ -20,13 +20,13 @@ import models.Period
 
 final case class IndividualAASummaryModel(
   period: Period,
-  changeInTaxCharge: Int,
-  changeInTaxChargeNonAbs: Int,
+  changeInTaxCharge: Double,
+  changeInTaxChargeNonAbs: Double,
   changeInTaxChargeString: String,
-  revisedChargeableAmountBeforeTaxRate: Int,
-  chargePaidByMember: Int,
-  chargePaidBySchemes: Int,
-  revisedChargeableAmountAfterTaxRate: Int,
-  totalChargePaid: Int,
-  writtenOffAmount: Option[Int]
+  revisedChargeableAmountBeforeTaxRate: Double,
+  chargePaidByMember: Double,
+  chargePaidBySchemes: Double,
+  revisedChargeableAmountAfterTaxRate: Double,
+  totalChargePaid: Double,
+  writtenOffAmount: Option[Double]
 )

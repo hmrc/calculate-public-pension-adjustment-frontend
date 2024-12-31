@@ -21,16 +21,16 @@ import play.api.libs.json.{Reads, Writes, __}
 
 case class InDatesTaxYearsCalculation(
   period: Period,
-  memberCredit: Int,
-  schemeCredit: Int,
-  debit: Int,
-  chargePaidByMember: Int,
-  chargePaidBySchemes: Int,
-  revisedChargableAmountBeforeTaxRate: Int,
-  revisedChargableAmountAfterTaxRate: Int,
-  unusedAnnualAllowance: Int,
+  memberCredit: Double,
+  schemeCredit: Double,
+  debit: Double,
+  chargePaidByMember: Double,
+  chargePaidBySchemes: Double,
+  revisedChargableAmountBeforeTaxRate: Double,
+  revisedChargableAmountAfterTaxRate: Double,
+  unusedAnnualAllowance: Double,
   taxYearSchemes: List[InDatesTaxYearSchemeCalculation],
-  totalCompensation: Option[Int]
+  totalCompensation: Option[Double]
 )
 
 object InDatesTaxYearsCalculation {
@@ -41,16 +41,16 @@ object InDatesTaxYearsCalculation {
 
     (
       (__ \ "period").read[Period] and
-        (__ \ "memberCredit").read[Int] and
-        (__ \ "schemeCredit").read[Int] and
-        (__ \ "debit").read[Int] and
-        (__ \ "chargePaidByMember").read[Int] and
-        (__ \ "chargePaidBySchemes").read[Int] and
-        (__ \ "revisedChargableAmountBeforeTaxRate").read[Int] and
-        (__ \ "revisedChargableAmountAfterTaxRate").read[Int] and
-        (__ \ "unusedAnnualAllowance").read[Int] and
+        (__ \ "memberCredit").read[Double] and
+        (__ \ "schemeCredit").read[Double] and
+        (__ \ "debit").read[Double] and
+        (__ \ "chargePaidByMember").read[Double] and
+        (__ \ "chargePaidBySchemes").read[Double] and
+        (__ \ "revisedChargableAmountBeforeTaxRate").read[Double] and
+        (__ \ "revisedChargableAmountAfterTaxRate").read[Double] and
+        (__ \ "unusedAnnualAllowance").read[Double] and
         (__ \ "taxYearSchemes").read[List[InDatesTaxYearSchemeCalculation]] and
-        (__ \ "totalCompensation").readNullable[Int]
+        (__ \ "totalCompensation").readNullable[Double]
     )(InDatesTaxYearsCalculation.apply _)
   }
 
@@ -60,16 +60,16 @@ object InDatesTaxYearsCalculation {
 
     (
       (__ \ "period").write[Period] and
-        (__ \ "memberCredit").write[Int] and
-        (__ \ "schemeCredit").write[Int] and
-        (__ \ "debit").write[Int] and
-        (__ \ "chargePaidByMember").write[Int] and
-        (__ \ "chargePaidBySchemes").write[Int] and
-        (__ \ "revisedChargableAmountBeforeTaxRate").write[Int] and
-        (__ \ "revisedChargableAmountAfterTaxRate").write[Int] and
-        (__ \ "unusedAnnualAllowance").write[Int] and
+        (__ \ "memberCredit").write[Double] and
+        (__ \ "schemeCredit").write[Double] and
+        (__ \ "debit").write[Double] and
+        (__ \ "chargePaidByMember").write[Double] and
+        (__ \ "chargePaidBySchemes").write[Double] and
+        (__ \ "revisedChargableAmountBeforeTaxRate").write[Double] and
+        (__ \ "revisedChargableAmountAfterTaxRate").write[Double] and
+        (__ \ "unusedAnnualAllowance").write[Double] and
         (__ \ "taxYearSchemes").write[List[InDatesTaxYearSchemeCalculation]] and
-        (__ \ "totalCompensation").writeNullable[Int]
+        (__ \ "totalCompensation").writeNullable[Double]
     )(a =>
       (
         a.period,
