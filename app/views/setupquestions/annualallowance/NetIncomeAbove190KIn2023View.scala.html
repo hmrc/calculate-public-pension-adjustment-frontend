@@ -24,7 +24,15 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+<h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m">@messages("netIncomeAbove190KIn2023.heading2")</h2>
+}
+
+@contentText = {
+    <h2 class="govuk-caption-xl"> @messages("annualAllowance.caption")</h2>
+
+    <h1 class="govuk-heading-l">@messages("netIncomeAbove190KIn2023.heading1")</h1>
+
     <p class="govuk-body">@messages("netIncomeAbove190KIn2023.message1")</p>
     <p class="govuk-body">@messages("netIncomeAbove190KIn2023.message2")</p>
 
@@ -53,8 +61,6 @@
         </a>
         @messages("netIncomeAbove190KIn2023.message6")
     </p>
-
-    <h2 class="govuk-heading-m">@messages("netIncomeAbove190KIn2023.heading2")</h2>
 }
 
 @layout(pageTitle = title(form, messages("netIncomeAbove190KIn2023.title"))) {
@@ -65,15 +71,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-            @govukRadios(
-                RadiosViewModel.yesNo(
-                field = form("value"),
-                    legend = HmrcPageHeadingLegend(
-                        content = messages("netIncomeAbove190KIn2023.heading1"),
-                        caption = HmrcSectionCaption(messages("annualAllowance.caption")))
-                    ).withHint(HintViewModel(HtmlContent(contentHint))
-                )
-            )
+        @contentText
+
+        @govukRadios(
+                    RadiosViewModel.yesNo(
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
         @continueButton()
     }
