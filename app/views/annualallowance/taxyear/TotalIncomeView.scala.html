@@ -28,6 +28,17 @@
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
+    <p class="govuk-hint">@messages("totalIncome.hint1")</p>
+}
+
+@pageContent = {
+    @if(period.start.getYear == 2015) {
+        <h2 class="govuk-caption-xl">@messages("totalIncome.caption", period.start.getYear.toString, "2016")</h2>
+    } else {
+        <h2 class="govuk-caption-xl">@messages("totalIncome.caption", period.start.getYear.toString, period.end.getYear.toString)</h2>
+    }
+
+    <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("totalIncome.heading1", period.start.getYear.toString, period.end.getYear.toString)</h1>
     <p class="govuk-body">@messages("totalIncome.message1")</p>
     <p class="govuk-body">@messages("totalIncome.message2")</p>
     <ul class="govuk-body">
@@ -41,18 +52,11 @@
         <li>@messages("totalIncome.bullet8")</li>
     </ul>
     <p class="govuk-body">@messages("totalIncome.message3")</p>
+}
+
+@subHeadingContent = {
     <h2 class="govuk-heading-m">@messages("totalIncome.heading2", startEndDate)</h2>
-    <p class="govuk-hint">@messages("totalIncome.hint1")</p>
 }
-
-@captionText = {
-    @if(period.start.getYear == 2015) {
-        @messages("totalIncome.caption", period.start.getYear.toString, "2016")
-    } else {
-        @messages("totalIncome.caption", period.start.getYear.toString, period.end.getYear.toString)
-    }
-}
-
 
 @layout(pageTitle = title(form, messages("totalIncome.title", startEndDate))) {
 
@@ -65,12 +69,14 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        @pageContent
+
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = HmrcPageHeadingLabel(
-                content = messages("totalIncome.heading1", period.start.getYear.toString, period.end.getYear.toString),
-                caption = HtmlContent(captionText)
+                label = Label(
+                    isPageHeading = false,
+                    content = HtmlContent(subHeadingContent)
                 )
             ).withHint(HintViewModel(HtmlContent(contentHint)))
             .withCssClass("govuk-currency-input__inner__input")

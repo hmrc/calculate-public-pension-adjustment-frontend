@@ -28,11 +28,23 @@
 @(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @captionText = {
-    <span class="govuk-caption-xl">@messages("annualAllowance.period.caption."+{period.toString})</span>
+    <h2 class="govuk-caption-xl">@messages("annualAllowance.period.caption."+{period.toString})</h2>
 }
 
 @contentHint = {
-<p class="govuk-body"> @messages("pensionSchemeInputAmounts.message1")</p>
+    <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
+}
+
+@headingContent = {
+    @if(period == Period._2023){
+        <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("pensionSchemeInputAmounts.originalPIA.heading1", schemeName, startEndDate)</h1>
+    } else { <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("pensionSchemeInputAmounts.revisedPIA.heading1", schemeName, startEndDate)</h1>
+    }
+}
+
+@pageContent = {
+    @headingContent
+    <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message1")</p>
 
     @if(period != Period._2023){
         <p class="govuk-body"> @messages("pensionSchemeInputAmounts.revisedPIA.message1")</p>
@@ -40,14 +52,18 @@
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message2")</p>
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message3")</p>
     <p class="govuk-body"> @messages("pensionSchemeInputAmounts.message4")</p>
+}
 
+@subHeadingContent = {
     @if(period == Period._2023){
-        <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.originalPIA.heading2", schemeName, startEndDate)</h2>
-    }else{
-        <h2 class="govuk-heading-m">@messages("pensionSchemeInputAmounts.revisedPIA.heading2", schemeName, startEndDate)</h2>
+    <h2 class="govuk-heading-m">
+            @messages("pensionSchemeInputAmounts.originalPIA.heading2", schemeName, startEndDate)
+    </h2>
+    } else {
+    <h2 class="govuk-heading-m">
+            @messages("pensionSchemeInputAmounts.revisedPIA.heading2", schemeName, startEndDate)
+    </h2>
     }
-
-    <p class="govuk-hint">@messages("pensionSchemeInputAmounts.hint")</p>
 }
 
 @layout(pageTitle = title(form, messages("pensionSchemeInputAmounts.title", schemeName, startEndDate))) {
@@ -58,38 +74,25 @@
         @govukErrorSummary(ErrorSummaryViewModel(form))
     }
 
+    @captionText
+    @pageContent
 
-@if(period == Period._2023){
-            @govukInput(
+
+    @govukInput(
                 InputViewModel(
                     field = form("revisedPIA"),
-                    label = HmrcPageHeadingLabel(
-                        content = messages("pensionSchemeInputAmounts.originalPIA.heading1", schemeName, startEndDate),
-                        caption = HtmlContent(captionText)
+                    label = Label(
+                    isPageHeading = false,
+                    content = HtmlContent(subHeadingContent)
+                )
                     )
+                    .withCssClass("govuk-currency-input__inner__input")
+                    .withPrefix(PrefixOrSuffix(content = Text("£")))
+                    .withWidth(Fixed10)
+                    .withInputMode("numeric")
+                    .withHint(HintViewModel(HtmlContent(contentHint)))
                 )
-                .withCssClass("govuk-currency-input__inner__input")
-                .withPrefix(PrefixOrSuffix(content = Text("£")))
-                .withWidth(Fixed10)
-                .withInputMode("numeric")
-                .withHint(HintViewModel(HtmlContent(contentHint)))
-            )
-    } else{
-            @govukInput(
-            InputViewModel(
-                field = form("revisedPIA"),
-                label = HmrcPageHeadingLabel(
-                    content = messages("pensionSchemeInputAmounts.revisedPIA.heading1", schemeName, startEndDate),
-                    caption = HtmlContent(captionText)
-                )
-            )
-            .withCssClass("govuk-currency-input__inner__input")
-            .withPrefix(PrefixOrSuffix(content = Text("£")))
-            .withWidth(Fixed10)
-            .withInputMode("numeric")
-            .withHint(HintViewModel(HtmlContent(contentHint)))
-            )
-    }
+
     @continueButton()
 
 
