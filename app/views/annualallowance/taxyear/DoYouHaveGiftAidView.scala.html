@@ -25,13 +25,18 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m">@messages("doYouHaveGiftAid.heading2", startEndDate)</h2>
+}
+
+@contentText = {
+<h2 class="govuk-caption-xl"> @messages("annualAllowance.netIncome.caption")</h2>
+<h1 class="govuk-heading-l govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("doYouHaveGiftAid.heading1", startEndDate)</h1>
+
 <p class="govuk-body">@messages("doYouHaveGiftAid.message1")</p>
 <p class="govuk-body">@messages("doYouHaveGiftAid.message2")</p>
 <p class="govuk-body">@messages("doYouHaveGiftAid.message3")</p>
 <p class="govuk-body">@messages("doYouHaveGiftAid.message4")</p>
-<h2 class="govuk-heading-m">@messages("doYouHaveGiftAid.heading2", startEndDate)</h2>
-
 }
 
 @layout(pageTitle = title(form, messages("doYouHaveGiftAid.title", startEndDate))) {
@@ -42,14 +47,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        @contentText
+
         @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("doYouHaveGiftAid.heading1", startEndDate),
-                    caption = HmrcSectionCaption(messages("annualAllowance.netIncome.caption")))
-                ).withHint(HintViewModel(HtmlContent(contentHint))
-        ))
+                    RadiosViewModel.yesNo(
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
         @continueButton()
     }

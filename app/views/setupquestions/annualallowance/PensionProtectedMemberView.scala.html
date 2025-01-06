@@ -26,7 +26,13 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m">@messages("pensionProtectedMember.heading2")</h2>
+}
+
+@contentText = {
+    <h2 class="govuk-caption-xl"> @messages("annualAllowance.caption")</h2>
+    <h1 class="govuk-heading-l govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("pensionProtectedMember.heading")</h1>
 
     <p class="govuk-body">@messages("pensionProtectedMember.message1")</p>
     <p class="govuk-body">@messages("pensionProtectedMember.message2")</p>
@@ -34,9 +40,6 @@
     <a class="govuk-body govuk-link" href="https://www.gov.uk/government/collections/how-the-public-service-pension-remedy-affects-your-pension" rel="noreferrer noopener" target="_blank">
         @messages("pensionProtectedMember.link") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
     </a>
-
-    <h2 class="govuk-heading-m govuk-!-padding-top-5">@messages("pensionProtectedMember.heading2")</h2>
-
 }
 
 @layout(pageTitle = title(form, messages("pensionProtectedMember.title"))) {
@@ -47,15 +50,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        @contentText
+
         @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                    legend = HmrcPageHeadingLegend(
-                        content = messages("pensionProtectedMember.heading"),
-                        caption = messages("annualAllowance.caption")
-                )
-            ).withHint(HintViewModel(HtmlContent(contentHint)))
-        )
+                    RadiosViewModel.yesNo(
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
         @continueButton()
     }

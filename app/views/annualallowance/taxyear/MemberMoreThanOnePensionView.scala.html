@@ -25,7 +25,13 @@
 
 @(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m">@messages("memberMoreThanOnePension.subHeading")</h2>
+}
+
+@contentText = {
+<h2 class="govuk-caption-xl"> @messages("periodDateRangeAA.caption") + " " + (messages("periodDateRangeAA." + period))</h2>
+<h1 class="govuk-heading-l govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("memberMoreThanOnePension.heading")</h1>
 
 <p class="govuk-body">@messages("memberMoreThanOnePension.message1")</p>
 
@@ -45,8 +51,6 @@
 </ul>
 
 <p class="govuk-hint">@messages("memberMoreThanOnePension.hint1")</p>
-
-<h2 class="govuk-heading-m">@messages("memberMoreThanOnePension.subHeading")</h2>
 }
 
 @layout(pageTitle = title(form, messages("memberMoreThanOnePension.title"))) {
@@ -57,16 +61,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("memberMoreThanOnePension.heading"),
-                    caption = HmrcSectionCaption(messages("periodDateRangeAA.caption") + " " + (messages("periodDateRangeAA." + period)))
-                    )
-                ).withHint(HintViewModel(HtmlContent(contentHint)))
-            )
+        @contentText
 
+        @govukRadios(
+                    RadiosViewModel.yesNo(
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
         @continueButton()
     }

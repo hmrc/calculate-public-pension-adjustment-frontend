@@ -25,7 +25,14 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m">@messages("claimingTaxReliefPensionNotAdjustedIncome.heading2", startEndDate)</h2>
+}
+
+@contentText = {
+    <h2 class="govuk-caption-xl"> @messages("claimingTaxReliefPensionNotAdjustedIncome.caption")</h2>
+    <h1 class="govuk-heading-l govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("claimingTaxReliefPensionNotAdjustedIncome.heading1")</h1>
+
     <p class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.message1")</p>
 
     <ul class="govuk-body">
@@ -41,8 +48,6 @@
 
     <p class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.message2")</p>
     <p class="govuk-body">@messages("claimingTaxReliefPensionNotAdjustedIncome.message3")</p>
-
-<h2 class="govuk-heading-m">@messages("claimingTaxReliefPensionNotAdjustedIncome.heading2", startEndDate)</h2>
 }
 
 @layout(pageTitle = title(form, messages("claimingTaxReliefPensionNotAdjustedIncome.title", startEndDate))) {
@@ -53,16 +58,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("claimingTaxReliefPensionNotAdjustedIncome.heading1"),
-                    caption = HmrcSectionCaption(messages("claimingTaxReliefPensionNotAdjustedIncome.caption"))
-                )
-            ).withHint(HintViewModel(HtmlContent(contentHint)))
+        @contentText
 
-        )
+        @govukRadios(
+                    RadiosViewModel.yesNo(
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
         @continueButton()
     }
