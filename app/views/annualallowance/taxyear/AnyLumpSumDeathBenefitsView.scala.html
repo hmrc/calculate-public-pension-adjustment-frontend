@@ -26,12 +26,12 @@
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentSubHeading = {
-    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m">@messages("anyLumpSumDeathBenefits.heading2", startEndDate)</h2>
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("anyLumpSumDeathBenefits.heading2", startEndDate)</h2>
 }
 
 @contentText = {
-    <h2 class="govuk-caption-xl"> @messages("annualAllowance.thresholdIncome.caption")</h2>
-    <h1 class="govuk-heading-l govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("anyLumpSumDeathBenefits.heading")</h1>
+    <h2 class="govuk-caption-xl govuk-!-margin-top-2 govuk-!-margin-bottom-0"> @messages("annualAllowance.thresholdIncome.caption")</h2>
+    <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("anyLumpSumDeathBenefits.heading")</h1>
 
     <p class="govuk-body">@messages("anyLumpSumDeathBenefits.message1")</p>
     <p class="govuk-body">@messages("anyLumpSumDeathBenefits.message2")</p>
