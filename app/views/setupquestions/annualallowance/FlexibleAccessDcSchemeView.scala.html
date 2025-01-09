@@ -28,13 +28,19 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("flexibleAccessDcScheme.heading2")</h2>
+}
+
+@contentText = {
+    <h2 class="govuk-caption-xl govuk-!-margin-top-2 govuk-!-margin-bottom-0"> @messages("annualAllowance.caption")</h2>
+    <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("flexibleAccessDcScheme.heading1")</h1>
+
     <p class="govuk-body">@messages("flexibleAccessDcScheme.message1")</p>
         <ul class="govuk-body">
             <li class="govuk-body">@messages("flexibleAccessDcScheme.bullet1")</li>
             <li class="govuk-body">@messages("flexibleAccessDcScheme.bullet2")</li>
         </ul>
-    <h2 class="govuk-heading-m">@messages("flexibleAccessDcScheme.heading2")</h2>
 }
 
 @layout(pageTitle = title(form, messages("flexibleAccessDcScheme.title"))) {
@@ -45,15 +51,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-                @govukRadios(
+        @contentText
+
+        @govukRadios(
                     RadiosViewModel.yesNo(
-                    field = form("value"),
-                        legend = HmrcPageHeadingLegend(
-                            content = messages("flexibleAccessDcScheme.heading1"),
-                            caption = HmrcSectionCaption(messages("annualAllowance.caption")))
-                    ).withHint(HintViewModel(HtmlContent(contentHint))
-                )
-            )
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
         @continueButton()
     }

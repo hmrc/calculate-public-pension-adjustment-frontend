@@ -25,7 +25,14 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("tradeUnionRelief.heading2", startEndDate)</h2>
+}
+
+@contentText = {
+    <h2 class="govuk-caption-xl govuk-!-margin-top-2 govuk-!-margin-bottom-0"> @messages("annualAllowance.netIncome.caption")</h2>
+    <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("tradeUnionRelief.heading")</h1>
+
     <p class="govuk-body">@messages("tradeUnionRelief.message1")</p>
     <ul class="govuk-body">
         <li>@messages("tradeUnionRelief.list1")</li>
@@ -38,9 +45,6 @@
         <li>@messages("tradeUnionRelief.list4")</li>
     </ul>
     <p class="govuk-body">@messages("tradeUnionRelief.message3")</p>
-
-    <h2 class="govuk-heading-m">@messages("tradeUnionRelief.heading2", startEndDate)</h2>
-
 }
 
 @layout(pageTitle = title(form, messages("tradeUnionRelief.title", startEndDate))) {
@@ -51,16 +55,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        @contentText
+
         @govukRadios(
-            RadiosViewModel.yesNo(
-            field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                content = messages("tradeUnionRelief.heading"),
-                caption = HmrcSectionCaption(messages("annualAllowance.netIncome.caption"))
-                )
-            )
-        .withHint(HintViewModel(HtmlContent(contentHint)))
-        )
+                    RadiosViewModel.yesNo(
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
         @continueButton()
     }

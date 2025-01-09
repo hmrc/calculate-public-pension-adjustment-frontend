@@ -25,7 +25,14 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+<h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("thresholdIncome.subHeading2." + period)</h2>
+}
+
+@contentText = {
+<h2 class="govuk-caption-xl govuk-!-margin-top-2 govuk-!-margin-bottom-0"> @messages("annualAllowance.period.caption." + period)</h2>
+<h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("thresholdIncome.heading")</h1>
+
 <p class="govuk-body">@messages("thresholdIncome.message1")</p>
 
 <a class="govuk-link" href="https://www.gov.uk/guidance/pension-schemes-work-out-your-tapered-annual-allowance" rel="noreferrer noopener" target="_blank">
@@ -63,8 +70,6 @@
         @messages("thresholdIncome.heading.list8")
     </li>
 </ul>
-
-<h2 class="govuk-heading-m">@messages("thresholdIncome.subHeading2." + period)</h2>
 }
 
 @layout(pageTitle = title(form, messages("thresholdIncome.title", startEndDate))) {
@@ -75,15 +80,14 @@
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
+        @contentText
+
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                    legend = HmrcPageHeadingLegend(
-                    content = messages("thresholdIncome.heading"),
-                    caption = HmrcSectionCaption((messages("annualAllowance.period.caption." + period)))
-                ),
+                legend = LegendViewModel(HtmlContent(contentSubHeading)),
                 items  = ThresholdIncome.options
-            ).withHint(HintViewModel(HtmlContent(contentHint)))
+            )
         )
 
         @continueButton()

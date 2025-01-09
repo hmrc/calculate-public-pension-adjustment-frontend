@@ -25,43 +25,47 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("anyLumpSumDeathBenefits.heading2", startEndDate)</h2>
+}
 
-<p class="govuk-body">@messages("anyLumpSumDeathBenefits.message1")</p>
-<p class="govuk-body">@messages("anyLumpSumDeathBenefits.message2")</p>
+@contentText = {
+    <h2 class="govuk-caption-xl govuk-!-margin-top-2 govuk-!-margin-bottom-0"> @messages("annualAllowance.thresholdIncome.caption")</h2>
+    <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("anyLumpSumDeathBenefits.heading")</h1>
 
-<ul>
-    <li class="govuk-body">
-        @messages("anyLumpSumDeathBenefits.list1")
-    </li>
-    <li class="govuk-body">
-        @messages("anyLumpSumDeathBenefits.list2")
-    </li>
-    <li class="govuk-body">
-        @messages("anyLumpSumDeathBenefits.list3")
-    </li>
-    <li class="govuk-body">
-        @messages("anyLumpSumDeathBenefits.list4")
-    </li>
-</ul>
+    <p class="govuk-body">@messages("anyLumpSumDeathBenefits.message1")</p>
+    <p class="govuk-body">@messages("anyLumpSumDeathBenefits.message2")</p>
 
-<p class="govuk-body">@messages("anyLumpSumDeathBenefits.message3")</p>
+    <ul>
+        <li class="govuk-body">
+            @messages("anyLumpSumDeathBenefits.list1")
+        </li>
+        <li class="govuk-body">
+            @messages("anyLumpSumDeathBenefits.list2")
+        </li>
+        <li class="govuk-body">
+            @messages("anyLumpSumDeathBenefits.list3")
+        </li>
+        <li class="govuk-body">
+            @messages("anyLumpSumDeathBenefits.list4")
+        </li>
+    </ul>
 
-<ul>
-    <li class="govuk-body">
-        @messages("anyLumpSumDeathBenefits.list5")
-    </li>
-    <li class="govuk-body">
-        @messages("anyLumpSumDeathBenefits.list6")
-    </li>
-</ul>
+    <p class="govuk-body">@messages("anyLumpSumDeathBenefits.message3")</p>
 
-<a class="govuk-link" href="https://www.gov.uk/guidance/pension-administrators-lump-sum-death-benefit-payments" rel="noreferrer noopener" target="_blank">
-    @messages("anyLumpSumDeathBenefits.link") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
-</a>
-<br><br/>
+    <ul>
+        <li class="govuk-body">
+            @messages("anyLumpSumDeathBenefits.list5")
+        </li>
+        <li class="govuk-body">
+            @messages("anyLumpSumDeathBenefits.list6")
+        </li>
+    </ul>
 
-<h2 class="govuk-heading-m">@messages("anyLumpSumDeathBenefits.heading2", startEndDate)</h2>
+    <a class="govuk-link" href="https://www.gov.uk/guidance/pension-administrators-lump-sum-death-benefit-payments" rel="noreferrer noopener" target="_blank">
+        @messages("anyLumpSumDeathBenefits.link") <span class="govuk-visually-hidden">@messages("site.opensInNewTab")</span>
+    </a>
+    <br><br/>
 }
 
 @layout(pageTitle = title(form, messages("anyLumpSumDeathBenefits.title", startEndDate))) {
@@ -72,16 +76,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        @contentText
 
         @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("anyLumpSumDeathBenefits.heading"),
-                    caption = HmrcSectionCaption(messages("annualAllowance.thresholdIncome.caption"))
-        )
-        )        .withHint(HintViewModel(HtmlContent(contentHint)))
-        )
+                    RadiosViewModel.yesNo(
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
         @continueButton()
     }

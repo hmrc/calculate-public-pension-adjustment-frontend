@@ -25,11 +25,17 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
-<p class="govuk-body">@messages("anySalarySacrificeArrangements.message1")</p>
-<p class="govuk-body">@messages("anySalarySacrificeArrangements.message2")</p>
-<p class="govuk-body">@messages("anySalarySacrificeArrangements.message3")</p>
-<h2 class="govuk-heading-m">@messages("anySalarySacrificeArrangements.heading", startEndDate)</h2>
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("anySalarySacrificeArrangements.heading", startEndDate)</h2>
+}
+
+@contentText = {
+    <h2 class="govuk-caption-xl govuk-!-margin-top-2 govuk-!-margin-bottom-0"> @messages("annualAllowance.thresholdIncome.caption")</h2>
+    <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("anySalarySacrificeArrangements.heading", startEndDate)</h1>
+
+    <p class="govuk-body">@messages("anySalarySacrificeArrangements.message1")</p>
+    <p class="govuk-body">@messages("anySalarySacrificeArrangements.message2")</p>
+    <p class="govuk-body">@messages("anySalarySacrificeArrangements.message3")</p>
 }
 
 @layout(pageTitle = title(form, messages("anySalarySacrificeArrangements.title", startEndDate))) {
@@ -40,15 +46,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = HmrcPageHeadingLegend(
-                    content = messages("anySalarySacrificeArrangements.heading", startEndDate),
-                    caption = HmrcSectionCaption(messages("annualAllowance.thresholdIncome.caption")))
+        @contentText
 
-            ).withHint(HintViewModel(HtmlContent(contentHint))
-        ))
+        @govukRadios(
+                    RadiosViewModel.yesNo(
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
         @continueButton()
     }

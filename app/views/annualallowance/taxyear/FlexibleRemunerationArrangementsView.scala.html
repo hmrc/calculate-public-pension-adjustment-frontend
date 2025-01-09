@@ -25,11 +25,17 @@
 
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("flexibleRemunerationArrangements.heading", startEndDate)</h2>
+}
+
+@contentText = {
+    <h2 class="govuk-caption-xl govuk-!-margin-top-2 govuk-!-margin-bottom-0"> @messages("annualAllowance.thresholdIncome.caption")</h2>
+    <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("flexibleRemunerationArrangements.heading", startEndDate)</h1>
+
     <p class="govuk-body">@messages("flexibleRemunerationArrangements.message1")</p>
     <p class="govuk-body">@messages("flexibleRemunerationArrangements.message2")</p>
     <p class="govuk-body">@messages("flexibleRemunerationArrangements.message3")</p>
-    <h2 class="govuk-heading-m">@messages("flexibleRemunerationArrangements.heading", startEndDate)</h2>
 }
 
 @layout(pageTitle = title(form, messages("flexibleRemunerationArrangements.title", startEndDate))) {
@@ -40,14 +46,13 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-            @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                    legend = HmrcPageHeadingLegend(
-                        content = messages("flexibleRemunerationArrangements.heading", startEndDate),
-                        caption = HmrcSectionCaption(messages("annualAllowance.thresholdIncome.caption")))
-                ).withHint(HintViewModel(HtmlContent(contentHint))
-            ))
+        @contentText
+
+        @govukRadios(
+                    RadiosViewModel.yesNo(
+                        field = form("value"),
+                        legend = LegendViewModel(HtmlContent(contentSubHeading))
+                    ))
 
             @continueButton()
     }
