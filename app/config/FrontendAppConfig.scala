@@ -65,7 +65,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 //  val languageTranslationEnabled: Boolean =
 //    configuration.get[Boolean]("features.welsh-translation")
 
-  val languageTranslationEnabled: Boolean = true
+  val languageTranslationEnabled: Boolean = false
 
   val origin = configuration.get[String]("origin")
 
