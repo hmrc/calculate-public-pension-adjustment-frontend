@@ -32,14 +32,8 @@
                     content = messages("hasReliefClaimedOnOverseasPension.heading", startEndDate),
                     caption = HmrcSectionCaption(messages("annualAllowance.adjustedIncome.caption"))
                 )
-            ).withHint(HintViewModel(HtmlContent(contentHint)))
+            ).withHint(HintViewModel(HtmlContent(contentText)))
         )
-
-        @govukRadios(
-                    RadiosViewModel.yesNo(
-                        field = form("value"),
-                        legend = LegendViewModel(HtmlContent(contentText))
-                    ))
 
         @continueButton()
     }
