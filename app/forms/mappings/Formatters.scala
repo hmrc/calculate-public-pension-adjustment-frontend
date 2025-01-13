@@ -19,6 +19,7 @@ package forms.mappings
 import models.{Enumerable, PSTR}
 import play.api.data.FormError
 import play.api.data.format.Formatter
+import utils.Validation.decimalPlacesCheck
 
 import scala.util.control.Exception.nonFatalCatch
 
@@ -161,6 +162,7 @@ trait Formatters {
   private[mappings] def bigDecimalFormatter(
     requiredKey: String,
     nonNumericKey: String,
+    decimalTooBig: String,
     args: Seq[String] = Seq()
   ): Formatter[BigDecimal] =
     new Formatter[BigDecimal] {
@@ -178,6 +180,12 @@ trait Formatters {
               .either(BigDecimal(s))
               .left
               .map(_ => Seq(FormError(key, nonNumericKey, args)))
+          }.flatMap {
+            case s => if(decimalPlacesCheck(s)) {
+              Right(s)
+            } else {
+              Left(Seq(FormError(key, decimalTooBig, args)))
+            }
           }
 
       override def unbind(key: String, value: BigDecimal) =
