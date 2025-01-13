@@ -16,11 +16,11 @@
 
 package utils
 
-import utils.CurrencyFormatter.formatNumberString
+import utils.CurrencyFormatter.{formatNumberString, formatNumberStringWithDecimals}
 
 trait CurrencyFormatter {
   def currencyFormat(amt: BigInt): String     = formatNumberString(amt.toString)
-  def currencyFormat(amt: BigDecimal): String = formatNumberString(amt.toString)
+  def currencyFormat(amt: BigDecimal): String = formatNumberStringWithDecimals(amt.toString)
   def currencyFormat(amt: Int): String        = formatNumberString(amt.toString)
   def currencyFormat(string: String): String  = formatNumberString(string)
 }
@@ -37,5 +37,24 @@ object CurrencyFormatter extends CurrencyFormatter {
     } else {
       input
     }
+
+  def formatNumberStringWithDecimals(input: String): String = {
+    if (input.forall(c => c.isDigit || c == '.')) {
+      val parts = input.split('.')
+      val integerPart = parts(0)
+      val formattedIntegerPart = integerPart.reverse
+        .grouped(3)
+        .mkString(",")
+        .reverse
+      if (parts.length > 1) {
+        val fractionalPart = parts(1)
+        s"£$formattedIntegerPart.$fractionalPart"
+      } else {
+        s"£$formattedIntegerPart"
+      }
+    } else {
+      input
+    }
+  }
 
 }

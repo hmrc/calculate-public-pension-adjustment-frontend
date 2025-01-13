@@ -14,23 +14,13 @@
  * limitations under the License.
  */
 
-package forms.annualallowance.taxyear
+package utils
 
-import forms.mappings.Mappings
-import play.api.data.Form
-import utils.Validation.decimalPlacesCheck
+//import play.api.data.validation._
+//
+//import scala.util.{Failure, Success, Try}
 
-import javax.inject.Inject
-
-class AmountOfGiftAidFormProvider @Inject() extends Mappings {
-
-  def apply(startEndDate: String): Form[BigDecimal] =
-    Form(
-      "value" -> bigDecimal(
-        "amountOfGiftAid.error.required",
-        "amountOfGiftAid.error.nonNumeric",
-        "calc.annualExemptAmount.errorDecimalPlaces",
-        Seq(startEndDate)
-      )
-    )
+object Validation {
+  val decimalPlacesCheck: BigDecimal => Boolean = input => input.scale < 3
+  //if 2 pad 0
 }
