@@ -18,7 +18,6 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.annualallowance.taxyear.TradeUnionReliefFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -103,8 +102,7 @@ class TradeUnionReliefControllerSpec extends SpecBase with MockitoSugar {
           .build()
 
       running(application) {
-        val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   =
+        val request =
           FakeRequest(POST, tradeUnionReliefRoute)
             .withFormUrlEncodedBody(("value", "true"))
 

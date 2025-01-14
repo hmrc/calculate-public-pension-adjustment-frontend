@@ -16,8 +16,8 @@
 
 package pages.lifetimeallowance
 
-import pages.behaviours.PageBehaviours
 import models.{CheckMode, NormalMode, SchemeNameAndTaxRef}
+import pages.behaviours.PageBehaviours
 
 class SchemeNameAndTaxRefPageSpec extends PageBehaviours {
 

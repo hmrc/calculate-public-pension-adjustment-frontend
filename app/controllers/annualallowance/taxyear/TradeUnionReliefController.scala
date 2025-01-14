@@ -19,18 +19,17 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.TradeUnionReliefFormProvider
 import models.tasklist.sections.AASection
-
-import javax.inject.Inject
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.TradeUnionReliefPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.TradeUnionReliefView
-import services.UserDataService
 
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class TradeUnionReliefController @Inject() (

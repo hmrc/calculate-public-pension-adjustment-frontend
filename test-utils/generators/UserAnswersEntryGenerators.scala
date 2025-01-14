@@ -23,9 +23,9 @@ import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
-import pages.setupquestions.lifetimeallowance._
-import pages.setupquestions.annualallowance._
 import pages.setupquestions._
+import pages.setupquestions.annualallowance._
+import pages.setupquestions.lifetimeallowance._
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {

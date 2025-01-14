@@ -33,7 +33,7 @@
 
 @layout(pageTitle = title(form, messages("anySalarySacrificeArrangements.title", startEndDate))) {
 
-    @formHelper(action = controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = controllers.annualallowance.taxyear.routes.AnySalarySacrificeArrangementsController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

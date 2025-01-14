@@ -78,8 +78,6 @@ case object NetIncomeAbove190KPage extends QuestionPage[Boolean] {
               triageAAPages(userAnswers)
             case false =>
               removeAAData(triageAAPages(userAnswers).get)
-            case _     =>
-              super.cleanup(value, userAnswers)
           }
           .getOrElse(super.cleanup(value, userAnswers))
       }

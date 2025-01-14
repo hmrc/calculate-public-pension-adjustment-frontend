@@ -20,8 +20,8 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import models.Period
 import models.requests.DataRequest
-import play.api.mvc.{ActionRefiner, Result}
 import play.api.mvc.Results.Redirect
+import play.api.mvc.{ActionRefiner, Result}
 import services.PeriodService
 
 import scala.concurrent.{ExecutionContext, Future}

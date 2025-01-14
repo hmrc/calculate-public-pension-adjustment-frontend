@@ -19,20 +19,16 @@ package controllers.setupquestions
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{AAKickOutStatus, NormalMode, ReportingChange}
-import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
-import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers.setupquestions.annualallowance._
+import viewmodels.checkAnswers.setupquestions.lifetimeallowance._
 import viewmodels.checkAnswers.setupquestions.{AffectedByRemedySummary, ReasonForResubmissionSummary, ReportingChangeSummary, ResubmittingAdjustmentSummary}
 import viewmodels.checkAnswers.{Contribution4000ToDirectContributionSchemeSummary, FlexibleAccessDcSchemeSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
-import viewmodels.checkAnswers.setupquestions.annualallowance.{ContributionRefundsSummary, HadAAChargeSummary, NetIncomeAbove100KSummary, NetIncomeAbove190KIn2023Summary, PIAAboveAnnualAllowanceIn2023Summary, PensionProtectedMemberSummary, SavingsStatementSummary}
-import viewmodels.checkAnswers.setupquestions.lifetimeallowance._
 
 class CheckYourSetupAnswersController @Inject() (
   override val messagesApi: MessagesApi,

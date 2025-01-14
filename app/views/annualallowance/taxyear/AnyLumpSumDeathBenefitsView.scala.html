@@ -70,7 +70,7 @@
 
 @layout(pageTitle = title(form, messages("anyLumpSumDeathBenefits.title", startEndDate))) {
 
-    @formHelper(action = controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = controllers.annualallowance.taxyear.routes.AnyLumpSumDeathBenefitsController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

@@ -28,7 +28,7 @@ case object PreviousClaimContinuePage extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PreviousClaimContinuePage) match {
       case Some(true)  =>
-        controllers.routes.PreviousClaimContinueController.redirect
+        controllers.routes.PreviousClaimContinueController.redirect()
       case Some(false) => controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

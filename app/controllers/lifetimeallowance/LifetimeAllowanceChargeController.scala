@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import controllers.actions._
 import forms.lifetimeallowance.LifetimeAllowanceChargeFormProvider
-import javax.inject.Inject
 import models.Mode
 import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.LifetimeAllowanceChargePage
@@ -28,6 +27,7 @@ import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.lifetimeallowance.LifetimeAllowanceChargeView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class LifetimeAllowanceChargeController @Inject() (

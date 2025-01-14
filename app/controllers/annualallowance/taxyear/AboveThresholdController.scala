@@ -17,7 +17,7 @@
 package controllers.annualallowance.taxyear
 
 import models.{Period, UserAnswers}
-import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, HowMuchContributionPensionSchemePage, LumpSumDeathBenefitsValuePage, RASContributionAmountPage, TaxReliefPage, TotalIncomePage}
+import pages.annualallowance.taxyear._
 
 class AboveThresholdController {
 

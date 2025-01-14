@@ -34,7 +34,7 @@
     betaBanner: StandardBetaBanner
 )
 
-@(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = true, signOutUrl: String = controllers.auth.routes.AuthController.signOut.url)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+@(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = true, signOutUrl: String = controllers.auth.routes.AuthController.signOut().url)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @head = {
 
@@ -45,7 +45,7 @@
                 countdown           = Some(appConfig.countdown),
                 keepAliveUrl        = Some(routes.KeepAliveController.keepAlive().url),
                 keepAliveButtonText = Some(messages("timeout.keepAlive")),
-                signOutUrl          = if((request.signedIn && showSignOut) || (signOutUrl == controllers.auth.routes.AuthController.signOutUnauthorised.url)) Some(signOutUrl) else Some(controllers.auth.routes.AuthController.sessionTimeout.url),
+                signOutUrl          = if((request.signedIn && showSignOut) || (signOutUrl == controllers.auth.routes.AuthController.signOutUnauthorised.url)) Some(signOutUrl) else Some(controllers.auth.routes.AuthController.sessionTimeout().url),
                 signOutButtonText   = Some(messages("timeout.signOut")),
                 title               = Some(messages("timeout.title")),
                 message             = Some(messages("timeout.message"))

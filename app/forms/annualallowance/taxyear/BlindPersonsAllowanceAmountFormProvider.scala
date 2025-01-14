@@ -19,7 +19,6 @@ package forms.annualallowance.taxyear
 import forms.mappings.Mappings
 import models.Period
 import play.api.data.Form
-import play.api.i18n.Messages
 
 import javax.inject.Inject
 

@@ -74,7 +74,7 @@
 
 @layout(pageTitle = title(form, messages("thresholdIncome.title", startEndDate))) {
 
-    @formHelper(action = controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = controllers.annualallowance.taxyear.routes.ThresholdIncomeController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))

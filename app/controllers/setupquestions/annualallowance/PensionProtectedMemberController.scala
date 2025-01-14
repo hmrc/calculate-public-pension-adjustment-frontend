@@ -18,8 +18,8 @@ package controllers.setupquestions.annualallowance
 
 import controllers.actions._
 import forms.setupquestions.annualallowance.PensionProtectedMemberFormProvider
-import models.{AAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
+import models.{AAKickOutStatus, Mode}
 import pages.setupquestions.annualallowance.{PensionProtectedMemberPage, SavingsStatementPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

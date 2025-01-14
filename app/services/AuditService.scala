@@ -18,7 +18,6 @@ package services
 
 import config.FrontendAppConfig
 import models.{BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationStartAuditEvent, CalculationTaskListAuditEvent, EligibilityAuditEvent, KickOffAuditEvent}
-import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 

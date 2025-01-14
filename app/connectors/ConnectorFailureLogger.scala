@@ -17,14 +17,13 @@
 package connectors
 
 import logging.Logging
-import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, RequestId, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, UpstreamErrorResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 object ConnectorFailureLogger extends Logging {
   implicit class FromResultToConnectorFailureLogger[T](httpResult: Future[T]) {
-    def logFailureReason(connectorName: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[T] = {
-      val requestId = hc.requestId.getOrElse(RequestId("Undefined"))
+    def logFailureReason(connectorName: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[T] =
       httpResult.recoverWith {
         case e: UpstreamErrorResponse =>
           logger.warn(s"Received error status ${e.statusCode} from $connectorName")
@@ -38,6 +37,5 @@ object ConnectorFailureLogger extends Logging {
           logger.warn(s"Received an error from $connectorName")
           Future.failed(e)
       }
-    }
   }
 }

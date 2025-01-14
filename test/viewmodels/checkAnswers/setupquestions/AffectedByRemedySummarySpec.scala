@@ -17,11 +17,10 @@
 package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.AffectedByRemedyPage
-import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.checkAnswers.setupquestions.annualallowance.SavingsStatementSummary

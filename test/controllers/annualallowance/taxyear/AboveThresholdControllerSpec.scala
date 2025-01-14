@@ -20,7 +20,7 @@ import base.SpecBase
 import models.{Period, ThresholdIncome}
 import org.scalacheck.Gen
 import org.scalatest.freespec.AnyFreeSpec
-import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, HowMuchContributionPensionSchemePage, LumpSumDeathBenefitsValuePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
+import pages.annualallowance.taxyear._
 
 class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
 

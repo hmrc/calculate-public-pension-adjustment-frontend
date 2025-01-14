@@ -16,12 +16,12 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, Mode, NormalMode, UserAnswers}
+import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.NewExcessLifetimeAllowancePaid.{Both, Lumpsum}
+import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 
 import scala.util.Try
 

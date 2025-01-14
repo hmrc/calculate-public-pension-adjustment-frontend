@@ -18,8 +18,7 @@ package controllers.setupquestions.annualallowance
 
 import config.FrontendAppConfig
 import controllers.actions._
-import models.{KickOffAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
-import pages.setupquestions.ReportingChangePage
+import models.{KickOffAuditEvent, LTAKickOutStatus, NormalMode}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AuditService

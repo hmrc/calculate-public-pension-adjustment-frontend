@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
-import java.time.LocalDate
+import controllers.annualallowance.preaaquestions.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -25,7 +25,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
-import controllers.annualallowance.preaaquestions.routes
+
+import java.time.LocalDate
 
 class StopPayingPublicPensionSummarySpec extends AnyFreeSpec with Matchers {
 

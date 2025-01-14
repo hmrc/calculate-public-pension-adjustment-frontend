@@ -16,10 +16,10 @@
 
 package controllers.actions
 
-import javax.inject.Inject
 import models.requests.{AuthenticatedIdentifierRequest, IdentifierRequest, UnauthenticatedIdentifierRequest}
 import play.api.mvc._
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class FakeUnauthenticatedIdentifierAction @Inject() (bodyParsers: PlayBodyParsers) extends IdentifierAction {

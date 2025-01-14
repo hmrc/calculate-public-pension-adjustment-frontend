@@ -16,14 +16,12 @@
 
 package pages
 
-import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{CheckMode, ContributedToDuringRemedyPeriod, MaybePIAIncrease, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, SchemeIndex, ThresholdIncome, WhichYearsScottishTaxpayer, WhoPaidAACharge}
-import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear.{AddAnotherSchemePage, AdjustedIncomePage, AmountOfGiftAidPage, BlindAllowancePage, BlindPersonsAllowanceAmountPage, ClaimingTaxReliefPensionPage, ContributedToDuringRemedyPeriodPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, DidYouContributeToRASSchemePage, DoYouHaveGiftAidPage, DoYouKnowPersonalAllowancePage, FlexiAccessDefinedContributionAmountPage, HowMuchAAChargeSchemePaidPage, HowMuchAAChargeYouPaidPage, KnowAdjustedAmountPage, MemberMoreThanOnePensionPage, OtherDefinedBenefitOrContributionPage, PayAChargePage, PensionSchemeDetailsPage, PensionSchemeInputAmountsPage, PersonalAllowancePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage, WhichSchemePage, WhoPaidAAChargePage}
+import models.Period._2021
+import models.{CheckMode, MaybePIAIncrease, NormalMode}
+import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
+import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.annualallowance.{Contribution4000ToDirectContributionSchemePage, FlexibleAccessDcSchemePage, MaybePIAIncreasePage, NetIncomeAbove190KIn2023Page, PIAAboveAnnualAllowanceIn2023Page, PensionProtectedMemberPage, SavingsStatementPage}
-
-import java.time.LocalDate
+import pages.setupquestions.annualallowance._
 
 class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 

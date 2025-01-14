@@ -18,12 +18,12 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import forms.annualallowance.taxyear.RASContributionAmountFormProvider
-import pages.annualallowance.taxyear.{AmountFlexibleRemunerationArrangementsPage, AmountSalarySacrificeArrangementsPage, LumpSumDeathBenefitsValuePage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
 import models.{AboveThreshold, Done, NormalMode, Period, ThresholdIncome, UserAnswers}
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.annualallowance.taxyear._
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

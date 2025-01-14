@@ -41,7 +41,7 @@
 
 @layout(pageTitle = title(form, messages("maybePIAIncrease.title"))) {
 
-    @formHelper(action = routes.MaybePIAIncreaseController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.MaybePIAIncreaseController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))

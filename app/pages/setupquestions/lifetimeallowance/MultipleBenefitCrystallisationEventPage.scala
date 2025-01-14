@@ -17,7 +17,7 @@
 package pages.setupquestions.lifetimeallowance
 
 import models.tasklist.sections.LTASection
-import models.{CheckMode, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
@@ -55,8 +55,6 @@ case object MultipleBenefitCrystallisationEventPage extends QuestionPage[Boolean
           triageLTAPages(userAnswers)
         case false =>
           removeLTAData(triageLTAPages(userAnswers).get)
-        case _     =>
-          super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 

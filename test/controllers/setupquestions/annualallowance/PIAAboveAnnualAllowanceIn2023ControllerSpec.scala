@@ -17,7 +17,6 @@
 package controllers.setupquestions.annualallowance
 
 import base.SpecBase
-import controllers.routes
 import forms.setupquestions.annualallowance.PIAAboveAnnualAllowanceIn2023FormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any

@@ -37,7 +37,7 @@
 
 @layout(pageTitle = title(form, messages("otherSchemeNotification.title"))) {
 
-    @formHelper(action = controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = controllers.setupquestions.lifetimeallowance.routes.OtherSchemeNotificationController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

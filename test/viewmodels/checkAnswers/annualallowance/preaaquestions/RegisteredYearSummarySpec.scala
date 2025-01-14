@@ -21,9 +21,9 @@ import models.{CheckMode, Period, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.preaaquestions.RegisteredYearPage
-import viewmodels.govuk.summarylist._
 import play.api.i18n.Messages
 import play.api.test.Helpers
+import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
 class RegisteredYearSummarySpec extends AnyFreeSpec with Matchers {
