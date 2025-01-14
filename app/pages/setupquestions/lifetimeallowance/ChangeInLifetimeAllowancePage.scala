@@ -71,8 +71,6 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
           triageLTAPages(userAnswers)
         case false =>
           removeLTAData(triageLTAPages(userAnswers).get)
-        case _     =>
-          super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 

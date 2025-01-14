@@ -15,9 +15,10 @@
  */
 
 package utils
-import java.time.LocalDate
 import base.SpecBase
 import views.helpers.ImplicitDateFormatter
+
+import java.time.LocalDate
 
 class ImplicitDateFormatterSpec extends SpecBase with ImplicitDateFormatter {
 

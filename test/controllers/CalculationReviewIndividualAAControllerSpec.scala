@@ -20,18 +20,15 @@ import base.SpecBase
 import config.FrontendAppConfig
 import models.CalculationResults.{CalculationResponse, CalculationReviewIndividualAAViewModel, IndividualAASummaryModel, RowViewModel}
 import models.Period
-import models.submission.{Failure, Success}
-import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
-import models.tasklist.{SectionGroupViewModel, SectionStatus, SectionViewModel, TaskListViewModel}
-import models.tasklist.sections.{LTASection, NextStepsSection}
-import models.tasklist.sections.LTASection.cannotUseLtaServiceNoChargePage
+import models.tasklist.SectionStatus.{Completed, NotStarted}
+import models.tasklist.{SectionGroupViewModel, SectionViewModel, TaskListViewModel}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
 import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Call, Result}
+import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{route, status, _}
 import services.{CalculationResultService, TaskListService}

@@ -17,7 +17,6 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
-import models.Period
 import play.api.data.{Form, FormError}
 
 class ClaimingTaxReliefPensionFormProviderSpec extends BooleanFieldBehaviours {

@@ -17,8 +17,8 @@
 package controllers
 
 import base.SpecBase
-import models.{Done, UserAnswers}
 import models.tasklist.{SectionGroupViewModel, SectionStatus, SectionViewModel, TaskListViewModel}
+import models.{Done, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar

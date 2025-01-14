@@ -16,11 +16,11 @@
 
 package pages.lifetimeallowance
 
+import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 
 case object PensionCreditReferencePage extends QuestionPage[String] {
 

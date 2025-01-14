@@ -27,7 +27,7 @@
 
 @layout(pageTitle = title(form, messages("didYouContributeToRASScheme.title", startEndDate))) {
 
-    @formHelper(action = controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

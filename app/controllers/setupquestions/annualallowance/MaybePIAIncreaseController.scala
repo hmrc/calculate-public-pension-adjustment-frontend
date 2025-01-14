@@ -18,7 +18,6 @@ package controllers.setupquestions.annualallowance
 
 import controllers.actions._
 import forms.setupquestions.annualallowance.MaybePIAIncreaseFormProvider
-import models.MaybePIAIncrease.Yes
 import models.tasklist.sections.SetupSection
 import models.{AAKickOutStatus, MaybePIAIncrease, Mode}
 import pages.setupquestions.annualallowance.MaybePIAIncreasePage

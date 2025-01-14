@@ -18,8 +18,8 @@ package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.OtherSchemeNotificationFormProvider
-import models.{LTAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
+import models.{LTAKickOutStatus, Mode}
 import pages.setupquestions.lifetimeallowance.OtherSchemeNotificationPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

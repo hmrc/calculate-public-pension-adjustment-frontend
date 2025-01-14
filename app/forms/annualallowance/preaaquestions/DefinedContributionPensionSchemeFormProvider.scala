@@ -17,8 +17,9 @@
 package forms.annualallowance.preaaquestions
 
 import forms.mappings.Mappings
-import javax.inject.Inject
 import play.api.data.Form
+
+import javax.inject.Inject
 
 class DefinedContributionPensionSchemeFormProvider @Inject() extends Mappings {
 

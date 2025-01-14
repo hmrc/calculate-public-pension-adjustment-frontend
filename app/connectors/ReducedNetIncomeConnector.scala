@@ -18,12 +18,9 @@ package connectors
 
 import config.Service
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
-import models.submission.Success
-import models.{Done, IncomeSubJourney, Period, ReducedNetIncomeRequest, ReducedNetIncomeResponse}
-import play.api.http.Status.{ACCEPTED, NO_CONTENT, OK}
-import play.api.libs.functional.syntax.toFunctionalBuilderOps
-import play.api.libs.json.JsPath.\
-import play.api.libs.json.{Json, Reads, __}
+import models.{ReducedNetIncomeRequest, ReducedNetIncomeResponse}
+import play.api.http.Status.OK
+import play.api.libs.json.Json
 import play.api.{Configuration, Logging}
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}

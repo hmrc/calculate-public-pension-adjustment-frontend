@@ -16,12 +16,12 @@
 
 package controllers.actions
 
-import javax.inject.Inject
 import models.requests.{AuthenticatedIdentifierRequest, IdentifierRequest, OptionalDataRequest, UnauthenticatedIdentifierRequest}
 import play.api.mvc.ActionTransformer
 import services.UserDataService
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class DataRetrievalActionImpl @Inject() (

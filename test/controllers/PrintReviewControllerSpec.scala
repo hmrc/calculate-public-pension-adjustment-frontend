@@ -19,9 +19,9 @@ package controllers
 import base.SpecBase
 import models.CalculationResults.{CalculationResponse, CalculationReviewIndividualAAViewModel, IndividualAASummaryModel, RowViewModel}
 import models.Period
-import models.tasklist.{SectionGroupViewModel, SectionViewModel, TaskListViewModel}
 import models.tasklist.SectionStatus.{Completed, NotStarted}
 import models.tasklist.sections.LTASection
+import models.tasklist.{SectionGroupViewModel, SectionViewModel, TaskListViewModel}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -33,7 +33,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.{CalculationResultService, TaskListService}
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.govuk.all.SummaryListViewModel
 
 import scala.concurrent.Future
 import scala.io.Source
@@ -58,7 +57,6 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockPrintReviewViewModel     =
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
-      val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
         IndividualAASummaryModel(
           Period._2017,
@@ -144,7 +142,6 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockPrintReviewViewModel     =
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
-      val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
         IndividualAASummaryModel(
           Period._2017,
@@ -217,7 +214,6 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockPrintReviewViewModel     =
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
-      val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
         IndividualAASummaryModel(
           Period._2017,
@@ -304,7 +300,6 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockTaskListService          = mock[TaskListService]
       val mockPrintReviewViewModel     =
         CalculationReviewIndividualAAViewModel(Seq(Seq(mockRowViewModel)), Seq(Seq(mockRowViewModel)))
-      val list                         = SummaryListViewModel(Seq.empty)
       val mockOutDatesSummary          =
         IndividualAASummaryModel(
           Period._2017,

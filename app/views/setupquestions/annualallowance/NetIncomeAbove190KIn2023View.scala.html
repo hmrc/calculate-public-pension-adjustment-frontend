@@ -64,7 +64,7 @@
 
 @layout(pageTitle = title(form, messages("netIncomeAbove190KIn2023.title"))) {
 
-    @formHelper(action = controllers.setupquestions.annualallowance.routes.NetIncomeAbove190KIn2023Controller.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = controllers.setupquestions.annualallowance.routes.NetIncomeAbove190KIn2023Controller.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

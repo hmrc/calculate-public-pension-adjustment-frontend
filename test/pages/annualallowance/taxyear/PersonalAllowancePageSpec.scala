@@ -16,7 +16,7 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period}
+import models.{CheckMode, Period}
 import pages.behaviours.PageBehaviours
 
 class PersonalAllowancePageSpec extends PageBehaviours {

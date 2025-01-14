@@ -17,7 +17,6 @@
 package pages.setupquestions.lifetimeallowance
 
 import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import controllers.{routes => generalRoutes}
 import models.tasklist.sections.LTASection
 import models.{NormalMode, UserAnswers}
@@ -54,8 +53,6 @@ case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
           triageLTAPages(userAnswers)
         case false =>
           removeLTAData(triageLTAPages(userAnswers).get)
-        case _     =>
-          super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 

@@ -17,7 +17,7 @@
 package pages.setupquestions.lifetimeallowance
 
 import controllers.routes
-import models.{AAKickOutStatus, CheckMode, NormalMode, UserAnswers}
+import models.{AAKickOutStatus, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call

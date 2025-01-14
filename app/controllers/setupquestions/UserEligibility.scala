@@ -18,16 +18,14 @@ package controllers.setupquestions
 
 import config.FrontendAppConfig
 import controllers.actions._
-import models.{AAKickOutStatus, EligibilityAuditEvent, KickOffAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
+import models.{AAKickOutStatus, EligibilityAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import utils.Constants.TriageJourneyNotImpactedKickOff
-import views.html.setupquestions.UserEligibilityView
 import services.AuditService
-import utils.Constants._
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import views.html.setupquestions.UserEligibilityView
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext

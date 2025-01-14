@@ -18,9 +18,9 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
+import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.ReferenceNewProtectionTypeEnhancementFormProvider
 import models.{Done, NormalMode, UserAnswers}
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar

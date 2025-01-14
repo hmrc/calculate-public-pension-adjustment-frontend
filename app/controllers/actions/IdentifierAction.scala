@@ -23,8 +23,8 @@ import play.api.Logging
 import play.api.mvc.Results.Redirect
 import play.api.mvc._
 import uk.gov.hmrc.auth.core._
-import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
+import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
@@ -66,7 +66,7 @@ class OptionalAuthIdentifierAction @Inject() (
           block(AuthenticatedIdentifierRequest(request, nino))
         case _                    =>
           logger.warn(s"Incomplete retrievals")
-          Future.successful(Redirect(routes.UnauthorisedController.onPageLoad.url))
+          Future.successful(Redirect(routes.UnauthorisedController.onPageLoad().url))
       } recoverWith {
       case _: NoActiveSession             =>
         hc.sessionId match {
@@ -83,7 +83,7 @@ class OptionalAuthIdentifierAction @Inject() (
         Future.successful(Redirect(routes.CannotUseServiceNotIndividualController.onPageLoad))
       case ex: AuthorisationException     =>
         logger.warn(s"User has AuthorisationException. The reason is ${ex.reason} .")
-        Future.successful(Redirect(routes.UnauthorisedController.onPageLoad))
+        Future.successful(Redirect(routes.UnauthorisedController.onPageLoad()))
     }
   }
 

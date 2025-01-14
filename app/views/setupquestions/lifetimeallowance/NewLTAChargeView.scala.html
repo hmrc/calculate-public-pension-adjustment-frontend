@@ -30,7 +30,7 @@
 
 @layout(pageTitle = title(form, messages("newLTACharge.title"))) {
 
-    @formHelper(action = controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = controllers.setupquestions.lifetimeallowance.routes.NewLTAChargeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

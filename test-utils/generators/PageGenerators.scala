@@ -22,8 +22,8 @@ import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpaye
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
 import pages.setupquestions._
-import pages.setupquestions.lifetimeallowance._
 import pages.setupquestions.annualallowance._
+import pages.setupquestions.lifetimeallowance._
 
 trait PageGenerators {
 

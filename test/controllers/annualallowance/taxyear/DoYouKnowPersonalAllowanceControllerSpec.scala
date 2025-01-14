@@ -19,16 +19,16 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.annualallowance.taxyear.DoYouKnowPersonalAllowanceFormProvider
-import pages.annualallowance.taxyear.{DoYouKnowPersonalAllowancePage, TotalIncomePage}
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.annualallowance.taxyear.DoYouKnowPersonalAllowancePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.{CalculateBackendService, UserDataService}
+import services.UserDataService
 import views.html.annualallowance.taxyear.DoYouKnowPersonalAllowanceView
 
 import scala.concurrent.Future

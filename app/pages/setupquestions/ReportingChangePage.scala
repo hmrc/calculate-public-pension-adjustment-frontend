@@ -21,8 +21,6 @@ import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.sections.{AASection, LTASection, PreAASection, TriageSection}
 import models.{NormalMode, ReportingChange, UserAnswers}
 import pages.QuestionPage
-import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
-import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 

@@ -19,9 +19,9 @@ package connectors
 import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
 import generators.Generators
-import models.CalculationResults.{AnnualAllowanceSetup, CalculationInputs, CalculationResponse, LifetimeAllowanceSetup, Resubmission, Setup, TotalAmounts}
-import models.{MaybePIAIncrease, MaybePIAUnchangedOrDecreased}
+import models.CalculationResults._
 import models.submission.Failure
+import models.{MaybePIAIncrease, MaybePIAUnchangedOrDecreased}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.Application
 import play.api.http.Status.BAD_REQUEST

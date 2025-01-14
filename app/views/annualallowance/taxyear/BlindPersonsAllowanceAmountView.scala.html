@@ -33,7 +33,7 @@
 
 @layout(pageTitle = title(form, messages("blindPersonsAllowanceAmount.title", startEndDate))) {
 
-    @formHelper(action = controllers.annualallowance.taxyear.routes.BlindPersonsAllowanceAmountController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = controllers.annualallowance.taxyear.routes.BlindPersonsAllowanceAmountController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

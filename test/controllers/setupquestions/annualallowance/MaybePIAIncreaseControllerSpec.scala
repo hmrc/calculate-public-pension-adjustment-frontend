@@ -18,13 +18,11 @@ package controllers.setupquestions.annualallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.annualallowance.routes
 import forms.setupquestions.annualallowance.MaybePIAIncreaseFormProvider
 import models.{AAKickOutStatus, Done, MaybePIAIncrease, NormalMode, UserAnswers}
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
-import org.scalacheck.Gen
 import org.scalatestplus.mockito.MockitoSugar
 import pages.setupquestions.annualallowance.MaybePIAIncreasePage
 import play.api.inject.bind

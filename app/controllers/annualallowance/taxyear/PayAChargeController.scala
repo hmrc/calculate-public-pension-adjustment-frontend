@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.annualallowance.taxyear.PayAChargeFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
-import pages.annualallowance.taxyear.{PayAChargePage, PensionSchemeDetailsPage}
+import pages.annualallowance.taxyear.PayAChargePage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService

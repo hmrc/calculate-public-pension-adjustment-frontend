@@ -16,7 +16,7 @@
 
 package models
 
-import play.api.libs.json.{JsPath, Json}
+import play.api.libs.json.JsPath
 import queries.{Gettable, Settable}
 
 case class LTAKickOutStatus() extends Gettable[Int] with Settable[Int] {

@@ -17,7 +17,7 @@
 package controllers
 
 import base.SpecBase
-import models.{AAKickOutStatus, Done, KickOffAuditEvent, LTAKickOutStatus, UserAnswers}
+import models.{Done, KickOffAuditEvent, LTAKickOutStatus, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
@@ -177,7 +177,9 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
       running(application) {
         val request = FakeRequest(
           GET,
-          controllers.setupquestions.annualallowance.routes.TriageJourneyNotImpactedPIADecreaseController.onPageLoad.url
+          controllers.setupquestions.annualallowance.routes.TriageJourneyNotImpactedPIADecreaseController
+            .onPageLoad()
+            .url
         )
         val result  = route(application, request).value
         status(result) mustEqual OK

@@ -24,9 +24,9 @@ import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import uk.gov.hmrc.crypto.json.JsonEncryption
 import uk.gov.hmrc.crypto.{Decrypter, Encrypter}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
-import java.util.UUID
 
 import java.time.Instant
+import java.util.UUID
 import scala.util.{Failure, Success, Try}
 
 final case class UserAnswers(

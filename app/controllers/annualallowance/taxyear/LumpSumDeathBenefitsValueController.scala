@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import controllers.actions._
 import forms.annualallowance.taxyear.LumpSumDeathBenefitsValueFormProvider
 import models.tasklist.sections.AASection
-import models.{AboveThreshold, Mode, Period}
+import models.{Mode, Period}
 import pages.annualallowance.taxyear.LumpSumDeathBenefitsValuePage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

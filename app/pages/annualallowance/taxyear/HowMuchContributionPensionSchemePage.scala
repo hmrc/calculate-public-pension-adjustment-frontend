@@ -16,12 +16,10 @@
 
 package pages.annualallowance.taxyear
 
-import models.{CheckMode, NormalMode, Period, UserAnswers}
+import models.{NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
-
-import scala.util.Try
 
 case class HowMuchContributionPensionSchemePage(period: Period) extends QuestionPage[BigInt] {
 

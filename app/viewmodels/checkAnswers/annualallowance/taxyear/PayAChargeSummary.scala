@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.taxyear
 
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
-import pages.annualallowance.taxyear.{PayAChargePage, PensionSchemeDetailsPage}
+import pages.annualallowance.taxyear.PayAChargePage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._

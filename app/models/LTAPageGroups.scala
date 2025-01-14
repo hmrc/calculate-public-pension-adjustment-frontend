@@ -49,7 +49,7 @@ case object LTAPageGroups {
     )
 
   def changeInLifetimeAllowancePageGroup(): Seq[String] =
-    changeInTaxChargePageGroup :+ "changeInTaxCharge"
+    changeInTaxChargePageGroup() :+ "changeInTaxCharge"
 
   def newExcessLifetimeAllowancePaidPageGroup(): Seq[String] =
     Seq(

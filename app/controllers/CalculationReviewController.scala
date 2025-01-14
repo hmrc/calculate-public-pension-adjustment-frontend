@@ -24,14 +24,13 @@ import models.tasklist.SectionStatus
 import models.tasklist.sections.LTASection
 import play.api.data.Form
 import play.api.data.Forms.ignored
-
-import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.CalculationResultService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.CalculationReviewView
 
+import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
 class CalculationReviewController @Inject() (

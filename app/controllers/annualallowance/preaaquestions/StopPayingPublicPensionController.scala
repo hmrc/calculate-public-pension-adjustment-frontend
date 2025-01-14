@@ -18,8 +18,8 @@ package controllers.annualallowance.preaaquestions
 
 import controllers.actions._
 import forms.annualallowance.preaaquestions.StopPayingPublicPensionFormProvider
-import models.{CheckMode, Mode}
 import models.tasklist.sections.PreAASection
+import models.{CheckMode, Mode}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, FlexiblyAccessedPensionPage, StopPayingPublicPensionPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

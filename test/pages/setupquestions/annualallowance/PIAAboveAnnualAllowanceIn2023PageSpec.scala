@@ -16,8 +16,7 @@
 
 package pages.setupquestions.annualallowance
 
-import models.{CheckMode, LTAKickOutStatus, NormalMode, Period}
-import pages.annualallowance.taxyear.{BlindAllowancePage, BlindPersonsAllowanceAmountPage, PersonalAllowancePage}
+import models.{CheckMode, LTAKickOutStatus, NormalMode}
 import pages.behaviours.PageBehaviours
 
 import scala.util.Random

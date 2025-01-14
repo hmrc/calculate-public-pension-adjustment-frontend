@@ -18,14 +18,12 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import models.{AAKickOutStatus, Done, EligibilityAuditEvent, KickOffAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
+import models.{AAKickOutStatus, Done, EligibilityAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import pages.setupquestions.ReportingChangePage
-import play.api.inject
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -48,8 +46,6 @@ class UserEligibilityControllerSpec extends SpecBase {
           FakeRequest(GET, controllers.setupquestions.routes.UserEligibility.onPageLoad.url)
 
         val result = route(application, request).value
-
-        val view = application.injector.instanceOf[UserEligibilityView]
 
         status(result) mustEqual OK
       }

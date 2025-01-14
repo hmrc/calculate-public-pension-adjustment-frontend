@@ -18,8 +18,8 @@ package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
-import models.{LTAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
+import models.{LTAKickOutStatus, Mode}
 import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -45,7 +45,6 @@ class HadBenefitCrystallisationEventController @Inject() (
 
   val form = formProvider()
 
-  private val lta                = "LTA"
   private val kickOutStatusFalse = 1
   private val kickOutStatusTrue  = 0
 

@@ -42,7 +42,7 @@ class PreviousClaimContinuePageSpec extends PageBehaviours {
       val result = PreviousClaimContinuePage
         .navigate(NormalMode, ua)
 
-      result mustEqual controllers.routes.PreviousClaimContinueController.redirect
+      result mustEqual controllers.routes.PreviousClaimContinueController.redirect()
     }
 
     "must redirect to resubmitting adjustment when restarting previous claim in NormalMode" in {

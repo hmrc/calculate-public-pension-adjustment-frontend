@@ -19,11 +19,11 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.annualallowance.taxyear.AmountClaimedOnOverseasPensionFormProvider
-import pages.annualallowance.taxyear.AmountClaimedOnOverseasPensionPage
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.annualallowance.taxyear.AmountClaimedOnOverseasPensionPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

@@ -19,21 +19,21 @@ package services
 import base.SpecBase
 import connectors.{CalculationResultConnector, ReducedNetIncomeConnector, SubmissionsConnector}
 import controllers.annualallowance.taxyear.AboveThresholdController
-import models.CalculationResults.{AnnualAllowanceSetup, CalculationResponse, CalculationResultsViewModel, CalculationReviewIndividualAAViewModel, CalculationReviewViewModel, IndividualAASummaryModel, LifetimeAllowanceSetup, Resubmission, ReviewRowViewModel, RowViewModel, Setup}
+import models.CalculationResults._
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023._
 import models.submission.Success
 import models.tasklist.sections.LTASection
-import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, ReducedNetIncomeResponse, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
+import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, ReducedNetIncomeResponse, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.MockitoSugar
-import pages.annualallowance.taxyear.{AmountClaimedOnOverseasPensionPage, DefinedBenefitAmountPage, DefinedContributionAmountPage, FlexiAccessDefinedContributionAmountPage, HowMuchContributionPensionSchemePage, HowMuchTaxReliefPensionPage, KnowAdjustedAmountPage, LumpSumDeathBenefitsValuePage, PensionSchemeInputAmountsPage, RASContributionAmountPage, TaxReliefPage, ThresholdIncomePage, TotalIncomePage}
+import pages.annualallowance.taxyear._
 import play.api.libs.json.{JsObject, JsValue, Json}
 import uk.gov.hmrc.http.HeaderCarrier
 
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
 import java.time.LocalDate
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.io.Source
 
 class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
@@ -1143,56 +1143,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
                |      },
                |      "valueNewLtaCharge": 30000,
                |      "whoPayingExtraLtaCharge": "you"
-               |    }
-               |  }
-               |""".stripMargin)
-      .as[JsObject]
-
-    val data5 = Json
-      .parse("""
-               {
-               |    "savingsStatement": true,
-               |    "resubmittingAdjustment": false,
-               |    "reportingChange": [
-               |      "lifetimeAllowance"
-               |    ],
-               |    "lta": {
-               |      "hadBenefitCrystallisationEvent": true,
-               |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
-               |      "changeInLifetimeAllowance": true,
-               |      "increaseInLTACharge": false
-               |    }
-               |  }
-               |""".stripMargin)
-      .as[JsObject]
-
-    val data6 = Json
-      .parse("""
-               {
-               |    "savingsStatement": true,
-               |    "resubmittingAdjustment": false,
-               |    "reportingChange": [
-               |      "lifetimeAllowance"
-               |    ],
-               |    "lta": {
-               |      "hadBenefitCrystallisationEvent": true,
-               |      "dateOfBenefitCrystallisationEvent": "2018-11-20",
-               |      "changeInLifetimeAllowance": false
-               |    }
-               |  }
-               |""".stripMargin)
-      .as[JsObject]
-
-    val data7 = Json
-      .parse("""
-               {
-               |    "savingsStatement": true,
-               |    "resubmittingAdjustment": false,
-               |    "reportingChange": [
-               |      "lifetimeAllowance"
-               |    ],
-               |    "lta": {
-               |      "hadBenefitCrystallisationEvent": false
                |    }
                |  }
                |""".stripMargin)
@@ -4774,13 +4724,6 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         rows(index).changeString mustBe expectedString
         rows(index).link mustBe expectedLink
         rows(index).totalCharge mustBe expectedTotalCharge
-      }
-
-      def checkRowNameReviewRowLTA(row: ReviewRowViewModel, expectedTitle: String, expectedLink: String): Unit = {
-        row.title mustBe expectedTitle
-        row.changeString mustBe None
-        row.link mustBe expectedLink
-        row.totalCharge mustBe None
       }
 
       val index = 0

@@ -20,9 +20,9 @@ import base.SpecBase
 import config.FrontendAppConfig
 import models.CalculationResults.CalculationResponse
 import models.submission.{Failure, Success}
-import models.tasklist.{SectionGroupViewModel, SectionViewModel, TaskListViewModel}
 import models.tasklist.SectionStatus.{Completed, NotStarted}
 import models.tasklist.sections.LTASection
+import models.tasklist.{SectionGroupViewModel, SectionViewModel, TaskListViewModel}
 import org.jsoup.Jsoup
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -35,7 +35,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.{CalculationResultService, TaskListService}
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.CalculationReviewView
 
 import scala.concurrent.Future
 import scala.io.Source

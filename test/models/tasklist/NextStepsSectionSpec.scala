@@ -20,7 +20,7 @@ import base.SpecBase
 import config.FrontendAppConfig
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.sections.{LTASection, NextStepsSection}
-import models.{AAKickOutStatus, LTAKickOutStatus, PostTriageFlag, ReportingChange, SectionNavigation, UserAnswers}
+import models.{AAKickOutStatus, LTAKickOutStatus, PostTriageFlag, ReportingChange, UserAnswers}
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.behaviours.PageBehaviours
