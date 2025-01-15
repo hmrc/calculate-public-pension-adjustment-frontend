@@ -38,7 +38,7 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
       case Some(PensionScheme)             => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
       case Some(You) if hasPreviousCharge  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
       case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(NormalMode)
-      case None                            => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case _                               => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
@@ -48,7 +48,7 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
       case Some(PensionScheme)             => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode)
       case Some(You) if hasPreviousCharge  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
       case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(CheckMode)
-      case None                            => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case _                               => generalRoutes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
@@ -69,6 +69,7 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
           userAnswers
             .remove(LtaPensionSchemeDetailsPage)
             .flatMap(_.remove(UserSchemeDetailsPage))
+        case _                                                            => super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
   }

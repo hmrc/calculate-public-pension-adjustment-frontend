@@ -33,12 +33,12 @@ case object Contribution4000ToDirectContributionSchemePage extends QuestionPage[
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(Contribution4000ToDirectContributionSchemePage) match {
       case Some(true)  =>
-        answers.get(LTAKickOutStatus()).getOrElse(None) match {
-          case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case 1    =>
+        answers.get(LTAKickOutStatus()) match {
+          case Some(0)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(1)    =>
             controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
               .onPageLoad(NormalMode)
-          case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(2)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
@@ -51,12 +51,12 @@ case object Contribution4000ToDirectContributionSchemePage extends QuestionPage[
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(Contribution4000ToDirectContributionSchemePage) match {
       case Some(true)  =>
-        answers.get(LTAKickOutStatus()).getOrElse(None) match {
-          case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case 1    =>
+        answers.get(LTAKickOutStatus()) match {
+          case Some(0)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(1)   =>
             controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
               .onPageLoad(NormalMode)
-          case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(2)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }

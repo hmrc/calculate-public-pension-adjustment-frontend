@@ -84,7 +84,7 @@ class CalculationReviewIndividualAAController @Inject() (
 
   def onSubmit(period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData andThen requireTasksCompleted andThen isRelevantPeriod(period))
-      .async { implicit request =>
+      .async {
         Future.successful(Redirect(routes.CalculationReviewController.onPageLoad()))
       }
 }

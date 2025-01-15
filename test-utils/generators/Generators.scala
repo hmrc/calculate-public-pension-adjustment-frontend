@@ -75,7 +75,7 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
       firstDigits <- Gen.listOfN(8, Gen.numChar).map(_.mkString)
       secondChars <- Gen.listOfN(2, Gen.alphaChar).map(_.mkString)
     } yield s"$firstDigits $secondChars".toUpperCase.replaceAll(" ", "")
-    if (pstr == "00348916RT") {
+    if (pstr.toString == "00348916RT") {
       validPstrs
     } else {
       pstr
