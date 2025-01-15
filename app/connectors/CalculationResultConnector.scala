@@ -18,29 +18,32 @@ package connectors
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
+import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.CalculationResults.{CalculationInputs, CalculationResponse}
 import play.api.Logging
 import play.api.http.Status._
 import play.api.libs.json.Json
-import uk.gov.hmrc.http.{HttpClient, UpstreamErrorResponse}
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
+import uk.gov.hmrc.http.HttpReads.Implicits._
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class CalculationResultConnector @Inject() (
   config: FrontendAppConfig,
-  httpClient1: HttpClient
+  httpClient: HttpClientV2
 )(implicit
   ec: ExecutionContext
 ) extends Logging {
 
   def sendRequest(
     calculationInputs: CalculationInputs
-  ): Future[CalculationResponse] =
-    httpClient1
-      .doPost(
-        s"${config.cppaBaseUrl}/calculate-public-pension-adjustment/show-calculation",
-        Json.toJson(calculationInputs)
-      )
+  )(implicit hc: HeaderCarrier): Future[CalculationResponse] =
+    httpClient
+      .post(url"${config.cppaBaseUrl}/calculate-public-pension-adjustment/show-calculation")
+      .withBody(Json.toJson(calculationInputs))
+      .execute[HttpResponse]
+      .logFailureReason(connectorName = "Calculation Result on set")
       .flatMap { response =>
         response.status match {
           case OK =>

@@ -34,13 +34,13 @@ case object NetIncomeAbove190KPage extends QuestionPage[Boolean] {
     (answers.get(NetIncomeAbove190KPage), answers.get(SavingsStatementPage)) match {
       case (Some(true), Some(true))  =>
         answers.get(LTAKickOutStatus()) match {
-          case Some(0)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case Some(1)    =>
+          case Some(0) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(1) =>
             controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
               .onPageLoad(NormalMode)
-          case Some(2)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
+          case Some(2) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case None    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case _       => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
       case (Some(false), Some(true)) =>
         controllers.setupquestions.annualallowance.routes.MaybePIAIncreaseController.onPageLoad(NormalMode)
@@ -53,13 +53,13 @@ case object NetIncomeAbove190KPage extends QuestionPage[Boolean] {
     (answers.get(NetIncomeAbove190KPage), answers.get(SavingsStatementPage)) match {
       case (Some(true), Some(true))  =>
         answers.get(LTAKickOutStatus()) match {
-          case Some(0)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case Some(1)    =>
+          case Some(0) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(1) =>
             controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
               .onPageLoad(NormalMode)
-          case Some(2)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
+          case Some(2) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case None    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case _       => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
       case (Some(false), Some(true)) =>
         controllers.setupquestions.annualallowance.routes.MaybePIAIncreaseController.onPageLoad(NormalMode)

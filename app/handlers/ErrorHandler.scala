@@ -16,13 +16,12 @@
 
 package handlers
 
+import javax.inject.{Inject, Singleton}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Request
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.http.LegacyFrontendErrorHandler
 import views.html.ErrorTemplate
-
-import javax.inject.{Inject, Singleton}
 
 @Singleton
 class ErrorHandler @Inject() (
