@@ -42,7 +42,7 @@ class OptionalSignInController @Inject() (
     Ok(view(redirectLocation))
   }
 
-  def onSubmit(): Action[AnyContent] = (identify andThen getData) { implicit request =>
+  def onSubmit(): Action[AnyContent] = (identify andThen getData) {
     Redirect(
       config.loginUrl,
       Map(

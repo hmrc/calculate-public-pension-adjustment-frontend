@@ -54,5 +54,6 @@ class BlindPersonsAllowanceAmountFormProvider @Inject() extends Mappings {
     case Period._2021                => BigInt(2500)
     case Period._2022                => BigInt(2520)
     case Period._2023                => BigInt(2600)
+    case _                           => BigInt(0)
   }
 }

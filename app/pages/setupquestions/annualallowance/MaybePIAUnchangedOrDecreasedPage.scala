@@ -34,12 +34,12 @@ case object MaybePIAUnchangedOrDecreasedPage extends QuestionPage[MaybePIAUnchan
       case Some(MaybePIAUnchangedOrDecreased.Yes)                                                =>
         controllers.setupquestions.annualallowance.routes.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(NormalMode)
       case Some(MaybePIAUnchangedOrDecreased.No) | Some(MaybePIAUnchangedOrDecreased.IDoNotKnow) =>
-        answers.get(LTAKickOutStatus()).getOrElse(None) match {
-          case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case 1    =>
+        answers.get(LTAKickOutStatus()) match {
+          case Some(0)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(1)    =>
             controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
               .onPageLoad(NormalMode)
-          case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(2)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
@@ -51,12 +51,12 @@ case object MaybePIAUnchangedOrDecreasedPage extends QuestionPage[MaybePIAUnchan
       case Some(MaybePIAUnchangedOrDecreased.Yes)                                                =>
         controllers.setupquestions.annualallowance.routes.PIAAboveAnnualAllowanceIn2023Controller.onPageLoad(NormalMode)
       case Some(MaybePIAUnchangedOrDecreased.No) | Some(MaybePIAUnchangedOrDecreased.IDoNotKnow) =>
-        answers.get(LTAKickOutStatus()).getOrElse(None) match {
-          case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case 1    =>
+        answers.get(LTAKickOutStatus()) match {
+          case Some(0)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(1)    =>
             controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
               .onPageLoad(NormalMode)
-          case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(2)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
           case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
         }

@@ -21,7 +21,7 @@ GET         /annual-allowance/:period/check-answers                             
 GET         /account/sign-out-survey                                         controllers.auth.AuthController.signOut()
 GET         /account/session-timeout                                         controllers.auth.AuthController.sessionTimeout()
 GET         /account/signed-out                                              controllers.auth.SignedOutController.onPageLoad()
-GET         /account/sign-out-unauthorised                                   controllers.auth.AuthController.signOutUnauthorised
+GET         /account/sign-out-unauthorised                                   controllers.auth.AuthController.signOutUnauthorised()
 
 GET         /unauthorised                                                    controllers.UnauthorisedController.onPageLoad()
 

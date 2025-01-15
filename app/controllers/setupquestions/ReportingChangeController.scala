@@ -75,13 +75,13 @@ class ReportingChangeController @Inject() (
   }
 
   private def generateAAKickOutStatus(value: Set[ReportingChange], userAnswers: UserAnswers): UserAnswers  =
-    if (value.contains(ReportingChange.AnnualAllowance).equals(true)) {
+    if (value.contains(ReportingChange.AnnualAllowance)) {
       AAKickOutStatus().saveAAKickOutStatus(userAnswers, kickOutStatusFalse)
     } else {
       userAnswers
     }
   private def generateLTAKickOutStatus(value: Set[ReportingChange], userAnswers: UserAnswers): UserAnswers =
-    if (value.contains(ReportingChange.LifetimeAllowance).equals(true)) {
+    if (value.contains(ReportingChange.LifetimeAllowance)) {
       LTAKickOutStatus().saveLTAKickOutStatus(userAnswers, kickOutStatusFalse)
     } else {
       userAnswers
