@@ -23,7 +23,7 @@ import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case class HowMuchAAChargeYouPaidPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[BigInt] {
+case class HowMuchAAChargeYouPaidPage(period: Period, schemeIndex: SchemeIndex) extends QuestionPage[BigDecimal] {
 
   override def path: JsPath = JsPath \ "aa" \ "years" \ period.toString \ "schemes" \ schemeIndex.toString \ toString
 

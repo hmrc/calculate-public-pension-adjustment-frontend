@@ -29,7 +29,7 @@ object TaxYear2016To2023 {
     pensionInputAmount: Int,
     taxYearSchemes: List[TaxYearScheme],
     totalIncome: Int,
-    chargePaidByMember: Int,
+    chargePaidByMember: Double,
     period: Period,
     incomeSubJourney: IncomeSubJourney,
     income: Option[Income] = None,
@@ -43,7 +43,7 @@ object TaxYear2016To2023 {
     postAccessDefinedContributionInputAmount: Int,
     taxYearSchemes: List[TaxYearScheme],
     totalIncome: Int,
-    chargePaidByMember: Int,
+    chargePaidByMember: Double,
     period: Period,
     incomeSubJourney: IncomeSubJourney,
     income: Option[Income] = None,
@@ -56,7 +56,7 @@ object TaxYear2016To2023 {
     definedBenefitInputAmount: Int,
     definedContributionInputAmount: Int,
     totalIncome: Int,
-    chargePaidByMember: Int,
+    chargePaidByMember: Double,
     taxYearSchemes: List[TaxYearScheme],
     period: Period,
     incomeSubJourney: IncomeSubJourney,
@@ -72,7 +72,7 @@ object TaxYear2016To2023 {
     val normalReads: Reads[TaxYear2016To2023] = ((__ \ "pensionInputAmount").read[Int] and
       (__ \ "taxYearSchemes").read[List[TaxYearScheme]] and
       (__ \ "totalIncome").read[Int] and
-      (__ \ "chargePaidByMember").read[Int] and
+      (__ \ "chargePaidByMember").read[Double] and
       (__ \ "period").read[Period] and
       (__ \ "incomeSubJourney").read[IncomeSubJourney] and
       (__ \ "income").readNullable[Income] and
@@ -86,7 +86,7 @@ object TaxYear2016To2023 {
       (__ \ "postAccessDefinedContributionInputAmount").read[Int] and
       (__ \ "taxYearSchemes").read[List[TaxYearScheme]] and
       (__ \ "totalIncome").read[Int] and
-      (__ \ "chargePaidByMember").read[Int] and
+      (__ \ "chargePaidByMember").read[Double] and
       (__ \ "period").read[Period] and
       (__ \ "incomeSubJourney").read[IncomeSubJourney] and
       (__ \ "income").readNullable[Income] and
@@ -100,7 +100,7 @@ object TaxYear2016To2023 {
       ((__ \ "definedBenefitInputAmount").read[Int] and
         (__ \ "definedContributionInputAmount").read[Int] and
         (__ \ "totalIncome").read[Int] and
-        (__ \ "chargePaidByMember").read[Int] and
+        (__ \ "chargePaidByMember").read[Double] and
         (__ \ "taxYearSchemes").read[List[TaxYearScheme]] and
         (__ \ "period").read[Period] and
         (__ \ "incomeSubJourney").read[IncomeSubJourney] and
@@ -129,7 +129,7 @@ object TaxYear2016To2023 {
       (__ \ "pensionInputAmount").write[Int] and
         (__ \ "taxYearSchemes").write[List[TaxYearScheme]] and
         (__ \ "totalIncome").write[Int] and
-        (__ \ "chargePaidByMember").write[Int] and
+        (__ \ "chargePaidByMember").write[Double] and
         (__ \ "period").write[Period] and
         (__ \ "incomeSubJourney").write[IncomeSubJourney] and
         (__ \ "income").writeNullable[Income] and
@@ -154,7 +154,7 @@ object TaxYear2016To2023 {
         (__ \ "postAccessDefinedContributionInputAmount").write[Int] and
         (__ \ "taxYearSchemes").write[List[TaxYearScheme]] and
         (__ \ "totalIncome").write[Int] and
-        (__ \ "chargePaidByMember").write[Int] and
+        (__ \ "chargePaidByMember").write[Double] and
         (__ \ "period").write[Period] and
         (__ \ "incomeSubJourney").write[IncomeSubJourney] and
         (__ \ "income").writeNullable[Income] and
@@ -183,7 +183,7 @@ object TaxYear2016To2023 {
       (__ \ "definedBenefitInputAmount").write[Int] and
         (__ \ "definedContributionInputAmount").write[Int] and
         (__ \ "totalIncome").write[Int] and
-        (__ \ "chargePaidByMember").write[Int] and
+        (__ \ "chargePaidByMember").write[Double] and
         (__ \ "taxYearSchemes").write[List[TaxYearScheme]] and
         (__ \ "period").write[Period] and
         (__ \ "incomeSubJourney").write[IncomeSubJourney] and

@@ -320,8 +320,8 @@ class CalculationResultService @Inject() (
         }
     }
 
-    val chargePaidByMember: Int =
-      userAnswers.get(HowMuchAAChargeYouPaidPage(period, SchemeIndex(0))).map(_.toInt).getOrElse(0)
+    val chargePaidByMember: Double =
+      userAnswers.get(HowMuchAAChargeYouPaidPage(period, SchemeIndex(0))).map(_.toDouble).getOrElse(0.00)
 
     val taxYearSchemes: List[TaxYearScheme] =
       Range
@@ -345,8 +345,8 @@ class CalculationResultService @Inject() (
             else
               None
 
-          val oChargePaidByScheme: Option[Int] =
-            userAnswers.get(HowMuchAAChargeSchemePaidPage(period, SchemeIndex(v))).map(_.toInt)
+          val oChargePaidByScheme: Option[Double] =
+            userAnswers.get(HowMuchAAChargeSchemePaidPage(period, SchemeIndex(v))).map(_.toDouble)
 
           (oPensionSchemeDetails, oPensionSchemeInputAmounts) match {
             case (Some(pensionSchemeDetails), Some(pensionSchemeInputAmounts)) =>
@@ -355,7 +355,7 @@ class CalculationResultService @Inject() (
                   pensionSchemeDetails.schemeName,
                   pensionSchemeDetails.schemeTaxRef,
                   pensionSchemeInputAmounts.revisedPIA.toInt,
-                  oChargePaidByScheme.getOrElse(0),
+                  oChargePaidByScheme.getOrElse(0.00),
                   oPensionSchemeInput2016PostAmounts.map(_.revisedPIA.toInt)
                 )
               )

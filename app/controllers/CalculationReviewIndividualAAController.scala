@@ -23,6 +23,7 @@ import models.Period
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.CalculationResultService
 import uk.gov.hmrc.http.HeaderCarrier
@@ -56,9 +57,20 @@ class CalculationReviewIndividualAAController @Inject() (
         implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
         calculationResultService.sendRequest(request.userAnswers).flatMap { calculationResponse =>
+          println(
+            s"======== Sandy ======== calculationResponse ==== ${Json.prettyPrint(Json.toJson(calculationResponse))}  ========="
+          )
           val allYears: Seq[IndividualAASummaryModel]  =
             calculationResultService.individualAASummaryModel(calculationResponse)
           val individualYear: IndividualAASummaryModel = allYears.find(year => year.period == period).get
+
+          println(
+            s"====================================================== Sandy ====================================================================="
+          )
+
+          println(
+            s"======== Sandy ======== IndividualAASummaryModel ==== $IndividualAASummaryModel  ========="
+          )
           calculationResultService
             .calculationReviewIndividualAAViewModel(calculationResponse, Some(period.toString()), request.userAnswers)
             .map { calculationReviewIndividualAAViewModel =>

@@ -18,21 +18,20 @@ package forms.annualallowance.taxyear
 
 import forms.mappings.Mappings
 import play.api.data.Form
+import play.api.i18n.Messages
+import utils.Validation.decimalPlacesCheck
 
 import javax.inject.Inject
 
 class HowMuchAAChargeYouPaidFormProvider @Inject() extends Mappings {
 
-  def apply(startEndDate: String): Form[BigInt] =
+  def apply(startEndDate: String): Form[BigDecimal] =
     Form(
-      "value" -> bigInt(
+      "value" -> bigDecimal(
         "howMuchAAChargeYouPaid.error.required",
-        "howMuchAAChargeYouPaid.error.wholeNumber",
         "howMuchAAChargeYouPaid.error.nonNumeric",
+        "calc.annualExemptAmount.errorDecimalPlaces",
         Seq(startEndDate)
       )
-        .verifying(
-          inRangeWithArg[BigInt](1, BigInt("999999999"), "howMuchAAChargeYouPaid.error.outOfRange", startEndDate)
-        )
     )
 }
