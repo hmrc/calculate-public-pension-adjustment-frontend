@@ -57,11 +57,12 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
 
   private def redirectToNext(answers: UserAnswers): Call =
     answers.get(AAKickOutStatus()) match {
-      case Some(0)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case Some(1)    => controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode)
-      case Some(2)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case _    => routes.JourneyRecoveryController.onPageLoad(None)
+      case Some(0) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(1) =>
+        controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode)
+      case Some(2) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case None    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case _       => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =

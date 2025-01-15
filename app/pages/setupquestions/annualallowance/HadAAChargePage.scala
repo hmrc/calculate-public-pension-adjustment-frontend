@@ -33,13 +33,13 @@ case object HadAAChargePage extends QuestionPage[Boolean] {
     (answers.get(HadAAChargePage), answers.get(SavingsStatementPage)) match {
       case (Some(true), Some(true)) =>
         answers.get(LTAKickOutStatus()) match {
-          case Some(0)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case Some(1)    =>
+          case Some(0) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(1) =>
             controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
               .onPageLoad(NormalMode)
-          case Some(2)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
+          case Some(2) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case None    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case _       => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
       case (Some(_), Some(_))       =>
         controllers.setupquestions.annualallowance.routes.ContributionRefundsController.onPageLoad(NormalMode)
@@ -50,13 +50,13 @@ case object HadAAChargePage extends QuestionPage[Boolean] {
     (answers.get(HadAAChargePage), answers.get(SavingsStatementPage)) match {
       case (Some(true), Some(true)) =>
         answers.get(LTAKickOutStatus()) match {
-          case Some(0)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case Some(1)    =>
+          case Some(0) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case Some(1) =>
             controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
               .onPageLoad(NormalMode)
-          case Some(2)    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-          case _    => controllers.routes.JourneyRecoveryController.onPageLoad()
+          case Some(2) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case None    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+          case _       => controllers.routes.JourneyRecoveryController.onPageLoad()
         }
       case (Some(_), Some(_))       =>
         controllers.setupquestions.annualallowance.routes.ContributionRefundsController.onPageLoad(NormalMode)

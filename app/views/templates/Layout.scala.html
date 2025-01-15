@@ -45,7 +45,7 @@
                 countdown           = Some(appConfig.countdown),
                 keepAliveUrl        = Some(routes.KeepAliveController.keepAlive().url),
                 keepAliveButtonText = Some(messages("timeout.keepAlive")),
-                signOutUrl          = if((request.signedIn && showSignOut) || (signOutUrl == controllers.auth.routes.AuthController.signOutUnauthorised.url)) Some(signOutUrl) else Some(controllers.auth.routes.AuthController.sessionTimeout().url),
+                signOutUrl          = if((request.signedIn && showSignOut) || (signOutUrl == controllers.auth.routes.AuthController.signOutUnauthorised().url)) Some(signOutUrl) else Some(controllers.auth.routes.AuthController.sessionTimeout().url),
                 signOutButtonText   = Some(messages("timeout.signOut")),
                 title               = Some(messages("timeout.title")),
                 message             = Some(messages("timeout.message"))
@@ -93,7 +93,7 @@
     headBlock   = Some(head),
     headerBlock = Some(hmrcStandardHeader(
         serviceUrl  = Some(routes.IndexController.onPageLoad().url),
-        signOutUrl  = if((request.signedIn && showSignOut) || (signOutUrl == controllers.auth.routes.AuthController.signOutUnauthorised.url)) Some(signOutUrl) else None,
+        signOutUrl  = if((request.signedIn && showSignOut) || (signOutUrl == controllers.auth.routes.AuthController.signOutUnauthorised().url)) Some(signOutUrl) else None,
         phaseBanner = Some(betaBanner(appConfig.feedbackUrl))
     )),
     beforeContentBlock = Some(beforeContent),

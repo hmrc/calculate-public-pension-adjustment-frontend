@@ -104,7 +104,7 @@ class CalculationResultConnectorSpec
 
           server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withBody(responseBody)))
 
-          val result = connector.sendRequest(calcInputs).futureValue
+          val result = connector.sendRequest(calcInputs)(hc).futureValue
 
           result mustBe a[CalculationResponse]
           result mustBe calculationResponse
@@ -159,7 +159,7 @@ class CalculationResultConnectorSpec
           server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withStatus(BAD_REQUEST).withBody(responseBody)))
 
           val response: Try[CalculationResponse] =
-            Try(connector.sendRequest(calcInputs).futureValue)
+            Try(connector.sendRequest(calcInputs)(hc).futureValue)
 
           response.isFailure mustBe true
         }
