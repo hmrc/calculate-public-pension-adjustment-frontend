@@ -17,11 +17,11 @@
 package utils
 
 import models.requests.{AuthenticatedIdentifierRequest, DataRequest, OptionalDataRequest}
-import play.api.mvc.Request
+import play.api.mvc.{Request, RequestHeader}
 
 object RequestOps {
 
-  implicit class RequestSyntax(request: Request[_]) {
+  implicit class RequestSyntax(request: RequestHeader) {
 
     def signedIn: Boolean = request match {
       case dr: DataRequest[_] =>

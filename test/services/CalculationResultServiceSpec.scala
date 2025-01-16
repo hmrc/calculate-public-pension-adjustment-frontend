@@ -4743,7 +4743,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2016",
           Some("calculationReview.taxChargeNotChanged"),
-          "/public-pension-adjustment/calculation-results/2016/detailed-breakdown",
+          "/calculation-results/2016/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4751,7 +4751,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2017",
           Some("calculationReview.taxChargeDecreasedBy"),
-          "/public-pension-adjustment/calculation-results/2017/detailed-breakdown",
+          "/calculation-results/2017/detailed-breakdown",
           Some(1200)
         )
         checkRowNameAndValueReviewRow(
@@ -4759,7 +4759,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2018",
           Some("calculationReview.taxChargeNotChanged"),
-          "/public-pension-adjustment/calculation-results/2018/detailed-breakdown",
+          "/calculation-results/2018/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4767,7 +4767,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2019",
           Some("calculationReview.taxChargeNotChanged"),
-          "/public-pension-adjustment/calculation-results/2019/detailed-breakdown",
+          "/calculation-results/2019/detailed-breakdown",
           Some(0)
         )
       }
@@ -4787,7 +4787,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2020",
           Some("calculationReview.taxChargeNotChanged"),
-          "/public-pension-adjustment/calculation-results/2020/detailed-breakdown",
+          "/calculation-results/2020/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4795,7 +4795,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2021",
           Some("calculationReview.taxChargeNotChanged"),
-          "/public-pension-adjustment/calculation-results/2021/detailed-breakdown",
+          "/calculation-results/2021/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4803,7 +4803,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2022",
           Some("calculationReview.taxChargeNotChanged"),
-          "/public-pension-adjustment/calculation-results/2022/detailed-breakdown",
+          "/calculation-results/2022/detailed-breakdown",
           Some(0)
         )
         checkRowNameAndValueReviewRow(
@@ -4811,7 +4811,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           index,
           "calculationReview.period.2023",
           Some("calculationReview.taxChargeNotChanged"),
-          "/public-pension-adjustment/calculation-results/2023/detailed-breakdown",
+          "/calculation-results/2023/detailed-breakdown",
           Some(0)
         )
       }
@@ -4828,7 +4828,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
         .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
-      when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultConnector.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
       val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
@@ -4839,7 +4839,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
         .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
-      when(mockCalculationResultConnector.sendRequest(any))
+      when(mockCalculationResultConnector.sendRequest(any)(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
@@ -4852,7 +4852,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
         .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
-      when(mockCalculationResultConnector.sendRequest(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultConnector.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any))
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
