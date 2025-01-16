@@ -25,7 +25,7 @@ import org.scalatest.concurrent.ScalaFutures
 import play.api.Application
 import play.api.http.Status.{BAD_REQUEST, NO_CONTENT, OK, UNAUTHORIZED}
 import play.api.test.Helpers.running
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
 
 class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with WireMockHelper {
 

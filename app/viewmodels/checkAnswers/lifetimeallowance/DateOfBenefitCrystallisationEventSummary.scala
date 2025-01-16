@@ -21,10 +21,10 @@ import models.{CheckMode, UserAnswers}
 import pages.lifetimeallowance.DateOfBenefitCrystallisationEventPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import views.helpers.ImplicitDateFormatter
-import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object DateOfBenefitCrystallisationEventSummary extends ImplicitDateFormatter {
 

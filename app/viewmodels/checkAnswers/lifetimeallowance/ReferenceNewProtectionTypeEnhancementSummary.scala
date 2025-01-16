@@ -22,9 +22,9 @@ import pages.lifetimeallowance.ReferenceNewProtectionTypeEnhancementPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import viewmodels.checkAnswers.FormatUtils.keyCssClass
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
-import viewmodels.checkAnswers.FormatUtils.keyCssClass
 
 object ReferenceNewProtectionTypeEnhancementSummary {
 

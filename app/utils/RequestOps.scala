@@ -17,7 +17,7 @@
 package utils
 
 import models.requests.{AuthenticatedIdentifierRequest, DataRequest, OptionalDataRequest}
-import play.api.mvc.{Request, RequestHeader}
+import play.api.mvc.RequestHeader
 
 object RequestOps {
 
