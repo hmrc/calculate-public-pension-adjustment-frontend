@@ -18,8 +18,7 @@ package controllers.annualallowance.taxyear
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
-import forms.annualallowance.taxyear.{BlindPersonsAllowanceAmountFormProvider, HowMuchAAChargeSchemePaidFormProvider}
+import forms.annualallowance.taxyear.BlindPersonsAllowanceAmountFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -31,7 +30,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
 import views.html.annualallowance.taxyear.BlindPersonsAllowanceAmountView
-import play.api.i18n.Messages
 
 import scala.concurrent.Future
 

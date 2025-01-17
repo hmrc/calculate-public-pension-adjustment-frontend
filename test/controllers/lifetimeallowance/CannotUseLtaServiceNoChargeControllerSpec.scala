@@ -95,7 +95,7 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
         .build()
 
       running(application) {
-        val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad.url)
+        val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
         val result  = route(application, request).value
         status(result) mustEqual OK
         verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])

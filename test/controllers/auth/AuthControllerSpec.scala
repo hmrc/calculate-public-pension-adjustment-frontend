@@ -66,7 +66,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
 
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   = FakeRequest(GET, routes.AuthController.signOutUnauthorised.url)
+        val request   = FakeRequest(GET, routes.AuthController.signOutUnauthorised().url)
 
         val result = route(application, request).value
 

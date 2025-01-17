@@ -18,8 +18,8 @@ package controllers.setupquestions
 
 import controllers.actions._
 import forms.setupquestions.ReportingChangeFormProvider
-import models.{AAKickOutStatus, LTAKickOutStatus, Mode, ReportingChange, UserAnswers}
 import models.tasklist.sections.SetupSection
+import models.{AAKickOutStatus, LTAKickOutStatus, Mode, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -75,13 +75,13 @@ class ReportingChangeController @Inject() (
   }
 
   private def generateAAKickOutStatus(value: Set[ReportingChange], userAnswers: UserAnswers): UserAnswers  =
-    if (value.contains(ReportingChange.AnnualAllowance).equals(true)) {
+    if (value.contains(ReportingChange.AnnualAllowance)) {
       AAKickOutStatus().saveAAKickOutStatus(userAnswers, kickOutStatusFalse)
     } else {
       userAnswers
     }
   private def generateLTAKickOutStatus(value: Set[ReportingChange], userAnswers: UserAnswers): UserAnswers =
-    if (value.contains(ReportingChange.LifetimeAllowance).equals(true)) {
+    if (value.contains(ReportingChange.LifetimeAllowance)) {
       LTAKickOutStatus().saveLTAKickOutStatus(userAnswers, kickOutStatusFalse)
     } else {
       userAnswers

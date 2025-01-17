@@ -21,7 +21,7 @@ import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{NormalMode, Period, SectionNavigation, UserAnswers}
 import pages.Page
-import pages.annualallowance.preaaquestions.{DefinedContributionPensionSchemePage, FlexibleAccessStartDatePage, FlexiblyAccessedPensionPage, PIAPreRemedyPage, PayTaxCharge1415Page, PayingPublicPensionSchemePage, RegisteredYearPage, ScottishTaxpayerFrom2016Page, StopPayingPublicPensionPage, WhichYearsScottishTaxpayerPage}
+import pages.annualallowance.preaaquestions._
 import play.api.mvc.Call
 
 case object PreAASection extends Section {

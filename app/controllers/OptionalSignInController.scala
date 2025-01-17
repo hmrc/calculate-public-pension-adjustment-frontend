@@ -19,12 +19,12 @@ package controllers
 import config.FrontendAppConfig
 import controllers.actions._
 import models.NormalMode
-
-import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.OptionalSignInView
+
+import javax.inject.Inject
 
 class OptionalSignInController @Inject() (
   override val messagesApi: MessagesApi,
@@ -42,7 +42,7 @@ class OptionalSignInController @Inject() (
     Ok(view(redirectLocation))
   }
 
-  def onSubmit(): Action[AnyContent] = (identify andThen getData) { implicit request =>
+  def onSubmit(): Action[AnyContent] = (identify andThen getData) {
     Redirect(
       config.loginUrl,
       Map(

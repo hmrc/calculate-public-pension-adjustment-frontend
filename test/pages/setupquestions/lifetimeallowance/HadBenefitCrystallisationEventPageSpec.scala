@@ -16,11 +16,10 @@
 
 package pages.setupquestions.lifetimeallowance
 
-import models.{CheckMode, EnhancementType, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeNameAndTaxRef, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
 import pages.lifetimeallowance._
 
-import java.time.LocalDate
 import scala.util.Random
 
 class HadBenefitCrystallisationEventPageSpec extends PageBehaviours {

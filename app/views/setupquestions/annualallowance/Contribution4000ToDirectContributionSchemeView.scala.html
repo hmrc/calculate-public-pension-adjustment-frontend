@@ -41,7 +41,7 @@
 
 @layout(pageTitle = title(form, messages("contribution4000ToDirectContributionScheme.title"))) {
 
-    @formHelper(action = routes.Contribution4000ToDirectContributionSchemeController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.Contribution4000ToDirectContributionSchemeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

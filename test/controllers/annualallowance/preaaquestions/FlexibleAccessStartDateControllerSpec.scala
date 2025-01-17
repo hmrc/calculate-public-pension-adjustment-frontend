@@ -16,7 +16,6 @@
 
 package controllers.annualallowance.preaaquestions
 
-import java.time.LocalDate
 import base.SpecBase
 import config.FrontendAppConfig
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
@@ -34,6 +33,7 @@ import play.api.test.Helpers._
 import services.UserDataService
 import views.html.annualallowance.preaaquestions.FlexibleAccessStartDateView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {

@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import controllers.actions._
 import forms.lifetimeallowance.WhoPaidLTAChargeFormProvider
-import javax.inject.Inject
 import models.Mode
 import models.tasklist.sections.LTASection
 import pages.lifetimeallowance.WhoPaidLTAChargePage
@@ -28,6 +27,7 @@ import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.lifetimeallowance.WhoPaidLTAChargeView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class WhoPaidLTAChargeController @Inject() (

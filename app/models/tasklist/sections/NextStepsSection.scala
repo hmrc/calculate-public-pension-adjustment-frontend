@@ -16,11 +16,12 @@
 
 package models.tasklist.sections
 
+import config.FrontendAppConfig
 import controllers.routes
 import models.tasklist.{Section, SectionGroupViewModel, SectionStatus}
 import models.{AAKickOutStatus, LTAKickOutStatus, PostTriageFlag, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
-import config.FrontendAppConfig
+
 import javax.inject._
 
 @Singleton

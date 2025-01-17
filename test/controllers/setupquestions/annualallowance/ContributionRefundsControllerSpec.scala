@@ -18,14 +18,12 @@ package controllers.setupquestions.annualallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.routes
 import forms.setupquestions.annualallowance.ContributionRefundsFormProvider
 import models.{AAKickOutStatus, Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountPage
 import pages.setupquestions.annualallowance.{ContributionRefundsPage, SavingsStatementPage}
 import play.api.inject.bind
 import play.api.mvc.Call

@@ -18,6 +18,7 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
+import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import forms.annualallowance.preaaquestions.RegisteredYearFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +29,6 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import services.UserDataService
 import views.html.annualallowance.preaaquestions.RegisteredYearView
 

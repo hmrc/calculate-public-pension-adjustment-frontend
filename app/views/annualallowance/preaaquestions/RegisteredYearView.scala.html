@@ -33,7 +33,7 @@
 
 @layout(pageTitle = title(form, messages("registeredYear.title", period.start.getYear.toString, period.end.getYear.toString))) {
 
-    @formHelper(action = routes.RegisteredYearController.onSubmit(mode, period), 'autoComplete -> "off") {
+    @formHelper(action = routes.RegisteredYearController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

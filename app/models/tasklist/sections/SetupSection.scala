@@ -16,8 +16,8 @@
 
 package models.tasklist.sections
 
-import controllers.setupquestions.{routes => setupRoutes}
 import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
+import controllers.setupquestions.{routes => setupRoutes}
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{NormalMode, SectionNavigation, UserAnswers}

@@ -18,7 +18,6 @@ package pages.annualallowance.taxyear
 
 import models.{NormalMode, PSTR, Period, SchemeIndex, UserAnswers}
 import pages.QuestionPage
-import pages.setupquestions.ReasonForResubmissionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 

@@ -16,7 +16,7 @@
 
 package forms.annualallowance.taxyear
 
-import forms.behaviours.{BooleanFieldBehaviours, OptionFieldBehaviours}
+import forms.behaviours.OptionFieldBehaviours
 import models.{Period, ThresholdIncome}
 import play.api.data.FormError
 

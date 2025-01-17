@@ -20,8 +20,6 @@ import models.{CheckMode, LTAKickOutStatus, MaybePIAIncrease, NormalMode}
 import org.scalacheck.Gen
 import pages.behaviours.PageBehaviours
 
-import scala.util.Random
-
 class MaybePIAIncreasePageSpec extends PageBehaviours {
 
   "MaybePIAIncreasePage" - {

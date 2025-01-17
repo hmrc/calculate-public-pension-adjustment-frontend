@@ -41,13 +41,6 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
       )
       .build()
 
-  private def subApplication: Application =
-    applicationBuilder()
-      .configure(
-        "microservice.services.submit-public-pension-adjustment.port" -> server.port
-      )
-      .build()
-
   "UserAnswersConnector" - {
 
     "get" - {

@@ -48,6 +48,7 @@ case object DefinedBenefit2016PreAmountPage extends QuestionPage[BigInt] {
           case _       =>
             controllers.annualallowance.taxyear.routes.DefinedBenefit2016PostAmountController.onPageLoad(CheckMode)
         }
+      case _                                                   => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   private def maybeStopPayingInFirstSubPeriod(answers: UserAnswers) = answers.get(StopPayingPublicPensionPage) match {

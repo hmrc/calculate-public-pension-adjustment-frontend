@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.annualallowance.taxyear
 
-import controllers.routes
 import models.{CheckMode, Period, UserAnswers}
 import pages.annualallowance.taxyear.AmountSalarySacrificeArrangementsPage
 import play.api.i18n.Messages

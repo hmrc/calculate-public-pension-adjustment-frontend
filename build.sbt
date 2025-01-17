@@ -18,7 +18,7 @@ lazy val it = project
   .settings(libraryDependencies ++= AppDependencies.itDependencies)
 
 lazy val root = (project in file("."))
-  .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin, AutomateHeaderPlugin, BuildInfoPlugin)
+  .enablePlugins(PlayScala, SbtDistributablesPlugin, AutomateHeaderPlugin, BuildInfoPlugin)
   .disablePlugins(JUnitXmlReportPlugin) // Required to prevent https://github.com/scalatest/scalatest/issues/1427
   .settings(inConfig(Test)(testSettings): _*)
   .settings(majorVersion := 0)

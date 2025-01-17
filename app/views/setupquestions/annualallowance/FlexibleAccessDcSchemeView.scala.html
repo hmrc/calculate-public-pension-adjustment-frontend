@@ -45,7 +45,7 @@
 
 @layout(pageTitle = title(form, messages("flexibleAccessDcScheme.title"))) {
 
-    @formHelper(action = routes.FlexibleAccessDcSchemeController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.FlexibleAccessDcSchemeController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

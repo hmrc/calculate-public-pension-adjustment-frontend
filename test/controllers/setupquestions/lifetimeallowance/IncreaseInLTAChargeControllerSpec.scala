@@ -17,7 +17,6 @@
 package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
-import controllers.routes
 import forms.setupquestions.lifetimeallowance.IncreaseInLTAChargeFormProvider
 import models.{Done, LTAKickOutStatus, NormalMode, UserAnswers}
 import org.mockito.ArgumentCaptor

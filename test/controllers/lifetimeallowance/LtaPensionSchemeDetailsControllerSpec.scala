@@ -18,8 +18,8 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import forms.lifetimeallowance.LtaPensionSchemeDetailsFormProvider
 import controllers.lifetimeallowance.{routes => ltaRoutes}
+import forms.lifetimeallowance.LtaPensionSchemeDetailsFormProvider
 import models.{Done, LtaPensionSchemeDetails, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when

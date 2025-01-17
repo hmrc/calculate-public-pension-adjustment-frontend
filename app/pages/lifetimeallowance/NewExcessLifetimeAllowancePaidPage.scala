@@ -16,8 +16,8 @@
 
 package pages.lifetimeallowance
 
-import models.{CheckMode, Mode, NewExcessLifetimeAllowancePaid, NormalMode, UserAnswers}
 import models.NewExcessLifetimeAllowancePaid.{Annualpayment, Both, Lumpsum}
+import models.{CheckMode, Mode, NewExcessLifetimeAllowancePaid, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call

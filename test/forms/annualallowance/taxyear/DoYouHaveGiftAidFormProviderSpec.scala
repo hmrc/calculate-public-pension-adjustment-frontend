@@ -29,13 +29,13 @@ class DoYouHaveGiftAidFormProviderSpec extends BooleanFieldBehaviours {
     val fieldName = "value"
 
     behave like booleanField(
-      newForm,
+      newForm(),
       fieldName,
       invalidError = FormError(fieldName, invalidKey, Seq(""))
     )
 
     behave like mandatoryField(
-      newForm,
+      newForm(),
       fieldName,
       requiredError = FormError(fieldName, requiredKey, Seq(""))
     )

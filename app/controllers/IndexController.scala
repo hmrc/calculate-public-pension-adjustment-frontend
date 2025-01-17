@@ -18,15 +18,14 @@ package controllers
 
 import controllers.actions.{DataRetrievalAction, IdentifierAction}
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
-import models.{Done, Mode, NormalMode, SubmissionStatusResponse, UserAnswers}
-
-import javax.inject.Inject
+import models.{Done, NormalMode, SubmissionStatusResponse, UserAnswers}
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{CalculateBackendService, SubmitBackendService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class IndexController @Inject() (

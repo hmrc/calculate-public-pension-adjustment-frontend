@@ -19,11 +19,11 @@ package controllers.actions
 import base.SpecBase
 import models.UserAnswers
 import models.requests.{AuthenticatedIdentifierRequest, IdentifierRequest, OptionalDataRequest, UnauthenticatedIdentifierRequest}
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.FakeRequest
 import services.UserDataService
-import org.mockito.ArgumentMatchers.any
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

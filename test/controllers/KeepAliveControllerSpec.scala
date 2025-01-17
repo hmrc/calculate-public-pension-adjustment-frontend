@@ -17,6 +17,7 @@
 package controllers
 
 import base.SpecBase
+import models.Done
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{never, times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
@@ -24,7 +25,6 @@ import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
-import models.Done
 
 import scala.concurrent.Future
 

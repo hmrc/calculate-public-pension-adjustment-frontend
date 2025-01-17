@@ -16,13 +16,13 @@
 
 package forms.annualallowance.preaaquestions
 
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import forms.mappings.Mappings
-
-import javax.inject.Inject
 import play.api.data.Form
 import play.api.i18n.Messages
+
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
 class StopPayingPublicPensionFormProvider @Inject() extends Mappings {
 

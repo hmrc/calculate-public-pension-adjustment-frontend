@@ -18,9 +18,9 @@ package forms.annualallowance.preaaquestions
 
 import forms.mappings.Mappings
 import models.Period
+import play.api.data.Form
 
 import javax.inject.Inject
-import play.api.data.Form
 
 class PIAPreRemedyFormProvider @Inject() extends Mappings {
 

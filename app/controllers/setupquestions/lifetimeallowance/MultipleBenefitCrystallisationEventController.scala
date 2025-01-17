@@ -18,8 +18,8 @@ package controllers.setupquestions.lifetimeallowance
 
 import controllers.actions._
 import forms.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventFormProvider
+import models.tasklist.sections.SetupSection
 import models.{LTAKickOutStatus, Mode}
-import models.tasklist.sections.{LTASection, SetupSection}
 import pages.setupquestions.lifetimeallowance.MultipleBenefitCrystallisationEventPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
