@@ -22,5 +22,5 @@ package utils
 
 object Validation {
   val decimalPlacesCheck: BigDecimal => Boolean = input => input.scale < 3
-  //if 2 pad 0
+  // if 2 pad 0
 }

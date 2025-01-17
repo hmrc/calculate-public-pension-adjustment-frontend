@@ -180,8 +180,9 @@ trait Formatters {
               .either(BigDecimal(s))
               .left
               .map(_ => Seq(FormError(key, nonNumericKey, args)))
-          }.flatMap {
-            case s => if(decimalPlacesCheck(s)) {
+          }
+          .flatMap { case s =>
+            if (decimalPlacesCheck(s)) {
               Right(s)
             } else {
               Left(Seq(FormError(key, decimalTooBig, args)))

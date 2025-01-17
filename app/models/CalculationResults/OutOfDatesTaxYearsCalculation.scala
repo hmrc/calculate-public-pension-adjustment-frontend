@@ -25,9 +25,9 @@ case class OutOfDatesTaxYearsCalculation(
   indirectCompensation: Double,
   chargePaidByMember: Double,
   chargePaidBySchemes: Double,
-  revisedChargableAmountBeforeTaxRate: Double,
+  revisedChargableAmountBeforeTaxRate: Int,
   revisedChargableAmountAfterTaxRate: Double,
-  unusedAnnualAllowance: Double,
+  unusedAnnualAllowance: Int,
   taxYearSchemes: List[OutOfDatesTaxYearSchemeCalculation],
   adjustedCompensation: Option[Double]
 )
@@ -44,9 +44,9 @@ object OutOfDatesTaxYearsCalculation {
         (__ \ "indirectCompensation").read[Double] and
         (__ \ "chargePaidByMember").read[Double] and
         (__ \ "chargePaidBySchemes").read[Double] and
-        (__ \ "revisedChargableAmountBeforeTaxRate").read[Double] and
+        (__ \ "revisedChargableAmountBeforeTaxRate").read[Int] and
         (__ \ "revisedChargableAmountAfterTaxRate").read[Double] and
-        (__ \ "unusedAnnualAllowance").read[Double] and
+        (__ \ "unusedAnnualAllowance").read[Int] and
         (__ \ "taxYearSchemes").read[List[OutOfDatesTaxYearSchemeCalculation]] and
         (__ \ "adjustedCompensation").readNullable[Double]
     )(OutOfDatesTaxYearsCalculation.apply _)
@@ -63,9 +63,9 @@ object OutOfDatesTaxYearsCalculation {
         (__ \ "indirectCompensation").write[Double] and
         (__ \ "chargePaidByMember").write[Double] and
         (__ \ "chargePaidBySchemes").write[Double] and
-        (__ \ "revisedChargableAmountBeforeTaxRate").write[Double] and
+        (__ \ "revisedChargableAmountBeforeTaxRate").write[Int] and
         (__ \ "revisedChargableAmountAfterTaxRate").write[Double] and
-        (__ \ "unusedAnnualAllowance").write[Double] and
+        (__ \ "unusedAnnualAllowance").write[Int] and
         (__ \ "taxYearSchemes").write[List[OutOfDatesTaxYearSchemeCalculation]] and
         (__ \ "adjustedCompensation").writeNullable[Double]
     )(a =>

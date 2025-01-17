@@ -38,10 +38,10 @@ object CurrencyFormatter extends CurrencyFormatter {
       input
     }
 
-  def formatNumberStringWithDecimals(input: String): String = {
+  def formatNumberStringWithDecimals(input: String): String =
     if (input.forall(c => c.isDigit || c == '.')) {
-      val parts = input.split('.')
-      val integerPart = parts(0)
+      val parts                = input.split('.')
+      val integerPart          = parts(0)
       val formattedIntegerPart = integerPart.reverse
         .grouped(3)
         .mkString(",")
@@ -55,6 +55,5 @@ object CurrencyFormatter extends CurrencyFormatter {
     } else {
       input
     }
-  }
 
 }
