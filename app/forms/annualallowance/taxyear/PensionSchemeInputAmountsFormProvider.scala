@@ -58,6 +58,6 @@ class PensionSchemeInputAmountsFormProvider @Inject() extends Mappings {
             )
           )
       }
-    )(PensionSchemeInputAmounts.apply)(PensionSchemeInputAmounts.unapply)
+    )(PensionSchemeInputAmounts.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

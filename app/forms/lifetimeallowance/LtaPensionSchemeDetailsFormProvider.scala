@@ -34,6 +34,6 @@ class LtaPensionSchemeDetailsFormProvider @Inject() extends Mappings {
         "ltaPensionSchemeDetails.error.taxRef.invalid",
         Seq("""(\d\s*){8}[A-Za-z]{2}""")
       )
-    )(LtaPensionSchemeDetails.apply)(LtaPensionSchemeDetails.unapply)
+    )(LtaPensionSchemeDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

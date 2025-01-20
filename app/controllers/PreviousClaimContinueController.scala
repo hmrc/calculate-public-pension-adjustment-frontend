@@ -94,7 +94,7 @@ class PreviousClaimContinueController @Inject() (
 
   def redirect(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     submitBackendService.submissionsPresentInSubmissionService(request.userAnswers.uniqueId)(hc).map {
-      result: Boolean =>
+      (result: Boolean) =>
         result match {
           case true  =>
             Redirect(Call("GET", submitFrontendCalculationResultPageUrl()))
