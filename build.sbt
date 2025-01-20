@@ -25,7 +25,6 @@ lazy val root = (project in file("."))
   .settings(ThisBuild / useSuperShell := false)
   .settings(
     scalaVersion := "2.13.12",
-    targetJvm := "jvm-11",
     name := appName,
     RoutesKeys.routesImport ++= Seq(
       "models._",
