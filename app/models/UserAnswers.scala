@@ -126,7 +126,7 @@ object UserAnswers {
         (__ \ "lastUpdated").write(MongoJavatimeFormats.instantFormat) and
         (__ \ "authenticated").write[Boolean] and
         (__ \ "submissionStarted").write[Boolean]
-    )(unlift(UserAnswers.unapply))
+    )(o => Tuple.fromProductTyped(o))
   }
 
   implicit val format: OFormat[UserAnswers] = OFormat(reads, writes)

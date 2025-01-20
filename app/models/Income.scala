@@ -28,7 +28,7 @@ object Income {
   implicit lazy val reads: Reads[Income] =
     (__ \ "incomeAboveThreshold").read[Boolean].flatMap {
       case true  =>
-        (__ \ "adjustedIncome").read[Int].map(Income.AboveThreshold)
+        (__ \ "adjustedIncome").read[Int].map(models.Income.AboveThreshold.apply)
       case false =>
         Reads(_ => JsSuccess(Income.BelowThreshold))
     }
