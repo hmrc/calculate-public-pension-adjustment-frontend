@@ -23,7 +23,7 @@ import play.api.data.Forms._
 
 import javax.inject.Inject
 
-class PensionSchemeInputAmountsFormProvider @Inject() extends Mappings {
+class  PensionSchemeInputAmountsFormProvider @Inject() extends Mappings {
 
   def apply(period: Period, startEndDate: String): Form[PensionSchemeInputAmounts] = Form(
     mapping(
@@ -58,6 +58,6 @@ class PensionSchemeInputAmountsFormProvider @Inject() extends Mappings {
             )
           )
       }
-    )(PensionSchemeInputAmounts.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )(PensionSchemeInputAmounts.apply)
   )
 }
