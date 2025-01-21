@@ -41,6 +41,6 @@ class PensionSchemeInput2016preAmountsFormProvider @Inject() extends Mappings {
             dateString
           )
         )
-    )(PensionSchemeInput2016preAmounts.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )(PensionSchemeInput2016preAmounts.apply)
   )
 }
