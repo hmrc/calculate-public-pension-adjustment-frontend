@@ -69,10 +69,10 @@ POST        /annual-allowance/scottish-taxpayer-years                        con
 GET         /annual-allowance/change-scottish-taxpayer-years                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onPageLoad(mode: Mode = CheckMode)
 POST        /annual-allowance/change-scottish-taxpayer-years                 controllers.annualallowance.preaaquestions.WhichYearsScottishTaxpayerController.onSubmit(mode: Mode = CheckMode)
 
-GET         /annual-allowance/defined-contributions-scheme                   controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
-POST        /annual-allowance/defined-contributions-scheme                   controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = NormalMode)
-GET         /annual-allowance/change-defined-contributions-scheme            controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
-POST        /annual-allowance/change-defined-contributions-scheme            controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = CheckMode)
+GET         /annual-allowance/other-pension-schemes                          controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = NormalMode)
+POST        /annual-allowance/other-pension-schemes                          controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = NormalMode)
+GET         /annual-allowance/change-other-pension-schemes                   controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onPageLoad(mode: Mode = CheckMode)
+POST        /annual-allowance/change-other-pension-schemes                   controllers.annualallowance.preaaquestions.DefinedContributionPensionSchemeController.onSubmit(mode: Mode = CheckMode)
 
 GET         /annual-allowance/flexibly-accessed-date                         controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onPageLoad(mode: Mode = NormalMode)
 POST        /annual-allowance/flexibly-accessed-date                         controllers.annualallowance.preaaquestions.FlexibleAccessStartDateController.onSubmit(mode: Mode = NormalMode)

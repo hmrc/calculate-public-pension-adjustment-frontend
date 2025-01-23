@@ -39,7 +39,7 @@ class PayingPublicPensionSchemePageSpec extends PageBehaviours {
 
       val nextPageUrl = PayingPublicPensionSchemePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/annual-allowance/defined-contributions-scheme")
+      checkNavigation(nextPageUrl, "/annual-allowance/other-pension-schemes")
     }
 
     "next page should be when did you stop paying public pension scheme page when true" in {

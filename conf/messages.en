@@ -193,7 +193,7 @@ definedContributionPensionScheme.checkYourAnswersLabel = Do you have any other p
 definedContributionPensionScheme.message = These are usually either personal or stakeholder pensions. They’re sometimes called ‘money purchase’ pension schemes. They can be:
 definedContributionPensionScheme.bullet1 = workplace pensions arranged by your employer
 definedContributionPensionScheme.bullet2 = private pensions arranged by you
-definedContributionPensionScheme.error.required = Select yes if you have a defined contribution pension scheme
+definedContributionPensionScheme.error.required = Select yes if you have any other pension schemes apart from your public service ones
 definedContributionPensionScheme.change.hidden = if you have any other pension schemes apart from your public service ones
 
 flexiblyAccessedPension.title = Have you flexibly accessed your defined contribution pension?
