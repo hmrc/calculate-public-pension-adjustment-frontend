@@ -22,7 +22,6 @@ import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.lifetimeallowance.NewLTAChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, ValueViewModel}
 import viewmodels.govuk.summarylist.*
 import viewmodels.implicits.*
 

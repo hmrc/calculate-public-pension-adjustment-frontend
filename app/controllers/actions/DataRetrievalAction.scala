@@ -34,8 +34,8 @@ class DataRetrievalActionImpl @Inject() (
     val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     val authenticated = request match {
-      case AuthenticatedIdentifierRequest(?, ?)   => true
-      case UnauthenticatedIdentifierRequest(?, ?) => false
+      case AuthenticatedIdentifierRequest(_, _)   => true
+      case UnauthenticatedIdentifierRequest(_, _) => false
     }
 
     for {
