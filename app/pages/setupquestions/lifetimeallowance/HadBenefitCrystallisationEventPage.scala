@@ -16,8 +16,8 @@
 
 package pages.setupquestions.lifetimeallowance
 
-import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
-import controllers.{routes => generalRoutes}
+import controllers.routes as generalRoutes
+import controllers.setupquestions.lifetimeallowance.routes as setupLTARoutes
 import models.tasklist.sections.LTASection
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage

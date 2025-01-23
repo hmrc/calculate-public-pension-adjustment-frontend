@@ -16,16 +16,16 @@
 
 package generators
 
-import models._
+import models.*
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
 import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear._
-import pages.lifetimeallowance._
-import pages.setupquestions._
-import pages.setupquestions.annualallowance._
-import pages.setupquestions.lifetimeallowance._
+import pages.annualallowance.taxyear.*
+import pages.lifetimeallowance.*
+import pages.setupquestions.*
+import pages.setupquestions.annualallowance.*
+import pages.setupquestions.lifetimeallowance.*
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {

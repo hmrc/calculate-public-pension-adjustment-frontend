@@ -25,7 +25,7 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
-import viewmodels.implicits._
+import viewmodels.implicits.*
 
 class MaybePIAUnchangedOrDecreasedSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -39,7 +39,7 @@ class MaybePIAUnchangedOrDecreasedSummarySpec extends AnyFreeSpec with Matchers 
           MaybePIAUnchangedOrDecreased.Yes
         )
         .get
-      MaybePIAUnchangedOrDecreasedSummary.row(userAnswers) shouldBe Some(
+      MaybePIAUnchangedOrDecreasedSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "maybePIAUnchangedOrDecreased.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("maybePIAUnchangedOrDecreased.yes")),
@@ -61,7 +61,7 @@ class MaybePIAUnchangedOrDecreasedSummarySpec extends AnyFreeSpec with Matchers 
           MaybePIAUnchangedOrDecreased.No
         )
         .get
-      MaybePIAUnchangedOrDecreasedSummary.row(userAnswers) shouldBe Some(
+      MaybePIAUnchangedOrDecreasedSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "maybePIAUnchangedOrDecreased.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("maybePIAUnchangedOrDecreased.no")),
@@ -83,7 +83,7 @@ class MaybePIAUnchangedOrDecreasedSummarySpec extends AnyFreeSpec with Matchers 
           MaybePIAUnchangedOrDecreased.IDoNotKnow
         )
         .get
-      MaybePIAUnchangedOrDecreasedSummary.row(userAnswers) shouldBe Some(
+      MaybePIAUnchangedOrDecreasedSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "maybePIAUnchangedOrDecreased.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("maybePIAUnchangedOrDecreased.idk")),
@@ -100,7 +100,7 @@ class MaybePIAUnchangedOrDecreasedSummarySpec extends AnyFreeSpec with Matchers 
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      MaybePIAUnchangedOrDecreasedSummary.row(userAnswers) shouldBe None
+      MaybePIAUnchangedOrDecreasedSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

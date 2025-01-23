@@ -95,7 +95,7 @@ class TradeUnionReliefPageSpec extends PageBehaviours {
 
         val cleanedAnswers: UserAnswers = TradeUnionReliefPage(period).cleanup(Some(true), userAnswers).get
 
-        cleanedAnswers.get(UnionPoliceReliefAmountPage(period)) mustBe Some(1)
+        cleanedAnswers.get(UnionPoliceReliefAmountPage(period)) `mustBe` Some(1)
       }
 
       "must clean up correctly when user answers false" in {
@@ -107,7 +107,7 @@ class TradeUnionReliefPageSpec extends PageBehaviours {
 
         val cleanedAnswers: UserAnswers = TradeUnionReliefPage(period).cleanup(Some(false), userAnswers).get
 
-        cleanedAnswers.get(UnionPoliceReliefAmountPage(period)) mustBe None
+        cleanedAnswers.get(UnionPoliceReliefAmountPage(period)) `mustBe` None
       }
     }
 

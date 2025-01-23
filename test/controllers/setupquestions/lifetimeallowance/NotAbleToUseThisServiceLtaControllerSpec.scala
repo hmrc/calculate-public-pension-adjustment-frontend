@@ -23,7 +23,7 @@ import models.{AAKickOutStatus, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.Configuration
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import play.api.test.Helpers.baseApplicationBuilder.injector
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaView
 
@@ -55,8 +55,8 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(
             true,
             "/public-pension-adjustment/triage-journey/received-letter",
             exitUrl
@@ -64,8 +64,8 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
-          contentAsString(result) must not include "What did you think of this service?"
+          contentAsString(result) `must` `include`("Continue")
+          contentAsString(result) `must` `not` `include` "What did you think of this service?"
         }
       }
     }
@@ -90,12 +90,12 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup", exitUrl)(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(true, "/public-pension-adjustment/check-your-answers-setup", exitUrl)(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
+          contentAsString(result) `must` `include`("Continue")
         }
       }
     }
@@ -120,13 +120,13 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
-          contentAsString(result) must include("What did you think of this service?")
+          contentAsString(result) `must` `not` `include` "Continue"
+          contentAsString(result) `must` `include`("What did you think of this service?")
         }
       }
     }
@@ -149,12 +149,12 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
+          contentAsString(result) `must` `not` `include`"Continue"
         }
       }
     }

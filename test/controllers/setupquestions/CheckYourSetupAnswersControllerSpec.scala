@@ -19,7 +19,7 @@ package controllers.setupquestions
 import base.SpecBase
 import config.FrontendAppConfig
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
 
@@ -40,8 +40,8 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
         val view = application.injector.instanceOf[CheckYourAnswersView]
         val list = SummaryListViewModel(Seq.empty)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           "checkYourAnswers.setup.subHeading",
           controllers.setupquestions.routes.UserEligibility.onPageLoad,
           list
@@ -63,8 +63,8 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

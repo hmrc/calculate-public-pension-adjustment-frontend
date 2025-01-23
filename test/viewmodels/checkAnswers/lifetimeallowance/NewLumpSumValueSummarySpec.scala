@@ -25,8 +25,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class NewLumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -40,7 +40,7 @@ class NewLumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("999")
         )
         .get
-      NewLumpSumValueSummary.row(userAnswers, true) shouldBe Some(
+      NewLumpSumValueSummary.row(userAnswers, true) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "newLumpSumValue.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£999")),
@@ -59,7 +59,7 @@ class NewLumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("999")
         )
         .get
-      NewLumpSumValueSummary.row(userAnswers, false) shouldBe Some(
+      NewLumpSumValueSummary.row(userAnswers, false) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"newLumpSumValue.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("£999"))
@@ -69,7 +69,7 @@ class NewLumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      NewLumpSumValueSummary.row(userAnswers, true) shouldBe None
+      NewLumpSumValueSummary.row(userAnswers, true) `shouldBe` None
     }
   }
 

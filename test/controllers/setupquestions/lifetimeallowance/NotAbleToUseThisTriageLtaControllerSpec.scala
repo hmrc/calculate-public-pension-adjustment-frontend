@@ -18,12 +18,12 @@ package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.lifetimeallowance.{routes => ltaRoutes}
+import controllers.setupquestions.lifetimeallowance..routes as ltaRoutes
 import models.{AAKickOutStatus, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.Configuration
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import play.api.test.Helpers.baseApplicationBuilder.injector
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaView
 
@@ -55,8 +55,8 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[NotAbleToUseThisTriageLtaView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(
             true,
             "/public-pension-adjustment/triage-journey/received-letter",
             exitUrl
@@ -64,8 +64,9 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
-          contentAsString(result) must not include "What did you think of this service?"
+          contentAsString(result) `must` `include`("Continue")
+          contentAsString(result) `must` `not` `include` "What did you think of this service?"
+          contentAsString(result) `must` `include`("Continue")
         }
       }
     }
@@ -90,12 +91,12 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[NotAbleToUseThisTriageLtaView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup", exitUrl)(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(true, "/public-pension-adjustment/check-your-answers-setup", exitUrl)(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
+          contentAsString(result) `must` `include`("Continue")
         }
       }
     }
@@ -120,13 +121,13 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[NotAbleToUseThisTriageLtaView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
-          contentAsString(result) must include("What did you think of this service?")
+          contentAsString(result) `must` `not` `include` "Continue"
+          contentAsString(result) `must` `include`("What did you think of this service?")
         }
       }
     }
@@ -149,12 +150,12 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[NotAbleToUseThisTriageLtaView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
+          contentAsString(result) `must` `not` `include` "Continue"
         }
       }
     }

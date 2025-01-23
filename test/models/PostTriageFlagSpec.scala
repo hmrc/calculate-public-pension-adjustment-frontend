@@ -29,7 +29,7 @@ class PostTriageFlagSpec extends AnyFreeSpec with SpecBase {
 
       val updatedUserAnswers = PostTriageFlag.setStatusTrue(userAnswers)
 
-      updatedUserAnswers.get(PostTriageFlag) mustBe Some(true)
+      updatedUserAnswers.get(PostTriageFlag) `mustBe` Some(true)
     }
   }
 }

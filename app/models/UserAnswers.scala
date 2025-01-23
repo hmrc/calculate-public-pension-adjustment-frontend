@@ -43,7 +43,7 @@ final case class UserAnswers(
 
   def containsAnswerFor(page: Page) =
     page match {
-      case settable: Settable[_] =>
+      case settable: Settable[?] =>
         data.removeObject(settable.path) match {
           case JsSuccess(_, _) => true
           case JsError(_)      =>

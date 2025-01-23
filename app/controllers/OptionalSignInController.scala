@@ -30,7 +30,6 @@ class OptionalSignInController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: OptionalSignInView,
   config: FrontendAppConfig

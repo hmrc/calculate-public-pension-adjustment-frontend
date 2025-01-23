@@ -18,7 +18,7 @@ package controllers.setupquestions.annualallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.annualallowance.{routes => aaSetuproutes}
+import controllers.setupquestions.annualallowance.routes as aaSetuproutes
 import forms.setupquestions.annualallowance.SavingsStatementFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +28,7 @@ import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.setupquestions.annualallowance.SavingsStatementView
 
@@ -56,8 +56,8 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[SavingsStatementView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -73,8 +73,8 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -98,7 +98,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -115,8 +115,8 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -140,7 +140,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -159,8 +159,8 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
   }

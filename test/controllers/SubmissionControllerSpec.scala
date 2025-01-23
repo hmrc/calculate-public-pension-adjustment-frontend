@@ -25,7 +25,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{status, _}
+import play.api.test.Helpers.{status, *}
 import services.{CalculationResultService, UserDataService}
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -43,11 +43,11 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
     "Must submit answers with no calculation and redirect to submit frontend when backend call succeeds" in {
 
       val mockUserDataService = mock[UserDataService]
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val mockCalculationResultService: CalculationResultService = mock[CalculationResultService]
       when(mockCalculationResultService.submitUserAnswersWithNoCalculation(any, any)(any))
-        .thenReturn(Future.successful(Success("someId")))
+        .`thenReturn`(Future.successful(Success("someId")))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -62,8 +62,8 @@ class SubmissionControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value must endWith(
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `must` `endWith`(
           "/submit-public-pension-adjustment/landing-page?submissionUniqueId=someId"
         )
       }

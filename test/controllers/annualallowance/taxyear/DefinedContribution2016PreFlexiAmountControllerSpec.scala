@@ -28,7 +28,7 @@ import pages.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.DefinedContribution2016PreFlexiAmountView
 
@@ -69,8 +69,8 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
 
         val view = application.injector.instanceOf[DefinedContribution2016PreFlexiAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, "2 July 2015 and 8 July 2015")(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, "2 July 2015 and 8 July 2015")(
           request,
           messages(application)
         ).toString
@@ -96,8 +96,8 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, "2 July 2015 and 8 July 2015")(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(validAnswer), NormalMode, "2 July 2015 and 8 July 2015")(
           request,
           messages(application)
         ).toString
@@ -122,7 +122,7 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -146,8 +146,8 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(
           boundForm,
           NormalMode,
           "2 July 2015 and 8 July 2015"
@@ -168,8 +168,8 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -185,9 +185,9 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -209,8 +209,8 @@ class DefinedContribution2016PreFlexiAmountControllerSpec extends SpecBase with 
 
         val view = application.injector.instanceOf[DefinedContribution2016PreFlexiAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(flexiForm, NormalMode, "7 April 2015 and 8 July 2015")(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(flexiForm, NormalMode, "7 April 2015 and 8 July 2015")(
           request,
           messages(application)
         ).toString

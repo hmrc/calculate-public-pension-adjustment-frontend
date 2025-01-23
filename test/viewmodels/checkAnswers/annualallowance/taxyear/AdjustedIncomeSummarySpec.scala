@@ -24,8 +24,8 @@ import pages.annualallowance.taxyear.AdjustedIncomePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class AdjustedIncomeSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -40,7 +40,7 @@ class AdjustedIncomeSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      AdjustedIncomeSummary.row(userAnswers, period) shouldBe Some(
+      AdjustedIncomeSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "adjustedIncome.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -58,7 +58,7 @@ class AdjustedIncomeSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      AdjustedIncomeSummary.row(userAnswers, period) shouldBe None
+      AdjustedIncomeSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 

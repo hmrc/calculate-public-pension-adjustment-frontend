@@ -18,10 +18,10 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.{routes => setupRoutes}
+import controllers.setupquestions.routes as setupRoutes
 import play.api.Configuration
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import play.api.test.Helpers.baseApplicationBuilder.injector
 import views.html.setupquestions.IneligibleView
 
@@ -43,9 +43,9 @@ class IneligibleControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[IneligibleView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(exitUrl)(request, messages(application)).toString
-        contentAsString(result) must include("What did you think of this service?")
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(exitUrl)(request, messages(application)).toString
+        contentAsString(result) `must` `include`("What did you think of this service?")
       }
     }
   }

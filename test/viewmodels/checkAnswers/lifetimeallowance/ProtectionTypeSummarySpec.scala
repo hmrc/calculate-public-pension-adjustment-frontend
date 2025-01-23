@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.lifetimeallowance.routes as ltaRoutes
 import models.ProtectionType.EnhancedProtection
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -26,8 +26,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -41,7 +41,7 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
           EnhancedProtection
         )
         .get
-      ProtectionTypeSummary.row(userAnswers, true) shouldBe Some(
+      ProtectionTypeSummary.row(userAnswers, true) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "protectionType.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("protectionType.enhancedProtection")),
@@ -60,7 +60,7 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
           EnhancedProtection
         )
         .get
-      ProtectionTypeSummary.row(userAnswers, false) shouldBe Some(
+      ProtectionTypeSummary.row(userAnswers, false) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"protectionType.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("protectionType.enhancedProtection"))
@@ -70,7 +70,7 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionTypeSummary.row(userAnswers, true) shouldBe None
+      ProtectionTypeSummary.row(userAnswers, true) `shouldBe` None
     }
   }
 }

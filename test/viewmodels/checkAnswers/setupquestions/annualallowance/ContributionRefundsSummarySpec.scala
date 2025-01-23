@@ -23,7 +23,7 @@ import pages.setupquestions.annualallowance.ContributionRefundsPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
-import viewmodels.implicits._
+import viewmodels.implicits.*
 
 class ContributionRefundsSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -37,7 +37,7 @@ class ContributionRefundsSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      ContributionRefundsSummary.row(userAnswers) shouldBe Some(
+      ContributionRefundsSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "contributionRefunds.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -59,7 +59,7 @@ class ContributionRefundsSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      ContributionRefundsSummary.row(userAnswers) shouldBe Some(
+      ContributionRefundsSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "contributionRefunds.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -76,7 +76,7 @@ class ContributionRefundsSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ContributionRefundsSummary.row(userAnswers) shouldBe None
+      ContributionRefundsSummary.row(userAnswers) `shouldBe` None
     }
   }
 

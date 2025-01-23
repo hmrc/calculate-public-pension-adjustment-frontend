@@ -26,7 +26,7 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], mode: Mode, period: Period, schemeIndex: SchemeIndex, schemeName: String)(implicit request: Request[?], messages: Messages)
 
 @contentHint = {
     <p class="govuk-hint">@messages("rounding.down.hint")</p>

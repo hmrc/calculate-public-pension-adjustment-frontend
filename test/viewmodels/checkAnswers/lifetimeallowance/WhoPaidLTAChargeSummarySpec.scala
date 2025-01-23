@@ -24,8 +24,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -39,7 +39,7 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
           models.WhoPaidLTACharge.PensionScheme
         )
         .get
-      WhoPaidLTAChargeSummary.row(userAnswers, true) shouldBe Some(
+      WhoPaidLTAChargeSummary.row(userAnswers, true) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "whoPaidLTACharge.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoPaidLTACharge.pensionScheme")),
@@ -61,7 +61,7 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
           models.WhoPaidLTACharge.PensionScheme
         )
         .get
-      WhoPaidLTAChargeSummary.row(userAnswers, false) shouldBe Some(
+      WhoPaidLTAChargeSummary.row(userAnswers, false) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"whoPaidLTACharge.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("whoPaidLTACharge.pensionScheme"))
@@ -76,7 +76,7 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
           models.WhoPaidLTACharge.You
         )
         .get
-      WhoPaidLTAChargeSummary.row(userAnswers, true) shouldBe Some(
+      WhoPaidLTAChargeSummary.row(userAnswers, true) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "whoPaidLTACharge.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoPaidLTACharge.you")),
@@ -98,7 +98,7 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
           models.WhoPaidLTACharge.You
         )
         .get
-      WhoPaidLTAChargeSummary.row(userAnswers, false) shouldBe Some(
+      WhoPaidLTAChargeSummary.row(userAnswers, false) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"whoPaidLTACharge.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("whoPaidLTACharge.you"))
@@ -108,7 +108,7 @@ class WhoPaidLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhoPaidLTAChargeSummary.row(userAnswers, true) shouldBe None
+      WhoPaidLTAChargeSummary.row(userAnswers, true) `shouldBe` None
     }
   }
 

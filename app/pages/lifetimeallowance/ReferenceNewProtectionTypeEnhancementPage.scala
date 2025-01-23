@@ -16,7 +16,7 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.lifetimeallowance.routes as ltaRoutes
 import models.ProtectionEnhancedChanged.{Both, Protection}
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage

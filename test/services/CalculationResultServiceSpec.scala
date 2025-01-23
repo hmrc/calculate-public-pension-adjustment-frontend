@@ -19,15 +19,16 @@ package services
 import base.SpecBase
 import connectors.{CalculationResultConnector, ReducedNetIncomeConnector, SubmissionsConnector}
 import controllers.annualallowance.taxyear.AboveThresholdController
-import models.CalculationResults._
+import models.CalculationResults.*
 import models.Income.{AboveThreshold, BelowThreshold}
-import models.TaxYear2016To2023._
+import models.TaxYear2016To2023.*
 import models.submission.Success
 import models.tasklist.sections.LTASection
 import models.{AnnualAllowance, CalculationResults, ExcessLifetimeAllowancePaid, IncomeSubJourney, LifeTimeAllowance, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewLifeTimeAllowanceAdditions, PensionSchemeInputAmounts, Period, ProtectionEnhancedChanged, ProtectionType, ReducedNetIncomeResponse, SchemeIndex, SchemeNameAndTaxRef, TaxYear2011To2015, TaxYearScheme, ThresholdIncome, UserAnswers, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
-import pages.annualallowance.taxyear._
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar
+import pages.annualallowance.taxyear.*
 import play.api.libs.json.{JsObject, JsValue, Json}
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -2334,37 +2335,37 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       "should return valid TaxYear2011To2015 for a Period 2011" in {
         val result = service.toTaxYear2011To2015(userAnswers1, Period._2011)
 
-        result mustBe Some(TaxYear2011To2015(10000, Period._2011))
+        result `mustBe` Some(TaxYear2011To2015(10000, Period._2011))
       }
 
       "should return None for a Period 2012" in {
         val result = service.toTaxYear2011To2015(userAnswers1, Period._2012)
 
-        result mustBe None
+        result `mustBe` None
       }
 
       "should return valid TaxYear2011To2015 for a Period 2013" in {
         val result = service.toTaxYear2011To2015(userAnswers1, Period._2013)
 
-        result mustBe Some(TaxYear2011To2015(40000, Period._2013))
+        result `mustBe` Some(TaxYear2011To2015(40000, Period._2013))
       }
 
       "should return valid TaxYear2011To2015 for a Period 2014" in {
         val result = service.toTaxYear2011To2015(userAnswers1, Period._2014)
 
-        result mustBe Some(TaxYear2011To2015(20000, Period._2014))
+        result `mustBe` Some(TaxYear2011To2015(20000, Period._2014))
       }
 
       "should return valid TaxYear2011To2015 for a Period 2015" in {
         val result = service.toTaxYear2011To2015(userAnswers1, Period._2015)
 
-        result mustBe Some(TaxYear2011To2015(60000, Period._2015))
+        result `mustBe` Some(TaxYear2011To2015(60000, Period._2015))
       }
 
       "should return None for a missing Period 2015" in {
         val result = service.toTaxYear2011To2015(userAnswers1.copy(data = data2), Period._2015)
 
-        result mustBe None
+        result `mustBe` None
       }
 
     }
@@ -2377,7 +2378,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2016).futureValue
 
-        result mustBe Some(
+        result `mustBe` Some(
           InitialFlexiblyAccessedTaxYear(
             30015,
             Some(LocalDate.parse("2015-05-25")),
@@ -2417,7 +2418,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2016).futureValue
 
-        result mustBe Some(
+        result `mustBe` Some(
           InitialFlexiblyAccessedTaxYear(
             30015,
             Some(LocalDate.parse("2015-05-25")),
@@ -2457,7 +2458,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2017).futureValue
 
-        result mustBe Some(
+        result `mustBe` Some(
           PostFlexiblyAccessedTaxYear(
             35000,
             0,
@@ -2493,7 +2494,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2018).futureValue
 
-        result mustBe Some(
+        result `mustBe` Some(
           PostFlexiblyAccessedTaxYear(
             0,
             0,
@@ -2529,7 +2530,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2019).futureValue
 
-        result mustBe Some(
+        result `mustBe` Some(
           PostFlexiblyAccessedTaxYear(
             35000,
             0,
@@ -2565,7 +2566,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2020).futureValue
 
-        result mustBe Some(
+        result `mustBe` Some(
           PostFlexiblyAccessedTaxYear(
             34000,
             0,
@@ -2601,7 +2602,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2021).futureValue
 
-        result mustBe
+        result `mustBe`
           Some(
             PostFlexiblyAccessedTaxYear(
               0,
@@ -2638,7 +2639,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2022).futureValue
 
-        result mustBe Some(
+        result `mustBe` Some(
           PostFlexiblyAccessedTaxYear(
             44000,
             0,
@@ -2674,7 +2675,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2023).futureValue
 
-        result mustBe Some(
+        result `mustBe` Some(
           PostFlexiblyAccessedTaxYear(
             53000,
             0,
@@ -2716,7 +2717,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1.copy(data = data14)).futureValue
 
-        result mustBe CalculationResults.CalculationInputs(
+        result `mustBe` CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
             Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
@@ -2769,7 +2770,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1.copy(data = data11)).futureValue
 
-        result mustBe CalculationResults.CalculationInputs(
+        result `mustBe` CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
             Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
@@ -2880,7 +2881,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1.copy(data = data13)).futureValue
 
-        result mustBe CalculationResults.CalculationInputs(
+        result `mustBe` CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
             Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
@@ -2991,7 +2992,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1.copy(data = data12)).futureValue
 
-        result mustBe CalculationResults.CalculationInputs(
+        result `mustBe` CalculationResults.CalculationInputs(
           Resubmission(true, Some("Incorrect data")),
           Setup(
             Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
@@ -3131,7 +3132,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1).futureValue
 
-        result mustBe CalculationResults.CalculationInputs(
+        result `mustBe` CalculationResults.CalculationInputs(
           Resubmission(true, Some("Change in amounts")),
           Setup(
             Some(
@@ -3433,7 +3434,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1.copy(data = data3)).futureValue
 
-        result mustBe CalculationResults.CalculationInputs(
+        result `mustBe` CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
             Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
@@ -3569,7 +3570,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1.copy(data = data9)).futureValue
 
-        result mustBe CalculationResults.CalculationInputs(
+        result `mustBe` CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
             Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
@@ -3695,7 +3696,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
         val result = service.buildCalculationInputs(userAnswers1.copy(data = data10)).futureValue
 
-        result mustBe CalculationResults.CalculationInputs(
+        result `mustBe` CalculationResults.CalculationInputs(
           Resubmission(false, None),
           Setup(
             Some(AnnualAllowanceSetup(Some(true), None, None, None, None, None, None, None, None, None, None, None)),
@@ -3856,7 +3857,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       "should return Some LifeTimeAllowance data model for a valid UserAnswers with LifeTimeAllowance user inputs" in {
         val result = service.buildLifeTimeAllowance(userAnswers1.copy(data = data4))
 
-        result mustBe Some(
+        result `mustBe` Some(
           LifeTimeAllowance(
             LocalDate.parse("2018-11-28"),
             LtaProtectionOrEnhancements.Protection,
@@ -3897,7 +3898,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         val answersWithNav = LTASection.saveNavigation(userAnswers, LTASection.cannotUseLtaServiceNoChargePage.url)
         val result         = service.buildLifeTimeAllowance(answersWithNav)
 
-        result mustBe None
+        result `mustBe` None
       }
     }
 
@@ -3913,7 +3914,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           )
 
         val sections: Seq[Seq[RowViewModel]] = viewModel.futureValue.outDates
-        sections.size mustBe 1
+        sections.size `mustBe` 1
 
         val year = sections(0)
 
@@ -3987,7 +3988,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           )
 
         val sections: Seq[Seq[RowViewModel]] = viewModel.futureValue.inDates
-        sections.size mustBe 1
+        sections.size `mustBe` 1
 
         val year = sections(0)
 
@@ -4052,7 +4053,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           )
 
         val sections: Seq[Seq[RowViewModel]] = viewModel.futureValue.outDates
-        sections.size mustBe 4
+        sections.size `mustBe` 4
 
         val _2016Period = sections(0)
         val _2017Period = sections(1)
@@ -4216,7 +4217,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           )
 
         val sections: Seq[Seq[RowViewModel]] = viewModel.futureValue.inDates
-        sections.size mustBe 4
+        sections.size `mustBe` 4
 
         val _2020 = sections(0)
         val _2021 = sections(1)
@@ -4329,9 +4330,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             calculationResult
           )
 
-        summaryModel.size mustBe 8
+        summaryModel.size `mustBe` 8
 
-        summaryModel mustBe List(
+        summaryModel `mustBe` List(
           IndividualAASummaryModel(
             Period._2016,
             0,
@@ -4440,18 +4441,18 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             calculationResult
           )
 
-        summaryModel.size mustBe 8
+        summaryModel.size `mustBe` 8
 
         val year2016 = summaryModel(0)
 
-        year2016.period mustBe Period._2016
-        year2016.changeInTaxCharge mustBe 0
-        year2016.changeInTaxChargeNonAbs mustBe 0
-        year2016.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
-        year2016.revisedChargeableAmountBeforeTaxRate mustBe 0
-        year2016.chargePaidByMember mustBe 0
-        year2016.chargePaidBySchemes mustBe 0
-        year2016.revisedChargeableAmountAfterTaxRate mustBe 0
+        year2016.period `mustBe` Period._2016
+        year2016.changeInTaxCharge `mustBe` 0
+        year2016.changeInTaxChargeNonAbs `mustBe` 0
+        year2016.changeInTaxChargeString `mustBe` "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+        year2016.revisedChargeableAmountBeforeTaxRate `mustBe` 0
+        year2016.chargePaidByMember `mustBe` 0
+        year2016.chargePaidBySchemes `mustBe` 0
+        year2016.revisedChargeableAmountAfterTaxRate `mustBe` 0
       }
 
       "An in date year should be well formed" in {
@@ -4462,25 +4463,25 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
             calculationResult
           )
 
-        summaryModel.size mustBe 8
+        summaryModel.size `mustBe` 8
 
         val year2021 = summaryModel(5)
 
-        year2021.period mustBe Period._2021
-        year2021.changeInTaxCharge mustBe 0
-        year2021.changeInTaxChargeNonAbs mustBe 0
-        year2021.changeInTaxChargeString mustBe "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
-        year2021.revisedChargeableAmountBeforeTaxRate mustBe 0
-        year2021.chargePaidByMember mustBe 0
-        year2021.chargePaidBySchemes mustBe 0
-        year2021.revisedChargeableAmountAfterTaxRate mustBe 0
+        year2021.period `mustBe` Period._2021
+        year2021.changeInTaxCharge `mustBe` 0
+        year2021.changeInTaxChargeNonAbs `mustBe` 0
+        year2021.changeInTaxChargeString `mustBe` "calculationReviewIndividualAA.changeInTaxChargeString.noChange."
+        year2021.revisedChargeableAmountBeforeTaxRate `mustBe` 0
+        year2021.chargePaidByMember `mustBe` 0
+        year2021.chargePaidBySchemes `mustBe` 0
+        year2021.revisedChargeableAmountAfterTaxRate `mustBe` 0
 
       }
     }
 
     def checkRowNameAndValue(rows: Seq[RowViewModel], index: Int, expectedName: String, expectedValue: String): Unit = {
-      rows(index).name mustBe expectedName
-      rows(index).value mustBe expectedValue
+      rows(index).name `mustBe` expectedName
+      rows(index).value `mustBe` expectedValue
     }
 
     "Calculation review" - {
@@ -4493,10 +4494,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         expectedLink: String,
         expectedTotalCharge: Option[Int]
       ): Unit = {
-        rows(index).title mustBe expectedTitle
-        rows(index).changeString mustBe expectedString
-        rows(index).link mustBe expectedLink
-        rows(index).totalCharge mustBe expectedTotalCharge
+        rows(index).title `mustBe` expectedTitle
+        rows(index).changeString `mustBe` expectedString
+        rows(index).link `mustBe` expectedLink
+        rows(index).totalCharge `mustBe` expectedTotalCharge
       }
 
       val index = 0
@@ -4509,7 +4510,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           service.calculationReviewViewModel(calculationResult)
 
         val sections: Seq[Seq[ReviewRowViewModel]] = viewModel.outDates
-        sections.size mustBe 4
+        sections.size `mustBe` 4
 
         checkRowNameAndValueReviewRow(
           sections(0),
@@ -4553,7 +4554,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
           service.calculationReviewViewModel(calculationResult)
 
         val sections: Seq[Seq[ReviewRowViewModel]] = viewModel.inDates
-        sections.size mustBe 4
+        sections.size `mustBe` 4
 
         checkRowNameAndValueReviewRow(
           sections(0),
@@ -4605,7 +4606,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
 
       val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
-      submissionResponse.futureValue.asInstanceOf[Success].uniqueId mustBe "uniqueId"
+      submissionResponse.futureValue.asInstanceOf[Success].uniqueId `mustBe` "uniqueId"
     }
 
     "must fail when a valid calculation result cannot be obtained" in {
@@ -4616,7 +4617,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
-      an[RuntimeException] mustBe thrownBy(result.futureValue)
+      an[RuntimeException] `mustBe` thrownBy(result.futureValue)
     }
 
     "must fail when a calculation result cannot sent" in {
@@ -4630,7 +4631,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         .thenReturn(Future.failed(new RuntimeException("someError")))
 
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
-      an[RuntimeException] mustBe thrownBy(result.futureValue)
+      an[RuntimeException] `mustBe` thrownBy(result.futureValue)
     }
   }
 
@@ -4684,7 +4685,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
         .success
         .value
 
-      service.adjustedIncomeCalculation(userAnswers, period) mustBe 180000
+      service.adjustedIncomeCalculation(userAnswers, period) `mustBe` 180000
 
     }
 

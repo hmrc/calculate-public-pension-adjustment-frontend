@@ -24,12 +24,12 @@ class PSTRTest extends SpecBase {
 
     "must be constructed when year string is valid" in {
       val pstrOption: Option[PSTR] = PSTR.fromString("12345678RL")
-      pstrOption mustBe Some(PSTR("12345678RL"))
+      pstrOption `mustBe` Some(PSTR("12345678RL"))
     }
 
     "must not be constructed when year string is invalid" in {
       val pstrOption: Option[PSTR] = PSTR.fromString("invalidPSTR")
-      pstrOption mustBe None
+      pstrOption `mustBe` None
     }
   }
 }

@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -38,7 +38,7 @@ class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      SavingsStatementSummary.row(userAnswers) shouldBe Some(
+      SavingsStatementSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "savingsStatement.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -57,7 +57,7 @@ class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      SavingsStatementSummary.row(userAnswers) shouldBe Some(
+      SavingsStatementSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "savingsStatement.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -71,7 +71,7 @@ class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      SavingsStatementSummary.row(userAnswers) shouldBe None
+      SavingsStatementSummary.row(userAnswers) `shouldBe` None
     }
   }
 

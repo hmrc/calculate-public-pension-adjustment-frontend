@@ -28,7 +28,7 @@ import pages.setupquestions.annualallowance.MaybePIAUnchangedOrDecreasedPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.setupquestions.annualallowance.MaybePIAUnchangedOrDecreasedView
 
@@ -56,8 +56,8 @@ class MaybePIAUnchangedOrDecreasedControllerSpec extends SpecBase with MockitoSu
 
         val view = application.injector.instanceOf[MaybePIAUnchangedOrDecreasedView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -77,8 +77,8 @@ class MaybePIAUnchangedOrDecreasedControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(MaybePIAUnchangedOrDecreased.values.head), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(MaybePIAUnchangedOrDecreased.values.head), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -103,7 +103,7 @@ class MaybePIAUnchangedOrDecreasedControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -122,8 +122,8 @@ class MaybePIAUnchangedOrDecreasedControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -137,8 +137,8 @@ class MaybePIAUnchangedOrDecreasedControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -154,8 +154,8 @@ class MaybePIAUnchangedOrDecreasedControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -181,9 +181,9 @@ class MaybePIAUnchangedOrDecreasedControllerSpec extends SpecBase with MockitoSu
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
+          status(result) `mustEqual` SEE_OTHER
           val capturedUserAnswers = userAnswersCaptor.getValue
-          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(1)
+          capturedUserAnswers.get(AAKickOutStatus()) `mustBe` Some(1)
         }
       }
 
@@ -207,9 +207,9 @@ class MaybePIAUnchangedOrDecreasedControllerSpec extends SpecBase with MockitoSu
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
+          status(result) `mustEqual` SEE_OTHER
           val capturedUserAnswers = userAnswersCaptor.getValue
-          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(2)
+          capturedUserAnswers.get(AAKickOutStatus()) `mustBe` Some(2)
         }
       }
     }

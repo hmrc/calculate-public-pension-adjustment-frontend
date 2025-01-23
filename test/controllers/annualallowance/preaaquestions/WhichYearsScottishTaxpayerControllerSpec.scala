@@ -18,7 +18,7 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.WhichYearsScottishTaxpayerFormProvider
 import models.{Done, NormalMode, UserAnswers, WhichYearsScottishTaxpayer}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +28,7 @@ import pages.annualallowance.preaaquestions.WhichYearsScottishTaxpayerPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.preaaquestions.WhichYearsScottishTaxpayerView
 
@@ -56,9 +56,9 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
 
         val view = application.injector.instanceOf[WhichYearsScottishTaxpayerView]
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -78,8 +78,8 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhichYearsScottishTaxpayer.values.toSet), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(WhichYearsScottishTaxpayer.values.toSet), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -106,7 +106,7 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -125,8 +125,8 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -140,8 +140,8 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -157,8 +157,8 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 

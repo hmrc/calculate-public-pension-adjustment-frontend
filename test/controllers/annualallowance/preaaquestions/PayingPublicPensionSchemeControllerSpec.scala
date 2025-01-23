@@ -18,7 +18,7 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.PayingPublicPensionSchemeFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +28,7 @@ import pages.annualallowance.preaaquestions.PayingPublicPensionSchemePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.preaaquestions.PayingPublicPensionSchemeView
 
@@ -56,8 +56,8 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
 
         val view = application.injector.instanceOf[PayingPublicPensionSchemeView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -74,8 +74,8 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -99,7 +99,7 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -118,8 +118,8 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -133,8 +133,8 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -150,8 +150,8 @@ class PayingPublicPensionSchemeControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

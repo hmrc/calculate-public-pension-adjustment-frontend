@@ -17,7 +17,7 @@
 package controllers.setupquestions
 
 import base.SpecBase
-import controllers.setupquestions.{routes => setupRoutes}
+import controllers.setupquestions.routes as setupRoutes
 import forms.ResubmittingAdjustmentFormProvider
 import models.{CheckMode, Done, NormalMode, PostTriageFlag, UserAnswers}
 import org.mockito.ArgumentCaptor
@@ -28,7 +28,7 @@ import pages.setupquestions.ResubmittingAdjustmentPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import uk.gov.hmrc.auth.core.AuthConnector
 import uk.gov.hmrc.auth.core.authorise.Predicate
@@ -61,8 +61,8 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[ResubmittingAdjustmentView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -79,15 +79,15 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
 
       val mockUserDataService = mock[UserDataService]
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val fakeAuthConnector = new FakeAuthConnector(Some("userId"))
 
@@ -106,7 +106,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -125,8 +125,8 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -134,7 +134,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService                            = mock[UserDataService]
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val fakeAuthConnector = new FakeAuthConnector(Some("userId"))
 
@@ -153,9 +153,9 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(PostTriageFlag) mustBe Some(true)
+        capturedUserAnswers.get(PostTriageFlag) `mustBe` Some(true)
       }
     }
 
@@ -163,7 +163,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService                            = mock[UserDataService]
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val fakeAuthConnector = new FakeAuthConnector(Some("userId"))
 
@@ -184,9 +184,9 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(PostTriageFlag) mustBe None
+        capturedUserAnswers.get(PostTriageFlag) `mustBe` None
       }
     }
 
@@ -199,7 +199,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
       }
     }
 
@@ -212,7 +212,7 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
       }
     }
   }

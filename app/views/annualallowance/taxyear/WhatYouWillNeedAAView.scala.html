@@ -23,7 +23,7 @@
         newTabLink: HmrcNewTabLinkHelper
 )
 
-@(period: Period)(implicit request: Request[_], messages: Messages)
+@(period: Period)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("whatYouWillNeedAA.heading"))) {
 

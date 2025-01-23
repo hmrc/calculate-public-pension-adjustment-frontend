@@ -27,7 +27,7 @@ import pages.annualallowance.taxyear.AmountFlexibleRemunerationArrangementsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.AmountFlexibleRemunerationArrangementsView
 
@@ -61,8 +61,8 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
 
         val view = application.injector.instanceOf[AmountFlexibleRemunerationArrangementsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -86,8 +86,8 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -112,7 +112,7 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -131,8 +131,8 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -149,8 +149,8 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
     "must redirect to start of the service for a POST if no existing data is found" in {
@@ -165,8 +165,8 @@ class AmountFlexibleRemunerationArrangementsControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.AnySalarySacrificeArrangementsPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -40,7 +40,7 @@ class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matcher
           true
         )
         .get
-      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) shouldBe Some(
+      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "anySalarySacrificeArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -63,7 +63,7 @@ class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matcher
           false
         )
         .get
-      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) shouldBe Some(
+      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "anySalarySacrificeArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -81,7 +81,7 @@ class AnySalarySacrificeArrangementsSummarySpec extends AnyFreeSpec with Matcher
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) shouldBe None
+      AnySalarySacrificeArrangementsSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 

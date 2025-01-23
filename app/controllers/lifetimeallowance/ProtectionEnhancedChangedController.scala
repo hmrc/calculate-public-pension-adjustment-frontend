@@ -16,7 +16,7 @@
 
 package controllers.lifetimeallowance
 
-import controllers.actions._
+import controllers.actions.*
 import forms.ProtectionEnhancedChangedFormProvider
 import models.Mode
 import models.tasklist.sections.LTASection

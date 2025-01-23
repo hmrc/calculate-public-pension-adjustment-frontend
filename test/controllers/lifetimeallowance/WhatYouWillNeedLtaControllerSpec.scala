@@ -18,7 +18,7 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.lifetimeallowance.WhatYouWillNeedLtaView
 
 class WhatYouWillNeedLtaControllerSpec extends SpecBase {
@@ -36,8 +36,8 @@ class WhatYouWillNeedLtaControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[WhatYouWillNeedLtaView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view()(request, messages(application)).toString
       }
     }
   }

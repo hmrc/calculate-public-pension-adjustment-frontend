@@ -16,8 +16,8 @@
 
 package services
 
-import models.tasklist._
-import models.tasklist.sections._
+import models.tasklist.*
+import models.tasklist.sections.*
 import models.{AAKickOutStatus, LTAKickOutStatus, Period, PostTriageFlag, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 

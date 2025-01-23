@@ -19,8 +19,7 @@ package forms.annualallowance.taxyear
 import forms.mappings.Mappings
 import models.PensionSchemeInput2016postAmounts
 import play.api.data.Form
-import play.api.data.Forms._
-
+import play.api.data.Forms.*
 
 import javax.inject.Inject
 
@@ -42,6 +41,6 @@ class PensionSchemeInput2016postAmountsFormProvider @Inject() extends Mappings {
             dateString
           )
         )
-    )(PensionSchemeInput2016postAmounts.apply)
+    )(PensionSchemeInput2016postAmounts.apply)(o => Some(o.revisedPIA))
   )
 }

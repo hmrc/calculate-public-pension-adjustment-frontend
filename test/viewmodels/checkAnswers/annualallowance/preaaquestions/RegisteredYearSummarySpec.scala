@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.preaaquestions.RegisteredYearPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class RegisteredYearSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -39,7 +39,7 @@ class RegisteredYearSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      RegisteredYearSummary.row(userAnswers, Period._2011) shouldBe Some(
+      RegisteredYearSummary.row(userAnswers, Period._2011) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "registeredYear.checkYourAnswersLabel.2011",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class RegisteredYearSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      RegisteredYearSummary.row(userAnswers, Period._2011) shouldBe Some(
+      RegisteredYearSummary.row(userAnswers, Period._2011) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "registeredYear.checkYourAnswersLabel.2011",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class RegisteredYearSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2014
-      RegisteredYearSummary.row(userAnswers, period) shouldBe None
+      RegisteredYearSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 }

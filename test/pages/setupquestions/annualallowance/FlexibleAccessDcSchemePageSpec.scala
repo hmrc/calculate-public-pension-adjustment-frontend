@@ -21,7 +21,7 @@ import models.{CheckMode, MaybePIAIncrease, NormalMode}
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import pages.annualallowance.taxyear.MemberMoreThanOnePensionPage
 import pages.behaviours.PageBehaviours
-import pages.setupquestions.annualallowance._
+import pages.setupquestions.annualallowance.*
 
 class FlexibleAccessDcSchemePageSpec extends PageBehaviours {
 

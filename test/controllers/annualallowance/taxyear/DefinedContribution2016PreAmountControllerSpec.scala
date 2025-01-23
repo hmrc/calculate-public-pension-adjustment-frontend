@@ -29,7 +29,7 @@ import pages.annualallowance.taxyear.{DefinedContribution2016PreAmountPage, Defi
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.DefinedContribution2016PreAmountView
 
@@ -63,8 +63,8 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val view = application.injector.instanceOf[DefinedContribution2016PreAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form,
           NormalMode,
           "6 April 2015 and 8 July 2015"
@@ -93,8 +93,8 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val view = application.injector.instanceOf[DefinedContribution2016PreAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           flexiForm,
           NormalMode,
           "6 April 2015 and 1 July 2015"
@@ -123,8 +123,8 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val view = application.injector.instanceOf[DefinedContribution2016PreAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           flexiForm,
           NormalMode,
           "6 April 2015 and 6 April 2015"
@@ -163,7 +163,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
         val capturedUserAnswers = userAnswersCaptor.getValue
         capturedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) mustBe Some(BigInt(0))
@@ -198,7 +198,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
         val capturedUserAnswers = userAnswersCaptor.getValue
         capturedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) mustBe None
@@ -218,8 +218,8 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form.fill(validAnswer),
           NormalMode,
           "6 April 2015 and 8 July 2015"
@@ -248,7 +248,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -267,8 +267,8 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(
           boundForm,
           NormalMode,
           "6 April 2015 and 8 July 2015"
@@ -289,8 +289,8 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -306,9 +306,9 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

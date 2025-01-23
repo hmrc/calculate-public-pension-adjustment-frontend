@@ -16,12 +16,12 @@
 
 package models.tasklist.sections
 
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{NormalMode, Period, SectionNavigation, UserAnswers}
 import pages.Page
-import pages.annualallowance.preaaquestions._
+import pages.annualallowance.preaaquestions.*
 import play.api.mvc.Call
 
 case object PreAASection extends Section {

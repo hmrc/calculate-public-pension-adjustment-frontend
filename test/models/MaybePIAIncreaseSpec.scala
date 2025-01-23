@@ -33,7 +33,7 @@ class MaybePIAIncreaseSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
       val gen = Gen.oneOf(MaybePIAIncrease.values.toSeq)
 
       forAll(gen) { maybePIAIncrease =>
-        JsString(maybePIAIncrease.toString).validate[MaybePIAIncrease].asOpt.value mustEqual maybePIAIncrease
+        JsString(maybePIAIncrease.toString).validate[MaybePIAIncrease].asOpt.value `mustEqual` maybePIAIncrease
       }
     }
 
@@ -42,7 +42,7 @@ class MaybePIAIncreaseSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
       val gen = arbitrary[String] suchThat (!MaybePIAIncrease.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[MaybePIAIncrease] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[MaybePIAIncrease] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -51,7 +51,7 @@ class MaybePIAIncreaseSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
       val gen = Gen.oneOf(MaybePIAIncrease.values.toSeq)
 
       forAll(gen) { maybePIAIncrease =>
-        Json.toJson(maybePIAIncrease) mustEqual JsString(maybePIAIncrease.toString)
+        Json.toJson(maybePIAIncrease) `mustEqual` JsString(maybePIAIncrease.toString)
       }
     }
   }

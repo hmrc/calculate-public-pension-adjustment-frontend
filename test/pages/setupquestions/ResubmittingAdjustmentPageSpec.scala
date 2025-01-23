@@ -107,8 +107,8 @@ class ResubmittingAdjustmentPageSpec extends PageBehaviours {
 
       val result = answers.set(ResubmittingAdjustmentPage, true).success.value
 
-      result.get(ResubmittingAdjustmentPage) must be(defined)
-      result.get(ReasonForResubmissionPage)  must be(defined)
+      result.get(ResubmittingAdjustmentPage) `must` `be`(defined)
+      result.get(ReasonForResubmissionPage)  `must` `be`(defined)
     }
 
     "must remove ReasonForResubmissionPage when the answer is no" in {
@@ -117,8 +117,8 @@ class ResubmittingAdjustmentPageSpec extends PageBehaviours {
 
       val result = answers.set(ResubmittingAdjustmentPage, false).success.value
 
-      result.get(ResubmittingAdjustmentPage) must be(defined)
-      result.get(ReasonForResubmissionPage)  must not be defined
+      result.get(ResubmittingAdjustmentPage) `must` `be`(defined)
+      result.get(ReasonForResubmissionPage)  `must` `not` `be` defined
     }
   }
 }

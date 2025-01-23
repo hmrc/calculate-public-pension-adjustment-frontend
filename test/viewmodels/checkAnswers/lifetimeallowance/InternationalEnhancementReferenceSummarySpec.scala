@@ -24,8 +24,8 @@ import pages.lifetimeallowance.InternationalEnhancementReferencePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class InternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -39,7 +39,7 @@ class InternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with Matc
           "test123"
         )
         .get
-      InternationalEnhancementReferenceSummary.row(userAnswers, true) shouldBe Some(
+      InternationalEnhancementReferenceSummary.row(userAnswers, true) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "internationalEnhancementReference.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
@@ -61,7 +61,7 @@ class InternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with Matc
           "test123"
         )
         .get
-      InternationalEnhancementReferenceSummary.row(userAnswers, false) shouldBe Some(
+      InternationalEnhancementReferenceSummary.row(userAnswers, false) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"internationalEnhancementReference.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("test123")
@@ -71,7 +71,7 @@ class InternationalEnhancementReferenceSummarySpec extends AnyFreeSpec with Matc
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionReferenceSummary.row(userAnswers, true) shouldBe None
+      ProtectionReferenceSummary.row(userAnswers, true) `shouldBe` None
     }
   }
 

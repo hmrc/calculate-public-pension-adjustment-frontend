@@ -23,8 +23,8 @@ import pages.setupquestions.lifetimeallowance.PreviousLTAChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, ValueViewModel}
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class PreviousLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -38,7 +38,7 @@ class PreviousLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      PreviousLTAChargeSummary.row(userAnswers) shouldBe Some(
+      PreviousLTAChargeSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "previousLTACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -60,7 +60,7 @@ class PreviousLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      PreviousLTAChargeSummary.row(userAnswers) shouldBe Some(
+      PreviousLTAChargeSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "previousLTACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -77,7 +77,7 @@ class PreviousLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PreviousLTAChargeSummary.row(userAnswers) shouldBe None
+      PreviousLTAChargeSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

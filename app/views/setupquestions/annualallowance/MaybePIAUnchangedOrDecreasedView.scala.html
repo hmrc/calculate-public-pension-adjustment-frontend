@@ -24,7 +24,7 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], mode: Mode)(implicit request: Request[?], messages: Messages)
 
 @contentSubHeading = {
     <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("maybePIAUnchangedOrDecreased.heading2")</h2>

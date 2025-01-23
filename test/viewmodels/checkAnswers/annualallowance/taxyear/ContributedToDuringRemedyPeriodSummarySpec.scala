@@ -25,8 +25,8 @@ import pages.annualallowance.taxyear.ContributedToDuringRemedyPeriodPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class ContributedToDuringRemedyPeriodSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -41,7 +41,7 @@ class ContributedToDuringRemedyPeriodSummarySpec extends AnyFreeSpec with Matche
           Set(Definedcontribution, Definedbenefit)
         )
         .get
-      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period) shouldBe Some(
+      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "contributedToDuringRemedyPeriod.checkYourAnswersLabel",
           value = ValueViewModel(
@@ -63,7 +63,7 @@ class ContributedToDuringRemedyPeriodSummarySpec extends AnyFreeSpec with Matche
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period) shouldBe None
+      ContributedToDuringRemedyPeriodSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 

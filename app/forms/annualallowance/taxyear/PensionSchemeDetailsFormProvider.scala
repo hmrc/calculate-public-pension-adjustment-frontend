@@ -19,8 +19,7 @@ package forms.annualallowance.taxyear
 import forms.mappings.Mappings
 import models.PensionSchemeDetails
 import play.api.data.Form
-import play.api.data.Forms._
-
+import play.api.data.Forms.*
 
 import javax.inject.Inject
 

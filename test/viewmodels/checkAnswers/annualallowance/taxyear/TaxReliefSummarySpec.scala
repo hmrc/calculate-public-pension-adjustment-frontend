@@ -24,8 +24,8 @@ import pages.annualallowance.taxyear.TaxReliefPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class TaxReliefSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -40,7 +40,7 @@ class TaxReliefSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      TaxReliefSummary.row(userAnswers, period) shouldBe Some(
+      TaxReliefSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "taxRelief.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -58,7 +58,7 @@ class TaxReliefSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      TaxReliefSummary.row(userAnswers, period) shouldBe None
+      TaxReliefSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 

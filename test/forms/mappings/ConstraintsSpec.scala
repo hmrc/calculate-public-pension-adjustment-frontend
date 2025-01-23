@@ -31,22 +31,22 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Valid when all constraints pass" in {
       val result = firstError(maxLength(10, "error.length"), regexp("""^\w+$""", "error.regexp"))("foo")
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Invalid when the first constraint fails" in {
       val result = firstError(maxLength(10, "error.length"), regexp("""^\w+$""", "error.regexp"))("a" * 11)
-      result mustEqual Invalid("error.length", 10)
+      result `mustEqual` Invalid("error.length", 10)
     }
 
     "must return Invalid when the second constraint fails" in {
       val result = firstError(maxLength(10, "error.length"), regexp("""^\w+$""", "error.regexp"))("")
-      result mustEqual Invalid("error.regexp", """^\w+$""")
+      result `mustEqual` Invalid("error.regexp", """^\w+$""")
     }
 
     "must return Invalid for the first error when both constraints fail" in {
       val result = firstError(maxLength(-1, "error.length"), regexp("""^\w+$""", "error.regexp"))("")
-      result mustEqual Invalid("error.length", -1)
+      result `mustEqual` Invalid("error.length", -1)
     }
   }
 
@@ -54,12 +54,12 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Valid for a number between the thresholds" in {
       val result = inRange(1, 1000, "error.inRange").apply(2)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Invalid for a number outside the thresholds" in {
       val result = inRange(1, 1000, "error.inRange").apply(99999)
-      result mustEqual Invalid("error.inRange", 1, 1000)
+      result `mustEqual` Invalid("error.inRange", 1, 1000)
     }
   }
 
@@ -67,12 +67,12 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Valid for a number between the thresholds" in {
       val result = inRangeWithArg(1, 1000, "error.inRange", "arg").apply(2)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Invalid for a number outside the thresholds" in {
       val result = inRangeWithArg(1, 1000, "error.inRange", "arg").apply(99999)
-      result mustEqual Invalid("error.inRange", 1, 1000, "arg")
+      result `mustEqual` Invalid("error.inRange", 1, 1000, "arg")
     }
   }
 
@@ -80,17 +80,17 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Valid for a number greater than the threshold" in {
       val result = minimumValue(1, "error.min").apply(2)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Valid for a number equal to the threshold" in {
       val result = minimumValue(1, "error.min").apply(1)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Invalid for a number below the threshold" in {
       val result = minimumValue(1, "error.min").apply(0)
-      result mustEqual Invalid("error.min", 1, "")
+      result `mustEqual` Invalid("error.min", 1, "")
     }
   }
 
@@ -98,17 +98,17 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Valid for a number greater than the threshold" in {
       val result = minimumValueTwoArgs(1, "error.min").apply(2)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Valid for a number equal to the threshold" in {
       val result = minimumValueTwoArgs(1, "error.min").apply(1)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Invalid for a number below the threshold with two args" in {
       val result = minimumValueTwoArgs(1, "error.min", Seq("1", "error2")).apply(0)
-      result mustEqual Invalid("error.min", 1, "error2")
+      result `mustEqual` Invalid("error.min", 1, "error2")
     }
   }
 
@@ -116,17 +116,17 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Valid for a number less than the threshold" in {
       val result = maximumValue(1, "error.max").apply(0)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Valid for a number equal to the threshold" in {
       val result = maximumValue(1, "error.max").apply(1)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Invalid for a number above the threshold" in {
       val result = maximumValue(1, "error.max").apply(2)
-      result mustEqual Invalid("error.max", 1, "")
+      result `mustEqual` Invalid("error.max", 1, "")
     }
   }
 
@@ -134,17 +134,17 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Valid for a number greater than the threshold" in {
       val result = maximumValueTwoArgs(1, "error.max").apply(0)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Valid for a number equal to the threshold" in {
       val result = maximumValueTwoArgs(1, "error.max").apply(1)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Invalid for a number below the threshold with two args" in {
       val result = maximumValueTwoArgs(1, "error.max", Seq("1", "error2")).apply(2)
-      result mustEqual Invalid("error.max", 1, "error2")
+      result `mustEqual` Invalid("error.max", 1, "error2")
     }
   }
 
@@ -152,12 +152,12 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Valid for an input that matches the expression" in {
       val result = regexp("""^\w+$""", "error.invalid")("foo")
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Invalid for an input that does not match the expression" in {
       val result = regexp("""^\d+$""", "error.invalid")("foo")
-      result mustEqual Invalid("error.invalid", """^\d+$""")
+      result `mustEqual` Invalid("error.invalid", """^\d+$""")
     }
   }
 
@@ -165,22 +165,22 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
     "must return Valid for a string shorter than the allowed length" in {
       val result = maxLength(10, "error.length")("a" * 9)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Valid for an empty string" in {
       val result = maxLength(10, "error.length")("")
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Valid for a string equal to the allowed length" in {
       val result = maxLength(10, "error.length")("a" * 10)
-      result mustEqual Valid
+      result `mustEqual` Valid
     }
 
     "must return Invalid for a string longer than the allowed length" in {
       val result = maxLength(10, "error.length")("a" * 11)
-      result mustEqual Invalid("error.length", 10)
+      result `mustEqual` Invalid("error.length", 10)
     }
   }
 
@@ -195,7 +195,7 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
       forAll(gen) { case (max, date) =>
         val result = maxDate(max, "error.future")(date)
-        result mustEqual Valid
+        result `mustEqual` Valid
       }
     }
 
@@ -208,7 +208,7 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
       forAll(gen) { case (max, date) =>
         val result = maxDate(max, "error.future", "foo")(date)
-        result mustEqual Invalid("error.future", "foo")
+        result `mustEqual` Invalid("error.future", "foo")
       }
     }
   }
@@ -224,7 +224,7 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
       forAll(gen) { case (min, date) =>
         val result = minDate(min, "error.past", "foo")(date)
-        result mustEqual Valid
+        result `mustEqual` Valid
       }
     }
 
@@ -237,7 +237,7 @@ class ConstraintsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyC
 
       forAll(gen) { case (min, date) =>
         val result = minDate(min, "error.past", "foo")(date)
-        result mustEqual Invalid("error.past", "foo")
+        result `mustEqual` Invalid("error.past", "foo")
       }
     }
   }

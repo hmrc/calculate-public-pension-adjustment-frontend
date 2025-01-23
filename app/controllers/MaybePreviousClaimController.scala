@@ -16,7 +16,6 @@
 
 package controllers
 
-import config.FrontendAppConfig
 import controllers.actions._
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.{Done, NormalMode, SubmissionStatusResponse, UserAnswers}
@@ -35,7 +34,6 @@ class MaybePreviousClaimController @Inject() (
   submitBackendService: SubmitBackendService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   calculateBackendService: CalculateBackendService
 )(implicit ec: ExecutionContext)

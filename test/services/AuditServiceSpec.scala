@@ -17,12 +17,12 @@
 package services
 
 import base.SpecBase
-import models.CalculationResults._
+import models.CalculationResults.*
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
 import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, IncomeSubJourney, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
-import org.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.await
@@ -30,7 +30,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
 import scala.concurrent.ExecutionContext
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 
 class AuditServiceSpec extends SpecBase with MockitoSugar {
 
@@ -253,7 +253,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
             calculationResponse
           )
 
-        await(service.auditCalculationRequest(calculationSubmissionAuditEvent)(hc)) mustBe ()
+        await(service.auditCalculationRequest(calculationSubmissionAuditEvent)(hc)) `mustBe` ()
       }
     }
   }

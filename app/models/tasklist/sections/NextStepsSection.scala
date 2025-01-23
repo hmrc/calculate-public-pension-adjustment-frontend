@@ -22,7 +22,7 @@ import models.tasklist.{Section, SectionGroupViewModel, SectionStatus}
 import models.{AAKickOutStatus, LTAKickOutStatus, PostTriageFlag, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 
-import javax.inject._
+import javax.inject.*
 
 @Singleton
 class NextStepsSection @Inject() (

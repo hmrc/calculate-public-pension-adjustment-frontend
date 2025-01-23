@@ -17,7 +17,7 @@
 package pages.setupquestions
 
 import controllers.routes
-import controllers.setupquestions.{routes => setupRoutes}
+import controllers.setupquestions.routes as setupRoutes
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath

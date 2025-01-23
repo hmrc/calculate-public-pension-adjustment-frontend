@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class HasReliefClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -39,7 +39,7 @@ class HasReliefClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matc
           true
         )
         .get
-      HasReliefClaimedOnOverseasPensionSummary.row(userAnswers, period) shouldBe Some(
+      HasReliefClaimedOnOverseasPensionSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "hasReliefClaimedOnOverseasPension.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class HasReliefClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matc
           false
         )
         .get
-      HasReliefClaimedOnOverseasPensionSummary.row(userAnswers, period) shouldBe Some(
+      HasReliefClaimedOnOverseasPensionSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "hasReliefClaimedOnOverseasPension.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class HasReliefClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matc
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      HasReliefClaimedOnOverseasPensionSummary.row(userAnswers, period) shouldBe None
+      HasReliefClaimedOnOverseasPensionSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 

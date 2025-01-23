@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.lifetimeallowance.routes as ltaRoutes
 import models.ProtectionEnhancedChanged.Enhancement
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -26,8 +26,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -41,7 +41,7 @@ class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
           Enhancement
         )
         .get
-      ProtectionEnhancedChangedSummary.row(userAnswers, true) shouldBe Some(
+      ProtectionEnhancedChangedSummary.row(userAnswers, true) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "protectionEnhancedChanged.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("protectionEnhancedChanged.enhancement")),
@@ -63,7 +63,7 @@ class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
           Enhancement
         )
         .get
-      ProtectionEnhancedChangedSummary.row(userAnswers, false) shouldBe Some(
+      ProtectionEnhancedChangedSummary.row(userAnswers, false) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"protectionEnhancedChanged.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("protectionEnhancedChanged.enhancement"))
@@ -73,7 +73,7 @@ class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionEnhancedChangedSummary.row(userAnswers, true) shouldBe None
+      ProtectionEnhancedChangedSummary.row(userAnswers, true) `shouldBe` None
     }
   }
 }

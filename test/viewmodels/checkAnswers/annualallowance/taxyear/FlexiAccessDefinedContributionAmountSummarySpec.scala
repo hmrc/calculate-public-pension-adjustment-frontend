@@ -25,8 +25,8 @@ import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 import java.time.LocalDate
 
@@ -43,7 +43,7 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
           BigInt("100")
         )
         .get
-      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
+      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -61,7 +61,7 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe None
+      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 
@@ -77,7 +77,7 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
       )
       .get
 
-    FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
+    FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) `shouldBe` Some(
       SummaryListRowViewModel(
         key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
         value = ValueViewModel(HtmlContent("£100")),

@@ -24,8 +24,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -39,7 +39,7 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
           models.QuarterChargePaid.AprToJul
         )
         .get
-      QuarterChargePaidSummary.row(userAnswers, true) shouldBe Some(
+      QuarterChargePaidSummary.row(userAnswers, true) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "quarterChargePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("quarterChargePaid.aprToJul")),
@@ -61,7 +61,7 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
           models.QuarterChargePaid.AprToJul
         )
         .get
-      QuarterChargePaidSummary.row(userAnswers, false) shouldBe Some(
+      QuarterChargePaidSummary.row(userAnswers, false) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"quarterChargePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("quarterChargePaid.aprToJul"))
@@ -71,7 +71,7 @@ class QuarterChargePaidSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      QuarterChargePaidSummary.row(userAnswers, true) shouldBe None
+      QuarterChargePaidSummary.row(userAnswers, true) `shouldBe` None
     }
   }
 

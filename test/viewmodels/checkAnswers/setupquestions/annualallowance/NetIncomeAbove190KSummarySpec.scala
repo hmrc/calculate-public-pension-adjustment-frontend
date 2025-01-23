@@ -19,12 +19,12 @@ package viewmodels.checkAnswers.setupquestions.annualallowance
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.matchers.should.Matchers._
+import org.scalatest.matchers.should.Matchers.*
 import pages.setupquestions.annualallowance.NetIncomeAbove190KPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
-import viewmodels.implicits._
+import viewmodels.implicits.*
 
 class NetIncomeAbove190KSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -38,7 +38,7 @@ class NetIncomeAbove190KSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      NetIncomeAbove190KSummary.row(userAnswers) shouldBe Some(
+      NetIncomeAbove190KSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "netIncomeAbove190K.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -60,7 +60,7 @@ class NetIncomeAbove190KSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      NetIncomeAbove190KSummary.row(userAnswers) shouldBe Some(
+      NetIncomeAbove190KSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "netIncomeAbove190K.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -77,7 +77,7 @@ class NetIncomeAbove190KSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      NetIncomeAbove190KSummary.row(userAnswers) shouldBe None
+      NetIncomeAbove190KSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

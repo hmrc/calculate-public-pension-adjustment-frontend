@@ -21,7 +21,7 @@
         continueButtonWithLink: components.ContinueButtonWithLink
 )
 
-@(subHeadingMessageKey: String, continueURL:Call, list: SummaryList)(implicit request: Request[_], messages: Messages)
+@(subHeadingMessageKey: String, continueURL:Call, list: SummaryList)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 

@@ -17,13 +17,15 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import config.FrontendAppConfig
-import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.lifetimeallowance.routes as ltaRoutes
 import models.{ReportingChange, UserAnswers}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.{verify, when}
+import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.setupquestions.ReportingChangePage
 import play.api.Configuration
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import play.api.test.Helpers.baseApplicationBuilder.injector
 import views.html.lifetimeallowance.CannotUseLtaServiceNoChargeView
 
@@ -49,10 +51,10 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, exitUrl)(request, messages(application)).toString
-          contentAsString(result) must include("Continue")
-          contentAsString(result) must not include "What did you think of this service?"
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(true, exitUrl)(request, messages(application)).toString
+          contentAsString(result) `must` `include`("Continue")
+          contentAsString(result) `must` `not` `include` "What did you think of this service?"
         }
       }
     }
@@ -74,10 +76,10 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, exitUrl)(request, messages(application)).toString
-          contentAsString(result) must not include "Continue"
-          contentAsString(result) must include("What did you think of this service?")
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, exitUrl)(request, messages(application)).toString
+          contentAsString(result) `must` `not` `include` "Continue"
+          contentAsString(result) `must` `include`("What did you think of this service?")
         }
       }
     }

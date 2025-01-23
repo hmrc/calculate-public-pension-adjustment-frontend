@@ -19,7 +19,7 @@
         govukButton: GovukButton
 )
 
-@(annualAllowanceIncluded: Boolean, feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
+@(annualAllowanceIncluded: Boolean, feedbackLinkUrl: String)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("cannotUseLtaServiceNoCharge.title"))) {
 

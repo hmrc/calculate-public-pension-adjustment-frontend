@@ -19,7 +19,7 @@ package forms.lifetimeallowance
 import forms.mappings.Mappings
 import models.LtaPensionSchemeDetails
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 
 import javax.inject.Inject
 
