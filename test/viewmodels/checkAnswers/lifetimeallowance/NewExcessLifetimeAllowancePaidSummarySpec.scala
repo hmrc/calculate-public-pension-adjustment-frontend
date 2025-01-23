@@ -24,8 +24,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class NewExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -39,7 +39,7 @@ class NewExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matcher
           models.NewExcessLifetimeAllowancePaid.Annualpayment
         )
         .get
-      NewExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe Some(
+      NewExcessLifetimeAllowancePaidSummary.row(userAnswers, true) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "newExcessLifetimeAllowancePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("newExcessLifetimeAllowancePaid.annualPayment")),
@@ -61,7 +61,7 @@ class NewExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matcher
           models.NewExcessLifetimeAllowancePaid.Annualpayment
         )
         .get
-      NewExcessLifetimeAllowancePaidSummary.row(userAnswers, false) shouldBe Some(
+      NewExcessLifetimeAllowancePaidSummary.row(userAnswers, false) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"newExcessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("newExcessLifetimeAllowancePaid.annualPayment"))
@@ -71,7 +71,7 @@ class NewExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matcher
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      NewExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe None
+      NewExcessLifetimeAllowancePaidSummary.row(userAnswers, true) `shouldBe` None
     }
   }
 

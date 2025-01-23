@@ -24,8 +24,8 @@ import pages.setupquestions.AffectedByRemedyPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.checkAnswers.setupquestions.annualallowance.SavingsStatementSummary
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class AffectedByRemedySummarySpec extends AnyFreeSpec with Matchers {
 
@@ -39,7 +39,7 @@ class AffectedByRemedySummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      AffectedByRemedySummary.row(userAnswers) shouldBe Some(
+      AffectedByRemedySummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "affectedByRemedy.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -53,7 +53,7 @@ class AffectedByRemedySummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      SavingsStatementSummary.row(userAnswers) shouldBe None
+      SavingsStatementSummary.row(userAnswers) `shouldBe` None
     }
   }
 

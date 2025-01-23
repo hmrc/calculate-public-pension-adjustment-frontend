@@ -27,7 +27,7 @@ import pages.annualallowance.taxyear.AnyLumpSumDeathBenefitsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.AnyLumpSumDeathBenefitsView
 
@@ -58,8 +58,8 @@ class AnyLumpSumDeathBenefitsControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[AnyLumpSumDeathBenefitsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, period, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -79,8 +79,8 @@ class AnyLumpSumDeathBenefitsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, period, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -105,10 +105,10 @@ class AnyLumpSumDeathBenefitsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.LumpSumDeathBenefitsValueController
+        ).value `mustEqual` controllers.annualallowance.taxyear.routes.LumpSumDeathBenefitsValueController
           .onPageLoad(NormalMode, period)
           .url
       }
@@ -129,8 +129,8 @@ class AnyLumpSumDeathBenefitsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, period, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -147,8 +147,8 @@ class AnyLumpSumDeathBenefitsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
     "must redirect to start of the service for a POST if no existing data is found" in {
@@ -163,8 +163,8 @@ class AnyLumpSumDeathBenefitsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

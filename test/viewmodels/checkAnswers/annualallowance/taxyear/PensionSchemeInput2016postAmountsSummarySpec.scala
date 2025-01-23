@@ -24,8 +24,8 @@ import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInp
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class PensionSchemeInput2016postAmountsSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -46,7 +46,7 @@ class PensionSchemeInput2016postAmountsSummarySpec extends AnyFreeSpec with Matc
           models.PensionSchemeDetails("SomeScheme", "01234567TR")
         )
         .get
-      PensionSchemeInput2016postAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      PensionSchemeInput2016postAmountsSummary.row(userAnswers, period, schemeIndex) `shouldBe` Some(
         SummaryListRowViewModel(
           key = messages("pensionSchemeInputAmounts.2016-post.checkYourAnswersLabel", "SomeScheme"),
           value = ValueViewModel(HtmlContent("£100")),
@@ -65,7 +65,7 @@ class PensionSchemeInput2016postAmountsSummarySpec extends AnyFreeSpec with Matc
       val period      = Period._2016
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      PensionSchemeInput2016postAmountsSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      PensionSchemeInput2016postAmountsSummary.row(userAnswers, period, schemeIndex) `shouldBe` None
     }
   }
 

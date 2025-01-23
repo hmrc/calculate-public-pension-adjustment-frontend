@@ -24,8 +24,8 @@ import pages.annualallowance.taxyear.BlindPersonsAllowanceAmountPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class BlindPersonsAllowanceAmountSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -40,7 +40,7 @@ class BlindPersonsAllowanceAmountSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("2325")
         )
         .get
-      BlindPersonsAllowanceAmountSummary.row(userAnswers, period) shouldBe Some(
+      BlindPersonsAllowanceAmountSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "blindPersonsAllowanceAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£2,325")),
@@ -58,7 +58,7 @@ class BlindPersonsAllowanceAmountSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      BlindPersonsAllowanceAmountSummary.row(userAnswers, period) shouldBe None
+      BlindPersonsAllowanceAmountSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 

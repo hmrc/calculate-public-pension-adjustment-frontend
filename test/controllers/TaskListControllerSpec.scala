@@ -25,7 +25,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{status, _}
+import play.api.test.Helpers.{status, *}
 import services.{TaskListService, UserDataService}
 
 import scala.concurrent.Future
@@ -40,7 +40,7 @@ class TaskListControllerSpec extends SpecBase with MockitoSugar {
     "must render a task list with sections containing correct names links and statuses" in {
 
       val mockUserDataService = mock[UserDataService]
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val mockTaskListService: TaskListService = whenAllSectionsAre(SectionStatus.Completed)
 
@@ -57,11 +57,11 @@ class TaskListControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
         val content = contentAsString(result)
 
-        content.contains("<a href=\"url\" class=\"govuk-link\" aria-describedby=\"id\">Change name</a>") mustBe true
-        content.contains("<span class=\"hmrc-status-tag\" id=\"id\">Completed</span>") mustBe true
+        content.contains("<a href=\"url\" class=\"govuk-link\" aria-describedby=\"id\">Change name</a>") `mustBe` true
+        content.contains("<span class=\"hmrc-status-tag\" id=\"id\">Completed</span>") `mustBe` true
       }
     }
   }
@@ -71,7 +71,7 @@ class TaskListControllerSpec extends SpecBase with MockitoSugar {
 
     val taskListViewModel: TaskListViewModel = constructTaskListViewModel(sectionStatus)
 
-    when(mockTaskListService.taskListViewModel(any[UserAnswers])).thenReturn(taskListViewModel)
+    when(mockTaskListService.taskListViewModel(any[UserAnswers])).`thenReturn`(taskListViewModel)
 
     mockTaskListService
   }

@@ -18,7 +18,7 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.PIAPreRemedyFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +28,7 @@ import pages.annualallowance.preaaquestions
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.preaaquestions.PIAPreRemedyView
 
@@ -60,8 +60,8 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[PIAPreRemedyView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, validPreRemedyTaxYear)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, validPreRemedyTaxYear)(
           request,
           messages(application)
         ).toString
@@ -85,8 +85,8 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, validPreRemedyTaxYear)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(validAnswer), NormalMode, validPreRemedyTaxYear)(
           request,
           messages(application)
         ).toString
@@ -113,7 +113,7 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -132,8 +132,8 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, validPreRemedyTaxYear)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, validPreRemedyTaxYear)(
           request,
           messages(application)
         ).toString
@@ -150,8 +150,8 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -167,9 +167,9 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

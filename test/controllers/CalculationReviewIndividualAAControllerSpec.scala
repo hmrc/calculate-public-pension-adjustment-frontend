@@ -30,7 +30,7 @@ import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{route, status, _}
+import play.api.test.Helpers.{route, status, *}
 import services.{CalculationResultService, TaskListService}
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -59,8 +59,8 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
         val request   = FakeRequest(GET, normalRouteOutDate)
 
         val result = route(application, request).value
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToOutstandingTasksPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToOutstandingTasksPage
       }
     }
 
@@ -73,8 +73,8 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
         val request   = FakeRequest(GET, normalRouteOutDate)
 
         val result = route(application, request).value
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToOutstandingTasksPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToOutstandingTasksPage
       }
     }
 
@@ -105,8 +105,8 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
         val request   = FakeRequest(GET, normalRouteInDate)
 
         val result = route(application, request).value
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToTaskListPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToTaskListPage
       }
     }
 
@@ -137,8 +137,8 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
         val request   = FakeRequest(POST, normalRouteInDate)
 
         val result = route(application, request).value
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToTaskListPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToTaskListPage
       }
     }
 
@@ -198,9 +198,9 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
 
           val result = route(application, request).value
 
-          status(result) mustEqual OK
-          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
-          contentAsString(result).contains("Your annual allowance tax charge has reduced by £10") mustBe true
+          status(result) `mustEqual` OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") `mustBe` true
+          contentAsString(result).contains("Your annual allowance tax charge has reduced by £10") `mustBe` true
         }
       }
 
@@ -258,12 +258,12 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
 
           val result = route(application, request).value
 
-          status(result) mustEqual OK
-          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
-          contentAsString(result).contains("You have no annual allowance tax charge to pay") mustBe true
+          status(result) `mustEqual` OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") `mustBe` true
+          contentAsString(result).contains("You have no annual allowance tax charge to pay") `mustBe` true
           contentAsString(result).contains(
             "You do not need to pay the £8 increase in tax charge, as it is written off for this year."
-          ) mustBe true
+          ) `mustBe` true
         }
       }
     }
@@ -324,9 +324,9 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
 
           val result = route(application, request).value
 
-          status(result) mustEqual OK
-          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
-          contentAsString(result).contains("You must pay £10") mustBe true
+          status(result) `mustEqual` OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") `mustBe` true
+          contentAsString(result).contains("You must pay £10") `mustBe` true
         }
       }
 
@@ -384,9 +384,9 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
 
           val result = route(application, request).value
 
-          status(result) mustEqual OK
-          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
-          contentAsString(result).contains("Your annual allowance tax charge has reduced by £10") mustBe true
+          status(result) `mustEqual` OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") `mustBe` true
+          contentAsString(result).contains("Your annual allowance tax charge has reduced by £10") `mustBe` true
         }
       }
 
@@ -444,9 +444,9 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
 
           val result = route(application, request).value
 
-          status(result) mustEqual OK
-          contentAsString(result).contains("Calculation review for individual annual allowance") mustBe true
-          contentAsString(result).contains("You have no annual allowance tax charge to pay") mustBe true
+          status(result) `mustEqual` OK
+          contentAsString(result).contains("Calculation review for individual annual allowance") `mustBe` true
+          contentAsString(result).contains("You have no annual allowance tax charge to pay") `mustBe` true
         }
       }
     }
@@ -477,8 +477,8 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.CalculationReviewController.onPageLoad().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` routes.CalculationReviewController.onPageLoad().url
       }
     }
 

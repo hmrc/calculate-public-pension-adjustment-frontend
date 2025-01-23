@@ -23,8 +23,8 @@ import pages.setupquestions.lifetimeallowance.OtherSchemeNotificationPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, ValueViewModel}
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -38,7 +38,7 @@ class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      OtherSchemeNotificationSummary.row(userAnswers) shouldBe Some(
+      OtherSchemeNotificationSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "otherSchemeNotification.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      OtherSchemeNotificationSummary.row(userAnswers) shouldBe Some(
+      OtherSchemeNotificationSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "otherSchemeNotification.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -81,7 +81,7 @@ class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      OtherSchemeNotificationSummary.row(userAnswers) shouldBe None
+      OtherSchemeNotificationSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import models.NormalMode
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.OptionalSignInView
 
 class OptionalSignInControllerSpec extends SpecBase {
@@ -37,10 +37,10 @@ class OptionalSignInControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[OptionalSignInView]
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
         val redirectLocation =
           controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
-        contentAsString(result) mustEqual view(redirectLocation)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(redirectLocation)(request, messages(application)).toString
       }
     }
 
@@ -54,10 +54,10 @@ class OptionalSignInControllerSpec extends SpecBase {
           FakeRequest(POST, routes.OptionalSignInController.onPageLoad().url).withFormUrlEncodedBody("value" -> "true")
         val result  = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual "http://localhost:9949/auth-login-stub/gg-sign-in?origin=PPA&continue=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fmaybe-previous-claim-continue"
+        ).value `mustEqual` "http://localhost:9949/auth-login-stub/gg-sign-in?origin=PPA&continue=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fmaybe-previous-claim-continue"
       }
     }
   }

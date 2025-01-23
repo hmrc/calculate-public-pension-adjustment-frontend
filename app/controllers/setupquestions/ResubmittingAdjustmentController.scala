@@ -16,7 +16,6 @@
 
 package controllers.setupquestions
 
-import config.FrontendAppConfig
 import controllers.actions._
 import forms.ResubmittingAdjustmentFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
@@ -39,7 +38,6 @@ class ResubmittingAdjustmentController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   formProvider: ResubmittingAdjustmentFormProvider,
-  config: FrontendAppConfig,
   auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: ResubmittingAdjustmentView

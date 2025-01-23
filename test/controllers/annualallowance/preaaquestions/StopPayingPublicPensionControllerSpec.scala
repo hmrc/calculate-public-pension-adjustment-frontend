@@ -18,7 +18,7 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.StopPayingPublicPensionFormProvider
 import models.{CheckMode, Done, Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentCaptor
@@ -30,7 +30,7 @@ import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.preaaquestions.StopPayingPublicPensionView
 
@@ -75,8 +75,8 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[StopPayingPublicPensionView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest(NormalMode), messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(getRequest(NormalMode), messages(application)).toString
       }
     }
 
@@ -91,8 +91,8 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, getRequest(NormalMode)).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(validAnswer), NormalMode)(
           getRequest(NormalMode),
           messages(application)
         ).toString
@@ -115,7 +115,7 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val result = route(application, postRequest(NormalMode)).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -159,10 +159,10 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(FlexiblyAccessedPensionPage) mustBe None
-        capturedUserAnswers.get(FlexibleAccessStartDatePage) mustBe None
+        capturedUserAnswers.get(FlexiblyAccessedPensionPage) `mustBe` None
+        capturedUserAnswers.get(FlexibleAccessStartDatePage) `mustBe` None
       }
 
     }
@@ -182,8 +182,8 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -195,8 +195,8 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val result    = route(application, getRequest(NormalMode)).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -208,8 +208,8 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val result    = route(application, postRequest(NormalMode)).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

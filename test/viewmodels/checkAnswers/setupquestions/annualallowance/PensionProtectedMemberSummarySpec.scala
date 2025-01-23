@@ -23,8 +23,8 @@ import pages.setupquestions.annualallowance.PensionProtectedMemberPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, ValueViewModel}
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class PensionProtectedMemberSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -38,7 +38,7 @@ class PensionProtectedMemberSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      PensionProtectedMemberSummary.row(userAnswers) shouldBe Some(
+      PensionProtectedMemberSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "pensionProtectedMember.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class PensionProtectedMemberSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      PensionProtectedMemberSummary.row(userAnswers) shouldBe Some(
+      PensionProtectedMemberSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "pensionProtectedMember.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -81,7 +81,7 @@ class PensionProtectedMemberSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PensionProtectedMemberSummary.row(userAnswers) shouldBe None
+      PensionProtectedMemberSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

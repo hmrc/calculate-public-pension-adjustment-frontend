@@ -23,7 +23,7 @@ import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.inject
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.AuditService
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseView
@@ -57,15 +57,15 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(
             true,
             "/public-pension-adjustment/triage-journey/lifetime-allowance/benefit-crystallisation-event"
           )(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
+          contentAsString(result) `must` `include`("Continue")
         }
       }
     }
@@ -93,12 +93,12 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup")(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(true, "/public-pension-adjustment/check-your-answers-setup")(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
+          contentAsString(result) `must` `include`("Continue")
         }
       }
     }
@@ -126,12 +126,12 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem")(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
+          contentAsString(result) `must` `not` `include` "Continue"
         }
       }
     }
@@ -153,12 +153,12 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem")(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
+          contentAsString(result) `must` `not` `include` "Continue"
         }
       }
     }
@@ -182,7 +182,7 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
             .url
         )
         val result  = route(application, request).value
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
         verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])
       }
     }

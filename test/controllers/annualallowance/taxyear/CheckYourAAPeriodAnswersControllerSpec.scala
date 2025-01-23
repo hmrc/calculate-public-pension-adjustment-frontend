@@ -21,13 +21,13 @@ import config.FrontendAppConfig
 import models.Period
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
-import pages.annualallowance.taxyear._
+import pages.annualallowance.taxyear.*
 import play.api.http.Status.{OK, SEE_OTHER}
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
-import viewmodels.checkAnswers.annualallowance.taxyear._
+import viewmodels.checkAnswers.annualallowance.taxyear.*
 import viewmodels.govuk.SummaryListFluency
 import views.html.annualallowance.taxyear.CheckYourAAPeriodAnswersView
 
@@ -51,8 +51,8 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         val view = application.injector.instanceOf[CheckYourAAPeriodAnswersView]
         val list = SummaryListViewModel(Seq.empty)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           list,
           "checkYourAnswers.aa.period.subHeading.2023",
           controllers.routes.TaskListController.onPageLoad()
@@ -103,8 +103,8 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         ).flatten
         val sequenceWithFlexiAmount = SummaryListViewModel(expectedSeq)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           sequenceWithFlexiAmount,
           "checkYourAnswers.aa.period.subHeading.2023",
           controllers.routes.TaskListController.onPageLoad()
@@ -152,8 +152,8 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         val expectedSeq                = Seq(DefinedContributionAmountSummary.row(ua, Period._2023)(messages(application))).flatten
         val sequenceWithoutFlexiAmount = SummaryListViewModel(expectedSeq)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           sequenceWithoutFlexiAmount,
           "checkYourAnswers.aa.period.subHeading.2023",
           controllers.routes.TaskListController.onPageLoad()
@@ -209,8 +209,8 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         ).flatten
         val summarySequence2016 = SummaryListViewModel(expectedSeq)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           summarySequence2016,
           "checkYourAnswers.aa.period.subHeading.2016",
           controllers.routes.TaskListController.onPageLoad()
@@ -272,8 +272,8 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         ).flatten
         val summarySequence2016 = SummaryListViewModel(expectedSeq)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           summarySequence2016,
           "checkYourAnswers.aa.period.subHeading.2016",
           controllers.routes.TaskListController.onPageLoad()
@@ -335,8 +335,8 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         ).flatten
         val summarySequence2016 = SummaryListViewModel(expectedSeq)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           summarySequence2016,
           "checkYourAnswers.aa.period.subHeading.2016",
           controllers.routes.TaskListController.onPageLoad()
@@ -398,8 +398,8 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
         val incomeSubJourneySummarySequence = SummaryListViewModel(expectedSeq)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           incomeSubJourneySummarySequence,
           "checkYourAnswers.aa.period.subHeading.2022",
           controllers.routes.TaskListController.onPageLoad()
@@ -423,8 +423,8 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

@@ -17,7 +17,7 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.lifetimeallowance.routes as ltaRoutes
 import models.{Done, KickOffAuditEvent, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
@@ -25,7 +25,7 @@ import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.setupquestions.ReportingChangePage
 import play.api.inject
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.AuditService
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lifetimeallowance.CannotUseLtaServiceNoChargeView
@@ -51,9 +51,9 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true)(request, messages(application)).toString
-          contentAsString(result) must include("Continue")
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(true)(request, messages(application)).toString
+          contentAsString(result) `must` `include`("Continue")
         }
       }
     }
@@ -75,9 +75,9 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false)(request, messages(application)).toString
-          contentAsString(result) must not include "Continue"
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false)(request, messages(application)).toString
+          contentAsString(result) `must` `not` `include`"Continue"
         }
       }
     }
@@ -97,7 +97,7 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
       running(application) {
         val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
         val result  = route(application, request).value
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
         verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])
       }
     }

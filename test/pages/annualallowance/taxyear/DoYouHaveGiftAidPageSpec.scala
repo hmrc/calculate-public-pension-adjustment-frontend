@@ -134,7 +134,7 @@ class DoYouHaveGiftAidPageSpec extends PageBehaviours {
 
       val cleanedUserAnswers = DoYouHaveGiftAidPage(period).cleanup(Some(false), ua).success.value
 
-      cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
+      cleanedUserAnswers.get(AmountOfGiftAidPage(period)) `mustBe` None
     }
   }
 }

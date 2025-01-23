@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.FlexibleRemunerationArrangementsPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class FlexibleRemunerationArrangementsSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -40,7 +40,7 @@ class FlexibleRemunerationArrangementsSummarySpec extends AnyFreeSpec with Match
           true
         )
         .get
-      FlexibleRemunerationArrangementsSummary.row(userAnswers, period) shouldBe Some(
+      FlexibleRemunerationArrangementsSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "flexibleRemunerationArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -63,7 +63,7 @@ class FlexibleRemunerationArrangementsSummarySpec extends AnyFreeSpec with Match
           false
         )
         .get
-      FlexibleRemunerationArrangementsSummary.row(userAnswers, period) shouldBe Some(
+      FlexibleRemunerationArrangementsSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "flexibleRemunerationArrangements.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -81,7 +81,7 @@ class FlexibleRemunerationArrangementsSummarySpec extends AnyFreeSpec with Match
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      FlexibleRemunerationArrangementsSummary.row(userAnswers, period) shouldBe None
+      FlexibleRemunerationArrangementsSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 

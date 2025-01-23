@@ -24,8 +24,8 @@ import pages.annualallowance.taxyear.RASContributionAmountPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class RASContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -40,7 +40,7 @@ class RASContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      RASContributionAmountSummary.row(userAnswers, period) shouldBe Some(
+      RASContributionAmountSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "rASContributionAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -58,7 +58,7 @@ class RASContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      RASContributionAmountSummary.row(userAnswers, period) shouldBe None
+      RASContributionAmountSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 

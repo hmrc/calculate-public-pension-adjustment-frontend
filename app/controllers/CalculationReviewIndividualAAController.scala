@@ -16,7 +16,6 @@
 
 package controllers
 
-import config.FrontendAppConfig
 import controllers.actions._
 import models.CalculationResults.IndividualAASummaryModel
 import models.Period
@@ -42,8 +41,7 @@ class CalculationReviewIndividualAAController @Inject() (
   view: CalculationReviewIndividualAAView,
   calculationResultService: CalculationResultService,
   requireTasksCompleted: RequireTasksCompletedAction,
-  isRelevantPeriod: IsRevelantPeriodAction,
-  config: FrontendAppConfig
+  isRelevantPeriod: IsRevelantPeriodAction
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {

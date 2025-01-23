@@ -36,7 +36,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
     "pre triage" - {
 
       "Must route to calculation review page when reporting a change that includes Annual Allowance details when feature flag enabled" in {
-        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(true)
+        when(mockFrontEndAppConfig.calculationReviewEnabled).`thenReturn`(true)
         val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
@@ -46,7 +46,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
       }
 
       "Must route to calculation result page when reporting a change that includes Annual Allowance details when feature flag disabled" in {
-        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(false)
+        when(mockFrontEndAppConfig.calculationReviewEnabled).`thenReturn`(false)
         val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
@@ -74,7 +74,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
     "post triage" - {
 
       "Must route to calculation review page when reporting a change that includes Annual Allowance details when feature flag true" in {
-        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(true)
+        when(mockFrontEndAppConfig.calculationReviewEnabled).`thenReturn`(true)
         val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers
           .set(PostTriageFlag, true)
@@ -90,7 +90,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
       }
 
       "Must route to calculation result page when reporting a change that includes Annual Allowance details when feature flag false" in {
-        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(false)
+        when(mockFrontEndAppConfig.calculationReviewEnabled).`thenReturn`(false)
         val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers
           .set(PostTriageFlag, true)

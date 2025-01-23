@@ -17,9 +17,9 @@
 package connectors
 
 import base.SpecBase
-import com.github.tomakehurst.wiremock.client.WireMock._
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import generators.Generators
-import models.CalculationResults._
+import models.CalculationResults.*
 import models.submission.Failure
 import models.{MaybePIAIncrease, MaybePIAUnchangedOrDecreased}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks

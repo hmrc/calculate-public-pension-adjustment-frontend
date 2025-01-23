@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.preaaquestions.PayingPublicPensionSchemePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class PayingPublicPensionSchemeSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -38,7 +38,7 @@ class PayingPublicPensionSchemeSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      PayingPublicPensionSchemeSummary.row(userAnswers) shouldBe Some(
+      PayingPublicPensionSchemeSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "payingPublicPensionScheme.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -57,7 +57,7 @@ class PayingPublicPensionSchemeSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      PayingPublicPensionSchemeSummary.row(userAnswers) shouldBe Some(
+      PayingPublicPensionSchemeSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "payingPublicPensionScheme.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -71,7 +71,7 @@ class PayingPublicPensionSchemeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PayingPublicPensionSchemeSummary.row(userAnswers) shouldBe None
+      PayingPublicPensionSchemeSummary.row(userAnswers) `shouldBe` None
     }
   }
 

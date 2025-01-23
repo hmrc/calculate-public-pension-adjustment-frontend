@@ -28,7 +28,7 @@ import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.PayAChargeView
 
@@ -80,8 +80,8 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[PayAChargeView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           formWithMockMessages,
           NormalMode,
           Period._2018,
@@ -113,8 +113,8 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           formWithMockMessages.fill(true),
           NormalMode,
           Period._2019,
@@ -147,7 +147,7 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -166,8 +166,8 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(
           boundForm,
           NormalMode,
           Period._2018,
@@ -190,8 +190,8 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -207,8 +207,8 @@ class PayAChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

@@ -19,11 +19,11 @@ package generators
 import org.scalacheck.Arbitrary
 import pages.PreviousClaimContinuePage
 import pages.annualallowance.preaaquestions.{RegisteredYearPage, ScottishTaxpayerFrom2016Page, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear._
-import pages.lifetimeallowance._
-import pages.setupquestions._
-import pages.setupquestions.annualallowance._
-import pages.setupquestions.lifetimeallowance._
+import pages.annualallowance.taxyear.*
+import pages.lifetimeallowance.*
+import pages.setupquestions.*
+import pages.setupquestions.annualallowance.*
+import pages.setupquestions.lifetimeallowance.*
 
 trait PageGenerators {
 

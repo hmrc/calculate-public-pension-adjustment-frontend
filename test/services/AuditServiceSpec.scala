@@ -17,12 +17,12 @@
 package services
 
 import base.SpecBase
-import models.CalculationResults._
+import models.CalculationResults.*
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
 import models.{AnnualAllowance, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, EligibilityAuditEvent, IncomeSubJourney, KickOffAuditEvent, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
-import org.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.await
@@ -30,7 +30,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
 import scala.concurrent.ExecutionContext
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 
 class AuditServiceSpec extends SpecBase with MockitoSugar {
 
@@ -199,7 +199,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
             calculationInputs
           )
 
-        await(service.auditBeforeCalculationRequest(beforeCalculationSubmissionAuditEvent)(hc)) mustBe ()
+        await(service.auditBeforeCalculationRequest(beforeCalculationSubmissionAuditEvent)(hc)) `mustBe` ()
       }
     }
 
@@ -403,7 +403,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
             calculationResponse
           )
 
-        await(service.auditCalculationRequest(calculationSubmissionAuditEvent)(hc)) mustBe ()
+        await(service.auditCalculationRequest(calculationSubmissionAuditEvent)(hc)) `mustBe` ()
       }
     }
 
@@ -419,7 +419,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
             true
           )
 
-        await(service.auditCalculationStart(calculationStartAuditEvent)(hc)) mustBe ()
+        await(service.auditCalculationStart(calculationStartAuditEvent)(hc)) `mustBe` ()
       }
     }
 
@@ -448,7 +448,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
             )
           )
 
-        await(service.auditCalculationTaskList(calculationTaskListAuditEvent)(hc)) mustBe ()
+        await(service.auditCalculationTaskList(calculationTaskListAuditEvent)(hc)) `mustBe` ()
       }
     }
 
@@ -463,7 +463,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
           "KickOffPage"
         )
 
-      await(service.auditKickOff("test", kickOffAuditEvent)(hc)) mustBe ()
+      await(service.auditKickOff("test", kickOffAuditEvent)(hc)) `mustBe` ()
     }
 
     "auditEligibility" - {
@@ -480,7 +480,7 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
           false
         )
 
-      await(service.auditEligibility(eligibilityEvent)(hc)) mustBe ()
+      await(service.auditEligibility(eligibilityEvent)(hc)) `mustBe` ()
     }
 
   }
