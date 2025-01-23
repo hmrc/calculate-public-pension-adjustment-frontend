@@ -26,22 +26,22 @@ class SchemeIndexTest extends SpecBase {
 
     "must not be constructed when index less than 0" in {
       val schemeIndexOption: Option[SchemeIndex] = SchemeIndex.fromString("-1")
-      schemeIndexOption mustBe None
+      schemeIndexOption `mustBe` None
     }
 
     "must be constructed when index is 0" in {
       val schemeIndexOption: Option[SchemeIndex] = SchemeIndex.fromString("0")
-      schemeIndexOption mustBe Some(SchemeIndex(0))
+      schemeIndexOption `mustBe` Some(SchemeIndex(0))
     }
 
     "must be constructed when index is 4" in {
       val schemeIndexOption: Option[SchemeIndex] = SchemeIndex.fromString("4")
-      schemeIndexOption mustBe Some(SchemeIndex(4))
+      schemeIndexOption `mustBe` Some(SchemeIndex(4))
     }
 
     "must not be constructed when index more than 4" in {
       val schemeIndexOption: Option[SchemeIndex] = SchemeIndex.fromString("5")
-      schemeIndexOption mustBe None
+      schemeIndexOption `mustBe` None
     }
   }
 }

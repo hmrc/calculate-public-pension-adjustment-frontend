@@ -30,13 +30,13 @@ class PeriodServiceSpec extends SpecBase {
     "is identified correctly when a user has not completed any previous year" in {
       val answers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2018), false).get
 
-      PeriodService.isFirstPeriod(answers, Period._2018) must be(true)
+      PeriodService.isFirstPeriod(answers, Period._2018) `must` `be`(true)
     }
 
     "is identified correctly when a user has completed a previous year" in {
       val answers = emptyUserAnswers.set(MemberMoreThanOnePensionPage(Period._2019), false).get
 
-      PeriodService.isFirstPeriod(answers, Period._2018) must be(false)
+      PeriodService.isFirstPeriod(answers, Period._2018) `must` `be`(false)
     }
   }
 
@@ -51,7 +51,7 @@ class PeriodServiceSpec extends SpecBase {
         Period._2018
       )
 
-      PeriodService.relevantPeriods(answers.get) must be(expectedPeriods)
+      PeriodService.relevantPeriods(answers.get) `must` `be`(expectedPeriods)
     }
 
     "are included for all remedy periods if the user did not stop paying in" in {
@@ -68,7 +68,7 @@ class PeriodServiceSpec extends SpecBase {
         Period._2023
       )
 
-      PeriodService.relevantPeriods(answers) must be(expectedPeriods)
+      PeriodService.relevantPeriods(answers) `must` `be`(expectedPeriods)
     }
   }
 }

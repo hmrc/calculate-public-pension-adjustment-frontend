@@ -24,8 +24,8 @@ import pages.annualallowance.taxyear.HowMuchAAChargeSchemePaidPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class HowMuchAAChargeSchemePaidSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -41,7 +41,7 @@ class HowMuchAAChargeSchemePaidSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      HowMuchAAChargeSchemePaidSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      HowMuchAAChargeSchemePaidSummary.row(userAnswers, period, schemeIndex) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "howMuchAAChargeSchemePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -60,7 +60,7 @@ class HowMuchAAChargeSchemePaidSummarySpec extends AnyFreeSpec with Matchers {
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      HowMuchAAChargeSchemePaidSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      HowMuchAAChargeSchemePaidSummary.row(userAnswers, period, schemeIndex) `shouldBe` None
     }
   }
 

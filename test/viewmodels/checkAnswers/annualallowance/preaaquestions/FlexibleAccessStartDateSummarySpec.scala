@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.preaaquestions.FlexibleAccessStartDatePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 import java.time.LocalDate
 import scala.xml.Text
@@ -42,7 +42,7 @@ class FlexibleAccessStartDateSummarySpec extends AnyFreeSpec with Matchers {
           validAnswer
         )
         .get
-      FlexibleAccessStartDateSummary.row(userAnswers) shouldBe Some(
+      FlexibleAccessStartDateSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "flexibleAccessStartDate.checkYourAnswersLabel",
           value = ValueViewModel(Text("6 April 2015").toString()),
@@ -56,7 +56,7 @@ class FlexibleAccessStartDateSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      FlexibleAccessStartDateSummary.row(userAnswers) shouldBe None
+      FlexibleAccessStartDateSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

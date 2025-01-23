@@ -23,7 +23,7 @@ import pages.setupquestions.annualallowance.NetIncomeAbove100KPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
-import viewmodels.implicits._
+import viewmodels.implicits.*
 
 class NetIncomeAbove100KSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -37,7 +37,7 @@ class NetIncomeAbove100KSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      NetIncomeAbove100KSummary.row(userAnswers) shouldBe Some(
+      NetIncomeAbove100KSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "netIncomeAbove100K.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -59,7 +59,7 @@ class NetIncomeAbove100KSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      NetIncomeAbove100KSummary.row(userAnswers) shouldBe Some(
+      NetIncomeAbove100KSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "netIncomeAbove100K.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -76,7 +76,7 @@ class NetIncomeAbove100KSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      NetIncomeAbove100KSummary.row(userAnswers) shouldBe None
+      NetIncomeAbove100KSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

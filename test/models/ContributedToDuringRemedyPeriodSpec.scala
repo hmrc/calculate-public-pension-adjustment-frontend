@@ -41,7 +41,7 @@ class ContributedToDuringRemedyPeriodSpec
         JsString(contributedToDuringRemedyPeriod.toString)
           .validate[ContributedToDuringRemedyPeriod]
           .asOpt
-          .value mustEqual contributedToDuringRemedyPeriod
+          .value `mustEqual` contributedToDuringRemedyPeriod
       }
     }
 
@@ -50,7 +50,7 @@ class ContributedToDuringRemedyPeriodSpec
       val gen = arbitrary[String] suchThat (!ContributedToDuringRemedyPeriod.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[ContributedToDuringRemedyPeriod] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[ContributedToDuringRemedyPeriod] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -59,7 +59,7 @@ class ContributedToDuringRemedyPeriodSpec
       val gen = arbitrary[ContributedToDuringRemedyPeriod]
 
       forAll(gen) { contributedToDuringRemedyPeriod =>
-        Json.toJson(contributedToDuringRemedyPeriod) mustEqual JsString(contributedToDuringRemedyPeriod.toString)
+        Json.toJson(contributedToDuringRemedyPeriod) `mustEqual` JsString(contributedToDuringRemedyPeriod.toString)
       }
     }
   }

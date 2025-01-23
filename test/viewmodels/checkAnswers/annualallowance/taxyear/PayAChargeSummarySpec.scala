@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.taxyear.PayAChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -40,7 +40,7 @@ class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      PayAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      PayAChargeSummary.row(userAnswers, period, schemeIndex) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "payACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -64,7 +64,7 @@ class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      PayAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
+      PayAChargeSummary.row(userAnswers, period, schemeIndex) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "payACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -83,7 +83,7 @@ class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
-      PayAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe None
+      PayAChargeSummary.row(userAnswers, period, schemeIndex) `shouldBe` None
     }
   }
 

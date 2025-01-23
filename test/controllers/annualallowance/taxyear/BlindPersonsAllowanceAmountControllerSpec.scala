@@ -27,7 +27,7 @@ import pages.annualallowance.taxyear.BlindPersonsAllowanceAmountPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.BlindPersonsAllowanceAmountView
 
@@ -65,8 +65,8 @@ class BlindPersonsAllowanceAmountControllerSpec extends SpecBase with MockitoSug
 
         val view = application.injector.instanceOf[BlindPersonsAllowanceAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(formWithMockMessages, NormalMode, Period._2017, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(formWithMockMessages, NormalMode, Period._2017, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -87,8 +87,8 @@ class BlindPersonsAllowanceAmountControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           formWithMockMessages.fill(validAnswer),
           NormalMode,
           Period._2017,
@@ -115,7 +115,7 @@ class BlindPersonsAllowanceAmountControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -134,8 +134,8 @@ class BlindPersonsAllowanceAmountControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2017, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, Period._2017, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -152,8 +152,8 @@ class BlindPersonsAllowanceAmountControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -169,9 +169,9 @@ class BlindPersonsAllowanceAmountControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

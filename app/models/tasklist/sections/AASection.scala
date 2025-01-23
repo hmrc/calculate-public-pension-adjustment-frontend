@@ -16,7 +16,7 @@
 
 package models.tasklist.sections
 
-import controllers.annualallowance.taxyear.{routes => aaRoutes}
+import controllers.annualallowance.taxyear.routes as aaRoutes
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{Period, SectionNavigation, UserAnswers, UserAnswersPeriod}

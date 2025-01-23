@@ -24,8 +24,8 @@ import pages.annualallowance.taxyear.AmountClaimedOnOverseasPensionPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class AmountClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -40,7 +40,7 @@ class AmountClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matcher
           BigInt("100")
         )
         .get
-      AmountClaimedOnOverseasPensionSummary.row(userAnswers, period) shouldBe Some(
+      AmountClaimedOnOverseasPensionSummary.row(userAnswers, period) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "amountClaimedOnOverseasPension.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -58,7 +58,7 @@ class AmountClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matcher
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      AmountClaimedOnOverseasPensionSummary.row(userAnswers, period) shouldBe None
+      AmountClaimedOnOverseasPensionSummary.row(userAnswers, period) `shouldBe` None
     }
   }
 

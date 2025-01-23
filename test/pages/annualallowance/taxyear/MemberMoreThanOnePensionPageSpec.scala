@@ -115,8 +115,8 @@ class MemberMoreThanOnePensionPageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020, SchemeIndex(0))) mustBe None
-        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020, SchemeIndex(1))) mustBe None
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020, SchemeIndex(0))) `mustBe` None
+        cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2020, SchemeIndex(1))) `mustBe` None
 
       }
     }

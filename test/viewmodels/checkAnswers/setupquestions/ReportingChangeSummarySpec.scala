@@ -17,16 +17,16 @@
 package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
+import models.{ReportingChange, UserAnswers, CheckMode}
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
-import models._
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -43,7 +43,7 @@ class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
           )
         )
         .get
-      ReportingChangeSummary.row(userAnswers) shouldBe Some(
+      ReportingChangeSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "reportingChange.checkYourAnswersLabel",
           value = ValueViewModel(
@@ -61,7 +61,7 @@ class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ReportingChangeSummary.row(userAnswers) shouldBe None
+      ReportingChangeSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

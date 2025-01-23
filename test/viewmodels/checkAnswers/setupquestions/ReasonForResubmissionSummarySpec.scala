@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.ReasonForResubmissionPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class ReasonForResubmissionSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -38,7 +38,7 @@ class ReasonForResubmissionSummarySpec extends AnyFreeSpec with Matchers {
           "test text data"
         )
         .get
-      ReasonForResubmissionSummary.row(userAnswers) shouldBe Some(
+      ReasonForResubmissionSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "reasonForResubmission.checkYourAnswersLabel",
           value = ValueViewModel("test text data"),
@@ -52,7 +52,7 @@ class ReasonForResubmissionSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ReasonForResubmissionSummary.row(userAnswers) shouldBe None
+      ReasonForResubmissionSummary.row(userAnswers) `shouldBe` None
     }
   }
 

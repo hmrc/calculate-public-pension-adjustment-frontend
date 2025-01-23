@@ -16,7 +16,7 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.lifetimeallowance.routes as ltaRoutes
 import models.WhatNewProtectionTypeEnhancement.PrimaryProtection
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -26,8 +26,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -41,7 +41,7 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
           PrimaryProtection
         )
         .get
-      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe Some(
+      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.primaryProtection")),
@@ -63,7 +63,7 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
           PrimaryProtection
         )
         .get
-      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, false) shouldBe Some(
+      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, false) `shouldBe` Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"whatNewProtectionTypeEnhancement.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.primaryProtection"))
@@ -73,7 +73,7 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe None
+      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) `shouldBe` None
     }
   }
 }

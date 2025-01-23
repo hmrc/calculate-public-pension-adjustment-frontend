@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class ScottishTaxpayerFrom2016SummarySpec extends AnyFreeSpec with Matchers {
 
@@ -38,7 +38,7 @@ class ScottishTaxpayerFrom2016SummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      ScottishTaxpayerFrom2016Summary.row(userAnswers) shouldBe Some(
+      ScottishTaxpayerFrom2016Summary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "scottishTaxpayerFrom2016.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -57,7 +57,7 @@ class ScottishTaxpayerFrom2016SummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      ScottishTaxpayerFrom2016Summary.row(userAnswers) shouldBe Some(
+      ScottishTaxpayerFrom2016Summary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "scottishTaxpayerFrom2016.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -71,7 +71,7 @@ class ScottishTaxpayerFrom2016SummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ScottishTaxpayerFrom2016Summary.row(userAnswers) shouldBe None
+      ScottishTaxpayerFrom2016Summary.row(userAnswers) `shouldBe` None
     }
   }
 

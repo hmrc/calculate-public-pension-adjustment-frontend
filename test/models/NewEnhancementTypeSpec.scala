@@ -33,7 +33,7 @@ class NewEnhancementTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckPr
       val gen = Gen.oneOf(NewEnhancementType.values.toSeq)
 
       forAll(gen) { enhancementType =>
-        JsString(enhancementType.toString).validate[NewEnhancementType].asOpt.value mustEqual enhancementType
+        JsString(enhancementType.toString).validate[NewEnhancementType].asOpt.value `mustEqual` enhancementType
       }
     }
 
@@ -42,7 +42,7 @@ class NewEnhancementTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckPr
       val gen = arbitrary[String] suchThat (!NewEnhancementType.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[NewEnhancementType] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[NewEnhancementType] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -51,7 +51,7 @@ class NewEnhancementTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckPr
       val gen = Gen.oneOf(NewEnhancementType.values.toSeq)
 
       forAll(gen) { enhancementType =>
-        Json.toJson(enhancementType) mustEqual JsString(enhancementType.toString)
+        Json.toJson(enhancementType) `mustEqual` JsString(enhancementType.toString)
       }
     }
   }
