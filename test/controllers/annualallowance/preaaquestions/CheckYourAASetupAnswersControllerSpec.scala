@@ -22,7 +22,7 @@ import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import viewmodels.checkAnswers.annualallowance.preaaquestions.PayTaxCharge1415Summary
 import viewmodels.govuk.SummaryListFluency
@@ -47,8 +47,8 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         val view = application.injector.instanceOf[CheckYourAASetupAnswersView]
         val list = SummaryListViewModel(Seq.empty)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           false,
           "checkYourAnswers.aa.subHeading",
           controllers.routes.TaskListController.onPageLoad(),
@@ -90,8 +90,8 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
 
         val pIAList = SummaryListViewModel(Seq.empty)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           maybePensionInputAmounts = false,
           "checkYourAnswers.aa.subHeading",
           controllers.routes.TaskListController.onPageLoad(),
@@ -133,8 +133,8 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
 
         val pIAList = SummaryListViewModel(Seq.empty)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           maybePensionInputAmounts = true,
           "checkYourAnswers.aa.subHeading",
           controllers.routes.TaskListController.onPageLoad(),
@@ -161,8 +161,8 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

@@ -36,13 +36,13 @@ class UserAnswersSpec extends SpecBase {
 
     val userAnswers: UserAnswers = emptyUserAnswers.set(page1, true).get
 
-    userAnswers.containsAnswerFor(page1) must be(true)
-    userAnswers.containsAnswerFor(page2) must be(false)
+    userAnswers.containsAnswerFor(page1) `must` `be`(true)
+    userAnswers.containsAnswerFor(page2) `must` `be`(false)
   }
 
   "should correctly identify if answers are contained for a non question page" in {
     val userAnswers: UserAnswers = emptyUserAnswers
 
-    userAnswers.containsAnswerFor(WhatYouWillNeedPage(Period._2016)) must be(false)
+    userAnswers.containsAnswerFor(WhatYouWillNeedPage(Period._2016)) `must` `be`(false)
   }
 }

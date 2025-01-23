@@ -19,7 +19,6 @@ package controllers
 import config.FrontendAppConfig
 import controllers.actions._
 import models.submission
-import models.submission.SubmissionResponse
 import models.tasklist.SectionStatus
 import models.tasklist.sections.LTASection
 import play.api.data.Form

@@ -16,7 +16,7 @@
 
 package controllers.annualallowance.taxyear
 
-import controllers.actions._
+import controllers.actions.*
 import forms.annualallowance.taxyear.LumpSumDeathBenefitsValueFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period}

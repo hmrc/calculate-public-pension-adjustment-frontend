@@ -23,7 +23,7 @@ govukButton: GovukButton,
 continueButton: components.ContinueButton
 )
 
-@(form: Form[_])(implicit request: Request[_], messages: Messages)
+@(form: Form[?])(implicit request: Request[?], messages: Messages)
 
 @contentHint = {
     <p class="govuk-body">@messages("previousClaimContinue.body")</p>

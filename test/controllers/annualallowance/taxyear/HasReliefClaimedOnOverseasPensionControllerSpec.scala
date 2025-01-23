@@ -27,7 +27,7 @@ import pages.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.HasReliefClaimedOnOverseasPensionView
 
@@ -59,8 +59,8 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
 
         val view = application.injector.instanceOf[HasReliefClaimedOnOverseasPensionView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -81,8 +81,8 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -107,10 +107,10 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController
+        ).value `mustEqual` controllers.annualallowance.taxyear.routes.AmountClaimedOnOverseasPensionController
           .onPageLoad(NormalMode, Period._2018)
           .url
       }
@@ -131,8 +131,8 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -149,8 +149,8 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -166,8 +166,8 @@ class HasReliefClaimedOnOverseasPensionControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

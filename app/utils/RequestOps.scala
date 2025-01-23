@@ -24,19 +24,19 @@ object RequestOps {
   implicit class RequestSyntax(request: RequestHeader) {
 
     def signedIn: Boolean = request match {
-      case dr: DataRequest[_] =>
+      case dr: DataRequest[?] =>
         dr.request match {
-          case _: AuthenticatedIdentifierRequest[_] => true
+          case _: AuthenticatedIdentifierRequest[?] => true
           case _                                    => false
         }
 
-      case odr: OptionalDataRequest[_] =>
+      case odr: OptionalDataRequest[?] =>
         odr.request match {
-          case _: AuthenticatedIdentifierRequest[_] => true
+          case _: AuthenticatedIdentifierRequest[?] => true
           case _                                    => false
         }
 
-      case air: AuthenticatedIdentifierRequest[_] =>
+      case air: AuthenticatedIdentifierRequest[?] =>
         true
 
       case _ =>

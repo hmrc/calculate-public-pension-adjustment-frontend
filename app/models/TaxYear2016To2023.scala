@@ -16,7 +16,7 @@
 
 package models
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import java.time.LocalDate
 import scala.math.Ordered.orderingToOrdered
@@ -67,7 +67,7 @@ object TaxYear2016To2023 {
 
   implicit lazy val reads: Reads[TaxYear2016To2023] = {
 
-    import play.api.libs.functional.syntax._
+    import play.api.libs.functional.syntax.*
 
     val normalReads: Reads[TaxYear2016To2023] = ((__ \ "pensionInputAmount").read[Int] and
       (__ \ "taxYearSchemes").read[List[TaxYearScheme]] and
@@ -123,7 +123,7 @@ object TaxYear2016To2023 {
 
   implicit lazy val writes: Writes[TaxYear2016To2023] = {
 
-    import play.api.libs.functional.syntax._
+    import play.api.libs.functional.syntax.*
 
     lazy val normalWrites: Writes[TaxYear2016To2023.NormalTaxYear] = (
       (__ \ "pensionInputAmount").write[Int] and

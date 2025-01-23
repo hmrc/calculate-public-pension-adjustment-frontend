@@ -18,7 +18,7 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.{routes => ltaRoutes}
+import controllers.lifetimeallowance.routes as ltaRoutes
 import forms.lifetimeallowance.DateOfBenefitCrystallisationEventFormProvider
 import models.{Done, Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -29,7 +29,7 @@ import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.lifetimeallowance.DateOfBenefitCrystallisationEventView
 
@@ -72,8 +72,8 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
 
         val view = application.injector.instanceOf[DateOfBenefitCrystallisationEventView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest(NormalMode), messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(getRequest(NormalMode), messages(application)).toString
       }
     }
 
@@ -88,8 +88,8 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
 
         val result = route(application, getRequest(NormalMode)).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(validAnswer), NormalMode)(
           getRequest(NormalMode),
           messages(application)
         ).toString
@@ -112,7 +112,7 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
       running(application) {
         val result = route(application, postRequest(NormalMode)).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -131,8 +131,8 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -144,8 +144,8 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val result    = route(application, getRequest(NormalMode)).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -157,8 +157,8 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
         val appConfig = application.injector.instanceOf[FrontendAppConfig]
         val result    = route(application, postRequest(NormalMode)).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

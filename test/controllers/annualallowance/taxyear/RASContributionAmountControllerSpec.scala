@@ -23,11 +23,11 @@ import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear._
+import pages.annualallowance.taxyear.*
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.RASContributionAmountView
 
@@ -61,8 +61,8 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[RASContributionAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -83,8 +83,8 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(validAnswer), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -132,10 +132,10 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController
+        ).value `mustEqual` controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController
           .onPageLoad(NormalMode, period)
           .url
       }
@@ -186,9 +186,9 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(AboveThreshold(period)) mustBe Some(false)
+        capturedUserAnswers.get(AboveThreshold(period)) `mustBe` Some(false)
       }
     }
 
@@ -235,8 +235,8 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        ua.get(AboveThreshold(period)) mustBe None
+        status(result) `mustEqual` SEE_OTHER
+        ua.get(AboveThreshold(period)) `mustBe` None
       }
     }
 
@@ -255,8 +255,8 @@ class RASContributionAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString

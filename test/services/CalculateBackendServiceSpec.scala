@@ -18,8 +18,9 @@ package services
 
 import base.SpecBase
 import connectors.CalculateBackendConnector
-import org.mockito.MockitoSugar
+import org.mockito.Mockito.{times, verify}
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.http.HeaderCarrier
 
 class CalculateBackendServiceSpec extends SpecBase with MockitoSugar with ScalaFutures {

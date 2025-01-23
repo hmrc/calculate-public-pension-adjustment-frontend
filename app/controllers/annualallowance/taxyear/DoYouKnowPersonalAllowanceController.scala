@@ -16,14 +16,14 @@
 
 package controllers.annualallowance.taxyear
 
-import controllers.actions._
+import controllers.actions.*
 import forms.annualallowance.taxyear.DoYouKnowPersonalAllowanceFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period}
 import pages.annualallowance.taxyear.DoYouKnowPersonalAllowancePage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{CalculateBackendService, UserDataService}
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.DoYouKnowPersonalAllowanceView
 
@@ -35,7 +35,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class DoYouKnowPersonalAllowanceController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
-  calculateBackendService: CalculateBackendService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,

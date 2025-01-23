@@ -23,7 +23,7 @@ import models.{Mode, Period}
 import pages.annualallowance.taxyear.PersonalAllowancePage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{CalculateBackendService, UserDataService}
+import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.annualallowance.taxyear.PersonalAllowanceView
 
@@ -35,7 +35,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class PersonalAllowanceController @Inject() (
   override val messagesApi: MessagesApi,
   userDataService: UserDataService,
-  calculateBackendService: CalculateBackendService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,

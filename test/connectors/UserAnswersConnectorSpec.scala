@@ -17,7 +17,7 @@
 package connectors
 
 import base.SpecBase
-import com.github.tomakehurst.wiremock.client.WireMock._
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import models.{Done, UserAnswers}
 import org.scalatest.Inside.inside
 import org.scalatest.concurrent.ScalaFutures

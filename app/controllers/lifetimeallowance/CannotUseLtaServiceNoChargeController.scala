@@ -17,14 +17,14 @@
 package controllers.lifetimeallowance
 
 import config.FrontendAppConfig
-import controllers.actions._
+import controllers.actions.*
 import models.{KickOffAuditEvent, ReportingChange}
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import utils.Constants._
+import utils.Constants.*
 import views.html.lifetimeallowance.CannotUseLtaServiceNoChargeView
 
 import javax.inject.Inject

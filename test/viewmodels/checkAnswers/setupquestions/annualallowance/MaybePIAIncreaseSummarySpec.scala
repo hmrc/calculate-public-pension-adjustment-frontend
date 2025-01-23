@@ -25,7 +25,7 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
-import viewmodels.implicits._
+import viewmodels.implicits.*
 
 class MaybePIAIncreaseSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -39,7 +39,7 @@ class MaybePIAIncreaseSummarySpec extends AnyFreeSpec with Matchers {
           MaybePIAIncrease.Yes
         )
         .get
-      MaybePIAIncreaseSummary.row(userAnswers) shouldBe Some(
+      MaybePIAIncreaseSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "maybePIAIncrease.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("maybePIAIncrease.yes")),
@@ -61,7 +61,7 @@ class MaybePIAIncreaseSummarySpec extends AnyFreeSpec with Matchers {
           MaybePIAIncrease.No
         )
         .get
-      MaybePIAIncreaseSummary.row(userAnswers) shouldBe Some(
+      MaybePIAIncreaseSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "maybePIAIncrease.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("maybePIAIncrease.no")),
@@ -83,7 +83,7 @@ class MaybePIAIncreaseSummarySpec extends AnyFreeSpec with Matchers {
           MaybePIAIncrease.IDoNotKnow
         )
         .get
-      MaybePIAIncreaseSummary.row(userAnswers) shouldBe Some(
+      MaybePIAIncreaseSummary.row(userAnswers) `shouldBe` Some(
         SummaryListRowViewModel(
           key = "maybePIAIncrease.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("maybePIAIncrease.idk")),
@@ -100,7 +100,7 @@ class MaybePIAIncreaseSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      MaybePIAIncreaseSummary.row(userAnswers) shouldBe None
+      MaybePIAIncreaseSummary.row(userAnswers) `shouldBe` None
     }
   }
 }

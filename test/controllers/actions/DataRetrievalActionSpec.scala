@@ -20,7 +20,7 @@ import base.SpecBase
 import models.UserAnswers
 import models.requests.{AuthenticatedIdentifierRequest, IdentifierRequest, OptionalDataRequest, UnauthenticatedIdentifierRequest}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito._
+import org.mockito.Mockito.*
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.FakeRequest
 import services.UserDataService
@@ -41,7 +41,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
       "must set userAnswers to 'None' in the request" in {
 
         val userDataService = mock[UserDataService]
-        when(userDataService.get()(any())) thenReturn Future(None)
+        when(userDataService.get()(any())) `thenReturn` Future(None)
         val action          = new Harness(userDataService)
 
         val result = action.callTransform(UnauthenticatedIdentifierRequest(FakeRequest(), "id")).futureValue
@@ -58,7 +58,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
 
           val userDataService = mock[UserDataService]
           val userAnswers     = UserAnswers("id")
-          when(userDataService.get()(any())) thenReturn Future(Some(userAnswers))
+          when(userDataService.get()(any())) `thenReturn` Future(Some(userAnswers))
           val action          = new Harness(userDataService)
 
           val result = action.callTransform(UnauthenticatedIdentifierRequest(FakeRequest(), "id")).futureValue
@@ -73,7 +73,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
         "must build a userAnswers object and add it to the request" in {
 
           val userDataService = mock[UserDataService]
-          when(userDataService.get()(any())) thenReturn Future(Some(UserAnswers("id")))
+          when(userDataService.get()(any())) `thenReturn` Future(Some(UserAnswers("id")))
           val action          = new Harness(userDataService)
 
           val result = action.callTransform(AuthenticatedIdentifierRequest(FakeRequest(), "id")).futureValue

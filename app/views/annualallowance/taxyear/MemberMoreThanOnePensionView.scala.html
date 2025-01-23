@@ -23,7 +23,7 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], mode: Mode, period: Period)(implicit request: Request[?], messages: Messages)
 
 @contentSubHeading = {
     <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("memberMoreThanOnePension.subHeading")</h2>
