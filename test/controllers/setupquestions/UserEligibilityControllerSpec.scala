@@ -287,11 +287,11 @@ class UserEligibilityControllerSpec extends SpecBase {
     "must trigger audit event" in {
 
       val mockUserDataService = mock[UserDataService]
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val mockAuditService = mock[AuditService]
       when(mockAuditService.auditEligibility(any[EligibilityAuditEvent])(any[HeaderCarrier]))
-        .thenReturn(Future.successful(Done))
+        .`thenReturn`(Future.successful(Done))
 
       val userAnswers = emptyUserAnswers
         .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))

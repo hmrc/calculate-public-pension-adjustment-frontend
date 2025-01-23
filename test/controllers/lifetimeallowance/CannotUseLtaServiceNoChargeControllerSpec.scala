@@ -86,7 +86,7 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
 
       val mockAuditService = mock[AuditService]
       when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
-        .thenReturn(Future.successful(Done))
+        .`thenReturn`(Future.successful(Done))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
         .overrides(
