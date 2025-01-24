@@ -42,7 +42,7 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
           models.WhoPaidAACharge.You
         )
         .get
-      WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) `shouldBe` Some(
+      WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = messages("whoPaidAACharge.checkYourAnswersLabel", schemeName),
           value = ValueViewModel(HtmlContent("whoPaidAACharge.you")),
@@ -67,7 +67,7 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
           models.WhoPaidAACharge.Scheme
         )
         .get
-      WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) `shouldBe` Some(
+      WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = messages("whoPaidAACharge.checkYourAnswersLabel", schemeName),
           value = ValueViewModel(HtmlContent("whoPaidAACharge.scheme")),
@@ -92,7 +92,7 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
           models.WhoPaidAACharge.Both
         )
         .get
-      WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) `shouldBe` Some(
+      WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = messages("whoPaidAACharge.checkYourAnswersLabel", schemeName),
           value = ValueViewModel(HtmlContent("whoPaidAACharge.both")),
@@ -111,7 +111,7 @@ class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
-      WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) `shouldBe` None
+      WhoPaidAAChargeSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }
   }
 

@@ -46,7 +46,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
 
         val result = action.callTransform(UnauthenticatedIdentifierRequest(FakeRequest(), "id")).futureValue
 
-        result.userAnswers must not be defined
+        result.userAnswers `must` not `be` defined
       }
     }
 
@@ -63,8 +63,8 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
 
           val result = action.callTransform(UnauthenticatedIdentifierRequest(FakeRequest(), "id")).futureValue
 
-          result.userAnswers.value mustEqual userAnswers
-          result.userAnswers.value.authenticated mustEqual false
+          result.userAnswers.value `mustEqual` userAnswers
+          result.userAnswers.value.authenticated `mustEqual` false
         }
       }
 
@@ -78,8 +78,8 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar {
 
           val result = action.callTransform(AuthenticatedIdentifierRequest(FakeRequest(), "id")).futureValue
 
-          result.userAnswers mustBe defined
-          result.userAnswers.value.authenticated mustEqual true
+          result.userAnswers `mustBe` defined
+          result.userAnswers.value.authenticated `mustEqual` true
         }
       }
     }

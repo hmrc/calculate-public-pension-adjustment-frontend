@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.NewEnhancementType.PensionCredit
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -41,14 +40,14 @@ class NewEnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
           PensionCredit
         )
         .get
-      NewEnhancementTypeSummary.row(userAnswers, true) `shouldBe` Some(
+      NewEnhancementTypeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "newEnhancementType.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("newEnhancementType.pensionCredit")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              ltaRoutes.NewEnhancementTypeController.onPageLoad(CheckMode).url
+              controllers.lifetimeallowance.routes.NewEnhancementTypeController.onPageLoad(CheckMode).url
             )
               .withVisuallyHiddenText("newEnhancementType.change.hidden")
           )
@@ -63,7 +62,7 @@ class NewEnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
           PensionCredit
         )
         .get
-      NewEnhancementTypeSummary.row(userAnswers, false) `shouldBe` Some(
+      NewEnhancementTypeSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"newEnhancementType.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("newEnhancementType.pensionCredit"))
@@ -73,7 +72,7 @@ class NewEnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      LtaProtectionOrEnhancementsSummary.row(userAnswers, true) `shouldBe` None
+      LtaProtectionOrEnhancementsSummary.row(userAnswers, true) shouldBe None
     }
   }
 }

@@ -18,7 +18,6 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.WhichYearsScottishTaxpayerFormProvider
 import models.{Done, NormalMode, UserAnswers, WhichYearsScottishTaxpayer}
 import org.mockito.ArgumentMatchers.any
@@ -38,7 +37,8 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val whichYearsNormalRoute = preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode).url
+  lazy val whichYearsNormalRoute =
+    controllers.annualallowance.preaaquestions.routes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode).url
 
   val formProvider = new WhichYearsScottishTaxpayerFormProvider()
   val form         = formProvider()
@@ -90,7 +90,7 @@ class WhichYearsScottishTaxpayerControllerSpec extends SpecBase with MockitoSuga
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

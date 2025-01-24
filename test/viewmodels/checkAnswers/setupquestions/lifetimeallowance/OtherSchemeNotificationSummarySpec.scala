@@ -37,7 +37,7 @@ class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      OtherSchemeNotificationSummary.row(userAnswers) `shouldBe` Some(
+      OtherSchemeNotificationSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "otherSchemeNotification.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -61,7 +61,7 @@ class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      OtherSchemeNotificationSummary.row(userAnswers) `shouldBe` Some(
+      OtherSchemeNotificationSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "otherSchemeNotification.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class OtherSchemeNotificationSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      OtherSchemeNotificationSummary.row(userAnswers) `shouldBe` None
+      OtherSchemeNotificationSummary.row(userAnswers) shouldBe None
     }
   }
 }

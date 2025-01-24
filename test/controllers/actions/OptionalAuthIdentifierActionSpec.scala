@@ -177,8 +177,8 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
 
         val result = authAction(a =>
           a match {
-            case x: AuthenticatedIdentifierRequest[_]   => Ok(s"${x.userId}")
-            case y: UnauthenticatedIdentifierRequest[_] => Ok(y.userId)
+            case x: AuthenticatedIdentifierRequest[?]   => Ok(s"${x.userId}")
+            case y: UnauthenticatedIdentifierRequest[?] => Ok(y.userId)
           }
         )(request)
 

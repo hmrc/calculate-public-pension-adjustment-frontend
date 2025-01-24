@@ -40,7 +40,7 @@ class TaxReliefSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      TaxReliefSummary.row(userAnswers, period) `shouldBe` Some(
+      TaxReliefSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "taxRelief.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -58,7 +58,7 @@ class TaxReliefSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      TaxReliefSummary.row(userAnswers, period) `shouldBe` None
+      TaxReliefSummary.row(userAnswers, period) shouldBe None
     }
   }
 

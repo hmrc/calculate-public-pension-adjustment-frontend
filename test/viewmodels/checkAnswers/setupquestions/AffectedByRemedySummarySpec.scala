@@ -39,7 +39,7 @@ class AffectedByRemedySummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      AffectedByRemedySummary.row(userAnswers) `shouldBe` Some(
+      AffectedByRemedySummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "affectedByRemedy.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -53,7 +53,7 @@ class AffectedByRemedySummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      SavingsStatementSummary.row(userAnswers) `shouldBe` None
+      SavingsStatementSummary.row(userAnswers) shouldBe None
     }
   }
 

@@ -41,7 +41,7 @@ class PIAPreRemedySummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      PIAPreRemedySummary.rows(userAnswers) `shouldBe` List(
+      PIAPreRemedySummary.rows(userAnswers) shouldBe List(
         Some(
           SummaryListRowViewModel(
             key = "pIAPreRemedy.checkYourAnswersLabel.2011",
@@ -61,7 +61,7 @@ class PIAPreRemedySummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PIAPreRemedySummary.rows(userAnswers) `shouldBe` List(None, None, None, None, None)
+      PIAPreRemedySummary.rows(userAnswers) shouldBe List(None, None, None, None, None)
     }
   }
 }

@@ -18,7 +18,6 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.PIAPreRemedyFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -45,7 +44,9 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
   val validPreRemedyTaxYear: Period = Period._2013
 
-  lazy val normalRoute = preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, validPreRemedyTaxYear).url
+  lazy val normalRoute = controllers.annualallowance.preaaquestions.routes.PIAPreRemedyController
+    .onPageLoad(NormalMode, validPreRemedyTaxYear)
+    .url
 
   "PIAPreRemedy Controller" - {
 
@@ -97,7 +98,7 @@ class PIAPreRemedyControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

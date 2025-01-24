@@ -38,7 +38,7 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      LifetimeAllowanceChargeSummary.row(userAnswers, true) `shouldBe` Some(
+      LifetimeAllowanceChargeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -60,7 +60,7 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      LifetimeAllowanceChargeSummary.row(userAnswers, false) `shouldBe` Some(
+      LifetimeAllowanceChargeSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"lifetimeAllowanceCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("site.yes")
@@ -75,7 +75,7 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      LifetimeAllowanceChargeSummary.row(userAnswers, true) `shouldBe` Some(
+      LifetimeAllowanceChargeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "lifetimeAllowanceCharge.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -97,7 +97,7 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      LifetimeAllowanceChargeSummary.row(userAnswers, false) `shouldBe` Some(
+      LifetimeAllowanceChargeSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"lifetimeAllowanceCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("site.no")
@@ -107,7 +107,7 @@ class LifetimeAllowanceChargeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      LifetimeAllowanceChargeSummary.row(userAnswers, true) `shouldBe` None
+      LifetimeAllowanceChargeSummary.row(userAnswers, true) shouldBe None
     }
   }
 

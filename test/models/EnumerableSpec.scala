@@ -32,7 +32,7 @@ object EnumerableSpec {
     val values: Set[Foo] = Set(Bar, Baz)
 
     implicit val fooEnumerable: Enumerable[Foo] =
-      Enumerable(values.toSeq.map(v => v.toString -> v): _*)
+      Enumerable(values.toSeq.map(v => v.toString -> v) *)
   }
 }
 
@@ -53,7 +53,7 @@ class EnumerableSpec extends AnyFreeSpec with Matchers with EitherValues with Op
     }
 
     "must fail to bind for invalid values" in {
-      Json.fromJson[Foo](JsString("invalid")).asEither.left.value must contain(
+      Json.fromJson[Foo](JsString("invalid")).asEither.left.value `must` `contain`(
         JsPath -> Seq(JsonValidationError("error.invalid"))
       )
     }

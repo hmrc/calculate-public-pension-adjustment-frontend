@@ -40,7 +40,7 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
           ThresholdIncome.Yes
         )
         .get
-      ThresholdIncomeSummary.row(userAnswers, period) `shouldBe` Some(
+      ThresholdIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = s"thresholdIncome.checkYourAnswersLabel.$period",
           value = ValueViewModel(HtmlContent("thresholdIncome.yes")),
@@ -63,7 +63,7 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
           ThresholdIncome.No
         )
         .get
-      ThresholdIncomeSummary.row(userAnswers, period) `shouldBe` Some(
+      ThresholdIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = s"thresholdIncome.checkYourAnswersLabel.$period",
           value = ValueViewModel(HtmlContent("thresholdIncome.no")),
@@ -86,7 +86,7 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
           ThresholdIncome.IDoNotKnow
         )
         .get
-      ThresholdIncomeSummary.row(userAnswers, period) `shouldBe` Some(
+      ThresholdIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = s"thresholdIncome.checkYourAnswersLabel.$period",
           value = ValueViewModel(HtmlContent("thresholdIncome.idk")),
@@ -104,7 +104,7 @@ class ThresholdIncomeSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      ThresholdIncomeSummary.row(userAnswers, period) `shouldBe` None
+      ThresholdIncomeSummary.row(userAnswers, period) shouldBe None
     }
   }
 

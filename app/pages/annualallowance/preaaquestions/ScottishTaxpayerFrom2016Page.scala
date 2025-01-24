@@ -16,7 +16,6 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import controllers.routes
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -33,14 +32,18 @@ case object ScottishTaxpayerFrom2016Page extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ScottishTaxpayerFrom2016Page) match {
-      case Some(true)  => preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode)
-      case Some(false) => preAARoutes.PayingPublicPensionSchemeController.onPageLoad(NormalMode)
-      case None        => preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
+      case Some(true)  =>
+        controllers.annualallowance.preaaquestions.routes.WhichYearsScottishTaxpayerController.onPageLoad(NormalMode)
+      case Some(false) =>
+        controllers.annualallowance.preaaquestions.routes.PayingPublicPensionSchemeController.onPageLoad(NormalMode)
+      case None        =>
+        controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ScottishTaxpayerFrom2016Page) match {
-      case Some(true)  => preAARoutes.WhichYearsScottishTaxpayerController.onPageLoad(CheckMode)
+      case Some(true)  =>
+        controllers.annualallowance.preaaquestions.routes.WhichYearsScottishTaxpayerController.onPageLoad(CheckMode)
       case Some(false) =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case None        => routes.JourneyRecoveryController.onPageLoad(None)

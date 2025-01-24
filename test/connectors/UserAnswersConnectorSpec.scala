@@ -60,7 +60,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[UserAnswersConnector]
           val result    = connector.get().futureValue
 
-          result mustBe Some(expectedUserAnswers)
+          result `mustBe` Some(expectedUserAnswers)
         }
       }
 
@@ -81,7 +81,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
             }
             .futureValue
 
-          result mustBe None
+          result `mustBe` None
         }
       }
 
@@ -102,7 +102,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[UserAnswersConnector]
           val result    = connector.set(userAnswers).futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
 
@@ -120,7 +120,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[UserAnswersConnector]
           val result    = connector.set(userAnswers).failed.futureValue
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
     }
@@ -138,7 +138,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[UserAnswersConnector]
           val result    = connector.keepAlive().futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
       "must return a failed future when the server responds with an error status" in {
@@ -153,7 +153,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[UserAnswersConnector]
           val result    = connector.keepAlive().failed.futureValue
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
     }
@@ -171,7 +171,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[UserAnswersConnector]
           val result    = connector.clear().futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
 
@@ -187,7 +187,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           val connector = app.injector.instanceOf[UserAnswersConnector]
           val result    = connector.clear().failed.futureValue
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
 
@@ -209,8 +209,8 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
 
           val result = connector.checkSubmissionStatusWithId("id")(hc).futureValue
 
-          result.get.uniqueId mustBe "uniqueId"
-          result.get.submissionStarted mustBe true
+          result.get.uniqueId `mustBe` "uniqueId"
+          result.get.submissionStarted `mustBe` true
         }
       }
 
@@ -227,7 +227,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
 
           val result = connector.checkSubmissionStatusWithId("id")(hc).futureValue
 
-          result.isEmpty mustBe true
+          result.isEmpty `mustBe` true
         }
       }
     }
@@ -246,7 +246,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
 
           val result = connector.updateSubmissionStatus("id")(hc).futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
 
@@ -264,7 +264,7 @@ class UserAnswersConnectorSpec extends SpecBase with ScalaFutures with WireMockH
           whenReady(connector.updateSubmissionStatus("id")(hc).failed) { result =>
             result mustBe an[UpstreamErrorResponse]
             inside(result) { case UpstreamErrorResponse(_, statusCode, _, _) =>
-              statusCode mustBe BAD_REQUEST
+              statusCode `mustBe` BAD_REQUEST
             }
           }
         }

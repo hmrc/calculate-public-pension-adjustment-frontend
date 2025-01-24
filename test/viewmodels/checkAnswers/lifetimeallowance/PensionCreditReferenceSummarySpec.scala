@@ -39,7 +39,7 @@ class PensionCreditReferenceSummarySpec extends AnyFreeSpec with Matchers {
           "test123"
         )
         .get
-      PensionCreditReferenceSummary.row(userAnswers, true) `shouldBe` Some(
+      PensionCreditReferenceSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionCreditReference.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
@@ -58,7 +58,7 @@ class PensionCreditReferenceSummarySpec extends AnyFreeSpec with Matchers {
           "test123"
         )
         .get
-      PensionCreditReferenceSummary.row(userAnswers, false) `shouldBe` Some(
+      PensionCreditReferenceSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"pensionCreditReference.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("test123")
@@ -68,7 +68,7 @@ class PensionCreditReferenceSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionReferenceSummary.row(userAnswers, true) `shouldBe` None
+      ProtectionReferenceSummary.row(userAnswers, true) shouldBe None
     }
   }
 

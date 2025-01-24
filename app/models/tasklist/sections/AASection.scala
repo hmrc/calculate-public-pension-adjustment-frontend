@@ -16,7 +16,6 @@
 
 package models.tasklist.sections
 
-import controllers.annualallowance.taxyear.routes as aaRoutes
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{Period, SectionNavigation, UserAnswers, UserAnswersPeriod}
@@ -25,8 +24,9 @@ import services.PeriodService
 
 case class AASection(period: Period) extends Section {
 
-  val initialPage: Call                  = aaRoutes.WhatYouWillNeedAAController.onPageLoad(period)
-  val checkYourAAPeriodAnswersPage: Call = aaRoutes.CheckYourAAPeriodAnswersController.onPageLoad(period)
+  val initialPage: Call                  = controllers.annualallowance.taxyear.routes.WhatYouWillNeedAAController.onPageLoad(period)
+  val checkYourAAPeriodAnswersPage: Call =
+    controllers.annualallowance.taxyear.routes.CheckYourAAPeriodAnswersController.onPageLoad(period)
 
   def status(answers: UserAnswers): SectionStatus =
     navigateTo(answers) match {

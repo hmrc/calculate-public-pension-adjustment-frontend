@@ -37,7 +37,7 @@ class IneligibleControllerSpec extends SpecBase {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, setupRoutes.IneligibleController.onPageLoad.url)
+        val request = FakeRequest(GET, controllers.setupquestions.routes.IneligibleController.onPageLoad.url)
 
         val result = route(application, request).value
 

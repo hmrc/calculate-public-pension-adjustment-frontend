@@ -40,7 +40,7 @@ class DefinedBenefitAmountSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      DefinedBenefitAmountSummary.row(userAnswers, period) `shouldBe` Some(
+      DefinedBenefitAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "definedBenefitAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -58,7 +58,7 @@ class DefinedBenefitAmountSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      DefinedBenefitAmountSummary.row(userAnswers, period) `shouldBe` None
+      DefinedBenefitAmountSummary.row(userAnswers, period) shouldBe None
     }
   }
 

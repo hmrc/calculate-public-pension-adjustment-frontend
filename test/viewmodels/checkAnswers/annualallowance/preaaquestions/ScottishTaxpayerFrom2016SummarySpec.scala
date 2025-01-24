@@ -38,7 +38,7 @@ class ScottishTaxpayerFrom2016SummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      ScottishTaxpayerFrom2016Summary.row(userAnswers) `shouldBe` Some(
+      ScottishTaxpayerFrom2016Summary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "scottishTaxpayerFrom2016.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -57,7 +57,7 @@ class ScottishTaxpayerFrom2016SummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      ScottishTaxpayerFrom2016Summary.row(userAnswers) `shouldBe` Some(
+      ScottishTaxpayerFrom2016Summary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "scottishTaxpayerFrom2016.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -71,7 +71,7 @@ class ScottishTaxpayerFrom2016SummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ScottishTaxpayerFrom2016Summary.row(userAnswers) `shouldBe` None
+      ScottishTaxpayerFrom2016Summary.row(userAnswers) shouldBe None
     }
   }
 

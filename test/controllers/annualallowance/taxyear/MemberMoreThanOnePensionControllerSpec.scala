@@ -59,7 +59,10 @@ class MemberMoreThanOnePensionControllerSpec extends SpecBase with MockitoSugar 
         val view = application.injector.instanceOf[MemberMoreThanOnePensionView]
 
         status(result) `mustEqual` OK
-        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2018)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2018)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -88,7 +91,7 @@ class MemberMoreThanOnePensionControllerSpec extends SpecBase with MockitoSugar 
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

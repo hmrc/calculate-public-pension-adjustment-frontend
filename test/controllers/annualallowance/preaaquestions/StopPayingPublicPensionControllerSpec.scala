@@ -18,7 +18,6 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.StopPayingPublicPensionFormProvider
 import models.{CheckMode, Done, Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentCaptor
@@ -48,16 +47,24 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
   val validAnswer: LocalDate = LocalDate.of(2015, 4, 6)
 
-  lazy val NormalRoute = preAARoutes.StopPayingPublicPensionController.onPageLoad(NormalMode).url
-  lazy val CheckRoute  = preAARoutes.StopPayingPublicPensionController.onPageLoad(CheckMode).url
+  lazy val NormalRoute =
+    controllers.annualallowance.preaaquestions.routes.StopPayingPublicPensionController.onPageLoad(NormalMode).url
+  lazy val CheckRoute  =
+    controllers.annualallowance.preaaquestions.routes.StopPayingPublicPensionController.onPageLoad(CheckMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
   def getRequest(mode: Mode): FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest(GET, preAARoutes.StopPayingPublicPensionController.onPageLoad(mode).url)
+    FakeRequest(
+      GET,
+      controllers.annualallowance.preaaquestions.routes.StopPayingPublicPensionController.onPageLoad(mode).url
+    )
 
   def postRequest(mode: Mode): FakeRequest[AnyContentAsFormUrlEncoded] =
-    FakeRequest(POST, preAARoutes.StopPayingPublicPensionController.onPageLoad(mode).url)
+    FakeRequest(
+      POST,
+      controllers.annualallowance.preaaquestions.routes.StopPayingPublicPensionController.onPageLoad(mode).url
+    )
       .withFormUrlEncodedBody(
         "value.day"   -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
@@ -76,7 +83,10 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[StopPayingPublicPensionView]
 
         status(result) `mustEqual` OK
-        contentAsString(result) `mustEqual` view(form, NormalMode)(getRequest(NormalMode), messages(application)).toString
+        contentAsString(result) `mustEqual` view(form, NormalMode)(
+          getRequest(NormalMode),
+          messages(application)
+        ).toString
       }
     }
 
@@ -103,7 +113,7 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -139,7 +149,7 @@ class StopPayingPublicPensionControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))

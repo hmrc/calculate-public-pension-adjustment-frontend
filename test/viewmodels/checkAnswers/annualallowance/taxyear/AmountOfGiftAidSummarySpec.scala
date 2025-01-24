@@ -39,7 +39,7 @@ class AmountOfGiftAidSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      AmountOfGiftAidSummary.row(userAnswers, period) `shouldBe` Some(
+      AmountOfGiftAidSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "amountOfGiftAid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -57,7 +57,7 @@ class AmountOfGiftAidSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      AmountOfGiftAidSummary.row(userAnswers, period) `shouldBe` None
+      AmountOfGiftAidSummary.row(userAnswers, period) shouldBe None
     }
   }
 

@@ -40,7 +40,7 @@ class LumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("999")
         )
         .get
-      LumpSumValueSummary.row(userAnswers, true) `shouldBe` Some(
+      LumpSumValueSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "lumpSumValue.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£999")),
@@ -59,7 +59,7 @@ class LumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("999")
         )
         .get
-      LumpSumValueSummary.row(userAnswers, false) `shouldBe` Some(
+      LumpSumValueSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"lumpSumValue.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("£999"))
@@ -69,7 +69,7 @@ class LumpSumValueSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      LumpSumValueSummary.row(userAnswers, true) `shouldBe` None
+      LumpSumValueSummary.row(userAnswers, true) shouldBe None
     }
   }
 

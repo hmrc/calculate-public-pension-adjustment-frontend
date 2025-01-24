@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.routes as ltaRoutes
 import forms.lifetimeallowance.WhatNewProtectionTypeEnhancementFormProvider
 import models.{Done, NormalMode, UserAnswers, WhatNewProtectionTypeEnhancement}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,8 @@ class WhatNewProtectionTypeEnhancementControllerSpec extends SpecBase with Mocki
   val formProvider = new WhatNewProtectionTypeEnhancementFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode).url
+  lazy val normalRoute =
+    controllers.lifetimeallowance.routes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode).url
 
   "WhatNewProtectionTypeEnhancement Controller" - {
 
@@ -89,7 +89,7 @@ class WhatNewProtectionTypeEnhancementControllerSpec extends SpecBase with Mocki
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

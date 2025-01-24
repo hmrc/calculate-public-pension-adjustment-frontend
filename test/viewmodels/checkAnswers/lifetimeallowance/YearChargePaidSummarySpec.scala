@@ -39,7 +39,7 @@ class YearChargePaidSummarySpec extends AnyFreeSpec with Matchers {
           models.YearChargePaid._2016To2017
         )
         .get
-      YearChargePaidSummary.row(userAnswers, true) `shouldBe` Some(
+      YearChargePaidSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "yearChargePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("yearChargePaid.2016To2017")),
@@ -61,7 +61,7 @@ class YearChargePaidSummarySpec extends AnyFreeSpec with Matchers {
           models.YearChargePaid._2016To2017
         )
         .get
-      YearChargePaidSummary.row(userAnswers, false) `shouldBe` Some(
+      YearChargePaidSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"yearChargePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("yearChargePaid.2016To2017"))
@@ -71,7 +71,7 @@ class YearChargePaidSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      YearChargePaidSummary.row(userAnswers, true) `shouldBe` None
+      YearChargePaidSummary.row(userAnswers, true) shouldBe None
     }
   }
 

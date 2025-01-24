@@ -18,7 +18,6 @@ package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.lifetimeallowance.routes as ltaSetupRoutes
 import forms.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,9 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
   val formProvider = new HadBenefitCrystallisationEventFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = ltaSetupRoutes.HadBenefitCrystallisationEventController.onPageLoad(NormalMode).url
+  lazy val normalRoute = controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+    .onPageLoad(NormalMode)
+    .url
 
   "HadBenefitCrystallisationEvent Controller" - {
 
@@ -85,7 +86,7 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -111,7 +112,7 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))

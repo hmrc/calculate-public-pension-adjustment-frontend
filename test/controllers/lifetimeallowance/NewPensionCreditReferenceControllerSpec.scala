@@ -75,7 +75,10 @@ class NewPensionCreditReferenceControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) `mustEqual` OK
-        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -83,7 +86,7 @@ class NewPensionCreditReferenceControllerSpec extends SpecBase with MockitoSugar
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.routes as ltaRoutes
 import forms.lifetimeallowance.LtaProtectionOrEnhancementsFormProvider
 import models.{CheckMode, Done, LtaProtectionOrEnhancements, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -38,8 +37,10 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val normalRoute = ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url
+  lazy val normalRoute =
+    controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode).url
+  lazy val checkRoute  =
+    controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url
 
   val formProvider = new LtaProtectionOrEnhancementsFormProvider()
   val form         = formProvider()
@@ -90,7 +91,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -114,7 +115,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -144,7 +145,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -163,7 +164,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
         status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value `mustEqual` ltaRoutes.ProtectionTypeController.onPageLoad(NormalMode).url
+        ).value `mustEqual` controllers.lifetimeallowance.routes.ProtectionTypeController.onPageLoad(NormalMode).url
       }
     }
 
@@ -171,7 +172,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -190,7 +191,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
         status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value `mustEqual` ltaRoutes.ProtectionTypeController.onPageLoad(CheckMode).url
+        ).value `mustEqual` controllers.lifetimeallowance.routes.ProtectionTypeController.onPageLoad(CheckMode).url
       }
     }
 

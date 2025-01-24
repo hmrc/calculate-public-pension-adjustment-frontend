@@ -31,7 +31,7 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
       val taskListViewModel: TaskListViewModel =
         TaskListViewModel(sectionGroup, Some(sectionGroup), None, SectionGroupViewModel("heading", Seq()))
 
-      taskListViewModel.groupCount must be(3)
+      taskListViewModel.groupCount `must` `be`(3)
     }
 
     "completed group count should be correct when a group with a single section is complete" in {
@@ -41,8 +41,8 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
       val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
 
-      taskListViewModel.groupCount          must be(2)
-      taskListViewModel.completedGroupCount must be(2)
+      taskListViewModel.groupCount `must` `be`(2)
+      taskListViewModel.completedGroupCount `must` `be`(2)
     }
 
     "completed group count should be correct for a group with multiple sections of which only one is complete" in {
@@ -55,8 +55,8 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
       val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
 
-      taskListViewModel.groupCount          must be(2)
-      taskListViewModel.completedGroupCount must be(0)
+      taskListViewModel.groupCount `must` `be`(2)
+      taskListViewModel.completedGroupCount `must` `be`(0)
     }
 
     "completed group count should be correct for a group with multiple sections when all are complete" in {
@@ -69,8 +69,8 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
 
       val taskListViewModel: TaskListViewModel = TaskListViewModel(sectionGroup, None, None, sectionGroup)
 
-      taskListViewModel.groupCount          must be(2)
-      taskListViewModel.completedGroupCount must be(2)
+      taskListViewModel.groupCount `must` `be`(2)
+      taskListViewModel.completedGroupCount `must` `be`(2)
     }
 
     "all counts should be correct when some sections are complete and some are incomplete " in {
@@ -91,8 +91,8 @@ class TaskListViewModelSpec extends SpecBase with PageBehaviours {
       val taskListViewModel: TaskListViewModel =
         TaskListViewModel(sectionGroup, Some(incompleteSectionGroup), None, incompleteSectionGroup)
 
-      taskListViewModel.groupCount          must be(3)
-      taskListViewModel.completedGroupCount must be(1)
+      taskListViewModel.groupCount `must` `be`(3)
+      taskListViewModel.completedGroupCount `must` `be`(1)
     }
   }
 }

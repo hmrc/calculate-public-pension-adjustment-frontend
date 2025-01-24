@@ -38,7 +38,7 @@ class NetIncomeAbove190KSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      NetIncomeAbove190KSummary.row(userAnswers) `shouldBe` Some(
+      NetIncomeAbove190KSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "netIncomeAbove190K.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -60,7 +60,7 @@ class NetIncomeAbove190KSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      NetIncomeAbove190KSummary.row(userAnswers) `shouldBe` Some(
+      NetIncomeAbove190KSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "netIncomeAbove190K.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -77,7 +77,7 @@ class NetIncomeAbove190KSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      NetIncomeAbove190KSummary.row(userAnswers) `shouldBe` None
+      NetIncomeAbove190KSummary.row(userAnswers) shouldBe None
     }
   }
 }

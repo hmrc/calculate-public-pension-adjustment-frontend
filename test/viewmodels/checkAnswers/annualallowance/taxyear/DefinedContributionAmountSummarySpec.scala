@@ -43,7 +43,7 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      DefinedContributionAmountSummary.row(userAnswers, period) `shouldBe` Some(
+      DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "definedContributionAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -61,7 +61,7 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      DefinedContributionAmountSummary.row(userAnswers, period) `shouldBe` None
+      DefinedContributionAmountSummary.row(userAnswers, period) shouldBe None
     }
   }
 
@@ -77,7 +77,7 @@ class DefinedContributionAmountSummarySpec extends AnyFreeSpec with Matchers {
       )
       .get
 
-    DefinedContributionAmountSummary.row(userAnswers, period) `shouldBe` Some(
+    DefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
       SummaryListRowViewModel(
         key = "definedContributionAmount.checkYourAnswersLabel",
         value = ValueViewModel(HtmlContent("£100")),

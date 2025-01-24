@@ -26,8 +26,8 @@ class UserAnswersSpec extends SpecBase {
   "should correctly identify when answers are contained for a question page with a static path" in {
     val userAnswers: UserAnswers = emptyUserAnswers.set(SavingsStatementPage, true).get
 
-    userAnswers.containsAnswerFor(SavingsStatementPage)      must be(true)
-    userAnswers.containsAnswerFor(ReasonForResubmissionPage) must be(false)
+    userAnswers.containsAnswerFor(SavingsStatementPage) `must` `be`(true)
+    userAnswers.containsAnswerFor(ReasonForResubmissionPage) `must` `be`(false)
   }
 
   "should correctly identify when answers are contained for a question page with a parameterised path" in {

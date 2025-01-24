@@ -43,7 +43,7 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
           validAnswer
         )
         .get
-      DateOfBenefitCrystallisationEventSummary.row(userAnswers, true) `shouldBe` Some(
+      DateOfBenefitCrystallisationEventSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "dateOfBenefitCrystallisationEvent.checkYourAnswersLabel",
           value = ValueViewModel(Text("6 April 2015").toString()),
@@ -65,7 +65,7 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
           validAnswer
         )
         .get
-      DateOfBenefitCrystallisationEventSummary.row(userAnswers, false) `shouldBe` Some(
+      DateOfBenefitCrystallisationEventSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"dateOfBenefitCrystallisationEvent.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(Text("6 April 2015").toString())
@@ -75,7 +75,7 @@ class DateOfBenefitCrystallisationEventSummarySpec extends AnyFreeSpec with Matc
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      DateOfBenefitCrystallisationEventSummary.row(userAnswers, true) `shouldBe` None
+      DateOfBenefitCrystallisationEventSummary.row(userAnswers, true) shouldBe None
     }
   }
 

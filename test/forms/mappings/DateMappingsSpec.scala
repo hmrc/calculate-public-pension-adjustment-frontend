@@ -227,7 +227,7 @@ class DateMappingsSpec
 
         val result = form.bind(data)
 
-        result.errors must contain only FormError(
+        result.errors `must` `contain` `only` FormError(
           "value",
           "error.required.two",
           List(messages("date.error.day"), messages("date.error.year"))
@@ -253,7 +253,7 @@ class DateMappingsSpec
 
         val result = form.bind(data)
 
-        result.errors must contain only FormError(
+        result.errors `must` `contain` `only` FormError(
           "value",
           "error.required.two",
           List(messages("date.error.month"), messages("date.error.year"))

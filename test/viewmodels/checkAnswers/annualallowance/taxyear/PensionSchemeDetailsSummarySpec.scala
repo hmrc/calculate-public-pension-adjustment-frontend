@@ -41,7 +41,7 @@ class PensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
           models.PensionSchemeDetails("Some scheme", "08765432TR")
         )
         .get
-      PensionSchemeDetailsSummary.row(userAnswers, period, schemeIndex) `shouldBe` Some(
+      PensionSchemeDetailsSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionSchemeDetails.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Some scheme / 08765432TR")),
@@ -60,7 +60,7 @@ class PensionSchemeDetailsSummarySpec extends AnyFreeSpec with Matchers {
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      PensionSchemeDetailsSummary.row(userAnswers, period, schemeIndex) `shouldBe` None
+      PensionSchemeDetailsSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }
   }
 

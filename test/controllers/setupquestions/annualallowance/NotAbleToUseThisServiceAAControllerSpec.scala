@@ -50,7 +50,10 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -85,7 +88,10 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -117,7 +123,10 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
 
         running(application) {
 
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -146,7 +155,10 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 

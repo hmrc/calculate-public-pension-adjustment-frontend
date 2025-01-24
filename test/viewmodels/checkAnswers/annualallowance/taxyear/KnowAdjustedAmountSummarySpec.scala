@@ -39,7 +39,7 @@ class KnowAdjustedAmountSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      KnowAdjustedAmountSummary.row(userAnswers, period) `shouldBe` Some(
+      KnowAdjustedAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "knowAdjustedAmount.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class KnowAdjustedAmountSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      KnowAdjustedAmountSummary.row(userAnswers, period) `shouldBe` Some(
+      KnowAdjustedAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "knowAdjustedAmount.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class KnowAdjustedAmountSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      KnowAdjustedAmountSummary.row(userAnswers, period) `shouldBe` None
+      KnowAdjustedAmountSummary.row(userAnswers, period) shouldBe None
     }
   }
 

@@ -16,8 +16,6 @@
 
 package models.tasklist.sections
 
-import controllers.setupquestions.lifetimeallowance.routes as setupLTARoutes
-import controllers.setupquestions.routes as setupRoutes
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{NormalMode, SectionNavigation, UserAnswers}
@@ -25,11 +23,13 @@ import play.api.mvc.Call
 
 case object SetupSection extends Section {
 
-  val initialPage: Call               = setupRoutes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
-  val checkYourSetupAnswersPage: Call = setupRoutes.CheckYourSetupAnswersController.onPageLoad()
-  val ineligiblePage: Call            = setupRoutes.IneligibleController.onPageLoad
-  val kickoutLTAService: Call         = setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
-  val kickoutLTATriage: Call          = setupLTARoutes.NotAbleToUseThisTriageLtaController.onPageLoad()
+  val initialPage: Call               = controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode)
+  val checkYourSetupAnswersPage: Call = controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+  val ineligiblePage: Call            = controllers.setupquestions.routes.IneligibleController.onPageLoad
+  val kickoutLTAService: Call         =
+    controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
+  val kickoutLTATriage: Call          =
+    controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad()
 
   def status(answers: UserAnswers): SectionStatus =
     navigateTo(answers) match {

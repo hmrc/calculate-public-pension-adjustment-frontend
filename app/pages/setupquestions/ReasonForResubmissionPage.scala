@@ -16,7 +16,6 @@
 
 package pages.setupquestions
 
-import controllers.setupquestions.routes as setupRoutes
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -29,7 +28,7 @@ case object ReasonForResubmissionPage extends QuestionPage[String] {
   override def toString: String = "reasonForResubmission"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    setupRoutes.AffectedByRemedyController.onPageLoad(NormalMode)
+    controllers.setupquestions.routes.AffectedByRemedyController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()

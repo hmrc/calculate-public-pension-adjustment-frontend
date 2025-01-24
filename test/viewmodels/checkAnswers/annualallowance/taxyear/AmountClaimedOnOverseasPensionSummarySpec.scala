@@ -40,7 +40,7 @@ class AmountClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matcher
           BigInt("100")
         )
         .get
-      AmountClaimedOnOverseasPensionSummary.row(userAnswers, period) `shouldBe` Some(
+      AmountClaimedOnOverseasPensionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "amountClaimedOnOverseasPension.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -58,7 +58,7 @@ class AmountClaimedOnOverseasPensionSummarySpec extends AnyFreeSpec with Matcher
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      AmountClaimedOnOverseasPensionSummary.row(userAnswers, period) `shouldBe` None
+      AmountClaimedOnOverseasPensionSummary.row(userAnswers, period) shouldBe None
     }
   }
 

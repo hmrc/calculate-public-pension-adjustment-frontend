@@ -38,7 +38,7 @@ class DefinedContributionPensionSchemeSummarySpec extends AnyFreeSpec with Match
           true
         )
         .get
-      DefinedContributionPensionSchemeSummary.row(userAnswers) `shouldBe` Some(
+      DefinedContributionPensionSchemeSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "definedContributionPensionScheme.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -63,7 +63,7 @@ class DefinedContributionPensionSchemeSummarySpec extends AnyFreeSpec with Match
         )
         .get
 
-      DefinedContributionPensionSchemeSummary.row(userAnswers) `shouldBe` Some(
+      DefinedContributionPensionSchemeSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "definedContributionPensionScheme.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -82,7 +82,7 @@ class DefinedContributionPensionSchemeSummarySpec extends AnyFreeSpec with Match
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      DefinedContributionPensionSchemeSummary.row(userAnswers) `shouldBe` None
+      DefinedContributionPensionSchemeSummary.row(userAnswers) shouldBe None
     }
   }
 }

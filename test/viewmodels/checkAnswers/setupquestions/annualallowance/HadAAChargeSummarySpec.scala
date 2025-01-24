@@ -37,7 +37,7 @@ class HadAAChargeSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      HadAAChargeSummary.row(userAnswers) `shouldBe` Some(
+      HadAAChargeSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "hadAACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -59,7 +59,7 @@ class HadAAChargeSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      HadAAChargeSummary.row(userAnswers) `shouldBe` Some(
+      HadAAChargeSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "hadAACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -76,7 +76,7 @@ class HadAAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      HadAAChargeSummary.row(userAnswers) `shouldBe` None
+      HadAAChargeSummary.row(userAnswers) shouldBe None
     }
   }
 }

@@ -69,7 +69,7 @@ class UserEligibilityControllerSpec extends SpecBase {
     "must redirect to ScottishTaxpayerFrom2016Controller if reporting page has indicated AA and Scottsih tax payer page has not been answered and AA eligible" in {
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val ltaKickOutStatus = 0
       val aaKickoutStatus  = 2
@@ -117,7 +117,7 @@ class UserEligibilityControllerSpec extends SpecBase {
     "must redirect to task list controller if reporting page has indicated AA and Scottsih tax payer page has been answered and AA eligible " in {
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val ltaKickOutStatus = 0
       val aaKickoutStatus  = 2
@@ -168,7 +168,7 @@ class UserEligibilityControllerSpec extends SpecBase {
     "must SHOW lta content only if lta kickout status is complete and must NOT show aa if aa kickout status is false" in {
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val ltaKickOutStatus = 2
       val aaKickoutStatus  = 0
@@ -211,7 +211,7 @@ class UserEligibilityControllerSpec extends SpecBase {
           "You are able to use this service to calculate a change in your annual allowance position."
         ) `mustBe` false
 
-        contentAsString(result) mustEqual view(
+        contentAsString(result) `mustEqual` view(
           false,
           true,
           controllers.routes.TaskListController.onPageLoad(),
@@ -227,7 +227,7 @@ class UserEligibilityControllerSpec extends SpecBase {
     "must NOT show lta content only if lta kickout status is false and must show aa if aa kickout status is complete" in {
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val ltaKickOutStatus = 0
       val aaKickoutStatus  = 2

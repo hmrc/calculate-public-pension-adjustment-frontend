@@ -16,7 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -29,7 +28,7 @@ case object PensionCreditReferencePage extends QuestionPage[String] {
   override def toString: String = "pensionCreditReference"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
+    controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()

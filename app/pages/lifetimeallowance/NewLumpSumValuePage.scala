@@ -16,7 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.NewExcessLifetimeAllowancePaid.{Both, Lumpsum}
 import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -61,12 +60,12 @@ case object NewLumpSumValuePage extends QuestionPage[BigInt] {
         oldAnnualPaymentValue
       )
     ) {
-      ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
+      controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
     } else {
       if (hasPreviousCharge) {
-        ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+        controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
       } else {
-        ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
+        controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad()
       }
     }
   }

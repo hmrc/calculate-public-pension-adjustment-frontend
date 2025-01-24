@@ -49,7 +49,11 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisTriageLtaController.onPageLoad().url)
+          val request =
+            FakeRequest(
+              GET,
+              controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad().url
+            )
 
           val result = route(application, request).value
 
@@ -85,7 +89,11 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisTriageLtaController.onPageLoad().url)
+          val request =
+            FakeRequest(
+              GET,
+              controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad().url
+            )
 
           val result = route(application, request).value
 
@@ -115,7 +123,11 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisTriageLtaController.onPageLoad().url)
+          val request =
+            FakeRequest(
+              GET,
+              controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad().url
+            )
 
           val result = route(application, request).value
 
@@ -144,7 +156,11 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisTriageLtaController.onPageLoad().url)
+          val request =
+            FakeRequest(
+              GET,
+              controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisTriageLtaController.onPageLoad().url
+            )
 
           val result = route(application, request).value
 

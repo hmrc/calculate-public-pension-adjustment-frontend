@@ -37,7 +37,7 @@ class PensionProtectedMemberSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      PensionProtectedMemberSummary.row(userAnswers) `shouldBe` Some(
+      PensionProtectedMemberSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionProtectedMember.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -61,7 +61,7 @@ class PensionProtectedMemberSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      PensionProtectedMemberSummary.row(userAnswers) `shouldBe` Some(
+      PensionProtectedMemberSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "pensionProtectedMember.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class PensionProtectedMemberSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      PensionProtectedMemberSummary.row(userAnswers) `shouldBe` None
+      PensionProtectedMemberSummary.row(userAnswers) shouldBe None
     }
   }
 }

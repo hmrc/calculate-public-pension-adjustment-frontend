@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.routes as ltaRoutes
 import forms.lifetimeallowance.DateOfBenefitCrystallisationEventFormProvider
 import models.{Done, Mode, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -46,15 +45,22 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
 
   val validAnswer: LocalDate = LocalDate.of(2016, 4, 6)
 
-  lazy val normalRoute = ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode).url
+  lazy val normalRoute =
+    controllers.lifetimeallowance.routes.DateOfBenefitCrystallisationEventController.onPageLoad(NormalMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
   def getRequest(mode: Mode): FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest(GET, ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(mode).url)
+    FakeRequest(
+      GET,
+      controllers.lifetimeallowance.routes.DateOfBenefitCrystallisationEventController.onPageLoad(mode).url
+    )
 
   def postRequest(mode: Mode): FakeRequest[AnyContentAsFormUrlEncoded] =
-    FakeRequest(POST, ltaRoutes.DateOfBenefitCrystallisationEventController.onPageLoad(mode).url)
+    FakeRequest(
+      POST,
+      controllers.lifetimeallowance.routes.DateOfBenefitCrystallisationEventController.onPageLoad(mode).url
+    )
       .withFormUrlEncodedBody(
         "value.day"   -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
@@ -73,7 +79,10 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
         val view = application.injector.instanceOf[DateOfBenefitCrystallisationEventView]
 
         status(result) `mustEqual` OK
-        contentAsString(result) `mustEqual` view(form, NormalMode)(getRequest(NormalMode), messages(application)).toString
+        contentAsString(result) `mustEqual` view(form, NormalMode)(
+          getRequest(NormalMode),
+          messages(application)
+        ).toString
       }
     }
 
@@ -100,7 +109,7 @@ class DateOfBenefitCrystallisationEventControllerSpec extends SpecBase with Mock
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

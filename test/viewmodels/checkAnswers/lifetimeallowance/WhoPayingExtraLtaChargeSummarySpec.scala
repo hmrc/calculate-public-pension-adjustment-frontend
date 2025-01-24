@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.WhoPayingExtraLtaCharge.PensionScheme
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -41,14 +40,14 @@ class WhoPayingExtraLtaChargeSummarySpec extends AnyFreeSpec with Matchers {
           PensionScheme
         )
         .get
-      WhoPayingExtraLtaChargeSummary.row(userAnswers, true) `shouldBe` Some(
+      WhoPayingExtraLtaChargeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "whoPayingExtraLtaCharge.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whoPayingExtraLtaCharge.pensionScheme")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(CheckMode).url
+              controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController.onPageLoad(CheckMode).url
             )
               .withVisuallyHiddenText("whoPayingExtraLtaCharge.change.hidden")
           )
@@ -63,7 +62,7 @@ class WhoPayingExtraLtaChargeSummarySpec extends AnyFreeSpec with Matchers {
           PensionScheme
         )
         .get
-      WhoPayingExtraLtaChargeSummary.row(userAnswers, false) `shouldBe` Some(
+      WhoPayingExtraLtaChargeSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"whoPayingExtraLtaCharge.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("whoPayingExtraLtaCharge.pensionScheme"))
@@ -73,7 +72,7 @@ class WhoPayingExtraLtaChargeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      LtaProtectionOrEnhancementsSummary.row(userAnswers, true) `shouldBe` None
+      LtaProtectionOrEnhancementsSummary.row(userAnswers, true) shouldBe None
     }
   }
 }

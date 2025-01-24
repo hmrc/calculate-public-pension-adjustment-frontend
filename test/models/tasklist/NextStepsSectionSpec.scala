@@ -129,7 +129,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.calculate"
+        sectionNameOverride `mustBe` "taskList.nextSteps.calculate"
       }
 
       "Must be 'Continue to sign in' when reporting a change that does not include Annual Allowance details & no kickout reached and not authenticated" in {
@@ -138,7 +138,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
+        sectionNameOverride `mustBe` "taskList.nextSteps.continueToSignIn"
       }
 
       "Must be 'Continue' when reporting a change that does not include Annual Allowance details & no kickout reached and authenticated" in {
@@ -150,7 +150,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.continue"
+        sectionNameOverride `mustBe` "taskList.nextSteps.continue"
       }
 
       "Must be 'No further action required' when reporting a change that does not include Annual Allowance details & kickout was reached" in {
@@ -162,13 +162,13 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
         val answersWithNav = LTASection.saveNavigation(answers, LTASection.cannotUseLtaServiceNoChargePage.url)
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answersWithNav)
-        sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+        sectionNameOverride `mustBe` "taskList.nextSteps.noFurtherAction"
       }
 
       "Must be 'Complete setup questions' when reporting change details have not been captured" in {
         val sectionNameOverride = nextStepsSection.sectionNameOverride(emptyUserAnswers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.setupRequired"
+        sectionNameOverride `mustBe` "taskList.nextSteps.setupRequired"
       }
     }
 
@@ -183,7 +183,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.calculate"
+        sectionNameOverride `mustBe` "taskList.nextSteps.calculate"
       }
 
       "Must be 'Continue' when not eligible for AA, eligible for LTA and authenticated" in {
@@ -198,7 +198,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.continue"
+        sectionNameOverride `mustBe` "taskList.nextSteps.continue"
       }
 
       "Must be 'Continue' when AA not reported, eligible for LTA and authenticated" in {
@@ -211,7 +211,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.continue"
+        sectionNameOverride `mustBe` "taskList.nextSteps.continue"
       }
 
       "Must be 'Continue to sign in' when not eligible for AA, eligible for LTA and not authenticated" in {
@@ -225,7 +225,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
+        sectionNameOverride `mustBe` "taskList.nextSteps.continueToSignIn"
       }
 
       "Must be 'Continue to sign in' AA not reported, eligible for LTA and not authenticated" in {
@@ -237,7 +237,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.continueToSignIn"
+        sectionNameOverride `mustBe` "taskList.nextSteps.continueToSignIn"
       }
 
       "Must be 'No further action required' when not eligible for LTA or AA" in {
@@ -253,7 +253,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answersWithNav)
 
-        sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+        sectionNameOverride `mustBe` "taskList.nextSteps.noFurtherAction"
       }
 
       "Must be 'No further action required' when when not eligible for AA and only AA indicated" in {
@@ -268,7 +268,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+        sectionNameOverride `mustBe` "taskList.nextSteps.noFurtherAction"
       }
 
       "Must be 'No further action required' when when not eligible for LTA and only LTA indicated" in {
@@ -283,7 +283,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+        sectionNameOverride `mustBe` "taskList.nextSteps.noFurtherAction"
       }
 
       "Must be 'No further action required' when not eligible for AA and LTA kickout has been reached " in {
@@ -302,7 +302,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answersWithNav)
 
-        sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+        sectionNameOverride `mustBe` "taskList.nextSteps.noFurtherAction"
       }
 
       "Must be 'No further action required' when only LTA and LTA kickout has been reached " in {
@@ -319,7 +319,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
         val sectionNameOverride = nextStepsSection.sectionNameOverride(answersWithNav)
 
-        sectionNameOverride mustBe "taskList.nextSteps.noFurtherAction"
+        sectionNameOverride `mustBe` "taskList.nextSteps.noFurtherAction"
       }
 
       "Must be 'Complete setup questions' when reporting change details have not been captured" in {
@@ -329,7 +329,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
             .get
         )
 
-        sectionNameOverride mustBe "taskList.nextSteps.setupRequired"
+        sectionNameOverride `mustBe` "taskList.nextSteps.setupRequired"
       }
 
       "Must be 'Complete setup questions' when AA or LTA Triage in progress" in {
@@ -345,7 +345,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
           .get
         val sectionNameOverride                    = nextStepsSection.sectionNameOverride(answers)
 
-        sectionNameOverride mustBe "taskList.nextSteps.setupRequired"
+        sectionNameOverride `mustBe` "taskList.nextSteps.setupRequired"
       }
     }
   }
@@ -373,7 +373,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
           None
         )
         val sectionStatus                          = nextStepsSection.sectionStatus(dataCaptureSections, answers)
-        sectionStatus mustBe SectionStatus.CannotStartYet
+        sectionStatus `mustBe` SectionStatus.CannotStartYet
       }
 
       "Must be 'Not started' if all specified data capture sections are complete and only LTA is selected" in {
@@ -389,7 +389,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
           None
         )
         val sectionStatus                          = nextStepsSection.sectionStatus(dataCaptureSections, answers)
-        sectionStatus mustBe SectionStatus.NotStarted
+        sectionStatus `mustBe` SectionStatus.NotStarted
       }
 
       "Must be 'CannotStartYet' if all specified data capture sections are complete, only LTA is selected & a kickout page has been entered" in {
@@ -408,7 +408,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
           None
         )
         val sectionStatus                          = nextStepsSection.sectionStatus(dataCaptureSections, answersWithNav)
-        sectionStatus mustBe SectionStatus.CannotStartYet
+        sectionStatus `mustBe` SectionStatus.CannotStartYet
       }
 
       "Must be 'Not started' if all specified data capture sections are complete and annual allowance is not selected and no kickout has been reached" in {
@@ -430,7 +430,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
           None
         )
         val sectionStatus                          = nextStepsSection.sectionStatus(dataCaptureSections, answers)
-        sectionStatus mustBe SectionStatus.NotStarted
+        sectionStatus `mustBe` SectionStatus.NotStarted
       }
     }
 
@@ -460,7 +460,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
         )
 
         val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answers)
-        sectionStatus mustBe SectionStatus.CannotStartYet
+        sectionStatus `mustBe` SectionStatus.CannotStartYet
       }
 
       "Must be 'Not started' if all specified data capture sections are complete and only LTA is selected" in {
@@ -483,7 +483,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
         )
 
         val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answers)
-        sectionStatus mustBe SectionStatus.NotStarted
+        sectionStatus `mustBe` SectionStatus.NotStarted
       }
 
       "Must be 'CannotStartYet' if all specified data capture sections are complete, only LTA is selected & a LTA task kickout page has been entered" in {
@@ -507,7 +507,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
         )
 
         val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answersWithNav)
-        sectionStatus mustBe SectionStatus.CannotStartYet
+        sectionStatus `mustBe` SectionStatus.CannotStartYet
       }
 
       "Must be 'CannotStartYet' if all specified data capture sections are complete, only LTA is selected & LTA triage kickout page has been entered" in {
@@ -531,7 +531,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
         )
 
         val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answers)
-        sectionStatus mustBe SectionStatus.CannotStartYet
+        sectionStatus `mustBe` SectionStatus.CannotStartYet
       }
 
       "Must be 'Not started' if all specified data capture sections are complete and annual allowance is not selected and no kickout has been reached" in {
@@ -563,7 +563,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
         )
 
         val sectionStatus = nextStepsSection.sectionStatus(dataCaptureSections, answers)
-        sectionStatus mustBe SectionStatus.NotStarted
+        sectionStatus `mustBe` SectionStatus.NotStarted
       }
     }
   }

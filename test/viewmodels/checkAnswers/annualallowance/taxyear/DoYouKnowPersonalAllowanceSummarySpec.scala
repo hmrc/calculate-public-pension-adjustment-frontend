@@ -39,7 +39,7 @@ class DoYouKnowPersonalAllowanceSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      DoYouKnowPersonalAllowanceSummary.row(userAnswers, period) `shouldBe` Some(
+      DoYouKnowPersonalAllowanceSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "doYouKnowPersonalAllowance.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class DoYouKnowPersonalAllowanceSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      DoYouKnowPersonalAllowanceSummary.row(userAnswers, period) `shouldBe` Some(
+      DoYouKnowPersonalAllowanceSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "doYouKnowPersonalAllowance.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class DoYouKnowPersonalAllowanceSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      DoYouKnowPersonalAllowanceSummary.row(userAnswers, period) `shouldBe` None
+      DoYouKnowPersonalAllowanceSummary.row(userAnswers, period) shouldBe None
     }
   }
 

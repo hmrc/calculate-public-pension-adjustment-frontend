@@ -38,7 +38,7 @@ class ResubmittingAdjustmentSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      ResubmittingAdjustmentSummary.row(userAnswers) `shouldBe` Some(
+      ResubmittingAdjustmentSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "resubmittingAdjustment.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -57,7 +57,7 @@ class ResubmittingAdjustmentSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      ResubmittingAdjustmentSummary.row(userAnswers) `shouldBe` Some(
+      ResubmittingAdjustmentSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "resubmittingAdjustment.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -71,7 +71,7 @@ class ResubmittingAdjustmentSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ResubmittingAdjustmentSummary.row(userAnswers) `shouldBe` None
+      ResubmittingAdjustmentSummary.row(userAnswers) shouldBe None
     }
   }
 

@@ -92,7 +92,7 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -107,7 +107,9 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
         val result = route(application, request).value
 
         status(result) `mustEqual` SEE_OTHER
-        redirectLocation(result).value `mustEqual` controllers.annualallowance.taxyear.routes.PersonalAllowanceController
+        redirectLocation(
+          result
+        ).value `mustEqual` controllers.annualallowance.taxyear.routes.PersonalAllowanceController
           .onPageLoad(NormalMode, Period._2018)
           .url
       }

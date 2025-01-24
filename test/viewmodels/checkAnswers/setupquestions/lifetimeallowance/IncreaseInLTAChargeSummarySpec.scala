@@ -37,7 +37,7 @@ class IncreaseInLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      IncreaseInLTAChargeSummary.row(userAnswers) `shouldBe` Some(
+      IncreaseInLTAChargeSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "increaseInLTACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -61,7 +61,7 @@ class IncreaseInLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      IncreaseInLTAChargeSummary.row(userAnswers) `shouldBe` Some(
+      IncreaseInLTAChargeSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "increaseInLTACharge.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class IncreaseInLTAChargeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      IncreaseInLTAChargeSummary.row(userAnswers) `shouldBe` None
+      IncreaseInLTAChargeSummary.row(userAnswers) shouldBe None
     }
   }
 }

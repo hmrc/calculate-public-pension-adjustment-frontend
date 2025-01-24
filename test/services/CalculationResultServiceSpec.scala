@@ -2375,7 +2375,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016" in {
 
         when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+          .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2016).futureValue
 
         result `mustBe` Some(
@@ -2415,7 +2415,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid TaxYear2016To2023.InitialFlexiblyAccessedTaxYear for a Period 2016 when PublicPension" in {
         when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+          .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2016).futureValue
 
         result `mustBe` Some(
@@ -2455,7 +2455,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2017" in {
         when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+          .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2017).futureValue
 
         result `mustBe` Some(
@@ -2491,7 +2491,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2018" in {
         when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+          .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2018).futureValue
 
         result `mustBe` Some(
@@ -2527,7 +2527,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2019" in {
         when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+          .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2019).futureValue
 
         result `mustBe` Some(
@@ -2563,7 +2563,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2020" in {
         when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+          .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2020).futureValue
 
         result `mustBe` Some(
@@ -2599,7 +2599,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2021" in {
         when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+          .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2021).futureValue
 
         result `mustBe`
@@ -2636,7 +2636,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2022" in {
         when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+          .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1, Period._2022).futureValue
 
         result `mustBe` Some(
@@ -2672,7 +2672,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
       "should return valid TaxYear2016To2023.PostFlexiblyAccessedTaxYear for a Period 2023" in {
         when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-          .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+          .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
         val result = service.toTaxYear2016To2023(userAnswers1.copy(data = data2), Period._2023).futureValue
 
         result `mustBe` Some(
@@ -2711,7 +2711,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     "buildInputs" - {
 
       when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any())(any()))
-        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
 
       "should return 2016 as the InitialFlexiblyAccessedTaxYear when stopPayingPublicPension falls in 2016 " in {
 
@@ -4601,9 +4601,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
-        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
-      when(mockCalculationResultConnector.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
-      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any)).thenReturn(Future.successful(Success("uniqueId")))
+        .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
+      when(mockCalculationResultConnector.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
+      when(mockSubmissionsConnector.sendSubmissionRequest(any)(any))
+        .`thenReturn`(Future.successful(Success("uniqueId")))
 
       val submissionResponse = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
       submissionResponse.futureValue.asInstanceOf[Success].uniqueId `mustBe` "uniqueId"
@@ -4612,9 +4613,9 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
     "must fail when a valid calculation result cannot be obtained" in {
 
       when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
-        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
+        .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
       when(mockCalculationResultConnector.sendRequest(any)(any))
-        .thenReturn(Future.failed(new RuntimeException("someError")))
+        .`thenReturn`(Future.failed(new RuntimeException("someError")))
 
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
       an[RuntimeException] `mustBe` thrownBy(result.futureValue)
@@ -4625,10 +4626,10 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       val calculationResult = readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       when(mockReducedNetIncomeConnector.sendReducedNetIncomeRequest(any)(any))
-        .thenReturn(Future.successful(ReducedNetIncomeResponse(1, 2)))
-      when(mockCalculationResultConnector.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+        .`thenReturn`(Future.successful(ReducedNetIncomeResponse(1, 2)))
+      when(mockCalculationResultConnector.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockSubmissionsConnector.sendSubmissionRequest(any)(any))
-        .thenReturn(Future.failed(new RuntimeException("someError")))
+        .`thenReturn`(Future.failed(new RuntimeException("someError")))
 
       val result = service.submitUserAnswersAndCalculation(emptyUserAnswers, "sessionId")
       an[RuntimeException] `mustBe` thrownBy(result.futureValue)

@@ -16,7 +16,6 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import controllers.routes
 import models.tasklist.sections.AASection
 import models.{NormalMode, UserAnswers}
@@ -35,7 +34,8 @@ case object FlexibleAccessStartDatePage extends QuestionPage[LocalDate] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(FlexibleAccessStartDatePage) match {
-      case Some(_) => preAARoutes.PayTaxCharge1415Controller.onPageLoad(NormalMode)
+      case Some(_) =>
+        controllers.annualallowance.preaaquestions.routes.PayTaxCharge1415Controller.onPageLoad(NormalMode)
       case None    => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

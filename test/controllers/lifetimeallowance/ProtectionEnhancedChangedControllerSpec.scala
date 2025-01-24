@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.routes as ltaRoutes
 import forms.ProtectionEnhancedChangedFormProvider
 import models.{Done, NormalMode, ProtectionEnhancedChanged, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -38,7 +37,8 @@ class ProtectionEnhancedChangedControllerSpec extends SpecBase with MockitoSugar
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val protectionEnhancedChangedRoute = ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(NormalMode).url
+  lazy val protectionEnhancedChangedRoute =
+    controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onPageLoad(NormalMode).url
 
   val formProvider = new ProtectionEnhancedChangedFormProvider()
   val form         = formProvider()
@@ -89,7 +89,7 @@ class ProtectionEnhancedChangedControllerSpec extends SpecBase with MockitoSugar
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

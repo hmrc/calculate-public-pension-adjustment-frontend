@@ -39,7 +39,7 @@ class OtherDefinedBenefitOrContributionSummarySpec extends AnyFreeSpec with Matc
           true
         )
         .get
-      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period) `shouldBe` Some(
+      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "otherDefinedBenefitOrContribution.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class OtherDefinedBenefitOrContributionSummarySpec extends AnyFreeSpec with Matc
           false
         )
         .get
-      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period) `shouldBe` Some(
+      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "otherDefinedBenefitOrContribution.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class OtherDefinedBenefitOrContributionSummarySpec extends AnyFreeSpec with Matc
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period) `shouldBe` None
+      OtherDefinedBenefitOrContributionSummary.row(userAnswers, period) shouldBe None
     }
   }
 

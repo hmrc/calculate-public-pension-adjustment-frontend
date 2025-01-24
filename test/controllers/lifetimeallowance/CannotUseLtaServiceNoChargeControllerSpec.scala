@@ -45,7 +45,10 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -70,7 +73,10 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 

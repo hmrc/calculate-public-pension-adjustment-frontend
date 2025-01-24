@@ -42,7 +42,7 @@ class StopPayingPublicPensionSummarySpec extends AnyFreeSpec with Matchers {
           validAnswer
         )
         .get
-      StopPayingPublicPensionSummary.row(userAnswers) `shouldBe` Some(
+      StopPayingPublicPensionSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "stopPayingPublicPension.checkYourAnswersLabel",
           value = ValueViewModel(StopPayingPublicPensionSummary.dateToString(validAnswer, languageTag)),
@@ -56,7 +56,7 @@ class StopPayingPublicPensionSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      StopPayingPublicPensionSummary.row(userAnswers) `shouldBe` None
+      StopPayingPublicPensionSummary.row(userAnswers) shouldBe None
     }
   }
 

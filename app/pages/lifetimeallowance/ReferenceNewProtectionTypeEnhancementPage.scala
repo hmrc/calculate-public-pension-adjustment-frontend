@@ -16,7 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.ProtectionEnhancedChanged.{Both, Protection}
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -31,15 +30,16 @@ case object ReferenceNewProtectionTypeEnhancementPage extends QuestionPage[Strin
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ProtectionEnhancedChangedPage) match {
-      case Some(Protection) => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
-      case Some(Both)       => ltaRoutes.NewEnhancementTypeController.onPageLoad(NormalMode)
+      case Some(Protection) =>
+        controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
+      case Some(Both)       => controllers.lifetimeallowance.routes.NewEnhancementTypeController.onPageLoad(NormalMode)
       case _                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ProtectionEnhancedChangedPage) match {
-      case Some(Protection) => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both)       => ltaRoutes.NewEnhancementTypeController.onPageLoad(CheckMode)
+      case Some(Protection) => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(Both)       => controllers.lifetimeallowance.routes.NewEnhancementTypeController.onPageLoad(CheckMode)
       case _                => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

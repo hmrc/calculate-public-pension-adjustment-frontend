@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.routes as ltaRoutes
 import forms.lifetimeallowance.LtaPensionSchemeDetailsFormProvider
 import models.{Done, LtaPensionSchemeDetails, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -39,7 +38,8 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val normalRoute = ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode).url
+  lazy val normalRoute =
+    controllers.lifetimeallowance.routes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode).url
 
   val formProvider = new LtaPensionSchemeDetailsFormProvider()
   val form         = formProvider()
@@ -105,7 +105,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -124,7 +124,7 @@ class LtaPensionSchemeDetailsControllerSpec extends SpecBase with MockitoSugar {
         status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value `mustEqual` ltaRoutes.CheckYourLTAAnswersController.onPageLoad().url
+        ).value `mustEqual` controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad().url
       }
     }
 

@@ -40,7 +40,7 @@ class SchemeNameAndTaxRefSummarySpec extends AnyFreeSpec with Matchers {
           models.SchemeNameAndTaxRef("Some scheme", "Some Tax Ref")
         )
         .get
-      SchemeNameAndTaxRefSummary.row(userAnswers, true) `shouldBe` Some(
+      SchemeNameAndTaxRefSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "schemeNameAndTaxRef.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("Some scheme / Some Tax Ref")),
@@ -59,7 +59,7 @@ class SchemeNameAndTaxRefSummarySpec extends AnyFreeSpec with Matchers {
           models.SchemeNameAndTaxRef("Some scheme", "Some Tax Ref")
         )
         .get
-      SchemeNameAndTaxRefSummary.row(userAnswers, false) `shouldBe` Some(
+      SchemeNameAndTaxRefSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"schemeNameAndTaxRef.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("Some scheme / Some Tax Ref"))
@@ -69,7 +69,7 @@ class SchemeNameAndTaxRefSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      SchemeNameAndTaxRefSummary.row(userAnswers, true) `shouldBe` None
+      SchemeNameAndTaxRefSummary.row(userAnswers, true) shouldBe None
     }
   }
 

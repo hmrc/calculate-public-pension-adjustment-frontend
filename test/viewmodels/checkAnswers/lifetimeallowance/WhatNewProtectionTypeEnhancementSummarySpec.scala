@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.WhatNewProtectionTypeEnhancement.PrimaryProtection
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -41,14 +40,14 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
           PrimaryProtection
         )
         .get
-      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) `shouldBe` Some(
+      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "whatNewProtectionTypeEnhancement.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.primaryProtection")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
+              controllers.lifetimeallowance.routes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode).url
             )
               .withVisuallyHiddenText("whatNewProtectionTypeEnhancement.change.hidden")
           )
@@ -63,7 +62,7 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
           PrimaryProtection
         )
         .get
-      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, false) `shouldBe` Some(
+      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"whatNewProtectionTypeEnhancement.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("whatNewProtectionTypeEnhancement.primaryProtection"))
@@ -73,7 +72,7 @@ class WhatNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Match
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) `shouldBe` None
+      WhatNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe None
     }
   }
 }
