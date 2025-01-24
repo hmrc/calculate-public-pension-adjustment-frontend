@@ -17,7 +17,6 @@
 package controllers.setupquestions
 
 import base.SpecBase
-import controllers.setupquestions.routes as setupRoutes
 import forms.ResubmittingAdjustmentFormProvider
 import models.{CheckMode, Done, NormalMode, PostTriageFlag, UserAnswers}
 import org.mockito.ArgumentCaptor
@@ -46,7 +45,8 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new ResubmittingAdjustmentFormProvider()
   val form         = formProvider()
 
-  lazy val resubmittingNormalRoute = setupRoutes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
+  lazy val resubmittingNormalRoute =
+    controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
 
   "ResubmittingAdjustment Controller" - {
 
@@ -175,7 +175,8 @@ class ResubmittingAdjustmentControllerSpec extends SpecBase with MockitoSugar {
           )
           .build()
 
-      lazy val resubmittingCheckRoute = setupRoutes.ResubmittingAdjustmentController.onPageLoad(CheckMode).url
+      lazy val resubmittingCheckRoute =
+        controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(CheckMode).url
 
       running(application) {
         val request =

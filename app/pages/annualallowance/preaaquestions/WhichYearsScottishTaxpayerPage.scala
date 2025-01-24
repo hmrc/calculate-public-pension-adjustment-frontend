@@ -16,7 +16,6 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import controllers.routes
 import models.{NormalMode, UserAnswers, WhichYearsScottishTaxpayer}
 import pages.QuestionPage
@@ -31,7 +30,8 @@ case object WhichYearsScottishTaxpayerPage extends QuestionPage[Set[WhichYearsSc
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(WhichYearsScottishTaxpayerPage) match {
-      case Some(set) if set.nonEmpty => preAARoutes.PayingPublicPensionSchemeController.onPageLoad(NormalMode)
+      case Some(set) if set.nonEmpty =>
+        controllers.annualallowance.preaaquestions.routes.PayingPublicPensionSchemeController.onPageLoad(NormalMode)
       case _                         => routes.JourneyRecoveryController.onPageLoad(None)
     }
 

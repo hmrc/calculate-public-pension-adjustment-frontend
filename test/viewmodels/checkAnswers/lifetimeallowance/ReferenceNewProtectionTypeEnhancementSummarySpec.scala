@@ -39,7 +39,7 @@ class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with 
           "test123"
         )
         .get
-      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, true) `shouldBe` Some(
+      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "referenceNewProtectionTypeEnhancement.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
@@ -61,7 +61,7 @@ class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with 
           "test123"
         )
         .get
-      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, false) `shouldBe` Some(
+      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"referenceNewProtectionTypeEnhancement.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("test123")
@@ -71,7 +71,7 @@ class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with 
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, true) `shouldBe` None
+      ReferenceNewProtectionTypeEnhancementSummary.row(userAnswers, true) shouldBe None
     }
   }
 

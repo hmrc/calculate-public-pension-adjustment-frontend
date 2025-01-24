@@ -18,7 +18,6 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.FlexiblyAccessedPensionFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,8 @@ class FlexiblyAccessedPensionControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new FlexiblyAccessedPensionFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = preAARoutes.FlexiblyAccessedPensionController.onPageLoad(NormalMode).url
+  lazy val normalRoute =
+    controllers.annualallowance.preaaquestions.routes.FlexiblyAccessedPensionController.onPageLoad(NormalMode).url
 
   "FlexiblyAccessedPension Controller" - {
 
@@ -83,7 +83,7 @@ class FlexiblyAccessedPensionControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

@@ -18,7 +18,6 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.ScottishTaxpayerFrom2016FormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,8 @@ class ScottishTaxpayerFrom2016ControllerSpec extends SpecBase with MockitoSugar 
   val formProvider = new ScottishTaxpayerFrom2016FormProvider()
   val form         = formProvider()
 
-  lazy val scottishTaxpayerNormalRoute = preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode).url
+  lazy val scottishTaxpayerNormalRoute =
+    controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode).url
 
   "ScottishTaxpayerFrom2016 Controller" - {
 
@@ -83,7 +83,7 @@ class ScottishTaxpayerFrom2016ControllerSpec extends SpecBase with MockitoSugar 
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

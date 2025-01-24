@@ -18,7 +18,6 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.DefinedContributionPensionSchemeFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,9 @@ class DefinedContributionPensionSchemeControllerSpec extends SpecBase with Mocki
   val formProvider = new DefinedContributionPensionSchemeFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = preAARoutes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode).url
+  lazy val normalRoute = controllers.annualallowance.preaaquestions.routes.DefinedContributionPensionSchemeController
+    .onPageLoad(NormalMode)
+    .url
 
   "DefinedContributionPensionScheme Controller" - {
 
@@ -83,7 +84,7 @@ class DefinedContributionPensionSchemeControllerSpec extends SpecBase with Mocki
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

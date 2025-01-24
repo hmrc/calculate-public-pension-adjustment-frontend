@@ -40,7 +40,7 @@ class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      TotalIncomeSummary.row(userAnswers, period) `shouldBe` Some(
+      TotalIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "totalIncome.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -58,7 +58,7 @@ class TotalIncomeSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      TotalIncomeSummary.row(userAnswers, period) `shouldBe` None
+      TotalIncomeSummary.row(userAnswers, period) shouldBe None
     }
   }
 

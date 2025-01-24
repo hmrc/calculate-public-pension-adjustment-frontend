@@ -85,7 +85,7 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
           val result = route(application, request).value
 
           status(result) `mustEqual` SEE_OTHER
-          redirectLocation(result).get must be(
+          redirectLocation(result).get `must` `be`(
             s"/public-pension-adjustment/previous-claim-continue"
           )
         }
@@ -126,7 +126,7 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
           val result = route(application, request).value
 
           status(result) `mustEqual` SEE_OTHER
-          redirectLocation(result).get must be("/public-pension-adjustment/previous-claim-continue")
+          redirectLocation(result).get `must` `be`("/public-pension-adjustment/previous-claim-continue")
         }
       }
 
@@ -157,7 +157,7 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
           val result = route(application, request).value
 
           status(result) `mustEqual` SEE_OTHER
-          redirectLocation(result).get must be("/public-pension-adjustment/previous-claim-continue")
+          redirectLocation(result).get `must` `be`("/public-pension-adjustment/previous-claim-continue")
 
         }
       }
@@ -192,7 +192,7 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
           val result = route(application, request).value
 
           status(result) `mustEqual` SEE_OTHER
-          redirectLocation(result).get must be(
+          redirectLocation(result).get `must` `be`(
             s"/public-pension-adjustment/previous-claim-continue"
           )
         }
@@ -228,7 +228,7 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
           val result = route(application, request).value
 
           status(result) `mustEqual` SEE_OTHER
-          redirectLocation(result).get must be("/public-pension-adjustment/change-previous-adjustment")
+          redirectLocation(result).get `must` `be`("/public-pension-adjustment/change-previous-adjustment")
         }
       }
 

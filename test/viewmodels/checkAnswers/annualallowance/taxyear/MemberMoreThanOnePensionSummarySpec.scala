@@ -39,7 +39,7 @@ class MemberMoreThanOnePensionSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      MemberMoreThanOnePensionSummary.row(userAnswers, period) `shouldBe` Some(
+      MemberMoreThanOnePensionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "memberMoreThanOnePension.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class MemberMoreThanOnePensionSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      MemberMoreThanOnePensionSummary.row(userAnswers, period) `shouldBe` Some(
+      MemberMoreThanOnePensionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "memberMoreThanOnePension.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class MemberMoreThanOnePensionSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      MemberMoreThanOnePensionSummary.row(userAnswers, period) `shouldBe` None
+      MemberMoreThanOnePensionSummary.row(userAnswers, period) shouldBe None
     }
   }
 

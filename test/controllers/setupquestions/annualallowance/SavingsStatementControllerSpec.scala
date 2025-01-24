@@ -18,7 +18,6 @@ package controllers.setupquestions.annualallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.annualallowance.routes as aaSetuproutes
 import forms.setupquestions.annualallowance.SavingsStatementFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,8 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new SavingsStatementFormProvider()
   val form         = formProvider()
 
-  lazy val savingsStatementNormalRoute = aaSetuproutes.SavingsStatementController.onPageLoad(NormalMode).url
+  lazy val savingsStatementNormalRoute =
+    controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode).url
 
   "SavingsStatementController" - {
 
@@ -82,7 +82,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = None)
@@ -124,7 +124,7 @@ class SavingsStatementControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

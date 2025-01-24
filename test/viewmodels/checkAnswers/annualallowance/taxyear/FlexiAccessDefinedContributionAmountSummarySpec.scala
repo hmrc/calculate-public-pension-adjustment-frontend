@@ -43,7 +43,7 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
           BigInt("100")
         )
         .get
-      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) `shouldBe` Some(
+      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -61,7 +61,7 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) `shouldBe` None
+      FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe None
     }
   }
 
@@ -77,7 +77,7 @@ class FlexiAccessDefinedContributionAmountSummarySpec extends AnyFreeSpec with M
       )
       .get
 
-    FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) `shouldBe` Some(
+    FlexiAccessDefinedContributionAmountSummary.row(userAnswers, period) shouldBe Some(
       SummaryListRowViewModel(
         key = "flexiAccessDefinedContributionAmount.checkYourAnswersLabel",
         value = ValueViewModel(HtmlContent("£100")),

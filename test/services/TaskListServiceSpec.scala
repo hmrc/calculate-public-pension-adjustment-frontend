@@ -169,12 +169,12 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
 
         val setupGroup: SectionGroupViewModel = taskListViewModel.setupGroup
 
-        setupGroup.heading       `must` `be`("taskList.setup.groupHeading")
+        setupGroup.heading `must` `be`("taskList.setup.groupHeading")
         setupGroup.sections.size `must` `be`(1)
-        setupGroup.isComplete    `must` `be`(false)
+        setupGroup.isComplete `must` `be`(false)
 
         val setupSection = setupGroup.sections(0)
-        setupSection.status                `must` `be`(SectionStatus.InProgress)
+        setupSection.status `must` `be`(SectionStatus.InProgress)
         urlWithNoContext(setupSection.url) `must` `be`("/change-reason")
       }
 
@@ -184,9 +184,9 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
           taskListService.taskListViewModel(userAnswersAferResubmittingAdjustmentSubmitted())
         val nextStepsGroup: SectionGroupViewModel = taskListViewModel.nextStepsGroup
 
-        nextStepsGroup.heading       `must` `be`("taskList.nextSteps.groupHeading")
+        nextStepsGroup.heading `must` `be`("taskList.nextSteps.groupHeading")
         nextStepsGroup.sections.size `must` `be`(1)
-        nextStepsGroup.isComplete    `must` `be`(false)
+        nextStepsGroup.isComplete `must` `be`(false)
 
         val nextStepsSection = nextStepsGroup.sections(0)
         nextStepsSection.status `must` `be`(SectionStatus.CannotStartYet)
@@ -195,7 +195,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
       "the ltaGroup and aaGroup must not be defined" in {
         val taskListViewModel: TaskListViewModel =
           taskListService.taskListViewModel(userAnswersAferResubmittingAdjustmentSubmitted())
-        taskListViewModel.aaGroup.isDefined  `must` `be`(false)
+        taskListViewModel.aaGroup.isDefined `must` `be`(false)
         taskListViewModel.ltaGroup.isDefined `must` `be`(false)
       }
 
@@ -218,12 +218,12 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
         taskListService.taskListViewModel(userAnswersAferResubmittingAdjustmentSubmitted())
       val setupGroup: SectionGroupViewModel    = taskListViewModel.setupGroup
 
-      setupGroup.heading       `must` `be`("taskList.setup.groupHeading")
+      setupGroup.heading `must` `be`("taskList.setup.groupHeading")
       setupGroup.sections.size `must` `be`(1)
-      setupGroup.isComplete    `must` `be`(false)
+      setupGroup.isComplete `must` `be`(false)
 
       val setupSection = setupGroup.sections(0)
-      setupSection.status               `must` `be`(SectionStatus.InProgress)
+      setupSection.status `must` `be`(SectionStatus.InProgress)
       urlWithNoContext(setupSection.url) `must` `be`("/change-reason")
     }
 
@@ -232,9 +232,9 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
         taskListService.taskListViewModel(userAnswersAferResubmittingAdjustmentSubmitted())
       val nextStepsGroup: SectionGroupViewModel = taskListViewModel.nextStepsGroup
 
-      nextStepsGroup.heading       `must` `be`("taskList.nextSteps.groupHeading")
+      nextStepsGroup.heading `must` `be`("taskList.nextSteps.groupHeading")
       nextStepsGroup.sections.size `must` `be`(1)
-      nextStepsGroup.isComplete    `must` `be`(false)
+      nextStepsGroup.isComplete `must` `be`(false)
 
       val nextStepsSection = nextStepsGroup.sections(0)
       nextStepsSection.status `must` `be`(SectionStatus.CannotStartYet)
@@ -243,7 +243,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
     "the ltaGroup and aaGroup must not be defined" in {
       val taskListViewModel: TaskListViewModel =
         taskListService.taskListViewModel(userAnswersAferResubmittingAdjustmentSubmitted())
-      taskListViewModel.aaGroup.isDefined  `must` `be`(false)
+      taskListViewModel.aaGroup.isDefined `must` `be`(false)
       taskListViewModel.ltaGroup.isDefined `must` `be`(false)
     }
 
@@ -269,8 +269,8 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
         val aaGroup: SectionGroupViewModel       = taskListViewModel.aaGroup.get
 
         aaGroup.sections.size `must` `be`(2)
-        aaGroup.heading       `must` `be`("taskList.aa.groupHeading")
-        aaGroup.isComplete   `must` `be`(false)
+        aaGroup.heading `must` `be`("taskList.aa.groupHeading")
+        aaGroup.isComplete `must` `be`(false)
       }
 
       "the aa background section must be well formed" in {
@@ -279,7 +279,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
         val aaGroup: SectionGroupViewModel       = taskListViewModel.aaGroup.get
 
         val aaBackgroundSection = aaGroup.sections(0)
-        aaBackgroundSection.status                `must` `be`(SectionStatus.Completed)
+        aaBackgroundSection.status `must` `be`(SectionStatus.Completed)
         urlWithNoContext(aaBackgroundSection.url) `must` `be`("/annual-allowance/setup-check-answers")
       }
 
@@ -289,7 +289,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
         val aaGroup                              = taskListViewModel.aaGroup.get
 
         val periodSection = aaGroup.sections(1)
-        periodSection.status                `must` `be`(SectionStatus.NotStarted)
+        periodSection.status `must` `be`(SectionStatus.NotStarted)
         urlWithNoContext(periodSection.url) `must` `be`("/annual-allowance/2016/information")
       }
 
@@ -318,8 +318,8 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
         val aaGroup: SectionGroupViewModel       = taskListViewModel.aaGroup.get
 
         aaGroup.sections.size `must` `be`(2)
-        aaGroup.heading       `must` `be`("taskList.aa.groupHeading")
-        aaGroup.isComplete    `must` `be`(false)
+        aaGroup.heading `must` `be`("taskList.aa.groupHeading")
+        aaGroup.isComplete `must` `be`(false)
       }
 
       "the aa background section must be well formed" in {
@@ -328,7 +328,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
         val aaGroup: SectionGroupViewModel       = taskListViewModel.aaGroup.get
 
         val aaBackgroundSection = aaGroup.sections(0)
-        aaBackgroundSection.status                `must` `be`(SectionStatus.Completed)
+        aaBackgroundSection.status `must` `be`(SectionStatus.Completed)
         urlWithNoContext(aaBackgroundSection.url) `must` `be`("/annual-allowance/setup-check-answers")
       }
 
@@ -338,7 +338,7 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
         val aaGroup                              = taskListViewModel.aaGroup.get
 
         val periodSection = aaGroup.sections(1)
-        periodSection.status                `must` `be`(SectionStatus.NotStarted)
+        periodSection.status `must` `be`(SectionStatus.NotStarted)
         urlWithNoContext(periodSection.url) `must` `be`("/annual-allowance/2016/information")
       }
 
@@ -379,15 +379,15 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
       val ltaGroup                             = taskListViewModel.ltaGroup.get
 
       "the lta group must be well formed" in {
-        ltaGroup.heading       `must` `be`("taskList.lta.groupHeading")
-        ltaGroup.isComplete    `must` `be`(false)
+        ltaGroup.heading `must` `be`("taskList.lta.groupHeading")
+        ltaGroup.isComplete `must` `be`(false)
         ltaGroup.sections.size `must` `be`(1)
       }
 
       "the lta section must be in progress with the correct url" in {
         val ltaSection = ltaGroup.sections(0)
 
-        ltaSection.status                `must` `be`(SectionStatus.InProgress)
+        ltaSection.status `must` `be`(SectionStatus.InProgress)
         urlWithNoContext(ltaSection.url) `must` `be`("some-url")
       }
     }
@@ -412,15 +412,15 @@ class TaskListServiceSpec extends SpecBase with PageBehaviours with MockitoSugar
       val ltaGroup                             = taskListViewModel.ltaGroup.get
 
       "the lta group must be well formed" in {
-        ltaGroup.heading       `must` `be`("taskList.lta.groupHeading")
-        ltaGroup.isComplete    `must` `be`(false)
+        ltaGroup.heading `must` `be`("taskList.lta.groupHeading")
+        ltaGroup.isComplete `must` `be`(false)
         ltaGroup.sections.size `must` `be`(1)
       }
 
       "the lta section must be in progress with the correct url" in {
         val ltaSection = ltaGroup.sections(0)
 
-        ltaSection.status                `must` `be`(SectionStatus.InProgress)
+        ltaSection.status `must` `be`(SectionStatus.InProgress)
         urlWithNoContext(ltaSection.url) `must` `be`("some-url")
       }
     }

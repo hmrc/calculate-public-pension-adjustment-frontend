@@ -18,7 +18,6 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.RegisteredYearFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -43,7 +42,9 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
   val validRegisteredYear: Period = Period._2011
 
-  lazy val normalRoute = preAARoutes.RegisteredYearController.onPageLoad(NormalMode, validRegisteredYear).url
+  lazy val normalRoute = controllers.annualallowance.preaaquestions.routes.RegisteredYearController
+    .onPageLoad(NormalMode, validRegisteredYear)
+    .url
 
   "RegisteredYear Controller" - {
 
@@ -91,7 +92,7 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

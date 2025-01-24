@@ -30,7 +30,7 @@ import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{route, status, *}
+import play.api.test.Helpers.*
 import services.{CalculationResultService, TaskListService}
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -82,7 +82,7 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
 
       val mockTaskListService = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -114,7 +114,7 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
 
       val mockTaskListService = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -168,12 +168,12 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
             None
           )
 
-        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+        when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
 
         when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+          .`thenReturn`(Future.successful(mockCalculationReviewIndividualAAViewModel))
 
-        when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
           TaskListViewModel(
             SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
             None,
@@ -183,7 +183,7 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
         )
 
         when(mockCalculationResultService.individualAASummaryModel(calculationResult))
-          .thenReturn(Seq(mockIndividualAASummaryModel))
+          .`thenReturn`(Seq(mockIndividualAASummaryModel))
 
         val application =
           applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -228,12 +228,12 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
             Some(8)
           )
 
-        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+        when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
 
         when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+          .`thenReturn`(Future.successful(mockCalculationReviewIndividualAAViewModel))
 
-        when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
           TaskListViewModel(
             SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
             None,
@@ -243,7 +243,7 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
         )
 
         when(mockCalculationResultService.individualAASummaryModel(calculationResult))
-          .thenReturn(Seq(mockIndividualAASummaryModel))
+          .`thenReturn`(Seq(mockIndividualAASummaryModel))
 
         val application =
           applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -294,12 +294,12 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
             None
           )
 
-        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+        when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
 
         when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+          .`thenReturn`(Future.successful(mockCalculationReviewIndividualAAViewModel))
 
-        when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
           TaskListViewModel(
             SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
             None,
@@ -309,7 +309,7 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
         )
 
         when(mockCalculationResultService.individualAASummaryModel(calculationResult))
-          .thenReturn(Seq(mockIndividualAASummaryModel))
+          .`thenReturn`(Seq(mockIndividualAASummaryModel))
 
         val application =
           applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -354,12 +354,12 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
             None
           )
 
-        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+        when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
 
         when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+          .`thenReturn`(Future.successful(mockCalculationReviewIndividualAAViewModel))
 
-        when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
           TaskListViewModel(
             SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
             None,
@@ -369,7 +369,7 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
         )
 
         when(mockCalculationResultService.individualAASummaryModel(calculationResult))
-          .thenReturn(Seq(mockIndividualAASummaryModel))
+          .`thenReturn`(Seq(mockIndividualAASummaryModel))
 
         val application =
           applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -414,12 +414,12 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
             None
           )
 
-        when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+        when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
 
         when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-          .thenReturn(Future.successful(mockCalculationReviewIndividualAAViewModel))
+          .`thenReturn`(Future.successful(mockCalculationReviewIndividualAAViewModel))
 
-        when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
           TaskListViewModel(
             SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
             None,
@@ -429,7 +429,7 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
         )
 
         when(mockCalculationResultService.individualAASummaryModel(calculationResult))
-          .thenReturn(Seq(mockIndividualAASummaryModel))
+          .`thenReturn`(Seq(mockIndividualAASummaryModel))
 
         val application =
           applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -454,7 +454,7 @@ class CalculationReviewIndividualAAControllerSpec extends SpecBase with MockitoS
     "must redirect to the CalculationReviewController on a POST" in {
 
       val mockTaskListService = mock[TaskListService]
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,

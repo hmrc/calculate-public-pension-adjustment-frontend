@@ -16,7 +16,6 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import controllers.routes
 import models.{NormalMode, Period, UserAnswers}
 import pages.QuestionPage
@@ -37,7 +36,8 @@ case class PIAPreRemedyPage(period: Period) extends QuestionPage[BigInt] {
 
   private def navigateInNormalMode =
     if (period == Period._2011 || period == Period._2012 || period == Period._2013 || period == Period._2014) {
-      preAARoutes.RegisteredYearController.onPageLoad(NormalMode, Period.Year(period.end.getYear + 1))
+      controllers.annualallowance.preaaquestions.routes.RegisteredYearController
+        .onPageLoad(NormalMode, Period.Year(period.end.getYear + 1))
     } else if (period == Period._2015) {
       controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
     } else routes.JourneyRecoveryController.onPageLoad(None)

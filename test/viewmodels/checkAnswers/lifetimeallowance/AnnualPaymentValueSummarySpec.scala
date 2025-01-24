@@ -40,7 +40,7 @@ class AnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("999")
         )
         .get
-      AnnualPaymentValueSummary.row(userAnswers, true) `shouldBe` Some(
+      AnnualPaymentValueSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "annualPaymentValue.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£999")),
@@ -59,7 +59,7 @@ class AnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("999")
         )
         .get
-      AnnualPaymentValueSummary.row(userAnswers, false) `shouldBe` Some(
+      AnnualPaymentValueSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"annualPaymentValue.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("£999"))
@@ -69,7 +69,7 @@ class AnnualPaymentValueSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      AnnualPaymentValueSummary.row(userAnswers, true) `shouldBe` None
+      AnnualPaymentValueSummary.row(userAnswers, true) shouldBe None
     }
   }
 

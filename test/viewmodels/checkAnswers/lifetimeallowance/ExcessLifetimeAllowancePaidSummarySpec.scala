@@ -39,7 +39,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
           models.ExcessLifetimeAllowancePaid.Annualpayment
         )
         .get
-      ExcessLifetimeAllowancePaidSummary.row(userAnswers, true) `shouldBe` Some(
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.annualPayment")),
@@ -61,7 +61,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
           models.ExcessLifetimeAllowancePaid.Annualpayment
         )
         .get
-      ExcessLifetimeAllowancePaidSummary.row(userAnswers, false) `shouldBe` Some(
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"excessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.annualPayment"))
@@ -76,7 +76,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
           models.ExcessLifetimeAllowancePaid.Lumpsum
         )
         .get
-      ExcessLifetimeAllowancePaidSummary.row(userAnswers, true) `shouldBe` Some(
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "excessLifetimeAllowancePaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.lumpSum")),
@@ -98,7 +98,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
           models.ExcessLifetimeAllowancePaid.Lumpsum
         )
         .get
-      ExcessLifetimeAllowancePaidSummary.row(userAnswers, false) `shouldBe` Some(
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"excessLifetimeAllowancePaid.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("excessLifetimeAllowancePaid.lumpSum"))
@@ -108,7 +108,7 @@ class ExcessLifetimeAllowancePaidSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ExcessLifetimeAllowancePaidSummary.row(userAnswers, true) `shouldBe` None
+      ExcessLifetimeAllowancePaidSummary.row(userAnswers, true) shouldBe None
     }
   }
 

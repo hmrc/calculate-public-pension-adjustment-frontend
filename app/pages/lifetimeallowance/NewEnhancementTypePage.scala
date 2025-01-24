@@ -16,8 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
-import controllers.routes as generalRoutes
 import models.NewEnhancementType.{Both, InternationalEnhancement, PensionCredit}
 import models.{CheckMode, NewEnhancementType, NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -33,18 +31,20 @@ case object NewEnhancementTypePage extends QuestionPage[NewEnhancementType] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(NewEnhancementTypePage) match {
-      case Some(PensionCredit)                         => ltaRoutes.NewPensionCreditReferenceController.onPageLoad(NormalMode)
+      case Some(PensionCredit)                         =>
+        controllers.lifetimeallowance.routes.NewPensionCreditReferenceController.onPageLoad(NormalMode)
       case Some(InternationalEnhancement) | Some(Both) =>
-        ltaRoutes.NewInternationalEnhancementReferenceController.onPageLoad(NormalMode)
-      case _                                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+        controllers.lifetimeallowance.routes.NewInternationalEnhancementReferenceController.onPageLoad(NormalMode)
+      case _                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(NewEnhancementTypePage) match {
-      case Some(PensionCredit)                         => ltaRoutes.NewPensionCreditReferenceController.onPageLoad(CheckMode)
+      case Some(PensionCredit)                         =>
+        controllers.lifetimeallowance.routes.NewPensionCreditReferenceController.onPageLoad(CheckMode)
       case Some(InternationalEnhancement) | Some(Both) =>
-        ltaRoutes.NewInternationalEnhancementReferenceController.onPageLoad(CheckMode)
-      case _                                           => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+        controllers.lifetimeallowance.routes.NewInternationalEnhancementReferenceController.onPageLoad(CheckMode)
+      case _                                           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[NewEnhancementType], userAnswers: UserAnswers): Try[UserAnswers] =

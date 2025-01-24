@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.routes as ltaRoutes
 import forms.lifetimeallowance.WhoPaidLTAChargeFormProvider
 import models.{Done, NormalMode, UserAnswers, WhoPaidLTACharge}
 import org.mockito.ArgumentMatchers.any
@@ -38,7 +37,7 @@ import scala.concurrent.Future
 class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val normalRoute = ltaRoutes.WhoPaidLTAChargeController.onPageLoad(NormalMode).url
+  lazy val normalRoute = controllers.lifetimeallowance.routes.WhoPaidLTAChargeController.onPageLoad(NormalMode).url
 
   val formProvider = new WhoPaidLTAChargeFormProvider()
   val form         = formProvider()
@@ -66,7 +65,7 @@ class WhoPaidLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
     val mockUserDataService = mock[UserDataService]
 
-    when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+    when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
     val application =
       applicationBuilder(userAnswers = Some(emptyUserAnswers))

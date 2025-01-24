@@ -55,7 +55,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomeSummarySpec extends AnyFreeSpec w
           true
         )
         .get
-      ClaimingTaxReliefPensionNotAdjustedIncomeSummary.row(userAnswers, period) `shouldBe` Some(
+      ClaimingTaxReliefPensionNotAdjustedIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -78,7 +78,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomeSummarySpec extends AnyFreeSpec w
           false
         )
         .get
-      ClaimingTaxReliefPensionNotAdjustedIncomeSummary.row(userAnswers, period) `shouldBe` Some(
+      ClaimingTaxReliefPensionNotAdjustedIncomeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "claimingTaxReliefPensionNotAdjustedIncome.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -96,7 +96,7 @@ class ClaimingTaxReliefPensionNotAdjustedIncomeSummarySpec extends AnyFreeSpec w
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      ClaimingTaxReliefPensionNotAdjustedIncomeSummary.row(userAnswers, period) `shouldBe` None
+      ClaimingTaxReliefPensionNotAdjustedIncomeSummary.row(userAnswers, period) shouldBe None
     }
   }
 }
