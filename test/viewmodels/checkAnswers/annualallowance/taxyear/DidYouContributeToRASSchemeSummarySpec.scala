@@ -39,7 +39,7 @@ class DidYouContributeToRASSchemeSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      DidYouContributeToRASSchemeSummary.row(userAnswers, period) `shouldBe` Some(
+      DidYouContributeToRASSchemeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "didYouContributeToRASScheme.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class DidYouContributeToRASSchemeSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      DidYouContributeToRASSchemeSummary.row(userAnswers, period) `shouldBe` Some(
+      DidYouContributeToRASSchemeSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "didYouContributeToRASScheme.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class DidYouContributeToRASSchemeSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      DidYouContributeToRASSchemeSummary.row(userAnswers, period) `shouldBe` None
+      DidYouContributeToRASSchemeSummary.row(userAnswers, period) shouldBe None
     }
   }
 

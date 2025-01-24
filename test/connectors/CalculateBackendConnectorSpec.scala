@@ -68,7 +68,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
         val connector = app.injector.instanceOf[CalculateBackendConnector]
         val result    = connector.updateUserAnswersFromCalcUA("1234").futureValue
 
-        result mustBe Done
+        result `mustBe` Done
       }
     }
 
@@ -84,7 +84,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
         val connector = app.injector.instanceOf[CalculateBackendConnector]
         val result    = connector.updateUserAnswersFromCalcUA("1234").futureValue
 
-        result mustBe Done
+        result `mustBe` Done
       }
     }
 
@@ -100,7 +100,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
         val connector = app.injector.instanceOf[CalculateBackendConnector]
         val result    = connector.updateUserAnswersFromCalcUA("1234").failed.futureValue
 
-        result mustBe a[UpstreamErrorResponse]
+        result `mustBe` a[UpstreamErrorResponse]
       }
     }
 
@@ -116,7 +116,7 @@ class CalculateBackendConnectorSpec extends SpecBase with ScalaFutures with Wire
         val connector = app.injector.instanceOf[CalculateBackendConnector]
         val result    = connector.updateUserAnswersFromCalcUA("1234").failed.futureValue
 
-        result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+        result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
       }
     }
   }

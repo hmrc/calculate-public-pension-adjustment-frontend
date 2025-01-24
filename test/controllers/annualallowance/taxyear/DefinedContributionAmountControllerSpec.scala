@@ -150,7 +150,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -169,7 +169,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
         status(result) `mustEqual` SEE_OTHER
 
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2023)) mustBe Some(BigInt(0))
+        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2023)) `mustBe` Some(BigInt(0))
       }
     }
 
@@ -185,7 +185,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -204,7 +204,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
         status(result) `mustEqual` SEE_OTHER
 
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2023)) mustBe None
+        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2023)) `mustBe` None
       }
     }
 
@@ -241,7 +241,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

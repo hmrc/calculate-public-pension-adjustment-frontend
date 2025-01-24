@@ -18,7 +18,6 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.routes as setupRoutes
 import forms.setupquestions.ReportingChangeFormProvider
 import models.{Done, NormalMode, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new ReportingChangeFormProvider()
   val form         = formProvider()
 
-  lazy val reportingNormalRoute = setupRoutes.ReportingChangeController.onPageLoad(NormalMode).url
+  lazy val reportingNormalRoute = controllers.setupquestions.routes.ReportingChangeController.onPageLoad(NormalMode).url
 
   "ReportingChange Controller" - {
 

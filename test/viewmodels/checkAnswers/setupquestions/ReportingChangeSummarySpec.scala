@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
-import models.{ReportingChange, UserAnswers, CheckMode}
+import models.{CheckMode, ReportingChange, UserAnswers}
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -43,7 +43,7 @@ class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
           )
         )
         .get
-      ReportingChangeSummary.row(userAnswers) `shouldBe` Some(
+      ReportingChangeSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "reportingChange.checkYourAnswersLabel",
           value = ValueViewModel(
@@ -61,7 +61,7 @@ class ReportingChangeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ReportingChangeSummary.row(userAnswers) `shouldBe` None
+      ReportingChangeSummary.row(userAnswers) shouldBe None
     }
   }
 }

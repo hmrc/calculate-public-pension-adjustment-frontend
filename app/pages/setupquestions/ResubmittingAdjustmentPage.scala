@@ -17,7 +17,6 @@
 package pages.setupquestions
 
 import controllers.routes
-import controllers.setupquestions.routes as setupRoutes
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -33,14 +32,14 @@ case object ResubmittingAdjustmentPage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ResubmittingAdjustmentPage) match {
-      case Some(true)  => setupRoutes.ReasonForResubmissionController.onPageLoad(NormalMode)
-      case Some(false) => setupRoutes.AffectedByRemedyController.onPageLoad(NormalMode)
+      case Some(true)  => controllers.setupquestions.routes.ReasonForResubmissionController.onPageLoad(NormalMode)
+      case Some(false) => controllers.setupquestions.routes.AffectedByRemedyController.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ResubmittingAdjustmentPage) match {
-      case Some(true)  => setupRoutes.ReasonForResubmissionController.onPageLoad(CheckMode)
+      case Some(true)  => controllers.setupquestions.routes.ReasonForResubmissionController.onPageLoad(CheckMode)
       case Some(false) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }

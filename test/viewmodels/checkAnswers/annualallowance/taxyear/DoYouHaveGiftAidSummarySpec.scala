@@ -41,7 +41,7 @@ class DoYouHaveGiftAidSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      DoYouHaveGiftAidSummary.row(userAnswers, period) `shouldBe` Some(
+      DoYouHaveGiftAidSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "doYouHaveGiftAid.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -65,7 +65,7 @@ class DoYouHaveGiftAidSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      DoYouHaveGiftAidSummary.row(userAnswers, period) `shouldBe` Some(
+      DoYouHaveGiftAidSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "doYouHaveGiftAid.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -83,7 +83,7 @@ class DoYouHaveGiftAidSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2018
-      DoYouHaveGiftAidSummary.row(userAnswers, period) `shouldBe` None
+      DoYouHaveGiftAidSummary.row(userAnswers, period) shouldBe None
     }
   }
 }

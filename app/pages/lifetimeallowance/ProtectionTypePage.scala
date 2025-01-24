@@ -16,8 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
-import controllers.routes as generalRoutes
 import models.{CheckMode, NormalMode, ProtectionType, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -31,13 +29,13 @@ case object ProtectionTypePage extends QuestionPage[ProtectionType] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ProtectionTypePage) match {
-      case Some(_) => ltaRoutes.ProtectionReferenceController.onPageLoad(NormalMode)
-      case None    => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_) => controllers.lifetimeallowance.routes.ProtectionReferenceController.onPageLoad(NormalMode)
+      case None    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ProtectionTypePage) match {
-      case Some(_) => ltaRoutes.ProtectionReferenceController.onPageLoad(CheckMode)
-      case None    => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(_) => controllers.lifetimeallowance.routes.ProtectionReferenceController.onPageLoad(CheckMode)
+      case None    => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

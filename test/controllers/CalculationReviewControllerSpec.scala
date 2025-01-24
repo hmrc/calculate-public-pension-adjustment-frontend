@@ -63,7 +63,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -71,7 +71,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
           SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
         )
       )
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -129,7 +129,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -137,7 +137,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
           SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
         )
       )
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -174,7 +174,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
       val mockTaskListService = mock[TaskListService]
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -183,7 +183,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         )
       )
 
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -213,7 +213,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -221,7 +221,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
           SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
         )
       )
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -252,7 +252,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -260,7 +260,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
           SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
         )
       )
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -293,7 +293,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -302,7 +302,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         )
       )
       when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
-        .thenReturn(Future.successful(Success("123")))
+        .`thenReturn`(Future.successful(Success("123")))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -329,7 +329,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -338,7 +338,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         )
       )
       when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
-        .thenReturn(Future.successful(Failure(Seq("someError"))))
+        .`thenReturn`(Future.successful(Failure(Seq("someError"))))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

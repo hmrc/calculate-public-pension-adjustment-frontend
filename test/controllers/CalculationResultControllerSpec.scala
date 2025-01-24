@@ -28,7 +28,7 @@ import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Call, Result}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{route, status, *}
+import play.api.test.Helpers.*
 import services.CalculationResultService
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -84,7 +84,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) `mustEqual` OK
-        contentAsString(result).contains("Calculation results") mustBe true
+        contentAsString(result).contains("Calculation results") `mustBe` true
       }
     }
 
@@ -109,7 +109,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
         status(result) `mustEqual` SEE_OTHER
         redirectLocation(result).value.endsWith(
           "/submit-public-pension-adjustment/landing-page?submissionUniqueId=123"
-        ) mustBe true
+        ) `mustBe` true
       }
     }
 
@@ -132,7 +132,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) `mustEqual` SEE_OTHER
-        redirectLocation(result).value mustBe "/public-pension-adjustment/there-is-a-problem"
+        redirectLocation(result).value `mustBe` "/public-pension-adjustment/there-is-a-problem"
       }
     }
 

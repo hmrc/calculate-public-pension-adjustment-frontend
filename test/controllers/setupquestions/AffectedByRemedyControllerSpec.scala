@@ -18,7 +18,6 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.routes as setupRoutes
 import forms.setupquestions.AffectedByRemedyFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,8 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new AffectedByRemedyFormProvider()
   val form         = formProvider()
 
-  lazy val affectedByRemedyRoute = setupRoutes.AffectedByRemedyController.onPageLoad(NormalMode).url
+  lazy val affectedByRemedyRoute =
+    controllers.setupquestions.routes.AffectedByRemedyController.onPageLoad(NormalMode).url
 
   "AffectedByRemedy Controller" - {
 
@@ -83,7 +83,7 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

@@ -65,13 +65,13 @@ class AASectionSpec extends SpecBase with PageBehaviours {
     "Must be NotStarted when no section navigation has been saved" in {
       val answers: UserAnswers = emptyUserAnswers
 
-      AASection(Period._2011).status(answers) mustBe NotStarted
+      AASection(Period._2011).status(answers) `mustBe` NotStarted
     }
 
     "Must be InProgress when any other url has been saved" in {
       val answers: UserAnswers = AASection(Period._2011).saveNavigation(emptyUserAnswers, "/some-page-url")
 
-      AASection(Period._2011).status(answers) mustBe InProgress
+      AASection(Period._2011).status(answers) `mustBe` InProgress
     }
 
     "Must be Completed when check answers url for period has been saved" in {
@@ -79,7 +79,7 @@ class AASectionSpec extends SpecBase with PageBehaviours {
         AASection(Period._2011)
           .saveNavigation(emptyUserAnswers, AASection(Period._2011).checkYourAAPeriodAnswersPage.url)
 
-      AASection(Period._2011).status(answers) mustBe Completed
+      AASection(Period._2011).status(answers) `mustBe` Completed
     }
   }
 }

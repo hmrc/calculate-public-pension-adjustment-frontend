@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
 import controllers.annualallowance.preaaquestions.routes
-import models.{WhichYearsScottishTaxpayer, UserAnswers, CheckMode}
+import models.{CheckMode, UserAnswers, WhichYearsScottishTaxpayer}
 import models.WhichYearsScottishTaxpayer.{_2017, _2018, _2019, _2020, _2021, _2022, _2023}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -40,7 +40,7 @@ class WhichYearsScottishTaxpayerSummarySpec extends AnyFreeSpec with Matchers {
           Set(_2023, _2022, _2021, _2020, _2019, _2018, _2017)
         )
         .get
-      WhichYearsScottishTaxpayerSummary.row(userAnswers) `shouldBe` Some(
+      WhichYearsScottishTaxpayerSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "whichYearsScottishTaxpayer.checkYourAnswersLabel",
           value = ValueViewModel(
@@ -64,7 +64,7 @@ class WhichYearsScottishTaxpayerSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      WhichYearsScottishTaxpayerSummary.row(userAnswers) `shouldBe` None
+      WhichYearsScottishTaxpayerSummary.row(userAnswers) shouldBe None
     }
   }
 }

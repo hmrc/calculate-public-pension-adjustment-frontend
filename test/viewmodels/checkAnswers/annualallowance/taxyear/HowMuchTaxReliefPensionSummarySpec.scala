@@ -40,7 +40,7 @@ class HowMuchTaxReliefPensionSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      HowMuchTaxReliefPensionSummary.row(userAnswers, period) `shouldBe` Some(
+      HowMuchTaxReliefPensionSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "howMuchTaxReliefPension.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -58,7 +58,7 @@ class HowMuchTaxReliefPensionSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      HowMuchTaxReliefPensionSummary.row(userAnswers, period) `shouldBe` None
+      HowMuchTaxReliefPensionSummary.row(userAnswers, period) shouldBe None
     }
   }
 

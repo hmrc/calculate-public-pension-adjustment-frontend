@@ -175,7 +175,7 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
         val result  = route(application, request).value
 
         status(result) `mustEqual` SEE_OTHER
-        redirectLocation(result).get must be(
+        redirectLocation(result).get `must` `be`(
           s"/public-pension-adjustment/previous-claim-continue"
         )
       }

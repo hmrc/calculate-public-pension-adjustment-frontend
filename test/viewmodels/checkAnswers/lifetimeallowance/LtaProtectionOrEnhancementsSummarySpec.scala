@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.LtaProtectionOrEnhancements.Protection
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -41,14 +40,14 @@ class LtaProtectionOrEnhancementsSummarySpec extends AnyFreeSpec with Matchers {
           Protection
         )
         .get
-      LtaProtectionOrEnhancementsSummary.row(userAnswers, true) `shouldBe` Some(
+      LtaProtectionOrEnhancementsSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "ltaProtectionOrEnhancements.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("ltaProtectionOrEnhancements.protection")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url
+              controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url
             )
               .withVisuallyHiddenText("ltaProtectionOrEnhancements.change.hidden")
           )
@@ -63,7 +62,7 @@ class LtaProtectionOrEnhancementsSummarySpec extends AnyFreeSpec with Matchers {
           Protection
         )
         .get
-      LtaProtectionOrEnhancementsSummary.row(userAnswers, false) `shouldBe` Some(
+      LtaProtectionOrEnhancementsSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"ltaProtectionOrEnhancements.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("ltaProtectionOrEnhancements.protection"))
@@ -73,7 +72,7 @@ class LtaProtectionOrEnhancementsSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      LtaProtectionOrEnhancementsSummary.row(userAnswers, true) `shouldBe` None
+      LtaProtectionOrEnhancementsSummary.row(userAnswers, true) shouldBe None
     }
   }
 }

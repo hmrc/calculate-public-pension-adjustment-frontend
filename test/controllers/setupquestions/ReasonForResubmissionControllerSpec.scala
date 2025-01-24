@@ -18,7 +18,6 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.routes as setupRoutes
 import forms.ReasonForResubmissionFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,8 @@ class ReasonForResubmissionControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new ReasonForResubmissionFormProvider()
   val form         = formProvider()
 
-  lazy val reasonNormalRoute = setupRoutes.ReasonForResubmissionController.onPageLoad(NormalMode).url
+  lazy val reasonNormalRoute =
+    controllers.setupquestions.routes.ReasonForResubmissionController.onPageLoad(NormalMode).url
 
   "ReasonForResubmission Controller" - {
 
@@ -75,7 +75,10 @@ class ReasonForResubmissionControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) `mustEqual` OK
-        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

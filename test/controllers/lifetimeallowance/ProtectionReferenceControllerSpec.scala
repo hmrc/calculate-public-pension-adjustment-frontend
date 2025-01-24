@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.routes as ltaRoutes
 import forms.lifetimeallowance.ProtectionReferenceFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,7 @@ class ProtectionReferenceControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new ProtectionReferenceFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = ltaRoutes.ProtectionReferenceController.onPageLoad(NormalMode).url
+  lazy val normalRoute = controllers.lifetimeallowance.routes.ProtectionReferenceController.onPageLoad(NormalMode).url
 
   "ProtectionReference Controller" - {
 
@@ -75,7 +74,10 @@ class ProtectionReferenceControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) `mustEqual` OK
-        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -83,7 +85,7 @@ class ProtectionReferenceControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

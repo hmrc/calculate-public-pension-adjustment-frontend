@@ -39,7 +39,7 @@ class RegisteredYearSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      RegisteredYearSummary.row(userAnswers, Period._2011) `shouldBe` Some(
+      RegisteredYearSummary.row(userAnswers, Period._2011) shouldBe Some(
         SummaryListRowViewModel(
           key = "registeredYear.checkYourAnswersLabel.2011",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class RegisteredYearSummarySpec extends AnyFreeSpec with Matchers {
         )
         .get
 
-      RegisteredYearSummary.row(userAnswers, Period._2011) `shouldBe` Some(
+      RegisteredYearSummary.row(userAnswers, Period._2011) shouldBe Some(
         SummaryListRowViewModel(
           key = "registeredYear.checkYourAnswersLabel.2011",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class RegisteredYearSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
       val period      = Period._2014
-      RegisteredYearSummary.row(userAnswers, period) `shouldBe` None
+      RegisteredYearSummary.row(userAnswers, period) shouldBe None
     }
   }
 }

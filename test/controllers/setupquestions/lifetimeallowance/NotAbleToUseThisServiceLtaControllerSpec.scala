@@ -17,7 +17,6 @@
 package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
-import controllers.setupquestions.lifetimeallowance.routes as ltaRoutes
 import models.{AAKickOutStatus, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.test.FakeRequest
@@ -44,7 +43,11 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+          val request =
+            FakeRequest(
+              GET,
+              controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad().url
+            )
 
           val result = route(application, request).value
 
@@ -74,7 +77,11 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+          val request =
+            FakeRequest(
+              GET,
+              controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad().url
+            )
 
           val result = route(application, request).value
 
@@ -104,7 +111,11 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+          val request =
+            FakeRequest(
+              GET,
+              controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad().url
+            )
 
           val result = route(application, request).value
 
@@ -132,7 +143,11 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.NotAbleToUseThisServiceLtaController.onPageLoad().url)
+          val request =
+            FakeRequest(
+              GET,
+              controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad().url
+            )
 
           val result = route(application, request).value
 
@@ -143,7 +158,7 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
             request,
             messages(application)
           ).toString
-          contentAsString(result) `must` `not` `include`"Continue"
+          contentAsString(result) `must` `not` `include` "Continue"
         }
       }
     }
