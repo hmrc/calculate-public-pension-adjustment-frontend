@@ -17,8 +17,7 @@
 package controllers.setupquestions.annualallowance
 
 import base.SpecBase
-import controllers.setupquestions.annualallowance.routes as triageAARoutes
-import models.{Done, KickOffAuditEvent, LTAKickOutStatus, ReportingChange, UserAnswers}
+import models.{KickOffAuditEvent, LTAKickOutStatus, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
@@ -52,7 +51,10 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -85,7 +87,10 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -115,7 +120,10 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -143,7 +151,10 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -162,7 +173,7 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
 
       val mockAuditService = mock[AuditService]
       when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
-        .`thenReturn`(Future.successful(Done))
+        .`thenReturn`(Future.successful(()))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
         .overrides(
@@ -171,7 +182,10 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         .build()
 
       running(application) {
-        val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+        val request = FakeRequest(
+          GET,
+          controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+        )
         val result  = route(application, request).value
         status(result) `mustEqual` OK
         verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])

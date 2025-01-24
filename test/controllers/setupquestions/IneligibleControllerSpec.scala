@@ -17,8 +17,7 @@
 package controllers.setupquestions
 
 import base.SpecBase
-import controllers.setupquestions.routes as setupRoutes
-import models.{Done, KickOffAuditEvent}
+import models.KickOffAuditEvent
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
@@ -40,7 +39,7 @@ class IneligibleControllerSpec extends SpecBase {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, setupRoutes.IneligibleController.onPageLoad.url)
+        val request = FakeRequest(GET, controllers.setupquestions.routes.IneligibleController.onPageLoad.url)
 
         val result = route(application, request).value
 
@@ -55,7 +54,7 @@ class IneligibleControllerSpec extends SpecBase {
 
       val mockAuditService = mock[AuditService]
       when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
-        .`thenReturn`(Future.successful(Done))
+        .`thenReturn`(Future.successful(()))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
         .overrides(
@@ -64,7 +63,7 @@ class IneligibleControllerSpec extends SpecBase {
         .build()
 
       running(application) {
-        val request = FakeRequest(GET, setupRoutes.IneligibleController.onPageLoad.url)
+        val request = FakeRequest(GET, controllers.setupquestions.routes.IneligibleController.onPageLoad.url)
         val result  = route(application, request).value
         status(result) `mustEqual` OK
         verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])

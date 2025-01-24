@@ -85,7 +85,7 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -106,7 +106,7 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
           .onPageLoad(NormalMode)
           .url
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
+        capturedUserAnswers.get(LTAKickOutStatus()) `mustBe` Some(1)
       }
     }
 
@@ -116,7 +116,7 @@ class IncreaseInLTAChargeControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

@@ -18,7 +18,6 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import forms.annualallowance.preaaquestions.FlexibleAccessStartDateFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -47,7 +46,8 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
 
   val validAnswer = LocalDate.of(2020, 1, 1)
 
-  lazy val normalRoute = preAARoutes.FlexibleAccessStartDateController.onPageLoad(NormalMode).url
+  lazy val normalRoute =
+    controllers.annualallowance.preaaquestions.routes.FlexibleAccessStartDateController.onPageLoad(NormalMode).url
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
 
@@ -101,7 +101,7 @@ class FlexibleAccessStartDateControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

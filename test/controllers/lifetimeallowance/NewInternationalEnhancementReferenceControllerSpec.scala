@@ -76,7 +76,10 @@ class NewInternationalEnhancementReferenceControllerSpec extends SpecBase with M
         val result = route(application, request).value
 
         status(result) `mustEqual` OK
-        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -84,7 +87,7 @@ class NewInternationalEnhancementReferenceControllerSpec extends SpecBase with M
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val userAnswers: UserAnswers =
         emptyUserAnswers

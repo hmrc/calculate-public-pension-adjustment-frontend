@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.ProtectionEnhancedChanged.Enhancement
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -41,14 +40,14 @@ class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
           Enhancement
         )
         .get
-      ProtectionEnhancedChangedSummary.row(userAnswers, true) `shouldBe` Some(
+      ProtectionEnhancedChangedSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "protectionEnhancedChanged.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("protectionEnhancedChanged.enhancement")),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(CheckMode).url
+              controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onPageLoad(CheckMode).url
             )
               .withVisuallyHiddenText("protectionEnhancedChanged.change.hidden")
           )
@@ -63,7 +62,7 @@ class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
           Enhancement
         )
         .get
-      ProtectionEnhancedChangedSummary.row(userAnswers, false) `shouldBe` Some(
+      ProtectionEnhancedChangedSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"protectionEnhancedChanged.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("protectionEnhancedChanged.enhancement"))
@@ -73,7 +72,7 @@ class ProtectionEnhancedChangedSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionEnhancedChangedSummary.row(userAnswers, true) `shouldBe` None
+      ProtectionEnhancedChangedSummary.row(userAnswers, true) shouldBe None
     }
   }
 }

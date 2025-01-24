@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.routes as ltaRoutes
 import forms.lifetimeallowance.ReferenceNewProtectionTypeEnhancementFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -41,7 +40,8 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
   val formProvider = new ReferenceNewProtectionTypeEnhancementFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = ltaRoutes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(NormalMode).url
+  lazy val normalRoute =
+    controllers.lifetimeallowance.routes.ReferenceNewProtectionTypeEnhancementController.onPageLoad(NormalMode).url
 
   "ReferenceNewProtectionTypeEnhancement Controller" - {
 
@@ -76,14 +76,17 @@ class ReferenceNewProtectionTypeEnhancementControllerSpec extends SpecBase with 
         val result = route(application, request).value
 
         status(result) `mustEqual` OK
-        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(form.fill("answer"), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must redirect to next page when submitted" in {
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val userAnswers = emptyUserAnswers
 

@@ -26,7 +26,7 @@ class LTASectionSpec extends SpecBase {
 
     val status = LTASection.status(userAnswers)
 
-    status mustBe (SectionStatus.NotStarted)
+    status `mustBe` (SectionStatus.NotStarted)
   }
 
   "When user has navigated to the not able to use this service kick out" in {
@@ -34,7 +34,7 @@ class LTASectionSpec extends SpecBase {
 
     val status = LTASection.status(answersWithNav)
 
-    status mustBe (SectionStatus.Completed)
+    status `mustBe` (SectionStatus.Completed)
   }
 
   "When user has navigated to cannot use lta service no charge page" in {
@@ -42,7 +42,7 @@ class LTASectionSpec extends SpecBase {
 
     val status = LTASection.status(answersWithNav)
 
-    status mustBe (SectionStatus.Completed)
+    status `mustBe` (SectionStatus.Completed)
   }
 
   "When user has navigated to another url" in {
@@ -50,7 +50,7 @@ class LTASectionSpec extends SpecBase {
 
     val status = LTASection.status(answersWithNav)
 
-    status mustBe (SectionStatus.InProgress)
+    status `mustBe` (SectionStatus.InProgress)
   }
 
   "When user has navigated to check your lta answers page" in {
@@ -58,6 +58,6 @@ class LTASectionSpec extends SpecBase {
 
     val status = LTASection.status(answersWithNav)
 
-    status mustBe (SectionStatus.Completed)
+    status `mustBe` (SectionStatus.Completed)
   }
 }

@@ -39,7 +39,7 @@ class BlindAllowanceSummarySpec extends AnyFreeSpec with Matchers {
           true
         )
         .get
-      BlindAllowanceSummary.row(userAnswers, period) `shouldBe` Some(
+      BlindAllowanceSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "blindAllowance.checkYourAnswersLabel",
           value = ValueViewModel("site.yes"),
@@ -62,7 +62,7 @@ class BlindAllowanceSummarySpec extends AnyFreeSpec with Matchers {
           false
         )
         .get
-      BlindAllowanceSummary.row(userAnswers, period) `shouldBe` Some(
+      BlindAllowanceSummary.row(userAnswers, period) shouldBe Some(
         SummaryListRowViewModel(
           key = "blindAllowance.checkYourAnswersLabel",
           value = ValueViewModel("site.no"),
@@ -80,7 +80,7 @@ class BlindAllowanceSummarySpec extends AnyFreeSpec with Matchers {
     "when answer unavailable, return empty" in {
       val period      = Period._2018
       val userAnswers = UserAnswers("id")
-      BlindAllowanceSummary.row(userAnswers, period) `shouldBe` None
+      BlindAllowanceSummary.row(userAnswers, period) shouldBe None
     }
   }
 

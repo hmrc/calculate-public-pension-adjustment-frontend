@@ -41,7 +41,7 @@ class HowMuchAAChargeYouPaidSummarySpec extends AnyFreeSpec with Matchers {
           BigInt("100")
         )
         .get
-      HowMuchAAChargeYouPaidSummary.row(userAnswers, period, schemeIndex) `shouldBe` Some(
+      HowMuchAAChargeYouPaidSummary.row(userAnswers, period, schemeIndex) shouldBe Some(
         SummaryListRowViewModel(
           key = "howMuchAAChargeYouPaid.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("£100")),
@@ -60,7 +60,7 @@ class HowMuchAAChargeYouPaidSummarySpec extends AnyFreeSpec with Matchers {
       val period      = Period._2018
       val schemeIndex = SchemeIndex(0)
       val userAnswers = UserAnswers("id")
-      HowMuchAAChargeYouPaidSummary.row(userAnswers, period, schemeIndex) `shouldBe` None
+      HowMuchAAChargeYouPaidSummary.row(userAnswers, period, schemeIndex) shouldBe None
     }
   }
 

@@ -16,7 +16,6 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.annualallowance.preaaquestions.routes as preAARoutes
 import models.tasklist.sections.AASection
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -33,13 +32,13 @@ case object StopPayingPublicPensionPage extends QuestionPage[LocalDate] {
   override def toString: String = "stopPayingPublicPension"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    preAARoutes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode)
+    controllers.annualallowance.preaaquestions.routes.DefinedContributionPensionSchemeController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     if (answers.get(FlexiblyAccessedPensionPage).isDefined && !answers.get(FlexiblyAccessedPensionPage).get) {
       controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
     } else {
-      preAARoutes.FlexiblyAccessedPensionController.onPageLoad(CheckMode)
+      controllers.annualallowance.preaaquestions.routes.FlexiblyAccessedPensionController.onPageLoad(CheckMode)
     }
 
   override def cleanup(value: Option[LocalDate], userAnswers: UserAnswers): Try[UserAnswers] =

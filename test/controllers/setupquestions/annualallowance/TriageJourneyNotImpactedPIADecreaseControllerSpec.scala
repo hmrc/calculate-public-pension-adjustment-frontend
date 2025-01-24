@@ -17,7 +17,7 @@
 package controllers
 
 import base.SpecBase
-import models.{Done, KickOffAuditEvent, LTAKickOutStatus, UserAnswers}
+import models.{KickOffAuditEvent, LTAKickOutStatus, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
@@ -166,7 +166,7 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
       val mockAuditService = mock[AuditService]
       when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
-        .`thenReturn`(Future.successful(Done))
+        .`thenReturn`(Future.successful(()))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
         .overrides(

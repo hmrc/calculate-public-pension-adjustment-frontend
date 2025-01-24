@@ -147,7 +147,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -166,7 +166,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
         status(result) `mustEqual` SEE_OTHER
 
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) mustBe Some(BigInt(0))
+        capturedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) `mustBe` Some(BigInt(0))
       }
     }
 
@@ -182,7 +182,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -201,7 +201,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
         status(result) `mustEqual` SEE_OTHER
 
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) mustBe None
+        capturedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) `mustBe` None
       }
     }
 
@@ -234,7 +234,7 @@ class DefinedContribution2016PreAmountControllerSpec extends SpecBase with Mocki
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

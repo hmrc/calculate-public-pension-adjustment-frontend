@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.ProtectionType.EnhancedProtection
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -41,12 +40,15 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
           EnhancedProtection
         )
         .get
-      ProtectionTypeSummary.row(userAnswers, true) `shouldBe` Some(
+      ProtectionTypeSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "protectionType.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent("protectionType.enhancedProtection")),
           actions = Seq(
-            ActionItemViewModel("site.change", ltaRoutes.ProtectionTypeController.onPageLoad(CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              controllers.lifetimeallowance.routes.ProtectionTypeController.onPageLoad(CheckMode).url
+            )
               .withVisuallyHiddenText("protectionType.change.hidden")
           )
         )
@@ -60,7 +62,7 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
           EnhancedProtection
         )
         .get
-      ProtectionTypeSummary.row(userAnswers, false) `shouldBe` Some(
+      ProtectionTypeSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"protectionType.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel(HtmlContent("protectionType.enhancedProtection"))
@@ -70,7 +72,7 @@ class ProtectionTypeSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionTypeSummary.row(userAnswers, true) `shouldBe` None
+      ProtectionTypeSummary.row(userAnswers, true) shouldBe None
     }
   }
 }

@@ -42,7 +42,7 @@ class FlexibleAccessStartDateSummarySpec extends AnyFreeSpec with Matchers {
           validAnswer
         )
         .get
-      FlexibleAccessStartDateSummary.row(userAnswers) `shouldBe` Some(
+      FlexibleAccessStartDateSummary.row(userAnswers) shouldBe Some(
         SummaryListRowViewModel(
           key = "flexibleAccessStartDate.checkYourAnswersLabel",
           value = ValueViewModel(Text("6 April 2015").toString()),
@@ -56,7 +56,7 @@ class FlexibleAccessStartDateSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      FlexibleAccessStartDateSummary.row(userAnswers) `shouldBe` None
+      FlexibleAccessStartDateSummary.row(userAnswers) shouldBe None
     }
   }
 }

@@ -39,7 +39,7 @@ class ProtectionReferenceSummarySpec extends AnyFreeSpec with Matchers {
           "test123"
         )
         .get
-      ProtectionReferenceSummary.row(userAnswers, true) `shouldBe` Some(
+      ProtectionReferenceSummary.row(userAnswers, true) shouldBe Some(
         SummaryListRowViewModel(
           key = "protectionReference.checkYourAnswersLabel",
           value = ValueViewModel("test123"),
@@ -58,7 +58,7 @@ class ProtectionReferenceSummarySpec extends AnyFreeSpec with Matchers {
           "test123"
         )
         .get
-      ProtectionReferenceSummary.row(userAnswers, false) `shouldBe` Some(
+      ProtectionReferenceSummary.row(userAnswers, false) shouldBe Some(
         SummaryListRowViewModel(
           key = KeyViewModel(s"protectionReference.checkYourAnswersLabel").withCssClass(keyCssClass),
           value = ValueViewModel("test123")
@@ -68,7 +68,7 @@ class ProtectionReferenceSummarySpec extends AnyFreeSpec with Matchers {
 
     "when answer unavailable, return empty" in {
       val userAnswers = UserAnswers("id")
-      ProtectionReferenceSummary.row(userAnswers, true) `shouldBe` None
+      ProtectionReferenceSummary.row(userAnswers, true) shouldBe None
     }
   }
 

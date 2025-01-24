@@ -17,8 +17,7 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.lifetimeallowance.routes as ltaRoutes
-import models.{Done, KickOffAuditEvent, ReportingChange, UserAnswers}
+import models.{KickOffAuditEvent, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
@@ -45,7 +44,10 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -69,7 +71,10 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
@@ -77,7 +82,7 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
 
           status(result) `mustEqual` OK
           contentAsString(result) `mustEqual` view(false)(request, messages(application)).toString
-          contentAsString(result) `must` `not` `include`"Continue"
+          contentAsString(result) `must` `not` `include` "Continue"
         }
       }
     }
@@ -86,7 +91,7 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
 
       val mockAuditService = mock[AuditService]
       when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
-        .`thenReturn`(Future.successful(Done))
+        .`thenReturn`(Future.successful(()))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
         .overrides(
@@ -95,7 +100,8 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
         .build()
 
       running(application) {
-        val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
+        val request =
+          FakeRequest(GET, controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
         val result  = route(application, request).value
         status(result) `mustEqual` OK
         verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])

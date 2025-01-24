@@ -95,7 +95,7 @@ class ReducedNetIncomeConnectorSpec extends SpecBase with WireMockHelper with Sc
           server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withBody(responseBody)))
 
           val result = connector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc).futureValue
-          result mustBe reducedNetIncomeResponse
+          result `mustBe` reducedNetIncomeResponse
 
         }
       }
@@ -115,7 +115,7 @@ class ReducedNetIncomeConnectorSpec extends SpecBase with WireMockHelper with Sc
           val response: Try[ReducedNetIncomeResponse] =
             Try(connector.sendReducedNetIncomeRequest(reducedNetIncomeRequest)(hc).futureValue)
 
-          response.isFailure mustBe true
+          response.isFailure `mustBe` true
         }
       }
 
