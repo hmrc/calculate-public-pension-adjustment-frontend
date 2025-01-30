@@ -32,7 +32,7 @@ continueButton: components.ContinueButton
 
 @layout(pageTitle = title(form, messages("previousClaimContinue.title"))) {
 
-@formHelper(action = routes.PreviousClaimContinueController.onSubmit(), 'autoComplete -> "off") {
+@formHelper(action = routes.PreviousClaimContinueController.onSubmit(), Symbol("autoComplete") -> "off") {
 
     @if(form.errors.nonEmpty) {
     @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))

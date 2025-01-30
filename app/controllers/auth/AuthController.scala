@@ -37,7 +37,7 @@ class AuthController @Inject() (
     with I18nSupport {
 
   def signOut(): Action[AnyContent] = Action(
-    Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url)))
+    Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad().url)))
   )
 
   def signOutUnauthorised(): Action[AnyContent] = Action(
@@ -47,7 +47,10 @@ class AuthController @Inject() (
   def sessionTimeout(): Action[AnyContent] = identify.async { implicit request =>
     if (request.authenticated)
       Future.successful(
-        Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url)))
+        Redirect(
+          config.signOutUrl,
+          Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad().url))
+        )
       )
     else
       for {

@@ -17,24 +17,22 @@
 package controllers
 
 import controllers.actions._
-import models.CalculationResults.IndividualAASummaryModel
 import models.tasklist.SectionStatus
 import models.tasklist.sections.LTASection
 import play.api.data.Form
 import play.api.data.Forms.ignored
-
-import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.CalculationResultService
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
-import views.html.PrintReviewView
-import services.CalculationResultService
-import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import viewmodels.checkAnswers.lifetimeallowance.{AnnualPaymentValueSummary, DateOfBenefitCrystallisationEventSummary, EnhancementTypeSummary, ExcessLifetimeAllowancePaidSummary, InternationalEnhancementReferenceSummary, LifetimeAllowanceChargeSummary, LtaPensionSchemeDetailsSummary, LtaProtectionOrEnhancementsSummary, LumpSumValueSummary, NewAnnualPaymentValueSummary, NewEnhancementTypeSummary, NewExcessLifetimeAllowancePaidSummary, NewInternationalEnhancementReferenceSummary, NewLumpSumValueSummary, NewPensionCreditReferenceSummary, PensionCreditReferenceSummary, ProtectionEnhancedChangedSummary, ProtectionReferenceSummary, ProtectionTypeSummary, QuarterChargePaidSummary, ReferenceNewProtectionTypeEnhancementSummary, SchemeNameAndTaxRefSummary, UserSchemeDetailsSummary, WhatNewProtectionTypeEnhancementSummary, WhoPaidLTAChargeSummary, WhoPayingExtraLtaChargeSummary, YearChargePaidSummary}
+import viewmodels.checkAnswers.lifetimeallowance._
 import viewmodels.govuk.all.SummaryListViewModel
+import views.html.PrintReviewView
 
+import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
 class PrintReviewController @Inject() (

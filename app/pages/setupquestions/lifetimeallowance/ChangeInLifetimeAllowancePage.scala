@@ -56,12 +56,13 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
     }
 
   private def redirectToNext(answers: UserAnswers): Call =
-    answers.get(AAKickOutStatus()).getOrElse(None) match {
-      case 0    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case 1    => controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode)
-      case 2    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case None => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
-      case _    => routes.JourneyRecoveryController.onPageLoad(None)
+    answers.get(AAKickOutStatus()) match {
+      case Some(0) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(1) =>
+        controllers.setupquestions.annualallowance.routes.SavingsStatementController.onPageLoad(NormalMode)
+      case Some(2) => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case None    => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case _       => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
@@ -71,8 +72,6 @@ case object ChangeInLifetimeAllowancePage extends QuestionPage[Boolean] {
           triageLTAPages(userAnswers)
         case false =>
           removeLTAData(triageLTAPages(userAnswers).get)
-        case _     =>
-          super.cleanup(value, userAnswers)
       }
       .getOrElse(super.cleanup(value, userAnswers))
 

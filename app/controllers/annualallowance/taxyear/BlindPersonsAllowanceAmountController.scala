@@ -47,7 +47,7 @@ class BlindPersonsAllowanceAmountController @Inject() (
 
   def onPageLoad(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val form = formProvider(period, startEndDate(period))
+      val form = formProvider(period, startEndDate(period))()
 
       val preparedForm = request.userAnswers.get(BlindPersonsAllowanceAmountPage(period)) match {
         case None        => form
@@ -59,7 +59,7 @@ class BlindPersonsAllowanceAmountController @Inject() (
 
   def onSubmit(mode: Mode, period: Period): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      val form = formProvider(period, startEndDate(period))
+      val form = formProvider(period, startEndDate(period))()
 
       form
         .bindFromRequest()

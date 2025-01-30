@@ -24,8 +24,8 @@ import play.api.libs.json.Format.GenericFormat
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaView
 import utils.Constants._
+import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaView
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext

@@ -16,8 +16,8 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import controllers.routes
 import models.tasklist.sections.AASection
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage

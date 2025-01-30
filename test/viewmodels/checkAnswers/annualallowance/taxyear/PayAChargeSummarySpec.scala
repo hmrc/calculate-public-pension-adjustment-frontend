@@ -16,6 +16,7 @@
 
 package viewmodels.checkAnswers.annualallowance.taxyear
 
+import controllers.annualallowance.taxyear.routes
 import models.{CheckMode, Period, SchemeIndex, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -24,7 +25,6 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
-import controllers.annualallowance.taxyear.routes
 
 class PayAChargeSummarySpec extends AnyFreeSpec with Matchers {
 

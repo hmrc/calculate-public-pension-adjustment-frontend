@@ -20,6 +20,7 @@ import base.SpecBase
 import models.CalculationResults.CalculationResponse
 import models.submission.{Failure, Success}
 import models.tasklist.sections.LTASection
+import models.tasklist.sections.LTASection.cannotUseLtaServiceNoChargePage
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -30,7 +31,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{route, status, _}
 import services.CalculationResultService
 import uk.gov.hmrc.http.HeaderCarrier
-import models.tasklist.sections.LTASection.cannotUseLtaServiceNoChargePage
 
 import scala.concurrent.Future
 import scala.io.Source

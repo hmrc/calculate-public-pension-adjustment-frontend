@@ -27,6 +27,7 @@ import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.annualallowance.taxyear.DefinedContributionAmountView
 
 import java.time.LocalDate
@@ -34,7 +35,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 class DefinedContributionAmountController @Inject() (
   override val messagesApi: MessagesApi,

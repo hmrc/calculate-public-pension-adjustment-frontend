@@ -17,9 +17,10 @@
 package forms.lifetimeallowance
 
 import forms.mappings.Mappings
-import javax.inject.Inject
 import models.ExcessLifetimeAllowancePaid
 import play.api.data.Form
+
+import javax.inject.Inject
 
 class ExcessLifetimeAllowancePaidFormProvider @Inject() extends Mappings {
 

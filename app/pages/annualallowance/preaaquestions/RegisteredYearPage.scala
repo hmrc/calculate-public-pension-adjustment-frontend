@@ -16,8 +16,8 @@
 
 package pages.annualallowance.preaaquestions
 
-import models.{CheckMode, NormalMode, Period, UserAnswers}
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call

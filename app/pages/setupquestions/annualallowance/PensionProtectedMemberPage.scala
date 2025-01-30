@@ -17,7 +17,7 @@
 package pages.setupquestions.annualallowance
 
 import models.tasklist.sections.{AASection, PreAASection}
-import models.{AAKickOutStatus, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call

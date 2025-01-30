@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers._
 import pages.setupquestions.annualallowance.NetIncomeAbove190KPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.implicits._
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
+import viewmodels.implicits._
 
 class NetIncomeAbove190KSummarySpec extends AnyFreeSpec with Matchers {
 

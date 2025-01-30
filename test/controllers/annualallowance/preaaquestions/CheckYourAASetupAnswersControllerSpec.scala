@@ -20,13 +20,13 @@ import base.SpecBase
 import config.FrontendAppConfig
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.annualallowance.preaaquestions.PayTaxCharge1415Page
+import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import services.UserDataService
 import viewmodels.checkAnswers.annualallowance.preaaquestions.PayTaxCharge1415Summary
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAASetupAnswersView
-import play.api.inject.bind
-import services.UserDataService
 
 class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFluency {
 

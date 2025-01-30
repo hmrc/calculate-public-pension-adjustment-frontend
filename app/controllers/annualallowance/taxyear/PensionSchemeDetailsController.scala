@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.annualallowance.taxyear.PensionSchemeDetailsFormProvider
 import models.PSTR.{New, NewInWelsh}
 import models.tasklist.sections.AASection
-import models.{Mode, PSTR, Period, SchemeIndex}
+import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, WhichSchemePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

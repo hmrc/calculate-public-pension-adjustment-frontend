@@ -54,8 +54,6 @@ class RASContributionAmountPageSpec extends PageBehaviours {
 
         "to adjusted income page when threshold income above threshold" in {
 
-          val period = Gen.oneOf(pre2020Periods).sample.get
-
           val ua     = emptyUserAnswers
             .set(ThresholdIncomePage(Period._2018), ThresholdIncome.Yes)
             .success

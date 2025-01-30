@@ -17,10 +17,9 @@
 package controllers.annualallowance.taxyear
 
 import controllers.actions._
-import controllers.routes
 import forms.annualallowance.taxyear.DoYouKnowPersonalAllowanceFormProvider
-import models.{Mode, NormalMode, Period}
 import models.tasklist.sections.AASection
+import models.{Mode, Period}
 import pages.annualallowance.taxyear.DoYouKnowPersonalAllowancePage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

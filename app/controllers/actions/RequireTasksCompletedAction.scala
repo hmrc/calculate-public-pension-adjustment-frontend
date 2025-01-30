@@ -18,11 +18,10 @@ package controllers.actions
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import models.SectionStatus
 import models.requests.DataRequest
-import models.tasklist.SectionStatus.{CannotStartYet, Completed, InProgress, NotStarted}
-import play.api.mvc.{ActionRefiner, Result}
+import models.tasklist.SectionStatus.NotStarted
 import play.api.mvc.Results.Redirect
+import play.api.mvc.{ActionRefiner, Result}
 import services.TaskListService
 
 import scala.concurrent.{ExecutionContext, Future}

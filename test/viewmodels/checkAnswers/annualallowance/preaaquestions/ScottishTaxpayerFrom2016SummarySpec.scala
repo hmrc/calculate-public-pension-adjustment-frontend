@@ -16,6 +16,7 @@
 
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
+import controllers.annualallowance.preaaquestions.routes
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -24,7 +25,6 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
-import controllers.annualallowance.preaaquestions.routes
 
 class ScottishTaxpayerFrom2016SummarySpec extends AnyFreeSpec with Matchers {
 

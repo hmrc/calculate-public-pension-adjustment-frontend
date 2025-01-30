@@ -19,9 +19,9 @@ package connectors
 import base.SpecBase
 import com.github.tomakehurst.wiremock.client.WireMock._
 import generators.Generators
-import models.CalculationResults.{AnnualAllowanceSetup, CalculationInputs, CalculationResponse, LifetimeAllowanceSetup, Resubmission, Setup, TotalAmounts}
-import models.{MaybePIAIncrease, MaybePIAUnchangedOrDecreased}
+import models.CalculationResults._
 import models.submission.Failure
+import models.{MaybePIAIncrease, MaybePIAUnchangedOrDecreased}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.Application
 import play.api.http.Status.BAD_REQUEST
@@ -104,7 +104,7 @@ class CalculationResultConnectorSpec
 
           server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withBody(responseBody)))
 
-          val result = connector.sendRequest(calcInputs).futureValue
+          val result = connector.sendRequest(calcInputs)(hc).futureValue
 
           result mustBe a[CalculationResponse]
           result mustBe calculationResponse
@@ -159,7 +159,7 @@ class CalculationResultConnectorSpec
           server.stubFor(post(urlEqualTo(url)).willReturn(aResponse().withStatus(BAD_REQUEST).withBody(responseBody)))
 
           val response: Try[CalculationResponse] =
-            Try(connector.sendRequest(calcInputs).futureValue)
+            Try(connector.sendRequest(calcInputs)(hc).futureValue)
 
           response.isFailure mustBe true
         }

@@ -33,17 +33,16 @@
 package connectors
 
 import base.SpecBase
+import com.github.tomakehurst.wiremock.client.WireMock._
 import generators.Generators
-import models.CalculationResults._
-import models.submission.{Failure, SubmissionRequest, SubmissionResponse, Success}
-import models.{Done, IncomeSubJourney, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, ReducedNetIncomeRequest, ReducedNetIncomeResponse}
+import models.submission.Failure
+import models.{IncomeSubJourney, Period, ReducedNetIncomeRequest, ReducedNetIncomeResponse}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.Application
-import play.api.http.Status.{ACCEPTED, BAD_REQUEST, NO_CONTENT}
+import play.api.http.Status.BAD_REQUEST
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier}
-import com.github.tomakehurst.wiremock.client.WireMock._
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.util.Try
 

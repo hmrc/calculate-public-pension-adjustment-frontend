@@ -16,10 +16,10 @@
 
 package pages.lifetimeallowance
 
+import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.{LtaPensionSchemeDetails, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import play.api.mvc.Call
 
 case object LtaPensionSchemeDetailsPage extends QuestionPage[LtaPensionSchemeDetails] {

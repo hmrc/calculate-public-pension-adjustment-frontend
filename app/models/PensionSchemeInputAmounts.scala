@@ -21,5 +21,5 @@ import play.api.libs.json._
 case class PensionSchemeInputAmounts(revisedPIA: BigInt)
 
 object PensionSchemeInputAmounts {
-  implicit val format = Json.format[PensionSchemeInputAmounts]
+  implicit val format: OFormat[PensionSchemeInputAmounts] = Json.format[PensionSchemeInputAmounts]
 }

@@ -19,7 +19,6 @@ package forms.annualallowance.taxyear
 import forms.mappings.Mappings
 import models.Period
 import play.api.data.Form
-import play.api.i18n.Messages
 
 import javax.inject.Inject
 
@@ -55,5 +54,6 @@ class BlindPersonsAllowanceAmountFormProvider @Inject() extends Mappings {
     case Period._2021                => BigInt(2500)
     case Period._2022                => BigInt(2520)
     case Period._2023                => BigInt(2600)
+    case _                           => BigInt(0)
   }
 }

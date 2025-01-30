@@ -19,8 +19,6 @@ package controllers.setupquestions.annualallowance
 import config.FrontendAppConfig
 import controllers.actions._
 import models.{KickOffAuditEvent, LTAKickOutStatus, NormalMode}
-
-import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AuditService
@@ -28,6 +26,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.Constants.TriageJourneyNotEligiblePiaDecreaseKickOff
 import views.html.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseView
 
+import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
 class TriageJourneyNotImpactedPIADecreaseController @Inject() (

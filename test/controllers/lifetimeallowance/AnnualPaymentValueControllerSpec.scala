@@ -19,11 +19,11 @@ package controllers.lifetimeallowance
 import base.SpecBase
 import config.FrontendAppConfig
 import forms.lifetimeallowance.AnnualPaymentValueFormProvider
-import pages.lifetimeallowance.AnnualPaymentValuePage
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.lifetimeallowance.AnnualPaymentValuePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

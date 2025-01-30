@@ -171,7 +171,7 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         .build()
 
       running(application) {
-        val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad.url)
+        val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
         val result  = route(application, request).value
         status(result) mustEqual OK
         verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])

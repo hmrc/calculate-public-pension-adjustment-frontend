@@ -16,11 +16,11 @@
 
 package forms
 
-import javax.inject.Inject
-
 import forms.mappings.Mappings
-import play.api.data.Form
 import models.ProtectionEnhancedChanged
+import play.api.data.Form
+
+import javax.inject.Inject
 
 class ProtectionEnhancedChangedFormProvider @Inject() extends Mappings {
 

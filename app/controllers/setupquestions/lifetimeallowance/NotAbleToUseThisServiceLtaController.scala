@@ -22,10 +22,10 @@ import models.{AAKickOutStatus, KickOffAuditEvent, NormalMode}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.Format.GenericFormat
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaView
 import services.AuditService
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.Constants._
+import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaView
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext

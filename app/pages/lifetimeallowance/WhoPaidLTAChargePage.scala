@@ -16,8 +16,7 @@
 
 package pages.lifetimeallowance
 
-import models.WhoPaidLTACharge.You
-import models.WhoPaidLTACharge.PensionScheme
+import models.WhoPaidLTACharge.{PensionScheme, You}
 import models.{CheckMode, NormalMode, UserAnswers, WhoPaidLTACharge}
 import pages.QuestionPage
 import play.api.libs.json.JsPath

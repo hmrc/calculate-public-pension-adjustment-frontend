@@ -17,7 +17,6 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.IntFieldBehaviours
-import models.Period
 import play.api.data.{Form, FormError}
 
 class LumpSumDeathBenefitsValueFormProviderSpec extends IntFieldBehaviours {

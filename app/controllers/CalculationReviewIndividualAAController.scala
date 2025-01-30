@@ -17,22 +17,19 @@
 package controllers
 
 import config.FrontendAppConfig
-import controllers.actions.{IsRevelantPeriodAction, _}
+import controllers.actions._
 import models.CalculationResults.IndividualAASummaryModel
-import models.{Period, UserAnswers}
-import models.tasklist.sections.AASection
-import pages.annualallowance.preaaquestions.StopPayingPublicPensionPage
+import models.Period
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{CalculationResultService, PeriodService, TaskListService}
+import services.CalculationResultService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.CalculationReviewIndividualAAView
 
-import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -87,7 +84,7 @@ class CalculationReviewIndividualAAController @Inject() (
 
   def onSubmit(period: Period): Action[AnyContent] =
     (identify andThen getData andThen requireData andThen requireTasksCompleted andThen isRelevantPeriod(period))
-      .async { implicit request =>
+      .async {
         Future.successful(Redirect(routes.CalculationReviewController.onPageLoad()))
       }
 }

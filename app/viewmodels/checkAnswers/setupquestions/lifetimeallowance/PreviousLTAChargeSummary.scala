@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.setupquestions.lifetimeallowance
 
-import controllers.routes._
 import models.{CheckMode, UserAnswers}
 import pages.setupquestions.lifetimeallowance.PreviousLTAChargePage
 import play.api.i18n.Messages

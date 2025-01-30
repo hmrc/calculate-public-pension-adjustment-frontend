@@ -17,7 +17,7 @@
 package pages.annualallowance.taxyear
 
 import controllers.annualallowance.taxyear.routes.LumpSumDeathBenefitsValueController
-import models.{CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
+import models.{NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call

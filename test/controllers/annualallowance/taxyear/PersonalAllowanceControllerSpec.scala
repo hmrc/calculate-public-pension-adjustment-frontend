@@ -22,13 +22,13 @@ import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.annualallowance.taxyear.PersonalAllowancePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.{CalculateBackendService, UserDataService}
+import services.UserDataService
 import views.html.annualallowance.taxyear.PersonalAllowanceView
-import pages.annualallowance.taxyear.PersonalAllowancePage
 
 import scala.concurrent.Future
 

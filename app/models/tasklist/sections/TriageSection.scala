@@ -18,8 +18,6 @@ package models.tasklist.sections
 
 import models.UserAnswers
 import models.tasklist.Section
-import _root_.pages.Page
-import _root_.pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.libs.json.JsPath
 
 case object TriageSection extends Section {

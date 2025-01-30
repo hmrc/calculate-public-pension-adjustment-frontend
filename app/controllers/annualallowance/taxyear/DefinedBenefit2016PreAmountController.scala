@@ -18,8 +18,8 @@ package controllers.annualallowance.taxyear
 
 import controllers.actions._
 import forms.annualallowance.taxyear.DefinedBenefit2016PreAmountFormProvider
-import models.{Mode, Period}
 import models.tasklist.sections.AASection
+import models.{Mode, Period}
 import pages.annualallowance.taxyear.DefinedBenefit2016PreAmountPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

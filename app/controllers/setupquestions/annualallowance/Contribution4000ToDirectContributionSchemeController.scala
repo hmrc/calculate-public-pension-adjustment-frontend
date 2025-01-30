@@ -18,17 +18,16 @@ package controllers.setupquestions.annualallowance
 
 import controllers.actions._
 import forms.Contribution4000ToDirectContributionSchemeFormProvider
-
-import javax.inject.Inject
-import models.{AAKickOutStatus, Mode}
 import models.tasklist.sections.SetupSection
+import models.{AAKickOutStatus, Mode}
 import pages.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import services.UserDataService
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.annualallowance.Contribution4000ToDirectContributionSchemeView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class Contribution4000ToDirectContributionSchemeController @Inject() (

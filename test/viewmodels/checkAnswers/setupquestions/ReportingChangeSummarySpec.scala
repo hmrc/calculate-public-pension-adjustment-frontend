@@ -18,7 +18,7 @@ package viewmodels.checkAnswers.setupquestions
 
 import controllers.setupquestions.routes
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
-import models.{CheckMode, UserAnswers, _}
+import models._
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.ReportingChangePage

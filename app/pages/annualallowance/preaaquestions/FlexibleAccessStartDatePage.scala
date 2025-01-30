@@ -16,15 +16,15 @@
 
 package pages.annualallowance.preaaquestions
 
-import java.time.LocalDate
-import controllers.routes
 import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
+import controllers.routes
 import models.tasklist.sections.AASection
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
+import java.time.LocalDate
 import scala.util.Try
 
 case object FlexibleAccessStartDatePage extends QuestionPage[LocalDate] {

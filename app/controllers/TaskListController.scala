@@ -17,9 +17,9 @@
 package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.{CalculationTaskListAuditEvent, Done, SectionStatus}
 import models.requests.{AuthenticatedIdentifierRequest, DataRequest}
 import models.tasklist.TaskListViewModel
+import models.{CalculationTaskListAuditEvent, Done, SectionStatus}
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -27,8 +27,8 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.{AuditService, TaskListService, UserDataService}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.TaskListView
 import utils.ToCamelCase._
+import views.html.TaskListView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}

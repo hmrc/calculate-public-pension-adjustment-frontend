@@ -16,8 +16,8 @@
 
 package pages.annualallowance.taxyear
 
-import controllers.annualallowance.taxyear.routes.{AdjustedIncomeController, CheckYourAAPeriodAnswersController, TotalIncomeController}
-import models.{CheckMode, NormalMode, Period, ThresholdIncome, UserAnswers}
+import controllers.annualallowance.taxyear.routes.TotalIncomeController
+import models.{NormalMode, Period, ThresholdIncome, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call

@@ -19,8 +19,6 @@ package pages.annualallowance.taxyear
 import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.behaviours.PageBehaviours
 
-import scala.BigInt
-
 class TradeUnionReliefPageSpec extends PageBehaviours {
 
   val period = Period._2018

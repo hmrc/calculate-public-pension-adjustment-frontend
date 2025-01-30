@@ -37,7 +37,6 @@ import utils.CurrencyFormatter.currencyFormat
 import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
-import scala.math.abs
 
 class CalculationResultService @Inject() (
   calculationResultConnector: CalculationResultConnector,

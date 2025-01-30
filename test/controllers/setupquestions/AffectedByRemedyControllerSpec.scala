@@ -16,21 +16,21 @@
 
 package controllers.setupquestions
 
-import controllers.setupquestions.{routes => setupRoutes}
-import views.html.setupquestions.AffectedByRemedyView
-import pages.setupquestions.AffectedByRemedyPage
 import base.SpecBase
 import config.FrontendAppConfig
+import controllers.setupquestions.{routes => setupRoutes}
 import forms.setupquestions.AffectedByRemedyFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import pages.setupquestions.AffectedByRemedyPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.UserDataService
+import views.html.setupquestions.AffectedByRemedyView
 
 import scala.concurrent.Future
 

@@ -19,8 +19,6 @@ package controllers
 import config.FrontendAppConfig
 import controllers.actions._
 import forms.PreviousClaimContinueFormProvider
-
-import javax.inject.Inject
 import models.{Done, NormalMode}
 import pages.PreviousClaimContinuePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -30,6 +28,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.PreviousClaimContinueView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PreviousClaimContinueController @Inject() (
@@ -98,11 +97,9 @@ class PreviousClaimContinueController @Inject() (
       result: Boolean =>
         result match {
           case true  =>
-            Redirect(Call("GET", submitFrontendCalculationResultPageUrl))
+            Redirect(Call("GET", submitFrontendCalculationResultPageUrl()))
           case false =>
-            Redirect(controllers.routes.TaskListController.onPageLoad)
-          case _     =>
-            Redirect(controllers.routes.JourneyRecoveryController.onPageLoad(None))
+            Redirect(controllers.routes.TaskListController.onPageLoad())
         }
     }
   }
