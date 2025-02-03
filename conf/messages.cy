@@ -193,7 +193,7 @@ definedContributionPensionScheme.checkYourAnswersLabel = A oes gennych chi unrhy
 definedContributionPensionScheme.message = Fel arfer, bydd y rhain naill ai’n bensiynau personol neu’n bensiynau rhanddeiliaid. Weithiau, fe’u gelwir yn gynlluniau pensiwn ‘pryniannau arian’. Gallant fod:
 definedContributionPensionScheme.bullet1 = yn bensiynau gweithle a drefnir gan eich cyflogwr
 definedContributionPensionScheme.bullet2 = yn bensiynau preifat a drefnir gennych chi
-definedContributionPensionScheme.error.required = Dewiswch ‘Iawn’ os oes gennych gynllun pensiwn cyfraniadau diffiniedig
+definedContributionPensionScheme.error.required = cy: Select yes if you have any other pension schemes apart from your public service ones
 definedContributionPensionScheme.change.hidden = a oes gennych chi unrhyw gynlluniau pensiwn eraill heblaw am eich cynlluniau gwasanaeth cyhoeddus
 
 flexiblyAccessedPension.title = A ydych chi wedi cyrchu eich pensiwn cyfraniadau diffiniedig yn hyblyg?

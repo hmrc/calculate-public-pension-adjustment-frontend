@@ -51,7 +51,7 @@ class StopPayingPublicPensionPageSpec extends PageBehaviours with Matchers {
 
       val result = StopPayingPublicPensionPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(result, "/annual-allowance/defined-contributions-scheme")
+      checkNavigation(result, "/annual-allowance/other-pension-schemes")
     }
   }
 
