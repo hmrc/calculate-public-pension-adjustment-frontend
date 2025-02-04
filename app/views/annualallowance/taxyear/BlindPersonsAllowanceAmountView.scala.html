@@ -28,7 +28,7 @@
 @(form: Form[_], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
-    <p class="govuk-hint">@messages("rounding.hint")</p>
+    <p class="govuk-hint">@messages("rounding.up.hint")</p>
 }
 
 @layout(pageTitle = title(form, messages("blindPersonsAllowanceAmount.title", startEndDate))) {
