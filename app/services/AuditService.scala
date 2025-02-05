@@ -17,7 +17,7 @@
 package services
 
 import config.FrontendAppConfig
-import models.{BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationStartAuditEvent, CalculationTaskListAuditEvent, EligibilityAuditEvent, KickOffAuditEvent}
+import models.{AuthenticatedUserSaveAndReturnAuditEvent, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationStartAuditEvent, CalculationTaskListAuditEvent, EligibilityAuditEvent, KickOffAuditEvent}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
@@ -54,4 +54,14 @@ class AuditService @Inject() (
 
   def auditEligibility(event: EligibilityAuditEvent)(implicit hc: HeaderCarrier): Future[Unit] =
     Future.successful(auditConnector.sendExplicitAudit(config.eligibility, event))
+
+  def auditAuthenticatedUserSignOut(event: AuthenticatedUserSaveAndReturnAuditEvent)(implicit
+    hc: HeaderCarrier
+  ): Future[Unit] =
+    Future.successful(auditConnector.sendExplicitAudit(config.authenticatedUserSignOut, event))
+
+  def auditAuthenticatedUserSaveAndReturn(event: AuthenticatedUserSaveAndReturnAuditEvent)(implicit
+    hc: HeaderCarrier
+  ): Future[Unit] =
+    Future.successful(auditConnector.sendExplicitAudit(config.authenticatedUserSaveAndReturn, event))
 }

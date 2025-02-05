@@ -18,26 +18,35 @@ package controllers.auth
 
 import base.SpecBase
 import config.FrontendAppConfig
-import models.Done
+import models.{Done, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
+import pages.setupquestions.ReportingChangePage
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.{SubmissionDataService, UserDataService}
+import services.{AuditService, SubmissionDataService, UserDataService}
 
 import java.net.URLEncoder
 import scala.concurrent.Future
 
 class AuthControllerSpec extends SpecBase with MockitoSugar {
 
+  val userAnswers =
+    UserAnswers(userAnswersId).set(ReportingChangePage, ReportingChange.values.toSet).success.value
+
   "signOut" - {
 
     "must clear user answers and redirect to sign out, specifying the exit survey as the continue URL" in {
 
+      val mockAuditService = mock[AuditService]
+
+      when(mockAuditService.auditAuthenticatedUserSignOut(any())(any())) thenReturn Future.successful
+
       val application =
-        applicationBuilder(None)
+        applicationBuilder(Some(userAnswers.copy(authenticated = true)), true)
+          .overrides(bind[AuditService].toInstance(mockAuditService))
           .build()
 
       running(application) {
@@ -80,8 +89,14 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
   }
 
   "sessionTimeout" - {
+
+    val mockUserDataService       = mock[UserDataService]
+    val mockSubmissionDataService = mock[SubmissionDataService]
+
+    when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
+    when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
+
     "must redirect to sign out page if authenticated" in {
-      val mockUserDataService = mock[UserDataService]
 
       val application =
         applicationBuilder(None, userIsAuthenticated = true)
@@ -105,14 +120,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
     "must clear user answers and redirect to exit Survey if not authenticated" in {
 
-      val mockUserDataService       = mock[UserDataService]
-      val mockSubmissionDataService = mock[SubmissionDataService]
-
-      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
-
       val application =
-        applicationBuilder(None, userIsAuthenticated = false)
+        applicationBuilder(Some(userAnswers))
           .overrides(
             bind[UserDataService].toInstance(mockUserDataService),
             bind[SubmissionDataService].toInstance(mockSubmissionDataService)

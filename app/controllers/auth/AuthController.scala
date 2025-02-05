@@ -17,10 +17,11 @@
 package controllers.auth
 
 import config.FrontendAppConfig
-import controllers.actions.IdentifierAction
+import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import models.AuthenticatedUserSaveAndReturnAuditEvent
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{SubmissionDataService, UserDataService}
+import services.{AuditService, SubmissionDataService, UserDataService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
@@ -31,14 +32,27 @@ class AuthController @Inject() (
   config: FrontendAppConfig,
   userDataService: UserDataService,
   submissionDataService: SubmissionDataService,
-  identify: IdentifierAction
+  auditService: AuditService,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
-  def signOut(): Action[AnyContent] = Action(
-    Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad().url)))
-  )
+  def signOut(): Action[AnyContent] = (identify andThen getData).async { implicit request =>
+    auditService
+      .auditAuthenticatedUserSignOut(
+        AuthenticatedUserSaveAndReturnAuditEvent(
+          request.userId,
+          request.userAnswers.map(_.uniqueId),
+          request.userAnswers.map(_.authenticated)
+        )
+      )
+      .map { _ =>
+        Redirect(config.signOutUrl, Map("continue" -> Seq(config.baseUrl + routes.SignedOutController.onPageLoad.url)))
+      }
+  }
 
   def signOutUnauthorised(): Action[AnyContent] = Action(
     Redirect(config.signOutUrl, Map("continue" -> Seq(config.redirectToStartPage)))

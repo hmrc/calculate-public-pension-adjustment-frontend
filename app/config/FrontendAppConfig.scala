@@ -114,4 +114,9 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val eligibility =
     configuration.get[String]("auditing.eligibility")
 
+  val authenticatedUserSignOut =
+    configuration.get[String]("auditing.authenticated-user-signout")
+
+  val authenticatedUserSaveAndReturn =
+    configuration.get[String]("auditing.authenticated-user-save-and-return")
 }

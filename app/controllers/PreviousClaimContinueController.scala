@@ -19,16 +19,16 @@ package controllers
 import config.FrontendAppConfig
 import controllers.actions._
 import forms.PreviousClaimContinueFormProvider
-import models.{Done, NormalMode}
+import javax.inject.Inject
+import models.{AuthenticatedUserSaveAndReturnAuditEvent, Done, NormalMode}
 import pages.PreviousClaimContinuePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
-import services.{SubmissionDataService, SubmitBackendService, UserDataService}
+import services.{AuditService, SubmissionDataService, SubmitBackendService, UserDataService}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.PreviousClaimContinueView
 
-import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PreviousClaimContinueController @Inject() (
@@ -36,6 +36,7 @@ class PreviousClaimContinueController @Inject() (
   userDataService: UserDataService,
   submitBackendService: SubmitBackendService,
   submissionDataService: SubmissionDataService,
+  auditService: AuditService,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
@@ -50,8 +51,16 @@ class PreviousClaimContinueController @Inject() (
   val form = formProvider()
 
   def onPageLoad(): Action[AnyContent] =
-    (identify andThen getData andThen requireData) { implicit request =>
-      Ok(view(form))
+    (identify andThen getData).async { implicit request =>
+      auditService
+        .auditAuthenticatedUserSaveAndReturn(
+          AuthenticatedUserSaveAndReturnAuditEvent(
+            request.userId,
+            request.userAnswers.map(_.uniqueId),
+            request.userAnswers.map(_.authenticated)
+          )
+        )
+        .map(_ => Ok(view(form)))
     }
 
   def onSubmit(): Action[AnyContent] =
