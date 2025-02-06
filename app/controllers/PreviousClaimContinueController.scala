@@ -51,13 +51,13 @@ class PreviousClaimContinueController @Inject() (
   val form = formProvider()
 
   def onPageLoad(): Action[AnyContent] =
-    (identify andThen getData).async { implicit request =>
+    (identify andThen getData andThen requireData).async { implicit request =>
       auditService
         .auditAuthenticatedUserSaveAndReturn(
           AuthenticatedUserSaveAndReturnAuditEvent(
             request.userId,
-            request.userAnswers.map(_.uniqueId),
-            request.userAnswers.map(_.authenticated)
+            Some(request.userAnswers.uniqueId),
+            Some(request.userAnswers.authenticated)
           )
         )
         .map(_ => Ok(view(form)))
