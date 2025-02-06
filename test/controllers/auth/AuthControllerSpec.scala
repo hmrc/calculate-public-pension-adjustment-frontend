@@ -42,7 +42,7 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
       val mockAuditService = mock[AuditService]
 
-      when(mockAuditService.auditAuthenticatedUserSignOut(any())(any())) thenReturn Future.successful
+      when(mockAuditService.auditAuthenticatedUserSignOut(any())(any())) thenReturn Future.successful(())
 
       val application =
         applicationBuilder(Some(userAnswers.copy(authenticated = true)), true)
