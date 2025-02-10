@@ -68,7 +68,7 @@ class NextStepsSection @Inject() (
   def navigateTo(answers: UserAnswers): String =
     answers.get(ReportingChangePage) match {
       case Some(rcs) if calculationRequired(rcs, answers)  =>
-          routes.CalculationReviewController.onPageLoad().url
+        routes.CalculationReviewController.onPageLoad().url
       case Some(rcs) if !calculationRequired(rcs, answers) =>
         routes.SubmissionController.storeAndRedirect().url
       case _                                               => SetupSection.navigateTo(answers)
