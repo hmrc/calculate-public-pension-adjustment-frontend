@@ -61,11 +61,8 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val cppaBaseUrl: String =
     configuration.get[Service]("microservice.services.calculate-public-pension-adjustment").baseUrl
 
-//  TODO - Remove to add back welsh translantion
-//  val languageTranslationEnabled: Boolean =
-//    configuration.get[Boolean]("features.welsh-translation")
-
-  val languageTranslationEnabled: Boolean = false
+  val languageTranslationEnabled: Boolean =
+    configuration.get[Boolean]("features.welsh-translation")
 
   val origin = configuration.get[String]("origin")
 
