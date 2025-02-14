@@ -186,7 +186,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
     }
 
     "Redirect()" - {
-      "must redirect to the new calculation results page when calculationReviewEnabled flag true and submissions are present" in {
+      "must redirect to the new calculation results page when submissions are present" in {
         val mockSubmitBackendService = mock[SubmitBackendService]
         val mockFrontEndAppConfig    = mock[FrontendAppConfig]
 
