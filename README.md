@@ -27,7 +27,7 @@ You need to run BANK_ACCOUNT_VERIFICATION_FRONTEND separately with the following
 ```
 sm2 -start BANK_ACCOUNT_VERIFICATION_FRONTEND --appendArgs '{"BANK_ACCOUNT_VERIFICATION_FRONTEND": ["-Dmicroservice.services.access-control.enabled=false", "-Dmicroservice.hosts.allowList.1=localhost"]}'
 ```
-Additionally, use the PUBLIC_PENSION_ADJUSTMENT_ALL profile to bring up all services using the latest tagged releases
+Then use the PUBLIC_PENSION_ADJUSTMENT_ALL profile to bring up all services using the latest tagged releases
 ```
 sm2 --start PUBLIC_PENSION_ADJUSTMENT_ALL
 ```
