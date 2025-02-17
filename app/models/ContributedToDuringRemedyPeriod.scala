@@ -44,5 +44,5 @@ object ContributedToDuringRemedyPeriod extends Enumerable.Implicits {
     }
 
   implicit val enumerable: Enumerable[ContributedToDuringRemedyPeriod] =
-    Enumerable(values.map(v => v.toString -> v) *)
+    Enumerable(values.map(v => v.toString -> v)*)
 }
