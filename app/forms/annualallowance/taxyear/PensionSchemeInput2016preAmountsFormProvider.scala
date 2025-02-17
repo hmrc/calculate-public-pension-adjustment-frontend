@@ -25,20 +25,20 @@ import javax.inject.Inject
 
 class PensionSchemeInput2016preAmountsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[PensionSchemeInput2016preAmounts] = Form(
+  def apply(dateString: String): Form[PensionSchemeInput2016preAmounts] = Form(
     mapping(
       "revisedPIA" -> bigInt(
         "pensionSchemeInputAmounts.error.revisedPIA.required",
         "pensionSchemeInputAmounts.error.revisedPIA.wholeNumber",
         "pensionSchemeInputAmounts.error.revisedPIA.nonNumeric",
-        Seq("6 April 2015 and 8 July 2015")
+        Seq(dateString)
       )
         .verifying(
           inRangeWithArg[BigInt](
             0,
             BigInt("999999999"),
             "pensionSchemeInputAmounts.error.revisedPIA.length",
-            "6 April 2015 and 8 July 2015"
+            dateString
           )
         )
     )(PensionSchemeInput2016preAmounts.apply)(PensionSchemeInput2016preAmounts.unapply)

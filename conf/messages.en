@@ -533,6 +533,8 @@ pensionSchemeInputAmounts.change.hidden = your pension input amount for {0} from
 pensionSchemeInputAmounts.change.revised.hidden = your revised pension input amount for {0} from {1}
 pensionSchemeInputAmounts.2016-pre.change.hidden = your revised pension input amount for {0} from 6 April 2015 and 8 July 2015
 pensionSchemeInputAmounts.2016-post.change.hidden = your revised pension input amount for {0} from 9 July 2015 to 5 April 2016
+pensionSchemeInputAmounts.2016-pre.date = 6 April 2015 and 8 July 2015
+pensionSchemeInputAmounts.2016-post.date = 9 July 2015 and 5 April 2016
 
 whichScheme.title = Which scheme are you entering details for?
 whichScheme.heading = Which scheme are you entering details for?
