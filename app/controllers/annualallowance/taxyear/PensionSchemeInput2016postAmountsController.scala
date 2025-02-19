@@ -21,7 +21,7 @@ import forms.annualallowance.taxyear.PensionSchemeInput2016postAmountsFormProvid
 import models.tasklist.sections.AASection
 import models.{Mode, Period, SchemeIndex}
 import pages.annualallowance.taxyear.{PensionSchemeDetailsPage, PensionSchemeInput2016postAmountsPage}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.UserDataService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -43,10 +43,9 @@ class PensionSchemeInput2016postAmountsController @Inject() (
     extends FrontendBaseController
     with I18nSupport {
 
-  val form = formProvider()
-
   def onPageLoad(mode: Mode, period: Period, schemeIndex: SchemeIndex): Action[AnyContent] =
     (identify andThen getData andThen requireData) { implicit request =>
+      val form         = formProvider(dateString)
       val preparedForm = request.userAnswers.get(PensionSchemeInput2016postAmountsPage(period, schemeIndex)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -64,6 +63,7 @@ class PensionSchemeInput2016postAmountsController @Inject() (
       val schemeName = request.userAnswers.get(PensionSchemeDetailsPage(period, schemeIndex)).map { answer =>
         answer.schemeName
       }
+      val form       = formProvider(dateString)
       form
         .bindFromRequest()
         .fold(
@@ -81,4 +81,7 @@ class PensionSchemeInput2016postAmountsController @Inject() (
             } yield Redirect(redirectUrl)
         )
     }
+
+  private def dateString(implicit messages: Messages): String =
+    messages("pensionSchemeInputAmounts.2016-post.date")
 }

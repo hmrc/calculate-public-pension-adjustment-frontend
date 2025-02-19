@@ -19,19 +19,20 @@ package forms.annualallowance.preaaquestions
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.i18n.Messages
+import views.helpers.ImplicitDateFormatter
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class FlexibleAccessStartDateFormProvider @Inject() extends Mappings {
+class FlexibleAccessStartDateFormProvider @Inject() extends Mappings with ImplicitDateFormatter {
 
   private val FLEXIBLE_ACCESS_DATE_MIN_YEAR  = 2015
   private val FLEXIBLE_ACCESS_DATE_MIN_MONTH = 4
   private val FLEXIBLE_ACCESS_DATE_MIN_DAY   = 6
 
   def apply(flexibleAccessDateMax: LocalDate)(implicit messages: Messages): Form[LocalDate] = {
-
+    val languageTag                       = if (messages.lang.code == "cy") "cy" else "en"
     val min                               = LocalDate.of(FLEXIBLE_ACCESS_DATE_MIN_YEAR, FLEXIBLE_ACCESS_DATE_MIN_MONTH, FLEXIBLE_ACCESS_DATE_MIN_DAY)
     val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
     Form(
@@ -45,7 +46,7 @@ class FlexibleAccessStartDateFormProvider @Inject() extends Mappings {
           maxDate(
             flexibleAccessDateMax,
             "flexibleAccessStartDate.error.max",
-            flexibleAccessDateMax.plusDays(1).format(dateTimeFormat)
+            dateToString(flexibleAccessDateMax.plusDays(1), languageTag)
           )
         )
         .verifying(minDate(min, "flexibleAccessStartDate.error.min", min.format(dateTimeFormat)))

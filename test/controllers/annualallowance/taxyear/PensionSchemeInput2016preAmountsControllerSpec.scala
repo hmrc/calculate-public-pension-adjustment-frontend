@@ -39,7 +39,7 @@ class PensionSchemeInput2016preAmountsControllerSpec extends SpecBase with Mocki
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new PensionSchemeInput2016preAmountsFormProvider()
-  val form         = formProvider()
+  val form         = formProvider("6 April 2015 and 8 July 2015")
 
   lazy val pensionSchemeInput2016preAmountsRoute =
     controllers.annualallowance.taxyear.routes.PensionSchemeInput2016preAmountsController

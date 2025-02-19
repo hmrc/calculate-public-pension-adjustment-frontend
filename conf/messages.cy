@@ -533,6 +533,8 @@ pensionSchemeInputAmounts.change.hidden = eich swm mewnbwn pensiwn ar gyfer {0} 
 pensionSchemeInputAmounts.change.revised.hidden = eich swm mewnbwn pensiwn diwygiedig ar gyfer {0} o {1}
 pensionSchemeInputAmounts.2016-pre.change.hidden = eich swm mewnbwn pensiwn ar gyfer {0} rhwng 6 Ebrill 2015 ac 8 Gorffennaf 2015
 pensionSchemeInputAmounts.2016-post.change.hidden = eich swm mewnbwn pensiwn ar gyfer {0} rhwng 9 Gorffennaf 2015 a 5 Ebrill 2016
+pensionSchemeInputAmounts.2016-pre.date = 6 Ebrill 2015 ac 8 Gorffennaf 2015
+pensionSchemeInputAmounts.2016-post.date = 9 Gorffennaf 2015 ac 5 Ebrill 2016
 
 whichScheme.title = Pa gynllun ydych chi’n nodi manylion ar ei gyfer?
 whichScheme.heading = Pa gynllun ydych chi’n nodi manylion ar ei gyfer?

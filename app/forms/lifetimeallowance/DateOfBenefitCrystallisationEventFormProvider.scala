@@ -19,18 +19,19 @@ package forms.lifetimeallowance
 import forms.mappings.Mappings
 import play.api.data.Form
 import play.api.i18n.Messages
+import views.helpers.ImplicitDateFormatter
 
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class DateOfBenefitCrystallisationEventFormProvider @Inject() extends Mappings {
+class DateOfBenefitCrystallisationEventFormProvider @Inject() extends Mappings with ImplicitDateFormatter {
 
   def apply()(implicit messages: Messages): Form[LocalDate] = {
 
-    val min                               = LocalDate.of(2015, 4, 6)
-    val max                               = LocalDate.of(2023, 4, 5)
-    val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+    val languageTag = if (messages.lang.code == "cy") "cy" else "en"
+
+    val min = LocalDate.of(2015, 4, 6)
+    val max = LocalDate.of(2023, 4, 5)
 
     Form(
       "value" -> localDate(
@@ -39,8 +40,8 @@ class DateOfBenefitCrystallisationEventFormProvider @Inject() extends Mappings {
         twoRequiredKey = "dateOfBenefitCrystallisationEvent.error.required.two",
         requiredKey = "dateOfBenefitCrystallisationEvent.error.required"
       )
-        .verifying(maxDate(max, "dateOfBenefitCrystallisationEvent.error.max", max.format(dateTimeFormat)))
-        .verifying(minDate(min, "dateOfBenefitCrystallisationEvent.error.min", min.format(dateTimeFormat)))
+        .verifying(maxDate(max, "dateOfBenefitCrystallisationEvent.error.max", dateToString(max, languageTag)))
+        .verifying(minDate(min, "dateOfBenefitCrystallisationEvent.error.min", dateToString(min, languageTag)))
     )
   }
 }
