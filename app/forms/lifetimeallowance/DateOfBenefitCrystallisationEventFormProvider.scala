@@ -22,7 +22,6 @@ import play.api.i18n.Messages
 import views.helpers.ImplicitDateFormatter
 
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class DateOfBenefitCrystallisationEventFormProvider @Inject() extends Mappings with ImplicitDateFormatter {
@@ -31,9 +30,8 @@ class DateOfBenefitCrystallisationEventFormProvider @Inject() extends Mappings w
 
     val languageTag = if (messages.lang.code == "cy") "cy" else "en"
 
-    val min                               = LocalDate.of(2015, 4, 6)
-    val max                               = LocalDate.of(2023, 4, 5)
-    val dateTimeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+    val min = LocalDate.of(2015, 4, 6)
+    val max = LocalDate.of(2023, 4, 5)
 
     Form(
       "value" -> localDate(
