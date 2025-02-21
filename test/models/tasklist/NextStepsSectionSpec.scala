@@ -21,7 +21,6 @@ import config.FrontendAppConfig
 import models.ReportingChange.{AnnualAllowance, LifetimeAllowance}
 import models.tasklist.sections.{LTASection, NextStepsSection}
 import models.{AAKickOutStatus, LTAKickOutStatus, PostTriageFlag, ReportingChange, UserAnswers}
-import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.behaviours.PageBehaviours
 import pages.setupquestions.ReportingChangePage
@@ -35,24 +34,13 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
     "pre triage" - {
 
-      "Must route to calculation review page when reporting a change that includes Annual Allowance details when feature flag enabled" in {
-        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(true)
+      "Must route to calculation review page when reporting a change that includes Annual Allowance details when" in {
         val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
 
         val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
 
         checkNavigation(nextStepsTaskUrl, "/calculation-results")
-      }
-
-      "Must route to calculation result page when reporting a change that includes Annual Allowance details when feature flag disabled" in {
-        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(false)
-        val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
-        val answers: UserAnswers                   = emptyUserAnswers.set(ReportingChangePage, reportingChanges).get
-
-        val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
-
-        checkNavigation(nextStepsTaskUrl, "/calculation-result")
       }
 
       "Must route to LTA submission when reporting a change for LTA only" in {
@@ -73,8 +61,7 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
 
     "post triage" - {
 
-      "Must route to calculation review page when reporting a change that includes Annual Allowance details when feature flag true" in {
-        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(true)
+      "Must route to calculation review page when reporting a change that includes Annual Allowance details" in {
         val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
         val answers: UserAnswers                   = emptyUserAnswers
           .set(PostTriageFlag, true)
@@ -87,22 +74,6 @@ class NextStepsSectionSpec extends SpecBase with PageBehaviours with MockitoSuga
         val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
 
         checkNavigation(nextStepsTaskUrl, "/calculation-results")
-      }
-
-      "Must route to calculation result page when reporting a change that includes Annual Allowance details when feature flag false" in {
-        when(mockFrontEndAppConfig.calculationReviewEnabled).thenReturn(false)
-        val reportingChanges: Set[ReportingChange] = Set(AnnualAllowance, LifetimeAllowance)
-        val answers: UserAnswers                   = emptyUserAnswers
-          .set(PostTriageFlag, true)
-          .get
-          .set(ReportingChangePage, reportingChanges)
-          .get
-          .set(AAKickOutStatus(), 2)
-          .get
-
-        val nextStepsTaskUrl = nextStepsSection.navigateTo(answers)
-
-        checkNavigation(nextStepsTaskUrl, "/calculation-result")
       }
 
       "Must route to LTA submission when reporting a change for LTA only" in {

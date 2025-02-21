@@ -280,9 +280,6 @@ POST        /annual-allowance/:period/flexible-pension-input-amount-defined-cont
 GET         /annual-allowance/:period/change-flexible-pension-input-amount-defined-contribution                         controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onPageLoad(mode: Mode = CheckMode, period:Period)
 POST        /annual-allowance/:period/change-flexible-pension-input-amount-defined-contribution                         controllers.annualallowance.taxyear.FlexiAccessDefinedContributionAmountController.onSubmit(mode: Mode = CheckMode, period:Period)
 
-GET         /calculation-result                                                                                         controllers.CalculationResultController.onPageLoad()
-POST        /calculation-result                                                                                         controllers.CalculationResultController.onSubmit()
-
 GET         /lifetime-allowance/enhancement-type                        controllers.lifetimeallowance.EnhancementTypeController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/enhancement-type                        controllers.lifetimeallowance.EnhancementTypeController.onSubmit(mode: Mode = NormalMode)
 GET         /lifetime-allowance/change-enhancement-type                  controllers.lifetimeallowance.EnhancementTypeController.onPageLoad(mode: Mode = CheckMode)
@@ -302,9 +299,6 @@ GET         /lifetime-allowance/new-pension-credit-reference                    
 POST        /lifetime-allowance/new-pension-credit-reference                        controllers.lifetimeallowance.NewPensionCreditReferenceController.onSubmit(mode: Mode = NormalMode)
 GET         /lifetime-allowance/change-new-pension-credit-reference                  controllers.lifetimeallowance.NewPensionCreditReferenceController.onPageLoad(mode: Mode = CheckMode)
 POST        /lifetime-allowance/change-new-pension-credit-reference                  controllers.lifetimeallowance.NewPensionCreditReferenceController.onSubmit(mode: Mode = CheckMode)
-
-GET         /calculation-result                                                  controllers.CalculationResultController.onPageLoad()
-POST        /calculation-result                                                  controllers.CalculationResultController.onSubmit()
 
 GET         /lifetime-allowance/international-enhancement-reference                        controllers.lifetimeallowance.InternationalEnhancementReferenceController.onPageLoad(mode: Mode = NormalMode)
 POST        /lifetime-allowance/international-enhancement-reference                        controllers.lifetimeallowance.InternationalEnhancementReferenceController.onSubmit(mode: Mode = NormalMode)
