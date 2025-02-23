@@ -23,7 +23,7 @@ import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.QuestionPage
-import play.api.libs.json._
+import play.api.libs.json.*
 
 trait PageBehaviours extends SpecBase with ScalaCheckPropertyChecks with Generators {
 
@@ -41,7 +41,7 @@ trait PageBehaviours extends SpecBase with ScalaCheckPropertyChecks with Generat
             } yield (page, userAnswers.remove(page).success.value)
 
             forAll(gen) { case (page, userAnswers) =>
-              userAnswers.get(page) must be(empty)
+              userAnswers.get(page) `must` `be`(empty)
             }
           }
         }
@@ -57,7 +57,7 @@ trait PageBehaviours extends SpecBase with ScalaCheckPropertyChecks with Generat
             } yield (page, savedValue, userAnswers.set(page, savedValue).success.value)
 
             forAll(gen) { case (page, savedValue, userAnswers) =>
-              userAnswers.get(page).value mustEqual savedValue
+              userAnswers.get(page).value `mustEqual` savedValue
             }
           }
         }
@@ -76,7 +76,7 @@ trait PageBehaviours extends SpecBase with ScalaCheckPropertyChecks with Generat
 
         forAll(gen) { case (page, newValue, userAnswers) =>
           val updatedAnswers = userAnswers.set(page, newValue).success.value
-          updatedAnswers.get(page).value mustEqual newValue
+          updatedAnswers.get(page).value `mustEqual` newValue
         }
       }
   }
@@ -93,7 +93,7 @@ trait PageBehaviours extends SpecBase with ScalaCheckPropertyChecks with Generat
 
         forAll(gen) { case (page, userAnswers) =>
           val updatedAnswers = userAnswers.remove(page).success.value
-          updatedAnswers.get(page) must be(empty)
+          updatedAnswers.get(page) `must` `be`(empty)
         }
       }
   }
@@ -106,6 +106,6 @@ trait PageBehaviours extends SpecBase with ScalaCheckPropertyChecks with Generat
 
   def checkNavigation(nextUrl: String, expectedUrl: String) = {
     val urlWithNoContext = nextUrl.replace("/public-pension-adjustment", "")
-    urlWithNoContext must be(expectedUrl)
+    urlWithNoContext `must` `be`(expectedUrl)
   }
 }

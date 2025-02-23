@@ -27,7 +27,7 @@ import pages.annualallowance.taxyear.DefinedBenefit2016PostAmountPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.DefinedBenefit2016PostAmountView
 
@@ -58,8 +58,8 @@ class DefinedBenefit2016PostAmountControllerSpec extends SpecBase with MockitoSu
 
         val view = application.injector.instanceOf[DefinedBenefit2016PostAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -76,8 +76,8 @@ class DefinedBenefit2016PostAmountControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(validAnswer), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -88,7 +88,7 @@ class DefinedBenefit2016PostAmountControllerSpec extends SpecBase with MockitoSu
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -102,7 +102,7 @@ class DefinedBenefit2016PostAmountControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -121,8 +121,8 @@ class DefinedBenefit2016PostAmountControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -136,8 +136,8 @@ class DefinedBenefit2016PostAmountControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -153,8 +153,8 @@ class DefinedBenefit2016PostAmountControllerSpec extends SpecBase with MockitoSu
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

@@ -16,8 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import controllers.{routes => generalRoutes}
 import models.EnhancementType.{Both, InternationalEnhancement}
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -32,16 +30,17 @@ case object InternationalEnhancementReferencePage extends QuestionPage[String] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
-      case Some(InternationalEnhancement) => ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
-      case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(NormalMode)
-      case _                              => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(InternationalEnhancement) =>
+        controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
+      case Some(Both)                     => controllers.lifetimeallowance.routes.PensionCreditReferenceController.onPageLoad(NormalMode)
+      case _                              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(EnhancementTypePage) match {
       case Some(InternationalEnhancement) =>
         controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(Both)                     => ltaRoutes.PensionCreditReferenceController.onPageLoad(CheckMode)
-      case _                              => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Both)                     => controllers.lifetimeallowance.routes.PensionCreditReferenceController.onPageLoad(CheckMode)
+      case _                              => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 }

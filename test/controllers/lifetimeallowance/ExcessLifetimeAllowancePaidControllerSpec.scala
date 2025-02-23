@@ -27,7 +27,7 @@ import pages.lifetimeallowance.ExcessLifetimeAllowancePaidPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.lifetimeallowance.ExcessLifetimeAllowancePaidView
 
@@ -56,8 +56,8 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
         val view = application.injector.instanceOf[ExcessLifetimeAllowancePaidView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -77,8 +77,8 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ExcessLifetimeAllowancePaid.values.head), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(ExcessLifetimeAllowancePaid.values.head), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -89,7 +89,7 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -105,7 +105,7 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -124,8 +124,8 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -139,8 +139,8 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -156,9 +156,9 @@ class ExcessLifetimeAllowancePaidControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

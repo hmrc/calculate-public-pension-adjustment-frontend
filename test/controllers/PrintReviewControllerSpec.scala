@@ -30,7 +30,7 @@ import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{CalculationResultService, TaskListService}
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -86,20 +86,20 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
 
       when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-        .thenReturn(Future.successful(mockPrintReviewViewModel))
+        .`thenReturn`(Future.successful(mockPrintReviewViewModel))
 
       when(mockCalculationResultService.outDatesSummary(any))
-        .thenReturn(Seq(mockOutDatesSummary))
+        .`thenReturn`(Seq(mockOutDatesSummary))
 
       when(mockCalculationResultService.inDatesSummary(any))
-        .thenReturn(Seq(mockInDatesSummary))
+        .`thenReturn`(Seq(mockInDatesSummary))
 
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -121,15 +121,15 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Print calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Print calculation results") `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
-        ) mustBe true
-        contentAsString(result).contains("Your annual allowance tax charge has reduced by £10") mustBe true
+        ) `mustBe` true
+        contentAsString(result).contains("Your annual allowance tax charge has reduced by £10") `mustBe` true
       }
     }
 
@@ -158,20 +158,20 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
 
       when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-        .thenReturn(Future.successful(mockPrintReviewViewModel))
+        .`thenReturn`(Future.successful(mockPrintReviewViewModel))
 
       when(mockCalculationResultService.outDatesSummary(any))
-        .thenReturn(Seq(mockOutDatesSummary))
+        .`thenReturn`(Seq(mockOutDatesSummary))
 
       when(mockCalculationResultService.inDatesSummary(any))
-        .thenReturn(Seq())
+        .`thenReturn`(Seq())
 
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -193,14 +193,14 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Print calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Print calculation results") `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
-        ) mustBe false
+        ) `mustBe` false
       }
     }
 
@@ -243,20 +243,20 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
 
       when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-        .thenReturn(Future.successful(mockPrintReviewViewModel))
+        .`thenReturn`(Future.successful(mockPrintReviewViewModel))
 
       when(mockCalculationResultService.outDatesSummary(any))
-        .thenReturn(Seq(mockOutDatesSummary))
+        .`thenReturn`(Seq(mockOutDatesSummary))
 
       when(mockCalculationResultService.inDatesSummary(any))
-        .thenReturn(Seq(mockInDatesSummary))
+        .`thenReturn`(Seq(mockInDatesSummary))
 
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -278,15 +278,15 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Print calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Print calculation results") `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
-        ) mustBe true
-        contentAsString(result).contains("Lifetime allowance answers") mustBe true
+        ) `mustBe` true
+        contentAsString(result).contains("Lifetime allowance answers") `mustBe` true
       }
     }
 
@@ -329,20 +329,20 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
       val userAnswers = emptyUserAnswers
 
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
 
       when(mockCalculationResultService.calculationReviewIndividualAAViewModel(any, any, any)(any, any))
-        .thenReturn(Future.successful(mockPrintReviewViewModel))
+        .`thenReturn`(Future.successful(mockPrintReviewViewModel))
 
       when(mockCalculationResultService.outDatesSummary(any))
-        .thenReturn(Seq(mockOutDatesSummary))
+        .`thenReturn`(Seq(mockOutDatesSummary))
 
       when(mockCalculationResultService.inDatesSummary(any))
-        .thenReturn(Seq(mockInDatesSummary))
+        .`thenReturn`(Seq(mockInDatesSummary))
 
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -364,15 +364,15 @@ class PrintReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Print calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Print calculation results") `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
-        ) mustBe true
-        contentAsString(result).contains("Lifetime allowance answers") mustBe false
+        ) `mustBe` true
+        contentAsString(result).contains("Lifetime allowance answers") `mustBe` false
       }
     }
 

@@ -19,7 +19,6 @@ package controllers
 import config.FrontendAppConfig
 import controllers.actions._
 import models.submission
-import models.submission.SubmissionResponse
 import models.tasklist.SectionStatus
 import models.tasklist.sections.LTASection
 import play.api.data.Form
@@ -72,7 +71,7 @@ class CalculationResultController @Inject() (
 
   def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
     calculationResultService.submitUserAnswersAndCalculation(request.userAnswers, request.userId).map {
-      submissionResponse: SubmissionResponse =>
+      submissionResponse =>
         submissionResponse match {
           case submission.Success(uniqueId) => Redirect(submitFrontendLandingPageUrl(uniqueId))
           case submission.Failure(_)        => Redirect(routes.JourneyRecoveryController.onPageLoad())

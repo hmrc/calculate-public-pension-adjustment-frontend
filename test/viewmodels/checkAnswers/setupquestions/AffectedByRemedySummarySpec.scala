@@ -24,8 +24,8 @@ import pages.setupquestions.AffectedByRemedyPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.checkAnswers.setupquestions.annualallowance.SavingsStatementSummary
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class AffectedByRemedySummarySpec extends AnyFreeSpec with Matchers {
 

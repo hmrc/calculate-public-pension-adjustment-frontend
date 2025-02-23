@@ -16,7 +16,6 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import models.{CheckMode, NormalMode, Period, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -33,9 +32,10 @@ case class RegisteredYearPage(period: Period) extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     (answers.get(RegisteredYearPage(period)), period) match {
       case (Some(true), Period._2011 | Period._2012 | Period._2013 | Period._2014 | Period._2015) =>
-        preAARoutes.PIAPreRemedyController.onPageLoad(NormalMode, period)
+        controllers.annualallowance.preaaquestions.routes.PIAPreRemedyController.onPageLoad(NormalMode, period)
       case (Some(false), Period._2011 | Period._2012 | Period._2013 | Period._2014)               =>
-        preAARoutes.RegisteredYearController.onPageLoad(NormalMode, Period.Year(period.end.getYear + 1))
+        controllers.annualallowance.preaaquestions.routes.RegisteredYearController
+          .onPageLoad(NormalMode, Period.Year(period.end.getYear + 1))
       case (Some(false), Period._2015)                                                            =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _                                                                                      =>
@@ -44,7 +44,8 @@ case class RegisteredYearPage(period: Period) extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(RegisteredYearPage(period)) match {
-      case Some(true)  => preAARoutes.PIAPreRemedyController.onPageLoad(CheckMode, period)
+      case Some(true)  =>
+        controllers.annualallowance.preaaquestions.routes.PIAPreRemedyController.onPageLoad(CheckMode, period)
       case Some(false) =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)

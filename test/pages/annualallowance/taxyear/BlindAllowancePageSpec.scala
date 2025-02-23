@@ -108,7 +108,7 @@ class BlindAllowancePageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(PersonalAllowancePage(Period._2018)) mustBe None
+        cleanedUserAnswers.get(PersonalAllowancePage(Period._2018)) `mustBe` None
       }
     }
   }

@@ -27,7 +27,7 @@ import pages.annualallowance.taxyear.DoYouKnowPersonalAllowancePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.DoYouKnowPersonalAllowanceView
 
@@ -59,8 +59,8 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
         val view = application.injector.instanceOf[DoYouKnowPersonalAllowanceView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -80,8 +80,8 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -92,7 +92,7 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -106,8 +106,10 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.annualallowance.taxyear.routes.PersonalAllowanceController
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(
+          result
+        ).value `mustEqual` controllers.annualallowance.taxyear.routes.PersonalAllowanceController
           .onPageLoad(NormalMode, Period._2018)
           .url
       }
@@ -128,8 +130,8 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -146,8 +148,8 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -163,8 +165,8 @@ class DoYouKnowPersonalAllowanceControllerSpec extends SpecBase with MockitoSuga
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

@@ -28,7 +28,7 @@ import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Call, Result}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{route, status, _}
+import play.api.test.Helpers.*
 import services.CalculationResultService
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -68,7 +68,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
         readCalculationResult("test/resources/CalculationResultsTestData.json")
 
       val mockCalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationResultsViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -83,8 +83,8 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Calculation results") `mustBe` true
       }
     }
 
@@ -92,7 +92,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
       val mockCalculationResultService = mock[CalculationResultService]
       when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
-        .thenReturn(Future.successful(Success("123")))
+        .`thenReturn`(Future.successful(Success("123")))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -106,10 +106,10 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(result).value.endsWith(
           "/submit-public-pension-adjustment/landing-page?submissionUniqueId=123"
-        ) mustBe true
+        ) `mustBe` true
       }
     }
 
@@ -117,7 +117,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
       val mockCalculationResultService = mock[CalculationResultService]
       when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
-        .thenReturn(Future.successful(Failure(Seq("someError"))))
+        .`thenReturn`(Future.successful(Failure(Seq("someError"))))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -131,8 +131,8 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustBe "/public-pension-adjustment/there-is-a-problem"
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustBe` "/public-pension-adjustment/there-is-a-problem"
       }
     }
 
@@ -144,13 +144,13 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-        status(result) mustEqual OK
-        contentAsString(result).contains(dynamicNextStepsAuthenticated) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe true
-        contentAsString(result).contains(dynamicCredit) mustBe true
-        contentAsString(result).contains(dynamicCompensation) mustBe true
-        contentAsString(result).contains("Save and continue") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe false
+        status(result) `mustEqual` OK
+        contentAsString(result).contains(dynamicNextStepsAuthenticated) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` true
+        contentAsString(result).contains(dynamicCredit) `mustBe` true
+        contentAsString(result).contains(dynamicCompensation) `mustBe` true
+        contentAsString(result).contains("Save and continue") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` false
 
       }
 
@@ -160,14 +160,14 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsAuthenticated) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe true
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Save and continue") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe false
+        contentAsString(result).contains(dynamicNextStepsAuthenticated) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` true
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Save and continue") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` false
       }
 
       "must display correct dynamic content when only debit is greater than 0" in {
@@ -176,14 +176,14 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsAuthenticated) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe true
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Save and continue") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe false
+        contentAsString(result).contains(dynamicNextStepsAuthenticated) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` true
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Save and continue") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` false
       }
 
       "must display correct dynamic content when only compensation is greater than 0" in {
@@ -192,14 +192,14 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsAuthenticated) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe true
-        contentAsString(result).contains("Save and continue") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe false
+        contentAsString(result).contains(dynamicNextStepsAuthenticated) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` true
+        contentAsString(result).contains("Save and continue") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` false
       }
 
       "must not display dynamic content when no totals are greater than 0 and hide continue button and no LTA" in {
@@ -208,15 +208,15 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = true)
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsAuthenticated) mustBe false
-        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Save and continue") mustBe false
-        contentAsString(result).contains(notAuthenticated) mustBe false
+        contentAsString(result).contains(dynamicNextStepsAuthenticated) `mustBe` false
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Save and continue") `mustBe` false
+        contentAsString(result).contains(notAuthenticated) `mustBe` false
       }
 
       "must display dynamic content when no totals are greater than 0 and not hide continue button when LTA" in {
@@ -230,16 +230,16 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
           kickedOut = false
         )
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsAuthenticated) mustBe false
-        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe false
-        contentAsString(result).contains(dynamicNoAAChargeHasLTA) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Save and continue") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe false
+        contentAsString(result).contains(dynamicNextStepsAuthenticated) `mustBe` false
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) `mustBe` false
+        contentAsString(result).contains(dynamicNoAAChargeHasLTA) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Save and continue") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` false
       }
 
       "must display dynamic content when no totals are greater than 0 and hide continue button and LTA kicked out" in {
@@ -253,16 +253,16 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
           kickedOut = true
         )
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsAuthenticated) mustBe false
-        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe true
-        contentAsString(result).contains(dynamicNoAAChargeHasLTA) mustBe false
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Save and continue") mustBe false
-        contentAsString(result).contains(notAuthenticated) mustBe false
+        contentAsString(result).contains(dynamicNextStepsAuthenticated) `mustBe` false
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) `mustBe` true
+        contentAsString(result).contains(dynamicNoAAChargeHasLTA) `mustBe` false
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Save and continue") `mustBe` false
+        contentAsString(result).contains(notAuthenticated) `mustBe` false
       }
     }
 
@@ -274,14 +274,14 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe true
-        contentAsString(result).contains(dynamicCredit) mustBe true
-        contentAsString(result).contains(dynamicCompensation) mustBe true
-        contentAsString(result).contains("Continue to sign in") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe true
+        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` true
+        contentAsString(result).contains(dynamicCredit) `mustBe` true
+        contentAsString(result).contains(dynamicCompensation) `mustBe` true
+        contentAsString(result).contains("Continue to sign in") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` true
 
       }
 
@@ -291,14 +291,14 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe true
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Continue to sign in") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe true
+        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` true
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Continue to sign in") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` true
       }
 
       "must display correct dynamic content when only debit is greater than 0" in {
@@ -307,14 +307,14 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe true
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Continue to sign in") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe true
+        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` true
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Continue to sign in") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` true
       }
 
       "must display correct dynamic content when only compensation is greater than 0" in {
@@ -323,14 +323,14 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe true
-        contentAsString(result).contains("Continue to sign in") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe true
+        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` true
+        contentAsString(result).contains("Continue to sign in") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` true
       }
 
       "must not display dynamic content when no totals are greater than 0 and hide continue button and no LTA" in {
@@ -339,15 +339,15 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
 
         val result = returnResultFromBuiltApplication(calculationResult, authenticatedStatus = false)
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) mustBe false
-        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Continue to sign in") mustBe false
-        contentAsString(result).contains(notAuthenticated) mustBe false
+        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) `mustBe` false
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Continue to sign in") `mustBe` false
+        contentAsString(result).contains(notAuthenticated) `mustBe` false
       }
 
       "must display dynamic content when no totals are greater than 0 and hide continue button and LTA" in {
@@ -361,16 +361,16 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
           kickedOut = false
         )
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) mustBe false
-        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe false
-        contentAsString(result).contains(dynamicNoAAChargeHasLTA) mustBe true
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Continue to sign in") mustBe true
-        contentAsString(result).contains(notAuthenticated) mustBe true
+        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) `mustBe` false
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) `mustBe` false
+        contentAsString(result).contains(dynamicNoAAChargeHasLTA) `mustBe` true
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Continue to sign in") `mustBe` true
+        contentAsString(result).contains(notAuthenticated) `mustBe` true
       }
 
       "must display dynamic content when no totals are greater than 0 and hide continue button and LTA kicked out" in {
@@ -384,16 +384,16 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
           kickedOut = true
         )
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) mustBe false
-        contentAsString(result).contains(dynamicNoAAChargeOrLTA) mustBe true
-        contentAsString(result).contains(dynamicNoAAChargeHasLTA) mustBe false
-        contentAsString(result).contains(dynamicDebit) mustBe false
-        contentAsString(result).contains(dynamicCredit) mustBe false
-        contentAsString(result).contains(dynamicCompensation) mustBe false
-        contentAsString(result).contains("Continue to sign in") mustBe false
-        contentAsString(result).contains(notAuthenticated) mustBe false
+        contentAsString(result).contains(dynamicNextStepsNotAuthenticated) `mustBe` false
+        contentAsString(result).contains(dynamicNoAAChargeOrLTA) `mustBe` true
+        contentAsString(result).contains(dynamicNoAAChargeHasLTA) `mustBe` false
+        contentAsString(result).contains(dynamicDebit) `mustBe` false
+        contentAsString(result).contains(dynamicCredit) `mustBe` false
+        contentAsString(result).contains(dynamicCompensation) `mustBe` false
+        contentAsString(result).contains("Continue to sign in") `mustBe` false
+        contentAsString(result).contains(notAuthenticated) `mustBe` false
       }
     }
 
@@ -408,7 +408,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
       authenticatedStatus: Boolean
     ): Future[Result] = {
       val mockCalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationResultsViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -431,7 +431,7 @@ class CalculationResultControllerSpec extends SpecBase with MockitoSugar {
       kickedOut: Boolean
     ): Future[Result] = {
       val mockCalculationResultService = mock[CalculationResultService]
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationResultsViewModel(any)).thenCallRealMethod()
 
       val userAnswers =

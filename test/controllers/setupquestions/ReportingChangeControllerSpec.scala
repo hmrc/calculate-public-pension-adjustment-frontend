@@ -18,7 +18,6 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.{routes => setupRoutes}
 import forms.setupquestions.ReportingChangeFormProvider
 import models.{Done, NormalMode, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +27,7 @@ import pages.setupquestions.ReportingChangePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.setupquestions.ReportingChangeView
 
@@ -41,7 +40,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new ReportingChangeFormProvider()
   val form         = formProvider()
 
-  lazy val reportingNormalRoute = setupRoutes.ReportingChangeController.onPageLoad(NormalMode).url
+  lazy val reportingNormalRoute = controllers.setupquestions.routes.ReportingChangeController.onPageLoad(NormalMode).url
 
   "ReportingChange Controller" - {
 
@@ -56,9 +55,9 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[ReportingChangeView]
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -66,7 +65,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -82,7 +81,7 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -99,8 +98,8 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ReportingChange.values.toSet), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(ReportingChange.values.toSet), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -122,8 +121,8 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -137,8 +136,8 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -154,8 +153,8 @@ class ReportingChangeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

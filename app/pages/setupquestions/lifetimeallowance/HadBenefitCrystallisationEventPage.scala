@@ -16,8 +16,6 @@
 
 package pages.setupquestions.lifetimeallowance
 
-import controllers.setupquestions.lifetimeallowance.{routes => setupLTARoutes}
-import controllers.{routes => generalRoutes}
 import models.tasklist.sections.LTASection
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -34,16 +32,20 @@ case object HadBenefitCrystallisationEventPage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(HadBenefitCrystallisationEventPage) match {
-      case Some(true)  => setupLTARoutes.PreviousLTAChargeController.onPageLoad(NormalMode)
-      case Some(false) => setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
-      case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.setupquestions.lifetimeallowance.routes.PreviousLTAChargeController.onPageLoad(NormalMode)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
+      case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(HadBenefitCrystallisationEventPage) match {
-      case Some(true)  => setupLTARoutes.PreviousLTAChargeController.onPageLoad(NormalMode)
-      case Some(false) => setupLTARoutes.NotAbleToUseThisServiceLtaController.onPageLoad()
-      case None        => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(true)  =>
+        controllers.setupquestions.lifetimeallowance.routes.PreviousLTAChargeController.onPageLoad(NormalMode)
+      case Some(false) =>
+        controllers.setupquestions.lifetimeallowance.routes.NotAbleToUseThisServiceLtaController.onPageLoad()
+      case None        => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =

@@ -23,7 +23,7 @@ import pages.setupquestions.annualallowance.HadAAChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
-import viewmodels.implicits._
+import viewmodels.implicits.*
 
 class HadAAChargeSummarySpec extends AnyFreeSpec with Matchers {
 

@@ -40,7 +40,7 @@ class MaybePIAUnchangedOrDecreasedSpec
         JsString(maybePIAUnchangedOrDecreased.toString)
           .validate[MaybePIAUnchangedOrDecreased]
           .asOpt
-          .value mustEqual maybePIAUnchangedOrDecreased
+          .value `mustEqual` maybePIAUnchangedOrDecreased
       }
     }
 
@@ -49,7 +49,7 @@ class MaybePIAUnchangedOrDecreasedSpec
       val gen = arbitrary[String] suchThat (!MaybePIAUnchangedOrDecreased.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[MaybePIAUnchangedOrDecreased] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[MaybePIAUnchangedOrDecreased] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -58,7 +58,7 @@ class MaybePIAUnchangedOrDecreasedSpec
       val gen = Gen.oneOf(MaybePIAUnchangedOrDecreased.values.toSeq)
 
       forAll(gen) { maybePIAUnchangedOrDecreased =>
-        Json.toJson(maybePIAUnchangedOrDecreased) mustEqual JsString(maybePIAUnchangedOrDecreased.toString)
+        Json.toJson(maybePIAUnchangedOrDecreased) `mustEqual` JsString(maybePIAUnchangedOrDecreased.toString)
       }
     }
   }

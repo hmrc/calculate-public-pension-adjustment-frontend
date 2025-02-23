@@ -22,8 +22,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.preaaquestions.DefinedContributionPensionSchemePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class DefinedContributionPensionSchemeSummarySpec extends AnyFreeSpec with Matchers {
 

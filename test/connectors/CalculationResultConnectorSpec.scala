@@ -17,9 +17,9 @@
 package connectors
 
 import base.SpecBase
-import com.github.tomakehurst.wiremock.client.WireMock._
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import generators.Generators
-import models.CalculationResults._
+import models.CalculationResults.*
 import models.submission.Failure
 import models.{MaybePIAIncrease, MaybePIAUnchangedOrDecreased}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
@@ -106,8 +106,8 @@ class CalculationResultConnectorSpec
 
           val result = connector.sendRequest(calcInputs)(hc).futureValue
 
-          result mustBe a[CalculationResponse]
-          result mustBe calculationResponse
+          result `mustBe` a[CalculationResponse]
+          result `mustBe` calculationResponse
         }
       }
 
@@ -161,7 +161,7 @@ class CalculationResultConnectorSpec
           val response: Try[CalculationResponse] =
             Try(connector.sendRequest(calcInputs)(hc).futureValue)
 
-          response.isFailure mustBe true
+          response.isFailure `mustBe` true
         }
       }
     }

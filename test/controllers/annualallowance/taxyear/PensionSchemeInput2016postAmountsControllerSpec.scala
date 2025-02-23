@@ -28,7 +28,7 @@ import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.PensionSchemeInput2016postAmountsView
 
@@ -74,8 +74,8 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, SchemeIndex(0), "")(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2018, SchemeIndex(0), "")(
           request,
           messages(application)
         ).toString
@@ -101,8 +101,8 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form.fill(PensionSchemeInput2016postAmounts(2)),
           NormalMode,
           Period._2018,
@@ -119,7 +119,7 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -135,7 +135,7 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -154,8 +154,8 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "")(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, Period._2018, SchemeIndex(0), "")(
           request,
           messages(application)
         ).toString
@@ -172,8 +172,8 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -189,8 +189,8 @@ class PensionSchemeInput2016postAmountsControllerSpec extends SpecBase with Mock
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

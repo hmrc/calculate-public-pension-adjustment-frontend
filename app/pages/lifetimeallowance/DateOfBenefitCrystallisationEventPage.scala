@@ -16,7 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -31,8 +30,8 @@ case object DateOfBenefitCrystallisationEventPage extends QuestionPage[LocalDate
   override def toString: String = "dateOfBenefitCrystallisationEvent"
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
-    ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
+    controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode)
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
-    ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+    controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
 }

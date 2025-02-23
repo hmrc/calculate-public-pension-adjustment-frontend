@@ -28,7 +28,7 @@ import pages.setupquestions.annualallowance.{ContributionRefundsPage, SavingsSta
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.setupquestions.annualallowance.ContributionRefundsView
 
@@ -57,8 +57,8 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[ContributionRefundsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -75,8 +75,8 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -84,7 +84,7 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers.set(SavingsStatementPage, false).get))
@@ -98,7 +98,7 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -117,8 +117,8 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -132,8 +132,8 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
     "must redirect to start of the service for a POST if no existing data is found" in {
@@ -148,8 +148,8 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -165,7 +165,7 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
         val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
         val application = applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
@@ -179,9 +179,9 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
+          status(result) `mustEqual` SEE_OTHER
           val capturedUserAnswers = userAnswersCaptor.getValue
-          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(0)
+          capturedUserAnswers.get(AAKickOutStatus()) `mustBe` Some(0)
 
         }
       }
@@ -197,7 +197,7 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
         val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+        when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
         val application = applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
@@ -211,9 +211,9 @@ class ContributionRefundsControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
+          status(result) `mustEqual` SEE_OTHER
           val capturedUserAnswers = userAnswersCaptor.getValue
-          capturedUserAnswers.get(AAKickOutStatus()) mustBe Some(1)
+          capturedUserAnswers.get(AAKickOutStatus()) `mustBe` Some(1)
 
         }
       }

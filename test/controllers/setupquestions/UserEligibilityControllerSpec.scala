@@ -26,7 +26,7 @@ import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import pages.setupquestions.ReportingChangePage
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{AuditService, UserDataService}
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.UserEligibilityView
@@ -47,7 +47,7 @@ class UserEligibilityControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
       }
     }
 
@@ -62,15 +62,15 @@ class UserEligibilityControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
     "must redirect to ScottishTaxpayerFrom2016Controller if reporting page has indicated AA and Scottsih tax payer page has not been answered and AA eligible" in {
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val ltaKickOutStatus = 0
       val aaKickoutStatus  = 2
@@ -101,8 +101,8 @@ class UserEligibilityControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[UserEligibilityView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           true,
           false,
           controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode),
@@ -118,7 +118,7 @@ class UserEligibilityControllerSpec extends SpecBase {
     "must redirect to task list controller if reporting page has indicated AA and Scottsih tax payer page has been answered and AA eligible " in {
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val ltaKickOutStatus = 0
       val aaKickoutStatus  = 2
@@ -152,8 +152,8 @@ class UserEligibilityControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[UserEligibilityView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           true,
           false,
           controllers.routes.TaskListController.onPageLoad(),
@@ -169,7 +169,7 @@ class UserEligibilityControllerSpec extends SpecBase {
     "must SHOW lta content only if lta kickout status is complete and must NOT show aa if aa kickout status is false" in {
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val ltaKickOutStatus = 2
       val aaKickoutStatus  = 0
@@ -203,16 +203,16 @@ class UserEligibilityControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[UserEligibilityView]
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
         contentAsString(result).contains(
           "You are able to use this service to report changes to your lifetime allowance position."
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "You are able to use this service to calculate a change in your annual allowance position."
-        ) mustBe false
+        ) `mustBe` false
 
-        contentAsString(result) mustEqual view(
+        contentAsString(result) `mustEqual` view(
           false,
           true,
           controllers.routes.TaskListController.onPageLoad(),
@@ -228,7 +228,7 @@ class UserEligibilityControllerSpec extends SpecBase {
     "must NOT show lta content only if lta kickout status is false and must show aa if aa kickout status is complete" in {
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val ltaKickOutStatus = 0
       val aaKickoutStatus  = 2
@@ -262,16 +262,16 @@ class UserEligibilityControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[UserEligibilityView]
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
         contentAsString(result).contains(
           "You are able to use this service to report changes to your lifetime allowance position."
-        ) mustBe false
+        ) `mustBe` false
         contentAsString(result).contains(
           "You are able to use this service to calculate a change in your annual allowance position."
-        ) mustBe true
+        ) `mustBe` true
 
-        contentAsString(result) mustEqual view(
+        contentAsString(result) `mustEqual` view(
           true,
           false,
           controllers.routes.TaskListController.onPageLoad(),
@@ -287,11 +287,11 @@ class UserEligibilityControllerSpec extends SpecBase {
     "must trigger audit event" in {
 
       val mockUserDataService = mock[UserDataService]
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val mockAuditService = mock[AuditService]
       when(mockAuditService.auditEligibility(any[EligibilityAuditEvent])(any[HeaderCarrier]))
-        .thenReturn(Future.successful(Done))
+        .`thenReturn`(Future.successful(()))
 
       val userAnswers = emptyUserAnswers
         .set(ReportingChangePage, Set[ReportingChange](ReportingChange.values.head))
@@ -312,7 +312,7 @@ class UserEligibilityControllerSpec extends SpecBase {
       running(application) {
         val request = FakeRequest(GET, controllers.setupquestions.routes.UserEligibility.onPageLoad.url)
         val result  = route(application, request).value
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
         verify(mockAuditService).auditEligibility(any[EligibilityAuditEvent])(any[HeaderCarrier])
       }
     }

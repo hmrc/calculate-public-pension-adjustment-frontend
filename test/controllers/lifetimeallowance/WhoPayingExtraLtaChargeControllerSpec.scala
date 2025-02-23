@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.WhoPayingExtraLtaChargeFormProvider
 import models.{Done, NormalMode, UserAnswers, WhoPayingExtraLtaCharge}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +27,7 @@ import pages.lifetimeallowance.WhoPayingExtraLtaChargePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.lifetimeallowance.WhoPayingExtraLtaChargeView
 
@@ -38,7 +37,8 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val normalRoute = ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode).url
+  lazy val normalRoute =
+    controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController.onPageLoad(NormalMode).url
 
   val formProvider = new WhoPayingExtraLtaChargeFormProvider()
   val form         = formProvider()
@@ -56,8 +56,8 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[WhoPayingExtraLtaChargeView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -75,8 +75,8 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(WhoPayingExtraLtaCharge.values.head), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(WhoPayingExtraLtaCharge.values.head), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -87,7 +87,7 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -103,7 +103,7 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -122,8 +122,8 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -137,8 +137,8 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -154,9 +154,9 @@ class WhoPayingExtraLtaChargeControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

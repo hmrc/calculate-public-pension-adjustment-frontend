@@ -33,7 +33,7 @@ class WhoPaidLTAChargeSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
       val gen = Gen.oneOf(WhoPaidLTACharge.values.toSeq)
 
       forAll(gen) { whoPaidLTACharge =>
-        JsString(whoPaidLTACharge.toString).validate[WhoPaidLTACharge].asOpt.value mustEqual whoPaidLTACharge
+        JsString(whoPaidLTACharge.toString).validate[WhoPaidLTACharge].asOpt.value `mustEqual` whoPaidLTACharge
       }
     }
 
@@ -42,7 +42,7 @@ class WhoPaidLTAChargeSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
       val gen = arbitrary[String] suchThat (!WhoPaidLTACharge.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[WhoPaidLTACharge] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[WhoPaidLTACharge] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -51,7 +51,7 @@ class WhoPaidLTAChargeSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
       val gen = Gen.oneOf(WhoPaidLTACharge.values.toSeq)
 
       forAll(gen) { whoPaidLTACharge =>
-        Json.toJson(whoPaidLTACharge) mustEqual JsString(whoPaidLTACharge.toString)
+        Json.toJson(whoPaidLTACharge) `mustEqual` JsString(whoPaidLTACharge.toString)
       }
     }
   }

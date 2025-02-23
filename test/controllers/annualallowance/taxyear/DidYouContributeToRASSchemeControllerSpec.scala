@@ -24,11 +24,11 @@ import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.annualallowance.taxyear._
+import pages.annualallowance.taxyear.*
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.DidYouContributeToRASSchemeView
 
@@ -62,8 +62,8 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
         val view = application.injector.instanceOf[DidYouContributeToRASSchemeView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -84,8 +84,8 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -119,7 +119,7 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(ua))
@@ -133,10 +133,10 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController
+        ).value `mustEqual` controllers.annualallowance.taxyear.routes.DoYouHaveGiftAidController
           .onPageLoad(NormalMode, period)
           .url
       }
@@ -171,7 +171,7 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(ua))
@@ -187,9 +187,9 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(AboveThreshold(period)) mustBe Some(false)
+        capturedUserAnswers.get(AboveThreshold(period)) `mustBe` Some(false)
       }
     }
 
@@ -217,7 +217,7 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(ua))
@@ -233,8 +233,8 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        ua.get(AboveThreshold(Period._2020)) mustBe None
+        status(result) `mustEqual` SEE_OTHER
+        ua.get(AboveThreshold(Period._2020)) `mustBe` None
       }
     }
 
@@ -253,8 +253,8 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -271,8 +271,8 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -288,8 +288,8 @@ class DidYouContributeToRASSchemeControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

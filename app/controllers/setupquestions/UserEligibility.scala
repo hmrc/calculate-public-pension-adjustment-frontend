@@ -16,7 +16,6 @@
 
 package controllers.setupquestions
 
-import config.FrontendAppConfig
 import controllers.actions._
 import models.{AAKickOutStatus, EligibilityAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
@@ -36,7 +35,6 @@ class UserEligibility @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   auditService: AuditService,
-  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: UserEligibilityView
 )(implicit ec: ExecutionContext)

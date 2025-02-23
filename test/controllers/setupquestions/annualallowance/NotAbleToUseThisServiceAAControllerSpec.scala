@@ -17,15 +17,14 @@
 package controllers.setupquestions.annualallowance
 
 import base.SpecBase
-import controllers.setupquestions.annualallowance.{routes => triageAARoutes}
-import models.{Done, KickOffAuditEvent, LTAKickOutStatus, ReportingChange, UserAnswers}
+import models.{KickOffAuditEvent, LTAKickOutStatus, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.setupquestions.ReportingChangePage
 import play.api.inject
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.AuditService
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
@@ -52,21 +51,24 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
           val view = application.injector.instanceOf[NotAbleToUseThisServiceAAView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(
             true,
             "/public-pension-adjustment/triage-journey/lifetime-allowance/benefit-crystallisation-event"
           )(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
+          contentAsString(result) `must` `include`("Continue")
         }
       }
     }
@@ -85,18 +87,21 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
           val view = application.injector.instanceOf[NotAbleToUseThisServiceAAView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup")(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(true, "/public-pension-adjustment/check-your-answers-setup")(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
+          contentAsString(result) `must` `include`("Continue")
         }
       }
     }
@@ -115,18 +120,21 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
           val view = application.injector.instanceOf[NotAbleToUseThisServiceAAView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem")(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
+          contentAsString(result) `must` `not` `include` "Continue"
         }
       }
     }
@@ -143,18 +151,21 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
           val view = application.injector.instanceOf[NotAbleToUseThisServiceAAView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem")(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
+          contentAsString(result) `must` `not` `include` "Continue"
         }
       }
     }
@@ -162,7 +173,7 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
 
       val mockAuditService = mock[AuditService]
       when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
-        .thenReturn(Future.successful(Done))
+        .`thenReturn`(Future.successful(()))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
         .overrides(
@@ -171,9 +182,12 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         .build()
 
       running(application) {
-        val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
+        val request = FakeRequest(
+          GET,
+          controllers.setupquestions.annualallowance.routes.NotAbleToUseThisServiceAAController.onPageLoad().url
+        )
         val result  = route(application, request).value
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
         verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])
       }
     }
