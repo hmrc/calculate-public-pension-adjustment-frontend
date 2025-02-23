@@ -2,7 +2,7 @@ package controllers
 
 import base.SpecBase
 import play.api.test.FakeRequest
-import play.api.test.Helpers.
+import play.api.test.Helpers.*
 import views.html.$className$View
 
 class $className$ControllerSpec extends SpecBase {
