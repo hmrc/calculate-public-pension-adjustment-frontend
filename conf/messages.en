@@ -1098,10 +1098,11 @@ definedContribution2016PostFlexiAmount.error.maximum = Your pension input amount
 definedContribution2016PostFlexiAmount.error.minimum = Your pension input amount for defined contribution pension schemes between {1} must be £0 or more
 definedContribution2016PostFlexiAmount.change.hidden = your pension input amount for defined contribution pension schemes between {0}
 
-cannotUseServiceNotIndividual.title = Cannot use this service
+cannotUseServiceNotIndividual.title = You cannot use this service with those sign-in details
 cannotUseServiceNotIndividual.heading = You cannot use this service with this account
-cannotUseServiceNotIndividual.message1 = Only individual user accounts can use this service. If you signed into the government gateway using an organisation or agent account, you must create a personal account instead.
-cannotUseServiceNotIndividual.link = More information about Government Gateway and creating account
+cannotUseServiceNotIndividual.message1 = You signed in with an agent Government Gateway ID. To use this service, you must create an individual Government Gateway ID.
+cannotUseServiceNotIndividual.message2 = You can
+cannotUseServiceNotIndividual.link = learn more about signing in to HMRC online services.
 
 previousClaimContinue.title = Do you want to continue with your previous claim?
 previousClaimContinue.heading = Do you want to continue with your previous claim?
