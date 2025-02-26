@@ -26,16 +26,16 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
 
   val period: Period = Period._2019
 
-  val pre2020Periods: List[Period]  = List(Period._2017, Period._2018, Period._2019)
-  val post2019Periods: List[Period] = List(Period._2020, Period._2021, Period._2022, Period._2023)
+  val pre2021Periods: List[Period]  = List(Period._2017, Period._2018, Period._2019, Period._2020)
+  val post2020Periods: List[Period] = List(Period._2021, Period._2022, Period._2023)
 
   "AboveThresholdController" - {
 
     "thresholdStatus" - {
 
-      "must return false when below 110000 before 2020" in {
+      "must return false when below 110000 before 2021" in {
 
-        val period = Gen.oneOf(pre2020Periods).sample.get
+        val period = Gen.oneOf(pre2021Periods).sample.get
 
         val ua = emptyUserAnswers
           .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
@@ -67,7 +67,7 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
 
       "must return true when above 110000 before 2020" in {
 
-        val period = Gen.oneOf(pre2020Periods).sample.get
+        val period = Gen.oneOf(pre2021Periods).sample.get
 
         val ua = emptyUserAnswers
           .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
@@ -99,7 +99,7 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
 
       "must return false when below 200000 after and including 2020" in {
 
-        val period = Gen.oneOf(post2019Periods).sample.get
+        val period = Gen.oneOf(post2020Periods).sample.get
 
         val ua = emptyUserAnswers
           .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
@@ -131,7 +131,7 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
 
       "must return true when above 200000 after and including 2020" in {
 
-        val period = Gen.oneOf(post2019Periods).sample.get
+        val period = Gen.oneOf(post2020Periods).sample.get
 
         val ua = emptyUserAnswers
           .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)

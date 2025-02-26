@@ -22,20 +22,22 @@ import pages.annualallowance.taxyear._
 class AboveThresholdController {
 
   def thresholdStatus(answers: UserAnswers, period: Period): Boolean =
-    if (period == Period._2016 || period == Period._2017 || period == Period._2018 || period == Period._2019) {
-      thresholdRoutingPre2020(answers, period)
+    if (
+      period == Period._2016 || period == Period._2017 || period == Period._2018 || period == Period._2019 || period == Period._2020
+    ) {
+      thresholdRoutingPre2021(answers, period)
     } else {
-      thresholdRoutingPost2019(answers, period)
+      thresholdRoutingPost2020(answers, period)
     }
 
-  private def thresholdRoutingPre2020(answers: UserAnswers, period: Period) =
+  private def thresholdRoutingPre2021(answers: UserAnswers, period: Period) =
     if (calculateThresholdStatus(answers, period) > 110000) {
       true
     } else {
       false
     }
 
-  private def thresholdRoutingPost2019(answers: UserAnswers, period: Period) =
+  private def thresholdRoutingPost2020(answers: UserAnswers, period: Period) =
     if (calculateThresholdStatus(answers, period) > 200000) {
       true
     } else {
