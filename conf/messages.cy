@@ -1,4 +1,4 @@
-service.name = Cyfrifwch eich addasiad i bensiwn gwasanaeth cyhoeddus
+service.name = Cyfrifo eich addasiad i bensiwn gwasanaeth cyhoeddus
 
 site.back = Yn ôl
 site.remove = Dileu
@@ -1098,10 +1098,11 @@ definedContribution2016PostFlexiAmount.error.maximum = Mae’n rhaid i’ch swm 
 definedContribution2016PostFlexiAmount.error.minimum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig rhwng {1} fod yn £0 neu fwy
 definedContribution2016PostFlexiAmount.change.hidden = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig rhwng {0}
 
-cannotUseServiceNotIndividual.title = Ni allwch ddefnyddio’r gwasanaeth hwn
-cannotUseServiceNotIndividual.heading = Ni allwch ddefnyddio’r gwasanaeth cyflwyno gyda’r cyfrif hwn
-cannotUseServiceNotIndividual.message1 = Dim ond cyfrifon defnyddwyr unigol sy’n gallu defnyddio’r gwasanaeth cyflwyno. Os ydych wedi mewngofnodi i borth y llywodraeth gan ddefnyddio cyfrif asiant neu sefydliad, mae’n rhaid i chi greu cyfrif personol yn lle hynny.
-cannotUseServiceNotIndividual.link = Rhagor o wybodaeth am Borth y Llywodraeth a chreu cyfrif
+cannotUseServiceNotIndividual.title = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r manylion mewngofnodi hynny
+cannotUseServiceNotIndividual.heading = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r manylion mewngofnodi hynny
+cannotUseServiceNotIndividual.message1 = Rydych wedi mewngofnodi gan ddefnyddio Dynodydd Defnyddiwr (ID) asiant ar gyfer Porth y Llywodraeth. Er mwyn defnyddio’r gwasanaeth hwn, mae’n rhaid i chi greu Dynodydd Defnyddiwr (ID) ar gyfer Porth y Llywodraeth ar gyfer unigolyn
+cannotUseServiceNotIndividual.message2 = Gallwch
+cannotUseServiceNotIndividual.link = ddysgu rhagor am fewngofnodi i wasanaethau ar-lein CThEF
 
 previousClaimContinue.title = A hoffech fynd yn eich blaen â’ch hawliad blaenorol?
 previousClaimContinue.heading = A hoffech fynd yn eich blaen â’ch hawliad blaenorol?
