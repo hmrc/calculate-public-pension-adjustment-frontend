@@ -1,4 +1,4 @@
-service.name = Cyfrifwch eich addasiad i bensiwn gwasanaeth cyhoeddus
+service.name = Cyfrifo eich addasiad i bensiwn gwasanaeth cyhoeddus
 
 site.back = Yn ôl
 site.remove = Dileu
