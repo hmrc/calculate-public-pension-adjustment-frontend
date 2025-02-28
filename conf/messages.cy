@@ -1395,7 +1395,7 @@ previousLTACharge.change.hidden = os gwnaethoch dalu tâl treth lwfans oes yn ys
 
 pensionProtectedMember.title = Aelodau a ddiogelir - Lwfans blynyddol
 pensionProtectedMember.heading = Aelodau a ddiogelir
-pensionProtectedMember.message1 = Ni wnaeth aelodau a ddiogelir symud eu hen gynlluniau pensiwn (legacy) i’r cynllun newydd (reform) yn ystod y cyfnod pontio.
+pensionProtectedMember.message1 = Ni wnaeth aelodau a ddiogelir symud eu hen gynlluniau pensiwn (hanesyddol) i’r cynllun newydd (diwygio) yn ystod y cyfnod pontio.
 pensionProtectedMember.message2 = Gallech ond fod wedi ymuno â’r cynllun ôl-ddiwygio o 1 Ebrill 2022 ymlaen.
 pensionProtectedMember.link = Gallwch ddod o hyd i ragor o wybodaeth am aelodau a ddiogelir
 pensionProtectedMember.heading2 = A ydych yn aelod a ddiogelir o’ch cynllun pensiwn gwasanaeth cyhoeddus?
