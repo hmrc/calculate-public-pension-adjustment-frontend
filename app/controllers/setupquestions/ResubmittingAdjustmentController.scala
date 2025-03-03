@@ -16,16 +16,15 @@
 
 package controllers.setupquestions
 
-import config.FrontendAppConfig
 import controllers.actions._
 import forms.ResubmittingAdjustmentFormProvider
 import models.requests.{AuthenticatedIdentifierRequest, OptionalDataRequest}
 import models.tasklist.sections.SetupSection
-import models.{CalculationStartAuditEvent, Mode, NormalMode, PostTriageFlag, UserAnswers}
+import models.{Mode, NormalMode, PostTriageFlag, UserAnswers}
 import pages.setupquestions.ResubmittingAdjustmentPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{AuditService, UserDataService}
+import services.UserDataService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.ResubmittingAdjustmentView
@@ -39,8 +38,6 @@ class ResubmittingAdjustmentController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   formProvider: ResubmittingAdjustmentFormProvider,
-  config: FrontendAppConfig,
-  auditService: AuditService,
   val controllerComponents: MessagesControllerComponents,
   view: ResubmittingAdjustmentView
 )(implicit ec: ExecutionContext)
@@ -86,9 +83,6 @@ class ResubmittingAdjustmentController @Inject() (
       answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
       answersWithFlag = PostTriageFlag.setStatusTrue(answersWithNav)
       _              <- userDataService.set(answersWithFlag)
-      _              <- auditService.auditCalculationStart(
-                          CalculationStartAuditEvent(answersWithFlag.uniqueId, answersWithFlag.id, answersWithFlag.authenticated)
-                        )
     } yield Redirect(redirectUrl)
 
   private def checkModeRedirectGenerator(mode: Mode, request: OptionalDataRequest[AnyContent], value: Boolean)(implicit
@@ -103,9 +97,6 @@ class ResubmittingAdjustmentController @Inject() (
       redirectUrl     = ResubmittingAdjustmentPage.navigate(mode, updatedAnswers).url
       answersWithNav  = SetupSection.saveNavigation(updatedAnswers, redirectUrl)
       _              <- userDataService.set(answersWithNav)
-      _              <- auditService.auditCalculationStart(
-                          CalculationStartAuditEvent(answersWithNav.uniqueId, answersWithNav.id, answersWithNav.authenticated)
-                        )
     } yield Redirect(redirectUrl)
 
   private def constructUserAnswers(request: OptionalDataRequest[AnyContent]) = {

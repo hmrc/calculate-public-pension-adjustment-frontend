@@ -24,7 +24,6 @@ import play.api.libs.json.Format.GenericFormat
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import utils.Constants._
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaView
 
 import javax.inject.Inject
@@ -35,15 +34,13 @@ class NotAbleToUseThisServiceLtaController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  auditService: AuditService,
-  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceLtaView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val annualAllowanceStatus = request.userAnswers.get(AAKickOutStatus())
 
     val shouldShowContinueButton = annualAllowanceStatus match {
@@ -68,16 +65,6 @@ class NotAbleToUseThisServiceLtaController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    auditService
-      .auditKickOff(
-        config.triageJourneyNotImpactedNoBceKickOff,
-        KickOffAuditEvent(
-          request.userAnswers.uniqueId,
-          request.userAnswers.id,
-          request.userAnswers.authenticated,
-          TriageJourneyNotImpactedNoBceKickOff
-        )
-      )
-      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
+    Ok(view(shouldShowContinueButton, urlFromStatus))
   }
 }

@@ -53,15 +53,6 @@ class CalculationResultService @Inject() (
   ): Future[CalculationResponse] =
     for {
       calculationInputs   <- buildCalculationInputs(userAnswers)
-      _                   <-
-        auditService.auditBeforeCalculationRequest(
-          BeforeCalculationAuditEvent(
-            userAnswers.uniqueId,
-            userAnswers.authenticated,
-            userAnswers.id,
-            calculationInputs
-          )
-        )
       calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
       _                   <-
         auditService.auditCalculationRequest(

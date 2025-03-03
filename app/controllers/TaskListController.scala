@@ -17,17 +17,16 @@
 package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import models.Done
 import models.requests.{AuthenticatedIdentifierRequest, DataRequest}
 import models.tasklist.TaskListViewModel
-import models.{CalculationTaskListAuditEvent, Done, SectionStatus}
 import play.api.data.Form
 import play.api.data.Forms.ignored
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.{AuditService, TaskListService, UserDataService}
+import services.{TaskListService, UserDataService}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import utils.ToCamelCase._
 import views.html.TaskListView
 
 import javax.inject.Inject
@@ -42,7 +41,6 @@ class TaskListController @Inject() (
   view: TaskListView,
   taskListService: TaskListService,
   userDataService: UserDataService,
-  auditService: AuditService
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
@@ -50,27 +48,10 @@ class TaskListController @Inject() (
   val form = Form("_" -> ignored(()))
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
-    updateAuthFlag(request).flatMap { _ =>
+    updateAuthFlag(request).map { _ =>
       val taskListViewModel: TaskListViewModel = taskListService.taskListViewModel(request.userAnswers)
 
-      val sectionStatusList = taskListViewModel.allGroups.flatMap { group =>
-        group.sections.map { section =>
-          SectionStatus(toCamelCase(section.id, '-'), section.status.toString)
-        }
-      }.toList
-
-      auditService
-        .auditCalculationTaskList(
-          CalculationTaskListAuditEvent(
-            request.userAnswers.authenticated,
-            request.userAnswers.uniqueId,
-            request.userId,
-            sectionStatusList
-          )
-        )
-        .map { _ =>
-          Ok(view(form, taskListViewModel))
-        }
+      Ok(view(form, taskListViewModel))
     }
   }
 

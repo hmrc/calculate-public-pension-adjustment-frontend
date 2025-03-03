@@ -29,29 +29,9 @@ class AuditService @Inject() (
   config: FrontendAppConfig
 )(implicit ec: ExecutionContext) {
 
-  def auditBeforeCalculationRequest(event: BeforeCalculationAuditEvent)(implicit
-    hc: HeaderCarrier
-  ): Future[Unit] =
-    Future.successful(auditConnector.sendExplicitAudit(config.beforeCalculationAuditEventName, event))
-
   def auditCalculationRequest(event: CalculationAuditEvent)(implicit
     hc: HeaderCarrier
   ): Future[Unit] =
     Future.successful(auditConnector.sendExplicitAudit(config.calculationAuditEventName, event))
 
-  def auditCalculationStart(event: CalculationStartAuditEvent)(implicit
-    hc: HeaderCarrier
-  ): Future[Unit] =
-    Future.successful(auditConnector.sendExplicitAudit(config.calculationStartAuditEventName, event))
-
-  def auditCalculationTaskList(event: CalculationTaskListAuditEvent)(implicit
-    hc: HeaderCarrier
-  ): Future[Unit] =
-    Future.successful(auditConnector.sendExplicitAudit(config.calculationTaskListAuditEventName, event))
-
-  def auditKickOff(auditName: String, event: KickOffAuditEvent)(implicit hc: HeaderCarrier): Future[Unit] =
-    Future.successful(auditConnector.sendExplicitAudit(auditName, event))
-
-  def auditEligibility(event: EligibilityAuditEvent)(implicit hc: HeaderCarrier): Future[Unit] =
-    Future.successful(auditConnector.sendExplicitAudit(config.eligibility, event))
 }
