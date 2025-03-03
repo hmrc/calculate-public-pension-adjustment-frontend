@@ -67,15 +67,10 @@ journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gw
 journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
 journeyRecovery.startAgain.guidance = [Ychwanegu cynnwys i egluro pam mae angen i'r defnyddiwr ddechrau eto.]
 
-signedOut.title = Wedi allgofnodi
-signedOut.heading = Wedi allgofnodi
-signedOut.message1 = Gwnaethom gadw’ch cynnydd
-signedOut.message2 = Byddwn yn storio’ch data am 270 diwrnod (9 mis)
-signedOut.subHeading = Sut i fynd ymlaen â’ch cais
-signedOut.bullet1 = Ewch i dudalen y gwasanaeth ar GOV.UK
-signedOut.bullet2 = Defnyddiwch y botwm ‘Dechrau nawr’
-signedOut.bullet3 = Mewngofnodwch drwy ddefnyddio’ch Dynodydd Defnyddiwr (ID) ar gyfer Porth y Llywodraeth
-signedOut.message3 = Fel arall, ewch ymlaen â’ch cais nawr.
+signedOut.title = cy: You have been signed out
+signedOut.heading = cy: You have been signed out
+signedOut.message1 = We have saved your progress and we will store your data for 270 days (9 months).
+signedOut.message2 = You can
 
 unauthorised.title = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r cyfrif hwn
 unauthorised.heading = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r cyfrif hwn
