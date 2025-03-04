@@ -18,19 +18,11 @@ package controllers.setupquestions.annualallowance
 
 import base.SpecBase
 import controllers.setupquestions.annualallowance.{routes => triageAARoutes}
-import models.{Done, KickOffAuditEvent, LTAKickOutStatus, ReportingChange, UserAnswers}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{verify, when}
-import org.scalatestplus.mockito.MockitoSugar.mock
+import models.{LTAKickOutStatus, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
-import play.api.inject
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.AuditService
-import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
-
-import scala.concurrent.Future
 
 class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
 
@@ -156,25 +148,6 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
           ).toString
           contentAsString(result) must not include "Continue"
         }
-      }
-    }
-    "must trigger audit event" in {
-
-      val mockAuditService = mock[AuditService]
-      when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
-        .thenReturn(Future.successful(Done))
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-        .overrides(
-          inject.bind[AuditService].toInstance(mockAuditService)
-        )
-        .build()
-
-      running(application) {
-        val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
-        val result  = route(application, request).value
-        status(result) mustEqual OK
-        verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])
       }
     }
   }

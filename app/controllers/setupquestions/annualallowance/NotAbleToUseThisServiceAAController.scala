@@ -64,6 +64,6 @@ class NotAbleToUseThisServiceAAController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
- Ok(view(shouldShowContinueButton, urlFromStatus))
+    Ok(view(shouldShowContinueButton, urlFromStatus))
   }
 }

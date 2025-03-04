@@ -37,7 +37,7 @@ class IneligibleController @Inject() (
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-  Ok(view())
+    Ok(view())
   }
 
 }

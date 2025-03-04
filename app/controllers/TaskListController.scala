@@ -40,7 +40,7 @@ class TaskListController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: TaskListView,
   taskListService: TaskListService,
-  userDataService: UserDataService,
+  userDataService: UserDataService
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {

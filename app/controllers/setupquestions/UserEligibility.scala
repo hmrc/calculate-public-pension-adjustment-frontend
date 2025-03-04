@@ -66,7 +66,7 @@ class UserEligibility @Inject() (
       case _       => false
     }
 
-        Ok(view(annualAllowanceIncluded, lifetimeAllowanceIncluded, continueURL, eligibleForLTA, eligibleForAA))
+    Ok(view(annualAllowanceIncluded, lifetimeAllowanceIncluded, continueURL, eligibleForLTA, eligibleForAA))
 
   }
 }

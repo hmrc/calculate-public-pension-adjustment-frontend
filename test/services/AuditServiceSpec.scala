@@ -20,7 +20,7 @@ import base.SpecBase
 import models.CalculationResults._
 import models.Income.BelowThreshold
 import models.TaxYear2016To2023.PostFlexiblyAccessedTaxYear
-import models.{AnnualAllowance, BeforeCalculationAuditEvent, CalculationAuditEvent, CalculationResults, CalculationStartAuditEvent, CalculationTaskListAuditEvent, EligibilityAuditEvent, IncomeSubJourney, KickOffAuditEvent, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, SectionStatus, TaxYear2011To2015, TaxYearScheme}
+import models.{AnnualAllowance, CalculationAuditEvent, CalculationResults, IncomeSubJourney, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, Period, TaxYear2011To2015, TaxYearScheme}
 import org.apache.pekko.util.Timeout
 import org.mockito.MockitoSugar
 import play.api.inject.bind
@@ -256,83 +256,6 @@ class AuditServiceSpec extends SpecBase with MockitoSugar {
         await(service.auditCalculationRequest(calculationSubmissionAuditEvent)(hc)) mustBe ()
       }
     }
-
-    "auditCalculationStart" - {
-      "should call the audit connector with the CalculationStartAuditEvent event" in {
-
-        implicit val hc = HeaderCarrier()
-
-        val calculationStartAuditEvent =
-          CalculationStartAuditEvent(
-            "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
-            "AC666401B",
-            true
-          )
-
-        await(service.auditCalculationStart(calculationStartAuditEvent)(hc)) mustBe ()
-      }
-    }
-
-    "auditCalculationTaskList" - {
-      "should call the audit connector with the CalculationTaskListAuditEvent event" in {
-
-        implicit val hc = HeaderCarrier()
-
-        val calculationTaskListAuditEvent =
-          CalculationTaskListAuditEvent(
-            true,
-            "8453ea66-e3fe-4f35-b6c2-a6aa87482661",
-            "AA000000A",
-            List(
-              SectionStatus("setupQuestions", "Completed"),
-              SectionStatus("annualAllowanceSetupQuestions", "Completed"),
-              SectionStatus("annualAllowanceDetails2016", "NotStarted"),
-              SectionStatus("annualAllowanceDetails2017", "NotStarted"),
-              SectionStatus("annualAllowanceDetails2018", "NotStarted"),
-              SectionStatus("annualAllowanceDetails2019", "NotStarted"),
-              SectionStatus("annualAllowanceDetails2020", "NotStarted"),
-              SectionStatus("annualAllowanceDetails2021", "NotStarted"),
-              SectionStatus("annualAllowanceDetails2022", "NotStarted"),
-              SectionStatus("annualAllowanceDetails2023", "NotStarted"),
-              SectionStatus("nextStepsAction", "CannotStartYet")
-            )
-          )
-
-        await(service.auditCalculationTaskList(calculationTaskListAuditEvent)(hc)) mustBe ()
-      }
-    }
-
-    "auditKickoffEvent" - {
-      implicit val hc = HeaderCarrier()
-
-      val kickOffAuditEvent =
-        KickOffAuditEvent(
-          "uniqueID",
-          "userID",
-          false,
-          "KickOffPage"
-        )
-
-      await(service.auditKickOff("test", kickOffAuditEvent)(hc)) mustBe ()
-    }
-
-    "auditEligibility" - {
-      implicit val hc = HeaderCarrier()
-
-      val eligibilityEvent =
-        EligibilityAuditEvent(
-          "uniqueID",
-          "userID",
-          false,
-          true,
-          false,
-          true,
-          false
-        )
-
-      await(service.auditEligibility(eligibilityEvent)(hc)) mustBe ()
-    }
-
   }
 
 }

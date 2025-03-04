@@ -79,6 +79,4 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val calculationAuditEventName =
     configuration.get[String]("auditing.calculation-request-event-name")
 
-
-
 }

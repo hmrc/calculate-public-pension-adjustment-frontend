@@ -42,6 +42,6 @@ class CannotUseLtaServiceNoChargeController @Inject() (
     val annualAllowanceIncluded: Boolean =
       request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
 
- Ok(view(annualAllowanceIncluded))
+    Ok(view(annualAllowanceIncluded))
   }
 }
