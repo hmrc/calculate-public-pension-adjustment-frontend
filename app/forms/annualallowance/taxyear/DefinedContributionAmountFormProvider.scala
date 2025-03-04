@@ -28,7 +28,7 @@ class DefinedContributionAmountFormProvider @Inject() extends Mappings {
       "value" -> bigInt(
         "definedContributionAmount.error.required",
         "definedContributionAmount.error.wholeNumber",
-        "definedContributionAmount.error.wholeNumber",
+        "definedContributionAmount.error.nonNumeric",
         args
       )
         .verifying(

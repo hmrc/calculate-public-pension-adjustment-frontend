@@ -43,7 +43,7 @@ class PIAPreRemedyFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError = FormError(fieldName, "pIAPreRemedy.error.wholeNumber.2013"),
+      nonNumericError = FormError(fieldName, "pIAPreRemedy.error.nonNumeric.2013"),
       wholeNumberError = FormError(fieldName, "pIAPreRemedy.error.wholeNumber.2013")
     )
 

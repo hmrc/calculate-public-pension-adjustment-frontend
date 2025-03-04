@@ -40,7 +40,7 @@ class DefinedContributionAmountFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       newForm(),
       fieldName,
-      nonNumericError = FormError(fieldName, "definedContributionAmount.error.wholeNumber", Seq("")),
+      nonNumericError = FormError(fieldName, "definedContributionAmount.error.nonNumeric", Seq("")),
       wholeNumberError = FormError(fieldName, "definedContributionAmount.error.wholeNumber", Seq(""))
     )
 

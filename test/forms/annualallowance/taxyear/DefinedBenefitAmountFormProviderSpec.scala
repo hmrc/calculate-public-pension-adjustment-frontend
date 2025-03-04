@@ -43,7 +43,7 @@ class DefinedBenefitAmountFormProviderSpec extends IntFieldBehaviours {
     behave like intField(
       form,
       fieldName,
-      nonNumericError = FormError(fieldName, "definedBenefitAmount.error.wholeNumber.2023"),
+      nonNumericError = FormError(fieldName, "definedBenefitAmount.error.nonNumeric.2023"),
       wholeNumberError = FormError(fieldName, "definedBenefitAmount.error.wholeNumber.2023")
     )
 

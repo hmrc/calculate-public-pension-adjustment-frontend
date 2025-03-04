@@ -29,7 +29,7 @@ class DefinedBenefitAmountFormProvider @Inject() extends Mappings {
       "value" -> bigInt(
         "definedBenefitAmount.error.required." + period,
         "definedBenefitAmount.error.wholeNumber." + period,
-        "definedBenefitAmount.error.wholeNumber." + period
+        "definedBenefitAmount.error.nonNumeric." + period
       )
         .verifying(
           minimumValue[BigInt](0, "definedBenefitAmount.error.minimum." + period),
