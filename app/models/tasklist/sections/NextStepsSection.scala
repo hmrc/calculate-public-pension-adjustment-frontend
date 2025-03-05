@@ -16,7 +16,6 @@
 
 package models.tasklist.sections
 
-import config.FrontendAppConfig
 import controllers.routes
 import models.tasklist.{Section, SectionGroupViewModel, SectionStatus}
 import models.{AAKickOutStatus, LTAKickOutStatus, PostTriageFlag, ReportingChange, UserAnswers}
@@ -25,9 +24,7 @@ import pages.setupquestions.ReportingChangePage
 import javax.inject.*
 
 @Singleton
-class NextStepsSection @Inject() (
-  config: FrontendAppConfig
-) extends Section {
+class NextStepsSection @Inject() extends Section {
 
   def sectionStatus(dataCaptureSections: List[Option[SectionGroupViewModel]], answers: UserAnswers): SectionStatus = {
     val allDataCaptureComplete: Boolean = dataCaptureSections.flatten.forall(_.isComplete)
