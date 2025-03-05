@@ -1217,7 +1217,7 @@ howMuchTaxReliefPension.error.outOfRange = Amount of relief claimed must be betw
 howMuchTaxReliefPension.change.hidden = the amount of tax relief you claimed on your pension from {0}
 
 claimingTaxReliefPensionNotAdjustedIncome.title = Tax relief on your pension contributions - Annual allowance from {0}
-claimingTaxReliefPensionNotAdjustedIncome.caption = Adjusted Income
+claimingTaxReliefPensionNotAdjustedIncome.caption = Adjusted income
 claimingTaxReliefPensionNotAdjustedIncome.heading1 = Tax relief on your pension contributions
 claimingTaxReliefPensionNotAdjustedIncome.message1 = You may have claimed tax relief on net income pension contributions if any of the following applied to you:
 claimingTaxReliefPensionNotAdjustedIncome.bullet1 = you pay Income Tax at a rate above 20% and your pension provider claims the first 20% for you (relief at source)
