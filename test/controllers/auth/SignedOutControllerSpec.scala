@@ -17,6 +17,7 @@
 package controllers.auth
 
 import base.SpecBase
+import models.NormalMode
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.auth.SignedOutView
@@ -35,9 +36,10 @@ class SignedOutControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[SignedOutView]
-
+        val redirectLocation =
+          controllers.routes.OptionalSignInController.onPageLoad().toString
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        contentAsString(result) mustEqual view(redirectLocation)(request, messages(application)).toString
       }
     }
   }
