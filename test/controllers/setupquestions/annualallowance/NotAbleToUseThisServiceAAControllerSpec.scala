@@ -17,15 +17,17 @@
 package controllers.setupquestions.annualallowance
 
 import base.SpecBase
+import config.FrontendAppConfig
 import controllers.setupquestions.annualallowance.{routes => triageAARoutes}
 import models.{Done, KickOffAuditEvent, LTAKickOutStatus, ReportingChange, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.setupquestions.ReportingChangePage
-import play.api.inject
+import play.api.{Configuration, inject}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.api.test.Helpers.baseApplicationBuilder.injector
 import services.AuditService
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
@@ -35,12 +37,14 @@ import scala.concurrent.Future
 class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
 
   val kickOutStatusFalse = 1
+  val config: Configuration = injector.instanceOf[Configuration]
+  val exitUrl: String = new FrontendAppConfig(config).exitSurveyUrl
 
   "NotAbleToUseThisServiceLta Controller" - {
 
     "when lifetime allowance status is 1 in the UserAnswers" - {
 
-      "must return show button as true and have correct url" in {
+      "must return show button as true and have correct url and not show feedback message" in {
         val userAnswers =
           UserAnswers(userAnswersId)
             .set(ReportingChangePage, ReportingChange.values.toSet)
@@ -61,12 +65,14 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
           status(result) mustEqual OK
           contentAsString(result) mustEqual view(
             true,
-            "/public-pension-adjustment/triage-journey/lifetime-allowance/benefit-crystallisation-event"
+            "/public-pension-adjustment/triage-journey/lifetime-allowance/benefit-crystallisation-event",
+            exitUrl
           )(
             request,
             messages(application)
           ).toString
           contentAsString(result) must include("Continue")
+          contentAsString(result) must not include("What did you think of this service?")
         }
       }
     }
@@ -92,7 +98,7 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[NotAbleToUseThisServiceAAView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup")(
+          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup", exitUrl)(
             request,
             messages(application)
           ).toString
@@ -103,7 +109,8 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
 
     "when LTA status is 0 in the UserAnswers" - {
 
-      "must return show button as false and have correct url" in {
+      "must return show button as false and have correct url and must include feedback survey" in {
+
         val userAnswers =
           UserAnswers(userAnswersId)
             .set(ReportingChangePage, ReportingChange.values.toSet)
@@ -115,6 +122,7 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
+
           val request = FakeRequest(GET, triageAARoutes.NotAbleToUseThisServiceAAController.onPageLoad().url)
 
           val result = route(application, request).value
@@ -122,11 +130,12 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[NotAbleToUseThisServiceAAView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString
           contentAsString(result) must not include "Continue"
+          contentAsString(result) must include("What did you think of this service?")
         }
       }
     }
@@ -150,7 +159,7 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[NotAbleToUseThisServiceAAView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString

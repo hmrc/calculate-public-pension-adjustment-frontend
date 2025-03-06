@@ -78,6 +78,6 @@ class NotAbleToUseThisTriageLtaController @Inject() (
           TriageJourneyNotImpactedNoChangeKickOff
         )
       )
-      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
+      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus, config.exitSurveyUrl)))
   }
 }

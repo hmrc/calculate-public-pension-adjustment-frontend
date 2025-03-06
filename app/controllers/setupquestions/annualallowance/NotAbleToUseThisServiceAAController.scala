@@ -79,6 +79,6 @@ class NotAbleToUseThisServiceAAController @Inject() (
           TriageJourneyNotEligibleNoRpssKickOff
         )
       )
-      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
+      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus, config.exitSurveyUrl)))
   }
 }
