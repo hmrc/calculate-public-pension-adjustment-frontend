@@ -78,7 +78,7 @@ class CalculationReviewController @Inject() (
   def onSubmit(): Action[AnyContent] =
     (identify andThen getData andThen requireData andThen requireTasksCompleted).async { implicit request =>
       calculationResultService.submitUserAnswersAndCalculation(request.userAnswers, request.userId).map {
-        submissionResponse: SubmissionResponse =>
+        (submissionResponse: SubmissionResponse) =>
           submissionResponse match {
             case submission.Success(uniqueId) => Redirect(submitFrontendLandingPageUrl(uniqueId))
             case submission.Failure(_)        => Redirect(routes.JourneyRecoveryController.onPageLoad())

@@ -26,13 +26,13 @@ import models.tasklist.{SectionGroupViewModel, SectionViewModel, TaskListViewMod
 import org.jsoup.Jsoup
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers.should
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{CalculationResultService, TaskListService}
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -63,7 +63,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -71,7 +71,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
           SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
         )
       )
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -87,8 +87,8 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Calculation results") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Calculation results") `mustBe` true
       }
     }
 
@@ -101,8 +101,8 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         val request   = FakeRequest(GET, normalRoute)
 
         val result = route(application, request).value
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToOutstandingTasksPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToOutstandingTasksPage
       }
     }
 
@@ -115,8 +115,8 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         val request   = FakeRequest(POST, normalRoute)
 
         val result = route(application, request).value
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToOutstandingTasksPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToOutstandingTasksPage
 
       }
     }
@@ -129,7 +129,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -137,7 +137,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
           SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
         )
       )
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -153,15 +153,15 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
-        contentAsString(result).contains("Calculation results") mustBe true
+        contentAsString(result).contains("Calculation results") `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2015 to 5 April 2019"
-        ) mustBe true
+        ) `mustBe` true
         contentAsString(result).contains(
           "Change in annual allowance tax charges from 6 April 2019 to 5 April 2023"
-        ) mustBe false
+        ) `mustBe` false
       }
     }
 
@@ -174,7 +174,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val userAnswers = LTASection.saveNavigation(emptyUserAnswers, LTASection.checkYourLTAAnswersPage.url)
 
       val mockTaskListService = mock[TaskListService]
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -183,7 +183,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         )
       )
 
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -199,9 +199,9 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Calculation results") mustBe true
-        contentAsString(result).contains("Lifetime allowance") mustBe true
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Calculation results") `mustBe` true
+        contentAsString(result).contains("Lifetime allowance") `mustBe` true
       }
     }
 
@@ -213,7 +213,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -221,7 +221,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
           SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
         )
       )
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -237,9 +237,9 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result).contains("Calculation results") mustBe true
-        contentAsString(result).contains("Lifetime allowance") mustBe false
+        status(result) `mustEqual` OK
+        contentAsString(result).contains("Calculation results") `mustBe` true
+        contentAsString(result).contains("Lifetime allowance") `mustBe` false
       }
 
     }
@@ -252,7 +252,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -260,7 +260,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
           SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
         )
       )
-      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.sendRequest(any)(any)).`thenReturn`(Future.successful(calculationResult))
       when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
 
       val application =
@@ -276,14 +276,14 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
+        status(result) `mustEqual` OK
 
         val document    = Jsoup.parse(contentAsString(result))
         val table       = document.select("table").first()
         val columnCells = table.select("tbody tr td:nth-child(2)")
         val columnTexts = columnCells.eachText()
-        columnTexts should contain("No tax to pay")
-        columnTexts should contain("Decreased by £1,200")
+        columnTexts `should` `contain`("No tax to pay")
+        columnTexts `should` `contain`("Decreased by £1,200")
       }
 
     }
@@ -293,7 +293,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -302,7 +302,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         )
       )
       when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
-        .thenReturn(Future.successful(Success("123")))
+        .`thenReturn`(Future.successful(Success("123")))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -317,10 +317,10 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(result).value.endsWith(
           "/submit-public-pension-adjustment/landing-page?submissionUniqueId=123"
-        ) mustBe true
+        ) `mustBe` true
       }
     }
 
@@ -329,7 +329,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
       val mockCalculationResultService = mock[CalculationResultService]
       val mockTaskListService          = mock[TaskListService]
 
-      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+      when(mockTaskListService.taskListViewModel(any())).`thenReturn`(
         TaskListViewModel(
           SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
           None,
@@ -338,7 +338,7 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
         )
       )
       when(mockCalculationResultService.submitUserAnswersAndCalculation(any, any)(any))
-        .thenReturn(Future.successful(Failure(Seq("someError"))))
+        .`thenReturn`(Future.successful(Failure(Seq("someError"))))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -353,8 +353,8 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustBe "/public-pension-adjustment/there-is-a-problem"
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustBe` "/public-pension-adjustment/there-is-a-problem"
       }
     }
 

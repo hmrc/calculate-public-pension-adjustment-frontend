@@ -16,7 +16,6 @@
 
 package models.tasklist.sections
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{SectionNavigation, UserAnswers}
@@ -35,9 +34,10 @@ case object LTASection extends Section {
       .remove(sectionNavigation)
       .get
 
-  val initialPage: Call                     = ltaRoutes.WhatYouWillNeedLtaController.onPageLoad()
-  val checkYourLTAAnswersPage: Call         = ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-  val cannotUseLtaServiceNoChargePage: Call = ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
+  val initialPage: Call                     = controllers.lifetimeallowance.routes.WhatYouWillNeedLtaController.onPageLoad()
+  val checkYourLTAAnswersPage: Call         = controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+  val cannotUseLtaServiceNoChargePage: Call =
+    controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad()
 
   def status(answers: UserAnswers): SectionStatus =
     navigateTo(answers) match {

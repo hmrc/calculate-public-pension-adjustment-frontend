@@ -27,7 +27,7 @@ import pages.PreviousClaimContinuePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{SubmissionDataService, SubmitBackendService, UserDataService}
 import views.html.PreviousClaimContinueView
 
@@ -55,8 +55,8 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[PreviousClaimContinueView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form)(request, messages(application)).toString
       }
     }
 
@@ -73,8 +73,8 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form)(request, messages(application)).toString
       }
     }
 
@@ -82,7 +82,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -96,8 +96,8 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.PreviousClaimContinueController.redirect().url
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` controllers.routes.PreviousClaimContinueController.redirect().url
       }
     }
 
@@ -106,12 +106,12 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
       val mockSubmitBackendService  = mock[SubmitBackendService]
       val mockSubmissionDataService = mock[SubmissionDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmitBackendService.clearUserAnswers()(any())) thenReturn Future.successful(Done)
-      when(mockSubmitBackendService.clearCalcUserAnswers()(any())) thenReturn Future.successful(Done)
-      when(mockSubmitBackendService.clearSubmissions()(any())) thenReturn Future.successful(Done)
-      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+      when(mockUserDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmitBackendService.clearUserAnswers()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmitBackendService.clearCalcUserAnswers()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmitBackendService.clearSubmissions()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmissionDataService.clear()(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -127,8 +127,8 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual`
           controllers.setupquestions.routes.ResubmittingAdjustmentController.onPageLoad(NormalMode).url
       }
     }
@@ -148,8 +148,8 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm)(request, messages(application)).toString
       }
     }
 
@@ -163,8 +163,8 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -180,8 +180,8 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -191,7 +191,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
         val mockFrontEndAppConfig    = mock[FrontendAppConfig]
 
         when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any()))
-          .thenReturn(Future.successful(true))
+          .`thenReturn`(Future.successful(true))
 
         val application =
           applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -205,8 +205,8 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
-          redirectLocation(result).value mustEqual s"${appConfig.submitFrontend}/calculation-results"
+          status(result) `mustEqual` SEE_OTHER
+          redirectLocation(result).value `mustEqual` s"${appConfig.submitFrontend}/calculation-results"
         }
       }
 
@@ -214,7 +214,7 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
         val mockSubmitBackendService = mock[SubmitBackendService]
 
         when(mockSubmitBackendService.submissionsPresentInSubmissionService(any())(any()))
-          .thenReturn(Future.successful(false))
+          .`thenReturn`(Future.successful(false))
 
         val application =
           applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -226,8 +226,8 @@ class PreviousClaimContinueControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
-          redirectLocation(result).value mustEqual controllers.routes.TaskListController.onPageLoad().url
+          status(result) `mustEqual` SEE_OTHER
+          redirectLocation(result).value `mustEqual` controllers.routes.TaskListController.onPageLoad().url
         }
       }
     }

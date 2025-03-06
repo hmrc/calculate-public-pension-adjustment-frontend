@@ -16,7 +16,7 @@
 
 package controllers.lifetimeallowance
 
-import controllers.actions._
+import controllers.actions.*
 import forms.lifetimeallowance.NewPensionCreditReferenceFormProvider
 import models.Mode
 import models.tasklist.sections.LTASection

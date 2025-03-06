@@ -146,29 +146,29 @@ class TotalIncomePageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) mustBe None
-        cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) mustBe None
-        cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) mustBe None
-        cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) mustBe None
-        cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) mustBe None
-        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) mustBe None
-        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) mustBe None
-        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(TaxReliefPage(period)) mustBe None
-        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) mustBe None
-        cleanedUserAnswers.get(AdjustedIncomePage(period)) mustBe None
-        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) mustBe None
-        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) mustBe None
-        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) mustBe None
-        cleanedUserAnswers.get(TradeUnionReliefPage(period)) mustBe None
-        cleanedUserAnswers.get(UnionPoliceReliefAmountPage(period)) mustBe None
-        cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) mustBe None
-        cleanedUserAnswers.get(AmountOfGiftAidPage(period)) mustBe None
-        cleanedUserAnswers.get(PersonalAllowancePage(period)) mustBe None
-        cleanedUserAnswers.get(BlindAllowancePage(period)) mustBe None
-        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) mustBe None
+        cleanedUserAnswers.get(AnySalarySacrificeArrangementsPage(period)) `mustBe` None
+        cleanedUserAnswers.get(AmountSalarySacrificeArrangementsPage(period)) `mustBe` None
+        cleanedUserAnswers.get(FlexibleRemunerationArrangementsPage(period)) `mustBe` None
+        cleanedUserAnswers.get(AmountFlexibleRemunerationArrangementsPage(period)) `mustBe` None
+        cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(period)) `mustBe` None
+        cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(period)) `mustBe` None
+        cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(period)) `mustBe` None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(period)) `mustBe` None
+        cleanedUserAnswers.get(TaxReliefPage(period)) `mustBe` None
+        cleanedUserAnswers.get(KnowAdjustedAmountPage(period)) `mustBe` None
+        cleanedUserAnswers.get(AdjustedIncomePage(period)) `mustBe` None
+        cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(period)) `mustBe` None
+        cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(period)) `mustBe` None
+        cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(period)) `mustBe` None
+        cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(period)) `mustBe` None
+        cleanedUserAnswers.get(DoYouKnowPersonalAllowancePage(period)) `mustBe` None
+        cleanedUserAnswers.get(TradeUnionReliefPage(period)) `mustBe` None
+        cleanedUserAnswers.get(UnionPoliceReliefAmountPage(period)) `mustBe` None
+        cleanedUserAnswers.get(DoYouHaveGiftAidPage(period)) `mustBe` None
+        cleanedUserAnswers.get(AmountOfGiftAidPage(period)) `mustBe` None
+        cleanedUserAnswers.get(PersonalAllowancePage(period)) `mustBe` None
+        cleanedUserAnswers.get(BlindAllowancePage(period)) `mustBe` None
+        cleanedUserAnswers.get(BlindPersonsAllowanceAmountPage(period)) `mustBe` None
       }
     }
   }

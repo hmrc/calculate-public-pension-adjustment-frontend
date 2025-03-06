@@ -17,16 +17,16 @@
 package viewmodels.checkAnswers.annualallowance.preaaquestions
 
 import controllers.annualallowance.preaaquestions.routes
+import models.{CheckMode, UserAnswers, WhichYearsScottishTaxpayer}
 import models.WhichYearsScottishTaxpayer.{_2017, _2018, _2019, _2020, _2021, _2022, _2023}
-import models._
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import pages.annualallowance.preaaquestions.WhichYearsScottishTaxpayerPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class WhichYearsScottishTaxpayerSummarySpec extends AnyFreeSpec with Matchers {
 

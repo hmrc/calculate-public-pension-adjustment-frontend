@@ -20,8 +20,9 @@ import base.SpecBase
 import connectors.SubmissionsConnector
 import models.Done
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
@@ -35,20 +36,20 @@ class SubmissionDataServiceSpec extends SpecBase with MockitoSugar with ScalaFut
         val connector = mock[SubmissionsConnector]
         val service   = new SubmissionDataService(connector)
 
-        when(connector.clear()(any())) thenReturn Future.successful(Done)
+        when(connector.clear()(any())) `thenReturn` Future.successful(Done)
 
         val result = service.clear()(hc).futureValue
-        result mustBe Done
+        result `mustBe` Done
       }
 
       "must return a failed future when the connector fails to clear" in {
         val connector = mock[SubmissionsConnector]
         val service   = new SubmissionDataService(connector)
 
-        when(connector.clear()(any())) thenReturn Future.failed(new RuntimeException("Clear failed"))
+        when(connector.clear()(any())) `thenReturn` Future.failed(new RuntimeException("Clear failed"))
 
         val result = service.clear()(hc).failed.futureValue
-        result mustBe a[RuntimeException]
+        result `mustBe` a[RuntimeException]
       }
     }
   }

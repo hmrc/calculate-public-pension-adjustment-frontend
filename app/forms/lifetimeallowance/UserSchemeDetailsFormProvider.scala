@@ -34,6 +34,6 @@ class UserSchemeDetailsFormProvider @Inject() extends Mappings {
         "userSchemeDetails.taxRef.error.invalid",
         Seq("""(\d\s*){8}[A-Za-z]{2}""")
       )
-    )(UserSchemeDetails.apply)(UserSchemeDetails.unapply)
+    )(UserSchemeDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

@@ -24,7 +24,7 @@ import pages.annualallowance.taxyear.AmountOfGiftAidPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import viewmodels.govuk.all._
+import viewmodels.govuk.all.*
 
 class AmountOfGiftAidSummarySpec extends AnyFreeSpec with Matchers {
 

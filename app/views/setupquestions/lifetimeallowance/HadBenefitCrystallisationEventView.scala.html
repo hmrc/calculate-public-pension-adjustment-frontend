@@ -22,7 +22,7 @@
     govukButton: GovukButton,
     continueButton: components.ContinueButton
 )
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], mode: Mode)(implicit request: Request[?], messages: Messages)
 @import controllers.lifetimeallowance.routes
 
 @contentHint = {

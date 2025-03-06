@@ -16,8 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import controllers.{routes => generalRoutes}
 import models.WhoPayingExtraLtaCharge.{PensionScheme, You}
 import models.{CheckMode, NormalMode, UserAnswers, WhoPaidLTACharge, WhoPayingExtraLtaCharge}
 import pages.QuestionPage
@@ -35,20 +33,26 @@ case object WhoPayingExtraLtaChargePage extends QuestionPage[WhoPayingExtraLtaCh
   override protected def navigateInNormalMode(answers: UserAnswers): Call = {
     val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
     answers.get(WhoPayingExtraLtaChargePage) match {
-      case Some(PensionScheme)             => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
-      case Some(You) if hasPreviousCharge  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(NormalMode)
-      case _                               => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(PensionScheme)             =>
+        controllers.lifetimeallowance.routes.LtaPensionSchemeDetailsController.onPageLoad(NormalMode)
+      case Some(You) if hasPreviousCharge  =>
+        controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(You) if !hasPreviousCharge =>
+        controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(NormalMode)
+      case _                               => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call = {
     val hasPreviousCharge = answers.get(LifetimeAllowanceChargePage).getOrElse(false)
     answers.get(WhoPayingExtraLtaChargePage) match {
-      case Some(PensionScheme)             => ltaRoutes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode)
-      case Some(You) if hasPreviousCharge  => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-      case Some(You) if !hasPreviousCharge => ltaRoutes.UserSchemeDetailsController.onPageLoad(CheckMode)
-      case _                               => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(PensionScheme)             =>
+        controllers.lifetimeallowance.routes.LtaPensionSchemeDetailsController.onPageLoad(CheckMode)
+      case Some(You) if hasPreviousCharge  =>
+        controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(You) if !hasPreviousCharge =>
+        controllers.lifetimeallowance.routes.UserSchemeDetailsController.onPageLoad(CheckMode)
+      case _                               => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
   }
 

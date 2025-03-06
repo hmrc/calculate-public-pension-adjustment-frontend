@@ -19,7 +19,7 @@ package forms.lifetimeallowance
 import forms.mappings.Mappings
 import models.LtaPensionSchemeDetails
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 
 import javax.inject.Inject
 
@@ -34,6 +34,6 @@ class LtaPensionSchemeDetailsFormProvider @Inject() extends Mappings {
         "ltaPensionSchemeDetails.error.taxRef.invalid",
         Seq("""(\d\s*){8}[A-Za-z]{2}""")
       )
-    )(LtaPensionSchemeDetails.apply)(LtaPensionSchemeDetails.unapply)
+    )(LtaPensionSchemeDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

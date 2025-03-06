@@ -20,9 +20,9 @@ import config.FrontendAppConfig
 import controllers.routes
 import models.requests.{AuthenticatedIdentifierRequest, IdentifierRequest, UnauthenticatedIdentifierRequest}
 import play.api.Logging
+import play.api.mvc.*
 import play.api.mvc.Results.Redirect
-import play.api.mvc._
-import uk.gov.hmrc.auth.core._
+import uk.gov.hmrc.auth.core.*
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.http.HeaderCarrier
@@ -77,7 +77,7 @@ class OptionalAuthIdentifierAction @Inject() (
             Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
         }
       case _: InsufficientConfidenceLevel =>
-        insufficientConfidence(request)
+        insufficientConfidence()
       case ex: UnsupportedAffinityGroup   =>
         logger.warn(s"User has UnsupportedAffinityGroup. The reason is ${ex.reason} .")
         Future.successful(Redirect(routes.CannotUseServiceNotIndividualController.onPageLoad))
@@ -87,7 +87,7 @@ class OptionalAuthIdentifierAction @Inject() (
     }
   }
 
-  private def insufficientConfidence[A](request: Request[A]) =
+  private def insufficientConfidence() =
     Future.successful(
       Redirect(
         config.confidenceUpliftUrl,
