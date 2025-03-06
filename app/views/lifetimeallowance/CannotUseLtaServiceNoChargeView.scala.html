@@ -19,7 +19,7 @@
         govukButton: GovukButton
 )
 
-@(annualAllowanceIncluded: Boolean)(implicit request: Request[_], messages: Messages)
+@(annualAllowanceIncluded: Boolean, feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("cannotUseLtaServiceNoCharge.title"))) {
 
@@ -45,5 +45,13 @@
      .asLink(controllers.routes.TaskListController.onPageLoad().url)
      )
     </p>
-  }
+  } else {
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="@feedbackLinkUrl">
+            @messages("feedback.link")
+        </a>
+        @messages("feedback.takesSecond")
+    </p>
+    }
 }

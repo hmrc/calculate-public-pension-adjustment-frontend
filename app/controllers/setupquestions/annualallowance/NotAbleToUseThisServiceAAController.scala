@@ -16,6 +16,7 @@
 
 package controllers.setupquestions.annualallowance
 
+import config.FrontendAppConfig
 import controllers.actions._
 import models.{LTAKickOutStatus, NormalMode}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -31,6 +32,7 @@ class NotAbleToUseThisServiceAAController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceAAView
 )(implicit ec: ExecutionContext)
@@ -64,6 +66,6 @@ class NotAbleToUseThisServiceAAController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    Ok(view(shouldShowContinueButton, urlFromStatus))
+    Ok(view(shouldShowContinueButton, urlFromStatus, config.exitSurveyUrl))
   }
 }

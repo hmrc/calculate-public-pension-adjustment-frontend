@@ -69,7 +69,8 @@ class CalculationReviewController @Inject() (
             isInDebit,
             isUserAuthenticated,
             isLTACompleteWithoutKickout,
-            hasInDates
+            hasInDates,
+            config.exitSurveyUrl
           )
         )
       }

@@ -16,6 +16,7 @@
 
 package controllers.lifetimeallowance
 
+import config.FrontendAppConfig
 import controllers.actions._
 import models.ReportingChange
 import pages.setupquestions.ReportingChangePage
@@ -32,6 +33,7 @@ class CannotUseLtaServiceNoChargeController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: CannotUseLtaServiceNoChargeView
 )(implicit ec: ExecutionContext)
@@ -42,6 +44,6 @@ class CannotUseLtaServiceNoChargeController @Inject() (
     val annualAllowanceIncluded: Boolean =
       request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
 
-    Ok(view(annualAllowanceIncluded))
+    Ok(view(annualAllowanceIncluded, config.exitSurveyUrl))
   }
 }

@@ -16,6 +16,7 @@
 
 package controllers.setupquestions.lifetimeallowance
 
+import config.FrontendAppConfig
 import controllers.actions._
 import models.{AAKickOutStatus, NormalMode}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -32,6 +33,7 @@ class NotAbleToUseThisServiceLtaController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceLtaView
 )(implicit ec: ExecutionContext)
@@ -63,6 +65,6 @@ class NotAbleToUseThisServiceLtaController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    Ok(view(shouldShowContinueButton, urlFromStatus))
+    Ok(view(shouldShowContinueButton, urlFromStatus, config.exitSurveyUrl))
   }
 }

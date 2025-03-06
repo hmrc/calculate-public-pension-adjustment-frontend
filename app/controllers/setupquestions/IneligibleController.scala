@@ -16,6 +16,7 @@
 
 package controllers.setupquestions
 
+import config.FrontendAppConfig
 import controllers.actions._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -30,6 +31,7 @@ class IneligibleController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: IneligibleView
 )(implicit ec: ExecutionContext)
@@ -37,7 +39,7 @@ class IneligibleController @Inject() (
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
-    Ok(view())
+    Ok(view(config.exitSurveyUrl))
   }
 
 }

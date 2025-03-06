@@ -21,7 +21,7 @@
         govukButton: GovukButton
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("ineligible.title"))) {
 
@@ -37,4 +37,12 @@
     </ul>
 
     <p class="govuk-body">@messages("ineligible.message2")</p>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="@feedbackLinkUrl">
+            @messages("feedback.link")
+        </a>
+        @messages("feedback.takesSecond")
+    </p>
+
 }

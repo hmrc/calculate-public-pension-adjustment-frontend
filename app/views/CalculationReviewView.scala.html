@@ -23,7 +23,15 @@
 )
 
 
-@(form: Form[_], calculationReviewViewModel: CalculationReviewViewModel, includeCompensation2015: Boolean, isInCredit: Boolean, isInDebit: Boolean, isUserAuthenticated : Boolean, isLTACompleteWithoutKickout: Boolean, hasInDates: Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[_],
+calculationReviewViewModel: CalculationReviewViewModel,
+includeCompensation2015: Boolean,
+isInCredit: Boolean,
+isInDebit: Boolean,
+isUserAuthenticated : Boolean,
+isLTACompleteWithoutKickout: Boolean,
+hasInDates: Boolean,
+feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
 
 @buttonContent = @{
     if(isUserAuthenticated) {
@@ -171,6 +179,13 @@
             <h2 class="govuk-heading-m">@messages("calculationReview.whatHappensNext.heading1")</h2>
 
             <p class="govuk-body">@messages("calculationReview.whatHappensNext.message1")</p>
+
+            <p class="govuk-body">
+                <a class="govuk-link" href="@feedbackLinkUrl">
+                    @messages("feedback.link")
+                </a>
+                @messages("feedback.takesSecond")
+            </p>
         }
 
         @if(isInDebit || isInCredit || includeCompensation2015 || isLTACompleteWithoutKickout) {
