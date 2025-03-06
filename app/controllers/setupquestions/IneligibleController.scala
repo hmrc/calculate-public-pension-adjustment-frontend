@@ -53,7 +53,7 @@ class IneligibleController @Inject() (
           TriageJourneyNotImpactedKickOff
         )
       )
-      .map(_ => Ok(view()))
+      .map(_ => Ok(view(config.exitSurveyUrl)))
   }
 
 }

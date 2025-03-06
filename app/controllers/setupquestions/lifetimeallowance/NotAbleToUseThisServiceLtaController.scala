@@ -78,6 +78,6 @@ class NotAbleToUseThisServiceLtaController @Inject() (
           TriageJourneyNotImpactedNoBceKickOff
         )
       )
-      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
+      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus, config.exitSurveyUrl)))
   }
 }

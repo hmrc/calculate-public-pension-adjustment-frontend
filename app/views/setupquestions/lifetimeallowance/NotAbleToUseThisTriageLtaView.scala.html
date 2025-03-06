@@ -19,7 +19,7 @@
         govukButton: GovukButton
 )
 
-@(shouldShowContinueButton: Boolean, url: String)(implicit request: Request[_], messages: Messages)
+@(shouldShowContinueButton: Boolean, url: String, feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("notAbleToUseThisTriageLta.title"))) {
 
@@ -36,6 +36,13 @@
             ButtonViewModel(messages("site.continue"))
                     .asLink(url)
         )
+        </p>
+        } else {
+        <p class="govuk-body">
+            <a class="govuk-link" href="@feedbackLinkUrl">
+                @messages("feedback.link")
+            </a>
+            @messages("feedback.takesSecond")
         </p>
         }
     }

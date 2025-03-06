@@ -89,6 +89,46 @@ class CalculationReviewControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result).contains("Calculation results") mustBe true
+        contentAsString(result).contains("What did you think of this service?") mustBe false
+      }
+    }
+
+    "When no further action required, show feedback survey" in {
+
+      val calculationResult: CalculationResponse =
+        readCalculationResult("test/resources/CalculationResultsTestDataNoTotals.json")
+
+      val mockCalculationResultService = mock[CalculationResultService]
+      val mockTaskListService          = mock[TaskListService]
+
+      when(mockTaskListService.taskListViewModel(any())).thenReturn(
+        TaskListViewModel(
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", Completed, "", None))),
+          None,
+          None,
+          SectionGroupViewModel("", Seq(SectionViewModel("", "", NotStarted, "", None)))
+        )
+      )
+      when(mockCalculationResultService.sendRequest(any)(any)).thenReturn(Future.successful(calculationResult))
+      when(mockCalculationResultService.calculationReviewViewModel(any)).thenCallRealMethod()
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(
+            bind[CalculationResultService].toInstance(mockCalculationResultService),
+            bind[TaskListService].toInstance(mockTaskListService)
+          )
+          .build()
+
+      running(application) {
+        val request = FakeRequest(GET, normalRoute)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result).contains("Calculation results") mustBe true
+        contentAsString(result).contains("What did you think of this service?") mustBe true
+
       }
     }
 

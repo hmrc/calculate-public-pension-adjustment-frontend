@@ -15,6 +15,9 @@ site.govuk = GOV.UK
 site.opensInNewTab = (opens in a new tab)
 site.newPSTR = New
 
+feedback.link = What did you think of this service?
+feedback.takesSecond = (takes 30 seconds)
+
 date.day = Day
 date.month = Month
 date.year = Year
