@@ -35,7 +35,7 @@ class SignedOutControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[SignedOutView]
+        val view             = application.injector.instanceOf[SignedOutView]
         val redirectLocation =
           controllers.routes.OptionalSignInController.onPageLoad().toString
         status(result) mustEqual OK
