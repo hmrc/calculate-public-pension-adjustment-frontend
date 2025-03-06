@@ -17,14 +17,16 @@
 package controllers.setupquestions
 
 import base.SpecBase
+import config.FrontendAppConfig
 import controllers.setupquestions.{routes => setupRoutes}
 import models.{Done, KickOffAuditEvent}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
-import play.api.inject
+import play.api.{Configuration, inject}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.api.test.Helpers.baseApplicationBuilder.injector
 import services.AuditService
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.IneligibleView
@@ -32,6 +34,9 @@ import views.html.setupquestions.IneligibleView
 import scala.concurrent.Future
 
 class IneligibleControllerSpec extends SpecBase {
+
+  val config: Configuration = injector.instanceOf[Configuration]
+  val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
   "Ineligible Controller" - {
 
@@ -47,7 +52,8 @@ class IneligibleControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[IneligibleView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        contentAsString(result) mustEqual view(exitUrl)(request, messages(application)).toString
+        contentAsString(result) must include("What did you think of this service?")
       }
     }
 

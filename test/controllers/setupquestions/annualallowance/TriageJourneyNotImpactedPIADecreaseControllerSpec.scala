@@ -17,13 +17,15 @@
 package controllers
 
 import base.SpecBase
+import config.FrontendAppConfig
 import models.{Done, KickOffAuditEvent, LTAKickOutStatus, UserAnswers}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar.mock
-import play.api.inject
+import play.api.{Configuration, inject}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.api.test.Helpers.baseApplicationBuilder.injector
 import services.AuditService
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseView
@@ -34,9 +36,12 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
   "TriageJourneyNotImpactedPIADecrease Controller" - {
 
+    val config: Configuration = injector.instanceOf[Configuration]
+    val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
+
     "when annual allowance status is 1 in the UserAnswers" - {
 
-      "must return show button as true and have correct url" in {
+      "must return show button as true and have correct url and not show feedback message" in {
         val userAnswers =
           UserAnswers(userAnswersId)
             .set(LTAKickOutStatus(), 1)
@@ -60,12 +65,15 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
           status(result) mustEqual OK
           contentAsString(result) mustEqual view(
             true,
-            "/public-pension-adjustment/triage-journey/lifetime-allowance/benefit-crystallisation-event"
+            "/public-pension-adjustment/triage-journey/lifetime-allowance/benefit-crystallisation-event",
+            exitUrl
           )(
             request,
             messages(application)
           ).toString
           contentAsString(result) must include("Continue")
+          contentAsString(result) must not include "What did you think of this service?"
+
         }
       }
     }
@@ -94,7 +102,7 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup")(
+          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup", exitUrl)(
             request,
             messages(application)
           ).toString
@@ -105,7 +113,7 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
     "when annual allowance status is any number in the UserAnswers" - {
 
-      "must return show button as false and have correct url" in {
+      "must return show button as false and have correct url and show feedback message" in {
         val userAnswers =
           UserAnswers(userAnswersId)
             .set(LTAKickOutStatus(), 0)
@@ -127,11 +135,13 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString
           contentAsString(result) must not include "Continue"
+          contentAsString(result) must include("What did you think of this service?")
+
         }
       }
     }
@@ -154,7 +164,7 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem")(
+          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString

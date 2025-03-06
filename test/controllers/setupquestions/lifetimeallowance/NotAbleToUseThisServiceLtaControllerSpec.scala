@@ -29,9 +29,9 @@ import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaVie
 
 class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
 
-  val kickOutStatusFalse = 1
+  val kickOutStatusFalse    = 1
   val config: Configuration = injector.instanceOf[Configuration]
-  val exitUrl: String = new FrontendAppConfig(config).exitSurveyUrl
+  val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
   "NotAbleToUseThisServiceLta Controller" - {
 
@@ -56,12 +56,16 @@ class NotAbleToUseThisServiceLtaControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[NotAbleToUseThisServiceLtaView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/triage-journey/received-letter", exitUrl)(
+          contentAsString(result) mustEqual view(
+            true,
+            "/public-pension-adjustment/triage-journey/received-letter",
+            exitUrl
+          )(
             request,
             messages(application)
           ).toString
           contentAsString(result) must include("Continue")
-          contentAsString(result) must not include("What did you think of this service?")
+          contentAsString(result) must not include "What did you think of this service?"
         }
       }
     }

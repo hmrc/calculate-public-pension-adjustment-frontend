@@ -36,9 +36,9 @@ import scala.concurrent.Future
 
 class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
 
-  val kickOutStatusFalse = 1
+  val kickOutStatusFalse    = 1
   val config: Configuration = injector.instanceOf[Configuration]
-  val exitUrl: String = new FrontendAppConfig(config).exitSurveyUrl
+  val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
   "NotAbleToUseThisServiceLta Controller" - {
 
@@ -72,7 +72,7 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
             messages(application)
           ).toString
           contentAsString(result) must include("Continue")
-          contentAsString(result) must not include("What did you think of this service?")
+          contentAsString(result) must not include "What did you think of this service?"
         }
       }
     }

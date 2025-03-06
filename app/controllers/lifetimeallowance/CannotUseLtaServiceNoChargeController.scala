@@ -57,6 +57,6 @@ class CannotUseLtaServiceNoChargeController @Inject() (
           CannotUseLtaServiceNoChargeKickOff
         )
       )
-      .map(_ => Ok(view(annualAllowanceIncluded)))
+      .map(_ => Ok(view(annualAllowanceIncluded, config.exitSurveyUrl)))
   }
 }
