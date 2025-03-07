@@ -16,7 +16,7 @@ site.opensInNewTab = (yn agor tab newydd)
 site.newPSTR = Newydd
 
 feedback.link = Beth oedd eich barn am y gwasanaeth hwn?
-feedback.takesSecond = (mae'n cymryd 30 eiliad)
+feedback.takesSecond = (mae''n cymryd 30 eiliad)
 
 date.day = Diwrnod
 date.month = Mis
