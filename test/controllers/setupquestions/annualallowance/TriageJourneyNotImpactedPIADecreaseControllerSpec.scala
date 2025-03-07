@@ -17,18 +17,10 @@
 package controllers
 
 import base.SpecBase
-import models.{Done, KickOffAuditEvent, LTAKickOutStatus, UserAnswers}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{verify, when}
-import org.scalatestplus.mockito.MockitoSugar.mock
-import play.api.inject
+import models.{LTAKickOutStatus, UserAnswers}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.AuditService
-import uk.gov.hmrc.http.HeaderCarrier
 import views.html.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseView
-
-import scala.concurrent.Future
 
 class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
@@ -160,30 +152,6 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
           ).toString
           contentAsString(result) must not include "Continue"
         }
-      }
-    }
-    "must trigger audit event" in {
-
-      val mockAuditService = mock[AuditService]
-      when(mockAuditService.auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier]))
-        .thenReturn(Future.successful(Done))
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-        .overrides(
-          inject.bind[AuditService].toInstance(mockAuditService)
-        )
-        .build()
-
-      running(application) {
-        val request = FakeRequest(
-          GET,
-          controllers.setupquestions.annualallowance.routes.TriageJourneyNotImpactedPIADecreaseController
-            .onPageLoad()
-            .url
-        )
-        val result  = route(application, request).value
-        status(result) mustEqual OK
-        verify(mockAuditService).auditKickOff(any[String], any[KickOffAuditEvent])(any[HeaderCarrier])
       }
     }
   }

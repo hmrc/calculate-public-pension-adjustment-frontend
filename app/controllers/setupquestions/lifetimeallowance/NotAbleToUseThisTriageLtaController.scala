@@ -16,15 +16,12 @@
 
 package controllers.setupquestions.lifetimeallowance
 
-import config.FrontendAppConfig
 import controllers.actions._
-import models.{AAKickOutStatus, KickOffAuditEvent, NormalMode}
+import models.{AAKickOutStatus, NormalMode}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.Format.GenericFormat
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import utils.Constants._
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaView
 
 import javax.inject.Inject
@@ -35,15 +32,13 @@ class NotAbleToUseThisTriageLtaController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  auditService: AuditService,
-  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisTriageLtaView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val annualAllowanceStatus = request.userAnswers.get(AAKickOutStatus())
 
     val shouldShowContinueButton = annualAllowanceStatus match {
@@ -68,16 +63,6 @@ class NotAbleToUseThisTriageLtaController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    auditService
-      .auditKickOff(
-        config.triageJourneyNotImpactedNoChangeKickOff,
-        KickOffAuditEvent(
-          request.userAnswers.uniqueId,
-          request.userAnswers.id,
-          request.userAnswers.authenticated,
-          TriageJourneyNotImpactedNoChangeKickOff
-        )
-      )
-      .map(_ => Ok(view(shouldShowContinueButton, urlFromStatus)))
+    Ok(view(shouldShowContinueButton, urlFromStatus))
   }
 }

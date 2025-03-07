@@ -16,14 +16,12 @@
 
 package controllers.setupquestions
 
-import config.FrontendAppConfig
 import controllers.actions._
-import models.{AAKickOutStatus, EligibilityAuditEvent, LTAKickOutStatus, NormalMode, ReportingChange}
+import models.{AAKickOutStatus, LTAKickOutStatus, NormalMode, ReportingChange}
 import pages.annualallowance.preaaquestions.ScottishTaxpayerFrom2016Page
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.UserEligibilityView
 
@@ -35,15 +33,13 @@ class UserEligibility @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  auditService: AuditService,
-  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: UserEligibilityView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async { implicit request =>
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val continueURL                      = request.userAnswers.get(ReportingChangePage) match {
       case Some(set)
           if set.contains(ReportingChange.AnnualAllowance) && request.userAnswers.get(AAKickOutStatus()).contains(2) =>
@@ -70,21 +66,7 @@ class UserEligibility @Inject() (
       case _       => false
     }
 
-    auditService
-      .auditEligibility(
-        EligibilityAuditEvent(
-          request.userAnswers.uniqueId,
-          request.userAnswers.id,
-          request.userAnswers.authenticated,
-          annualAllowanceIncluded,
-          lifetimeAllowanceIncluded,
-          eligibleForAA,
-          eligibleForLTA
-        )
-      )
-      .map(_ =>
-        Ok(view(annualAllowanceIncluded, lifetimeAllowanceIncluded, continueURL, eligibleForLTA, eligibleForAA))
-      )
+    Ok(view(annualAllowanceIncluded, lifetimeAllowanceIncluded, continueURL, eligibleForLTA, eligibleForAA))
 
   }
 }

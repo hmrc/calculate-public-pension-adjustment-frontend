@@ -76,37 +76,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
 
   val cacheTtl: Int = configuration.get[Int]("mongodb.timeToLiveInSeconds")
 
-  val beforeCalculationAuditEventName =
-    configuration.get[String]("auditing.before-calculation-request-event-name")
-
   val calculationAuditEventName =
     configuration.get[String]("auditing.calculation-request-event-name")
-
-  val calculationStartAuditEventName =
-    configuration.get[String]("auditing.calculation-start-event-name")
-
-  val calculationTaskListAuditEventName =
-    configuration.get[String]("auditing.calculation-task-list-event-name")
-
-  val triageJourneyNotImpactedKickOff =
-    configuration.get[String]("auditing.triage-journey-not-impacted-kick-off-event-name")
-
-  val triageJourneyNotEligibleNoRpssKickOff =
-    configuration.get[String]("auditing.triage-journey-not-eligible-no-rpss-kick-off-event-name")
-
-  val triageJourneyNotEligiblePiaDecreaseKickOff =
-    configuration.get[String]("auditing.triage-journey-not-eligible-pia-decrease-kick-off-event-name")
-
-  val triageJourneyNotImpactedNoBceKickOff =
-    configuration.get[String]("auditing.triage-journey-not-impacted-no-bce-kick-off-event-name")
-
-  val triageJourneyNotImpactedNoChangeKickOff =
-    configuration.get[String]("auditing.triage-journey-not-impacted-no-change-kick-off-event-name")
-
-  val cannotUseLtaServiceNoChargeKickOff =
-    configuration.get[String]("auditing.cannot-use-lta-service-no-change-kick-off-event-name")
-
-  val eligibility =
-    configuration.get[String]("auditing.eligibility")
 
 }
