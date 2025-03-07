@@ -23,7 +23,7 @@ import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
-import models.{AAKickOutStatus, AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReducedNetIncomeRequest, ReducedNetIncomeResponse, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AAKickOutStatus, AnnualAllowance, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReducedNetIncomeRequest, ReducedNetIncomeResponse, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
 import pages.annualallowance.taxyear._
 import pages.lifetimeallowance._
@@ -42,7 +42,6 @@ class CalculationResultService @Inject() (
   calculationResultConnector: CalculationResultConnector,
   submissionsConnector: SubmissionsConnector,
   reducedNetIncomeConnector: ReducedNetIncomeConnector,
-  auditService: AuditService,
   aboveThresholdController: AboveThresholdController
 )(implicit
   ec: ExecutionContext
@@ -54,16 +53,6 @@ class CalculationResultService @Inject() (
     for {
       calculationInputs   <- buildCalculationInputs(userAnswers)
       calculationResponse <- calculationResultConnector.sendRequest(calculationInputs)
-      _                   <-
-        auditService.auditCalculationRequest(
-          CalculationAuditEvent(
-            userAnswers.uniqueId,
-            userAnswers.authenticated,
-            userAnswers.id,
-            calculationInputs,
-            calculationResponse
-          )
-        )
     } yield calculationResponse
 
   def submitUserAnswersAndCalculation(answers: UserAnswers, userId: String)(implicit

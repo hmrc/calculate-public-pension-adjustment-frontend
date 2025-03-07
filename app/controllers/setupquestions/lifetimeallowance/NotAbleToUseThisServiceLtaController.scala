@@ -25,7 +25,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class NotAbleToUseThisServiceLtaController @Inject() (
   override val messagesApi: MessagesApi,
@@ -34,8 +33,7 @@ class NotAbleToUseThisServiceLtaController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceLtaView
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>

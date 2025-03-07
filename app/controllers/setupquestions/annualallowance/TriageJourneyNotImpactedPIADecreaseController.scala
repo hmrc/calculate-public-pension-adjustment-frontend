@@ -16,17 +16,14 @@
 
 package controllers.setupquestions.annualallowance
 
-import config.FrontendAppConfig
 import controllers.actions._
 import models.{LTAKickOutStatus, NormalMode}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.AuditService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class TriageJourneyNotImpactedPIADecreaseController @Inject() (
   override val messagesApi: MessagesApi,
@@ -35,8 +32,7 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: TriageJourneyNotImpactedPIADecreaseView
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
