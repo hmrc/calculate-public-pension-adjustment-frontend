@@ -44,7 +44,9 @@ case object SetupSection extends Section {
 
   def navigateTo(answers: UserAnswers): String = {
     val taskListNavLink = answers.get(sectionNavigation).getOrElse(initialPage.url)
-    if (taskListNavLink == ineligiblePage.url) { checkYourSetupAnswersPage.url }
+    if (
+      taskListNavLink == ineligiblePage.url || taskListNavLink == kickoutLTAService.url || taskListNavLink == kickoutLTATriage.url
+    ) { checkYourSetupAnswersPage.url }
     else { taskListNavLink }
   }
 
