@@ -25,6 +25,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaView
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
 class NotAbleToUseThisTriageLtaController @Inject() (
   override val messagesApi: MessagesApi,
@@ -33,7 +34,8 @@ class NotAbleToUseThisTriageLtaController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisTriageLtaView
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
