@@ -26,6 +26,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.UserEligibilityView
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
 class UserEligibility @Inject() (
   override val messagesApi: MessagesApi,
@@ -34,7 +35,8 @@ class UserEligibility @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: UserEligibilityView
-) extends FrontendBaseController
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>

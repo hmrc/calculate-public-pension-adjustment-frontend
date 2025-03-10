@@ -42,6 +42,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
 
   private val mockCalculationResultConnector = mock[CalculationResultConnector]
   private val mockSubmissionsConnector       = mock[SubmissionsConnector]
+  private val mockAuditService               = mock[AuditService]
   private val mockReducedNetIncomeConnector  = mock[ReducedNetIncomeConnector]
   private val aboveThresholdController       = new AboveThresholdController
   private val service                        =
@@ -49,6 +50,7 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       mockCalculationResultConnector,
       mockSubmissionsConnector,
       mockReducedNetIncomeConnector,
+      mockAuditService,
       aboveThresholdController
     )
 
