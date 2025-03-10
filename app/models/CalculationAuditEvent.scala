@@ -17,7 +17,8 @@
 package models
 
 import models.CalculationResults.{CalculationInputs, CalculationResponse}
-import play.api.libs.json.*
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 case class CalculationAuditEvent(
   uniqueId: String,
@@ -29,5 +30,11 @@ case class CalculationAuditEvent(
 
 object CalculationAuditEvent {
 
-  implicit lazy val formats: Format[CalculationAuditEvent] = Json.format
+  implicit val format: Format[CalculationAuditEvent] = (
+    (__ \ "uniqueId").format[String] and
+      (__ \ "authenticated").format[Boolean] and
+      (__ \ "userId").format[String] and
+      (__ \ "calculationInputs").format[CalculationInputs] and
+      (__ \ "calculationResponse").format[CalculationResponse]
+  )(CalculationAuditEvent.apply, o => Tuple.fromProductTyped(o))
 }

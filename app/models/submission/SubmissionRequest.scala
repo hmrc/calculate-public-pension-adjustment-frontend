@@ -16,8 +16,9 @@
 
 package models.submission
 
+import play.api.libs.functional.syntax.*
 import models.CalculationResults.{CalculationInputs, CalculationResponse}
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, __}
 
 case class SubmissionRequest(
   calculationInputs: CalculationInputs,
@@ -28,5 +29,10 @@ case class SubmissionRequest(
 
 object SubmissionRequest {
 
-  implicit lazy val format: Format[SubmissionRequest] = Json.format
+  implicit lazy val format: Format[SubmissionRequest] = (
+    (__ \ "calculationInputs").format[CalculationInputs] and
+      (__ \ "calculation").formatNullable[CalculationResponse] and
+      (__ \ "userId").format[String] and
+      (__ \ "uniqueId").format[String]
+  )(SubmissionRequest.apply, o => Tuple.fromProductTyped(o))
 }
