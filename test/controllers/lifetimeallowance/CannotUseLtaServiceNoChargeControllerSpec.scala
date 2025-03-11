@@ -17,11 +17,7 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
-import controllers.lifetimeallowance.routes as ltaRoutes
 import models.{ReportingChange, UserAnswers}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{verify, when}
-import org.scalatestplus.mockito.MockitoSugar.mock
 import pages.setupquestions.ReportingChangePage
 import play.api.Configuration
 import play.api.test.FakeRequest
