@@ -1034,12 +1034,12 @@ class CalculationResultService @Inject() (
 
     val lumpSumDeathBenefits = userAnswers.get(LumpSumDeathBenefitsValuePage(period)).getOrElse(BigInt(0))
 
-    netIncomeAfterDeductingTaxRelief +
+    (netIncomeAfterDeductingTaxRelief +
       taxReliefClaimedOnPensionContributions +
       employeeContributions +
       employerTotalContributions +
       reliefClaimedOnOverseasPensions -
-      lumpSumDeathBenefits
+      lumpSumDeathBenefits).max(0)
 
   }
 

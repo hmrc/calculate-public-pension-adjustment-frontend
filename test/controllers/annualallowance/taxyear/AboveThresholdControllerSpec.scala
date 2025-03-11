@@ -170,7 +170,7 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
           .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
           .success
           .value
-          .set(TotalIncomePage(period), BigInt(-1000))
+          .set(TotalIncomePage(period), BigInt(1000))
           .success
           .value
           .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
@@ -182,7 +182,7 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
           .set(RASContributionAmountPage(period), BigInt(1))
           .success
           .value
-          .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+          .set(LumpSumDeathBenefitsValuePage(period), BigInt(9999999))
           .success
           .value
           .set(TaxReliefPage(period), BigInt(1))
