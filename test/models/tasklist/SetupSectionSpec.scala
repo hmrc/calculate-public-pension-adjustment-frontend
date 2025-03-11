@@ -40,6 +40,22 @@ class SetupSectionSpec extends SpecBase with PageBehaviours {
       checkNavigation(navUrl, "/check-your-answers-setup")
     }
 
+    "Must link to check answers url when a kickoutLTATriage url has been saved" in {
+      val answers: UserAnswers = SetupSection.saveNavigation(emptyUserAnswers, SetupSection.kickoutLTAService.url)
+
+      val navUrl = SetupSection.navigateTo(answers)
+
+      checkNavigation(navUrl, "/check-your-answers-setup")
+    }
+
+    "Must link to check answers url when a kickoutLTAService url has been saved" in {
+      val answers: UserAnswers = SetupSection.saveNavigation(emptyUserAnswers, SetupSection.kickoutLTATriage.url)
+
+      val navUrl = SetupSection.navigateTo(answers)
+
+      checkNavigation(navUrl, "/check-your-answers-setup")
+    }
+
     "Must link to check answers url when check answers url has been saved" in {
       val answers: UserAnswers =
         SetupSection.saveNavigation(emptyUserAnswers, SetupSection.checkYourSetupAnswersPage.url)
