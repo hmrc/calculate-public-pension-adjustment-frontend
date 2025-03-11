@@ -25,7 +25,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class TriageJourneyNotImpactedPIADecreaseController @Inject() (
   override val messagesApi: MessagesApi,
@@ -35,7 +34,7 @@ class TriageJourneyNotImpactedPIADecreaseController @Inject() (
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: TriageJourneyNotImpactedPIADecreaseView
-)(implicit ec: ExecutionContext)
+)
     extends FrontendBaseController
     with I18nSupport {
 

@@ -25,7 +25,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class NotAbleToUseThisServiceAAController @Inject() (
   override val messagesApi: MessagesApi,
@@ -35,7 +34,7 @@ class NotAbleToUseThisServiceAAController @Inject() (
   config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceAAView
-)(implicit ec: ExecutionContext)
+)
     extends FrontendBaseController
     with I18nSupport {
 
