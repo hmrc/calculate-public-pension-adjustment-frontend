@@ -25,6 +25,7 @@ import models.tasklist.sections.LTASection
 import models.tasklist.{SectionGroupViewModel, SectionViewModel, TaskListViewModel}
 import org.jsoup.Jsoup
 import org.mockito.ArgumentMatchers.any
+import org.scalatest.matchers.should.Matchers.should
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind

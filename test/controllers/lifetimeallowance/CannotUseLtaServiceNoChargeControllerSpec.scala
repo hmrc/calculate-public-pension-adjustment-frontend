@@ -17,19 +17,20 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
+import config.FrontendAppConfig
 import models.{ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.Configuration
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.lifetimeallowance.CannotUseLtaServiceNoChargeView
 
-class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
+class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
   "CannotUseLtaServiceNoCharge Controller" - {
 
-    val config: Configuration = injector.instanceOf[Configuration]
+    val config: Configuration = app.injector.instanceOf[Configuration]
     val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
     "when AnnualAllowance is included in the UserAnswers" - {

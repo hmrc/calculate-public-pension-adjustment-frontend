@@ -33,7 +33,7 @@ class SignedOutControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = None).build
+      val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
         val request = FakeRequest(GET, routes.SignedOutController.onPageLoad().url)

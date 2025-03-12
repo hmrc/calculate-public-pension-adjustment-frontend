@@ -18,19 +18,18 @@ package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.lifetimeallowance..routes as ltaRoutes
 import models.{AAKickOutStatus, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.Configuration
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisTriageLtaView
 
-class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
+class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
   val kickOutStatusFalse    = 1
-  val config: Configuration = injector.instanceOf[Configuration]
+  val config: Configuration = app.injector.instanceOf[Configuration]
   val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
   "NotAbleToUseThisTriageLta Controller" - {
@@ -100,7 +99,11 @@ class NotAbleToUseThisTriageLtaControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[NotAbleToUseThisTriageLtaView]
 
           status(result) `mustEqual` OK
-          contentAsString(result) `mustEqual` view(true, "/public-pension-adjustment/check-your-answers-setup", exitUrl)(
+          contentAsString(result) `mustEqual` view(
+            true,
+            "/public-pension-adjustment/check-your-answers-setup",
+            exitUrl
+          )(
             request,
             messages(application)
           ).toString

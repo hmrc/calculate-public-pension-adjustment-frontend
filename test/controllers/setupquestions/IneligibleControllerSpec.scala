@@ -18,16 +18,15 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.routes as setupRoutes
 import play.api.Configuration
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.setupquestions.IneligibleView
 
-class IneligibleControllerSpec extends SpecBase {
+class IneligibleControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
-  val config: Configuration = injector.instanceOf[Configuration]
+  val config: Configuration = app.injector.instanceOf[Configuration]
   val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
   "Ineligible Controller" - {

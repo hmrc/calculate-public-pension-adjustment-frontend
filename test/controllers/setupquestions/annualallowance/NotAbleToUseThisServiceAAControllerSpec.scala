@@ -18,20 +18,19 @@ package controllers.setupquestions.annualallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.annualallowance.routes as triageAARoutes
 import models.{LTAKickOutStatus, ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.Configuration
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 import views.html.setupquestions.annualallowance.NotAbleToUseThisServiceAAView
 
-class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
+class NotAbleToUseThisServiceAAControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
   val kickOutStatusFalse    = 1
-  val config: Configuration = injector.instanceOf[Configuration]
+  val config: Configuration = app.injector.instanceOf[Configuration]
   val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
   "NotAbleToUseThisServiceLta Controller" - {
@@ -98,7 +97,11 @@ class NotAbleToUseThisServiceAAControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[NotAbleToUseThisServiceAAView]
 
           status(result) `mustEqual` OK
-          contentAsString(result) `mustEqual` view(true, "/public-pension-adjustment/check-your-answers-setup", exitUrl)(
+          contentAsString(result) `mustEqual` view(
+            true,
+            "/public-pension-adjustment/check-your-answers-setup",
+            exitUrl
+          )(
             request,
             messages(application)
           ).toString
