@@ -16,6 +16,7 @@
 
 package controllers.setupquestions.lifetimeallowance
 
+import config.FrontendAppConfig
 import controllers.actions._
 import models.{AAKickOutStatus, NormalMode}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -25,17 +26,16 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.setupquestions.lifetimeallowance.NotAbleToUseThisServiceLtaView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class NotAbleToUseThisServiceLtaController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: NotAbleToUseThisServiceLtaView
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
@@ -63,6 +63,6 @@ class NotAbleToUseThisServiceLtaController @Inject() (
         controllers.routes.JourneyRecoveryController.onPageLoad(None).url
     }
 
-    Ok(view(shouldShowContinueButton, urlFromStatus))
+    Ok(view(shouldShowContinueButton, urlFromStatus, config.exitSurveyUrl))
   }
 }

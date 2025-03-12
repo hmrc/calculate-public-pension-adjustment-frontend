@@ -16,6 +16,7 @@
 
 package controllers.lifetimeallowance
 
+import config.FrontendAppConfig
 import controllers.actions._
 import models.ReportingChange
 import pages.setupquestions.ReportingChangePage
@@ -25,23 +26,22 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.lifetimeallowance.CannotUseLtaServiceNoChargeView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class CannotUseLtaServiceNoChargeController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
+  config: FrontendAppConfig,
   val controllerComponents: MessagesControllerComponents,
   view: CannotUseLtaServiceNoChargeView
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController
+) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) { implicit request =>
     val annualAllowanceIncluded: Boolean =
       request.userAnswers.get(ReportingChangePage).exists(_.contains(ReportingChange.AnnualAllowance))
 
-    Ok(view(annualAllowanceIncluded))
+    Ok(view(annualAllowanceIncluded, config.exitSurveyUrl))
   }
 }

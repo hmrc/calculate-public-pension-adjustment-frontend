@@ -17,20 +17,26 @@
 package controllers.lifetimeallowance
 
 import base.SpecBase
+import config.FrontendAppConfig
 import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.{ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
+import play.api.Configuration
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.api.test.Helpers.baseApplicationBuilder.injector
 import views.html.lifetimeallowance.CannotUseLtaServiceNoChargeView
 
 class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
 
   "CannotUseLtaServiceNoCharge Controller" - {
 
+    val config: Configuration = injector.instanceOf[Configuration]
+    val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
+
     "when AnnualAllowance is included in the UserAnswers" - {
 
-      "must return OK and the correct view with annualAllowanceIncluded as true for a GET" in {
+      "must return OK and the correct view with annualAllowanceIncluded as true for a GET and must not show feedback message" in {
         val userAnswers =
           UserAnswers(userAnswersId).set(ReportingChangePage, ReportingChange.values.toSet).success.value
 
@@ -44,13 +50,14 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true)(request, messages(application)).toString
+          contentAsString(result) mustEqual view(true, exitUrl)(request, messages(application)).toString
           contentAsString(result) must include("Continue")
+          contentAsString(result) must not include "What did you think of this service?"
         }
       }
     }
 
-    "when AnnualAllowance is NOT included in the UserAnswers" - {
+    "when AnnualAllowance is NOT included in the UserAnswers must not show continue and show feedback message" - {
 
       "must return OK and the correct view with annualAllowanceIncluded as false for a GET" in {
         val userAnswers = UserAnswers(userAnswersId)
@@ -68,8 +75,9 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
           status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false)(request, messages(application)).toString
+          contentAsString(result) mustEqual view(false, exitUrl)(request, messages(application)).toString
           contentAsString(result) must not include "Continue"
+          contentAsString(result) must include("What did you think of this service?")
         }
       }
     }
