@@ -27,7 +27,7 @@ import pages.annualallowance.taxyear.ClaimingTaxReliefPensionPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.ClaimingTaxReliefPensionView
 
@@ -59,8 +59,8 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
         val view = application.injector.instanceOf[ClaimingTaxReliefPensionView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, period, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -80,8 +80,8 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, period, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -106,10 +106,10 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
+        ).value `mustEqual` controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController
           .onPageLoad(NormalMode, period)
           .url
       }
@@ -130,8 +130,8 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, period, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -148,8 +148,8 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -165,8 +165,8 @@ class ClaimingTaxReliefPensionControllerSpec extends SpecBase with MockitoSugar 
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

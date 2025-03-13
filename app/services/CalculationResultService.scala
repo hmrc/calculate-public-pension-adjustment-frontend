@@ -18,17 +18,17 @@ package services
 
 import connectors.{CalculationResultConnector, ReducedNetIncomeConnector, SubmissionsConnector}
 import controllers.annualallowance.taxyear.AboveThresholdController
-import models.CalculationResults._
+import models.CalculationResults.*
 import models.Income.{AboveThreshold, BelowThreshold}
 import models.TaxYear2016To2023.{InitialFlexiblyAccessedTaxYear, NormalTaxYear, PostFlexiblyAccessedTaxYear}
 import models.submission.{SubmissionRequest, SubmissionResponse}
 import models.tasklist.sections.LTASection
 import models.{AAKickOutStatus, AnnualAllowance, CalculationAuditEvent, CalculationResults, EnhancementType, ExcessLifetimeAllowancePaid, Income, IncomeSubJourney, LTAKickOutStatus, LifeTimeAllowance, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, NewLifeTimeAllowanceAdditions, PensionSchemeDetails, PensionSchemeInput2016postAmounts, PensionSchemeInputAmounts, Period, PostTriageFlag, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReducedNetIncomeRequest, ReducedNetIncomeResponse, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, TaxYear, TaxYear2011To2015, TaxYear2016To2023, TaxYearScheme, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.{FlexibleAccessStartDatePage, PIAPreRemedyPage, WhichYearsScottishTaxpayerPage}
-import pages.annualallowance.taxyear._
-import pages.lifetimeallowance._
-import pages.setupquestions.annualallowance._
-import pages.setupquestions.lifetimeallowance._
+import pages.annualallowance.taxyear.*
+import pages.lifetimeallowance.*
+import pages.setupquestions.annualallowance.*
+import pages.setupquestions.lifetimeallowance.*
 import pages.setupquestions.{ReasonForResubmissionPage, ReportingChangePage, ResubmittingAdjustmentPage}
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
@@ -143,7 +143,7 @@ class CalculationResultService @Inject() (
         if (postTriageFlagStatus) {
           buildSetupAAPostTriage(userAnswers, scottishTaxYears, tYears, reportingChange)
         } else {
-          buildSetupAAPreTriage(userAnswers, scottishTaxYears, tYears, reportingChange)
+          buildSetupAAPreTriage(scottishTaxYears, tYears, reportingChange)
         },
         if (postTriageFlagStatus) {
           buildSetupLTAPostTriage(userAnswers, reportingChange)
@@ -184,7 +184,6 @@ class CalculationResultService @Inject() (
     } else None
 
   private def buildSetupAAPreTriage(
-    userAnswers: UserAnswers,
     scottishTaxYears: List[Period],
     tYears: List[TaxYear],
     reportingChange: Option[Set[ReportingChange]]

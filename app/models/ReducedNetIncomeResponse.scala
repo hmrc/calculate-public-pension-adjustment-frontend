@@ -16,7 +16,8 @@
 
 package models
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 case class ReducedNetIncomeResponse(
   personalAllowance: Int,
@@ -25,5 +26,8 @@ case class ReducedNetIncomeResponse(
 
 object ReducedNetIncomeResponse {
 
-  implicit lazy val format: Format[ReducedNetIncomeResponse] = Json.format
+  implicit lazy val format: Format[ReducedNetIncomeResponse] = (
+    (__ \ "personalAllowance").format[Int] and
+      (__ \ "reducedNetIncomeAmount").format[Int]
+  )(ReducedNetIncomeResponse.apply, o => Tuple.fromProductTyped(o))
 }

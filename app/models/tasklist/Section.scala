@@ -28,7 +28,7 @@ trait Section {
 
       val updatedAnswers =
         page match {
-          case settablePage: Settable[_] => answers.remove(settablePage).get
+          case settablePage: Settable[?] => answers.remove(settablePage).get
           case _                         => answers
         }
 

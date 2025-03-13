@@ -16,8 +16,9 @@
 
 package models.CalculationResults
 
+import play.api.libs.functional.syntax.*
 import models.{AnnualAllowance, LifeTimeAllowance}
-import play.api.libs.json._
+import play.api.libs.json.{Format, __}
 
 case class CalculationInputs(
   resubmission: Resubmission,
@@ -28,5 +29,10 @@ case class CalculationInputs(
 
 object CalculationInputs {
 
-  implicit lazy val formats: Format[CalculationInputs] = Json.format
+  implicit lazy val format: Format[CalculationInputs] = (
+    (__ \ "resubmission").format[Resubmission] and
+      (__ \ "setup").format[Setup] and
+      (__ \ "annualAllowance").formatNullable[AnnualAllowance] and
+      (__ \ "lifeTimeAllowance").formatNullable[LifeTimeAllowance]
+  )(CalculationInputs.apply, o => Tuple.fromProductTyped(o))
 }

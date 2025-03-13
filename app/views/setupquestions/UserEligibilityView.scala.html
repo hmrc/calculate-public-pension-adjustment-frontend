@@ -22,7 +22,7 @@
     continueButtonWithLink: components.ContinueButtonWithLink
 )
 
-@(aaExist: Boolean, ltaExist: Boolean, continueURL:Call, ltaKickOutStatusStatus: Boolean, annualAllowanceStatus: Boolean)(implicit request: Request[_], messages: Messages)
+@(aaExist: Boolean, ltaExist: Boolean, continueURL:Call, ltaKickOutStatusStatus: Boolean, annualAllowanceStatus: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("userEligibility.title"))) {
 

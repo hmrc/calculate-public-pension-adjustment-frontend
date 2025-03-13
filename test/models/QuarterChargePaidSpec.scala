@@ -33,7 +33,7 @@ class QuarterChargePaidSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
       val gen = Gen.oneOf(QuarterChargePaid.values.toSeq)
 
       forAll(gen) { quarterChargePaid =>
-        JsString(quarterChargePaid.toString).validate[QuarterChargePaid].asOpt.value mustEqual quarterChargePaid
+        JsString(quarterChargePaid.toString).validate[QuarterChargePaid].asOpt.value `mustEqual` quarterChargePaid
       }
     }
 
@@ -42,7 +42,7 @@ class QuarterChargePaidSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
       val gen = arbitrary[String] suchThat (!QuarterChargePaid.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[QuarterChargePaid] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[QuarterChargePaid] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -51,7 +51,7 @@ class QuarterChargePaidSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
       val gen = Gen.oneOf(QuarterChargePaid.values.toSeq)
 
       forAll(gen) { quarterChargePaid =>
-        Json.toJson(quarterChargePaid) mustEqual JsString(quarterChargePaid.toString)
+        Json.toJson(quarterChargePaid) `mustEqual` JsString(quarterChargePaid.toString)
       }
     }
   }

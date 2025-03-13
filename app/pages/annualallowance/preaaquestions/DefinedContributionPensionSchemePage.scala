@@ -16,7 +16,6 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import controllers.routes
 import models.tasklist.sections.AASection
 import models.{CheckMode, NormalMode, UserAnswers}
@@ -34,15 +33,17 @@ case object DefinedContributionPensionSchemePage extends QuestionPage[Boolean] {
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(DefinedContributionPensionSchemePage) match {
-      case Some(true)  => preAARoutes.FlexiblyAccessedPensionController.onPageLoad(NormalMode)
+      case Some(true)  =>
+        controllers.annualallowance.preaaquestions.routes.FlexiblyAccessedPensionController.onPageLoad(NormalMode)
       case Some(false) =>
-        preAARoutes.PayTaxCharge1415Controller.onPageLoad(NormalMode)
+        controllers.annualallowance.preaaquestions.routes.PayTaxCharge1415Controller.onPageLoad(NormalMode)
       case None        => routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(DefinedContributionPensionSchemePage) match {
-      case Some(true)  => preAARoutes.FlexiblyAccessedPensionController.onPageLoad(CheckMode)
+      case Some(true)  =>
+        controllers.annualallowance.preaaquestions.routes.FlexiblyAccessedPensionController.onPageLoad(CheckMode)
       case Some(false) =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case None        => routes.JourneyRecoveryController.onPageLoad(None)

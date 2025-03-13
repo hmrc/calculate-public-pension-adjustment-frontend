@@ -18,23 +18,22 @@ package controllers.auth
 
 import base.SpecBase
 import config.FrontendAppConfig
-import models.NormalMode
 import play.api.Configuration
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import play.api.test.Helpers.*
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.auth.SignedOutView
 
-class SignedOutControllerSpec extends SpecBase {
+class SignedOutControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
-  val config: Configuration = injector.instanceOf[Configuration]
+  val config: Configuration = app.injector.instanceOf[Configuration]
   val startPageUrl: String  = new FrontendAppConfig(config).redirectToStartPage
 
   "SignedOut Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = None).build
+      val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
         val request = FakeRequest(GET, routes.SignedOutController.onPageLoad().url)
@@ -42,8 +41,8 @@ class SignedOutControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[SignedOutView]
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(startPageUrl)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(startPageUrl)(request, messages(application)).toString
       }
     }
   }

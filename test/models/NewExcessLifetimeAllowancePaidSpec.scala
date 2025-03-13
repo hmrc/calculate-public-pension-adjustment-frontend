@@ -40,7 +40,7 @@ class NewExcessLifetimeAllowancePaidSpec
         JsString(newExcessLifetimeAllowancePaid.toString)
           .validate[NewExcessLifetimeAllowancePaid]
           .asOpt
-          .value mustEqual newExcessLifetimeAllowancePaid
+          .value `mustEqual` newExcessLifetimeAllowancePaid
       }
     }
 
@@ -49,7 +49,7 @@ class NewExcessLifetimeAllowancePaidSpec
       val gen = arbitrary[String] suchThat (!NewExcessLifetimeAllowancePaid.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[NewExcessLifetimeAllowancePaid] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[NewExcessLifetimeAllowancePaid] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -58,7 +58,7 @@ class NewExcessLifetimeAllowancePaidSpec
       val gen = Gen.oneOf(NewExcessLifetimeAllowancePaid.values.toSeq)
 
       forAll(gen) { newExcessLifetimeAllowancePaid =>
-        Json.toJson(newExcessLifetimeAllowancePaid) mustEqual JsString(newExcessLifetimeAllowancePaid.toString)
+        Json.toJson(newExcessLifetimeAllowancePaid) `mustEqual` JsString(newExcessLifetimeAllowancePaid.toString)
       }
     }
   }

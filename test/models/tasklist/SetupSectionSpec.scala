@@ -77,40 +77,40 @@ class SetupSectionSpec extends SpecBase with PageBehaviours {
   "Setup section status" - {
 
     "Must be NotStarted when no section navigation has been saved" in {
-      SetupSection.status(emptyUserAnswers) mustBe NotStarted
+      SetupSection.status(emptyUserAnswers) `mustBe` NotStarted
     }
 
     "Must be Completed when a kick out url has been saved" in {
       val answers: UserAnswers = SetupSection.saveNavigation(emptyUserAnswers, SetupSection.ineligiblePage.url)
 
-      SetupSection.status(answers) mustBe Completed
+      SetupSection.status(answers) `mustBe` Completed
     }
 
     "Must be Completed when check answers url has been saved" in {
       val answers: UserAnswers =
         SetupSection.saveNavigation(emptyUserAnswers, SetupSection.checkYourSetupAnswersPage.url)
 
-      SetupSection.status(answers) mustBe Completed
+      SetupSection.status(answers) `mustBe` Completed
     }
 
     "Must be InProgress when any other url has been saved" in {
       val answers: UserAnswers = SetupSection.saveNavigation(emptyUserAnswers, "/some-page-url")
 
-      SetupSection.status(answers) mustBe InProgress
+      SetupSection.status(answers) `mustBe` InProgress
     }
 
     "Must be Completed when NotAbleToUseThisServiceLtaController reached" in {
       val answers: UserAnswers =
         SetupSection.saveNavigation(emptyUserAnswers, SetupSection.kickoutLTAService.url)
 
-      SetupSection.status(answers) mustBe Completed
+      SetupSection.status(answers) `mustBe` Completed
     }
 
     "Must be Completed when NotAbleToUseThisTriageLtaController reached" in {
       val answers: UserAnswers =
         SetupSection.saveNavigation(emptyUserAnswers, SetupSection.kickoutLTATriage.url)
 
-      SetupSection.status(answers) mustBe Completed
+      SetupSection.status(answers) `mustBe` Completed
     }
   }
 }

@@ -16,19 +16,19 @@
 
 package base
 
-import controllers.actions._
+import controllers.actions.*
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
 import models.{AAKickOutStatus, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LTAKickOutStatus, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, MaybePIAUnchangedOrDecreased, NewEnhancementType, NewExcessLifetimeAllowancePaid, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, ThresholdIncome, UserAnswers, UserSchemeDetails, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
-import pages.annualallowance.preaaquestions._
-import pages.annualallowance.taxyear._
-import pages.lifetimeallowance._
+import pages.annualallowance.preaaquestions.*
+import pages.annualallowance.taxyear.*
+import pages.lifetimeallowance.*
 import pages.setupquestions.ReportingChangePage
-import pages.setupquestions.annualallowance._
-import pages.setupquestions.lifetimeallowance._
+import pages.setupquestions.annualallowance.*
+import pages.setupquestions.lifetimeallowance.*
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.guice.GuiceApplicationBuilder

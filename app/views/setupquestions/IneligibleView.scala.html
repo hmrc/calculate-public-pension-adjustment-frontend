@@ -21,7 +21,7 @@
         govukButton: GovukButton
 )
 
-@(feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
+@(feedbackLinkUrl: String)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("ineligible.title"))) {
 

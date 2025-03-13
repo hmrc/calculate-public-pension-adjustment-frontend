@@ -20,7 +20,7 @@
         formHelper: FormWithCSRF
 )
 
-@(redirectLocation: String)(implicit request: Request[_], messages: Messages)
+@(redirectLocation: String)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("optionalSignIn.title"))) {
 

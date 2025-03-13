@@ -29,7 +29,7 @@ class LTAKickOutStatusSpec extends AnyFreeSpec with SpecBase {
 
       val updatedUserAnswers = LTAKickOutStatus().saveLTAKickOutStatus(userAnswers, 1)
 
-      updatedUserAnswers.get(LTAKickOutStatus()) mustBe Some(1)
+      updatedUserAnswers.get(LTAKickOutStatus()) `mustBe` Some(1)
     }
   }
 

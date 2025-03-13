@@ -21,7 +21,7 @@ govukButton: GovukButton,
 continueButtonWithLink: components.ContinueButtonWithLink
 )
 
-@(maybeFlexiPeriodEndDateRowsStatus: SummaryList, subHeadingMessageKey: String, continueURL:Call)(implicit request: Request[_], messages: Messages)
+@(maybeFlexiPeriodEndDateRowsStatus: SummaryList, subHeadingMessageKey: String, continueURL:Call)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 

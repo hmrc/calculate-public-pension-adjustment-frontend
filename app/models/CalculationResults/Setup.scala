@@ -16,7 +16,8 @@
 
 package models.CalculationResults
 
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 case class Setup(
   annualAllowanceSetup: Option[AnnualAllowanceSetup],
@@ -25,5 +26,8 @@ case class Setup(
 
 object Setup {
 
-  implicit lazy val formats: Format[Setup] = Json.format
+  implicit lazy val formats: Format[Setup] = (
+    (__ \ "annualAllowanceSetup").formatNullable[AnnualAllowanceSetup] and
+      (__ \ "lifetimeAllowanceSetup").formatNullable[LifetimeAllowanceSetup]
+  )(Setup.apply, o => Tuple.fromProductTyped(o))
 }

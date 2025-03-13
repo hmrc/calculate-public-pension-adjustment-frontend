@@ -30,7 +30,7 @@
 
 )
 
-@(form: Form[_],
+@(form: Form[?],
 calculationReviewIndividualAAViewModel: CalculationReviewIndividualAAViewModel,
 isInCredit: Boolean,
 isInDebit: Boolean,
@@ -42,7 +42,7 @@ isLTACompleteWithoutKickout: Boolean,
 includeCompensation2015: Boolean,
 redirectURL:Call,
 hasInDates: Boolean
-)(implicit request: Request[_], messages: Messages)
+)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("printReview.title"))) {
 
