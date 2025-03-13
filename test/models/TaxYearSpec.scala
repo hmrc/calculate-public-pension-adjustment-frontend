@@ -22,7 +22,6 @@ import org.scalatest.matchers.must.Matchers.mustEqual
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.libs.json.*
 
-
 class TaxYearSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks {
 
   "TaxYear reads" - {
