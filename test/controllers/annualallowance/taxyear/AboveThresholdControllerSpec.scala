@@ -161,6 +161,70 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
 
       }
     }
+
+    "calculateThresholdStatus" - {
+      "must return 0 if a negative number is calculated" in {
+        val period = Gen.oneOf(pre2021Periods).sample.get
+
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+          .success
+          .value
+          .set(TotalIncomePage(period), BigInt(1000))
+          .success
+          .value
+          .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+          .success
+          .value
+          .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+          .success
+          .value
+          .set(RASContributionAmountPage(period), BigInt(1))
+          .success
+          .value
+          .set(LumpSumDeathBenefitsValuePage(period), BigInt(9999999))
+          .success
+          .value
+          .set(TaxReliefPage(period), BigInt(1))
+          .success
+          .value
+
+        val controller = new AboveThresholdController
+        controller.calculateThresholdStatus(ua, period) mustBe 0
+
+      }
+      "must return the correct value if a positive value is calculated" in {
+        val period = Gen.oneOf(pre2021Periods).sample.get
+
+        val ua = emptyUserAnswers
+          .set(ThresholdIncomePage(period), ThresholdIncome.IDoNotKnow)
+          .success
+          .value
+          .set(TotalIncomePage(period), BigInt(1000))
+          .success
+          .value
+          .set(AmountSalarySacrificeArrangementsPage(period), BigInt(1))
+          .success
+          .value
+          .set(AmountFlexibleRemunerationArrangementsPage(period), BigInt(1))
+          .success
+          .value
+          .set(RASContributionAmountPage(period), BigInt(1))
+          .success
+          .value
+          .set(LumpSumDeathBenefitsValuePage(period), BigInt(1))
+          .success
+          .value
+          .set(TaxReliefPage(period), BigInt(1))
+          .success
+          .value
+
+        val controller = new AboveThresholdController
+        controller.calculateThresholdStatus(ua, period) mustBe 1000
+
+      }
+
+    }
   }
 
 }

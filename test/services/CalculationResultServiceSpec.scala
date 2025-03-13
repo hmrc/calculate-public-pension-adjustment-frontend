@@ -4687,5 +4687,58 @@ class CalculationResultServiceSpec extends SpecBase with MockitoSugar {
       service.adjustedIncomeCalculation(userAnswers, period) mustBe 180000
 
     }
+
+    "if adjusted income is a negative number it should be set to 0" in {
+
+      val period: Period = Period._2022
+
+      val userAnswers = emptyUserAnswers
+        .set(PensionSchemeInputAmountsPage(period, SchemeIndex(0)), PensionSchemeInputAmounts(29997))
+        .success
+        .value
+        .set(PensionSchemeInputAmountsPage(period, SchemeIndex(1)), PensionSchemeInputAmounts(45000))
+        .success
+        .value
+        .set(DefinedContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+        .set(FlexiAccessDefinedContributionAmountPage(period), BigInt(1))
+        .success
+        .value
+        .set(DefinedBenefitAmountPage(period), BigInt(1))
+        .success
+        .value
+        .set(ThresholdIncomePage(period), ThresholdIncome.Yes)
+        .success
+        .value
+        .set(TotalIncomePage(period), BigInt(100))
+        .success
+        .value
+        .set(TaxReliefPage(period), BigInt(100))
+        .success
+        .value
+        .set(KnowAdjustedAmountPage(period), false)
+        .success
+        .value
+        .set(RASContributionAmountPage(period), BigInt(100))
+        .success
+        .value
+        .set(LumpSumDeathBenefitsValuePage(period), BigInt(999999999))
+        .success
+        .value
+        .set(HowMuchTaxReliefPensionPage(period), BigInt(0))
+        .success
+        .value
+        .set(HowMuchContributionPensionSchemePage(period), BigInt(100))
+        .success
+        .value
+        .set(AmountClaimedOnOverseasPensionPage(period), BigInt(0))
+        .success
+        .value
+
+      service.adjustedIncomeCalculation(userAnswers, period) mustBe 0
+
+    }
+
   }
 }
