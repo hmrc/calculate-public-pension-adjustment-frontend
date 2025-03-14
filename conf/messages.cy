@@ -162,7 +162,7 @@ whichYearsScottishTaxpayer.2018 = 6 Ebrill 2017 i 5 Ebrill 2018
 whichYearsScottishTaxpayer.2017 = 6 Ebrill 2016 i 5 Ebrill 2017
 whichYearsScottishTaxpayer.checkYourAnswersLabel = Pa flynyddoedd treth oeddech chi’n drethdalwr yn yr Alban?
 whichYearsScottishTaxpayer.error.required = Dewiswch pa flynyddoedd treth yr oeddech yn drethdalwr yn yr Alban
-whichYearsScottishTaxpayer.change.hidden = pa flynyddoedd treth oeddech chi’n drethdalwr yn yr Alban
+whichYearsScottishTaxpayer.change.hidden = pa flynyddoedd treth oeddech chi’n   drethdalwr yn yr Alban
 
 payingPublicPensionScheme.title = Ydych chi wedi parhau i dalu i mewn neu gynyddu eich cynllun pensiwn gwasanaeth cyhoeddus ar ôl 5 Ebrill 2022?
 payingPublicPensionScheme.heading = Ydych chi wedi parhau i dalu i mewn neu gynyddu eich cynllun pensiwn gwasanaeth cyhoeddus ar ôl 5 Ebrill 2022?
@@ -715,8 +715,8 @@ definedContributionAmount.message2 = Gall hyn gael ei wneud gennych chi neu gan 
 definedContributionAmount.error.required = Nodwch eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {0}
 definedContributionAmount.error.nonNumeric = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {0} gynnwys y rhifau 0 i 9 yn unig
 definedContributionAmount.error.wholeNumber = Mae’n rhaid i’ch swm mewnbwn pensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {0} fod yn rhif cyfan
-definedContributionAmount.error.maximum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {1} fod yn £xxxx neu lai
-definedContributionAmount.error.minimum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {1} fod yn £xxxx neu fwy
+definedContributionAmount.error.maximum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {1} fod yn £999,999,999 neu lai
+definedContributionAmount.error.minimum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {1} fod yn £0 neu fwy
 definedContributionAmount.change.hidden = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {0}
 
 definedBenefitAmount.title = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn buddiannau diffiniedig o {0}?
@@ -787,8 +787,8 @@ flexiAccessDefinedContributionAmount.heading = Beth oedd eich swm talu i mewn i 
 flexiAccessDefinedContributionAmount.checkYourAnswersLabel = Beth oedd eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig rhwng {0}?
 flexiAccessDefinedContributionAmount.error.nonNumeric = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {0} gynnwys y rhifau 0 i 9 yn unig
 flexiAccessDefinedContributionAmount.error.required = Nodwch eich swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {0}
-flexiAccessDefinedContributionAmount.error.maximum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {1} fod yn £xxxx neu lai
-flexiAccessDefinedContributionAmount.error.minimum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {1} fod yn £xxxx neu fwy
+flexiAccessDefinedContributionAmount.error.maximum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {1} fod yn £999,999,999 neu lai
+flexiAccessDefinedContributionAmount.error.minimum = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {1} fod yn £0 neu fwy
 flexiAccessDefinedContributionAmount.change.hidden = Mae’n rhaid i’ch swm talu i mewn i bensiwn ar gyfer cynlluniau pensiwn cyfraniadau diffiniedig o {0}
 
 calculationResults.yourResult = Eich canlyniad
