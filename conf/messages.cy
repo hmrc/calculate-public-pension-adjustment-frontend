@@ -116,7 +116,7 @@ resubmittingAdjustment.title = A ydych am drosysgrifo cyflwyniad blaenorol?
 resubmittingAdjustment.heading = A ydych am drosysgrifo cyflwyniad blaenorol?
 resubmittingAdjustment.checkYourAnswersLabel = A ydych am ailgyflwyno addasiad?
 resubmittingAdjustment.error.required = Dewiswch ‘Iawn’ os ydych am drosysgrifo cyflwyniad blaenorol
-resubmittingAdjustment.change.hidden = os ydych am ailgyflwyno eich addasiad
+resubmittingAdjustment.change.hidden = cy: if you want to overwrite a previous submission
 resubmittingAdjustment.hint = Dewiswch ‘Na’ os mai dyma’ch tro cyntaf yn defnyddio’r gwasanaeth.
 
 reasonForResubmission.title = Pam ydych am drosysgrifo cyflwyniad blaenorol?
