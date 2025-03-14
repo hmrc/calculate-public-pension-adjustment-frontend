@@ -69,7 +69,6 @@ class CheckYourLTAAnswersController @Inject() (
 
     Ok(
       view(
-        "checkYourAnswers.lta.subHeading",
         controllers.routes.TaskListController.onPageLoad(),
         SummaryListViewModel(rows.flatten)
       )

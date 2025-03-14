@@ -78,6 +78,6 @@ class CheckYourSetupAnswersController @Inject() (
 
     val continueURL = controllers.setupquestions.routes.UserEligibility.onPageLoad
 
-    Ok(view("checkYourAnswers.setup.subHeading", continueURL, SummaryListViewModel(finalRows.flatten)))
+    Ok(view(continueURL, SummaryListViewModel(finalRows.flatten)))
   }
 }
