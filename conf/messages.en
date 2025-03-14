@@ -116,7 +116,7 @@ resubmittingAdjustment.title = Do you want to overwrite a previous submission?
 resubmittingAdjustment.heading = Do you want to overwrite a previous submission?
 resubmittingAdjustment.checkYourAnswersLabel = Do you want to overwrite a previous submission?
 resubmittingAdjustment.error.required = Select yes if you want to overwrite a previous submission
-resubmittingAdjustment.change.hidden = if you want to resubmit an adjustment
+resubmittingAdjustment.change.hidden = if you want to overwrite a previous submission
 resubmittingAdjustment.hint = Select no if this is your first time using the service.
 
 reasonForResubmission.title = Why do you want to overwrite a previous submission?
