@@ -166,7 +166,6 @@ class CheckYourAAPeriodAnswersController @Inject() (
       Ok(
         view(
           SummaryListViewModel(maybeFlexiPeriodEndDateRowsStatus.flatten),
-          s"checkYourAnswers.aa.period.subHeading.$period",
           controllers.routes.TaskListController.onPageLoad()
         )
       )

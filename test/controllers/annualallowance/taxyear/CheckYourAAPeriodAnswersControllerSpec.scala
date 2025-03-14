@@ -54,7 +54,6 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           list,
-          "checkYourAnswers.aa.period.subHeading.2023",
           controllers.routes.TaskListController.onPageLoad()
         )(
           request,
@@ -106,7 +105,6 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           sequenceWithFlexiAmount,
-          "checkYourAnswers.aa.period.subHeading.2023",
           controllers.routes.TaskListController.onPageLoad()
         )(
           request,
@@ -155,7 +153,6 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           sequenceWithoutFlexiAmount,
-          "checkYourAnswers.aa.period.subHeading.2023",
           controllers.routes.TaskListController.onPageLoad()
         )(
           request,
@@ -212,7 +209,6 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           summarySequence2016,
-          "checkYourAnswers.aa.period.subHeading.2016",
           controllers.routes.TaskListController.onPageLoad()
         )(
           request,
@@ -275,7 +271,6 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           summarySequence2016,
-          "checkYourAnswers.aa.period.subHeading.2016",
           controllers.routes.TaskListController.onPageLoad()
         )(
           request,
@@ -338,7 +333,6 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           summarySequence2016,
-          "checkYourAnswers.aa.period.subHeading.2016",
           controllers.routes.TaskListController.onPageLoad()
         )(
           request,
@@ -401,7 +395,6 @@ class CheckYourAAPeriodAnswersControllerSpec extends SpecBase with SummaryListFl
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           incomeSubJourneySummarySequence,
-          "checkYourAnswers.aa.period.subHeading.2022",
           controllers.routes.TaskListController.onPageLoad()
         )(
           request,
