@@ -997,6 +997,7 @@ optionalSignIn.message1 = You can create a personal Government Gateway ID if you
 optionalSignIn.message2 = When you sign in, you can:
 optionalSignIn.list1 = Calculate your pension adjustment at your own pace
 optionalSignIn.list2 = Save your progress
+optionalSignIn.warningWord = Warning
 optionalSignIn.warning = If you do not sign in, you will have to re-enter all the information that you have previously given us if you need to continue your application later.
 optionalSignIn.button = Sign in
 optionalSignIn.link = Continue without signing in
