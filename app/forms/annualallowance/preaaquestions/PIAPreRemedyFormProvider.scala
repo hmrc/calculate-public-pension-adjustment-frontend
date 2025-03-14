@@ -28,7 +28,7 @@ class PIAPreRemedyFormProvider @Inject() extends Mappings {
     Form(
       "value" -> bigInt(
         "pIAPreRemedy.error.required." + period,
-        "pIAPreRemedy.error.nonNumeric." + period,
+        "pIAPreRemedy.error.wholeNumber." + period,
         "pIAPreRemedy.error.nonNumeric." + period
       )
         .verifying(

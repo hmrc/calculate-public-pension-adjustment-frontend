@@ -28,7 +28,7 @@ class DefinedBenefitAmountFormProvider @Inject() extends Mappings {
     Form(
       "value" -> bigInt(
         "definedBenefitAmount.error.required." + period,
-        "definedBenefitAmount.error.nonNumeric." + period,
+        "definedBenefitAmount.error.wholeNumber." + period,
         "definedBenefitAmount.error.nonNumeric." + period
       )
         .verifying(
