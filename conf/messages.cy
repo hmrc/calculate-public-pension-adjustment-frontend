@@ -997,7 +997,6 @@ optionalSignIn.message1 = Os nad oes gennych ID personol ar gyfer Porth y Llywod
 optionalSignIn.message2 = Pan fyddwch yn mewngofnodi, gallwch wneud y canlynol:
 optionalSignIn.list1 = Cyfrifo eich addasiad pensiwn ar adeg sy’n gyfleus i chi
 optionalSignIn.list2 = Cadw’ch cynnydd
-optionalSignIn.warningWord = Rhybudd!
 optionalSignIn.warning = Os na fyddwch yn mewngofnodi, bydd yn rhaid i chi ailgyflwyno’r holl wybodaeth yr ydych eisoes wedi’i rhoi i ni os dewiswch beidio â chwblhau’ch cais mewn un tro.
 optionalSignIn.button = Mewngofnodi
 optionalSignIn.link = Yn eich blaen heb fewngofnodi
