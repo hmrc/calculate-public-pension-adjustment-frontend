@@ -42,7 +42,6 @@ class CheckYourSetupAnswersControllerSpec extends SpecBase with SummaryListFluen
 
         status(result) `mustEqual` OK
         contentAsString(result) `mustEqual` view(
-          "checkYourAnswers.setup.subHeading",
           controllers.setupquestions.routes.UserEligibility.onPageLoad,
           list
         )(

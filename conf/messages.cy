@@ -46,18 +46,7 @@ error.invalid_aa_period = Cyfnod lwfans blynyddol annilys
 
 checkYourAnswers.title = Gwiriwch eich atebion
 checkYourAnswers.heading = Gwiriwch eich atebion
-checkYourAnswers.setup.subHeading = Cwestiynau sefydlu
 checkYourAnswers.aa.pIASubHeading = Symiau talu i mewn i bensiwn
-checkYourAnswers.aa.subHeading = Cwestiynau sefydlu lwfans blynyddol
-checkYourAnswers.lta.subHeading = Cwestiynau sefydlu lwfans oes
-checkYourAnswers.aa.period.subHeading.2016 = Cwestiynau lwfans blynyddol 2016
-checkYourAnswers.aa.period.subHeading.2017 = Cwestiynau lwfans blynyddol 2017
-checkYourAnswers.aa.period.subHeading.2018 = Cwestiynau lwfans blynyddol 2018
-checkYourAnswers.aa.period.subHeading.2019 = Cwestiynau lwfans blynyddol 2019
-checkYourAnswers.aa.period.subHeading.2020 = Cwestiynau lwfans blynyddol 2020
-checkYourAnswers.aa.period.subHeading.2021 = Cwestiynau lwfans blynyddol 2021
-checkYourAnswers.aa.period.subHeading.2022 = Cwestiynau lwfans blynyddol 2022
-checkYourAnswers.aa.period.subHeading.2023 = Cwestiynau lwfans blynyddol 2023
 
 reviewLTAAnswers.title = Adolygu atebion o ran lwfans oes
 reviewLTAAnswers.heading = Adolygu atebion o ran lwfans oes
@@ -1371,7 +1360,7 @@ affectedByRemedy.change.hidden = os yw unioni’r pensiynau gwasanaeth cyhoeddus
 previousLTACharge.title = Tâl treth lwfans oes - Lwfans oes
 previousLTACharge.heading = Tâl treth lwfans oes
 previousLTACharge.message1 = Y lwfans oes yw cyfanswm yr arian y gallwch ei roi i mewn i gynlluniau pensiwn cofrestredig yn y DU cyn bod agored i dâl treth.
-previousLTACharge.message2 = Y lwfans oes safonol oedd £1,073,100. Cafodd hyn ei ddiddymu o 6 Ebrill 2023 ymlaen.
+previousLTACharge.message2 = Y lwfans oes safonol oedd £1,073,100.
 previousLTACharge.heading2 = A ydych wedi talu tâl treth lwfans oes yn ystod unrhyw flwyddyn dreth o 6 Ebrill 2015 i 5 Ebrill 2023?
 previousLTACharge.checkYourAnswersLabel = A ydych wedi talu tâl treth lwfans oes yn ystod unrhyw flwyddyn dreth o 6 Ebrill 2015 i 5 Ebrill 2023?
 previousLTACharge.error.required = Dewiswch ‘Iawn’ os gwnaethoch dalu tâl treth lwfans oes yn ystod unrhyw flwyddyn dreth o 6 Ebrill 2015 i 5 Ebrill 2023
@@ -1404,7 +1393,6 @@ contributionRefunds.change.hidden = os gwnaeth eich cyfraniadau newid o ganlynia
 
 notAbleToUseThisServiceAA.title = Nid ydych yn gymwys
 notAbleToUseThisServiceAA.heading = Nid ydych yn gymwys i ddefnyddio’r rhan hon o’r gwasanaeth
-notAbleToUseThisServiceAA.message1 = Nid ydych yn gymwys i ddefnyddio’r gwasanaeth hwn
 notAbleToUseThisServiceAA.message2 = Gwnaethoch ddewis eich bod am ddefnyddio’r gwasanaeth hwn i gyfrifo’ch addasiad lwfans blynyddol (AA).
 notAbleToUseThisServiceAA.message3 = Nid ydych wedi cael unrhyw un o’r canlynol:
 notAbleToUseThisServiceAA.bullet1 = datganiad cynilion pensiwn wedi’i ddiwygio
@@ -1570,8 +1558,6 @@ flexibleAccessDcScheme.change.hidden = os gwnaethoch gyrchu unrhyw un o’ch cyn
 
 triageJourneyNotImpactedPIADecrease.title = Nid ydych yn gymwys
 triageJourneyNotImpactedPIADecrease.heading = Nid ydych yn gymwys i ddefnyddio’r Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus
-triageJourneyNotImpactedPIADecrease.message1 = Nid ydych yn gymwys i ddefnyddio’r gwasanaeth hwn
-triageJourneyNotImpactedPIADecrease.message2 = Yn seiliedig ar yr atebion rydych wedi’u rhoi:
 triageJourneyNotImpactedPIADecrease.message3 = Gwnaethoch ddewis eich bod am ddefnyddio’r gwasanaeth hwn i gyfrifo’ch addasiad lwfans blynyddol (AA).
 triageJourneyNotImpactedPIADecrease.message4 = Nid ydych wedi talu tâl lwfans blynyddol.
 triageJourneyNotImpactedPIADecrease.message5 = Nid yw’ch lwfans blynyddol wedi’i feinhau gan nad yw’ch incwm trethadwy yn ddigon uchel.

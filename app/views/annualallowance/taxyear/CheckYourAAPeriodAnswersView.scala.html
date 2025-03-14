@@ -21,13 +21,11 @@ govukButton: GovukButton,
 continueButtonWithLink: components.ContinueButtonWithLink
 )
 
-@(maybeFlexiPeriodEndDateRowsStatus: SummaryList, subHeadingMessageKey: String, continueURL:Call)(implicit request: Request[?], messages: Messages)
+@(maybeFlexiPeriodEndDateRowsStatus: SummaryList, continueURL:Call)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
 <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
-
-<h2 class="govuk-heading-m">@messages(subHeadingMessageKey)</h2>
 
 @govukSummaryList(maybeFlexiPeriodEndDateRowsStatus)
 

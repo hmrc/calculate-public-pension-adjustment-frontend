@@ -42,7 +42,6 @@ class CheckYourLTAAnswersControllerSpec extends SpecBase with SummaryListFluency
 
         status(result) `mustEqual` OK
         contentAsString(result) `mustEqual` view(
-          "checkYourAnswers.lta.subHeading",
           controllers.routes.TaskListController.onPageLoad(),
           list
         )(
