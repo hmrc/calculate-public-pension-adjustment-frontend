@@ -16,12 +16,11 @@
 
 package models.tasklist.sections
 
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import models.tasklist.SectionStatus.{Completed, InProgress, NotStarted}
 import models.tasklist.{Section, SectionStatus}
 import models.{NormalMode, Period, SectionNavigation, UserAnswers}
 import pages.Page
-import pages.annualallowance.preaaquestions._
+import pages.annualallowance.preaaquestions.*
 import play.api.mvc.Call
 
 case object PreAASection extends Section {
@@ -52,8 +51,10 @@ case object PreAASection extends Section {
     PIAPreRemedyPage(Period._2015)
   )
 
-  val initialPage: Call                 = preAARoutes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
-  val checkYourAASetupAnswersPage: Call = preAARoutes.CheckYourAASetupAnswersController.onPageLoad()
+  val initialPage: Call                 =
+    controllers.annualallowance.preaaquestions.routes.ScottishTaxpayerFrom2016Controller.onPageLoad(NormalMode)
+  val checkYourAASetupAnswersPage: Call =
+    controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
 
   def status(answers: UserAnswers): SectionStatus =
     navigateTo(answers) match {

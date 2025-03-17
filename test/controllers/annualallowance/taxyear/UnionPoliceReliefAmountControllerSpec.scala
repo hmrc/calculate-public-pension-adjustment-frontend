@@ -27,7 +27,7 @@ import pages.annualallowance.taxyear.UnionPoliceReliefAmountPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.UnionPoliceReliefAmountView
 
@@ -63,8 +63,8 @@ class UnionPoliceReliefAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[UnionPoliceReliefAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, period, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -84,8 +84,8 @@ class UnionPoliceReliefAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, period, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(validAnswer), NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -96,7 +96,7 @@ class UnionPoliceReliefAmountControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -110,7 +110,7 @@ class UnionPoliceReliefAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -129,8 +129,8 @@ class UnionPoliceReliefAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, period, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, period, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -147,8 +147,8 @@ class UnionPoliceReliefAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -164,8 +164,8 @@ class UnionPoliceReliefAmountControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

@@ -19,7 +19,7 @@
         govukSummaryList: GovukSummaryList
 )
 
-@(redirectURL:Call, list: SummaryList)(implicit request: Request[_], messages: Messages)
+@(redirectURL:Call, list: SummaryList)(implicit request: Request[?], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("reviewLTAAnswers.title"))) {
 

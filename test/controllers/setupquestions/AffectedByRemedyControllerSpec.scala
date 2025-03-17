@@ -18,7 +18,6 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.{routes => setupRoutes}
 import forms.setupquestions.AffectedByRemedyFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +27,7 @@ import pages.setupquestions.AffectedByRemedyPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.setupquestions.AffectedByRemedyView
 
@@ -41,7 +40,8 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new AffectedByRemedyFormProvider()
   val form         = formProvider()
 
-  lazy val affectedByRemedyRoute = setupRoutes.AffectedByRemedyController.onPageLoad(NormalMode).url
+  lazy val affectedByRemedyRoute =
+    controllers.setupquestions.routes.AffectedByRemedyController.onPageLoad(NormalMode).url
 
   "AffectedByRemedy Controller" - {
 
@@ -56,8 +56,8 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[AffectedByRemedyView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -74,8 +74,8 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -83,7 +83,7 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -97,7 +97,7 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -116,8 +116,8 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -131,8 +131,8 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -148,8 +148,8 @@ class AffectedByRemedyControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

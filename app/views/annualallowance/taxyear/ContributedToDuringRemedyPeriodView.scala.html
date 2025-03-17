@@ -23,7 +23,7 @@
     continueButton: components.ContinueButton
 )
 
-@(form: Form[_], mode: Mode, period: Period)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], mode: Mode, period: Period)(implicit request: Request[?], messages: Messages)
 
 @contentHint = {
 

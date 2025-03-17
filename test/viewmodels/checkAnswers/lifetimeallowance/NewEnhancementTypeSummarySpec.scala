@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.NewEnhancementType.PensionCredit
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -26,8 +25,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class NewEnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -48,7 +47,7 @@ class NewEnhancementTypeSummarySpec extends AnyFreeSpec with Matchers {
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              ltaRoutes.NewEnhancementTypeController.onPageLoad(CheckMode).url
+              controllers.lifetimeallowance.routes.NewEnhancementTypeController.onPageLoad(CheckMode).url
             )
               .withVisuallyHiddenText("newEnhancementType.change.hidden")
           )

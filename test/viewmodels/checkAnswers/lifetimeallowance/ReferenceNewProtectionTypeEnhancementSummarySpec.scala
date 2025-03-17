@@ -24,8 +24,8 @@ import pages.lifetimeallowance.ReferenceNewProtectionTypeEnhancementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class ReferenceNewProtectionTypeEnhancementSummarySpec extends AnyFreeSpec with Matchers {
 

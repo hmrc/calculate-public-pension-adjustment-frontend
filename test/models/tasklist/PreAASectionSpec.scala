@@ -55,20 +55,20 @@ class PreAASectionSpec extends SpecBase with PageBehaviours {
     "Must be NotStarted when no section navigation has been saved" in {
       val answers: UserAnswers = emptyUserAnswers
 
-      PreAASection.status(answers) mustBe NotStarted
+      PreAASection.status(answers) `mustBe` NotStarted
     }
 
     "Must be InProgress when any other url has been saved" in {
       val answers: UserAnswers = PreAASection.saveNavigation(emptyUserAnswers, "/some-page-url")
 
-      PreAASection.status(answers) mustBe InProgress
+      PreAASection.status(answers) `mustBe` InProgress
     }
 
     "Must be Completed when check answers url has been saved" in {
       val answers: UserAnswers =
         PreAASection.saveNavigation(emptyUserAnswers, PreAASection.checkYourAASetupAnswersPage.url)
 
-      PreAASection.status(answers) mustBe Completed
+      PreAASection.status(answers) `mustBe` Completed
     }
   }
 }

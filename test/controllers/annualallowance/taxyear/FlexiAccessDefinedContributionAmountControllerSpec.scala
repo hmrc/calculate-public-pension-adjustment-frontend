@@ -29,7 +29,7 @@ import pages.annualallowance.taxyear.FlexiAccessDefinedContributionAmountPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.FlexiAccessDefinedContributionAmountView
 
@@ -68,8 +68,8 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
         val view = application.injector.instanceOf[FlexiAccessDefinedContributionAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form,
           NormalMode,
           Period._2023,
@@ -100,8 +100,8 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form.fill(validAnswer),
           NormalMode,
           Period._2023,
@@ -117,7 +117,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -133,7 +133,7 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -157,8 +157,8 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(
           boundForm,
           NormalMode,
           Period._2023,
@@ -180,8 +180,8 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -197,9 +197,9 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -223,8 +223,8 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
           val result = route(application, request).value
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(
             flexiForm,
             NormalMode,
             Period._2023,
@@ -254,8 +254,8 @@ class FlexiAccessDefinedContributionAmountControllerSpec extends SpecBase with M
 
           val result = route(application, request).value
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(
             flexiForm,
             NormalMode,
             Period._2023,

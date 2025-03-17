@@ -16,7 +16,7 @@
 
 package controllers.annualallowance.taxyear
 
-import controllers.actions._
+import controllers.actions.*
 import forms.annualallowance.taxyear.DefinedBenefit2016PreAmountFormProvider
 import models.tasklist.sections.AASection
 import models.{Mode, Period}

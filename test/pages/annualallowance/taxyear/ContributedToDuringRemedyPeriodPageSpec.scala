@@ -464,12 +464,12 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(DefinedBenefit2016PreAmountPage) mustBe None
-        cleanedUserAnswers.get(DefinedBenefit2016PostAmountPage) mustBe None
-        cleanedUserAnswers.get(DefinedContribution2016PreAmountPage) mustBe Some(BigInt(3))
-        cleanedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) mustBe Some(BigInt(4))
-        cleanedUserAnswers.get(DefinedContribution2016PostAmountPage) mustBe Some(BigInt(5))
-        cleanedUserAnswers.get(DefinedContribution2016PostFlexiAmountPage) mustBe Some(BigInt(6))
+        cleanedUserAnswers.get(DefinedBenefit2016PreAmountPage) `mustBe` None
+        cleanedUserAnswers.get(DefinedBenefit2016PostAmountPage) `mustBe` None
+        cleanedUserAnswers.get(DefinedContribution2016PreAmountPage) `mustBe` Some(BigInt(3))
+        cleanedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) `mustBe` Some(BigInt(4))
+        cleanedUserAnswers.get(DefinedContribution2016PostAmountPage) `mustBe` Some(BigInt(5))
+        cleanedUserAnswers.get(DefinedContribution2016PostFlexiAmountPage) `mustBe` Some(BigInt(6))
 
       }
 
@@ -480,12 +480,12 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(DefinedBenefit2016PreAmountPage) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(DefinedBenefit2016PostAmountPage) mustBe Some(BigInt(2))
-        cleanedUserAnswers.get(DefinedContribution2016PreAmountPage) mustBe None
-        cleanedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) mustBe None
-        cleanedUserAnswers.get(DefinedContribution2016PostAmountPage) mustBe None
-        cleanedUserAnswers.get(DefinedContribution2016PostFlexiAmountPage) mustBe None
+        cleanedUserAnswers.get(DefinedBenefit2016PreAmountPage) `mustBe` Some(BigInt(1))
+        cleanedUserAnswers.get(DefinedBenefit2016PostAmountPage) `mustBe` Some(BigInt(2))
+        cleanedUserAnswers.get(DefinedContribution2016PreAmountPage) `mustBe` None
+        cleanedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) `mustBe` None
+        cleanedUserAnswers.get(DefinedContribution2016PostAmountPage) `mustBe` None
+        cleanedUserAnswers.get(DefinedContribution2016PostFlexiAmountPage) `mustBe` None
 
       }
 
@@ -499,12 +499,12 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(DefinedBenefit2016PreAmountPage) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(DefinedBenefit2016PostAmountPage) mustBe Some(BigInt(2))
-        cleanedUserAnswers.get(DefinedContribution2016PreAmountPage) mustBe Some(BigInt(3))
-        cleanedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) mustBe Some(BigInt(4))
-        cleanedUserAnswers.get(DefinedContribution2016PostAmountPage) mustBe Some(BigInt(5))
-        cleanedUserAnswers.get(DefinedContribution2016PostFlexiAmountPage) mustBe Some(BigInt(6))
+        cleanedUserAnswers.get(DefinedBenefit2016PreAmountPage) `mustBe` Some(BigInt(1))
+        cleanedUserAnswers.get(DefinedBenefit2016PostAmountPage) `mustBe` Some(BigInt(2))
+        cleanedUserAnswers.get(DefinedContribution2016PreAmountPage) `mustBe` Some(BigInt(3))
+        cleanedUserAnswers.get(DefinedContribution2016PreFlexiAmountPage) `mustBe` Some(BigInt(4))
+        cleanedUserAnswers.get(DefinedContribution2016PostAmountPage) `mustBe` Some(BigInt(5))
+        cleanedUserAnswers.get(DefinedContribution2016PostFlexiAmountPage) `mustBe` Some(BigInt(6))
 
       }
     }
@@ -535,9 +535,9 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(DefinedBenefitAmountPage(Period._2017)) mustBe None
-        cleanedUserAnswers.get(DefinedContributionAmountPage(Period._2017)) mustBe Some(BigInt(2))
-        cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2017)) mustBe Some(BigInt(3))
+        cleanedUserAnswers.get(DefinedBenefitAmountPage(Period._2017)) `mustBe` None
+        cleanedUserAnswers.get(DefinedContributionAmountPage(Period._2017)) `mustBe` Some(BigInt(2))
+        cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2017)) `mustBe` Some(BigInt(3))
       }
 
       "must clean up correctly when user deselects DC and DB remains" in {
@@ -547,9 +547,9 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(DefinedBenefitAmountPage(Period._2017)) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(DefinedContributionAmountPage(Period._2017)) mustBe None
-        cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2017)) mustBe None
+        cleanedUserAnswers.get(DefinedBenefitAmountPage(Period._2017)) `mustBe` Some(BigInt(1))
+        cleanedUserAnswers.get(DefinedContributionAmountPage(Period._2017)) `mustBe` None
+        cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2017)) `mustBe` None
       }
 
       "must clean up correctly when both DC and DB selected" in {
@@ -562,9 +562,9 @@ class ContributedToDuringRemedyPeriodPageSpec extends PageBehaviours {
           .success
           .value
 
-        cleanedUserAnswers.get(DefinedBenefitAmountPage(Period._2017)) mustBe Some(BigInt(1))
-        cleanedUserAnswers.get(DefinedContributionAmountPage(Period._2017)) mustBe Some(BigInt(2))
-        cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2017)) mustBe Some(BigInt(3))
+        cleanedUserAnswers.get(DefinedBenefitAmountPage(Period._2017)) `mustBe` Some(BigInt(1))
+        cleanedUserAnswers.get(DefinedContributionAmountPage(Period._2017)) `mustBe` Some(BigInt(2))
+        cleanedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2017)) `mustBe` Some(BigInt(3))
       }
     }
   }

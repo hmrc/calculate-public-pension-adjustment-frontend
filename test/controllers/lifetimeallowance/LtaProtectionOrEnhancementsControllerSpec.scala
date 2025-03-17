@@ -18,7 +18,6 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import forms.lifetimeallowance.LtaProtectionOrEnhancementsFormProvider
 import models.{CheckMode, Done, LtaProtectionOrEnhancements, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +27,7 @@ import pages.lifetimeallowance.LtaProtectionOrEnhancementsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.lifetimeallowance.LtaProtectionOrEnhancementsView
 
@@ -38,8 +37,10 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val normalRoute = ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode).url
-  lazy val checkRoute  = ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url
+  lazy val normalRoute =
+    controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(NormalMode).url
+  lazy val checkRoute  =
+    controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url
 
   val formProvider = new LtaProtectionOrEnhancementsFormProvider()
   val form         = formProvider()
@@ -57,8 +58,8 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
         val view = application.injector.instanceOf[LtaProtectionOrEnhancementsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -78,8 +79,8 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(LtaProtectionOrEnhancements.values.head), NormalMode)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(LtaProtectionOrEnhancements.values.head), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -90,7 +91,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -106,7 +107,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -114,7 +115,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -133,8 +134,8 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
         val expectedAnswers =
           emptyUserAnswers.set(LtaProtectionOrEnhancementsPage, LtaProtectionOrEnhancements.values.head).success.value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual LtaProtectionOrEnhancementsPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` LtaProtectionOrEnhancementsPage
           .navigate(CheckMode, expectedAnswers)
           .url
       }
@@ -144,7 +145,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -160,10 +161,10 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.ProtectionTypeController.onPageLoad(NormalMode).url
+        ).value `mustEqual` controllers.lifetimeallowance.routes.ProtectionTypeController.onPageLoad(NormalMode).url
       }
     }
 
@@ -171,7 +172,7 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -187,10 +188,10 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
         redirectLocation(
           result
-        ).value mustEqual ltaRoutes.ProtectionTypeController.onPageLoad(CheckMode).url
+        ).value `mustEqual` controllers.lifetimeallowance.routes.ProtectionTypeController.onPageLoad(CheckMode).url
       }
     }
 
@@ -209,8 +210,8 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -224,8 +225,8 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -241,9 +242,9 @@ class LtaProtectionOrEnhancementsControllerSpec extends SpecBase with MockitoSug
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

@@ -18,16 +18,15 @@ package controllers.setupquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.{routes => setupRoutes}
 import play.api.Configuration
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import play.api.test.Helpers.*
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.setupquestions.IneligibleView
 
-class IneligibleControllerSpec extends SpecBase {
+class IneligibleControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
-  val config: Configuration = injector.instanceOf[Configuration]
+  val config: Configuration = app.injector.instanceOf[Configuration]
   val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
   "Ineligible Controller" - {
@@ -37,15 +36,15 @@ class IneligibleControllerSpec extends SpecBase {
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, setupRoutes.IneligibleController.onPageLoad.url)
+        val request = FakeRequest(GET, controllers.setupquestions.routes.IneligibleController.onPageLoad.url)
 
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[IneligibleView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(exitUrl)(request, messages(application)).toString
-        contentAsString(result) must include("What did you think of this service?")
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(exitUrl)(request, messages(application)).toString
+        contentAsString(result) `must` `include`("What did you think of this service?")
       }
     }
   }

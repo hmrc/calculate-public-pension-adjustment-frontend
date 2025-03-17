@@ -19,7 +19,7 @@ package models
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-import viewmodels.govuk.checkbox._
+import viewmodels.govuk.checkbox.*
 
 sealed trait ContributedToDuringRemedyPeriod
 
@@ -44,5 +44,5 @@ object ContributedToDuringRemedyPeriod extends Enumerable.Implicits {
     }
 
   implicit val enumerable: Enumerable[ContributedToDuringRemedyPeriod] =
-    Enumerable(values.map(v => v.toString -> v): _*)
+    Enumerable(values.map(v => v.toString -> v)*)
 }

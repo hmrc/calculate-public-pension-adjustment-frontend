@@ -21,10 +21,11 @@ import config.Service
 import connectors.ConnectorFailureLogger.FromResultToConnectorFailureLogger
 import models.Done
 import models.submission.{SubmissionRequest, SubmissionResponse, Success}
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.libs.json.Json
+import play.api.libs.ws.writeableOf_JsValue
 import play.api.{Configuration, Logging}
-import uk.gov.hmrc.http.HttpReads.Implicits._
+import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps, UpstreamErrorResponse}
 

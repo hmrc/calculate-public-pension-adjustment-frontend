@@ -17,7 +17,7 @@
 package connectors
 
 import base.SpecBase
-import com.github.tomakehurst.wiremock.client.WireMock._
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import models.Done
 import org.scalatest.concurrent.ScalaFutures
 import play.api.Application
@@ -51,7 +51,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
           val result    = connector.clearUserAnswers().futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
 
@@ -67,7 +67,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
           val result    = connector.clearUserAnswers().failed.futureValue
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
 
@@ -86,7 +86,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
           val result    = connector.clearCalcUserAnswers().futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
 
@@ -102,7 +102,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
           val result    = connector.clearCalcUserAnswers().failed.futureValue
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
 
@@ -121,7 +121,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
           val result    = connector.clearSubmissions().futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
 
@@ -137,7 +137,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
           val result    = connector.clearSubmissions().failed.futureValue
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
 
@@ -159,7 +159,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
 
           val result = connector.userAnswersPresentInSubmissionService("id")(hc).futureValue
 
-          result mustBe true
+          result `mustBe` true
         }
       }
 
@@ -178,7 +178,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
 
           val result = connector.userAnswersPresentInSubmissionService("id")(hc).futureValue
 
-          result mustBe false
+          result `mustBe` false
         }
       }
 
@@ -194,7 +194,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
 
           whenReady(connector.userAnswersPresentInSubmissionService("id")(hc).failed) { exc =>
-            exc mustBe a[java.lang.IllegalArgumentException]
+            exc `mustBe` a[java.lang.IllegalArgumentException]
           }
         }
       }
@@ -216,7 +216,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
 
           val result = connector.submissionsPresentInSubmissionService("uniqueId")(hc).futureValue
 
-          result mustBe true
+          result `mustBe` true
         }
       }
 
@@ -235,7 +235,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
 
           val result = connector.submissionsPresentInSubmissionService("uniqueId")(hc).futureValue
 
-          result mustBe false
+          result `mustBe` false
         }
       }
 
@@ -251,7 +251,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
 
           whenReady(connector.userAnswersPresentInSubmissionService("uniqueId")(hc).failed) { exc =>
-            exc mustBe a[java.lang.IllegalArgumentException]
+            exc `mustBe` a[java.lang.IllegalArgumentException]
           }
         }
       }
@@ -273,7 +273,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
 
           val result = connector.submissionsPresentInSubmissionServiceWithId("id")(hc).futureValue
 
-          result mustBe true
+          result `mustBe` true
         }
       }
 
@@ -292,7 +292,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
 
           val result = connector.submissionsPresentInSubmissionServiceWithId("id")(hc).futureValue
 
-          result mustBe false
+          result `mustBe` false
         }
       }
 
@@ -308,7 +308,7 @@ class SubmitBackendConnectorSpec extends SpecBase with ScalaFutures with WireMoc
           val connector = app.injector.instanceOf[SubmitBackendConnector]
 
           whenReady(connector.userAnswersPresentInSubmissionService("id")(hc).failed) { exc =>
-            exc mustBe a[java.lang.IllegalArgumentException]
+            exc `mustBe` a[java.lang.IllegalArgumentException]
           }
         }
       }

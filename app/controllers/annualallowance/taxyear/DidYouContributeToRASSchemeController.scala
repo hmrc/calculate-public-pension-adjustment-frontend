@@ -16,7 +16,7 @@
 
 package controllers.annualallowance.taxyear
 
-import controllers.actions._
+import controllers.actions.*
 import forms.annualallowance.taxyear.DidYouContributeToRASSchemeFormProvider
 import models.tasklist.sections.AASection
 import models.{AboveThreshold, Mode, Period, ThresholdIncome}

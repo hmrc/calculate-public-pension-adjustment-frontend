@@ -25,7 +25,7 @@ import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{CalculateBackendService, SubmitBackendService, UserDataService}
 
 import java.time.Instant
@@ -48,8 +48,8 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual controllers.routes.OptionalSignInController
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` controllers.routes.OptionalSignInController
           .onPageLoad()
           .url
       }
@@ -62,10 +62,10 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
         val mockUserDataService      = mock[UserDataService]
         val mockSubmitBackendService = mock[SubmitBackendService]
 
-        when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn
+        when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) `thenReturn`
           Future.successful(Some(SubmissionStatusResponse("id", true)))
-        when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) thenReturn
+        when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) `thenReturn`
           Future.successful(true)
 
         val userAnswers =
@@ -84,8 +84,8 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
-          redirectLocation(result).get must be(
+          status(result) `mustEqual` SEE_OTHER
+          redirectLocation(result).get `must` `be`(
             s"/public-pension-adjustment/previous-claim-continue"
           )
         }
@@ -96,16 +96,16 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
         val mockUserDataService      = mock[UserDataService]
         val mockSubmitBackendService = mock[SubmitBackendService]
 
-        when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn
+        when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) `thenReturn`
           Future.successful(Some(SubmissionStatusResponse("id", true)))
-        when(mockUserDataService.updateSubmissionStatus(any())(any())) thenReturn
+        when(mockUserDataService.updateSubmissionStatus(any())(any())) `thenReturn`
           Future.successful(Done)
-        when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) thenReturn
+        when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) `thenReturn`
           Future.successful(false)
-        when(mockSubmitBackendService.clearUserAnswers()(any())) thenReturn
+        when(mockSubmitBackendService.clearUserAnswers()(any())) `thenReturn`
           Future.successful(Done)
-        when(mockSubmitBackendService.clearSubmissions()(any())) thenReturn
+        when(mockSubmitBackendService.clearSubmissions()(any())) `thenReturn`
           Future.successful(Done)
 
         val userAnswers =
@@ -125,8 +125,8 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
-          redirectLocation(result).get must be("/public-pension-adjustment/previous-claim-continue")
+          status(result) `mustEqual` SEE_OTHER
+          redirectLocation(result).get `must` `be`("/public-pension-adjustment/previous-claim-continue")
         }
       }
 
@@ -134,8 +134,8 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
 
         val mockUserDataService = mock[UserDataService]
 
-        when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn Future.successful(
+        when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) `thenReturn` Future.successful(
           Some(SubmissionStatusResponse("id", false))
         )
 
@@ -156,8 +156,8 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
-          redirectLocation(result).get must be("/public-pension-adjustment/previous-claim-continue")
+          status(result) `mustEqual` SEE_OTHER
+          redirectLocation(result).get `must` `be`("/public-pension-adjustment/previous-claim-continue")
 
         }
       }
@@ -167,10 +167,10 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
         val mockUserDataService      = mock[UserDataService]
         val mockSubmitBackendService = mock[SubmitBackendService]
 
-        when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn
+        when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) `thenReturn`
           Future.successful(None)
-        when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) thenReturn
+        when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) `thenReturn`
           Future.successful(true)
 
         val userAnswers =
@@ -191,8 +191,8 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
-          redirectLocation(result).get must be(
+          status(result) `mustEqual` SEE_OTHER
+          redirectLocation(result).get `must` `be`(
             s"/public-pension-adjustment/previous-claim-continue"
           )
         }
@@ -203,10 +203,10 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
         val mockUserDataService      = mock[UserDataService]
         val mockSubmitBackendService = mock[SubmitBackendService]
 
-        when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
-        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) thenReturn
+        when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
+        when(mockUserDataService.checkSubmissionStatusWithId(any())(any())) `thenReturn`
           Future.successful(None)
-        when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) thenReturn
+        when(mockSubmitBackendService.submissionsPresentInSubmissionServiceWithId(any())(any())) `thenReturn`
           Future.successful(false)
 
         val userAnswers =
@@ -227,8 +227,8 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
 
           val result = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
-          redirectLocation(result).get must be("/public-pension-adjustment/change-previous-adjustment")
+          status(result) `mustEqual` SEE_OTHER
+          redirectLocation(result).get `must` `be`("/public-pension-adjustment/change-previous-adjustment")
         }
       }
 
@@ -246,7 +246,7 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
           val request = FakeRequest(GET, indexControllerRoute).withSession("authToken" -> "some-auth-token")
           val result  = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
+          status(result) `mustEqual` SEE_OTHER
           verify(mockCalculateBackendService, times(0)).updateUserAnswersFromCalcUA(any())(any())
         }
       }
@@ -267,7 +267,7 @@ class IndexControllerSpec extends SpecBase with MockitoSugar {
           val request = FakeRequest(GET, indexControllerRoute)
           val result  = route(application, request).value
 
-          status(result) mustEqual SEE_OTHER
+          status(result) `mustEqual` SEE_OTHER
           verify(mockCalculateBackendService, times(0)).updateUserAnswersFromCalcUA(any())(any())
         }
       }

@@ -18,9 +18,8 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import play.api.http.Status.OK
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import viewmodels.govuk.SummaryListFluency
 import views.html.lifetimeallowance.ViewYourAnswersView
 
@@ -41,8 +40,8 @@ class ViewYourLTAAnswersControllerSpec extends SpecBase with SummaryListFluency 
         val view = application.injector.instanceOf[ViewYourAnswersView]
         val list = SummaryListViewModel(Seq.empty)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           controllers.routes.CalculationReviewController.onPageLoad(),
           list
         )(
@@ -63,8 +62,8 @@ class ViewYourLTAAnswersControllerSpec extends SpecBase with SummaryListFluency 
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

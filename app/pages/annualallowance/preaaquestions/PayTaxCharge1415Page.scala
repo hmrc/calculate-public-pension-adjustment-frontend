@@ -16,7 +16,6 @@
 
 package pages.annualallowance.preaaquestions
 
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import controllers.routes
 import models.{NormalMode, Period, UserAnswers}
 import pages.QuestionPage
@@ -35,7 +34,7 @@ case object PayTaxCharge1415Page extends QuestionPage[Boolean] {
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1415Page) match {
       case Some(false) =>
-        preAARoutes.RegisteredYearController.onPageLoad(NormalMode, Period._2011)
+        controllers.annualallowance.preaaquestions.routes.RegisteredYearController.onPageLoad(NormalMode, Period._2011)
       case Some(true)  =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _           => routes.JourneyRecoveryController.onPageLoad(None)
@@ -43,7 +42,8 @@ case object PayTaxCharge1415Page extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(PayTaxCharge1415Page) match {
-      case Some(false) => preAARoutes.RegisteredYearController.onPageLoad(NormalMode, Period._2011)
+      case Some(false) =>
+        controllers.annualallowance.preaaquestions.routes.RegisteredYearController.onPageLoad(NormalMode, Period._2011)
       case Some(true)  =>
         controllers.annualallowance.preaaquestions.routes.CheckYourAASetupAnswersController.onPageLoad()
       case _           => routes.JourneyRecoveryController.onPageLoad(None)

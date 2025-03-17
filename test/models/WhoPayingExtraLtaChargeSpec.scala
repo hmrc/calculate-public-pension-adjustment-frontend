@@ -36,7 +36,7 @@ class WhoPayingExtraLtaChargeSpec extends AnyFreeSpec with Matchers with ScalaCh
         JsString(whoPayingExtraLtaCharge.toString)
           .validate[WhoPayingExtraLtaCharge]
           .asOpt
-          .value mustEqual whoPayingExtraLtaCharge
+          .value `mustEqual` whoPayingExtraLtaCharge
       }
     }
 
@@ -45,7 +45,7 @@ class WhoPayingExtraLtaChargeSpec extends AnyFreeSpec with Matchers with ScalaCh
       val gen = arbitrary[String] suchThat (!WhoPayingExtraLtaCharge.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[WhoPayingExtraLtaCharge] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[WhoPayingExtraLtaCharge] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -54,7 +54,7 @@ class WhoPayingExtraLtaChargeSpec extends AnyFreeSpec with Matchers with ScalaCh
       val gen = Gen.oneOf(WhoPayingExtraLtaCharge.values.toSeq)
 
       forAll(gen) { whoPayingExtraLtaCharge =>
-        Json.toJson(whoPayingExtraLtaCharge) mustEqual JsString(whoPayingExtraLtaCharge.toString)
+        Json.toJson(whoPayingExtraLtaCharge) `mustEqual` JsString(whoPayingExtraLtaCharge.toString)
       }
     }
   }

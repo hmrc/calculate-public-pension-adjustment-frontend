@@ -41,7 +41,7 @@ class WhichYearsScottishTaxpayerSpec
         JsString(whichYearsScottishTaxpayer.toString)
           .validate[WhichYearsScottishTaxpayer]
           .asOpt
-          .value mustEqual whichYearsScottishTaxpayer
+          .value `mustEqual` whichYearsScottishTaxpayer
       }
     }
 
@@ -50,7 +50,7 @@ class WhichYearsScottishTaxpayerSpec
       val gen = arbitrary[String] suchThat (!WhichYearsScottishTaxpayer.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[WhichYearsScottishTaxpayer] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[WhichYearsScottishTaxpayer] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -59,7 +59,7 @@ class WhichYearsScottishTaxpayerSpec
       val gen = arbitrary[WhichYearsScottishTaxpayer]
 
       forAll(gen) { whichYearsScottishTaxpayer =>
-        Json.toJson(whichYearsScottishTaxpayer) mustEqual JsString(whichYearsScottishTaxpayer.toString)
+        Json.toJson(whichYearsScottishTaxpayer) `mustEqual` JsString(whichYearsScottishTaxpayer.toString)
       }
     }
   }

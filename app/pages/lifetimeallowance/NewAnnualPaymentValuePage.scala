@@ -16,7 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.{CheckMode, Mode, NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
@@ -57,12 +56,12 @@ case object NewAnnualPaymentValuePage extends QuestionPage[BigInt] {
         oldAnnualPaymentValue
       )
     ) {
-      ltaRoutes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
+      controllers.lifetimeallowance.routes.WhoPayingExtraLtaChargeController.onPageLoad(mode)
     } else {
       if (hasPreviousCharge) {
-        ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+        controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
       } else {
-        ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad()
+        controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad()
       }
     }
   }

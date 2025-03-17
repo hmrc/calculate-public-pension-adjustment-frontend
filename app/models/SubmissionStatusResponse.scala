@@ -16,11 +16,15 @@
 
 package models
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{Format, __}
 
 case class SubmissionStatusResponse(uniqueId: String, submissionStarted: Boolean)
 
 object SubmissionStatusResponse {
 
-  implicit lazy val format: Format[SubmissionStatusResponse] = Json.format
+  implicit lazy val format: Format[SubmissionStatusResponse] = (
+    (__ \ "uniqueId").format[String] and
+      (__ \ "submissionStarted").format[Boolean]
+  )(SubmissionStatusResponse.apply, o => Tuple.fromProductTyped(o))
 }

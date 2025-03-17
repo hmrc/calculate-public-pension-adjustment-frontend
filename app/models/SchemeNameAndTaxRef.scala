@@ -16,10 +16,14 @@
 
 package models
 
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.{OFormat, __}
 
 case class SchemeNameAndTaxRef(name: String, taxRef: String)
 
 object SchemeNameAndTaxRef {
-  implicit val format: OFormat[SchemeNameAndTaxRef] = Json.format[SchemeNameAndTaxRef]
+  implicit val format: OFormat[SchemeNameAndTaxRef] = (
+    (__ \ "name").format[String] and
+      (__ \ "taxRef").format[String]
+  )(SchemeNameAndTaxRef.apply, o => Tuple.fromProductTyped(o))
 }

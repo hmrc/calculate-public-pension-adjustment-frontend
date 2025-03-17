@@ -24,8 +24,8 @@ import pages.annualallowance.taxyear.WhoPaidAAChargePage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class WhoPaidAAChargeSummarySpec extends AnyFreeSpec with Matchers {
 

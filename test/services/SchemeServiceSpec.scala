@@ -28,7 +28,7 @@ class SchemeServiceSpec extends SpecBase {
   "WhichScheme" - {
 
     "options should include an option to add a new scheme if there are no previous schemes" in {
-      SchemeService.whichScheme(emptyUserAnswers).values must be(Seq(messages("site.newPSTR")))
+      SchemeService.whichScheme(emptyUserAnswers).values `must` `be`(Seq(messages("site.newPSTR")))
     }
 
     "options should include previous scheme references from a single period and new" in {
@@ -39,7 +39,7 @@ class SchemeServiceSpec extends SpecBase {
         )
         .get
 
-      SchemeService.whichScheme(userAnswers).values must be(Seq("pstr1", messages("site.newPSTR")))
+      SchemeService.whichScheme(userAnswers).values `must` `be`(Seq("pstr1", messages("site.newPSTR")))
     }
 
     "options should include multiple scheme references from a single period and new" in {
@@ -55,7 +55,7 @@ class SchemeServiceSpec extends SpecBase {
         )
         .get
 
-      SchemeService.whichScheme(userAnswers).values must be(Seq("pstr1", "pstr2", messages("site.newPSTR")))
+      SchemeService.whichScheme(userAnswers).values `must` `be`(Seq("pstr1", "pstr2", messages("site.newPSTR")))
     }
 
     "options should include scheme references from multiple periods and new" in {
@@ -71,7 +71,7 @@ class SchemeServiceSpec extends SpecBase {
         )
         .get
 
-      SchemeService.whichScheme(userAnswers).values must be(Seq("pstr1", "pstr2", messages("site.newPSTR")))
+      SchemeService.whichScheme(userAnswers).values `must` `be`(Seq("pstr1", "pstr2", messages("site.newPSTR")))
     }
   }
 
@@ -88,7 +88,7 @@ class SchemeServiceSpec extends SpecBase {
       val maybeUpdatedAnswers =
         SchemeService.maybeAddSchemeDetailsToPeriod(userAnswers, PSTR.New, Period._2016, SchemeIndex(1))
 
-      maybeUpdatedAnswers must be(userAnswers)
+      maybeUpdatedAnswers `must` `be`(userAnswers)
     }
 
     "should update user answers if details exist in a previous period and specified reference matches" in {
@@ -104,11 +104,11 @@ class SchemeServiceSpec extends SpecBase {
 
       val maybeUpdatedAnswers = SchemeService.maybeAddSchemeDetailsToPeriod(userAnswers, "pstr1", period, index)
 
-      maybeUpdatedAnswers must not be userAnswers
+      maybeUpdatedAnswers `must` `not` `be` userAnswers
       val updatedAnswers: Option[PensionSchemeDetails] =
         maybeUpdatedAnswers.get(PensionSchemeDetailsPage(period, index))
 
-      updatedAnswers.get must be(PensionSchemeDetails("scheme1", "pstr1"))
+      updatedAnswers.get `must` `be`(PensionSchemeDetails("scheme1", "pstr1"))
     }
 
     "should not update user answers if details exist in a previous period and specified reference does not match" in {
@@ -122,7 +122,7 @@ class SchemeServiceSpec extends SpecBase {
       val maybeUpdatedAnswers =
         SchemeService.maybeAddSchemeDetailsToPeriod(userAnswers, "pstr1", Period._2018, SchemeIndex(0))
 
-      maybeUpdatedAnswers must be(userAnswers)
+      maybeUpdatedAnswers `must` `be`(userAnswers)
     }
 
     "should not modify user answers if no previous details exist" in {
@@ -131,7 +131,7 @@ class SchemeServiceSpec extends SpecBase {
       val maybeUpdatedAnswers =
         SchemeService.maybeAddSchemeDetailsToPeriod(userAnswers, "pstr1", Period._2016, SchemeIndex(1))
 
-      maybeUpdatedAnswers must be(userAnswers)
+      maybeUpdatedAnswers `must` `be`(userAnswers)
     }
   }
 }

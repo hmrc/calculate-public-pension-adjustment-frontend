@@ -17,8 +17,7 @@
 package forms.annualallowance.taxyear
 
 import forms.behaviours.BooleanFieldBehaviours
-import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchersSugar.eqTo
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.data.FormError
@@ -46,7 +45,7 @@ class PayAChargeFormProviderSpec extends BooleanFieldBehaviours {
 
     def formWithMockMessages = {
       val messages = mock[Messages]
-      when(messages.apply(eqTo("payACharge.error.required"), any())).thenReturn("error message")
+      when(messages.apply(eqTo("payACharge.error.required"), any())).`thenReturn`("error message")
 
       val formProvider = new PayAChargeFormProvider()
       formProvider("")(messages)

@@ -18,20 +18,19 @@ package controllers.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.{ReportingChange, UserAnswers}
 import pages.setupquestions.ReportingChangePage
 import play.api.Configuration
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import play.api.test.Helpers.*
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.lifetimeallowance.CannotUseLtaServiceNoChargeView
 
-class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
+class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
   "CannotUseLtaServiceNoCharge Controller" - {
 
-    val config: Configuration = injector.instanceOf[Configuration]
+    val config: Configuration = app.injector.instanceOf[Configuration]
     val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
     "when AnnualAllowance is included in the UserAnswers" - {
@@ -43,16 +42,19 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, exitUrl)(request, messages(application)).toString
-          contentAsString(result) must include("Continue")
-          contentAsString(result) must not include "What did you think of this service?"
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(true, exitUrl)(request, messages(application)).toString
+          contentAsString(result) `must` `include`("Continue")
+          contentAsString(result) `must` `not` `include` "What did you think of this service?"
         }
       }
     }
@@ -68,16 +70,19 @@ class CannotUseLtaServiceNoChargeControllerSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
         running(application) {
-          val request = FakeRequest(GET, ltaRoutes.CannotUseLtaServiceNoChargeController.onPageLoad().url)
+          val request = FakeRequest(
+            GET,
+            controllers.lifetimeallowance.routes.CannotUseLtaServiceNoChargeController.onPageLoad().url
+          )
 
           val result = route(application, request).value
 
           val view = application.injector.instanceOf[CannotUseLtaServiceNoChargeView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, exitUrl)(request, messages(application)).toString
-          contentAsString(result) must not include "Continue"
-          contentAsString(result) must include("What did you think of this service?")
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, exitUrl)(request, messages(application)).toString
+          contentAsString(result) `must` `not` `include` "Continue"
+          contentAsString(result) `must` `include`("What did you think of this service?")
         }
       }
     }

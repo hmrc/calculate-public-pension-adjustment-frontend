@@ -17,7 +17,7 @@
 package controllers.lifetimeallowance
 
 import config.FrontendAppConfig
-import controllers.actions._
+import controllers.actions.*
 import models.ReportingChange
 import pages.setupquestions.ReportingChangePage
 import play.api.i18n.{I18nSupport, MessagesApi}

@@ -40,7 +40,7 @@ class LtaProtectionOrEnhancementsSpec
         JsString(ltaProtectionOrEnhancements.toString)
           .validate[LtaProtectionOrEnhancements]
           .asOpt
-          .value mustEqual ltaProtectionOrEnhancements
+          .value `mustEqual` ltaProtectionOrEnhancements
       }
     }
 
@@ -49,7 +49,7 @@ class LtaProtectionOrEnhancementsSpec
       val gen = arbitrary[String] suchThat (!LtaProtectionOrEnhancements.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[LtaProtectionOrEnhancements] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[LtaProtectionOrEnhancements] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -58,7 +58,7 @@ class LtaProtectionOrEnhancementsSpec
       val gen = Gen.oneOf(LtaProtectionOrEnhancements.values.toSeq)
 
       forAll(gen) { ltaProtectionOrEnhancements =>
-        Json.toJson(ltaProtectionOrEnhancements) mustEqual JsString(ltaProtectionOrEnhancements.toString)
+        Json.toJson(ltaProtectionOrEnhancements) `mustEqual` JsString(ltaProtectionOrEnhancements.toString)
       }
     }
   }

@@ -20,8 +20,9 @@ import base.SpecBase
 import connectors.SubmitBackendConnector
 import models.Done
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito.{times, verify, when}
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatestplus.mockito.MockitoSugar
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
@@ -36,20 +37,20 @@ class SubmitBackendServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
         val connector = mock[SubmitBackendConnector]
         val service   = new SubmitBackendService(connector)
 
-        when(connector.clearUserAnswers()(any())) thenReturn Future.successful(Done)
+        when(connector.clearUserAnswers()(any())) `thenReturn` Future.successful(Done)
 
         val result = service.clearUserAnswers()(hc).futureValue
-        result mustBe Done
+        result `mustBe` Done
       }
 
       "must return a failed future when the connector fails to clear" in {
         val connector = mock[SubmitBackendConnector]
         val service   = new SubmitBackendService(connector)
 
-        when(connector.clearUserAnswers()(any())) thenReturn Future.failed(new RuntimeException("Clear failed"))
+        when(connector.clearUserAnswers()(any())) `thenReturn` Future.failed(new RuntimeException("Clear failed"))
 
         val result = service.clearUserAnswers()(hc).failed.futureValue
-        result mustBe a[RuntimeException]
+        result `mustBe` a[RuntimeException]
       }
     }
 
@@ -58,20 +59,20 @@ class SubmitBackendServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
         val connector = mock[SubmitBackendConnector]
         val service   = new SubmitBackendService(connector)
 
-        when(connector.clearCalcUserAnswers()(any())) thenReturn Future.successful(Done)
+        when(connector.clearCalcUserAnswers()(any())) `thenReturn` Future.successful(Done)
 
         val result = service.clearCalcUserAnswers()(hc).futureValue
-        result mustBe Done
+        result `mustBe` Done
       }
 
       "must return a failed future when the connector fails to clear" in {
         val connector = mock[SubmitBackendConnector]
         val service   = new SubmitBackendService(connector)
 
-        when(connector.clearCalcUserAnswers()(any())) thenReturn Future.failed(new RuntimeException("Clear failed"))
+        when(connector.clearCalcUserAnswers()(any())) `thenReturn` Future.failed(new RuntimeException("Clear failed"))
 
         val result = service.clearCalcUserAnswers()(hc).failed.futureValue
-        result mustBe a[RuntimeException]
+        result `mustBe` a[RuntimeException]
       }
     }
 
@@ -80,20 +81,20 @@ class SubmitBackendServiceSpec extends SpecBase with MockitoSugar with ScalaFutu
         val connector = mock[SubmitBackendConnector]
         val service   = new SubmitBackendService(connector)
 
-        when(connector.clearSubmissions()(any())) thenReturn Future.successful(Done)
+        when(connector.clearSubmissions()(any())) `thenReturn` Future.successful(Done)
 
         val result = service.clearSubmissions()(hc).futureValue
-        result mustBe Done
+        result `mustBe` Done
       }
 
       "must return a failed future when the connector fails to clear" in {
         val connector = mock[SubmitBackendConnector]
         val service   = new SubmitBackendService(connector)
 
-        when(connector.clearSubmissions()(any())) thenReturn Future.failed(new RuntimeException("Clear failed"))
+        when(connector.clearSubmissions()(any())) `thenReturn` Future.failed(new RuntimeException("Clear failed"))
 
         val result = service.clearSubmissions()(hc).failed.futureValue
-        result mustBe a[RuntimeException]
+        result `mustBe` a[RuntimeException]
       }
     }
 

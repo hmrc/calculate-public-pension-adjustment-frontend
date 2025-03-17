@@ -28,7 +28,7 @@ import pages.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.DefinedContribution2016PostFlexiAmountView
 
@@ -69,8 +69,8 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
 
         val view = application.injector.instanceOf[DefinedContribution2016PostFlexiAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form,
           NormalMode,
           "2 January 2016 and 5 April 2016"
@@ -97,8 +97,8 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, "2 January 2016 and 5 April 2016")(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(validAnswer), NormalMode, "2 January 2016 and 5 April 2016")(
           request,
           messages(application)
         ).toString
@@ -109,7 +109,7 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -123,7 +123,7 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -147,8 +147,8 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(
           boundForm,
           NormalMode,
           "2 January 2016 and 5 April 2016"
@@ -169,8 +169,8 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -186,9 +186,9 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -210,8 +210,8 @@ class DefinedContribution2016PostFlexiAmountControllerSpec extends SpecBase with
 
         val view = application.injector.instanceOf[DefinedContribution2016PostFlexiAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           flexiForm,
           NormalMode,
           "10 July 2015 and 5 April 2016"

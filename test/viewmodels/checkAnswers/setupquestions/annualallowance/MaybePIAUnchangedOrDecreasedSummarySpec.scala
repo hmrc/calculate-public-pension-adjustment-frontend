@@ -25,7 +25,7 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
-import viewmodels.implicits._
+import viewmodels.implicits.*
 
 class MaybePIAUnchangedOrDecreasedSummarySpec extends AnyFreeSpec with Matchers {
 

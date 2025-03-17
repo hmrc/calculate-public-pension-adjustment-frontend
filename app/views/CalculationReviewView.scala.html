@@ -23,7 +23,7 @@
 )
 
 
-@(form: Form[_],
+@(form: Form[?],
 calculationReviewViewModel: CalculationReviewViewModel,
 includeCompensation2015: Boolean,
 isInCredit: Boolean,
@@ -31,7 +31,7 @@ isInDebit: Boolean,
 isUserAuthenticated : Boolean,
 isLTACompleteWithoutKickout: Boolean,
 hasInDates: Boolean,
-feedbackLinkUrl: String)(implicit request: Request[_], messages: Messages)
+feedbackLinkUrl: String)(implicit request: Request[?], messages: Messages)
 
 @buttonContent = @{
     if(isUserAuthenticated) {

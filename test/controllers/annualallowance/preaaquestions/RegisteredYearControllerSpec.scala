@@ -18,7 +18,6 @@ package controllers.annualallowance.preaaquestions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.annualallowance.preaaquestions.{routes => preAARoutes}
 import forms.annualallowance.preaaquestions.RegisteredYearFormProvider
 import models.{Done, NormalMode, Period, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +27,7 @@ import pages.annualallowance.preaaquestions.RegisteredYearPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.preaaquestions.RegisteredYearView
 
@@ -43,7 +42,9 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
   val validRegisteredYear: Period = Period._2011
 
-  lazy val normalRoute = preAARoutes.RegisteredYearController.onPageLoad(NormalMode, validRegisteredYear).url
+  lazy val normalRoute = controllers.annualallowance.preaaquestions.routes.RegisteredYearController
+    .onPageLoad(NormalMode, validRegisteredYear)
+    .url
 
   "RegisteredYear Controller" - {
 
@@ -58,8 +59,8 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
         val view = application.injector.instanceOf[RegisteredYearView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, validRegisteredYear)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, validRegisteredYear)(
           request,
           messages(application)
         ).toString
@@ -79,8 +80,8 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, validRegisteredYear)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode, validRegisteredYear)(
           request,
           messages(application)
         ).toString
@@ -91,7 +92,7 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -105,7 +106,7 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -124,8 +125,8 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, validRegisteredYear)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, validRegisteredYear)(
           request,
           messages(application)
         ).toString
@@ -142,8 +143,8 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -159,8 +160,8 @@ class RegisteredYearControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

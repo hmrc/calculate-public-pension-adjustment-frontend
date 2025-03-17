@@ -25,7 +25,7 @@ import play.api.Application
 import play.api.mvc.BodyParsers
 import play.api.mvc.Results.Ok
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.auth.core.authorise.Predicate
 import uk.gov.hmrc.auth.core.retrieve.{ItmpName, Retrieval}
 import uk.gov.hmrc.auth.core.{AuthConnector, InsufficientConfidenceLevel, InternalError, MissingBearerToken, UnsupportedAffinityGroup}
@@ -66,8 +66,8 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
 
           val result = authAction(a => Ok(a.userId))(request)
 
-          status(result) mustEqual SEE_OTHER
-          redirectLocation(result).value mustEqual routes.CannotUseServiceNotIndividualController.onPageLoad.url
+          status(result) `mustEqual` SEE_OTHER
+          redirectLocation(result).value `mustEqual` routes.CannotUseServiceNotIndividualController.onPageLoad.url
         }
       }
 
@@ -86,10 +86,10 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
 
             val result = authAction(_ => Ok)(request)
 
-            status(result) mustEqual SEE_OTHER
+            status(result) `mustEqual` SEE_OTHER
             redirectLocation(
               result
-            ).value mustEqual routes.UnauthorisedController.onPageLoad().url
+            ).value `mustEqual` routes.UnauthorisedController.onPageLoad().url
           }
         }
 
@@ -106,10 +106,10 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
 
             val result = authAction(a => Ok(a.userId))(request)
 
-            status(result) mustEqual SEE_OTHER
+            status(result) `mustEqual` SEE_OTHER
             redirectLocation(
               result
-            ).value mustEqual "http://localhost:9948/iv-stub/uplift?origin=PPA&confidenceLevel=250&completionURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fmaybe-previous-claim-continue&failureURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fuplift-failure"
+            ).value `mustEqual` "http://localhost:9948/iv-stub/uplift?origin=PPA&confidenceLevel=250&completionURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fmaybe-previous-claim-continue&failureURL=http%3A%2F%2Flocalhost%3A12804%2Fpublic-pension-adjustment%2Fuplift-failure"
           }
 
         }
@@ -136,8 +136,8 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
               }
             )(request)
 
-            status(result) mustEqual OK
-            contentAsString(result) mustEqual "nino"
+            status(result) `mustEqual` OK
+            contentAsString(result) `mustEqual` "nino"
           }
         }
 
@@ -154,10 +154,10 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
 
             val result = authAction(_ => Ok)(request)
 
-            status(result) mustEqual SEE_OTHER
+            status(result) `mustEqual` SEE_OTHER
             redirectLocation(
               result
-            ).value mustEqual routes.UnauthorisedController.onPageLoad().url
+            ).value `mustEqual` routes.UnauthorisedController.onPageLoad().url
           }
         }
       }
@@ -177,13 +177,13 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
 
         val result = authAction(a =>
           a match {
-            case x: AuthenticatedIdentifierRequest[_]   => Ok(s"${x.userId}")
-            case y: UnauthenticatedIdentifierRequest[_] => Ok(y.userId)
+            case x: AuthenticatedIdentifierRequest[?]   => Ok(s"${x.userId}")
+            case y: UnauthenticatedIdentifierRequest[?] => Ok(y.userId)
           }
         )(request)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual sessionId
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` sessionId
       }
 
       "must redirect to the session expired page when the user is unauthenticated and has no session identifier" in {
@@ -198,8 +198,8 @@ class OptionalAuthIdentifierActionSpec extends SpecBase {
 
         val result = authAction(a => Ok(a.userId))(request)
 
-        status(result) mustBe SEE_OTHER
-        redirectLocation(result).value must startWith(controllers.routes.JourneyRecoveryController.onPageLoad().url)
+        status(result) `mustBe` SEE_OTHER
+        redirectLocation(result).value `must` startWith(controllers.routes.JourneyRecoveryController.onPageLoad().url)
       }
     }
   }

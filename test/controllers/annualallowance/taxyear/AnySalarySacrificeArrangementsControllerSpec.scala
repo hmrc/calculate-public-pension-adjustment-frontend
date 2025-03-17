@@ -26,7 +26,7 @@ import pages.annualallowance.taxyear.AnySalarySacrificeArrangementsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.AnySalarySacrificeArrangementsView
 
@@ -59,8 +59,8 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
 
         val view = application.injector.instanceOf[AnySalarySacrificeArrangementsView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -81,8 +81,8 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString
@@ -107,7 +107,7 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -126,8 +126,8 @@ class AnySalarySacrificeArrangementsControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Period._2018, startEndDate)(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode, Period._2018, startEndDate)(
           request,
           messages(application)
         ).toString

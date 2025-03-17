@@ -16,7 +16,7 @@
 
 package controllers.lifetimeallowance
 
-import controllers.actions._
+import controllers.actions.*
 import forms.lifetimeallowance.UserSchemeDetailsFormProvider
 import models.Mode
 import models.tasklist.sections.LTASection

@@ -18,7 +18,6 @@ package controllers.setupquestions.lifetimeallowance
 
 import base.SpecBase
 import config.FrontendAppConfig
-import controllers.setupquestions.lifetimeallowance.{routes => ltaSetupRoutes}
 import forms.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventFormProvider
 import models.{Done, NormalMode, UserAnswers}
 import org.mockito.ArgumentMatchers.any
@@ -28,7 +27,7 @@ import pages.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.setupquestions.lifetimeallowance.HadBenefitCrystallisationEventView
 
@@ -41,7 +40,9 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
   val formProvider = new HadBenefitCrystallisationEventFormProvider()
   val form         = formProvider()
 
-  lazy val normalRoute = ltaSetupRoutes.HadBenefitCrystallisationEventController.onPageLoad(NormalMode).url
+  lazy val normalRoute = controllers.setupquestions.lifetimeallowance.routes.HadBenefitCrystallisationEventController
+    .onPageLoad(NormalMode)
+    .url
 
   "HadBenefitCrystallisationEvent Controller" - {
 
@@ -56,8 +57,8 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
         val view = application.injector.instanceOf[HadBenefitCrystallisationEventView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -74,8 +75,8 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(form.fill(true), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -85,7 +86,7 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -101,7 +102,7 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -111,7 +112,7 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -127,7 +128,7 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -146,8 +147,8 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -161,8 +162,8 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -178,8 +179,8 @@ class HadBenefitCrystallisationEventControllerSpec extends SpecBase with Mockito
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

@@ -16,7 +16,7 @@
 
 package controllers.setupquestions.annualallowance
 
-import controllers.actions._
+import controllers.actions.*
 import forms.setupquestions.annualallowance.SavingsStatementFormProvider
 import models.Mode
 import models.tasklist.sections.SetupSection

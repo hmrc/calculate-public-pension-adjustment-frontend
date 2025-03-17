@@ -36,7 +36,7 @@ class ProtectionEnhancedChangedSpec extends AnyFreeSpec with Matchers with Scala
         JsString(protectionEnhancedChanged.toString)
           .validate[ProtectionEnhancedChanged]
           .asOpt
-          .value mustEqual protectionEnhancedChanged
+          .value `mustEqual` protectionEnhancedChanged
       }
     }
 
@@ -45,7 +45,7 @@ class ProtectionEnhancedChangedSpec extends AnyFreeSpec with Matchers with Scala
       val gen = arbitrary[String] suchThat (!ProtectionEnhancedChanged.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[ProtectionEnhancedChanged] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[ProtectionEnhancedChanged] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -54,7 +54,7 @@ class ProtectionEnhancedChangedSpec extends AnyFreeSpec with Matchers with Scala
       val gen = Gen.oneOf(ProtectionEnhancedChanged.values.toSeq)
 
       forAll(gen) { protectionEnhancedChanged =>
-        Json.toJson(protectionEnhancedChanged) mustEqual JsString(protectionEnhancedChanged.toString)
+        Json.toJson(protectionEnhancedChanged) `mustEqual` JsString(protectionEnhancedChanged.toString)
       }
     }
   }

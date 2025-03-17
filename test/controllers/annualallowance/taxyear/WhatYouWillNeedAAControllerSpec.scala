@@ -19,7 +19,7 @@ package controllers.annualallowance.taxyear
 import base.SpecBase
 import models.Period
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.annualallowance.taxyear.WhatYouWillNeedAAView
 
 class WhatYouWillNeedAAControllerSpec extends SpecBase {
@@ -41,8 +41,8 @@ class WhatYouWillNeedAAControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[WhatYouWillNeedAAView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(Period._2018)(request, messages(application)).toString
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(Period._2018)(request, messages(application)).toString
       }
     }
   }

@@ -238,15 +238,15 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
             .success
             .value
 
-          cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(Period._2018)) mustBe Some(true)
-          cleanedUserAnswers.get(TaxReliefPage(Period._2018)) mustBe Some(BigInt(1))
-          cleanedUserAnswers.get(DidYouContributeToRASSchemePage(Period._2018)) mustBe Some(true)
-          cleanedUserAnswers.get(RASContributionAmountPage(Period._2018)) mustBe Some(BigInt(1))
-          cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(ClaimingTaxReliefPensionPage(Period._2018)) `mustBe` Some(true)
+          cleanedUserAnswers.get(TaxReliefPage(Period._2018)) `mustBe` Some(BigInt(1))
+          cleanedUserAnswers.get(DidYouContributeToRASSchemePage(Period._2018)) `mustBe` Some(true)
+          cleanedUserAnswers.get(RASContributionAmountPage(Period._2018)) `mustBe` Some(BigInt(1))
+          cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018)) `mustBe` None
+          cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(Period._2018)) `mustBe` None
+          cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(Period._2018)) `mustBe` None
+          cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(Period._2018)) `mustBe` None
+          cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(Period._2018)) `mustBe` None
 
         }
 
@@ -283,13 +283,13 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
             .success
             .value
 
-          cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(Period._2018)) mustBe Some(true)
-          cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(Period._2018)) mustBe Some(BigInt(1))
-          cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(Period._2018)) mustBe None
-          cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(Period._2018)) `mustBe` Some(true)
+          cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(Period._2018)) `mustBe` Some(BigInt(1))
+          cleanedUserAnswers.get(ClaimingTaxReliefPensionNotAdjustedIncomePage(Period._2018)) `mustBe` None
+          cleanedUserAnswers.get(HowMuchTaxReliefPensionPage(Period._2018)) `mustBe` None
+          cleanedUserAnswers.get(HowMuchContributionPensionSchemePage(Period._2018)) `mustBe` None
+          cleanedUserAnswers.get(HasReliefClaimedOnOverseasPensionPage(Period._2018)) `mustBe` None
+          cleanedUserAnswers.get(AmountClaimedOnOverseasPensionPage(Period._2018)) `mustBe` None
 
         }
       }
@@ -317,9 +317,9 @@ class KnowAdjustedAmountPageSpec extends PageBehaviours {
             .success
             .value
 
-          cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(Period._2018)) mustBe Some(true)
-          cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(Period._2018)) mustBe Some(BigInt(1))
-          cleanedUserAnswers.get(AdjustedIncomePage(Period._2018)) mustBe None
+          cleanedUserAnswers.get(AnyLumpSumDeathBenefitsPage(Period._2018)) `mustBe` Some(true)
+          cleanedUserAnswers.get(LumpSumDeathBenefitsValuePage(Period._2018)) `mustBe` Some(BigInt(1))
+          cleanedUserAnswers.get(AdjustedIncomePage(Period._2018)) `mustBe` None
 
         }
       }

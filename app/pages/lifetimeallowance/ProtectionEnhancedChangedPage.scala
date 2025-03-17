@@ -16,7 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.ProtectionEnhancedChanged.{Both, Enhancement, No, Protection}
 import models.{CheckMode, NormalMode, ProtectionEnhancedChanged, UserAnswers}
 import pages.QuestionPage
@@ -33,17 +32,19 @@ case object ProtectionEnhancedChangedPage extends QuestionPage[ProtectionEnhance
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(ProtectionEnhancedChangedPage) match {
-      case Some(Enhancement)             => ltaRoutes.NewEnhancementTypeController.onPageLoad(NormalMode)
-      case Some(Protection) | Some(Both) => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
-      case Some(No)                      => ltaRoutes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
+      case Some(Enhancement)             => controllers.lifetimeallowance.routes.NewEnhancementTypeController.onPageLoad(NormalMode)
+      case Some(Protection) | Some(Both) =>
+        controllers.lifetimeallowance.routes.WhatNewProtectionTypeEnhancementController.onPageLoad(NormalMode)
+      case Some(No)                      => controllers.lifetimeallowance.routes.LifetimeAllowanceChargeController.onPageLoad(NormalMode)
       case _                             => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(ProtectionEnhancedChangedPage) match {
-      case Some(Enhancement)             => ltaRoutes.NewEnhancementTypeController.onPageLoad(CheckMode)
-      case Some(Protection) | Some(Both) => ltaRoutes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode)
-      case Some(No)                      => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
+      case Some(Enhancement)             => controllers.lifetimeallowance.routes.NewEnhancementTypeController.onPageLoad(CheckMode)
+      case Some(Protection) | Some(Both) =>
+        controllers.lifetimeallowance.routes.WhatNewProtectionTypeEnhancementController.onPageLoad(CheckMode)
+      case Some(No)                      => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
       case None                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 

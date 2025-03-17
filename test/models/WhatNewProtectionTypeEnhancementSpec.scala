@@ -40,7 +40,7 @@ class WhatNewProtectionTypeEnhancementSpec
         JsString(whatNewProtectionTypeEnhancement.toString)
           .validate[WhatNewProtectionTypeEnhancement]
           .asOpt
-          .value mustEqual whatNewProtectionTypeEnhancement
+          .value `mustEqual` whatNewProtectionTypeEnhancement
       }
     }
 
@@ -49,7 +49,7 @@ class WhatNewProtectionTypeEnhancementSpec
       val gen = arbitrary[String] suchThat (!WhatNewProtectionTypeEnhancement.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[WhatNewProtectionTypeEnhancement] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[WhatNewProtectionTypeEnhancement] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -58,7 +58,7 @@ class WhatNewProtectionTypeEnhancementSpec
       val gen = Gen.oneOf(WhatNewProtectionTypeEnhancement.values.toSeq)
 
       forAll(gen) { whatNewProtectionTypeEnhancement =>
-        Json.toJson(whatNewProtectionTypeEnhancement) mustEqual JsString(whatNewProtectionTypeEnhancement.toString)
+        Json.toJson(whatNewProtectionTypeEnhancement) `mustEqual` JsString(whatNewProtectionTypeEnhancement.toString)
       }
     }
   }

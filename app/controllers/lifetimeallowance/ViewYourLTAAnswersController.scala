@@ -22,8 +22,8 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.checkAnswers.lifetimeallowance._
-import viewmodels.govuk.summarylist._
+import viewmodels.checkAnswers.lifetimeallowance.*
+import viewmodels.govuk.summarylist.*
 import views.html.lifetimeallowance.ViewYourAnswersView
 
 class ViewYourLTAAnswersController @Inject() (

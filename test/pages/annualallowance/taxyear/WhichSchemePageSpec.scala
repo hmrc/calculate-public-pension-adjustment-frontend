@@ -96,7 +96,7 @@ class WhichSchemePageSpec extends PageBehaviours {
         .success
         .value
 
-      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))) `mustBe` None
     }
 
     "must clean up correctly when a user selects new in welsh" in {
@@ -110,7 +110,7 @@ class WhichSchemePageSpec extends PageBehaviours {
         .success
         .value
 
-      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))) mustBe None
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))) `mustBe` None
     }
 
     "must not clean up when a user selects another scheme from the scheme list" in {
@@ -124,7 +124,7 @@ class WhichSchemePageSpec extends PageBehaviours {
         .success
         .value
 
-      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))) mustBe Some(
+      cleanedUserAnswers.get(PensionSchemeDetailsPage(Period._2018, SchemeIndex(0))) `mustBe` Some(
         PensionSchemeDetails("schemeName", "schemeRef")
       )
     }

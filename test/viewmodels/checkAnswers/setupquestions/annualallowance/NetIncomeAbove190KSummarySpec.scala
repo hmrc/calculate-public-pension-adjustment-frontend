@@ -19,12 +19,12 @@ package viewmodels.checkAnswers.setupquestions.annualallowance
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.matchers.should.Matchers._
+import org.scalatest.matchers.should.Matchers.*
 import pages.setupquestions.annualallowance.NetIncomeAbove190KPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
-import viewmodels.implicits._
+import viewmodels.implicits.*
 
 class NetIncomeAbove190KSummarySpec extends AnyFreeSpec with Matchers {
 

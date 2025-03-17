@@ -24,7 +24,7 @@ import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.{SubmissionDataService, UserDataService}
 
 import java.net.URLEncoder
@@ -51,8 +51,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
           URLEncoder.encode("http://localhost:12804/public-pension-adjustment/account/signed-out", "UTF-8")
         val expectedRedirectUrl = s"${appConfig.signOutUrl}?continue=$encodedContinueUrl"
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual expectedRedirectUrl
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` expectedRedirectUrl
       }
     }
   }
@@ -73,8 +73,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
         val encodedContinueUrl  = URLEncoder.encode(appConfig.redirectToStartPage, "UTF-8")
         val expectedRedirectUrl = s"${appConfig.signOutUrl}?continue=$encodedContinueUrl"
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual expectedRedirectUrl
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` expectedRedirectUrl
       }
     }
   }
@@ -98,8 +98,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
           URLEncoder.encode("http://localhost:12804/public-pension-adjustment/account/signed-out", "UTF-8")
         val expectedRedirectUrl = s"${appConfig.signOutUrl}?continue=$encodedContinueUrl"
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual expectedRedirectUrl
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` expectedRedirectUrl
       }
     }
 
@@ -108,8 +108,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
       val mockUserDataService       = mock[UserDataService]
       val mockSubmissionDataService = mock[SubmissionDataService]
 
-      when(mockUserDataService.clear()(any())) thenReturn Future.successful(Done)
-      when(mockSubmissionDataService.clear()(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.clear()(any())) `thenReturn` Future.successful(Done)
+      when(mockSubmissionDataService.clear()(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(None, userIsAuthenticated = false)
@@ -128,8 +128,8 @@ class AuthControllerSpec extends SpecBase with MockitoSugar {
 
         val expectedRedirectUrl = appConfig.exitSurveyUrl
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual expectedRedirectUrl
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` expectedRedirectUrl
         verify(mockUserDataService, times(1)).clear()(any())
         verify(mockSubmissionDataService, times(1)).clear()(any())
       }

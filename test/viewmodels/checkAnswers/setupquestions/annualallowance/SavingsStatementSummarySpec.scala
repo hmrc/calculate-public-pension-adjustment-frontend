@@ -23,8 +23,8 @@ import org.scalatest.matchers.should.Matchers
 import pages.setupquestions.annualallowance.SavingsStatementPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class SavingsStatementSummarySpec extends AnyFreeSpec with Matchers {
 

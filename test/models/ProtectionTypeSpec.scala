@@ -33,7 +33,7 @@ class ProtectionTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckProper
       val gen = Gen.oneOf(ProtectionType.values.toSeq)
 
       forAll(gen) { protectionType =>
-        JsString(protectionType.toString).validate[ProtectionType].asOpt.value mustEqual protectionType
+        JsString(protectionType.toString).validate[ProtectionType].asOpt.value `mustEqual` protectionType
       }
     }
 
@@ -42,7 +42,7 @@ class ProtectionTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckProper
       val gen = arbitrary[String] suchThat (!ProtectionType.values.map(_.toString).contains(_))
 
       forAll(gen) { invalidValue =>
-        JsString(invalidValue).validate[ProtectionType] mustEqual JsError("error.invalid")
+        JsString(invalidValue).validate[ProtectionType] `mustEqual` JsError("error.invalid")
       }
     }
 
@@ -51,7 +51,7 @@ class ProtectionTypeSpec extends AnyFreeSpec with Matchers with ScalaCheckProper
       val gen = Gen.oneOf(ProtectionType.values.toSeq)
 
       forAll(gen) { protectionType =>
-        Json.toJson(protectionType) mustEqual JsString(protectionType.toString)
+        Json.toJson(protectionType) `mustEqual` JsString(protectionType.toString)
       }
     }
   }

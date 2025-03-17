@@ -16,8 +16,6 @@
 
 package pages.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
-import controllers.{routes => generalRoutes}
 import models.LtaProtectionOrEnhancements.{Both, Enhancements, No, Protection}
 import models.{CheckMode, LtaProtectionOrEnhancements, NormalMode, UserAnswers}
 import pages.QuestionPage
@@ -34,18 +32,20 @@ case object LtaProtectionOrEnhancementsPage extends QuestionPage[LtaProtectionOr
 
   override protected def navigateInNormalMode(answers: UserAnswers): Call =
     answers.get(LtaProtectionOrEnhancementsPage) match {
-      case Some(Enhancements)            => ltaRoutes.EnhancementTypeController.onPageLoad(NormalMode)
-      case Some(Protection) | Some(Both) => ltaRoutes.ProtectionTypeController.onPageLoad(NormalMode)
-      case Some(No)                      => ltaRoutes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
-      case None                          => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Enhancements)            => controllers.lifetimeallowance.routes.EnhancementTypeController.onPageLoad(NormalMode)
+      case Some(Protection) | Some(Both) =>
+        controllers.lifetimeallowance.routes.ProtectionTypeController.onPageLoad(NormalMode)
+      case Some(No)                      => controllers.lifetimeallowance.routes.ProtectionEnhancedChangedController.onPageLoad(NormalMode)
+      case None                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(LtaProtectionOrEnhancementsPage) match {
-      case Some(Enhancements)            => ltaRoutes.EnhancementTypeController.onPageLoad(CheckMode)
-      case Some(Protection) | Some(Both) => ltaRoutes.ProtectionTypeController.onPageLoad(CheckMode)
-      case Some(No)                      => ltaRoutes.CheckYourLTAAnswersController.onPageLoad()
-      case None                          => generalRoutes.JourneyRecoveryController.onPageLoad(None)
+      case Some(Enhancements)            => controllers.lifetimeallowance.routes.EnhancementTypeController.onPageLoad(CheckMode)
+      case Some(Protection) | Some(Both) =>
+        controllers.lifetimeallowance.routes.ProtectionTypeController.onPageLoad(CheckMode)
+      case Some(No)                      => controllers.lifetimeallowance.routes.CheckYourLTAAnswersController.onPageLoad()
+      case None                          => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }
 
   override def cleanup(value: Option[LtaProtectionOrEnhancements], userAnswers: UserAnswers): Try[UserAnswers] =

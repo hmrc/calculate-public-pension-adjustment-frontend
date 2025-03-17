@@ -16,7 +16,6 @@
 
 package viewmodels.checkAnswers.lifetimeallowance
 
-import controllers.lifetimeallowance.{routes => ltaRoutes}
 import models.LtaProtectionOrEnhancements.Protection
 import models.{CheckMode, UserAnswers}
 import org.scalatest.freespec.AnyFreeSpec
@@ -26,8 +25,8 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 import viewmodels.checkAnswers.FormatUtils.keyCssClass
-import viewmodels.govuk.summarylist._
-import viewmodels.implicits._
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
 
 class LtaProtectionOrEnhancementsSummarySpec extends AnyFreeSpec with Matchers {
 
@@ -48,7 +47,7 @@ class LtaProtectionOrEnhancementsSummarySpec extends AnyFreeSpec with Matchers {
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              ltaRoutes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url
+              controllers.lifetimeallowance.routes.LtaProtectionOrEnhancementsController.onPageLoad(CheckMode).url
             )
               .withVisuallyHiddenText("ltaProtectionOrEnhancements.change.hidden")
           )

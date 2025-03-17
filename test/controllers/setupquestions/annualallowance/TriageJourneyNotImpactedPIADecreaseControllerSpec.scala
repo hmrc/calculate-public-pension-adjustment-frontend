@@ -21,15 +21,15 @@ import models.{LTAKickOutStatus, UserAnswers}
 import config.FrontendAppConfig
 import play.api.Configuration
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import play.api.test.Helpers.*
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.setupquestions.annualallowance.TriageJourneyNotImpactedPIADecreaseView
 
-class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
+class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase with GuiceOneAppPerSuite {
 
   "TriageJourneyNotImpactedPIADecrease Controller" - {
 
-    val config: Configuration = injector.instanceOf[Configuration]
+    val config: Configuration = app.injector.instanceOf[Configuration]
     val exitUrl: String       = new FrontendAppConfig(config).exitSurveyUrl
 
     "when annual allowance status is 1 in the UserAnswers" - {
@@ -55,8 +55,8 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(
             true,
             "/public-pension-adjustment/triage-journey/lifetime-allowance/benefit-crystallisation-event",
             exitUrl
@@ -64,8 +64,8 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
-          contentAsString(result) must not include "What did you think of this service?"
+          contentAsString(result) `must` `include`("Continue")
+          contentAsString(result) `must` `not` `include` "What did you think of this service?"
 
         }
       }
@@ -94,12 +94,16 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(true, "/public-pension-adjustment/check-your-answers-setup", exitUrl)(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(
+            true,
+            "/public-pension-adjustment/check-your-answers-setup",
+            exitUrl
+          )(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must include("Continue")
+          contentAsString(result) `must` `include`("Continue")
         }
       }
     }
@@ -127,13 +131,13 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
-          contentAsString(result) must include("What did you think of this service?")
+          contentAsString(result) `must` `not` `include` "Continue"
+          contentAsString(result) `must` `include`("What did you think of this service?")
 
         }
       }
@@ -156,12 +160,12 @@ class TriageJourneyNotImpactedPIADecreaseControllerSpec extends SpecBase {
 
           val view = application.injector.instanceOf[TriageJourneyNotImpactedPIADecreaseView]
 
-          status(result) mustEqual OK
-          contentAsString(result) mustEqual view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
+          status(result) `mustEqual` OK
+          contentAsString(result) `mustEqual` view(false, "/public-pension-adjustment/there-is-a-problem", exitUrl)(
             request,
             messages(application)
           ).toString
-          contentAsString(result) must not include "Continue"
+          contentAsString(result) `must` `not` `include` "Continue"
         }
       }
     }

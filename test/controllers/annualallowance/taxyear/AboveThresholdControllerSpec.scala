@@ -20,7 +20,7 @@ import base.SpecBase
 import models.{Period, ThresholdIncome}
 import org.scalacheck.Gen
 import org.scalatest.freespec.AnyFreeSpec
-import pages.annualallowance.taxyear._
+import pages.annualallowance.taxyear.*
 
 class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
 
@@ -61,7 +61,7 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
           .value
 
         val controller = new AboveThresholdController
-        controller.thresholdStatus(ua, period) mustBe false
+        controller.thresholdStatus(ua, period) `mustBe` false
 
       }
 
@@ -93,7 +93,7 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
           .value
 
         val controller = new AboveThresholdController
-        controller.thresholdStatus(ua, period) mustBe true
+        controller.thresholdStatus(ua, period) `mustBe` true
 
       }
 
@@ -125,7 +125,7 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
           .value
 
         val controller = new AboveThresholdController
-        controller.thresholdStatus(ua, period) mustBe false
+        controller.thresholdStatus(ua, period) `mustBe` false
 
       }
 
@@ -157,7 +157,7 @@ class AboveThresholdControllerSpec extends AnyFreeSpec with SpecBase {
           .value
 
         val controller = new AboveThresholdController
-        controller.thresholdStatus(ua, period) mustBe true
+        controller.thresholdStatus(ua, period) `mustBe` true
 
       }
     }

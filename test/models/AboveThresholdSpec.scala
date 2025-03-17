@@ -29,7 +29,7 @@ class AboveThresholdSpec extends AnyFreeSpec with SpecBase {
 
       val updatedUserAnswers = AboveThreshold(Period._2022).saveThresholdStatus(userAnswers, Period._2022, true)
 
-      updatedUserAnswers.get(AboveThreshold(Period._2022)) mustBe Some(true)
+      updatedUserAnswers.get(AboveThreshold(Period._2022)) `mustBe` Some(true)
     }
   }
 

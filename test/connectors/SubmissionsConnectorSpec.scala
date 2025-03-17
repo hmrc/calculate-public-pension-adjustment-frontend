@@ -17,9 +17,9 @@
 package connectors
 
 import base.SpecBase
-import com.github.tomakehurst.wiremock.client.WireMock._
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import generators.Generators
-import models.CalculationResults._
+import models.CalculationResults.*
 import models.submission.{Failure, SubmissionRequest, SubmissionResponse, Success}
 import models.{Done, MaybePIAIncrease, MaybePIAUnchangedOrDecreased}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
@@ -98,7 +98,7 @@ class SubmissionsConnectorSpec extends SpecBase with WireMockHelper with ScalaCh
 
           val result = connector.sendSubmissionRequest(submissionRequest)(hc).futureValue
 
-          result mustBe Success("uniqueId")
+          result `mustBe` Success("uniqueId")
         }
       }
 
@@ -157,7 +157,7 @@ class SubmissionsConnectorSpec extends SpecBase with WireMockHelper with ScalaCh
           val response: Try[SubmissionResponse] =
             Try(connector.sendSubmissionRequest(submissionRequest)(hc).futureValue)
 
-          response.isFailure mustBe true
+          response.isFailure `mustBe` true
         }
       }
     }
@@ -175,7 +175,7 @@ class SubmissionsConnectorSpec extends SpecBase with WireMockHelper with ScalaCh
           val connector = app.injector.instanceOf[SubmissionsConnector]
           val result    = connector.clear()(hc).futureValue
 
-          result mustBe Done
+          result `mustBe` Done
         }
       }
 
@@ -191,7 +191,7 @@ class SubmissionsConnectorSpec extends SpecBase with WireMockHelper with ScalaCh
           val connector = app.injector.instanceOf[UserAnswersConnector]
           val result    = connector.clear()(hc).failed.futureValue
 
-          result mustBe an[uk.gov.hmrc.http.UpstreamErrorResponse]
+          result `mustBe` an[uk.gov.hmrc.http.UpstreamErrorResponse]
         }
       }
 

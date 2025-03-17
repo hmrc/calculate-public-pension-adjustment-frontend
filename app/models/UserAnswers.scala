@@ -43,7 +43,7 @@ final case class UserAnswers(
 
   def containsAnswerFor(page: Page) =
     page match {
-      case settable: Settable[_] =>
+      case settable: Settable[?] =>
         data.removeObject(settable.path) match {
           case JsSuccess(_, _) => true
           case JsError(_)      =>
@@ -126,7 +126,7 @@ object UserAnswers {
         (__ \ "lastUpdated").write(MongoJavatimeFormats.instantFormat) and
         (__ \ "authenticated").write[Boolean] and
         (__ \ "submissionStarted").write[Boolean]
-    )(unlift(UserAnswers.unapply))
+    )(o => Tuple.fromProductTyped(o))
   }
 
   implicit val format: OFormat[UserAnswers] = OFormat(reads, writes)

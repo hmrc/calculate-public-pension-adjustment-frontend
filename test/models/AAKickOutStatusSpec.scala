@@ -29,7 +29,7 @@ class AAKickOutStatusSpec extends AnyFreeSpec with SpecBase {
 
       val updatedUserAnswers = AAKickOutStatus().saveAAKickOutStatus(userAnswers, 1)
 
-      updatedUserAnswers.get(AAKickOutStatus()) mustBe Some(1)
+      updatedUserAnswers.get(AAKickOutStatus()) `mustBe` Some(1)
     }
   }
 

@@ -30,7 +30,7 @@ import pages.annualallowance.taxyear.{DefinedContributionAmountPage, FlexiAccess
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import services.UserDataService
 import views.html.annualallowance.taxyear.DefinedContributionAmountView
 
@@ -64,8 +64,8 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val view = application.injector.instanceOf[DefinedContributionAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form,
           NormalMode,
           Period._2023,
@@ -95,8 +95,8 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val view = application.injector.instanceOf[DefinedContributionAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           flexiForm,
           NormalMode,
           Period._2023,
@@ -125,8 +125,8 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val view = application.injector.instanceOf[DefinedContributionAmountView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           flexiFormStartOfPeriod,
           NormalMode,
           Period._2023,
@@ -150,7 +150,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -166,10 +166,10 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2023)) mustBe Some(BigInt(0))
+        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2023)) `mustBe` Some(BigInt(0))
       }
     }
 
@@ -185,7 +185,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
       val userAnswersCaptor: ArgumentCaptor[UserAnswers] = ArgumentCaptor.forClass(classOf[UserAnswers])
 
-      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(userAnswersCaptor.capture())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -201,10 +201,10 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
         val capturedUserAnswers = userAnswersCaptor.getValue
-        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2023)) mustBe None
+        capturedUserAnswers.get(FlexiAccessDefinedContributionAmountPage(Period._2023)) `mustBe` None
       }
     }
 
@@ -224,8 +224,8 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` OK
+        contentAsString(result) `mustEqual` view(
           form.fill(validAnswer),
           NormalMode,
           Period._2023,
@@ -241,7 +241,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
       val mockUserDataService = mock[UserDataService]
 
-      when(mockUserDataService.set(any())(any())) thenReturn Future.successful(Done)
+      when(mockUserDataService.set(any())(any())) `thenReturn` Future.successful(Done)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -257,7 +257,7 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
       }
     }
 
@@ -276,8 +276,8 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(
           boundForm,
           NormalMode,
           Period._2023,
@@ -311,8 +311,8 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(
+        status(result) `mustEqual` BAD_REQUEST
+        contentAsString(result) `mustEqual` view(
           boundForm,
           NormalMode,
           Period._2023,
@@ -334,8 +334,8 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        status(result) `mustEqual` SEE_OTHER
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
 
@@ -351,9 +351,9 @@ class DefinedContributionAmountControllerSpec extends SpecBase with MockitoSugar
 
         val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
+        status(result) `mustEqual` SEE_OTHER
 
-        redirectLocation(result).value mustEqual appConfig.redirectToStartPage
+        redirectLocation(result).value `mustEqual` appConfig.redirectToStartPage
       }
     }
   }

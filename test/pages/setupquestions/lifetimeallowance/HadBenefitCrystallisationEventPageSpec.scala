@@ -18,7 +18,7 @@ package pages.setupquestions.lifetimeallowance
 
 import models.{CheckMode, NormalMode}
 import pages.behaviours.PageBehaviours
-import pages.lifetimeallowance._
+import pages.lifetimeallowance.*
 
 import scala.util.Random
 

@@ -23,7 +23,7 @@ import pages.setupquestions.annualallowance.ContributionRefundsPage
 import play.api.i18n.Messages
 import play.api.test.Helpers
 import viewmodels.govuk.all.{ActionItemViewModel, FluentActionItem, SummaryListRowViewModel, ValueViewModel}
-import viewmodels.implicits._
+import viewmodels.implicits.*
 
 class ContributionRefundsSummarySpec extends AnyFreeSpec with Matchers {
 
