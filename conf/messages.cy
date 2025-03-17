@@ -1087,7 +1087,7 @@ cannotUseServiceNotIndividual.title = Ni allwch ddefnyddio’r gwasanaeth hwn gy
 cannotUseServiceNotIndividual.heading = Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r manylion mewngofnodi hynny
 cannotUseServiceNotIndividual.message1 = Rydych wedi mewngofnodi gan ddefnyddio Dynodydd Defnyddiwr (ID) asiant ar gyfer Porth y Llywodraeth. Er mwyn defnyddio’r gwasanaeth hwn, mae’n rhaid i chi greu Dynodydd Defnyddiwr (ID) ar gyfer Porth y Llywodraeth ar gyfer unigolyn.
 cannotUseServiceNotIndividual.message2 = Gallwch
-cannotUseServiceNotIndividual.link = ddysgu rhagor am fewngofnodi i wasanaethau ar-lein CThEF.
+cannotUseServiceNotIndividual.link = ddysgu rhagor am fewngofnodi i wasanaethau ar-lein CThEF
 
 previousClaimContinue.title = A hoffech fynd yn eich blaen â’ch hawliad blaenorol?
 previousClaimContinue.heading = A hoffech fynd yn eich blaen â’ch hawliad blaenorol?
