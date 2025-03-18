@@ -165,7 +165,7 @@ whichYearsScottishTaxpayer.2018 = 6 Ebrill 2017 i 5 Ebrill 2018
 whichYearsScottishTaxpayer.2017 = 6 Ebrill 2016 i 5 Ebrill 2017
 whichYearsScottishTaxpayer.checkYourAnswersLabel = Pa flynyddoedd treth oeddech chi’n drethdalwr yn yr Alban?
 whichYearsScottishTaxpayer.error.required = Dewiswch pa flynyddoedd treth yr oeddech yn drethdalwr yn yr Alban
-whichYearsScottishTaxpayer.change.hidden = pa flynyddoedd treth oeddech chi’n   drethdalwr yn yr Alban
+whichYearsScottishTaxpayer.change.hidden = pa flynyddoedd treth oeddech chi’n drethdalwr yn yr Alban
 
 payingPublicPensionScheme.title = Ydych chi wedi parhau i dalu i mewn neu gynyddu eich cynllun pensiwn gwasanaeth cyhoeddus ar ôl 5 Ebrill 2022?
 payingPublicPensionScheme.heading = Ydych chi wedi parhau i dalu i mewn neu gynyddu eich cynllun pensiwn gwasanaeth cyhoeddus ar ôl 5 Ebrill 2022?
