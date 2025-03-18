@@ -293,7 +293,7 @@ dateOfBenefitCrystallisationEvent.error.max = Mae’n rhaid i ddyddiad y digwydd
 
 notAbleToUseThisServiceLta.title = Nid ydych yn gymwys
 notAbleToUseThisServiceLta.heading = Nid ydych yn gymwys i ddefnyddio’r gwasanaeth hwn
-notAbleToUseThisServiceLta.message1 = Gwnaethoch ddewis eich bod am ddefnyddio’r gwasanaeth hwn i gyfrifo’ch addasiad lwfans blynyddol (AA)
+notAbleToUseThisServiceLta.message1 = Gwnaethoch ddewis eich bod am ddefnyddio’r gwasanaeth hwn i gyfrifo’ch addasiad lwfans oes (LTA)
 notAbleToUseThisServiceLta.message2 = Os nad ydych wedi cael digwyddiad crisialu buddiannau, nid ydych wedi cyrchu’ch pensiwn. Mae hyn yn golygu na fyddwch wedi talu tâl lwfans oes.
 notAbleToUseThisServiceLta.message3 = Er y gallai’ch cyfraniadau pensiwn gael eu heffeithio gan y cynllun unioni pensiynau gwasanaeth cyhoeddus, nid oes angen i chi ddefnyddio’r gwasanaeth hwn ar gyfer eich lwfans oes.
 notAbleToUseThisServiceLta.message4 = Rydych yn dal i allu defnyddio’r gwasanaeth hwn i gyfrifo’ch taliadau treth lwfans blynyddol.
@@ -1424,7 +1424,7 @@ otherSchemeNotification.change.hidden = os yw’ch cynllun arall wedi rhoi gwybo
 
 notAbleToUseThisTriageLta.title = Nid ydych yn cael eich effeithio
 notAbleToUseThisTriageLta.heading = Nid ydych yn gymwys i ddefnyddio’r gwasanaeth hwn
-notAbleToUseThisTriageLta.message1 = Gwnaethoch ddewis eich bod am ddefnyddio’r gwasanaeth hwn i gyfrifo’ch addasiad lwfans blynyddol (AA).
+notAbleToUseThisTriageLta.message1 = Gwnaethoch ddewis eich bod am ddefnyddio’r gwasanaeth hwn i gyfrifo’ch addasiad lwfans oes (LTA).
 notAbleToUseThisTriageLta.message2 = Er i chi dalu tâl lwfans oes, nid yw’r tâl hwn wedi newid o ganlyniad i’r Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus.
 notAbleToUseThisTriageLta.message3 = Er y gallai’ch cyfraniadau pensiwn gael eu heffeithio gan y Cynllun Unioni Pensiynau Gwasanaeth Cyhoeddus, nid oes angen i chi ddefnyddio’r gwasanaeth hwn ar gyfer eich lwfans oes.
 notAbleToUseThisTriageLta.message4 = Rydych yn dal i allu defnyddio’r gwasanaeth hwn i gyfrifo’ch taliadau treth lwfans blynyddol.
