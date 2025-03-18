@@ -52,7 +52,8 @@ case object AffectedByRemedyPage extends QuestionPage[Boolean] {
         val answersWithNoTriageLTA     = TriageSection.removeAllLTAUserAnswers(answersWithNoKickOutStatus)
         val answersWithNoAATriage      = TriageSection.removeAllAAUserAnswers(answersWithNoTriageLTA)
         val answersWithNoPreAA         = PreAASection.removeAllUserAnswersAndNavigation(answersWithNoAATriage)
-        val aaSectionRemove            = AASection.removeAllAAPeriodAnswersAndNavigation(answersWithNoPreAA)
+        val aaSectionRemove            =
+          AASection.removeAllAAPeriodAnswersAndNavigation(answersWithNoPreAA).remove(ReportingChangePage).get
         Try(LTASection.removeAllUserAnswersAndNavigation(aaSectionRemove))
       case _           => super.cleanup(value, userAnswers)
     }

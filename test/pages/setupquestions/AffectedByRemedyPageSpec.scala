@@ -17,7 +17,7 @@
 package pages.setupquestions
 
 import models.Period.{_2013, _2014, _2015, _2021, _2022}
-import models.{AAKickOutStatus, CheckMode, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LTAKickOutStatus, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, SchemeIndex, SchemeNameAndTaxRef, ThresholdIncome, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
+import models.{AAKickOutStatus, CheckMode, ContributedToDuringRemedyPeriod, EnhancementType, ExcessLifetimeAllowancePaid, LTAKickOutStatus, LtaPensionSchemeDetails, LtaProtectionOrEnhancements, MaybePIAIncrease, NewEnhancementType, NewExcessLifetimeAllowancePaid, NormalMode, PensionSchemeDetails, PensionSchemeInputAmounts, ProtectionEnhancedChanged, ProtectionType, QuarterChargePaid, ReportingChange, SchemeIndex, SchemeNameAndTaxRef, ThresholdIncome, WhatNewProtectionTypeEnhancement, WhichYearsScottishTaxpayer, WhoPaidAACharge, WhoPaidLTACharge, WhoPayingExtraLtaCharge, YearChargePaid}
 import pages.annualallowance.preaaquestions.*
 import pages.annualallowance.taxyear.*
 import pages.behaviours.PageBehaviours
@@ -117,6 +117,9 @@ class AffectedByRemedyPageSpec extends PageBehaviours {
         val ua = testCalulationServiceData
 
         val cleanedUserAnswers = AffectedByRemedyPage.cleanup(Some(false), ua).success.value
+
+        // Setup Answers
+        cleanedUserAnswers.get(ReportingChangePage) `mustBe` None
 
         // AA Triage Answers
         cleanedUserAnswers.get(SavingsStatementPage) `mustBe` None
@@ -242,6 +245,11 @@ class AffectedByRemedyPageSpec extends PageBehaviours {
         val ua = testCalulationServiceData
 
         val cleanedUserAnswers = AffectedByRemedyPage.cleanup(Some(true), ua).success.value
+
+        // Setup Answers
+        cleanedUserAnswers.get(ReportingChangePage) `mustBe` Some(
+          Set(ReportingChange.AnnualAllowance, ReportingChange.LifetimeAllowance)
+        )
 
         // AA Triage Answers
         cleanedUserAnswers.get(SavingsStatementPage) `mustBe` Some(true)
