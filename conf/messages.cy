@@ -1309,8 +1309,6 @@ doYouHaveGiftAid.change.hidden = os gwnaethoch unrhyw gyfraniadau at elusen a ha
 
 amountOfGiftAid.title = Beth oedd swm y rhyddhad treth y gwnaethoch ei hawlio drwy Rodd Cymorth o {0}?
 amountOfGiftAid.heading = Beth oedd swm y rhyddhad treth y gwnaethoch ei hawlio drwy Rodd Cymorth o {0}?
-amountOfGiftAid.message1 = I gyfrifo swm y rhyddhad treth rydych wedi’i hawlio, mae’n rhaid i chi luosi eich cyfraniad â 1.25.
-amountOfGiftAid.message2 = Er enghraifft, os gwnaethoch gyfraniadau gwerth £100 drwy Rodd Cymorth, gwnaethoch hawlio £125 o ryddhad treth.
 amountOfGiftAid.message3 = Os ydych wedi cyflwyno Ffurflen Dreth Hunanasesiad, bydd swm eich cyfraniad i’w weld ar eich SA100 o dan ‘Cyfrannu at elusennau’
 amountOfGiftAid.checkYourAnswersLabel = Beth oedd swm y rhyddhad treth y gwnaethoch ei hawlio drwy Rodd Cymorth o {0}?
 amountOfGiftAid.error.nonNumeric = Mae’n rhaid i swm y rhyddhad treth y gwnaethoch ei hawlio drwy Rodd Cymorth o {0} gynnwys y rhifau 0 i 9 yn unig

@@ -1309,8 +1309,6 @@ doYouHaveGiftAid.change.hidden = if you made any donations to charity on which y
 
 amountOfGiftAid.title = How much tax relief did you claim from Gift Aid from {0}?
 amountOfGiftAid.heading = How much tax relief did you claim from Gift Aid from {0}?
-amountOfGiftAid.message1 = To work out how much tax relief you have claimed, you must multiply your donation by 1.25.
-amountOfGiftAid.message2 = For example, if you made £100 of Gift Aid donations, you claimed £125 in tax relief.
 amountOfGiftAid.message3 = If you have filed for Self Assessment you will find the amount that you donated in your SA100 under charitable giving
 amountOfGiftAid.checkYourAnswersLabel = How much tax relief did you claim from Gift Aid from {0}?
 amountOfGiftAid.error.nonNumeric = The amount of tax relief you claimed via Gift Aid from {0} must only include numbers 0 to 9
