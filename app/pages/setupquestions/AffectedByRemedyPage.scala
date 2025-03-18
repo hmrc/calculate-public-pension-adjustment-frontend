@@ -16,10 +16,13 @@
 
 package pages.setupquestions
 
+import models.tasklist.sections.{AASection, LTASection, PreAASection, TriageSection}
 import models.{NormalMode, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
+
+import scala.util.Try
 
 case object AffectedByRemedyPage extends QuestionPage[Boolean] {
 
@@ -39,5 +42,18 @@ case object AffectedByRemedyPage extends QuestionPage[Boolean] {
       case Some(true)  => controllers.setupquestions.routes.ReportingChangeController.onPageLoad(NormalMode)
       case Some(false) => controllers.setupquestions.routes.IneligibleController.onPageLoad
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
+    }
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
+    value match {
+      case Some(true)  => super.cleanup(value, userAnswers)
+      case Some(false) =>
+        val answersWithNoKickOutStatus = TriageSection.removeAllKickOutStatusUserAnswers(userAnswers)
+        val answersWithNoTriageLTA     = TriageSection.removeAllLTAUserAnswers(answersWithNoKickOutStatus)
+        val answersWithNoAATriage      = TriageSection.removeAllAAUserAnswers(answersWithNoTriageLTA)
+        val answersWithNoPreAA         = PreAASection.removeAllUserAnswersAndNavigation(answersWithNoAATriage)
+        val aaSectionRemove            = AASection.removeAllAAPeriodAnswersAndNavigation(answersWithNoPreAA)
+        Try(LTASection.removeAllUserAnswersAndNavigation(aaSectionRemove))
+      case _           => super.cleanup(value, userAnswers)
     }
 }
