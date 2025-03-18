@@ -36,7 +36,7 @@ case object AffectedByRemedyPage extends QuestionPage[Boolean] {
 
   override protected def navigateInCheckMode(answers: UserAnswers): Call =
     answers.get(AffectedByRemedyPage) match {
-      case Some(true)  => controllers.setupquestions.routes.CheckYourSetupAnswersController.onPageLoad()
+      case Some(true)  => controllers.setupquestions.routes.ReportingChangeController.onPageLoad(NormalMode)
       case Some(false) => controllers.setupquestions.routes.IneligibleController.onPageLoad
       case _           => controllers.routes.JourneyRecoveryController.onPageLoad(None)
     }

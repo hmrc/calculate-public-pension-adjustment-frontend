@@ -25,6 +25,19 @@
 
 @(form: Form[?], mode: Mode, period: Period, startEndDate: String)(implicit request: Request[?], messages: Messages)
 
+@contentSubHeading = {
+    <h2 class= "govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-top-4 govuk-!-margin-bottom-2">@messages("knowAdjustedAmount.heading2", startEndDate)</h2>
+}
+
+@contentText = {
+    <h2 class="govuk-caption-xl govuk-!-margin-top-2 govuk-!-margin-bottom-0"> @messages("annualAllowance.thresholdIncome.caption")</h2>
+    <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-2">@messages("didYouContributeToRASScheme.mainHeading")</h1>
+
+    <p class="govuk-body">@messages("didYouContributeToRASScheme.message1")</p>
+    <p class="govuk-body">@messages("didYouContributeToRASScheme.message2")</p>
+    <p class="govuk-body">@messages("didYouContributeToRASScheme.message3")</p>
+}
+
 @layout(pageTitle = title(form, messages("didYouContributeToRASScheme.title", startEndDate))) {
 
     @formHelper(action = controllers.annualallowance.taxyear.routes.DidYouContributeToRASSchemeController.onSubmit(mode, period), Symbol("autoComplete") -> "off") {
@@ -33,16 +46,12 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <span class="govuk-caption-xl">@messages("annualAllowance.thresholdIncome.caption")</span>
-        <h1 class="govuk-heading-xl"> @messages("didYouContributeToRASScheme.mainHeading")</h1>
-        <p class="govuk-body">@messages("didYouContributeToRASScheme.message1")</p>
-        <p class="govuk-body">@messages("didYouContributeToRASScheme.message2")</p>
-        <p class="govuk-body">@messages("didYouContributeToRASScheme.message3")</p>
+        @contentText
 
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("didYouContributeToRASScheme.heading", startEndDate)).withCssClass("govuk-label--m")
+                legend = LegendViewModel(HtmlContent(contentSubHeading))
             )
         )
 

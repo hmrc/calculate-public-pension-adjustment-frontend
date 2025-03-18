@@ -76,7 +76,7 @@ class AffectedByRemedyPageSpec extends PageBehaviours {
 
         val nextPageUrl: String = AffectedByRemedyPage.navigate(CheckMode, ua).url
 
-        checkNavigation(nextPageUrl, "/check-your-answers-setup")
+        checkNavigation(nextPageUrl, "/triage-journey/AA-or-LTA-charges")
       }
 
       "must redirect to kick out page  when false" in {
