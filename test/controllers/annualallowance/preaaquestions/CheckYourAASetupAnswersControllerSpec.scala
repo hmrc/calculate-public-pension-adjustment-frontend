@@ -50,7 +50,6 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         status(result) `mustEqual` OK
         contentAsString(result) `mustEqual` view(
           false,
-          "checkYourAnswers.aa.subHeading",
           controllers.routes.TaskListController.onPageLoad(),
           list,
           "checkYourAnswers.aa.pIASubHeading",
@@ -93,7 +92,6 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         status(result) `mustEqual` OK
         contentAsString(result) `mustEqual` view(
           maybePensionInputAmounts = false,
-          "checkYourAnswers.aa.subHeading",
           controllers.routes.TaskListController.onPageLoad(),
           list,
           "checkYourAnswers.aa.pIASubHeading",
@@ -136,7 +134,6 @@ class CheckYourAASetupAnswersControllerSpec extends SpecBase with SummaryListFlu
         status(result) `mustEqual` OK
         contentAsString(result) `mustEqual` view(
           maybePensionInputAmounts = true,
-          "checkYourAnswers.aa.subHeading",
           controllers.routes.TaskListController.onPageLoad(),
           list,
           "checkYourAnswers.aa.pIASubHeading",

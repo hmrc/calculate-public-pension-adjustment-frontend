@@ -66,7 +66,6 @@ class CheckYourAASetupAnswersController @Inject() (
     Ok(
       view(
         maybePensionInputAmounts(request.userAnswers),
-        "checkYourAnswers.aa.subHeading",
         controllers.routes.TaskListController.onPageLoad(),
         SummaryListViewModel(rows.flatten),
         "checkYourAnswers.aa.pIASubHeading",
