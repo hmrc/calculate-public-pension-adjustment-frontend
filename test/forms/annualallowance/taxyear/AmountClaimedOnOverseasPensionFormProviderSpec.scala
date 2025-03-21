@@ -27,7 +27,7 @@ class AmountClaimedOnOverseasPensionFormProviderSpec extends IntFieldBehaviours 
 
     val fieldName = "value"
 
-    val minimum = 0
+    val minimum = 1
     val maximum = 999999999
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
@@ -45,13 +45,13 @@ class AmountClaimedOnOverseasPensionFormProviderSpec extends IntFieldBehaviours 
       wholeNumberError = FormError(fieldName, "amountClaimedOnOverseasPension.error.wholeNumber")
     )
 
-//    behave like intFieldWithRange(
-//      form,
-//      fieldName,
-//      minimum       = minimum,
-//      maximum       = maximum,
-//      expectedError = FormError(fieldName, "amountClaimedOnOverseasPension.error.outOfRange", Seq(minimum, maximum))
-//    )
+    behave like intFieldWithRange(
+      form,
+      fieldName,
+      minimum = minimum,
+      maximum = maximum,
+      expectedError = FormError(fieldName, "amountClaimedOnOverseasPension.error.outOfRange", Seq(minimum, maximum))
+    )
 
     behave like mandatoryField(
       form,
