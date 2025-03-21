@@ -68,25 +68,6 @@ class MaybePreviousClaimControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    // TODO Revisit Unit test
-    //    "must update user answers if authenticated and no existing user answers" in {
-    //      val mockCalculateBackendService = mock[CalculateBackendService]
-    //      when(mockCalculateBackendService.updateUserAnswersFromCalcUA(any())(any())) `thenReturn` Future.successful(Done)
-    //
-    //      val application = applicationBuilder(userAnswers = None, userIsAuthenticated = true)
-    //        .overrides(
-    //          bind[CalculateBackendService].toInstance(mockCalculateBackendService)
-    //        ).build()
-    //
-    //      running(application) {
-    //        val request = AuthenticatedIdentifierRequest(FakeRequest(GET, routes.MaybePreviousClaimController.redirect().url), "id")
-    //        val result = route(application, request).value
-    //
-    //        status(result) `mustEqual` SEE_OTHER
-    //        verify(mockCalculateBackendService, times(1)).updateUserAnswersFromCalcUA(any())(any())
-    //      }
-    //    }
-
     "must not update user answers if not authenticated" in {
       val mockCalculateBackendService = mock[CalculateBackendService]
 

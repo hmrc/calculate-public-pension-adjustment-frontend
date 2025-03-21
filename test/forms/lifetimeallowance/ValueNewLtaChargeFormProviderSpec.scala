@@ -28,7 +28,7 @@ class ValueNewLtaChargeFormProviderSpec extends IntFieldBehaviours {
     val fieldName = "value"
 
     val minimum = 0
-    val maximum = 9
+    val maximum = 999999999
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
@@ -45,13 +45,13 @@ class ValueNewLtaChargeFormProviderSpec extends IntFieldBehaviours {
       wholeNumberError = FormError(fieldName, "valueNewLtaCharge.error.wholeNumber")
     )
 
-//    behave like intFieldWithRange(
-//      form,
-//      fieldName,
-//      minimum = minimum,
-//      maximum = maximum,
-//      expectedError = FormError(fieldName, "valueNewLtaCharge.error.outOfRange", Seq(minimum, maximum))
-//    )
+    behave like intFieldWithRange(
+      form,
+      fieldName,
+      minimum = minimum,
+      maximum = maximum,
+      expectedError = FormError(fieldName, "valueNewLtaCharge.error.outOfRange", Seq(minimum, maximum))
+    )
 
     behave like mandatoryField(
       form,
