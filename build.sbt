@@ -6,10 +6,8 @@ import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 lazy val appName: String = "calculate-public-pension-adjustment-frontend"
 
-val scala3_3_4 = "3.3.4"
-
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := scala3_3_4
+ThisBuild / scalaVersion := "3.3.5"
 
 lazy val it = project
   .enablePlugins(PlayScala)
@@ -21,10 +19,8 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin, AutomateHeaderPlugin, BuildInfoPlugin)
   .disablePlugins(JUnitXmlReportPlugin) // Required to prevent https://github.com/scalatest/scalatest/issues/1427
   .settings(inConfig(Test)(testSettings): _*)
-  .settings(majorVersion := 0)
   .settings(ThisBuild / useSuperShell := false)
   .settings(
-    scalaVersion := "3.3.4",
     name := appName,
     RoutesKeys.routesImport ++= Seq(
       "models._",
