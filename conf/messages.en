@@ -1571,7 +1571,7 @@ contribution4000ToDirectContributionScheme.checkYourAnswersLabel = Did the combi
 contribution4000ToDirectContributionScheme.error.required = Select yes if the combined contributions from you and your employer totaled more than £4,000 for any defined contribution scheme between 6 April 2017 and 5 April 2023
 contribution4000ToDirectContributionScheme.change.hidden = if the combined contributions from you and your employer totaled more than £4,000 for any defined contribution scheme between 6 April 2017 and 5 April 2023
 
-userEligibility.title = You are eligible to use service
+userEligibility.title = You are eligible to use the Public Service Pensions adjustment service
 userEligibility.heading = You are eligible to use the Public Service Pensions adjustment service
 userEligibility.message1 = You are able to use this service to calculate a change in your annual allowance position.
 userEligibility.message2 = You are able to use this service to report changes to your lifetime allowance position.
