@@ -1571,7 +1571,7 @@ contribution4000ToDirectContributionScheme.checkYourAnswersLabel = A yw’r cyfr
 contribution4000ToDirectContributionScheme.error.required = Dewiswch ‘Iawn’ os oedd y cyfraniadau cyfunol gennych chi a’ch cyflogwr yn fwy na £4,000 ar gyfer unrhyw gynllun cyfraniadau diffiniedig rhwng 6 Ebrill 2017 a 5 Ebrill 2023
 contribution4000ToDirectContributionScheme.change.hidden = os oedd y cyfraniadau cyfunol gennych chi a’ch cyflogwr yn fwy na £4,000 ar gyfer unrhyw gynllun cyfraniadau diffiniedig rhwng 6 Ebrill 2017 a 5 Ebrill 2023
 
-userEligibility.title = Rydych yn gymwys i ddefnyddio’r gwasanaeth
+userEligibility.title = Rydych yn gymwys i ddefnyddio’r gwasanaeth Addasiad i Bensiwn Gwasanaethau Cyhoeddus
 userEligibility.heading = Rydych yn gymwys i ddefnyddio’r gwasanaeth Addasiad i Bensiwn Gwasanaethau Cyhoeddus
 userEligibility.message1 = Gallwch ddefnyddio’r gwasanaeth hwn i gyfrifo newid yn eich sefyllfa lwfans blynyddol.
 userEligibility.message2 = Gallwch ddefnyddio’r gwasanaeth hwn i roi gwybod am newidiadau i’ch sefyllfa lwfans oes.
