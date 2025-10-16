@@ -35,7 +35,7 @@ trait ErrorSummaryFluency {
       val errors = form.errors.map { error =>
         ErrorLink(
           href = Some(s"#${errorLinkOverrides.getOrElse(error.key, error.key)}"),
-          content = Text(messages(error.message, error.args: _*))
+          content = Text(messages(error.message, error.args*))
         )
       }
 

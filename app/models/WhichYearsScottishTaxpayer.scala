@@ -53,5 +53,5 @@ object WhichYearsScottishTaxpayer extends Enumerable.Implicits {
     }
 
   implicit val enumerable: Enumerable[WhichYearsScottishTaxpayer] =
-    Enumerable(values.map(v => v.toString -> v): _*)
+    Enumerable(values.map(v => v.toString -> v)*)
 }

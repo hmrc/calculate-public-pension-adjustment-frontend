@@ -31,7 +31,7 @@ import play.api.libs.json.{JsValue, Json}
 trait UserAnswersGenerator extends TryValues {
   self: Generators =>
 
-  val generators: Seq[Gen[(QuestionPage[_], JsValue)]] =
+  val generators: Seq[Gen[(QuestionPage[?], JsValue)]] =
     arbitrary[(MaybePIAUnchangedOrDecreasedPage.type, JsValue)] ::
       arbitrary[(MaybePIAIncreasePage.type, JsValue)] ::
       arbitrary[(NetIncomeAbove190KPage.type, JsValue)] ::
@@ -99,7 +99,7 @@ trait UserAnswersGenerator extends TryValues {
       for {
         id   <- nonEmptyString
         data <- generators match {
-                  case Nil => Gen.const(Map[QuestionPage[_], JsValue]())
+                  case Nil => Gen.const(Map[QuestionPage[?], JsValue]())
                   case _   => Gen.mapOf(oneOf(generators))
                 }
       } yield UserAnswers(

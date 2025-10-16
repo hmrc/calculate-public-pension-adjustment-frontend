@@ -7,7 +7,7 @@ import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 lazy val appName: String = "calculate-public-pension-adjustment-frontend"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "3.3.5"
+ThisBuild / scalaVersion := "3.6.4"
 
 lazy val it = project
   .enablePlugins(PlayScala)
@@ -18,7 +18,7 @@ lazy val it = project
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin, AutomateHeaderPlugin, BuildInfoPlugin)
   .disablePlugins(JUnitXmlReportPlugin) // Required to prevent https://github.com/scalatest/scalatest/issues/1427
-  .settings(inConfig(Test)(testSettings): _*)
+  .settings(inConfig(Test)(testSettings) *)
   .settings(ThisBuild / useSuperShell := false)
   .settings(
     name := appName,
@@ -53,7 +53,6 @@ lazy val root = (project in file("."))
       "-Wconf:msg=Flag.*repeatedly:s",
       "-feature",
       "-deprecation",
-      "-Ypatmat-exhaust-depth",
       "off"
     ),
     libraryDependencies ++= AppDependencies(),
@@ -78,7 +77,7 @@ lazy val root = (project in file("."))
     uglify / includeFilter := GlobFilter("application.js")
   )
 
-lazy val testSettings: Seq[Def.Setting[_]] = Seq(
+lazy val testSettings: Seq[Def.Setting[?]] = Seq(
   fork := true,
   unmanagedSourceDirectories += baseDirectory.value / "test-utils"
 )

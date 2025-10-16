@@ -45,5 +45,5 @@ object ReportingChange extends Enumerable.Implicits {
     }
 
   implicit val enumerable: Enumerable[ReportingChange] =
-    Enumerable(values.map(v => v.toString -> v): _*)
+    Enumerable(values.map(v => v.toString -> v)*)
 }
