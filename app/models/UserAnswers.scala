@@ -112,7 +112,7 @@ object UserAnswers {
         (__ \ "lastUpdated").read(MongoJavatimeFormats.instantFormat) and
         (__ \ "authenticated").read[Boolean] and
         (__ \ "submissionStarted").read[Boolean]
-    )(UserAnswers.apply _)
+    )(UserAnswers.apply)
   }
 
   val writes: OWrites[UserAnswers] = {
@@ -131,7 +131,7 @@ object UserAnswers {
 
   implicit val format: OFormat[UserAnswers] = OFormat(reads, writes)
 
-  def encryptedFormat(implicit crypto: Encrypter with Decrypter): OFormat[UserAnswers] = {
+  def encryptedFormat(implicit crypto: Encrypter & Decrypter): OFormat[UserAnswers] = {
 
     import play.api.libs.functional.syntax._
 

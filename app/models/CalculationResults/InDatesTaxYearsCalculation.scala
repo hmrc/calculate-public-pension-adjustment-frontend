@@ -51,7 +51,7 @@ object InDatesTaxYearsCalculation {
         (__ \ "unusedAnnualAllowance").read[Int] and
         (__ \ "taxYearSchemes").read[List[InDatesTaxYearSchemeCalculation]] and
         (__ \ "totalCompensation").readNullable[Int]
-    )(InDatesTaxYearsCalculation.apply _)
+    )(InDatesTaxYearsCalculation.apply)
   }
 
   implicit lazy val writes: Writes[InDatesTaxYearsCalculation] = {
