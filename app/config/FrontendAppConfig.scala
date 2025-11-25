@@ -77,6 +77,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val calculationAuditEventName =
     configuration.get[String]("auditing.calculation-request-event-name")
 
-  val forceServiceNavigation: Boolean = configuration.getOptional[Boolean]("play-frontend-hmrc.forceServiceNavigation").getOrElse(false)
+  val forceServiceNavigation: Boolean =
+    configuration.getOptional[Boolean]("play-frontend-hmrc.forceServiceNavigation").getOrElse(false)
 
 }
