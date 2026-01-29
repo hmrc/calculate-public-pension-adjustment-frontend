@@ -16,7 +16,7 @@
 
 package models.submission
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Json, OFormat, OWrites, Reads, JsObject, JsError}
 
 sealed trait SubmissionResponse extends Product with Serializable
 
@@ -36,5 +36,20 @@ object Failure {
 }
 
 object SubmissionResponse {
-  implicit lazy val format: OFormat[SubmissionResponse] = Json.format[SubmissionResponse]
+  implicit lazy val writes: OWrites[SubmissionResponse] = OWrites {
+    case success: Success => Json.toJsObject(success)
+    case failure: Failure => Json.toJsObject(failure)
+  }
+
+  implicit lazy val reads: Reads[SubmissionResponse] = Reads { jsValue =>
+    jsValue.asOpt[JsObject] match {
+      case Some(obj) if (obj \ "uniqueId").isDefined =>
+        Success.format.reads(jsValue)
+      case Some(obj) if (obj \ "errors").isDefined =>
+        Failure.format.reads(jsValue)
+      case _ => JsError("Invalid SubmissionResponse")
+    }
+  }
+
+  implicit lazy val format: OFormat[SubmissionResponse] = OFormat(reads, writes)
 }
