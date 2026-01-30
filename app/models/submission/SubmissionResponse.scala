@@ -16,7 +16,7 @@
 
 package models.submission
 
-import play.api.libs.json.{Json, OFormat, OWrites, Reads, JsObject, JsError}
+import play.api.libs.json.{JsError, JsObject, Json, OFormat, OWrites, Reads}
 
 sealed trait SubmissionResponse extends Product with Serializable
 
@@ -45,9 +45,9 @@ object SubmissionResponse {
     jsValue.asOpt[JsObject] match {
       case Some(obj) if (obj \ "uniqueId").isDefined =>
         Success.format.reads(jsValue)
-      case Some(obj) if (obj \ "errors").isDefined =>
+      case Some(obj) if (obj \ "errors").isDefined   =>
         Failure.format.reads(jsValue)
-      case _ => JsError("Invalid SubmissionResponse")
+      case _                                         => JsError("Invalid SubmissionResponse")
     }
   }
 
