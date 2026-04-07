@@ -39,7 +39,7 @@ class NewExcessLifetimeAllowancePaidSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewExcessLifetimeAllowancePaidPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/new-value-of-lump-sum")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-excess-lump-sum-value")
     }
 
     "when user has selected Both for how excess was paid " in {
@@ -49,7 +49,7 @@ class NewExcessLifetimeAllowancePaidSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewExcessLifetimeAllowancePaidPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/new-value-of-lump-sum")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-excess-lump-sum-value")
     }
 
     "when user has selected Annual Payment for how excess was paid " in {
@@ -61,7 +61,7 @@ class NewExcessLifetimeAllowancePaidSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewExcessLifetimeAllowancePaidPage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/new-value-of-annual-payment")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-excess-annual-payment-value")
     }
 
     "when user hasn't entered correct value " in {
