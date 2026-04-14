@@ -841,9 +841,9 @@ newAnnualPaymentValue.error.wholeNumber = Mae’n rhaid i werth newydd eich tali
 newAnnualPaymentValue.error.outOfRange = Mae’n rhaid i werth eich taliad blynyddol newydd fod yn £999,999,999 neu lai
 newAnnualPaymentValue.change.hidden = gwerth newydd y taliad blynyddol
 
-newLumpSumValue.title = Beth yw gwerth newydd y cyfandaliad?
-newLumpSumValue.heading = Beth yw gwerth newydd y cyfandaliad?
-newLumpSumValue.checkYourAnswersLabel = Beth yw gwerth newydd y cyfandaliad?
+newLumpSumValue.title = Beth oedd gwerth y cyfandaliad sydd dros ben?
+newLumpSumValue.heading = Beth oedd gwerth y cyfandaliad sydd dros ben?
+newLumpSumValue.checkYourAnswersLabel = Beth oedd gwerth y cyfandaliad sydd dros ben?
 newLumpSumValue.error.nonNumeric = Mae’n rhaid i’ch cyfandaliad newydd gynnwys y rhifau 0 i 9 yn unig
 newLumpSumValue.error.required = Nodwch werth y cyfandaliad sydd dros ben newydd
 newLumpSumValue.error.wholeNumber = Mae’n rhaid i werth newydd eich cyfandaliad fod yn rhif cyfan
@@ -903,14 +903,23 @@ pensionCreditReference.error.length = Mae’n rhaid i’r cyfeirnod ar gyfer eic
 pensionCreditReference.error.invalid = Mae’n rhaid i’r cyfeirnod ar gyfer eich credyd pensiwn lwfans oes gynnwys y llythrennau A i Z a’r rhifau 0 i 9 yn unig
 pensionCreditReference.change.hidden = cyfeirnod eich credyd pensiwn lwfans oes
 
-annualPaymentValue.title = Beth oedd gwerth y taliad blynyddol?
-annualPaymentValue.heading = Beth oedd gwerth y taliad blynyddol?
-annualPaymentValue.checkYourAnswersLabel = Beth oedd gwerth y taliad blynyddol?
+annualPaymentValue.title = Beth oedd gwerth y taliad blynyddol sydd dros ben?
+annualPaymentValue.heading = Beth oedd gwerth y taliad blynyddol sydd dros ben?
+annualPaymentValue.checkYourAnswersLabel =  eth oedd gwerth y taliad blynyddol sydd dros ben?
 annualPaymentValue.error.nonNumeric = Mae’n rhaid i werth eich taliad blynyddol gynnwys y rhifau 0 i 9 yn unig
 annualPaymentValue.error.required = Nodwch werth y taliad blynyddol sydd dros ben
 annualPaymentValue.error.wholeNumber = Mae’n rhaid i werth eich taliad blynyddol fod yn rhif cyfan
 annualPaymentValue.error.outOfRange = Mae’n rhaid i werth eich taliad blynyddol fod yn £999,999,999 neu lai
 annualPaymentValue.change.hidden = gwerth y taliad blynyddol
+
+
+excessAnnualPaymentValueTitle = Gwerth y taliad blynyddol sydd dros ben
+excessAnnualPaymentValue.hint = Dyma’r swm sydd dros eich lwfans oes. Cafodd ei dalu i chi fel taliad blynyddol ar ôl digwyddiadau crisialu buddiannau 1 i 5D ac 8.
+
+
+excessLumpSumValue.title = Gwerth y cyfandaliad sydd dros ben
+excessLifetimeAllowance.hint = Dyma’r swm sydd dros eich lwfans oes. Cafodd ei dalu i chi fel cyfandaliad ar ôl digwyddiadau crisialu buddiannau 6 neu 7.
+
 
 lumpSumValue.title = Beth oedd gwerth y cyfandaliad?
 lumpSumValue.heading = Beth oedd gwerth y cyfandaliad?

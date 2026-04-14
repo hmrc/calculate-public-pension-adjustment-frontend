@@ -832,9 +832,9 @@ yearChargePaid.checkYourAnswersLabel = In which year was your lifetime allowance
 yearChargePaid.error.required = Select the year your lifetime allowance charge was paid
 yearChargePaid.change.hidden = year your lifetime allowance charge paid
 
-newAnnualPaymentValue.title = What is the new value of the annual payment?
-newAnnualPaymentValue.heading = What is the new value of the annual payment?
-newAnnualPaymentValue.checkYourAnswersLabel = What is the new value of the annual payment?
+newAnnualPaymentValue.title = What is the new excess annual payment value?
+newAnnualPaymentValue.heading = What is the new excess annual payment value?
+newAnnualPaymentValue.checkYourAnswersLabel = What is the new excess annual payment value?
 newAnnualPaymentValue.error.nonNumeric = Your new annual payment value must only include numbers 0 to 9
 newAnnualPaymentValue.error.required = Enter the value of the new excess annual payment
 newAnnualPaymentValue.error.wholeNumber = Your new annual payment value must be a whole number
@@ -903,18 +903,24 @@ pensionCreditReference.error.length = Your lifetime allowance pension credit ref
 pensionCreditReference.error.invalid = Your lifetime allowance pension credit reference must only include letters a to z and numbers 0 to 9
 pensionCreditReference.change.hidden = your lifetime allowance pension credit reference
 
-annualPaymentValue.title = What was the value of the annual payment?
-annualPaymentValue.heading = What was the value of the annual payment?
-annualPaymentValue.checkYourAnswersLabel = What was the value of the annual payment?
+annualPaymentValue.title = What was the excess annual payment value?
+annualPaymentValue.heading =  What was the excess annual payment value?
+annualPaymentValue.checkYourAnswersLabel =  What was the excess annual payment value?
 annualPaymentValue.error.nonNumeric = Your annual payment value must only include numbers 0 to 9
 annualPaymentValue.error.required = Enter the value of the excess annual payment
 annualPaymentValue.error.wholeNumber = Your annual payment value must be a whole number
 annualPaymentValue.error.outOfRange = Your annual payment value must be £999,999,999 or less
 annualPaymentValue.change.hidden = the value of the annual payment
 
-lumpSumValue.title = What was the value of the lump sum?
-lumpSumValue.heading = What was the value of the lump sum?
-lumpSumValue.checkYourAnswersLabel = What was the value of the lump sum?
+excessAnnualPaymentValue.title = Excess annual payment value
+excessAnnualPaymentValue.hint = This is the amount over your lifetime allowance. It was paid to you as an annual payment after benefit crystallisation events 1 to 5D and 8.
+
+excessLumpSumValue.title = Excess lump sum value
+excessLifetimeAllowance.hint = This is the amount over your lifetime allowance. It was paid to you as a lump sum after benefit crystallisation events 6 or 7.
+
+lumpSumValue.title = What was the excess lump sum value?
+lumpSumValue.heading = What was the excess lump sum value?
+lumpSumValue.checkYourAnswersLabel = What was the excess lump sum value?
 lumpSumValue.error.nonNumeric = Your lump sum value must only include numbers 0 to 9
 lumpSumValue.error.required = Enter the value of the excess lump sum
 lumpSumValue.error.wholeNumber = Your lump sum value must be a whole number
