@@ -841,9 +841,9 @@ newAnnualPaymentValue.error.wholeNumber = Mae’n rhaid i werth newydd eich tali
 newAnnualPaymentValue.error.outOfRange = Mae’n rhaid i werth eich taliad blynyddol newydd fod yn £999,999,999 neu lai
 newAnnualPaymentValue.change.hidden = gwerth newydd y taliad blynyddol
 
-newLumpSumValue.title = Beth oedd gwerth y cyfandaliad sydd dros ben?
-newLumpSumValue.heading = Beth oedd gwerth y cyfandaliad sydd dros ben?
-newLumpSumValue.checkYourAnswersLabel = Beth oedd gwerth y cyfandaliad sydd dros ben?
+newLumpSumValue.title = Beth yw gwerth y cyfandaliad sydd dros ben newydd?
+newLumpSumValue.heading = Beth yw gwerth y cyfandaliad sydd dros ben newydd?
+newLumpSumValue.checkYourAnswersLabel = Beth yw gwerth y cyfandaliad sydd dros ben newydd?
 newLumpSumValue.error.nonNumeric = Mae’n rhaid i’ch cyfandaliad newydd gynnwys y rhifau 0 i 9 yn unig
 newLumpSumValue.error.required = Nodwch werth y cyfandaliad sydd dros ben newydd
 newLumpSumValue.error.wholeNumber = Mae’n rhaid i werth newydd eich cyfandaliad fod yn rhif cyfan

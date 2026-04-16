@@ -841,9 +841,9 @@ newAnnualPaymentValue.error.wholeNumber = Your new annual payment value must be 
 newAnnualPaymentValue.error.outOfRange = Your new annual payment value must be £999,999,999 or less
 newAnnualPaymentValue.change.hidden = the new value of the annual payment
 
-newLumpSumValue.title = What is the new value of the lump sum?
-newLumpSumValue.heading = What is the new value of the lump sum?
-newLumpSumValue.checkYourAnswersLabel = What is the new value of the lump sum?
+newLumpSumValue.title = What is the new excess lump sum value?
+newLumpSumValue.heading = What is the new excess lump sum value?
+newLumpSumValue.checkYourAnswersLabel = What is the new excess lump sum value?
 newLumpSumValue.error.nonNumeric = Your new lump sum value must only include numbers 0 to 9
 newLumpSumValue.error.required = Enter the value of the new excess lump sum
 newLumpSumValue.error.wholeNumber = Your new lump sum value must be a whole number
