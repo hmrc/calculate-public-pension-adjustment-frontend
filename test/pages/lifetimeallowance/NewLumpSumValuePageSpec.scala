@@ -214,7 +214,7 @@ class NewLumpSumValuePageSpec extends PageBehaviours {
 
       val nextPageUrl: String = NewLumpSumValuePage.navigate(NormalMode, userAnswers).url
 
-      checkNavigation(nextPageUrl, "/lifetime-allowance/new-value-of-annual-payment")
+      checkNavigation(nextPageUrl, "/lifetime-allowance/new-excess-annual-payment-value")
     }
 
     "when user has entered correct value " in {
