@@ -16,9 +16,11 @@
 
 package config
 
-import com.google.inject.AbstractModule
+import com.google.inject.{AbstractModule, TypeLiteral}
 import controllers.actions._
+import play.twirl.api.Html
 import uk.gov.hmrc.crypto.{Decrypter, Encrypter}
+import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.LanguageSelect
 
 import java.time.{Clock, ZoneOffset}
 
@@ -33,5 +35,6 @@ class Module extends AbstractModule {
     bind(classOf[Clock]).toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
     bind(classOf[Encrypter]).toProvider(classOf[CryptoProvider])
     bind(classOf[Decrypter]).toProvider(classOf[CryptoProvider])
+    bind(new TypeLiteral[Function1[LanguageSelect, Html]] {}).toInstance((_: LanguageSelect) => Html(""))
   }
 }
