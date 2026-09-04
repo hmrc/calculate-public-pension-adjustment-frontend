@@ -54,8 +54,9 @@ reviewLTAAnswers.returnToMainResult = Dychwelyd i’r prif grynodeb
 
 journeyRecovery.continue.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
 journeyRecovery.continue.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
-journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
-journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
+journeyRecovery.continue.guidance = [Ychwanegu cynnwys i egluro sut i symud ymlaen.]
+journeyRecovery.startAgain.title = Mae'n ddrwg gennym, mae problem gyda'r gwasanaeth
+journeyRecovery.startAgain.heading = Mae'n ddrwg gennym, mae problem gyda'r gwasanaeth
 
 signedOut.title = Rydych wedi cael eich allgofnodi
 signedOut.heading = Rydych wedi cael eich allgofnodi
